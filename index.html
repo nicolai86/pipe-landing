@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RotaryCAM | 4-Axis Rotary CNC Plasma CAM from 3D STEP</title>
+  <meta name="description" content="Dedicated 4-axis rotary plasma CAM. Drop raw 3D STEP assemblies directly into machine-ready G-code for round pipe, structural HSS square/rectangular tube, and open profiles." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --surface: #14171d;
+      --surface-border: #232833;
+      --surface-hover: #1c212b;
+      --plasma-amber: #f59e0b;
+      --plasma-glow: rgba(245, 158, 11, 0.2);
+      --cyan-arc: #06b6d4;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --code-bg: #090b0e;
+      --radius: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Navigation */
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .brand-tag {
+      font-size: 0.7rem;
+      background: var(--surface-border);
+      color: var(--plasma-amber);
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-cta {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      border-color: var(--plasma-amber);
+      color: #fff;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem 4rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--plasma-amber);
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #fff 40%, var(--plasma-amber));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 580px;
+    }
+
+    .cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 440px;
+    }
+
+    .primary-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: var(--plasma-amber);
+      color: #000;
+      font-weight: 600;
+      padding: 0.85rem 1.5rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      box-shadow: 0 0 25px var(--plasma-glow);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .primary-btn:hover {
+      background: #fbbf24;
+      transform: translateY(-2px);
+    }
+
+    .sub-cta {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    /* Dropzone Simulation */
+    .dropzone-box {
+      background: var(--surface);
+      border: 2px dashed var(--surface-border);
+      border-radius: 12px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .dropzone-box:hover {
+      border-color: var(--plasma-amber);
+      background: var(--surface-hover);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--surface-border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .term-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .term-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--surface-border);
+    }
+
+    .dropzone-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 1rem;
+      color: var(--plasma-amber);
+    }
+
+    /* Problems Grid */
+    .section-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+      max-width: 650px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-num {
+      color: var(--plasma-amber);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Tech Deep Dive Callout */
+    .feature-strip {
+      background: var(--code-bg);
+      border-top: 1px solid var(--surface-border);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 4rem 2rem;
+    }
+
+    .feature-strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .code-preview {
+      background: #000;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: #34d399;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .code-comment {
+      color: var(--text-dim);
+    }
+
+    /* Footer */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    @media (max-width: 900px) {
+      .hero, .feature-strip-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="brand">
+      <span>RotaryCAM</span>
+      <span class="brand-tag">v0.9-BETA</span>
+    </a>
+    <a href="#download" class="nav-cta">Download Prototype</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div>
+      <div class="badge">
+        <span class="mono">4-AXIS XYZA ENGINE</span>
+        <span>•</span>
+        <span>Zero 2D Unwrapping</span>
+      </div>
+      <h1>Rotary CNC Plasma CAM That <span>Understands 3D CAD</span></h1>
+      <p>
+        Drop raw STEP assemblies straight onto your rotary chuck. Automated feature detection, zero-bevel saddle compensation, and multi-profile kinematics for round pipe, structural HSS, and open channel.
+      </p>
+
+      <div class="cta-group" id="download">
+        <a href="#prototype" class="primary-btn">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+          Get the Standalone Prototype
+        </a>
+        <div class="sub-cta mono">Free during beta • Built for SimCNC & standard 4-axis controllers</div>
+      </div>
+    </div>
+
+    <!-- Interactive/Visual CAD Dropzone Mock -->
+    <div class="dropzone-box">
+      <div class="terminal-header mono">
+        <div class="term-dots">
+          <div class="term-dot"></div>
+          <div class="term-dot"></div>
+          <div class="term-dot"></div>
+        </div>
+        <span>B-Rep Topology Extractor</span>
+        <span>STEP 214/242</span>
+      </div>
+      <svg class="dropzone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+      </svg>
+      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Drop your .STEP / .STP model here</h3>
+      <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;">Automatic wall-thickness extraction & joint classification</p>
+      <div class="mono" style="font-size: 0.75rem; background: var(--code-bg); padding: 0.75rem; border-radius: 4px; border: 1px solid var(--surface-border); text-align: left; color: var(--text-muted);">
+        [OK] Stock identified: HSS 2.0" x 2.0" x 0.188"<br>
+        [OK] Closed wire stitched: Saddle miter (35.0 deg)<br>
+        [OK] Zero-bevel inner curve offset calculated<br>
+        [OK] Swirl chirality: CW outside / CCW inside
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem & Solution Grid -->
+  <section class="section-wrap">
+    <div class="section-header">
+      <h2>Built by fabricators tired of 2D flat unwrappers.</h2>
+      <p>Standard plasma CAM programs treat tubes like rolled sheet metal. RotaryCAM parses full 3D B-Rep topology directly from your solid model.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-num mono">01 / GEOMETRY</div>
+        <h3>No Manual Unrolling</h3>
+        <p>Never waste time converting solid CAD models into flattened 2D DXFs in SolidWorks or Fusion 360 again. Import your 3D STEP assembly directly.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num mono">02 / FITMENT</div>
+        <h3>Zero-Bevel Dual-Curve Compensation</h3>
+        <p>Perpendicular torches create interference bevels on angled saddle joints. RotaryCAM calculates inner-cylinder penetration curves so fishmouths fit flush right off the chuck.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num mono">03 / MULTI-PROFILE</div>
+        <h3>Structural HSS & Channels</h3>
+        <p>Not just round pipe. Handles square tubing, rectangular structural sections, and open angle iron with automatic corner-radius tracking and dynamic feed throttling.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Kinematics Feature Strip -->
+  <section class="feature-strip">
+    <div class="feature-strip-inner">
+      <div>
+        <div class="badge">
+          <span class="mono">OFFLINE TCP & LOOK-AHEAD</span>
+        </div>
+        <h2 style="font-size: 1.85rem; margin-bottom: 1rem;">Eliminate servo stalls and arc blowout on tube corners.</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+          Most DIY and industrial CNC controllers choke on simultaneous multi-axis rotary acceleration because they lack Inverse Time Feedrate (G93). RotaryCAM calculates Jacobian vector accelerations offline, smoothing feed rates before generating a single line of G-code.
+        </p>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;" class="mono">
+          <li style="color: var(--cyan-arc);">✓ Swirl-aware lead-in chirality (CW outer / CCW inner)</li>
+          <li style="color: var(--cyan-arc);">✓ THC auto-disable on square corner rotations</li>
+          <li style="color: var(--cyan-arc);">✓ Midpoint pierce shifting on long straight spans</li>
+        </ul>
+      </div>
+
+      <div class="code-preview mono">
+        <span class="code-comment">; RotaryCAM Pre-Digested Trajectory Output</span><br>
+        <span class="code-comment">; Stock: 2.0x2.0 Square HSS - Profile Corner Transition</span><br>
+        G00 X12.500 Y0.000 Z25.400 A0.000<br>
+        M03 <span class="code-comment">; Controller probes IHS + arc-transfer</span><br>
+        G04 P0.400 <span class="code-comment">; Pierce dwell</span><br>
+        G01 X12.500 Y0.000 Z1.500 F1800<br>
+        <span class="code-comment">; Offline blended look-ahead to prevent corner blowouts</span><br>
+        G01 X14.210 Y-12.200 Z1.500 A12.40 F1450<br>
+        G01 X15.800 Y-18.400 Z3.200 A45.00 F980 <span class="code-comment">; THC Disabled</span><br>
+        G01 X17.100 Y-25.400 Z1.500 A90.00 F1450<br>
+        M05
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="mono">rotarycam.app © 2026</div>
+    <div>Built for 4-axis CNC plasma cutting machines</div>
+  </footer>
+
+</body>
+</html>
