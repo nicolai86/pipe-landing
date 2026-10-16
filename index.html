@@ -439,7 +439,24 @@
       transform: scale(1.008);
     }
 
+    /* Offline Shop-Floor Banner */
+    .offline-banner {
+      background: linear-gradient(135deg, rgba(20, 23, 29, 0.95), rgba(26, 31, 41, 0.95));
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius);
+      padding: 2.25rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
     @media (max-width: 900px) {
+      .offline-banner {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
       .hero, .feature-strip-inner, .grid-2 {
         grid-template-columns: 1fr;
         gap: 2.5rem;
@@ -472,7 +489,7 @@
   <section class="hero">
     <div>
       <div class="badge">
-        <span class="mono">4-AXIS XYZA ENGINE</span>
+        <span class="mono">100% OFFLINE DESKTOP & WEB APP</span>
         <span>•</span>
         <span>OpenCASCADE 7.9 & FOVNet AI</span>
       </div>
@@ -488,7 +505,7 @@
           </svg>
           Join the Beta Waitlist
         </a>
-        <div class="sub-cta mono">Free during beta • Built for SimCNC, Mach4, LinuxCNC & Masso</div>
+        <div class="sub-cta mono">100% Offline Standalone Desktop App & Instant Web App • Zero Cloud Dependency • SimCNC & 4-Axis Controllers</div>
       </div>
     </div>
 
@@ -527,7 +544,27 @@
       <p>From raw 3D CAD assemblies to nested multi-stick G-code and real-time 4-axis motion simulation.</p>
     </div>
 
-    <!-- Showcase Item 1: CAD Inspection -->
+    <!-- Showcase Item 1: Standalone Desktop App -->
+    <div class="showcase-card">
+      <div class="showcase-header">
+        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">STANDALONE OFFLINE DESKTOP APP</span>
+        <h3>Native macOS Desktop Application — 100% Offline Shop Floor Ready</h3>
+        <p>
+          Designed for harsh plasma table environments with zero internet dependency. Runs completely offline with native Apple Metal 3D acceleration, local OpenCASCADE B-Rep topology kernel, embedded FOVNet neural network, and integrated plasma cut library (feedrates, pierce heights, arc voltages, and kerf widths). Your proprietary STEP models never leave your computer.
+        </p>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>100% Offline Capable</span>
+          <span class="pill"><span class="pill-dot"></span>Native Metal 3D Viewport</span>
+          <span class="pill"><span class="pill-dot"></span>Zero Cloud Uploads</span>
+          <span class="pill"><span class="pill-dot"></span>Built-In Cut Database</span>
+        </div>
+      </div>
+      <div class="showcase-img-container">
+        <img src="assets/desktop-app.png" alt="Standalone Offline Desktop Application in RotaryCAM" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Showcase Item 2: CAD Inspection -->
     <div class="showcase-card">
       <div class="showcase-header">
         <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">B-REP TOPOLOGY RECOGNITION</span>
@@ -547,7 +584,7 @@
       </div>
     </div>
 
-    <!-- Showcase Item 2: Multi-Part Pack Nesting -->
+    <!-- Showcase Item 3: Multi-Part Pack Nesting -->
     <div class="showcase-card">
       <div class="showcase-header">
         <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">1D ROTARY NESTING</span>
@@ -567,7 +604,7 @@
       </div>
     </div>
 
-    <!-- Showcase Item 3: 3D Cut Simulation -->
+    <!-- Showcase Item 4: 3D Cut Simulation -->
     <div class="showcase-card">
       <div class="showcase-header">
         <span class="badge mono" style="color: var(--emerald-cut); margin-bottom: 0.75rem;">WEBGL DIGITAL TWIN</span>
@@ -587,7 +624,7 @@
       </div>
     </div>
 
-    <!-- Showcase Item 4: Machine Kinematics & THC -->
+    <!-- Showcase Item 5: Machine Kinematics & THC -->
     <div class="showcase-card" style="margin-bottom: 0;">
       <div class="showcase-header">
         <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">HARDWARE MOTION & THC CONTROL</span>
@@ -604,6 +641,29 @@
       </div>
       <div class="showcase-img-container">
         <img src="assets/machine-kinematics.png" alt="Machine Kinematics and Hardware THC Synchronization in RotaryCAM" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- 100% Offline Shop-Floor Guarantee Banner -->
+  <section class="section-wrap" style="padding-top: 0; padding-bottom: 2rem;">
+    <div class="offline-banner">
+      <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); display: flex; align-items: center; justify-content: center; color: var(--plasma-amber); flex-shrink: 0;">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="badge mono" style="margin-bottom: 0.5rem; font-size: 0.75rem;"><span style="color: var(--plasma-amber);">SHOP-FLOOR AIR-GAPPED SECURITY</span></div>
+        <h3 style="font-size: 1.35rem; margin-bottom: 0.4rem; color: #fff;">100% Offline & Standalone — Zero Cloud Dependency</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin: 0;">
+          Unlike cloud-only CAD/CAM tools, RotaryCAM runs completely air-gapped on your local machine. Your proprietary 3D CAD models never leave your computer, no telemetry is uploaded, and your cutting operations never halt when Wi-Fi drops on the fabrication floor.
+        </p>
+      </div>
+      <div class="mono" style="font-size: 0.82rem; color: var(--cyan-arc); text-align: right; white-space: nowrap;">
+        ✓ Native macOS Metal<br>
+        ✓ Air-Gapped Ready<br>
+        ✓ Zero Model Uploads
       </div>
     </div>
   </section>
@@ -825,7 +885,7 @@
 
     <div style="margin-top: 2rem; background: var(--surface); border: 1px solid var(--surface-border); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
       <div class="mono" style="font-size: 0.85rem; color: var(--text-muted);">
-        <span style="color: var(--plasma-amber);">Deployable Anywhere:</span> Go + HTMX 2.0 Web App • Native macOS Desktop App (Metal) • Headless REST API (<span class="mono">PipeServer</span>)
+        <span style="color: var(--plasma-amber);">Dual Deployment:</span> Standalone 100% Offline Desktop App (Native Metal) • Zero-Install Web App (Go + HTMX) • Headless REST Automation (<span class="mono">PipeServer</span>)
       </div>
       <a href="#waitlist" class="nav-cta mono" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">Try in Beta →</a>
     </div>
