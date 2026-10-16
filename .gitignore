@@ -1,0 +1,20 @@
+# Credentials & Secrets Protection
+.env
+.env.*
+*.pem
+*.key
+*.cert
+*.crt
+*credential*
+*secret*
+*token*
+*.id_rsa
+*.id_ed25519
+*.pfx
+*.p12
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
