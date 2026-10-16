@@ -25,6 +25,11 @@
       --radius: 8px;
     }
 
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -51,15 +56,27 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Navigation */
+    /* Sticky Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 15, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+      width: 100%;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
     nav {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 1.5rem 2rem;
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid var(--surface-border);
+      border-bottom: none; /* moved to .site-header */
     }
 
     .brand {
@@ -89,14 +106,33 @@
     }
 
     .nav-links a {
+      position: relative;
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.875rem;
       transition: color 0.2s ease;
+      padding: 0.25rem 0;
     }
 
     .nav-links a:hover {
       color: #fff;
+    }
+
+    .nav-links a.active {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--plasma-amber);
+      border-radius: 2px;
+      box-shadow: 0 0 8px var(--plasma-glow);
     }
 
     .nav-cta {
@@ -469,21 +505,23 @@
 </head>
 <body>
 
-  <!-- Navigation -->
-  <nav>
-    <a href="#" class="brand">
-      <span>RotaryCAM</span>
-      <span class="brand-tag">v0.2-BETA</span>
-    </a>
-    <div class="nav-links">
-      <a href="#showcase">Showcase</a>
-      <a href="#features">Features</a>
-      <a href="#kinematics">Machine Safety</a>
-      <a href="#profiles">Tubing & Controllers</a>
-      <a href="#simulation">3D Simulation</a>
-    </div>
-    <a href="#waitlist" class="nav-cta">Request Early Access</a>
-  </nav>
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <nav>
+      <a href="#" class="brand">
+        <span>RotaryCAM</span>
+        <span class="brand-tag">v0.2-BETA</span>
+      </a>
+      <div class="nav-links">
+        <a href="#showcase">Showcase</a>
+        <a href="#features">Features</a>
+        <a href="#kinematics">Machine Safety</a>
+        <a href="#profiles">Tubing & Controllers</a>
+        <a href="#simulation">3D Simulation</a>
+      </div>
+      <a href="#waitlist" class="nav-cta">Request Early Access</a>
+    </nav>
+  </header>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -932,5 +970,41 @@
     <div>Built for 4-axis CNC rotary plasma cutting tables • SimCNC, Mach4, LinuxCNC, Masso</div>
   </footer>
 
+  <!-- Scroll-Spy Active Nav Highlighting -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-links a');
+
+      function updateActiveNav() {
+        let currentSectionId = '';
+        const scrollPosition = window.scrollY + 120; // offset for sticky header
+
+        sections.forEach(section => {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentSectionId = section.getAttribute('id');
+          }
+        });
+
+        // Highlight bottom waitlist when scrolled near bottom
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 80) {
+          currentSectionId = 'waitlist';
+        }
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + currentSectionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
+      window.addEventListener('resize', updateActiveNav, { passive: true });
+      updateActiveNav();
+    });
+  </script>
 </body>
 </html>
