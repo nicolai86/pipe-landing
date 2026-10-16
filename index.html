@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RotaryCAM | 4-Axis Rotary CNC Plasma CAM from 3D STEP</title>
-  <meta name="description" content="Dedicated 4-axis rotary plasma CAM. Drop raw 3D STEP assemblies directly into machine-ready G-code for round pipe, structural HSS square/rectangular tube, and open profiles." />
+  <meta name="description" content="Dedicated 4-axis rotary plasma CAM software. Drop raw 3D STEP assemblies directly into machine-ready G-code with B-Rep feature extraction, zero-bevel saddle compensation, SimCNC 4D feedrate scaling, and multi-stick nesting." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,6 +17,7 @@
       --plasma-amber: #f59e0b;
       --plasma-glow: rgba(245, 158, 11, 0.2);
       --cyan-arc: #06b6d4;
+      --emerald-cut: #10b981;
       --text: #e2e8f0;
       --text-muted: #94a3b8;
       --text-dim: #64748b;
@@ -81,6 +82,23 @@
       letter-spacing: 0.5px;
     }
 
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
     .nav-cta {
       background: var(--surface);
       border: 1px solid var(--surface-border);
@@ -135,7 +153,7 @@
     }
 
     .hero p {
-      font-size: 1.15rem;
+      font-size: 1.12rem;
       color: var(--text-muted);
       margin-bottom: 2rem;
       max-width: 580px;
@@ -179,7 +197,7 @@
       background: var(--surface);
       border: 2px dashed var(--surface-border);
       border-radius: 12px;
-      padding: 2.5rem 1.5rem;
+      padding: 2.2rem 1.5rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -197,7 +215,7 @@
       justify-content: space-between;
       border-bottom: 1px solid var(--surface-border);
       padding-bottom: 0.75rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       font-size: 0.75rem;
       color: var(--text-dim);
     }
@@ -215,13 +233,13 @@
     }
 
     .dropzone-icon {
-      width: 48px;
-      height: 48px;
-      margin: 0 auto 1rem;
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 0.75rem;
       color: var(--plasma-amber);
     }
 
-    /* Problems Grid */
+    /* Section Wrappers */
     .section-wrap {
       max-width: 1200px;
       margin: 0 auto;
@@ -230,21 +248,28 @@
 
     .section-header {
       margin-bottom: 3.5rem;
-      max-width: 650px;
+      max-width: 720px;
     }
 
     .section-header h2 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       margin-bottom: 0.75rem;
     }
 
     .section-header p {
       color: var(--text-muted);
+      font-size: 1.05rem;
     }
 
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
       gap: 1.5rem;
     }
 
@@ -256,13 +281,19 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: border-color 0.2s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
     }
 
     .card-num {
       color: var(--plasma-amber);
       font-weight: 700;
       margin-bottom: 1rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
     }
 
     .card h3 {
@@ -273,22 +304,58 @@
     .card p {
       color: var(--text-muted);
       font-size: 0.95rem;
+      line-height: 1.6;
     }
 
-    /* Tech Deep Dive Callout */
+    /* Specs & Lists */
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      border-radius: 9999px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--plasma-amber);
+    }
+
+    .pill-cyan .pill-dot {
+      background: var(--cyan-arc);
+    }
+
+    .pill-emerald .pill-dot {
+      background: var(--emerald-cut);
+    }
+
+    /* Kinematics Feature Strip */
     .feature-strip {
       background: var(--code-bg);
       border-top: 1px solid var(--surface-border);
       border-bottom: 1px solid var(--surface-border);
-      padding: 4rem 2rem;
+      padding: 5rem 2rem;
     }
 
     .feature-strip-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 3.5rem;
       align-items: center;
     }
 
@@ -297,10 +364,11 @@
       border: 1px solid var(--surface-border);
       border-radius: var(--radius);
       padding: 1.5rem;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: #34d399;
       line-height: 1.8;
       overflow-x: auto;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.6);
     }
 
     .code-comment {
@@ -321,9 +389,12 @@
     }
 
     @media (max-width: 900px) {
-      .hero, .feature-strip-inner {
+      .hero, .feature-strip-inner, .grid-2 {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+      }
+      .nav-links {
+        display: none;
       }
     }
   </style>
@@ -336,20 +407,26 @@
       <span>RotaryCAM</span>
       <span class="brand-tag">v0.9-BETA</span>
     </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#kinematics">Kinematics & Physics</a>
+      <a href="#profiles">Profiles & Controllers</a>
+      <a href="#simulation">3D Simulation</a>
+    </div>
     <a href="#waitlist" class="nav-cta">Request Early Access</a>
   </nav>
 
-  <!-- Hero -->
+  <!-- Hero Section -->
   <section class="hero">
     <div>
       <div class="badge">
         <span class="mono">4-AXIS XYZA ENGINE</span>
         <span>•</span>
-        <span>Zero 2D Unwrapping</span>
+        <span>OpenCASCADE 7.9 & FOVNet AI</span>
       </div>
       <h1>Rotary CNC Plasma CAM That <span>Understands 3D CAD</span></h1>
       <p>
-        Drop raw STEP assemblies straight onto your rotary chuck. Automated feature detection, zero-bevel saddle compensation, and multi-profile kinematics for round pipe, structural HSS, and open channel.
+        Transform raw 3D STEP assemblies directly into machine-ready 4-axis G-code. Automated B-Rep topology recognition, dual-curve zero-bevel saddle compensation, ADLS corner look-ahead, and SimCNC 4D feedrate scaling for round pipe, structural HSS, and open profiles.
       </p>
 
       <div class="cta-group" id="download">
@@ -359,7 +436,7 @@
           </svg>
           Join the Beta Waitlist
         </a>
-        <div class="sub-cta mono">Free during beta • Built for SimCNC & standard 4-axis controllers</div>
+        <div class="sub-cta mono">Free during beta • Built for SimCNC, Mach4, LinuxCNC & Masso</div>
       </div>
     </div>
 
@@ -372,81 +449,244 @@
           <div class="term-dot"></div>
         </div>
         <span>B-Rep Topology Extractor</span>
-        <span>STEP 214/242</span>
+        <span>STEP AP 214/242</span>
       </div>
       <svg class="dropzone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
       </svg>
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;">Drop your .STEP / .STP model here</h3>
-      <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.5rem;">Automatic wall-thickness extraction & joint classification</p>
-      <div class="mono" style="font-size: 0.75rem; background: var(--code-bg); padding: 0.75rem; border-radius: 4px; border: 1px solid var(--surface-border); text-align: left; color: var(--text-muted);">
-        [OK] Stock identified: HSS 2.0" x 2.0" x 0.188"<br>
-        [OK] Closed wire stitched: Saddle miter (35.0 deg)<br>
-        [OK] Zero-bevel inner curve offset calculated<br>
-        [OK] Swirl chirality: CW outside / CCW inside
+      <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Drop your .STEP / .STP model here</h3>
+      <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.25rem;">Automatic wall-thickness extraction & joint classification</p>
+      <div class="mono" style="font-size: 0.74rem; background: var(--code-bg); padding: 0.85rem; border-radius: 4px; border: 1px solid var(--surface-border); text-align: left; color: var(--text-muted); line-height: 1.6;">
+        [OK] 3D STEP loaded: 4-axis tubular assembly (4 bodies)<br>
+        [OK] Profile classified: HSS 2.0" x 2.0" x 0.188" (R=6.35mm)<br>
+        [OK] Features extracted: 3x Coping saddles, 4x slotted holes, 1x sever miter<br>
+        [OK] Zero-Bevel Option B: Inner-cylinder penetration clipped<br>
+        [OK] Swirl chirality: CW outside perimeters / CCW inside holes<br>
+        [OK] SimCNC 4D Euclidean feedrate scaled point-by-point
       </div>
     </div>
   </section>
 
-  <!-- Problem & Solution Grid -->
-  <section class="section-wrap">
+  <!-- Core Capabilities Grid -->
+  <section id="features" class="section-wrap">
     <div class="section-header">
-      <h2>Built by fabricators tired of 2D flat unwrappers.</h2>
-      <p>Standard plasma CAM programs treat tubes like rolled sheet metal. RotaryCAM parses full 3D B-Rep topology directly from your solid model.</p>
+      <div class="badge"><span class="mono">CORE CAPABILITIES</span></div>
+      <h2>Engineered for 4-axis rotary plasma. Not rolled 2D sheet metal.</h2>
+      <p>Conventional plasma CAM forces fabricators to manually unwrap tubes into flat 2D DXFs in CAD. RotaryCAM solves the true 3D B-Rep topology and rotary kinematics directly from your solid model.</p>
     </div>
 
     <div class="grid-3">
+      <!-- Feature 1 -->
       <div class="card">
-        <div class="card-num mono">01 / GEOMETRY</div>
-        <h3>No Manual Unrolling</h3>
-        <p>Never waste time converting solid CAD models into flattened 2D DXFs in SolidWorks or Fusion 360 again. Import your 3D STEP assembly directly.</p>
+        <div>
+          <div class="card-num mono">01 / TOPOLOGY & AI</div>
+          <h3>Direct 3D B-Rep Recognition</h3>
+          <p>Never unroll solid bodies into 2D DXF flats. OpenCASCADE 7.9 and an embedded TorchScript Graph Neural Network (<span class="mono" style="color: var(--cyan-arc);">FOVNet</span>) analyze raw STEP 214/242 files, automatically extracting wall thickness from concentric cylinders or anti-parallel planar faces with 50-micron chordal deflection tolerance.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>Zero 2D Unwrapping</span>
+          <span class="pill"><span class="pill-dot"></span>Hole / Slot Stitching</span>
+        </div>
       </div>
 
+      <!-- Feature 2 -->
       <div class="card">
-        <div class="card-num mono">02 / FITMENT</div>
-        <h3>Zero-Bevel Dual-Curve Compensation</h3>
-        <p>Perpendicular torches create interference bevels on angled saddle joints. RotaryCAM calculates inner-cylinder penetration curves so fishmouths fit flush right off the chuck.</p>
+        <div>
+          <div class="card-num mono">02 / WELD FITMENT</div>
+          <h3>Zero-Bevel Dual-Curve Compensation</h3>
+          <p>Perpendicular torches create interference bevels on angled saddle joints. RotaryCAM calculates inner-cylinder penetration curves (<span class="mono" style="color: var(--plasma-amber);">Option B</span> from CAD inner edges, or <span class="mono" style="color: var(--plasma-amber);">Option A</span> analytical) to clip toolpaths to the inner wall boundary. Fishmouths fit drop-in flush right off the chuck with zero hand grinding.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>Option A & B Logic</span>
+          <span class="pill"><span class="pill-dot"></span>Zero-Gap Fitup</span>
+        </div>
       </div>
 
+      <!-- Feature 3 -->
       <div class="card">
-        <div class="card-num mono">03 / MULTI-PROFILE</div>
-        <h3>Structural HSS & Channels</h3>
-        <p>Not just round pipe. Handles square tubing, rectangular structural sections, and open angle iron with automatic corner-radius tracking and dynamic feed throttling.</p>
+        <div>
+          <div class="card-num mono">03 / 4D TRAJECTORY</div>
+          <h3>SimCNC 4D Feedrate Scaling</h3>
+          <p>Standard CNC controllers lack native Inverse Time (G93) or true rotary TCP. SimCNC measures distance in 4D machine units where A-axis degrees are treated linearly. RotaryCAM computes composite 4D displacement <span class="mono" style="color: var(--cyan-arc);">dS_machine / dS_cartesian</span> block-by-block, ensuring exact, constant surface speed across combined XYZA motion.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>SimCNC 4D Spoofing</span>
+          <span class="pill"><span class="pill-dot"></span>G94 / G93 Dialects</span>
+        </div>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="card">
+        <div>
+          <div class="card-num mono">04 / CHUCK MOTION</div>
+          <h3>ADLS Singularity Damping & Anti-Dive THC</h3>
+          <p>On rectangular HSS corners, angular acceleration demands spike toward infinity. Adaptive Damped Least Squares (<span class="mono" style="color: var(--plasma-amber);">ADLS</span>) limits rotary velocity via real-time manipulability metrics. Dynamic THC freeze signals (<span class="mono">M62/M63</span> or SimCNC variables) lock the Z-axis during corner rotations to prevent torch dives.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>ADLS Look-Ahead</span>
+          <span class="pill"><span class="pill-dot"></span>Dynamic Safe Z</span>
+        </div>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="card">
+        <div>
+          <div class="card-num mono">05 / ARC PHYSICS</div>
+          <h3>Chirality, 3D Ramps & Zero-Overburn</h3>
+          <p>Mathematically enforces swirl gas chirality: Clockwise (CW) on outer profiles and Counter-Clockwise (CCW) on internal holes, keeping the square edge on the finished part. Simultaneous 3D Hermite ramp lead-ins blow slag away from nozzles, and early torch extinguish (<span class="mono">M05</span> 1.5–3mm early) eliminates divots at lead-in overlaps.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>Swirl Chirality</span>
+          <span class="pill"><span class="pill-dot"></span>Early M05 Extinguish</span>
+        </div>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="card">
+        <div>
+          <div class="card-num mono">06 / NESTING</div>
+          <h3>Stick Pack Nesting & Thermal Hedging</h3>
+          <p>Pack multi-part assemblies end-to-end on standard 20ft/24ft/6m raw mill sticks in right-to-left parting sequence for maximum chuck grip. Thermal distance hop sequencing (<span class="mono" style="color: var(--cyan-arc);">D_thermal</span>) prevents localized heat concentration and tube banana-bowing, while automated micro-tabbing prevents scrap tip-ups.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>1D Mill Stick Packing</span>
+          <span class="pill"><span class="pill-dot"></span>2D Sheet NFP Nesting</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profiles & Controllers Section -->
+  <section id="profiles" class="section-wrap" style="padding-top: 0;">
+    <div class="section-header">
+      <div class="badge"><span class="mono">COMPATIBILITY</span></div>
+      <h2>Supported Profiles & CNC Controllers</h2>
+      <p>Engineered for full structural versatility, verified against imperial ASTM/AISC and metric EN/ISO standard sizing tables.</p>
+    </div>
+
+    <div class="grid-2">
+      <!-- Profiles Card -->
+      <div class="card" style="padding: 2.2rem;">
+        <div>
+          <div class="card-num mono">PROFILES SUPPORTED</div>
+          <h3 style="margin-bottom: 1rem;">Complete Structural Range</h3>
+          <p style="margin-bottom: 1.5rem;">RotaryCAM handles both closed tubular profiles and open structural sections with dedicated geometric extraction pipelines:</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem;" class="mono">
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Round Pipe & Tubing:</strong> 1/8" NPS (10.3mm) up to 16" (406.4mm) casing</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Square & Rectangular HSS:</strong> 12.7mm to 400mm+ with corner fillet tracking</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Structural Angle Iron:</strong> Equal & unequal leg L-profile with heel radius</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>C-Channel & MC-Channel:</strong> Web & tapered/parallel flange coping</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>I-Beam & Wide Flange:</strong> Multi-flange structural clearance cuts</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Sheet & Plate:</strong> Up to 1/2" (12.75mm) with smart THC and full kerf</li>
+          </ul>
+        </div>
+        <div class="pill-list mono" style="margin-top: 1.5rem;">
+          <span class="pill pill-cyan"><span class="pill-dot"></span>ASTM / AISC Imperial</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>EN 10210 / ISO Metric</span>
+        </div>
+      </div>
+
+      <!-- Controllers Card -->
+      <div class="card" style="padding: 2.2rem;">
+        <div>
+          <div class="card-num mono">CONTROLLER DIALECTS</div>
+          <h3 style="margin-bottom: 1rem;">Machine-Ready Post-Processors</h3>
+          <p style="margin-bottom: 1.5rem;">Clean, controller-optimized G-code tailored to the exact motion-control constraints of your hardware:</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem;" class="mono">
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>CSLab SimCNC (IP-M / IP-S):</strong> 4D Euclidean feedrate spoofing, #1111/#1112 current modulation, #1080 THC corner lock</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>Mach4 4-Axis:</strong> Standard G94 units-per-minute feed blending and synchronized M-code macros</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>LinuxCNC (EMC2):</strong> Multi-axis XYZA with motor tuning acceleration limits and look-ahead</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>Masso G3:</strong> Dedicated multi-axis rotary post with smooth continuous velocity</li>
+          </ul>
+        </div>
+        <div class="pill-list mono" style="margin-top: 1.5rem;">
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Hardware Digital Pins (M62/M63)</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>G93 Inverse Time Ready</span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Deep Kinematics Feature Strip -->
-  <section class="feature-strip">
+  <section id="kinematics" class="feature-strip">
     <div class="feature-strip-inner">
       <div>
         <div class="badge">
           <span class="mono">OFFLINE TCP & LOOK-AHEAD</span>
         </div>
-        <h2 style="font-size: 1.85rem; margin-bottom: 1rem;">Eliminate servo stalls and arc blowout on tube corners.</h2>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Eliminate servo stalls, chuck jerking, and corner blowout.</h2>
         <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-          Most DIY and industrial CNC controllers choke on simultaneous multi-axis rotary acceleration because they lack Inverse Time Feedrate (G93). RotaryCAM calculates Jacobian vector accelerations offline, smoothing feed rates before generating a single line of G-code.
+          Standard CNC controllers cannot calculate non-linear rotary tool center point (TCP) inverse kinematics on the fly. RotaryCAM handles the heavy math offline: computing Jacobian accelerations, injecting Levenberg-Marquardt singularity damping, and synchronizing THC lock signals directly into the G-code.
         </p>
         <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;" class="mono">
-          <li style="color: var(--cyan-arc);">✓ Swirl-aware lead-in chirality (CW outer / CCW inner)</li>
-          <li style="color: var(--cyan-arc);">✓ THC auto-disable on square corner rotations</li>
-          <li style="color: var(--cyan-arc);">✓ Midpoint pierce shifting on long straight spans</li>
+          <li style="color: var(--cyan-arc);">✓ SimCNC 4D Euclidean feedrate scaling (dS_machine / dS_cartesian)</li>
+          <li style="color: var(--cyan-arc);">✓ ADLS corner look-ahead & rotary chuck jerk damping</li>
+          <li style="color: var(--cyan-arc);">✓ Dynamic THC corner freeze (#1080=0 or M62/M63 digital pins)</li>
+          <li style="color: var(--cyan-arc);">✓ Zero-overburn early torch extinguish (M05 based on arc lag)</li>
+          <li style="color: var(--cyan-arc);">✓ 3D Hermite ramp lead-ins with pierce puddle protection</li>
         </ul>
       </div>
 
       <div class="code-preview mono">
-        <span class="code-comment">; RotaryCAM Pre-Digested Trajectory Output</span><br>
-        <span class="code-comment">; Stock: 2.0x2.0 Square HSS - Profile Corner Transition</span><br>
-        G00 X12.500 Y0.000 Z25.400 A0.000<br>
-        M03 <span class="code-comment">; Controller probes IHS + arc-transfer</span><br>
-        G04 P0.400 <span class="code-comment">; Pierce dwell</span><br>
-        G01 X12.500 Y0.000 Z1.500 F1800<br>
-        <span class="code-comment">; Offline blended look-ahead to prevent corner blowouts</span><br>
-        G01 X14.210 Y-12.200 Z1.500 A12.40 F1450<br>
-        G01 X15.800 Y-18.400 Z3.200 A45.00 F980 <span class="code-comment">; THC Disabled</span><br>
-        G01 X17.100 Y-25.400 Z1.500 A90.00 F1450<br>
-        M05
+        <span class="code-comment">; RotaryCAM SimCNC 4D Trajectory & Dynamic Modulation</span><br>
+        <span class="code-comment">; Stock: HSS 50x50x4.5mm (Corner Fillet R=6.35mm)</span><br>
+        <span class="code-comment">; 1. Rapid approach & ohmic touch-off</span><br>
+        G00 X12.500 Y0.000 Z25.000 A0.000<br>
+        M03 <span class="code-comment">; SimCNC macro probes IHS, arc transfer, pierce dwell</span><br>
+        <span class="code-comment">; 2. 3D ramp plunge with arc stabilization</span><br>
+        G01 X15.000 Y-4.200 Z1.500 A0.000 F1800<br>
+        <span class="code-comment">; 3. Flat face cut with active voltage THC</span><br>
+        G01 X28.400 Y-18.650 Z1.500 A0.000 F2400<br>
+        <span class="code-comment">; 4. Approaching corner: Lock THC, ADLS damping on A-axis</span><br>
+        #1080=0 <span class="code-comment">; Dynamic THC Freeze (anti-dive signal)</span><br>
+        #1111=38.0 <span class="code-comment">; Throttle current: 45A -> 38A on slowdown</span><br>
+        <span class="code-comment">; 5. Offline blended 4D Euclidean feedrate (dMachine/dS scaled)</span><br>
+        G01 X28.400 Y-23.200 Z3.150 A22.50 F1680<br>
+        G01 X28.400 Y-25.000 Z4.500 A45.00 F1120 <span class="code-comment">; Corner apex</span><br>
+        G01 X28.400 Y-23.200 Z3.150 A67.50 F1680<br>
+        G01 X28.400 Y-18.650 Z1.500 A90.00 F2400<br>
+        #1080=1 <span class="code-comment">; Re-engage THC on flat face</span><br>
+        <span class="code-comment">; 6. Early extinguish before contour closure (Zero-Overburn)</span><br>
+        M05 <span class="code-comment">; Extinguish arc 1.8mm early; residual plasma severs kerf</span><br>
+        G01 X28.400 Y-16.850 Z1.500 A90.00 F2400<br>
+        G00 Z25.000
       </div>
+    </div>
+  </section>
+
+  <!-- 3D Interactive Simulation Section -->
+  <section id="simulation" class="section-wrap">
+    <div class="section-header">
+      <div class="badge"><span class="mono">CLIENT-SIDE WEBGL</span></div>
+      <h2>100% Client-Side WebAssembly & 3D Simulation</h2>
+      <p>Inspect every cut, pierce, and lead-in before striking an arc. Built with OpenCASCADE WebAssembly and Three.js for instant browser performance.</p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-num mono">01 / WASM CAD</div>
+        <h3>Instant STEP Parsing</h3>
+        <p>Models are parsed client-side using OpenCASCADE compiled to WebAssembly (<span class="mono">occt-import-js</span>). No waiting for heavy CAD files to upload before seeing your assembly.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num mono">02 / 3D STOCK</div>
+        <h3>True Wall Thickness</h3>
+        <p>Visualizes procedural satin steel uncut stock with accurate wall thickness, interior hollow bores, and corner fillets. Color-coded toolpaths overlay the 3D model with normal lift to eliminate Z-fighting.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-num mono">03 / SIMULATOR</div>
+        <h3>4-Axis Kinematic DRO</h3>
+        <p>Interactive machine simulator animates chuck rotation ($A$), carriage ($X$), cross-slide ($Y$), and torch slide ($Z$). Real-time DRO telemetry tracks coordinates, feedrates, and cut duration with dual-slider scrubber.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem; background: var(--surface); border: 1px solid var(--surface-border); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+      <div class="mono" style="font-size: 0.85rem; color: var(--text-muted);">
+        <span style="color: var(--plasma-amber);">Deployable Anywhere:</span> Go + HTMX 2.0 Web App • Native macOS Desktop App (Metal) • Headless REST API (<span class="mono">PipeServer</span>)
+      </div>
+      <a href="#waitlist" class="nav-cta mono" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">Try in Beta →</a>
     </div>
   </section>
 
@@ -486,7 +726,7 @@
   <!-- Footer -->
   <footer>
     <div class="mono">rotarycam.app © 2026</div>
-    <div>Built for 4-axis CNC plasma cutting machines</div>
+    <div>Built for 4-axis CNC plasma cutting machines • SimCNC, Mach4, LinuxCNC, Masso</div>
   </footer>
 
 </body>
