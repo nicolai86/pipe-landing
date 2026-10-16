@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RotaryCAM | 4-Axis Rotary CNC Plasma CAM from 3D STEP</title>
-  <meta name="description" content="Dedicated 4-axis rotary plasma CAM software. Drop raw 3D STEP assemblies directly into machine-ready G-code with B-Rep feature extraction, zero-bevel saddle compensation, SimCNC 4D feedrate scaling, and multi-stick nesting." />
+  <title>RotaryCAM | 4-Axis Rotary CNC Plasma CAM from 3D CAD</title>
+  <meta name="description" content="Dedicated 4-axis rotary CNC plasma CAM. Drop 3D CAD assemblies straight in — get ready-to-cut G-code with automatic tube copes, zero-gap saddle joints, and full stick nesting. No unrolling to flat 2D DXFs." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -248,7 +248,7 @@
 
     .section-header {
       margin-bottom: 3.5rem;
-      max-width: 720px;
+      max-width: 760px;
     }
 
     .section-header h2 {
@@ -305,6 +305,70 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.6;
+    }
+
+    /* Showcase Section */
+    .showcase-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 2.25rem;
+      margin-bottom: 3rem;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .showcase-card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .showcase-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .showcase-header h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .showcase-header p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+      max-width: 960px;
+    }
+
+    .showcase-img-container {
+      margin-top: 1.5rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--surface-border);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      background: #000;
+    }
+
+    .showcase-img-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .showcase-img-container:hover img {
+      transform: scale(1.008);
+    }
+
+    /* Offline Shop-Floor Banner */
+    .offline-banner {
+      background: linear-gradient(135deg, rgba(20, 23, 29, 0.95), rgba(26, 31, 41, 0.95));
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius);
+      padding: 2.25rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 2rem;
+      align-items: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
     }
 
     /* Specs & Lists */
@@ -388,81 +452,17 @@
       border-top: 1px solid var(--surface-border);
     }
 
-    /* Showcase Section */
-    .showcase-card {
-      background: var(--surface);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius);
-      padding: 2.25rem;
-      margin-bottom: 3rem;
-      transition: border-color 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .showcase-card:hover {
-      border-color: rgba(245, 158, 11, 0.4);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
-    }
-
-    .showcase-header {
-      margin-bottom: 1.5rem;
-    }
-
-    .showcase-header h3 {
-      font-size: 1.6rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .showcase-header p {
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      line-height: 1.6;
-      max-width: 960px;
-    }
-
-    .showcase-img-container {
-      margin-top: 1.5rem;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid var(--surface-border);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-      background: #000;
-    }
-
-    .showcase-img-container img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.3s ease;
-    }
-
-    .showcase-img-container:hover img {
-      transform: scale(1.008);
-    }
-
-    /* Offline Shop-Floor Banner */
-    .offline-banner {
-      background: linear-gradient(135deg, rgba(20, 23, 29, 0.95), rgba(26, 31, 41, 0.95));
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      border-radius: var(--radius);
-      padding: 2.25rem;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 2rem;
-      align-items: center;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
-    }
-
     @media (max-width: 900px) {
-      .offline-banner {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
       .hero, .feature-strip-inner, .grid-2 {
         grid-template-columns: 1fr;
         gap: 2.5rem;
       }
       .nav-links {
         display: none;
+      }
+      .offline-banner {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
     }
   </style>
@@ -478,8 +478,8 @@
     <div class="nav-links">
       <a href="#showcase">Showcase</a>
       <a href="#features">Features</a>
-      <a href="#kinematics">Kinematics & Physics</a>
-      <a href="#profiles">Profiles & Controllers</a>
+      <a href="#kinematics">Machine Safety</a>
+      <a href="#profiles">Tubing & Controllers</a>
       <a href="#simulation">3D Simulation</a>
     </div>
     <a href="#waitlist" class="nav-cta">Request Early Access</a>
@@ -491,11 +491,11 @@
       <div class="badge">
         <span class="mono">100% OFFLINE DESKTOP & WEB APP</span>
         <span>•</span>
-        <span>OpenCASCADE 7.9 & FOVNet AI</span>
+        <span>ZERO CLOUD • ZERO 2D UNROLLING</span>
       </div>
-      <h1>Rotary CNC Plasma CAM That <span>Understands 3D CAD</span></h1>
+      <h1>Raw 3D CAD Assemblies In. <span>Clean 4-Axis Plasma G-Code Out.</span></h1>
       <p>
-        Transform raw 3D STEP assemblies directly into machine-ready 4-axis G-code. Automated B-Rep topology recognition, dual-curve zero-bevel saddle compensation, ADLS corner look-ahead, and SimCNC 4D feedrate scaling for round pipe, structural HSS, and open profiles.
+        Stop wasting hours flattening 3D tubing into distorted 2D DXFs in CAD. Drop your finished 3D CAD frame, roll cage, or truss straight into RotaryCAM. It detects your pipe, tube, cope, and hole cuts automatically, calculates zero-gap saddle joints that fit tight with no grinder work, and outputs machine-ready G-code for your 4-axis rotary plasma table.
       </p>
 
       <div class="cta-group" id="download">
@@ -505,11 +505,11 @@
           </svg>
           Join the Beta Waitlist
         </a>
-        <div class="sub-cta mono">100% Offline Standalone Desktop App & Instant Web App • Zero Cloud Dependency • SimCNC & 4-Axis Controllers</div>
+        <div class="sub-cta mono">100% Offline Standalone Desktop App & Instant Web App • Zero Cloud Dependency • SimCNC, Mach4, LinuxCNC, Masso</div>
       </div>
     </div>
 
-    <!-- Interactive/Visual CAD Dropzone Mock -->
+    <!-- Dropzone Box -->
     <div class="dropzone-box">
       <div class="terminal-header mono">
         <div class="term-dots">
@@ -517,21 +517,21 @@
           <div class="term-dot"></div>
           <div class="term-dot"></div>
         </div>
-        <span>B-Rep Topology Extractor</span>
-        <span>STEP AP 214/242</span>
+        <span>DROP 3D STEP / STP ASSEMBLY HERE</span>
+        <span>4-AXIS READY</span>
       </div>
       <svg class="dropzone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
       </svg>
       <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Drop your .STEP / .STP model here</h3>
-      <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.25rem;">Automatic wall-thickness extraction & joint classification</p>
+      <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.25rem;">Auto-detects Round Pipe, Square/Rectangular Tubing, Angle Iron, and Channel</p>
       <div class="mono" style="font-size: 0.74rem; background: var(--code-bg); padding: 0.85rem; border-radius: 4px; border: 1px solid var(--surface-border); text-align: left; color: var(--text-muted); line-height: 1.6;">
-        [OK] 3D STEP loaded: 4-axis tubular assembly (4 bodies)<br>
-        [OK] Profile classified: HSS 2.0" x 2.0" x 0.188" (R=6.35mm)<br>
-        [OK] Features extracted: 3x Coping saddles, 4x slotted holes, 1x sever miter<br>
-        [OK] Zero-Bevel Option B: Inner-cylinder penetration clipped<br>
-        [OK] Swirl chirality: CW outside perimeters / CCW inside holes<br>
-        [OK] SimCNC 4D Euclidean feedrate scaled point-by-point
+        [OK] 3D CAD model loaded: 45-part tubular frame<br>
+        [OK] Tube size detected: 2.0" x 2.0" Square Tube (0.188" wall)<br>
+        [OK] Cuts found: 3 copes, 4 bolt holes, 1 end miter cut<br>
+        [OK] Zero-gap saddle compensation applied (inside wall fitup)<br>
+        [OK] Cut direction locked: CW outside / CCW inside holes<br>
+        [OK] Constant torch surface speed calculated for SimCNC & 4-axis
       </div>
     </div>
   </section>
@@ -539,24 +539,24 @@
   <!-- Screenshot Showcase Section -->
   <section id="showcase" class="section-wrap">
     <div class="section-header">
-      <div class="badge"><span class="mono">SOFTWARE IN ACTION</span></div>
+      <div class="badge"><span class="mono">SHOP-PROVEN WORKFLOW</span></div>
       <h2>See RotaryCAM in Action</h2>
-      <p>From raw 3D CAD assemblies to nested multi-stick G-code and real-time 4-axis motion simulation.</p>
+      <p>From full 3D CAD chassis frames to nested mill sticks and clean torch paths ready to cut.</p>
     </div>
 
     <!-- Showcase Item 1: Standalone Desktop App -->
     <div class="showcase-card">
       <div class="showcase-header">
         <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">STANDALONE OFFLINE DESKTOP APP</span>
-        <h3>Native macOS Desktop Application — 100% Offline Shop Floor Ready</h3>
+        <h3>Native Desktop App — 100% Offline at the Plasma Table</h3>
         <p>
-          Designed for harsh plasma table environments with zero internet dependency. Runs completely offline with native Apple Metal 3D acceleration, local OpenCASCADE B-Rep topology kernel, embedded FOVNet neural network, and integrated plasma cut library (feedrates, pierce heights, arc voltages, and kerf widths). Your proprietary STEP models never leave your computer.
+          Built for harsh shop-floor environments with zero internet required. Runs completely offline on your shop PC or Mac with high-speed 3D graphics, local CAD processing, and built-in cut charts (amperage, feedrate, pierce height, arc voltage, and kerf width). Your proprietary CAD designs never leave your machine.
         </p>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>100% Offline Capable</span>
-          <span class="pill"><span class="pill-dot"></span>Native Metal 3D Viewport</span>
+          <span class="pill"><span class="pill-dot"></span>100% Offline</span>
           <span class="pill"><span class="pill-dot"></span>Zero Cloud Uploads</span>
-          <span class="pill"><span class="pill-dot"></span>Built-In Cut Database</span>
+          <span class="pill"><span class="pill-dot"></span>Built-In Cut Charts</span>
+          <span class="pill"><span class="pill-dot"></span>Instant G-Code</span>
         </div>
       </div>
       <div class="showcase-img-container">
@@ -567,16 +567,16 @@
     <!-- Showcase Item 2: CAD Inspection -->
     <div class="showcase-card">
       <div class="showcase-header">
-        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">B-REP TOPOLOGY RECOGNITION</span>
-        <h3>Single Part CAD Inspection & Feature Classification</h3>
+        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">AUTOMATIC TUBE RECOGNITION</span>
+        <h3>Complete Assembly Inspection — No Manual Layout</h3>
         <p>
-          Native 3D B-Rep analysis on complex assemblies (shown: 45-part truck headache rack). Automatically detects structural HSS rectangular tubing (38.1 × 38.1 mm), wall thickness (3.18 mm), and classifies cuts, miters, and holes with 3D toolpath previews (approach plunge, cut contour, lead-out).
+          Drop multi-part assemblies directly into RotaryCAM (shown: 45-part truck headache rack). Automatically identifies square & rectangular tubing (38.1 × 38.1 × 3.18mm), classifies every miter cut, fishmouth cope, and bolt hole, and calculates smooth torch lead-ins in the scrap.
         </p>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>45-Part Assembly</span>
-          <span class="pill"><span class="pill-dot"></span>Square HSS 38.1×38.1×3.18mm</span>
-          <span class="pill"><span class="pill-dot"></span>Miter & Saddle Cuts</span>
-          <span class="pill"><span class="pill-dot"></span>3D Lead-In Previews</span>
+          <span class="pill"><span class="pill-dot"></span>45-Part Frame Ready</span>
+          <span class="pill"><span class="pill-dot"></span>Automatic Tube Sizing</span>
+          <span class="pill"><span class="pill-dot"></span>Miters & Fishmouths</span>
+          <span class="pill"><span class="pill-dot"></span>Scrap-Side Lead-Ins</span>
         </div>
       </div>
       <div class="showcase-img-container">
@@ -587,16 +587,16 @@
     <!-- Showcase Item 3: Multi-Part Pack Nesting -->
     <div class="showcase-card">
       <div class="showcase-header">
-        <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">1D ROTARY NESTING</span>
-        <h3>Multi-Part Pack Nesting on Standard Mill Sticks</h3>
+        <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">STICK NESTING & SCRAP SAVINGS</span>
+        <h3>Stick Nesting — Cut Full Bundles with Minimum Scrap Drop</h3>
         <p>
-          Profile-grouped 1D stick packing along standard mill tubes (6000 mm stick shown with 0.3% scrap waste). Automatically sequences cuts from free end to chuck, manages thermal hopping, and applies auto-tabbing to prevent parts falling into the slag bed.
+          Group and pack parts end-to-end along standard 20ft / 24ft / 6m mill sticks (shown: 6000mm stick with only 0.3% scrap waste). Cuts sequentially from the free end back toward the chuck so your stock stays rigid, with thermal hops to keep tubes from banana-bowing.
         </p>
         <div class="pill-list mono">
-          <span class="pill pill-cyan"><span class="pill-dot"></span>6000mm Mill Stick</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>0.3% Scrap Waste</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>Free-End to Chuck Sequence</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>Anti-Collision Part Spacing</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>20ft/24ft Mill Sticks</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>99%+ Material Yield</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Rigid Chuck Grip</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Thermal Jump Sequencing</span>
         </div>
       </div>
       <div class="showcase-img-container">
@@ -607,16 +607,16 @@
     <!-- Showcase Item 4: 3D Cut Simulation -->
     <div class="showcase-card">
       <div class="showcase-header">
-        <span class="badge mono" style="color: var(--emerald-cut); margin-bottom: 0.75rem;">WEBGL DIGITAL TWIN</span>
-        <h3>Real-Time 3D Cut Simulation & Kinematic DRO</h3>
+        <span class="badge mono" style="color: var(--emerald-cut); margin-bottom: 0.75rem;">3D TORCH SIMULATION</span>
+        <h3>Live 3D Cut Simulation — Catch Torch Crashes Before Striking an Arc</h3>
         <p>
-          100% client-side WebGL simulation rendering uncut raw stock with dynamic kerf trails, live plasma torch kinematics, real-time DRO (X, Y, Z, A), THC anti-dive locks, and SimCNC 4D trajectory feedrate scaling.
+          Inspect the exact torch path in 3D before cutting metal. Simulates chuck rotation (A), carriage travel (X), torch slide (Y), and height control (Z). Verifies real-time cutting feedrate, torch height transitions, and corner anti-dive locks.
         </p>
         <div class="pill-list mono">
-          <span class="pill pill-emerald"><span class="pill-dot"></span>Real-Time DRO (X, Y, Z, A)</span>
-          <span class="pill pill-emerald"><span class="pill-dot"></span>Interactive Scrubber</span>
-          <span class="pill pill-emerald"><span class="pill-dot"></span>Kerf Width Visualization</span>
-          <span class="pill pill-emerald"><span class="pill-dot"></span>SimCNC 4D Trajectory</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>4-Axis Machine Motion</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Real-Time DRO & Feeds</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Torch Clearance Check</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Accurate Kerf Width</span>
         </div>
       </div>
       <div class="showcase-img-container">
@@ -627,16 +627,16 @@
     <!-- Showcase Item 5: Machine Kinematics & THC -->
     <div class="showcase-card" style="margin-bottom: 0;">
       <div class="showcase-header">
-        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">HARDWARE MOTION & THC CONTROL</span>
-        <h3>Machine Profiles & Hardware THC Synchronization</h3>
+        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">CONTROLLER & THC INTEGRATION</span>
+        <h3>Machine Profiles & Hardware Torch Height Control (THC)</h3>
         <p>
-          Configurable machine profiles with direct hardware THC synchronization (M62/M63 high-speed digital pins, SimCNC variables), breakout arc locks, corner slowdown thresholds, and multi-controller dialects (SimCNC IP-M/S 4D feedrate spoofing, native G94 rotary blending, Mach4, LinuxCNC).
+          Lock your Torch Height Control over tube corners so the torch never dives into the metal. Direct M62/M63 high-speed digital output pins and SimCNC macros stop torch diving, slow down around sharp corners, and tailor G-code to SimCNC, Mach4, LinuxCNC, or Masso.
         </p>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Hardware Sync (M62/M63)</span>
-          <span class="pill"><span class="pill-dot"></span>Dynamic THC Corner Lock</span>
-          <span class="pill"><span class="pill-dot"></span>SimCNC IP-M/S & Native G94</span>
-          <span class="pill"><span class="pill-dot"></span>Multi-Machine Profiles</span>
+          <span class="pill"><span class="pill-dot"></span>Corner Anti-Dive (THC Lock)</span>
+          <span class="pill"><span class="pill-dot"></span>SimCNC, Mach4, LinuxCNC</span>
+          <span class="pill"><span class="pill-dot"></span>M62/M63 Hardware Sync</span>
+          <span class="pill"><span class="pill-dot"></span>Custom Machine Profiles</span>
         </div>
       </div>
       <div class="showcase-img-container">
@@ -654,14 +654,14 @@
         </svg>
       </div>
       <div>
-        <div class="badge mono" style="margin-bottom: 0.5rem; font-size: 0.75rem;"><span style="color: var(--plasma-amber);">SHOP-FLOOR AIR-GAPPED SECURITY</span></div>
+        <div class="badge mono" style="margin-bottom: 0.5rem; font-size: 0.75rem;"><span style="color: var(--plasma-amber);">SHOP-FLOOR RELIABILITY</span></div>
         <h3 style="font-size: 1.35rem; margin-bottom: 0.4rem; color: #fff;">100% Offline & Standalone — Zero Cloud Dependency</h3>
         <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin: 0;">
-          Unlike cloud-only CAD/CAM tools, RotaryCAM runs completely air-gapped on your local machine. Your proprietary 3D CAD models never leave your computer, no telemetry is uploaded, and your cutting operations never halt when Wi-Fi drops on the fabrication floor.
+          Fabrication shops run on reliability, not cloud subscriptions. RotaryCAM runs entirely on your local machine. No internet required next to your plasma table, no cloud servers processing your files, and no risk of leaked customer drawings.
         </p>
       </div>
       <div class="mono" style="font-size: 0.82rem; color: var(--cyan-arc); text-align: right; white-space: nowrap;">
-        ✓ Native macOS Metal<br>
+        ✓ Runs Next to Table<br>
         ✓ Air-Gapped Ready<br>
         ✓ Zero Model Uploads
       </div>
@@ -671,87 +671,94 @@
   <!-- Core Capabilities Grid -->
   <section id="features" class="section-wrap">
     <div class="section-header">
-      <div class="badge"><span class="mono">CORE CAPABILITIES</span></div>
-      <h2>Engineered for 4-axis rotary plasma. Not rolled 2D sheet metal.</h2>
-      <p>Conventional plasma CAM forces fabricators to manually unwrap tubes into flat 2D DXFs in CAD. RotaryCAM solves the true 3D B-Rep topology and rotary kinematics directly from your solid model.</p>
+      <div class="badge"><span class="mono">BUILT FOR FABRICATORS</span></div>
+      <h2>Engineered for rotary plasma cutting. Not rolled 2D sheet metal.</h2>
+      <p>Standard plasma software was built for flat tables and treats tubes like rolled sheet metal. RotaryCAM solves the real-world shop problems of 4-axis cutting directly from your 3D models.</p>
     </div>
 
     <div class="grid-3">
       <!-- Feature 1 -->
       <div class="card">
         <div>
-          <div class="card-num mono">01 / TOPOLOGY & AI</div>
-          <h3>Direct 3D B-Rep Recognition</h3>
-          <p>Never unroll solid bodies into 2D DXF flats. OpenCASCADE 7.9 and an embedded TorchScript Graph Neural Network (<span class="mono" style="color: var(--cyan-arc);">FOVNet</span>) analyze raw STEP 214/242 files, automatically extracting wall thickness from concentric cylinders or anti-parallel planar faces with 50-micron chordal deflection tolerance.</p>
+          <div class="card-num mono">01 / NO CAD UNROLLING</div>
+          <h3>Cut Straight from 3D CAD Models</h3>
+          <p>Never unroll tubing into flat 2D DXF sheets again. RotaryCAM inspects your solid 3D CAD files directly, measuring exact outside dimensions, wall thickness, and corner radii automatically. It spots end miters, saddles, copes, and bolt holes without you clicking a single face.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Zero 2D Unwrapping</span>
-          <span class="pill"><span class="pill-dot"></span>Hole / Slot Stitching</span>
+          <span class="pill"><span class="pill-dot"></span>Zero 2D DXF Unrolling</span>
+          <span class="pill"><span class="pill-dot"></span>Automatic Wall Thickness</span>
+          <span class="pill"><span class="pill-dot"></span>Full Assembly Import</span>
         </div>
       </div>
 
       <!-- Feature 2 -->
       <div class="card">
         <div>
-          <div class="card-num mono">02 / WELD FITMENT</div>
-          <h3>Zero-Bevel Dual-Curve Compensation</h3>
-          <p>Perpendicular torches create interference bevels on angled saddle joints. RotaryCAM calculates inner-cylinder penetration curves (<span class="mono" style="color: var(--plasma-amber);">Option B</span> from CAD inner edges, or <span class="mono" style="color: var(--plasma-amber);">Option A</span> analytical) to clip toolpaths to the inner wall boundary. Fishmouths fit drop-in flush right off the chuck with zero hand grinding.</p>
+          <div class="card-num mono">02 / PERFECT FITUP</div>
+          <h3>Zero-Gap Saddles & Fishmouths Ready to Weld</h3>
+          <p>When a straight torch cuts an angled pipe fishmouth, the inside wall can stick out and leave ugly gaps that need hours of grinding. RotaryCAM's dual-curve compensation cuts to the inside cylinder line—giving you tight, flush fitup right off the machine with zero grinding or gap wedges needed.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Option A & B Logic</span>
-          <span class="pill"><span class="pill-dot"></span>Zero-Gap Fitup</span>
+          <span class="pill"><span class="pill-dot"></span>Zero-Grind Fitup</span>
+          <span class="pill"><span class="pill-dot"></span>Flush Branch Welds</span>
+          <span class="pill"><span class="pill-dot"></span>True Inside-Wall Path</span>
         </div>
       </div>
 
       <!-- Feature 3 -->
       <div class="card">
         <div>
-          <div class="card-num mono">03 / 4D TRAJECTORY</div>
-          <h3>SimCNC 4D Feedrate Scaling</h3>
-          <p>Standard CNC controllers lack native Inverse Time (G93) or true rotary TCP. SimCNC measures distance in 4D machine units where A-axis degrees are treated linearly. RotaryCAM computes composite 4D displacement <span class="mono" style="color: var(--cyan-arc);">dS_machine / dS_cartesian</span> block-by-block, ensuring exact, constant surface speed across combined XYZA motion.</p>
+          <div class="card-num mono">03 / CONSTANT TORCH SPEED</div>
+          <h3>Smooth Surface Speed Across Pipe & Square Tube</h3>
+          <p>When your rotary chuck spins, standard controllers miscalculate speed—crawling along flats and racing around corners, burning through thin walls. RotaryCAM calculates true surface torch velocity on every block, keeping your cutting speed rock-steady for clean dross-free edges on SimCNC, Mach4, and LinuxCNC.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>SimCNC 4D Spoofing</span>
-          <span class="pill"><span class="pill-dot"></span>G94 / G93 Dialects</span>
+          <span class="pill"><span class="pill-dot"></span>Consistent Kerf Width</span>
+          <span class="pill"><span class="pill-dot"></span>No Corner Blowouts</span>
+          <span class="pill"><span class="pill-dot"></span>Dross-Free Cuts</span>
         </div>
       </div>
 
       <!-- Feature 4 -->
       <div class="card">
         <div>
-          <div class="card-num mono">04 / CHUCK MOTION</div>
-          <h3>ADLS Singularity Damping & Anti-Dive THC</h3>
-          <p>On rectangular HSS corners, angular acceleration demands spike toward infinity. Adaptive Damped Least Squares (<span class="mono" style="color: var(--plasma-amber);">ADLS</span>) limits rotary velocity via real-time manipulability metrics. Dynamic THC freeze signals (<span class="mono">M62/M63</span> or SimCNC variables) lock the Z-axis during corner rotations to prevent torch dives.</p>
+          <div class="card-num mono">04 / MACHINE SAFETY</div>
+          <h3>Corner Anti-Dive & Chuck Acceleration Damping</h3>
+          <p>Spinning square tube around a 90° corner requires immense rotary speed that can stall stepper motors or jerk your chuck. RotaryCAM smooths rotary acceleration around corners and automatically signals your Torch Height Control (THC) to freeze, preventing the torch from diving into the tube.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>ADLS Look-Ahead</span>
-          <span class="pill"><span class="pill-dot"></span>Dynamic Safe Z</span>
+          <span class="pill"><span class="pill-dot"></span>Anti-Dive Corner Freeze</span>
+          <span class="pill"><span class="pill-dot"></span>Protects Torch Consumables</span>
+          <span class="pill"><span class="pill-dot"></span>No Stalled Steppers</span>
         </div>
       </div>
 
       <!-- Feature 5 -->
       <div class="card">
         <div>
-          <div class="card-num mono">05 / ARC PHYSICS</div>
-          <h3>Chirality, 3D Ramps & Zero-Overburn</h3>
-          <p>Mathematically enforces swirl gas chirality: Clockwise (CW) on outer profiles and Counter-Clockwise (CCW) on internal holes, keeping the square edge on the finished part. Simultaneous 3D Hermite ramp lead-ins blow slag away from nozzles, and early torch extinguish (<span class="mono">M05</span> 1.5–3mm early) eliminates divots at lead-in overlaps.</p>
+          <div class="card-num mono">05 / ARC QUALITY</div>
+          <h3>Correct Swirl Direction, 3D Plunges & Zero Divots</h3>
+          <p>Plasma swirl gas creates a square cut on one side and a bevel on the other. RotaryCAM cuts clockwise on outside profiles and counter-clockwise inside holes so the clean, square edge stays on your finished part. 3D ramped lead-ins protect your nozzle shield from pierce spatter, and early arc extinguish eliminates starting divots.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Swirl Chirality</span>
-          <span class="pill"><span class="pill-dot"></span>Early M05 Extinguish</span>
+          <span class="pill"><span class="pill-dot"></span>Square Cut Edges</span>
+          <span class="pill"><span class="pill-dot"></span>No Pierce Spatter on Nozzles</span>
+          <span class="pill"><span class="pill-dot"></span>Zero Start/Stop Divots</span>
         </div>
       </div>
 
       <!-- Feature 6 -->
       <div class="card">
         <div>
-          <div class="card-num mono">06 / NESTING</div>
-          <h3>Stick Pack Nesting & Thermal Hedging</h3>
-          <p>Pack multi-part assemblies end-to-end on standard 20ft/24ft/6m raw mill sticks in right-to-left parting sequence for maximum chuck grip. Thermal distance hop sequencing (<span class="mono" style="color: var(--cyan-arc);">D_thermal</span>) prevents localized heat concentration and tube banana-bowing, while automated micro-tabbing prevents scrap tip-ups.</p>
+          <div class="card-num mono">06 / MATERIAL SAVINGS</div>
+          <h3>Stick Nesting & Anti-Warp Thermal Sequencing</h3>
+          <p>Cut entire projects out of standard 20ft / 24ft mill sticks with less than 1% scrap drop. RotaryCAM cuts parts from the free end back toward the chuck so your stick never loses clamping rigidity. Thermal jumping spreads heat along the stick to prevent your tubes from banana-bowing.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>1D Mill Stick Packing</span>
-          <span class="pill"><span class="pill-dot"></span>2D Sheet NFP Nesting</span>
+          <span class="pill"><span class="pill-dot"></span>Cut 20ft / 24ft Sticks</span>
+          <span class="pill"><span class="pill-dot"></span>Minimal Scrap Waste</span>
+          <span class="pill"><span class="pill-dot"></span>Prevents Tube Bowing</span>
+          <span class="pill"><span class="pill-dot"></span>Auto-Tabbing</span>
         </div>
       </div>
     </div>
@@ -760,49 +767,49 @@
   <!-- Profiles & Controllers Section -->
   <section id="profiles" class="section-wrap" style="padding-top: 0;">
     <div class="section-header">
-      <div class="badge"><span class="mono">COMPATIBILITY</span></div>
-      <h2>Supported Profiles & CNC Controllers</h2>
-      <p>Engineered for full structural versatility, verified against imperial ASTM/AISC and metric EN/ISO standard sizing tables.</p>
+      <div class="badge"><span class="mono">STOCK & CONTROLLERS</span></div>
+      <h2>Supported Tubing & CNC Plasma Controllers</h2>
+      <p>Cuts standard mill stock from 1/8" pipe up to structural beams, with post-processors tailored to your table's controller.</p>
     </div>
 
     <div class="grid-2">
       <!-- Profiles Card -->
       <div class="card" style="padding: 2.2rem;">
         <div>
-          <div class="card-num mono">PROFILES SUPPORTED</div>
-          <h3 style="margin-bottom: 1rem;">Complete Structural Range</h3>
-          <p style="margin-bottom: 1.5rem;">RotaryCAM handles both closed tubular profiles and open structural sections with dedicated geometric extraction pipelines:</p>
+          <div class="card-num mono">SUPPORTED TUBING & PROFILES</div>
+          <h3 style="margin-bottom: 1rem;">Complete Structural Tubing Range</h3>
+          <p style="margin-bottom: 1.5rem;">Handles round pipe, square tube, and open structural iron with dedicated toolpaths:</p>
           <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem;" class="mono">
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Round Pipe & Tubing:</strong> 1/8" NPS (10.3mm) up to 16" (406.4mm) casing</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Square & Rectangular HSS:</strong> 12.7mm to 400mm+ with corner fillet tracking</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Structural Angle Iron:</strong> Equal & unequal leg L-profile with heel radius</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>C-Channel & MC-Channel:</strong> Web & tapered/parallel flange coping</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>I-Beam & Wide Flange:</strong> Multi-flange structural clearance cuts</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Sheet & Plate:</strong> Up to 1/2" (12.75mm) with smart THC and full kerf</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Round Pipe & Tubing:</strong> 1/8" pipe up to 16" heavy casing</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Square & Rectangular Tubing (HSS):</strong> 1/2" up to 16"+ with corner radius compensation</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Structural Angle Iron:</strong> Equal & unequal leg L-profile with heel tracking</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>C-Channel & MC-Channel:</strong> Web & flange coping</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>I-Beam & Structural Sections:</strong> Flange clearance cuts</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Plate & Brackets:</strong> Cut gussets, tabs, and baseplates on the same machine</li>
           </ul>
         </div>
         <div class="pill-list mono" style="margin-top: 1.5rem;">
-          <span class="pill pill-cyan"><span class="pill-dot"></span>ASTM / AISC Imperial</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>EN 10210 / ISO Metric</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>ASTM / AISC Imperial Standard</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>EN 10210 / ISO Metric Sizing</span>
         </div>
       </div>
 
       <!-- Controllers Card -->
       <div class="card" style="padding: 2.2rem;">
         <div>
-          <div class="card-num mono">CONTROLLER DIALECTS</div>
-          <h3 style="margin-bottom: 1rem;">Machine-Ready Post-Processors</h3>
-          <p style="margin-bottom: 1.5rem;">Clean, controller-optimized G-code tailored to the exact motion-control constraints of your hardware:</p>
+          <div class="card-num mono">CONTROLLER POST-PROCESSORS</div>
+          <h3 style="margin-bottom: 1rem;">Ready-to-Cut Controller Post-Processors</h3>
+          <p style="margin-bottom: 1.5rem;">Clean G-code formatted for the exact motion limits and macro signals of your CNC plasma controller:</p>
           <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem;" class="mono">
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>CSLab SimCNC (IP-M / IP-S):</strong> 4D Euclidean feedrate spoofing, #1111/#1112 current modulation, #1080 THC corner lock</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>Mach4 4-Axis:</strong> Standard G94 units-per-minute feed blending and synchronized M-code macros</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>LinuxCNC (EMC2):</strong> Multi-axis XYZA with motor tuning acceleration limits and look-ahead</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>Masso G3:</strong> Dedicated multi-axis rotary post with smooth continuous velocity</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>CSLab SimCNC (IP-M / IP-S):</strong> 4D rotary speed scaling, dynamic THC freeze, and current throttling</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>Mach4 4-Axis:</strong> Clean multi-axis G-code with synchronized M-code macros</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>LinuxCNC:</strong> Coordinated XYZA motion with look-ahead and acceleration limits</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <strong>Masso G3:</strong> Direct rotary post with smooth continuous velocity</li>
           </ul>
         </div>
         <div class="pill-list mono" style="margin-top: 1.5rem;">
           <span class="pill pill-emerald"><span class="pill-dot"></span>Hardware Digital Pins (M62/M63)</span>
-          <span class="pill pill-emerald"><span class="pill-dot"></span>G93 Inverse Time Ready</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Instant Post Generation</span>
         </div>
       </div>
     </div>
@@ -813,44 +820,44 @@
     <div class="feature-strip-inner">
       <div>
         <div class="badge">
-          <span class="mono">OFFLINE TCP & LOOK-AHEAD</span>
+          <span class="mono">SHOP-READY G-CODE</span>
         </div>
-        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Eliminate servo stalls, chuck jerking, and corner blowout.</h2>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem;">Eliminate torch crashes, burnt corners, and ugly fitups.</h2>
         <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-          Standard CNC controllers cannot calculate non-linear rotary tool center point (TCP) inverse kinematics on the fly. RotaryCAM handles the heavy math offline: computing Jacobian accelerations, injecting Levenberg-Marquardt singularity damping, and synchronizing THC lock signals directly into the G-code.
+          Standard CNC controllers don't know how to handle 4-axis rotary plasma cutting. RotaryCAM solves the real-world shop problems before the G-code reaches your machine: steady surface speeds, corner THC freezing, clean bevel fitups, and nozzle-saving lead-ins.
         </p>
         <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;" class="mono">
-          <li style="color: var(--cyan-arc);">✓ SimCNC 4D Euclidean feedrate scaling (dS_machine / dS_cartesian)</li>
-          <li style="color: var(--cyan-arc);">✓ ADLS corner look-ahead & rotary chuck jerk damping</li>
-          <li style="color: var(--cyan-arc);">✓ Dynamic THC corner freeze (#1080=0 or M62/M63 digital pins)</li>
-          <li style="color: var(--cyan-arc);">✓ Zero-overburn early torch extinguish (M05 based on arc lag)</li>
-          <li style="color: var(--cyan-arc);">✓ 3D Hermite ramp lead-ins with pierce puddle protection</li>
+          <li style="color: var(--cyan-arc);">✓ Constant torch travel speed on round pipe and square tube</li>
+          <li style="color: var(--cyan-arc);">✓ Smooth corner rotation so chuck motors never stall</li>
+          <li style="color: var(--cyan-arc);">✓ Automatic THC anti-dive freeze on square corners</li>
+          <li style="color: var(--cyan-arc);">✓ Early arc shutoff to eliminate ugly start/stop divots</li>
+          <li style="color: var(--cyan-arc);">✓ 3D ramp lead-ins that blow piercing slag away from nozzles</li>
         </ul>
       </div>
 
       <div class="code-preview mono">
-        <span class="code-comment">; RotaryCAM SimCNC 4D Trajectory & Dynamic Modulation</span><br>
-        <span class="code-comment">; Stock: HSS 50x50x4.5mm (Corner Fillet R=6.35mm)</span><br>
-        <span class="code-comment">; 1. Rapid approach & ohmic touch-off</span><br>
+        <span class="code-comment">; RotaryCAM 4-Axis Plasma G-Code (SimCNC & Standard Controllers)</span><br>
+        <span class="code-comment">; Stock: 2" x 2" x 3/16" Square Tubing</span><br>
+        <span class="code-comment">; 1. Rapid move and ohmic touch-off</span><br>
         G00 X12.500 Y0.000 Z25.000 A0.000<br>
-        M03 <span class="code-comment">; SimCNC macro probes IHS, arc transfer, pierce dwell</span><br>
-        <span class="code-comment">; 2. 3D ramp plunge with arc stabilization</span><br>
+        M03 <span class="code-comment">; Probe plate, fire pilot arc, pierce dwell</span><br>
+        <span class="code-comment">; 2. 3D ramp plunge: blow pierce spatter away from nozzle</span><br>
         G01 X15.000 Y-4.200 Z1.500 A0.000 F1800<br>
-        <span class="code-comment">; 3. Flat face cut with active voltage THC</span><br>
+        <span class="code-comment">; 3. Cut flat face with active Torch Height Control (THC)</span><br>
         G01 X28.400 Y-18.650 Z1.500 A0.000 F2400<br>
-        <span class="code-comment">; 4. Approaching corner: Lock THC, ADLS damping on A-axis</span><br>
-        #1080=0 <span class="code-comment">; Dynamic THC Freeze (anti-dive signal)</span><br>
-        #1111=38.0 <span class="code-comment">; Throttle current: 45A -> 38A on slowdown</span><br>
-        <span class="code-comment">; 5. Offline blended 4D Euclidean feedrate (dMachine/dS scaled)</span><br>
+        <span class="code-comment">; 4. Approaching corner: Freeze THC to prevent torch dive</span><br>
+        #1080=0 <span class="code-comment">; THC freeze active (prevents diving into corner)</span><br>
+        #1111=38.0 <span class="code-comment">; Slowdown: drop amperage 45A -> 38A to avoid dross</span><br>
+        <span class="code-comment">; 5. Smooth corner rotation with steady surface speed</span><br>
         G01 X28.400 Y-23.200 Z3.150 A22.50 F1680<br>
         G01 X28.400 Y-25.000 Z4.500 A45.00 F1120 <span class="code-comment">; Corner apex</span><br>
         G01 X28.400 Y-23.200 Z3.150 A67.50 F1680<br>
         G01 X28.400 Y-18.650 Z1.500 A90.00 F2400<br>
-        #1080=1 <span class="code-comment">; Re-engage THC on flat face</span><br>
-        <span class="code-comment">; 6. Early extinguish before contour closure (Zero-Overburn)</span><br>
-        M05 <span class="code-comment">; Extinguish arc 1.8mm early; residual plasma severs kerf</span><br>
+        #1080=1 <span class="code-comment">; Flat face reached: re-enable THC tracking</span><br>
+        <span class="code-comment">; 6. Extinguish arc 1.8mm early: residual arc severs kerf cleanly</span><br>
+        M05 <span class="code-comment">; Early arc-off eliminates divot at lead-in overlap</span><br>
         G01 X28.400 Y-16.850 Z1.500 A90.00 F2400<br>
-        G00 Z25.000
+        G00 Z25.000 <span class="code-comment">; Rapid retract to safe height</span>
       </div>
     </div>
   </section>
@@ -858,28 +865,28 @@
   <!-- 3D Interactive Simulation Section -->
   <section id="simulation" class="section-wrap">
     <div class="section-header">
-      <div class="badge"><span class="mono">CLIENT-SIDE WEBGL</span></div>
-      <h2>100% Client-Side WebAssembly & 3D Simulation</h2>
-      <p>Inspect every cut, pierce, and lead-in before striking an arc. Built with OpenCASCADE WebAssembly and Three.js for instant browser performance.</p>
+      <div class="badge"><span class="mono">3D TORCH VERIFICATION</span></div>
+      <h2>Real-Time 3D Simulation & Torch Motion Verification</h2>
+      <p>Verify every cut, pierce, and torch height change right in your browser or desktop app before hitting cycle start.</p>
     </div>
 
     <div class="grid-3">
       <div class="card">
-        <div class="card-num mono">01 / WASM CAD</div>
-        <h3>Instant STEP Parsing</h3>
-        <p>Models are parsed client-side using OpenCASCADE compiled to WebAssembly (<span class="mono">occt-import-js</span>). No waiting for heavy CAD files to upload before seeing your assembly.</p>
+        <div class="card-num mono">01 / INSTANT CAD</div>
+        <h3>Instant 3D CAD Preview</h3>
+        <p>Open full STEP assembly files directly on your machine in seconds. No waiting for slow cloud servers to upload or process your drawings.</p>
       </div>
 
       <div class="card">
-        <div class="card-num mono">02 / 3D STOCK</div>
-        <h3>True Wall Thickness</h3>
-        <p>Visualizes procedural satin steel uncut stock with accurate wall thickness, interior hollow bores, and corner fillets. Color-coded toolpaths overlay the 3D model with normal lift to eliminate Z-fighting.</p>
+        <div class="card-num mono">02 / ACCURATE STOCK</div>
+        <h3>Realistic Tube & Kerf Preview</h3>
+        <p>Shows real hollow tube geometry with actual wall thickness and corner fillets. Color-coded cut lines show rapid moves, pierces, kerf widths, and micro-tabs.</p>
       </div>
 
       <div class="card">
-        <div class="card-num mono">03 / SIMULATOR</div>
-        <h3>4-Axis Kinematic DRO</h3>
-        <p>Interactive machine simulator animates chuck rotation ($A$), carriage ($X$), cross-slide ($Y$), and torch slide ($Z$). Real-time DRO telemetry tracks coordinates, feedrates, and cut duration with dual-slider scrubber.</p>
+        <div class="card-num mono">03 / FULL MOTION</div>
+        <h3>4-Axis Digital Readout & Playback</h3>
+        <p>Watch the chuck spin and the torch slide in real time. Digital readouts track exact X, Y, Z, and A coordinates, cut speeds, and total job cycle time.</p>
       </div>
     </div>
 
@@ -894,10 +901,10 @@
   <!-- Early Access & Beta Interest Section -->
   <section id="waitlist" class="section-wrap" style="max-width: 820px; margin: 0 auto; padding-bottom: 5rem;">
     <div class="section-header" style="text-align: center; margin-bottom: 2rem;">
-      <div class="badge" style="margin-bottom: 1rem;"><span class="mono">EARLY ACCESS</span></div>
-      <h2 style="font-size: 2.2rem; margin-bottom: 0.75rem;">Get Access to RotaryCAM</h2>
+      <div class="badge" style="margin-bottom: 1rem;"><span class="mono">EARLY ACCESS BETA</span></div>
+      <h2 style="font-size: 2.2rem; margin-bottom: 0.75rem;">Ready to Cut Tubes on Your Rotary Table?</h2>
       <p style="color: var(--text-muted); font-size: 1.05rem;">
-        We are onboarding plasma fabrication shops and makers for early access. Tell us about your rotary setup and controller to test your STEP files.
+        We're onboarding fabrication shops, chassis builders, and metal artists. Tell us about your rotary setup and controller to test your own 3D CAD files.
       </p>
     </div>
 
@@ -927,7 +934,7 @@
   <!-- Footer -->
   <footer>
     <div class="mono">rotarycam.app © 2026</div>
-    <div>Built for 4-axis CNC plasma cutting machines • SimCNC, Mach4, LinuxCNC, Masso</div>
+    <div>Built for 4-axis CNC rotary plasma cutting tables • SimCNC, Mach4, LinuxCNC, Masso</div>
   </footer>
 
 </body>
