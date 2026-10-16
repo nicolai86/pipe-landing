@@ -479,13 +479,275 @@
     footer {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 3rem 2rem;
+      padding: 3.5rem 2rem 4rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 2rem;
       color: var(--text-dim);
       font-size: 0.85rem;
       border-top: 1px solid var(--surface-border);
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .footer-brand {
+      color: #f1f5f9;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-sub {
+      color: var(--text-dim);
+      font-size: 0.825rem;
+      line-height: 1.5;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s ease;
+      cursor: pointer;
+    }
+
+    .footer-link:hover {
+      color: var(--plasma-amber);
+    }
+
+    /* Impressum & Legal Notice Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 12, 16, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 840px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(245, 158, 11, 0.15);
+      transform: scale(0.96) translateY(10px);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(20, 23, 29, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .modal-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    }
+
+    .modal-badge {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--plasma-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .modal-close-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      color: var(--text-dim);
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+      line-height: 1;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fff;
+      border-color: var(--plasma-amber);
+    }
+
+    .modal-body {
+      padding: 2rem;
+      overflow-y: auto;
+      color: var(--text-main);
+      font-size: 0.92rem;
+      line-height: 1.65;
+    }
+
+    .modal-body h3 {
+      font-size: 1.05rem;
+      color: #fff;
+      margin: 1.75rem 0 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-body h3:first-child {
+      margin-top: 0;
+    }
+
+    .modal-body p {
+      margin-bottom: 1rem;
+      color: var(--text-dim);
+    }
+
+    .modal-body ul {
+      margin: 0.5rem 0 1.25rem 1.25rem;
+      color: var(--text-dim);
+    }
+
+    .modal-body li {
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-body a {
+      color: var(--plasma-amber);
+      text-decoration: none;
+    }
+
+    .modal-body a:hover {
+      text-decoration: underline;
+    }
+
+    .safety-alert-box {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-left: 4px solid #ef4444;
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      color: #fca5a5;
+    }
+
+    .safety-alert-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #f87171;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .safety-alert-box p {
+      color: #fecaca;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-bottom: 0.6rem;
+    }
+
+    .safety-alert-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-footer {
+      padding: 1.25rem 2rem;
+      border-top: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      background: rgba(20, 23, 29, 0.95);
+      position: sticky;
+      bottom: 0;
+      z-index: 2;
+    }
+
+    .modal-footer-btn {
+      padding: 0.55rem 1.25rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--surface-border);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+
+    .modal-footer-btn:hover {
+      background: var(--plasma-amber);
+      color: #000;
+      border-color: var(--plasma-amber);
+    }
+
+    /* Modal Scrollbar */
+    .modal-body::-webkit-scrollbar {
+      width: 8px;
+    }
+    .modal-body::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    .modal-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+    .modal-body::-webkit-scrollbar-thumb:hover {
+      background: rgba(245, 158, 11, 0.4);
     }
 
     @media (max-width: 900px) {
@@ -499,6 +761,23 @@
       .offline-banner {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+      .footer-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .modal-card {
+        max-height: 92vh;
+        width: 96%;
+      }
+      .modal-header, .modal-body, .modal-footer {
+        padding: 1.25rem;
       }
     }
   </style>
@@ -966,13 +1245,183 @@
 
   <!-- Footer -->
   <footer>
-    <div class="mono">rotarycam.app © 2026</div>
-    <div>Built for 4-axis CNC rotary plasma cutting tables • SimCNC, Mach4, LinuxCNC, Masso</div>
+    <div class="footer-left">
+      <div class="footer-brand mono">rotarycam.app © 2026</div>
+      <div class="footer-sub">Dedicated 4-axis rotary plasma CAM • Built for SimCNC, Mach4, LinuxCNC &amp; Masso</div>
+    </div>
+    <div class="footer-links">
+      <a href="#impressum" id="open-impressum-btn" class="footer-link">Legal Notice &amp; Safety (Impressum)</a>
+      <a href="#waitlist" class="footer-link">Early Access Waitlist</a>
+      <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
+    </div>
   </footer>
 
-  <!-- Scroll-Spy Active Nav Highlighting -->
+  <!-- Impressum & Legal Notice Modal -->
+  <div id="impressum-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 id="modal-title" class="modal-title">Legal Notice &amp; Safety Disclaimer</h2>
+          <span class="modal-badge mono">IMPRESSUM • § 5 TMG</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="modal-close-header" aria-label="Close legal notice modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Site Operator / § 5 TMG -->
+        <h3>1. Provider Identification (§ 5 TMG)</h3>
+        <p>
+          Information pursuant to Section 5 of the German Telemedia Act (TMG) and applicable digital services regulations:
+        </p>
+        <p>
+          <strong>Application &amp; Service:</strong> RotaryCAM.app<br>
+          <strong>General Inquiries:</strong> <a href="mailto:contact@rotarycam.app">contact@rotarycam.app</a><br>
+          <strong>Technical Support &amp; Feedback:</strong> <a href="mailto:support@rotarycam.app">support@rotarycam.app</a><br>
+          <strong>Website Hosting:</strong> GitHub Pages, GitHub Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA (Custom Domain Routing: <code>rotarycam.app</code>).
+        </p>
+
+        <!-- Mandatory CNC Safety Warning -->
+        <div class="safety-alert-box">
+          <div class="safety-alert-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            2. Mandatory CNC Plasma Machine Safety Disclaimer
+          </div>
+          <p>
+            <strong>EXTREME PHYSICAL &amp; ELECTRICAL HAZARDS:</strong> CNC plasma cutting involves lethal open-circuit voltages (&gt;100–300V DC), high-intensity ultraviolet (UV) and infrared (IR) arc radiation capable of causing permanent ocular damage, plasma jet temperatures exceeding 20,000°C (36,000°F), high-velocity molten metal dross/slag, severe fire hazards, toxic fumes (including ozone, hexavalent chromium, and nitrogen oxides), and mechanical crushing / entanglement hazards from motorized gantries and high-torque 4th-axis rotary chucks.
+          </p>
+          <p>
+            <strong>OPERATOR RESPONSIBILITY &amp; MANDATORY DRY RUNS:</strong> RotaryCAM is a toolpath calculation and G-code generation program. It cannot physically sense machine travel limits, torch collision envelopes, chuck jaw clearance, fixture interference, earth grounding adequacy, or ventilation status. <strong>You, the machine operator, are exclusively responsible for verifying toolpaths before running live cutting cycles.</strong>
+          </p>
+          <p>
+            <strong>MANDATORY DRY RUN / AIR CUT:</strong> Prior to cutting any new program or unverified G-code, you MUST perform a complete "dry run" / "air cut" with the plasma torch turned off, pilot arc disabled, and the Z-axis retracted above any collision danger. Visually verify rotary chuck clearance, continuous 360° rotation cable wrap, coordinate system origins (X0, Y0, Z0, A0), and feedrate scaling.
+          </p>
+          <p>
+            <strong>DISCLAIMER OF LIABILITY:</strong> Under no circumstances shall the creators, maintainers, or contributors of RotaryCAM be held liable for personal injury, electric shock, flash burns, death, fire, property damage, machine crashes, torch head destruction, ruined raw materials, or lost commercial production resulting from the use or misuse of G-code or toolpaths generated by RotaryCAM.
+          </p>
+        </div>
+
+        <!-- Software Warranty & Liability -->
+        <h3>3. "AS IS" Software Warranty &amp; Limitation of Liability</h3>
+        <p>
+          THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NONINFRINGEMENT.
+        </p>
+        <p>
+          IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        </p>
+        <p>
+          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono">v0.2-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
+        </p>
+
+        <!-- Trademark & Compatibility Notice -->
+        <h3>4. Trademarks &amp; Third-Party Compatibility</h3>
+        <p>
+          RotaryCAM is an independent CAM utility developed independently of machine controller manufacturers and CAD vendors. The following trademarks and trade names are cited on this website strictly for technical identification and interoperability purposes:
+        </p>
+        <ul>
+          <li><strong>CSLab® / SimCNC™ / CSMIO™</strong> are registered trademarks of CSLab s.c. (Poland).</li>
+          <li><strong>Mach4® / Mach3®</strong> are registered trademarks of Newfangled Solutions LLC / Artsoft.</li>
+          <li><strong>LinuxCNC</strong> is a trademark of the LinuxCNC open-source community project.</li>
+          <li><strong>MASSO®</strong> is a registered trademark of Hind Technology Pty Ltd.</li>
+          <li><strong>OpenCASCADE™</strong> is a trademark of Open CASCADE SAS.</li>
+          <li><strong>macOS® / Metal® / Apple®</strong> are registered trademarks of Apple Inc.</li>
+        </ul>
+        <p>
+          RotaryCAM is not officially affiliated with, endorsed by, sponsored by, or partnered with any of the above entities. Reference to these systems reflects only software output compatibility with their standard CNC dialects and motion kinematics.
+        </p>
+
+        <!-- Data Privacy & Local-First Architecture -->
+        <h3>5. Data Privacy &amp; Local CAD Processing (Datenschutz)</h3>
+        <p>
+          <strong>Air-Gapped, Local-Only CAD Processing:</strong> We respect fabricator trade secrets and client proprietary CAD designs. Both the RotaryCAM desktop application and the client-side WebGL in-browser toolpath preview process 3D STEP files (AP203, AP214, AP242) entirely on your local machine's CPU and GPU. <strong>Your CAD models, part geometries, dimensions, and customer projects are NEVER uploaded to any cloud server, database, or remote service.</strong>
+        </p>
+        <p>
+          <strong>Beta Waitlist Data:</strong> If you voluntarily submit your contact information via our early access form (hosted securely by Google Forms), your information (email, name, machine controller specs) is stored exclusively to notify you of private beta releases and technical updates. We never sell, rent, or distribute your email address to advertisers or external third parties. You may request removal of your email from the waitlist at any time by contacting <a href="mailto:contact@rotarycam.app">contact@rotarycam.app</a>.
+        </p>
+        <p>
+          <strong>Server Logs:</strong> When accessing this website, standard technical connection metadata (IP address, browser type, referral header, timestamp) may be logged by GitHub Pages for network security and content delivery diagnostics in accordance with GitHub's standard privacy practices. No tracking pixels, third-party advertising cookies, or fingerprinting scripts are used on rotarycam.app.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="modal-footer-btn" id="modal-close-footer">Close Notice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Impressum Modal & Scroll-Spy Scripts -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // 1. Impressum Modal Controls
+      const modal = document.getElementById('impressum-modal');
+      const openBtn = document.getElementById('open-impressum-btn');
+      const closeHeaderBtn = document.getElementById('modal-close-header');
+      const closeFooterBtn = document.getElementById('modal-close-footer');
+
+      function openModal() {
+        if (!modal) return;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        if (window.location.hash === '#impressum') {
+          history.replaceState(null, null, window.location.pathname + window.location.search);
+        }
+      }
+
+      if (openBtn) {
+        openBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+          history.pushState(null, null, '#impressum');
+        });
+      }
+
+      if (closeHeaderBtn) {
+        closeHeaderBtn.addEventListener('click', closeModal);
+      }
+      if (closeFooterBtn) {
+        closeFooterBtn.addEventListener('click', closeModal);
+      }
+
+      // Close on backdrop click (click outside modal-card)
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            closeModal();
+          }
+        });
+      }
+
+      // Close on Escape key
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // Handle URL hash on initial load or hashchange
+      function checkHash() {
+        if (window.location.hash === '#impressum') {
+          openModal();
+        }
+      }
+      checkHash();
+      window.addEventListener('hashchange', checkHash);
+
+      // 2. Scroll-Spy Active Nav Highlighting
       const sections = document.querySelectorAll('section[id]');
       const navLinks = document.querySelectorAll('.nav-links a');
 
