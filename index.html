@@ -388,6 +388,57 @@
       border-top: 1px solid var(--surface-border);
     }
 
+    /* Showcase Section */
+    .showcase-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 2.25rem;
+      margin-bottom: 3rem;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .showcase-card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+    }
+
+    .showcase-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .showcase-header h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .showcase-header p {
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.6;
+      max-width: 960px;
+    }
+
+    .showcase-img-container {
+      margin-top: 1.5rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--surface-border);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      background: #000;
+    }
+
+    .showcase-img-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .showcase-img-container:hover img {
+      transform: scale(1.008);
+    }
+
     @media (max-width: 900px) {
       .hero, .feature-strip-inner, .grid-2 {
         grid-template-columns: 1fr;
@@ -408,6 +459,7 @@
       <span class="brand-tag">v0.9-BETA</span>
     </a>
     <div class="nav-links">
+      <a href="#showcase">Showcase</a>
       <a href="#features">Features</a>
       <a href="#kinematics">Kinematics & Physics</a>
       <a href="#profiles">Profiles & Controllers</a>
@@ -463,6 +515,95 @@
         [OK] Zero-Bevel Option B: Inner-cylinder penetration clipped<br>
         [OK] Swirl chirality: CW outside perimeters / CCW inside holes<br>
         [OK] SimCNC 4D Euclidean feedrate scaled point-by-point
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshot Showcase Section -->
+  <section id="showcase" class="section-wrap">
+    <div class="section-header">
+      <div class="badge"><span class="mono">SOFTWARE IN ACTION</span></div>
+      <h2>See RotaryCAM in Action</h2>
+      <p>From raw 3D CAD assemblies to nested multi-stick G-code and real-time 4-axis motion simulation.</p>
+    </div>
+
+    <!-- Showcase Item 1: CAD Inspection -->
+    <div class="showcase-card">
+      <div class="showcase-header">
+        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">B-REP TOPOLOGY RECOGNITION</span>
+        <h3>Single Part CAD Inspection & Feature Classification</h3>
+        <p>
+          Native 3D B-Rep analysis on complex assemblies (shown: 45-part truck headache rack). Automatically detects structural HSS rectangular tubing (38.1 × 38.1 mm), wall thickness (3.18 mm), and classifies cuts, miters, and holes with 3D toolpath previews (approach plunge, cut contour, lead-out).
+        </p>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>45-Part Assembly</span>
+          <span class="pill"><span class="pill-dot"></span>Square HSS 38.1×38.1×3.18mm</span>
+          <span class="pill"><span class="pill-dot"></span>Miter & Saddle Cuts</span>
+          <span class="pill"><span class="pill-dot"></span>3D Lead-In Previews</span>
+        </div>
+      </div>
+      <div class="showcase-img-container">
+        <img src="assets/cad-inspection.png" alt="Single Part CAD Inspection in RotaryCAM" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Showcase Item 2: Multi-Part Pack Nesting -->
+    <div class="showcase-card">
+      <div class="showcase-header">
+        <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">1D ROTARY NESTING</span>
+        <h3>Multi-Part Pack Nesting on Standard Mill Sticks</h3>
+        <p>
+          Profile-grouped 1D stick packing along standard mill tubes (6000 mm stick shown with 0.3% scrap waste). Automatically sequences cuts from free end to chuck, manages thermal hopping, and applies auto-tabbing to prevent parts falling into the slag bed.
+        </p>
+        <div class="pill-list mono">
+          <span class="pill pill-cyan"><span class="pill-dot"></span>6000mm Mill Stick</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>0.3% Scrap Waste</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Free-End to Chuck Sequence</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Anti-Collision Part Spacing</span>
+        </div>
+      </div>
+      <div class="showcase-img-container">
+        <img src="assets/pack-nesting.png" alt="Multi-Part Pack Nesting in RotaryCAM" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Showcase Item 3: 3D Cut Simulation -->
+    <div class="showcase-card">
+      <div class="showcase-header">
+        <span class="badge mono" style="color: var(--emerald-cut); margin-bottom: 0.75rem;">WEBGL DIGITAL TWIN</span>
+        <h3>Real-Time 3D Cut Simulation & Kinematic DRO</h3>
+        <p>
+          100% client-side WebGL simulation rendering uncut raw stock with dynamic kerf trails, live plasma torch kinematics, real-time DRO (X, Y, Z, A), THC anti-dive locks, and SimCNC 4D trajectory feedrate scaling.
+        </p>
+        <div class="pill-list mono">
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Real-Time DRO (X, Y, Z, A)</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Interactive Scrubber</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>Kerf Width Visualization</span>
+          <span class="pill pill-emerald"><span class="pill-dot"></span>SimCNC 4D Trajectory</span>
+        </div>
+      </div>
+      <div class="showcase-img-container">
+        <img src="assets/cut-simulation.png" alt="3D Cut Simulation and Kinematic DRO in RotaryCAM" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Showcase Item 4: Machine Kinematics & THC -->
+    <div class="showcase-card" style="margin-bottom: 0;">
+      <div class="showcase-header">
+        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">HARDWARE MOTION & THC CONTROL</span>
+        <h3>Machine Profiles & Hardware THC Synchronization</h3>
+        <p>
+          Configurable machine profiles with direct hardware THC synchronization (M62/M63 high-speed digital pins, SimCNC variables), breakout arc locks, corner slowdown thresholds, and multi-controller dialects (SimCNC IP-M/S 4D feedrate spoofing, native G94 rotary blending, Mach4, LinuxCNC).
+        </p>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>Hardware Sync (M62/M63)</span>
+          <span class="pill"><span class="pill-dot"></span>Dynamic THC Corner Lock</span>
+          <span class="pill"><span class="pill-dot"></span>SimCNC IP-M/S & Native G94</span>
+          <span class="pill"><span class="pill-dot"></span>Multi-Machine Profiles</span>
+        </div>
+      </div>
+      <div class="showcase-img-container">
+        <img src="assets/machine-kinematics.png" alt="Machine Kinematics and Hardware THC Synchronization in RotaryCAM" loading="lazy">
       </div>
     </div>
   </section>
