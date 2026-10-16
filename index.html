@@ -509,30 +509,20 @@
       </div>
     </div>
 
-    <!-- Dropzone Box -->
-    <div class="dropzone-box">
-      <div class="terminal-header mono">
+    <!-- Webapp Screenshot Frame -->
+    <div class="card" style="padding: 0.75rem; border-color: var(--surface-border); background: var(--surface); box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow: hidden;">
+      <div class="terminal-header" style="padding: 0.5rem 0.75rem; margin-bottom: 0.5rem;">
         <div class="term-dots">
-          <div class="term-dot"></div>
-          <div class="term-dot"></div>
-          <div class="term-dot"></div>
+          <div class="term-dot" style="background: #ef4444;"></div>
+          <div class="term-dot" style="background: #eab308;"></div>
+          <div class="term-dot" style="background: #22c55e;"></div>
         </div>
-        <span>DROP 3D STEP / STP ASSEMBLY HERE</span>
-        <span>4-AXIS READY</span>
+        <span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">RotaryCAM Web — 3D CAD Assembly Inspection</span>
       </div>
-      <svg class="dropzone-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
-      </svg>
-      <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Drop your .STEP / .STP model here</h3>
-      <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.25rem;">Auto-detects Round Pipe, Square/Rectangular Tubing, Angle Iron, and Flat Plate</p>
-      <div class="mono" style="font-size: 0.74rem; background: var(--code-bg); padding: 0.85rem; border-radius: 4px; border: 1px solid var(--surface-border); text-align: left; color: var(--text-muted); line-height: 1.6;">
-        [OK] 3D CAD model loaded: 45-part tubular frame<br>
-        [OK] Tube size detected: 2.0" x 2.0" Square Tube (0.188" wall)<br>
-        [OK] Cuts found: 3 copes, 4 bolt holes, 1 end miter cut<br>
-        [OK] Zero-gap saddle compensation applied (inside wall fitup)<br>
-        [OK] Cut direction locked: CW outside / CCW inside holes<br>
-        [OK] Constant torch surface speed calculated for SimCNC & 4-axis
-      </div>
+      <img src="assets/cad-inspection.png" 
+           alt="RotaryCAM Web Application Interface" 
+           loading="eager" 
+           style="width: 100%; border-radius: 6px; display: block; border: 1px solid var(--surface-border);" />
     </div>
   </section>
 
@@ -834,27 +824,35 @@
       </div>
 
       <div class="code-preview mono">
-        <span class="code-comment">; RotaryCAM 4-Axis Plasma G-Code (SimCNC & Standard Controllers)</span><br>
-        <span class="code-comment">; Stock: 2" x 2" x 3/16" Square Tubing</span><br>
-        <span class="code-comment">; 1. Rapid move and ohmic touch-off</span><br>
-        G00 X12.500 Y0.000 Z25.000 A0.000<br>
-        M03 <span class="code-comment">; Probe plate, fire pilot arc, pierce dwell</span><br>
-        <span class="code-comment">; 2. 3D ramp plunge: blow pierce spatter away from nozzle</span><br>
-        G01 X15.000 Y-4.200 Z1.500 A0.000 F1800<br>
-        <span class="code-comment">; 3. Cut flat face with active Torch Height Control (THC)</span><br>
-        G01 X28.400 Y-18.650 Z1.500 A0.000 F2400<br>
-        <span class="code-comment">; 4. Approaching corner: Freeze THC to prevent torch dive</span><br>
-        #1080=0 <span class="code-comment">; THC freeze active (prevents diving into corner)</span><br>
-        #1111=38.0 <span class="code-comment">; Slowdown: drop amperage 45A -> 38A to avoid dross</span><br>
-        <span class="code-comment">; 5. Smooth corner rotation with steady surface speed</span><br>
-        G01 X28.400 Y-23.200 Z3.150 A22.50 F1680<br>
-        G01 X28.400 Y-25.000 Z4.500 A45.00 F1120 <span class="code-comment">; Corner apex</span><br>
-        G01 X28.400 Y-23.200 Z3.150 A67.50 F1680<br>
-        G01 X28.400 Y-18.650 Z1.500 A90.00 F2400<br>
-        #1080=1 <span class="code-comment">; Flat face reached: re-enable THC tracking</span><br>
-        <span class="code-comment">; 6. Extinguish arc 1.8mm early: residual arc severs kerf cleanly</span><br>
-        M05 <span class="code-comment">; Early arc-off eliminates divot at lead-in overlap</span><br>
-        G01 X28.400 Y-16.850 Z1.500 A90.00 F2400<br>
+        <span class="code-comment">%</span><br>
+        <span class="code-comment">; RotaryCAM 4-Axis Plasma G-Code (Fixture: rot-test-saddle1.step)</span><br>
+        <span class="code-comment">; Stock: Round Pipe OD 27.0mm · Cut Speed: 1000 mm/min surface</span><br>
+        <span class="code-comment">; G93 Rotary Interpolation via G94 (SimCNC 4D Feedrate Scaling)</span><br>
+        G21 <span class="code-comment">; Metric mode</span><br>
+        G90 <span class="code-comment">; Absolute positioning</span><br>
+        G94 <span class="code-comment">; Feed mode with multi-axis surface speed interpolation</span><br>
+        G92 X-104.043 Y0 Z0 A0 <span class="code-comment">; Set workpiece origin</span><br>
+        <br>
+        <span class="code-comment">; --- Saddle Fishmouth Cut (Zero-Bevel Dual-Curve Compensated) ---</span><br>
+        G00 Z25.000 <span class="code-comment">; Retract to safe Z clearance</span><br>
+        G00 X-104.043 Y0.000 <span class="code-comment">; Rapid to pierce position</span><br>
+        G01 A51.702 F1500.0 <span class="code-comment">; Chuck rotary index to start angle</span><br>
+        M03 S1 <span class="code-comment">; Ohmic touch-off, pierce height, arc transfer</span><br>
+        M63 P0 <span class="code-comment">; Lock THC during lead-in</span><br>
+        #1111=40 #1112=72 M108 <span class="code-comment">; Throttle current/pressure on pierce lead-in</span><br>
+        <span class="code-comment">; 4D interpolated feedrates maintain constant 1000mm/min surface speed:</span><br>
+        G01 X-103.794 A52.214 F2059.043<br>
+        G01 X-103.410 A52.952 F1974.067<br>
+        G01 X-102.576 A54.428 F1848.520 <span class="code-comment">; Tangent arc lead-in</span><br>
+        M62 P0 <span class="code-comment">; Unlock THC for main contour cut</span><br>
+        <span class="code-comment">; --- Saddle contour: cuts to inside wall for zero-gap fitup ---</span><br>
+        G01 X-99.343 A58.857 F1513.375<br>
+        G01 X-99.014 A62.132 F3780.151 <span class="code-comment">; Rotary acceleration scaled</span><br>
+        G01 X-98.618 A65.938 F3904.416<br>
+        G01 X-97.714 A73.675 F3768.406<br>
+        G01 X-94.771 A95.767 F3650.210 <span class="code-comment">; Saddle crotch (flush branch weld)</span><br>
+        G01 X-91.916 A117.747 F3820.440 <span class="code-comment">; Saddle flank</span><br>
+        M05 <span class="code-comment">; Extinguish arc 1.8mm early: residual arc severs kerf</span><br>
         G00 Z25.000 <span class="code-comment">; Rapid retract to safe height</span>
       </div>
     </div>
