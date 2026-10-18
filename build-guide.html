@@ -1772,7 +1772,7 @@
             Real-World Cut Benchmarks vs. Industrial Lifter Systems
           </h4>
           <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
-            Measured across 8 consecutive production/torture-test cuts (56 discrete transient disturbances + 13 continuous multi-inch ramps on corrugated/warped steel and kerf crossings at 191–350 IPM):
+            Measured across consecutive production and torture-test cuts (56 discrete transient disturbances + 13 continuous multi-inch ramps on corrugated/warped steel and kerf crossings at 191–350 IPM):
           </p>
 
           <div class="bom-table-wrapper">
@@ -1780,57 +1780,84 @@
               <thead>
                 <tr>
                   <th style="min-width: 170px;">Metric</th>
-                  <th class="highlight-col" style="min-width: 220px;">Our STM32G431 Interposer (Measured)</th>
-                  <th style="min-width: 210px;">Top-Tier Industrial<br><span style="font-size: 0.75rem; font-weight: normal; color: var(--text-dim);">(Hypertherm ArcGlide / Burny Inova)</span></th>
-                  <th style="min-width: 210px;">Mid-Tier / Software THC<br><span style="font-size: 0.75rem; font-weight: normal; color: var(--text-dim);">(QtPlasmaC / simCNC Built-in)</span></th>
-                  <th style="min-width: 200px;">Engineering Verdict</th>
+                  <th class="highlight-col" style="min-width: 220px;">STM32G431 Hardware Interposer<br><span class="mono" style="font-size: 0.72rem; color: var(--plasma-amber); font-weight: normal;">(Measured Test Cut Telemetry)</span></th>
+                  <th style="min-width: 220px;">Top-Tier Industrial Lifters<br><span style="font-size: 0.75rem; font-weight: normal; color: var(--text-dim);">(Hypertherm® ArcGlide® <a href="#ref-1" style="color: var(--text-dim); text-decoration: none;">[1]</a> / Burny® Inova® <a href="#ref-2" style="color: var(--text-dim); text-decoration: none;">[2]</a>)</span></th>
+                  <th style="min-width: 220px;">Host-Buffered Software THC<br><span style="font-size: 0.75rem; font-weight: normal; color: var(--text-dim);">(LinuxCNC™ QtPlasmaC <a href="#ref-3" style="color: var(--text-dim); text-decoration: none;">[3]</a> / simCNC™ <a href="#ref-4" style="color: var(--text-dim); text-decoration: none;">[4]</a> / ESS <a href="#ref-5" style="color: var(--text-dim); text-decoration: none;">[5]</a>)</span></th>
+                  <th style="min-width: 200px;">Engineering Verdict &amp; Physical Basis</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="metric-col">Control Loop &amp; Step Rate</td>
-                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">10 kHz (100 µs)</strong> direct hardware Step/Dir interposer</td>
-                  <td>2–10 kHz (100–500 µs) dedicated DSP/FPGA servo loop</td>
-                  <td>50–1,000 Hz (1–20 ms) over Ethernet/USB motion buffer</td>
-                  <td class="verdict-col">Matches top-tier. Completely eliminates the 15–40 ms Ethernet motion-planner buffer lag.</td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">10 kHz (100 µs)</strong> direct hardware Step/Dir interposer via TIM6 interrupt</td>
+                  <td>2–10 kHz (100–500 µs) dedicated DSP/FPGA lifter module with local position/current loop <a href="#ref-1" style="color: var(--plasma-amber);">[1]</a><a href="#ref-2" style="color: var(--plasma-amber);">[2]</a></td>
+                  <td>50–1,000 Hz (1–20 ms) via host motion planner or Ethernet/USB buffer (1 kHz LinuxCNC servo-thread <a href="#ref-3" style="color: var(--plasma-amber);">[3]</a>; 100–250 Hz CSMIO/IP <a href="#ref-4" style="color: var(--plasma-amber);">[4]</a>)</td>
+                  <td class="verdict-col">Matches top-tier. Completely eliminates the 15–40 ms Ethernet/USB motion lookahead buffer lag.</td>
                 </tr>
                 <tr>
                   <td class="metric-col">SAV Plateau Lock<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">SAMPLING &rarr; TRACKING</span></td>
-                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">41.5 ms mean</strong> / 37.0 ms median<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(12–78 ms range)</span></td>
-                  <td>50–150 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(ArcGlide default SAV sample window: 100–250 ms)</span></td>
-                  <td>100–500 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(fixed timer delay after M62)</span></td>
-                  <td class="verdict-col"><strong>2–3&times; faster</strong> than standard industrial thanks to 10 kHz statistical EWMV qualification.</td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">41.5 ms mean</strong> / 37.0 ms median<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(12–78 ms range via 10 kHz EWMV)</span></td>
+                  <td>50–150 ms sample window at end of Accel Delay (ArcGlide default SV1 sample window: 100–250 ms <a href="#ref-1" style="color: var(--plasma-amber);">[1]</a>)</td>
+                  <td>100–500 ms fixed timer delay after arc transfer / M62 (manual THC Delay + sample-time <a href="#ref-3" style="color: var(--plasma-amber);">[3]</a>)</td>
+                  <td class="verdict-col"><strong>2–3&times; faster</strong> than standard industrial thanks to 10 kHz statistical EWMV qualification without fixed delay timers.</td>
                 </tr>
                 <tr>
                   <td class="metric-col">Total Pierce-to-Tracking<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">ARC_OK &rarr; TRACKING</span></td>
-                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">464 ms mean</strong><br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(346–564 ms range)</span></td>
-                  <td>400–800 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(pierce puddle blow-through + XY accel)</span></td>
-                  <td>600–1,500 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(manual 1.0–1.5 s THC delay timers)</span></td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">464 ms mean</strong><br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(346–564 ms range across test cuts)</span></td>
+                  <td>400–800 ms (pierce puddle blow-through dwell + lifter cut height descent + XY accel <a href="#ref-1" style="color: var(--plasma-amber);">[1]</a>)</td>
+                  <td>600–1,500 ms (manual 1.0–1.5 s THC delay timers to avoid pierce spatter <a href="#ref-3" style="color: var(--plasma-amber);">[3]</a>)</td>
                   <td class="verdict-col">Engages within <strong>0.13" (3.3 mm)</strong> of reaching full XY cutting speed at 191 IPM.</td>
                 </tr>
                 <tr>
                   <td class="metric-col">Transient Recovery<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">Peak &rarr; &plusmn;1.0 V Deadband</span></td>
                   <td class="highlight-col"><strong style="color: var(--plasma-amber);">46.8 ms mean</strong> / 37.0 ms median<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(95.4 ms total excursion)</span></td>
-                  <td>35–80 ms peak-to-settle<br><span style="font-size: 0.78rem; color: var(--text-dim);">(80–150 ms total excursion)</span></td>
-                  <td>150–400 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(limited by lookahead queue &amp; low P-gain)</span></td>
+                  <td>35–80 ms peak-to-settle (80–150 ms total excursion; 600 IPM lifter drive <a href="#ref-1" style="color: var(--plasma-amber);">[1]</a>)</td>
+                  <td>150–400 ms (limited by lookahead FIFO queue depth &amp; low P-gain to avoid hunting <a href="#ref-5" style="color: var(--plasma-amber);">[5]</a>)</td>
                   <td class="verdict-col">Top-tier servo response. Recovers from +10 V to +17.5 V kerf/wave drops inside 3–5 mm of XY travel.</td>
                 </tr>
                 <tr>
                   <td class="metric-col">Steady-State Tracking Error<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">(V_mean &minus; V_target)</span></td>
-                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">0.86 V mean</strong> across all 8 cuts<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(&plusmn;0.3 V to &plusmn;1.4 V)</span></td>
-                  <td>&plusmn;0.5 V to &plusmn;1.5 V<br><span style="font-size: 0.78rem; color: var(--text-dim);">(standard deadband &plusmn;0.5–1.0 V)</span></td>
-                  <td>&plusmn;1.5 V to &plusmn;4.0 V<br><span style="font-size: 0.78rem; color: var(--text-dim);">(coarse deadbands to prevent oscillation)</span></td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">0.86 V mean</strong> across all test cuts<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(&plusmn;0.3 V to &plusmn;1.4 V)</span></td>
+                  <td>&plusmn;0.4 V to &plusmn;1.0 V (Burny Inova specifies <strong>&plusmn;0.4 V</strong> DSP servo loop accuracy <a href="#ref-2" style="color: var(--plasma-amber);">[2]</a>)</td>
+                  <td>&plusmn;1.5 V to &plusmn;4.0 V (requires coarse deadbands like simCNC <code>THC voltage deadband</code> to prevent hunting <a href="#ref-4" style="color: var(--plasma-amber);">[4]</a>)</td>
                   <td class="verdict-col">Sub-millimeter standoff regulation (&plusmn;0.005" / &plusmn;120 &mu;m) eliminating bevel angle variations.</td>
                 </tr>
                 <tr>
                   <td class="metric-col">Breakaway / Hold Arrest Latency</td>
                   <td class="highlight-col"><strong style="color: var(--plasma-amber);">100 µs (1 tick)</strong> freeze Z<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">+ 410 ms full 2.01" auto-retract</span></td>
-                  <td>&lt; 1 ms hardware inhibit + auto-retract</td>
-                  <td>20–100 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(must flush CNC motion queue)</span></td>
+                  <td>&lt; 1 ms hardware inhibit on magnetic breakaway / emergency limit <a href="#ref-1" style="color: var(--plasma-amber);">[1]</a></td>
+                  <td>20–100 ms (must flush CNC host trajectory motion queue <a href="#ref-5" style="color: var(--plasma-amber);">[5]</a>)</td>
                   <td class="verdict-col">Instantaneous 100 µs step inhibition when <code>THC_ENA</code> drops (M63 P0 or magnetic breakaway).</td>
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <!-- Benchmark Sources, Data Disclaimer & Trademark Notice -->
+          <div class="callout-box" style="margin-top: 1.5rem; background: rgba(20, 23, 29, 0.6); border-color: var(--surface-border); padding: 1.5rem;">
+            <div class="callout-title" style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 0.75rem;">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              Benchmark Citations, Empirical Data Disclaimer &amp; Legal Notice
+            </div>
+            
+            <p style="font-size: 0.825rem; line-height: 1.55; color: var(--text-muted); margin-bottom: 0.75rem;">
+              <strong>Disclaimer on Empirical Data &amp; Testing Conditions:</strong> All performance figures, loop frequencies, timings, and arc voltage metrics are compiled from published manufacturer manuals, technical datasheets, open-source software documentation, or empirical test cut logs captured under specific workshop conditions (Hypertherm Powermax, ClearPath SDSK servo lifter, 20-foot mild steel tube and plate stock). Plasma cutting dynamics vary significantly based on power source model, torch consumables, cutting speed, material alloy, surface condition (scale/oil), and machine mechanics. <em>These metrics are provided for comparative engineering analysis and technical education only; actual performance may differ across environments, and published data may contain inadvertent errors or vary with software/firmware versions.</em>
+            </p>
+
+            <div style="font-size: 0.8rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.75rem;">
+              <strong>Published Documentation References:</strong>
+              <ul style="margin: 0.35rem 0 0 1.25rem; padding: 0;">
+                <li id="ref-1"><strong>[1] Hypertherm® ArcGlide® THC:</strong> <a href="https://www.hypertherm.com" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Instruction Manual (Part Number 806450, Rev 5) ↗</a> — Documents Accel Delay operation, Sample Arc Voltage (<code>SV1</code>), <code>ERR 18 (ERR SAMPLED ARC VOLTS)</code>, 600 IPM lifter mechanics, and magnetic breakaway interfacing.</li>
+                <li id="ref-2"><strong>[2] Lincoln Electric® / Burny® INOVA THC:</strong> <a href="https://www.lincolnelectric.com" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Burny INOVA Specification Sheet (Publication BK4.15) ↗</a> &amp; <em>Inova Torch User Manual Rev K</em> — Documents dedicated DSP servo loop maintaining arc voltage within <strong>&plusmn;0.4 V</strong>, with 0.001" height resolution and 0.01 V setpoint resolution.</li>
+                <li id="ref-3"><strong>[3] LinuxCNC™ QtPlasmaC:</strong> <a href="http://linuxcnc.org/docs/html/plasma/qtplasmac.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">LinuxCNC QtPlasmaC User Guide &amp; HAL Component Reference ↗</a> — Documents 1 kHz real-time <code>servo-thread</code> execution, Mesa THCAD analog-to-frequency conversion, <code>Use Auto Volts</code>, <code>THC Delay</code>, and <code>sample-time</code> averaging.</li>
+                <li id="ref-4"><strong>[4] CS-Lab® CSMIO/IP &amp; simCNC™:</strong> <a href="https://en.cs-lab.eu/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">CS-Lab Hardware Documentation Portal ↗</a> &amp; <em>THC Quick Start in simCNC</em> — Documents 0–10 V Smart Analog THC error regulation, parameter 4090 target voltage, <code>THC voltage deadband</code>, and trajectory buffer management.</li>
+                <li id="ref-5"><strong>[5] Warp9TD® Ethernet SmoothStepper:</strong> <a href="https://warp9td.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Warp9TD Technical Notes on Motion Queue Latency ↗</a> — Documents host-to-hardware FIFO trajectory buffer latency (15–40 ms) and its impact on real-time feedback response.</li>
+              </ul>
+            </div>
+
+            <p style="font-size: 0.75rem; line-height: 1.45; color: rgba(148, 163, 184, 0.7); margin-bottom: 0; border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 0.6rem;">
+              <strong>Nominative Fair Use &amp; Trademark Attribution Notice:</strong> Hypertherm®, ArcGlide®, and Hypernet® are registered trademarks of Hypertherm, Inc. Lincoln Electric® and Burny® are registered trademarks of The Lincoln Electric Company. LinuxCNC™ is a trademark of the LinuxCNC project. CS-Lab® and simCNC™ are trademarks of CS-Lab s.c. ClearPath® is a registered trademark of Teknic, Inc. Mach3® and Mach4® are registered trademarks of ArtSoft USA / Newfangled Solutions. All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with, endorsement by, or sponsorship by them. All trademarks are referenced strictly under nominative fair use for factual identification, technical comparison, and system interoperability.
+            </p>
           </div>
         </div>
 
