@@ -990,7 +990,7 @@
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      z-index: 10;
+      z-index: 12;
       transition: opacity 0.4s ease, visibility 0.4s ease;
     }
 
@@ -998,6 +998,74 @@
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+    }
+
+    .pcb-cover-overlay {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      z-index: 10;
+      cursor: pointer;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .pcb-cover-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .pcb-cover-scrim {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(13, 15, 18, 0.45) 0%, rgba(13, 15, 18, 0.82) 100%);
+      transition: background 0.3s ease;
+    }
+
+    .pcb-cover-overlay:hover .pcb-cover-scrim {
+      background: radial-gradient(circle at center, rgba(13, 15, 18, 0.2) 0%, rgba(13, 15, 18, 0.65) 100%);
+    }
+
+    .pcb-explore-btn {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1.6rem;
+      background: rgba(20, 23, 29, 0.92);
+      color: #fff;
+      border: 1px solid var(--plasma-amber);
+      border-radius: 8px;
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(245, 158, 11, 0.25);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .pcb-cover-overlay:hover .pcb-explore-btn {
+      transform: translateY(-2px) scale(1.03);
+      background: var(--plasma-amber);
+      color: #000;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), 0 0 24px rgba(245, 158, 11, 0.5);
+    }
+
+    .pcb-cover-hint {
+      position: relative;
+      z-index: 2;
+      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.75);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+      letter-spacing: 0.03em;
     }
 
     .pcb-viewport-badge {
@@ -1329,7 +1397,17 @@
             <span class="status-dot"></span>
             <span>Interactive 3D Board Model • Drag to Orbit • Scroll to Zoom</span>
           </div>
-          <div class="pcb-loading-overlay" id="cslab-ip-m-loading">
+          <div class="pcb-cover-overlay" id="cslab-ip-m-cover" style="background-image: url('assets/cslab-ip-m-preview.png');">
+            <div class="pcb-cover-scrim"></div>
+            <button class="pcb-explore-btn" type="button" aria-label="Click to explore CSLab IP-M 3D model">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              <span>Click to explore</span>
+            </button>
+            <div class="pcb-cover-hint mono">Interactive 3D CAD • Drag to Rotate</div>
+          </div>
+          <div class="pcb-loading-overlay hidden" id="cslab-ip-m-loading">
             <div class="spinner"></div>
             <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);">Loading 3D Board Model…</div>
           </div>
@@ -1422,7 +1500,17 @@
             <span class="status-dot"></span>
             <span>Interactive 3D Board Model • Drag to Orbit • Scroll to Zoom</span>
           </div>
-          <div class="pcb-loading-overlay" id="rs422-loading">
+          <div class="pcb-cover-overlay" id="rs422-cover" style="background-image: url('assets/rs422-splitter-preview.png');">
+            <div class="pcb-cover-scrim"></div>
+            <button class="pcb-explore-btn" type="button" aria-label="Click to explore RS422 Splitter 3D model">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              <span>Click to explore</span>
+            </button>
+            <div class="pcb-cover-hint mono">Interactive 3D CAD • Drag to Rotate</div>
+          </div>
+          <div class="pcb-loading-overlay hidden" id="rs422-loading">
             <div class="spinner"></div>
             <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);">Loading 3D Board Model…</div>
           </div>
@@ -1595,7 +1683,17 @@
             <span class="status-dot"></span>
             <span>Interactive 3D Board Model • Drag to Orbit • Scroll to Zoom</span>
           </div>
-          <div class="pcb-loading-overlay" id="thc-loading">
+          <div class="pcb-cover-overlay" id="thc-cover" style="background-image: url('assets/z-axis-thc-preview.png');">
+            <div class="pcb-cover-scrim"></div>
+            <button class="pcb-explore-btn" type="button" aria-label="Click to explore THC Controller 3D model">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              <span>Click to explore</span>
+            </button>
+            <div class="pcb-cover-hint mono">Interactive 3D CAD • Drag to Rotate</div>
+          </div>
+          <div class="pcb-loading-overlay hidden" id="thc-loading">
             <div class="spinner"></div>
             <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);">Loading 3D Board Model…</div>
           </div>
@@ -2983,9 +3081,10 @@
     // -------------------------------------------------------------
     // Generic Interactive PCB 3D Viewer Function
     // -------------------------------------------------------------
-    function initPcbViewer(canvasId, loadingId, meshUrl, silkscreenUrl) {
+    function initPcbViewer(canvasId, loadingId, coverId, meshUrl, silkscreenUrl) {
       const pcbCanvas = document.getElementById(canvasId);
       const pcbLoading = document.getElementById(loadingId);
+      const pcbCover = document.getElementById(coverId);
       if (!pcbCanvas) return;
 
       const pcbParent = pcbCanvas.parentElement;
@@ -2994,12 +3093,27 @@
       let pcbScene = null;
       let pcbCamera = null;
       let pcbControls = null;
-      let isVisible = false;
+      let isVisible = true;
 
-      function setupViewer() {
+      function startViewer() {
         if (initialized) return;
         initialized = true;
 
+        if (pcbCover) {
+          pcbCover.classList.add('hidden');
+        }
+        if (pcbLoading) {
+          pcbLoading.classList.remove('hidden');
+        }
+
+        setupViewer();
+      }
+
+      if (pcbCover) {
+        pcbCover.addEventListener('click', startViewer);
+      }
+
+      function setupViewer() {
         const width = pcbParent.clientWidth || 480;
         const height = pcbParent.clientHeight || 440;
 
@@ -3255,22 +3369,19 @@
       });
       ro.observe(pcbParent);
 
-      // Lazy load only when within 300px of viewport
+      // Pause animation loop when scrolled away
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           isVisible = entry.isIntersecting;
-          if (entry.isIntersecting && !initialized) {
-            setupViewer();
-          }
         });
-      }, { rootMargin: '300px 0px', threshold: 0.01 });
+      }, { rootMargin: '100px 0px', threshold: 0.01 });
       io.observe(pcbCanvas);
     }
 
-    // Initialize PCB Viewers with Mesh + Silkscreen Projection (cache-busted for production CDN/browser cache)
-    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz?v=20261018-layers', 'assets/cslab-ip-m-silkscreen.svg?v=20261018-layers');
-    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz?v=20261018-layers', 'assets/rs422-splitter-silkscreen.svg?v=20261018-layers');
-    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz?v=20261018-layers', 'assets/z-axis-thc-silkscreen.svg?v=20261018-layers');
+    // Initialize PCB Viewers with Mesh + Silkscreen Projection (on-demand click to explore)
+    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'cslab-ip-m-cover', 'assets/cslab-ip-m-mesh.json.gz?v=20261018-layers', 'assets/cslab-ip-m-silkscreen.svg?v=20261018-layers');
+    initPcbViewer('rs422-canvas', 'rs422-loading', 'rs422-cover', 'assets/rs422-splitter-mesh.json.gz?v=20261018-layers', 'assets/rs422-splitter-silkscreen.svg?v=20261018-layers');
+    initPcbViewer('thc-canvas', 'thc-loading', 'thc-cover', 'assets/z-axis-thc-mesh.json.gz?v=20261018-layers', 'assets/z-axis-thc-silkscreen.svg?v=20261018-layers');
   </script>
 
 
