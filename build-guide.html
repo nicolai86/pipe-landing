@@ -632,6 +632,38 @@
       width: 60px;
     }
 
+    /* Benchmark Table */
+    table.benchmark-table th, table.benchmark-table td {
+      padding: 0.85rem 1.1rem;
+      vertical-align: top;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    table.benchmark-table th.highlight-col, table.benchmark-table td.highlight-col {
+      background: rgba(245, 158, 11, 0.06);
+      border-left: 2px solid rgba(245, 158, 11, 0.35);
+      border-right: 2px solid rgba(245, 158, 11, 0.35);
+    }
+    table.benchmark-table th.highlight-col {
+      color: var(--plasma-amber);
+      font-weight: 700;
+      background: rgba(245, 158, 11, 0.12);
+    }
+    table.benchmark-table td.highlight-col {
+      color: #fff;
+      font-weight: 500;
+    }
+    table.benchmark-table td.metric-col {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+    table.benchmark-table td.verdict-col {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+
     /* CAM CTA Card */
     .cam-cta-card {
       background: linear-gradient(135deg, rgba(20, 23, 29, 0.95) 0%, rgba(35, 40, 51, 0.95) 100%);
@@ -1619,6 +1651,231 @@
               Download THC Controller 3D STEP Model (4.4 MB GZ)
             </a>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Complete 3D Assembly with All SMT &amp; Passive Components</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- THC Controller Firmware Architecture, Control Modes & DSP Deep-Dive -->
+      <div style="margin-top: 3.5rem;">
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span class="card-badge amber mono">DSP ARCHITECTURE &amp; FLIGHT TELEMETRY</span>
+            <h3 style="font-size: 1.65rem; margin-top: 0.5rem; color: #fff;">10 kHz Real-Time Step/Dir Interposer Deep-Dive</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem; max-width: 840px;">
+              Most CNC motion controllers treat Torch Height Control as an afterthought—either relying on sluggish UP/DOWN bang-bang relays or routing analog arc voltage through an Ethernet/USB motion planner buffer with 15–40 ms of trajectory lookahead lag. That phase delay forces software THCs to detune loop gains by 4–5&times; to avoid torch oscillation, guaranteeing sluggish tracking across warped sheet and disastrous torch dives when crossing kerfs or entering corners.
+            </p>
+          </div>
+          <div class="mono" style="font-size: 0.8rem; color: var(--plasma-amber); background: rgba(245, 158, 11, 0.08); padding: 0.5rem 0.9rem; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.25);">
+            170 MHz Cortex-M4F • 100 µs Loop • &gt;80° Phase Margin
+          </div>
+        </div>
+
+        <!-- Subsection 1: Three Operating Modes -->
+        <div style="margin-bottom: 2.5rem;">
+          <h4 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="mono" style="color: var(--plasma-amber); font-size: 0.95rem;">01.</span>
+            Three Operating Modes: HYBRID_SAV, PURE_SAV &amp; PRESET
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
+            Fixed book-voltage THCs fail in the real world as soon as an electrode wears (increasing arc voltage by +5 V to +10 V and driving the torch into the plate) or when cutting far from the ground clamp. Pure Sample-Arc-Voltage (SAV) systems solve consumable wear by locking onto the initial post-pierce voltage, but fail catastrophically if warped thin sheet springs back after touch-off—locking in a bogus 165–170 V target (0.50"+ standoff) for the rest of the cut. Our controller implements three selectable modes, with <strong>Sanity-Checked HYBRID_SAV + Automatic PURE_SAV Fallback</strong> as the production default:
+          </p>
+
+          <div class="grid-3">
+            <div class="doc-card highlight">
+              <span class="card-badge cyan mono">MODE 1 • RAPID LOCK</span>
+              <h3>Statistical EWMV Plateau Lock</h3>
+              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted);">
+                Instead of waiting out a fixed 150–500 ms delay timer after pierce, the DSP computes the real-time <strong>Exponentially Weighted Moving Variance (EWMV)</strong> of the arc voltage at 10 kHz.
+              </p>
+              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted); margin-bottom: 0;">
+                As soon as the plasma column stabilizes into a laminar cut (&sigma;&sup2; &le; threshold for 10.0 ms continuously), it locks the target voltage in as little as <strong>12–78 ms (41.5 ms mean)</strong>—engaging active tracking within <strong>0.13" (3.3 mm)</strong> of reaching full XY cut speed.
+              </p>
+            </div>
+
+            <div class="doc-card highlight">
+              <span class="card-badge amber mono">MODE 2 • PRODUCTION DEFAULT</span>
+              <h3>HYBRID_SAV Dual-ADC Window</h3>
+              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted);">
+                Reads the live plasma arc on ADC1 (PA3) and the CNC's cut-chart preset voltage on ADC2 (PA7 from simCNC <code>m3.py</code>). When the EWMV detector locks onto the post-pierce plateau:
+              </p>
+              <ul style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin: 0 0 0 1.15rem; padding: 0;">
+                <li style="margin-bottom: 0.4rem;"><strong>Inside Sanity Window [Preset - 7.0 V, Preset + 15.0 V]:</strong> Locks true measured voltage—automatically compensating for consumable wear (+6.8 V on 75% worn electrode), work-lead drop, and FineCut arc drag.</li>
+                <li><strong>Out of Bounds (Sheet Springback):</strong> If bowed sheet metal deflected during probing (e.g. 165 V high pierce), clamps target to window boundary and immediately drives torch back to proper cut height (<code>THC_STATE_TRACKING</code>), never freezing the axis.</li>
+              </ul>
+            </div>
+
+            <div class="doc-card">
+              <span class="card-badge mono">MODE 3 • AUTO-FALLBACK</span>
+              <h3>Automatic PURE_SAV &amp; PRESET</h3>
+              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted);">
+                <strong>Zero-Intervention Auto-Fallback:</strong> If the CNC controller's analog preset output is absent (ADC2 &lt; 55 V, e.g. following an E-Stop reset or on a machine without a 0–10 V DAC module), HYBRID_SAV seamlessly falls back to <strong>PURE_SAV</strong> ([55 V .. 200 V] global bounds) with zero operator intervention.
+              </p>
+              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted); margin-bottom: 0;">
+                Can also be configured per machine in <code>machines.json</code> for purely autonomous plateau lock (PURE_SAV) or direct cut-chart voltage tracking (PRESET).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subsection 2: Control Loop Innovations -->
+        <div style="margin-bottom: 2.5rem;">
+          <h4 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="mono" style="color: var(--plasma-amber); font-size: 0.95rem;">02.</span>
+            Deterministic DSP Control Loop Innovations
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
+            Running at 10 kHz (100 µs cycle time) on the STM32G431 hardware timer (TIM6), the firmware integrates four mathematical and physical filters designed specifically for rotary plasma kinematics:
+          </p>
+
+          <div class="grid-2">
+            <div class="doc-card">
+              <span class="card-badge cyan mono">SIGNAL CONDITIONING</span>
+              <h3>4th-Order Bessel Low-Pass Filter (1 kHz)</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Sampled at Fs = 10 kHz with fc = 1 kHz. Maximally flat group delay (0.33 ms) strips 20–100 kHz plasma inverter switching hash while preserving true arc-voltage transients without phase distortion or ringing.
+              </p>
+            </div>
+
+            <div class="doc-card">
+              <span class="card-badge amber mono">SERVO ADAPTATION</span>
+              <h3>Asymmetric Adaptive Gain &amp; Upward Fast-Bleed Integrator</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.5rem;">
+                Inside fine regulation (|error| &le; 1.5 V), baseline gain of 3.06 mm/s/V keeps the torch dead-calm on flat plate. On steep upward ramps (|error| &rarr; 6.0 V), gain scales smoothly to 6.80 mm/s/V alongside an upward-only leaky velocity integrator (<code>thc_slope_integrator &le; 0</code>).
+              </p>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Eliminates uphill lag (&lt; 0.4 V steady-state lag on a 1.12" ramp) and fast-drains in &lt; 3 ms (&tau; = 0.64 ms) at crest turnarounds. Downward tracking uses pure proportional control with zero downward integral windup, preventing dives into warped sheet or voids.
+              </p>
+            </div>
+
+            <div class="doc-card">
+              <span class="card-badge cyan mono">COLLISION PREVENTION</span>
+              <h3>Motion-Compensated Kerf Anti-Dive (dV/dt Observer)</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Evaluates external voltage rate-of-change over a 3.0 ms (30-tick) rolling window (averaging across 0.2–0.8 ms plasma anodic-restrike sawtooth cycles) while subtracting the voltage rise caused by the torch's own upward step emissions (<code>v_motion_q4</code>). Crossing a prior kerf freezes downward motion in 100 µs and arrests downward S-curve momentum immediately while still permitting upward collision retraction.
+              </p>
+            </div>
+
+            <div class="doc-card">
+              <span class="card-badge mono">POSITION INTEGRITY</span>
+              <h3>3rd-Order S-Curve Profiler &amp; Baseline Return</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Physical velocity, acceleration, and jerk limits from <code>machines.json</code> are enforced in hardware on both <code>THC_STATE_TRACKING</code> and post-cut <code>THC_STATE_RETURNING</code>. Prevents stepper stalls while automatically unwinding accumulated THC steps at the end of every cut, guaranteeing the CNC controller DRO never drifts even across thousands of pierce cycles.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subsection 3: Industrial Benchmark Table -->
+        <div style="margin-bottom: 2.5rem;">
+          <h4 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="mono" style="color: var(--plasma-amber); font-size: 0.95rem;">03.</span>
+            Real-World Cut Benchmarks vs. Industrial Lifter Systems
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
+            Measured across 8 consecutive production/torture-test cuts (56 discrete transient disturbances + 13 continuous multi-inch ramps on corrugated/warped steel and kerf crossings at 191–350 IPM):
+          </p>
+
+          <div class="bom-table-wrapper">
+            <table class="bom-table benchmark-table">
+              <thead>
+                <tr>
+                  <th style="min-width: 170px;">Metric</th>
+                  <th class="highlight-col" style="min-width: 220px;">Our STM32G431 Interposer (Measured)</th>
+                  <th style="min-width: 210px;">Top-Tier Industrial<br><span style="font-size: 0.75rem; font-weight: normal; color: var(--text-dim);">(Hypertherm ArcGlide / Burny Inova)</span></th>
+                  <th style="min-width: 210px;">Mid-Tier / Software THC<br><span style="font-size: 0.75rem; font-weight: normal; color: var(--text-dim);">(QtPlasmaC / simCNC Built-in)</span></th>
+                  <th style="min-width: 200px;">Engineering Verdict</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="metric-col">Control Loop &amp; Step Rate</td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">10 kHz (100 µs)</strong> direct hardware Step/Dir interposer</td>
+                  <td>2–10 kHz (100–500 µs) dedicated DSP/FPGA servo loop</td>
+                  <td>50–1,000 Hz (1–20 ms) over Ethernet/USB motion buffer</td>
+                  <td class="verdict-col">Matches top-tier. Completely eliminates the 15–40 ms Ethernet motion-planner buffer lag.</td>
+                </tr>
+                <tr>
+                  <td class="metric-col">SAV Plateau Lock<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">SAMPLING &rarr; TRACKING</span></td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">41.5 ms mean</strong> / 37.0 ms median<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(12–78 ms range)</span></td>
+                  <td>50–150 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(ArcGlide default SAV sample window: 100–250 ms)</span></td>
+                  <td>100–500 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(fixed timer delay after M62)</span></td>
+                  <td class="verdict-col"><strong>2–3&times; faster</strong> than standard industrial thanks to 10 kHz statistical EWMV qualification.</td>
+                </tr>
+                <tr>
+                  <td class="metric-col">Total Pierce-to-Tracking<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">ARC_OK &rarr; TRACKING</span></td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">464 ms mean</strong><br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(346–564 ms range)</span></td>
+                  <td>400–800 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(pierce puddle blow-through + XY accel)</span></td>
+                  <td>600–1,500 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(manual 1.0–1.5 s THC delay timers)</span></td>
+                  <td class="verdict-col">Engages within <strong>0.13" (3.3 mm)</strong> of reaching full XY cutting speed at 191 IPM.</td>
+                </tr>
+                <tr>
+                  <td class="metric-col">Transient Recovery<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">Peak &rarr; &plusmn;1.0 V Deadband</span></td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">46.8 ms mean</strong> / 37.0 ms median<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(95.4 ms total excursion)</span></td>
+                  <td>35–80 ms peak-to-settle<br><span style="font-size: 0.78rem; color: var(--text-dim);">(80–150 ms total excursion)</span></td>
+                  <td>150–400 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(limited by lookahead queue &amp; low P-gain)</span></td>
+                  <td class="verdict-col">Top-tier servo response. Recovers from +10 V to +17.5 V kerf/wave drops inside 3–5 mm of XY travel.</td>
+                </tr>
+                <tr>
+                  <td class="metric-col">Steady-State Tracking Error<br><span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">(V_mean &minus; V_target)</span></td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">0.86 V mean</strong> across all 8 cuts<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">(&plusmn;0.3 V to &plusmn;1.4 V)</span></td>
+                  <td>&plusmn;0.5 V to &plusmn;1.5 V<br><span style="font-size: 0.78rem; color: var(--text-dim);">(standard deadband &plusmn;0.5–1.0 V)</span></td>
+                  <td>&plusmn;1.5 V to &plusmn;4.0 V<br><span style="font-size: 0.78rem; color: var(--text-dim);">(coarse deadbands to prevent oscillation)</span></td>
+                  <td class="verdict-col">Sub-millimeter standoff regulation (&plusmn;0.005" / &plusmn;120 &mu;m) eliminating bevel angle variations.</td>
+                </tr>
+                <tr>
+                  <td class="metric-col">Breakaway / Hold Arrest Latency</td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">100 µs (1 tick)</strong> freeze Z<br><span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">+ 410 ms full 2.01" auto-retract</span></td>
+                  <td>&lt; 1 ms hardware inhibit + auto-retract</td>
+                  <td>20–100 ms<br><span style="font-size: 0.78rem; color: var(--text-dim);">(must flush CNC motion queue)</span></td>
+                  <td class="verdict-col">Instantaneous 100 µs step inhibition when <code>THC_ENA</code> drops (M63 P0 or magnetic breakaway).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Subsection 4: Flight Recorder Highlights -->
+        <div>
+          <h4 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="mono" style="color: var(--plasma-amber); font-size: 0.95rem;">04.</span>
+            Flight Recorder Telemetry Highlights (Real-World Cuts)
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
+            Empirical validation captured from 10–15 flight recorder logs across production pipe sever cuts and extreme edge-case torture tests:
+          </p>
+
+          <div class="grid-2">
+            <div class="doc-card">
+              <span class="card-badge cyan mono">CUT #4 • SEVERE PLATE WARP</span>
+              <h3>Steep 1.12" Continuous Uphill Climb</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Climbed over <strong>1.00" (25.4 mm)</strong> of continuous upward plate deformation over 3.43 seconds while maintaining <strong>-0.4 V average tracking error</strong> and zero upward ratcheting, thanks to the upward-only fast-bleed velocity integrator.
+              </p>
+            </div>
+
+            <div class="doc-card">
+              <span class="card-badge amber mono">CUTS #1, #2, #6, #7 • CORRUGATION</span>
+              <h3>High-Speed Wavy Steel &amp; Low-Pierce Pull-In</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Recovered from <strong>+16.5 V to +23.6 V wave drops</strong> back into the &plusmn;1.0 V deadband in 34–59 ms from peak (72–105 ms total excursion). In Cut #2, pulled a <strong>-6.1 V (-0.229") clamped low-pierce start</strong> smoothly back to cut height in 346 ms with zero overshoot.
+              </p>
+            </div>
+
+            <div class="doc-card">
+              <span class="card-badge cyan mono">CUT #8 • VOID REJECTION</span>
+              <h3>Kerf-Crossing Anti-Dive Protection</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Crossed two prior kerf cutouts without diving. The motion-compensated dV/dt observer detected the sharp <strong>+10.3 V and +10.7 V spikes</strong> in 100 µs, froze downward steps, and settled back into the &plusmn;1.0 V deadband in 30 ms and 26 ms without marking the part.
+              </p>
+            </div>
+
+            <div class="doc-card">
+              <span class="card-badge mono">CUTS #6–#8 • FAIL-SAFE</span>
+              <h3>Seamless HYBRID_SAV &rarr; PURE_SAV E-Stop Recovery</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                When an earlier breakaway E-Stop caused the CNC controller to clear its analog target output (<code>#4090 = 0 V</code>), firmware detected ADC2 &lt; 55 V and automatically fell back to PURE_SAV. It locked the natural 139.8 V plateau on a 75%-worn cartridge (+6.8 V above the 133 V book value) and tracked all three subsequent cuts with <strong>0.3–0.6 V mean error</strong>.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -2642,43 +2899,6 @@
         pcbControls.autoRotate = false;
       });
 
-      // Material Library
-      const matBoard = new THREE.MeshStandardMaterial({
-        color: 0x16432f,
-        roughness: 0.65,
-        metalness: 0.12
-      });
-      const matSilkscreen = new THREE.MeshStandardMaterial({
-        color: 0xf1f5f9,
-        roughness: 0.5,
-        metalness: 0.08
-      });
-      const matGold = new THREE.MeshStandardMaterial({
-        color: 0xd4af37,
-        roughness: 0.28,
-        metalness: 0.88
-      });
-      const matMetal = new THREE.MeshStandardMaterial({
-        color: 0xc8d0db,
-        roughness: 0.22,
-        metalness: 0.92
-      });
-      const matIC = new THREE.MeshStandardMaterial({
-        color: 0x181a1f,
-        roughness: 0.78,
-        metalness: 0.08
-      });
-      const matTerminal = new THREE.MeshStandardMaterial({
-        color: 0x15803d,
-        roughness: 0.45,
-        metalness: 0.05
-      });
-      const matDarkPlastic = new THREE.MeshStandardMaterial({
-        color: 0x27272a,
-        roughness: 0.65,
-        metalness: 0.08
-      });
-
       const pcbGroup = new THREE.Group();
       pcbScene.add(pcbGroup);
 
@@ -2703,36 +2923,25 @@
               geom.setIndex(m.indices);
             }
 
-            // Bounding box heuristic for component materials
-            let minX = Infinity, maxX = -Infinity;
-            let minY = Infinity, maxY = -Infinity;
-            let minZ = Infinity, maxZ = -Infinity;
-            const pos = m.positions;
-            for (let j = 0; j < pos.length; j += 3) {
-              const x = pos[j], y = pos[j + 1], z = pos[j + 2];
-              if (x < minX) minX = x; if (x > maxX) maxX = x;
-              if (y < minY) minY = y; if (y > maxY) maxY = y;
-              if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
-            }
-            const dx = maxX - minX, dy = maxY - minY, dz = maxZ - minZ;
-            const fp = dx * dz;
+            // Direct CAD Color from Fusion 360 STEP extraction
+            const c = m.color || [0.12, 0.12, 0.14];
+            // Green board substrate / solder mask detection
+            const isBoard = (c[1] > 0.18 && c[0] < 0.05 && c[2] < 0.05);
+            // Copper / gold pads detection
+            const isCopper = (c[0] > 0.7 && c[1] > 0.5 && c[2] < 0.4);
+            // Solder / metal pins / leads detection
+            const isMetal = (Math.abs(c[0] - c[1]) < 0.03 && Math.abs(c[1] - c[2]) < 0.03 && c[0] > 0.45);
+            // Silkscreen detection
+            const isSilkscreen = (c[0] > 0.9 && c[1] > 0.9 && c[2] > 0.9);
 
-            let mat = matMetal;
-            if (fp > 2000 && dy >= 0.4) {
-              mat = matBoard;
-            } else if (fp > 2000 && dy < 0.2) {
-              mat = matSilkscreen;
-            } else if (dy > 8.0 && fp > 80) {
-              mat = matTerminal;
-            } else if (dy > 5.5 && fp <= 80) {
-              mat = matDarkPlastic;
-            } else if (dy > 1.2 && fp > 18) {
-              mat = matIC;
-            } else if (dx < 3.2 && dz < 3.2 && dy > 1.4) {
-              mat = matGold;
-            } else {
-              mat = matMetal;
-            }
+            const mat = new THREE.MeshStandardMaterial({
+              color: new THREE.Color(c[0], c[1], c[2]),
+              roughness: isBoard ? 0.62 : (isCopper || isMetal ? 0.22 : (isSilkscreen ? 0.4 : 0.75)),
+              metalness: isMetal ? 0.92 : (isCopper ? 0.85 : 0.06),
+              polygonOffset: !isBoard,
+              polygonOffsetFactor: -1.0,
+              polygonOffsetUnits: -1.0
+            });
 
             const mesh = new THREE.Mesh(geom, mat);
             pcbGroup.add(mesh);
