@@ -1104,10 +1104,13 @@
           <div class="callout-box">
             <div class="callout-title">
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              How RotaryCAM Solves This
+              How RotaryCAM Solves This (G94 &amp; G93 Controllers)
             </div>
+            <p style="margin-bottom: 0.6rem;">
+              <strong>If your controller only supports standard G94 (units-per-minute):</strong> You can still use RotaryCAM without any hardware changes. RotaryCAM pre-computes <strong>4D Euclidean trajectory feedrate scaling</strong> directly into the G-code, recalculating feedrates dynamically for every motion segment to maintain constant surface torch velocity across flat tube faces and corner radii.
+            </p>
             <p>
-              RotaryCAM pre-computes <strong>4D Euclidean trajectory feedrate scaling</strong> directly into the generated G-code. By calculating instantaneous surface radii for every arc segment, RotaryCAM scales feedrates dynamically so the plasma jet cuts at an exact, uniform surface speed (IPM) across round pipe, square tube faces, and corner radii.
+              <strong>If your controller supports G93 (inverse time feedrate):</strong> You're all set also. RotaryCAM natively outputs standard G93 inverse time mode (supported on Mach4, LinuxCNC, Masso, and modern CNCs), where every rotary block specifies the exact reciprocal time required for constant surface speed cutting.
             </p>
           </div>
         </div>
@@ -1843,9 +1846,61 @@
       modelGroup = new THREE.Group();
       scene.add(modelGroup);
 
+      // Smooth camera transition state
+      let isAnimatingCamera = false;
+      const animStartTarget = new THREE.Vector3();
+      const animEndTarget = new THREE.Vector3();
+      const animStartPos = new THREE.Vector3();
+      const animEndPos = new THREE.Vector3();
+      let animStartTime = 0;
+      const animDuration = 420; // ms
+
+      function animateCameraTo(newTarget, newPos) {
+        animStartTarget.copy(controls.target);
+        animEndTarget.copy(newTarget);
+        animStartPos.copy(camera.position);
+
+        if (newPos) {
+          animEndPos.copy(newPos);
+        } else {
+          // Maintain viewing direction from current camera position to new target
+          const offset = camera.position.clone().sub(controls.target);
+          const dist = offset.length();
+          // If zoomed far out, bring closer for comfortable single-part inspection
+          if (dist > 2500) {
+            offset.setLength(1800);
+          } else if (dist < 600) {
+            offset.setLength(800);
+          }
+          animEndPos.copy(newTarget).add(offset);
+        }
+
+        animStartTime = performance.now();
+        isAnimatingCamera = true;
+      }
+
+      controls.addEventListener('start', () => {
+        isAnimatingCamera = false;
+      });
+
       // Render Loop
       function animate() {
         requestAnimationFrame(animate);
+
+        if (isAnimatingCamera) {
+          const now = performance.now();
+          const t = Math.min((now - animStartTime) / animDuration, 1.0);
+          // Ease in-out cubic
+          const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          controls.target.lerpVectors(animStartTarget, animEndTarget, ease);
+          camera.position.lerpVectors(animStartPos, animEndPos, ease);
+          if (t >= 1.0) {
+            controls.target.copy(animEndTarget);
+            camera.position.copy(animEndPos);
+            isAnimatingCamera = false;
+          }
+        }
+
         controls.update();
         renderer.render(scene, camera);
       }
@@ -1949,27 +2004,111 @@
       }
     }
 
+    // Solid selection & highlight material
+    const highlightMaterial = new THREE.MeshStandardMaterial({
+      color: 0xf59e0b,
+      metalness: 0.55,
+      roughness: 0.35,
+      emissive: 0xb45309,
+      emissiveIntensity: 0.45,
+      side: THREE.DoubleSide,
+      polygonOffset: true,
+      polygonOffsetFactor: 1,
+      polygonOffsetUnits: 1
+    });
+
+    let selectedMesh = null;
+    let selectedOriginalMat = null;
+
+    function selectMesh(mesh) {
+      if (selectedMesh) {
+        selectedMesh.material = selectedOriginalMat;
+        selectedMesh = null;
+        selectedOriginalMat = null;
+      }
+      if (mesh) {
+        selectedMesh = mesh;
+        selectedOriginalMat = mesh.material;
+        mesh.material = highlightMaterial;
+      }
+    }
+
     // View button event handlers
     function setCameraView(preset) {
       if (!controls || !camera) return;
-      controls.target.set(0, 0, 0);
+
+      selectMesh(null);
 
       switch (preset) {
         case 'iso':
-          camera.position.set(-3800, 2400, 4800);
+          animateCameraTo(new THREE.Vector3(0, 0, 0), new THREE.Vector3(-3800, 2400, 4800));
           break;
         case 'side':
-          camera.position.set(0, 100, 6800);
+          animateCameraTo(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 100, 6800));
           break;
         case 'top':
-          camera.position.set(0, 7500, 1);
+          animateCameraTo(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 7500, 1));
           break;
         case 'front':
-          camera.position.set(-5400, 150, 0);
+          // Center orbit target directly on the front chuck assembly
+          animateCameraTo(new THREE.Vector3(-2950, 50, 0), new THREE.Vector3(-5200, 250, 800));
           break;
       }
-      controls.update();
     }
+
+    // Raycasting click-to-orbit selection
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const pointerDown = { x: 0, y: 0, time: 0 };
+
+    canvas.addEventListener('pointerdown', (e) => {
+      pointerDown.x = e.clientX;
+      pointerDown.y = e.clientY;
+      pointerDown.time = performance.now();
+    });
+
+    canvas.addEventListener('pointerup', (e) => {
+      const dx = e.clientX - pointerDown.x;
+      const dy = e.clientY - pointerDown.y;
+      const dt = performance.now() - pointerDown.time;
+      if (Math.hypot(dx, dy) > 6 || dt > 500) {
+        // Dragging or orbiting - not a click
+        return;
+      }
+
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
+      raycaster.setFromCamera(mouse, camera);
+      const intersects = raycaster.intersectObjects(modelGroup.children, false);
+
+      if (intersects.length > 0) {
+        const hit = intersects[0];
+        const mesh = hit.object;
+        selectMesh(mesh);
+
+        // Compute center of selected solid/subset
+        const box = new THREE.Box3().setFromObject(mesh);
+        const center = box.getCenter(new THREE.Vector3());
+
+        // Animate orbit target to the center of the clicked part
+        animateCameraTo(center);
+      } else {
+        // Clicking empty space deselects and restores machine center orbit
+        selectMesh(null);
+        animateCameraTo(new THREE.Vector3(0, 0, 0));
+      }
+    });
+
+    canvas.addEventListener('pointermove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+      mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(mouse, camera);
+      const hits = raycaster.intersectObjects(modelGroup.children, false);
+      canvas.style.cursor = hits.length > 0 ? 'pointer' : 'default';
+    });
 
     btnIso.addEventListener('click', () => setCameraView('iso'));
     btnSide.addEventListener('click', () => setCameraView('side'));
