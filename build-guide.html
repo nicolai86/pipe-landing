@@ -1802,7 +1802,7 @@
       renderer.toneMappingExposure = 1.35;
 
       camera = new THREE.PerspectiveCamera(38, width / height, 10, 50000);
-      camera.position.set(3600, 2600, 5200);
+      camera.position.set(-3800, 2400, 4800);
 
       scene = new THREE.Scene();
 
@@ -1956,16 +1956,16 @@
 
       switch (preset) {
         case 'iso':
-          camera.position.set(3600, 2600, 5200);
+          camera.position.set(-3800, 2400, 4800);
           break;
         case 'side':
-          camera.position.set(0, 200, 6200);
+          camera.position.set(0, 100, 6800);
           break;
         case 'top':
-          camera.position.set(0, 7200, 0);
+          camera.position.set(0, 7500, 1);
           break;
         case 'front':
-          camera.position.set(-5200, 300, 1000);
+          camera.position.set(-5400, 150, 0);
           break;
       }
       controls.update();
