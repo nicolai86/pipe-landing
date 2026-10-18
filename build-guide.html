@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Rotary CNC Plasma Cutter v1 — Complete 6-Meter 4-Axis Build Guide | RotaryCAM</title>
+  <meta name="title" content="Rotary CNC Plasma Cutter v1 — Complete 6-Meter 4-Axis Build Guide | RotaryCAM" />
+  <meta name="description" content="Complete technical documentation, bill of materials, and interactive 3D CAD model for a 6-meter 4-axis rotary CNC plasma cutter built with CSLab IP-M, Teknic ClearPath servos, and dual chucks." />
+  <meta name="keywords" content="rotary plasma build guide, DIY 4-axis plasma cutter, rotary CNC plasma BOM, Teknic ClearPath plasma, CSLab IP-M rotary plasma, ZCT200 rotary table, XSU080318 slewing bearing, SimCNC rotary kinematics, pipe plasma machine build" />
+  <meta name="author" content="Raphael Randschau" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://rotarycam.app/build-guide.html" />
+  <meta name="theme-color" content="#0d0f12" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/build-guide.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Rotary CNC Plasma Cutter v1 — 6-Meter 4-Axis Build Guide" />
+  <meta property="og:description" content="Open-hardware engineering blueprint, complete BOM, and interactive 3D CAD assembly for a 20ft 4-axis rotary CNC plasma table." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Rotary CNC Plasma Cutter v1 — 6-Meter 4-Axis Build Guide" />
+  <meta name="twitter:description" content="Complete 4-axis rotary CNC plasma build guide: CSLab IP-M, Teknic ClearPath servos, dual synchronized chucks, and interactive 3D model." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%2314171d' stroke='%23f59e0b' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='16' r='4' fill='%23f59e0b'/></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three.core.js",
+      "three/addons/": "./vendor/"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --surface: #14171d;
+      --surface-border: #232833;
+      --surface-hover: #1c212b;
+      --plasma-amber: #f59e0b;
+      --plasma-glow: rgba(245, 158, 11, 0.2);
+      --cyan-arc: #06b6d4;
+      --emerald-cut: #10b981;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --code-bg: #090b0e;
+      --radius: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.25;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Sticky Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 15, 18, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+      width: 100%;
+    }
+
+    nav {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .brand-tag {
+      font-size: 0.7rem;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--plasma-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-back-link {
+      color: var(--plasma-amber) !important;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .nav-cta {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      border-color: var(--plasma-amber);
+      color: #fff;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .guide-hero {
+      padding: 3.5rem 0 2rem;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: var(--plasma-amber);
+      margin-bottom: 1.25rem;
+    }
+
+    .guide-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .guide-hero h1 span {
+      background: linear-gradient(135deg, #fff 40%, var(--plasma-amber) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .guide-hero p {
+      max-width: 820px;
+      margin: 0 auto 2.5rem;
+      color: var(--text-muted);
+      font-size: 1.125rem;
+      line-height: 1.6;
+    }
+
+    /* Specs Highlights Strip */
+    .specs-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .spec-item {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1rem;
+      text-align: left;
+    }
+
+    .spec-label {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+
+    .spec-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .spec-sub {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-top: 0.25rem;
+    }
+
+    /* 3D CAD Viewport Section */
+    .viewport-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 4rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .viewport-header {
+      padding: 0.85rem 1.25rem;
+      background: rgba(20, 23, 29, 0.95);
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .viewport-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald-cut);
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    }
+
+    .viewport-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .tool-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .tool-btn:hover, .tool-btn.active {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--plasma-amber);
+      border-color: var(--plasma-amber);
+    }
+
+    #cad-viewport-container {
+      width: 100%;
+      height: 580px;
+      position: relative;
+      background: radial-gradient(circle at center, #171b22 0%, #0d0f12 100%);
+      cursor: grab;
+    }
+
+    #cad-viewport-container:active {
+      cursor: grabbing;
+    }
+
+    #cad-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(13, 15, 18, 0.88);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 10;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(245, 158, 11, 0.2);
+      border-top-color: var(--plasma-amber);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .loading-sub {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .viewport-footer {
+      padding: 1rem 1.5rem;
+      background: rgba(20, 23, 29, 0.95);
+      border-top: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .viewport-info {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .download-step-btn {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: var(--plasma-amber);
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .download-step-btn:hover {
+      background: var(--plasma-amber);
+      color: #000;
+      box-shadow: 0 0 16px var(--plasma-glow);
+    }
+
+    /* Guide Content Sections */
+    .guide-section {
+      margin-bottom: 5rem;
+    }
+
+    .section-header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--surface-border);
+      padding-bottom: 1rem;
+    }
+
+    .section-num {
+      color: var(--plasma-amber);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .section-title {
+      font-size: 1.85rem;
+      color: #fff;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      max-width: 860px;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .doc-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      position: relative;
+    }
+
+    .doc-card.highlight {
+      border-color: rgba(245, 158, 11, 0.35);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.04) 0%, var(--surface) 100%);
+    }
+
+    .doc-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .doc-card p {
+      color: var(--text-muted);
+      font-size: 0.925rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .doc-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-badge.amber {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.3);
+      color: var(--plasma-amber);
+    }
+
+    .card-badge.cyan {
+      background: rgba(6, 182, 212, 0.12);
+      border-color: rgba(6, 182, 212, 0.3);
+      color: var(--cyan-arc);
+    }
+
+    /* Callout Box */
+    .callout-box {
+      background: rgba(6, 182, 212, 0.06);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-left: 4px solid var(--cyan-arc);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #67e8f9;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout-box p {
+      color: #cffafe;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-bottom: 0;
+    }
+
+    /* BOM Table */
+    .bom-table-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      overflow-x: auto;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.4);
+    }
+
+    table.bom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    table.bom-table th {
+      background: rgba(20, 23, 29, 0.95);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--surface-border);
+      white-space: nowrap;
+    }
+
+    table.bom-table td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid rgba(35, 40, 51, 0.6);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+
+    table.bom-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text);
+    }
+
+    table.bom-table td.subsystem-col {
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    table.bom-table td.model-col {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--plasma-amber);
+      font-size: 0.82rem;
+    }
+
+    table.bom-table td.qty-col {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      width: 60px;
+    }
+
+    /* CAM CTA Card */
+    .cam-cta-card {
+      background: linear-gradient(135deg, rgba(20, 23, 29, 0.95) 0%, rgba(35, 40, 51, 0.95) 100%);
+      border: 1px solid var(--plasma-amber);
+      box-shadow: 0 16px 36px rgba(245, 158, 11, 0.12);
+      border-radius: 12px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      margin: 5rem 0 3rem;
+      position: relative;
+    }
+
+    .cam-cta-card h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cam-cta-card p {
+      max-width: 720px;
+      margin: 0 auto 2rem;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .primary-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--plasma-amber);
+      color: #000;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      box-shadow: 0 4px 14px var(--plasma-glow);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .primary-btn:hover {
+      background: #fbbf24;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--plasma-amber);
+    }
+
+    @media (max-width: 900px) {
+      .specs-strip, .grid-2, .grid-3 {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+      #cad-viewport-container {
+        height: 420px;
+      }
+      .guide-hero h1 {
+        font-size: 2.2rem;
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <nav>
+      <a href="index.html" class="brand">
+        <span>RotaryCAM</span>
+        <span class="brand-tag">v0.2-BETA</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html" class="nav-back-link">← Back to RotaryCAM</a>
+        <a href="#viewport-section">3D Model</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#controller">SimCNC</a>
+        <a href="#servos">Servos</a>
+        <a href="#chucks">Dual Chucks</a>
+        <a href="#linear-motion">Linear Motion</a>
+        <a href="#thc">THC &amp; Safety</a>
+        <a href="#bom">BOM</a>
+      </div>
+      <a href="index.html#waitlist" class="nav-cta">Join Beta Waitlist</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="guide-hero">
+      <div class="badge">
+        <span class="mono">OPEN HARDWARE BLUEPRINT</span>
+        <span>•</span>
+        <span>6-METER 4-AXIS ROTARY PLASMA</span>
+      </div>
+      <h1>Rotary CNC Plasma Cutter <span>v1</span></h1>
+      <p>
+        Complete machine architecture, electrical schematics, bill of materials, and interactive 3D CAD model for a heavy-duty 6-meter (20-foot) 4-axis rotary plasma cutter built for full mill sticks of pipe, square tube, and rectangular HSS.
+      </p>
+
+      <!-- Key Specs Strip -->
+      <div class="specs-strip">
+        <div class="spec-item">
+          <div class="spec-label">Bed Capacity</div>
+          <div class="spec-value">6,096 mm (20 ft)</div>
+          <div class="spec-sub">Uncut mill stick continuous cutting</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Motion Kinematics</div>
+          <div class="spec-value">4-Axis Synchronized</div>
+          <div class="spec-sub">X, Y, Z + A Continuous Rotary</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Motion Controller</div>
+          <div class="spec-value">CSLab CSMIO/IP-M</div>
+          <div class="spec-sub">125 kHz Step/Dir, 24V Industrial I/O</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Rotary Drive</div>
+          <div class="spec-value">Teknic ClearPath</div>
+          <div class="spec-sub">Synchronized Dual-End Chucks</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D CAD Viewport Section -->
+    <section id="viewport-section" class="guide-section">
+      <div class="viewport-card">
+        <div class="viewport-header">
+          <div class="viewport-title">
+            <span class="status-dot"></span>
+            <span>Interactive 3D CAD Assembly</span>
+            <span class="card-badge amber mono" style="margin-bottom:0;">315 SOLIDS • 1.05M VERTICES</span>
+          </div>
+          <div class="viewport-toolbar">
+            <button class="tool-btn" id="btn-view-iso" title="Isometric View">Isometric</button>
+            <button class="tool-btn" id="btn-view-side" title="Side Bed Length View">Side View</button>
+            <button class="tool-btn" id="btn-view-top" title="Top View">Top View</button>
+            <button class="tool-btn" id="btn-view-front" title="Front Chuck Bore View">Front Chuck</button>
+            <button class="tool-btn" id="btn-toggle-wire" title="Toggle Wireframe Mode">Wireframe</button>
+            <button class="tool-btn" id="btn-reset-view" title="Reset Camera View">Reset</button>
+            <button class="tool-btn" id="btn-fullscreen" title="Toggle Fullscreen">Fullscreen</button>
+          </div>
+        </div>
+
+        <div id="cad-viewport-container">
+          <div class="loading-overlay" id="loading-overlay">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loading-status">Loading 3D CAD Assembly...</div>
+            <div class="loading-sub">Decompressing 315 solids (8.7 MB compressed)</div>
+          </div>
+          <canvas id="cad-canvas"></canvas>
+        </div>
+
+        <div class="viewport-footer">
+          <div class="viewport-info mono">
+            Assembly: 6,096 mm structural spine • XSU080318 slewing ring • ZCT200 actuator • 4 ClearPath servos
+          </div>
+          <a href="assets/rotary-pipe.step.gz" download class="download-step-btn">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            </svg>
+            Download STEP Assembly (23 MB)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1: Architecture & Machine Envelope -->
+    <section id="architecture" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 01</div>
+        <h2 class="section-title">Machine Envelope &amp; Structural Architecture</h2>
+        <p class="section-desc">
+          Designed for production fabrication shops cutting raw 20-foot (6-meter) structural mill sticks without pre-cutting on a cold saw.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="doc-card highlight">
+          <span class="card-badge amber mono">STRUCTURAL FOUNDATION</span>
+          <h3>5" × 3" × 1/4" Structural Steel Spine</h3>
+          <p>
+            The machine bed is built upon a single, continuous 6-meter <strong>5.0" × 3.0" × 1/4" (127 × 76 × 6.35 mm) rectangular HSS structural tube</strong>. This main structural backbone provides immense torsional rigidity, preventing bed sag under heavy thick-wall pipe and resisting high dynamic acceleration forces from rapid gantry reversals.
+          </p>
+          <p>
+            Heavy-duty adjustable leveling pedestals spaced along the spine allow precision laser-level alignment across the entire 20-foot bed length, isolating the machine from uneven shop floors.
+          </p>
+        </div>
+
+        <div class="doc-card">
+          <span class="card-badge cyan mono">KINEMATICS OVERVIEW</span>
+          <h3>True 4-Axis Synchronized Motion</h3>
+          <p>
+            Unlike 2-axis rotary attachments that disconnect a flat-table Y-axis, this machine features true dedicated 4-axis simultaneous kinematics:
+          </p>
+          <ul style="color: var(--text-muted); font-size: 0.925rem; margin-left: 1.25rem; margin-bottom: 1rem;">
+            <li style="margin-bottom: 0.4rem;"><strong>X-Axis (Longitudinal):</strong> 6,096 mm (20 ft) travel along the bed length for cutting mill sticks.</li>
+            <li style="margin-bottom: 0.4rem;"><strong>Y-Axis (Transverse):</strong> 1,000 mm (3.3 ft) cross-slide carriage for cutting across wide pipe profiles, slots, and off-center holes.</li>
+            <li style="margin-bottom: 0.4rem;"><strong>Z-Axis (Vertical Lifter):</strong> Fast initial height sensing (IHS) retracts and active THC arc voltage tracking.</li>
+            <li style="margin-bottom: 0.4rem;"><strong>A-Axis (Rotary):</strong> Continuous 360° stock rotation driven by dual synchronized chucks.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Motion Controller & SimCNC Software -->
+    <section id="controller" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 02</div>
+        <h2 class="section-title">Motion Controller &amp; SimCNC 4D Feedrate Scaling</h2>
+        <p class="section-desc">
+          Industrial motion hardware paired with CSLab SimCNC and RotaryCAM's proprietary 4D trajectory feedrate scaling.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="doc-card">
+          <span class="card-badge cyan mono">HARDWARE CONTROLLER</span>
+          <h3>CSLab CSMIO/IP-M 4-Axis Controller</h3>
+          <p>
+            The control cabinet is centered around the <strong>CSLab CSMIO/IP-M Ethernet 4-axis motion controller</strong>. It generates rock-solid 125 kHz step/direction signals over galvanic Ethernet, eliminating PC jitter and USB dropouts.
+          </p>
+          <p>
+            Hardware-level <strong>24V industrial opto-isolated I/O</strong> guarantees complete immunity against high-voltage electrical noise, pilot arc RF interference, and plasma high-frequency start spikes.
+          </p>
+        </div>
+
+        <div class="doc-card highlight">
+          <span class="card-badge amber mono">ROTARYCAM 4D FEEDRATE</span>
+          <h3>The Rotary Feedrate Problem &amp; CAM Solution</h3>
+          <p>
+            Standard CNC controllers (including SimCNC) calculate feedrate (F) in linear units-per-minute (inches/min or mm/min) or pure rotary degrees-per-minute. They cannot natively calculate constant surface speed when blending linear X/Y moves with rotary A-axis rotation.
+          </p>
+          <p>
+            If you cut an X-slot at F100, the torch travels at 100 IPM. But when cutting around a 2-inch pipe circumference, pure rotary motion at the same F drops or spikes surface speed, causing severe dross or arc extinguish. On square tube, the surface radius constantly changes between flat faces and corners!
+          </p>
+          <div class="callout-box">
+            <div class="callout-title">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              How RotaryCAM Solves This
+            </div>
+            <p>
+              RotaryCAM pre-computes <strong>4D Euclidean trajectory feedrate scaling</strong> directly into the generated G-code. By calculating instantaneous surface radii for every arc segment, RotaryCAM scales feedrates dynamically so the plasma jet cuts at an exact, uniform surface speed (IPM) across round pipe, square tube faces, and corner radii.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Teknic ClearPath Integrated Servos -->
+    <section id="servos" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 03</div>
+        <h2 class="section-title">Teknic ClearPath Integrated Brushless Servos</h2>
+        <p class="section-desc">
+          Zero external drive enclosures, zero encoder signal noise, and immense dynamic torque across all four axes.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="doc-card highlight">
+          <span class="card-badge amber mono">A-AXIS ROTARY (DUAL)</span>
+          <h3>2x SDHP-3446P-ELN</h3>
+          <p><strong>NEMA 34 High-Power ClearPath</strong></p>
+          <p>
+            Dedicated high-power servos drive the front and rear rotary chucks. Electrically synchronized in SimCNC, dual chucks grip both ends of a 20-foot stick, completely eliminating tube twist on thin-wall stock.
+          </p>
+        </div>
+
+        <div class="doc-card">
+          <span class="card-badge mono">X-AXIS BED TRAVEL</span>
+          <h3>1x SDHP-3446P-ELN</h3>
+          <p><strong>NEMA 34 High-Power ClearPath</strong></p>
+          <p>
+            Drives the full 6-meter longitudinal carriage through a precision helical pinion. Delivers rapid 1,200 IPM traverse speeds and rapid acceleration without missing steps.
+          </p>
+        </div>
+
+        <div class="doc-card">
+          <span class="card-badge mono">Y &amp; Z AXES (TORCH SLIDES)</span>
+          <h3>CPM-SDSK-2331S / 2311S</h3>
+          <p><strong>NEMA 23 High-Torque ClearPath</strong></p>
+          <p>
+            <strong>Y-Axis:</strong> CPM-SDSK-2331S-RLN drives the 1-meter cross slide.<br>
+            <strong>Z-Axis:</strong> CPM-SDSK-2311S-RQN provides rapid vertical retracts and ultra-low latency response to THC voltage tracking.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Dual Rotary Headstocks & Chucks -->
+    <section id="chucks" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 04</div>
+        <h2 class="section-title">Dual Rotary Headstocks &amp; Crossed Roller Slew Rings</h2>
+        <p class="section-desc">
+          Eliminating 20-foot torsional whip and slag contamination with industrial through-bore rotary mechanics.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="doc-card highlight">
+          <span class="card-badge amber mono">FRONT HEADSTOCK</span>
+          <h3>XSU080318 Crossed Roller Slew Bearing</h3>
+          <p>
+            At the cutting front where hot molten slag, dross, and sparks shower downward, conventional spindly bearings fail rapidly. This machine utilizes an <strong>XSU080318 high-rigidity crossed roller slewing ring bearing</strong>.
+          </p>
+          <p>
+            Its alternating cylindrical rollers withstand massive simultaneous radial, axial, and moment loads, allowing thick-wall pipe to rotate smoothly with zero radial play and zero deflection under torch downward pressure.
+          </p>
+        </div>
+
+        <div class="doc-card">
+          <span class="card-badge cyan mono">REAR CHUCK &amp; REDUCER</span>
+          <h3>ZCT200 10:1 Hollow Actuator + K72 Chuck</h3>
+          <p>
+            The drive actuator is a <strong>ZCT200 10:1 hollow rotary platform</strong> featuring zero-backlash planetary gearing and a massive central through-bore for long pipe pass-through.
+          </p>
+          <p>
+            Fitted with a heavy-duty <strong>K72 4-jaw independent chuck</strong> with reversible hardened jaws, allowing secure centering of round pipe, square tubing, rectangular HSS, and even asymmetric angle iron.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Linear Motion & Bed Construction -->
+    <section id="linear-motion" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 05</div>
+        <h2 class="section-title">Precision Linear Guides &amp; Helical Rack Drives</h2>
+        <p class="section-desc">
+          Continuous helical tooth engagement eliminates the tooth impact chatter and scalloped cut edges of cheap spur racks.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="doc-card">
+          <span class="card-badge mono">X &amp; Y AXIS GUIDES</span>
+          <h3>HGH25 Heavy-Load Profile Linear Rails</h3>
+          <p>
+            Both the 6-meter bed carriage and the 1-meter cross slide ride on <strong>precision-ground HGH25 linear profile rails</strong> with heavy-load flanged recirculating ball carriage blocks.
+          </p>
+          <p>
+            Linear rails are bolted directly to the precision-machined top reference surface of the HSS structural spine, ensuring perfect parallelism and zero gantry bind across all 20 feet of travel.
+          </p>
+        </div>
+
+        <div class="doc-card highlight">
+          <span class="card-badge amber mono">TRANSMISSION</span>
+          <h3>Module 1.5 Hardened Helical Rack &amp; Pinion</h3>
+          <p>
+            Standard straight spur racks vibrate as teeth enter and exit mesh, creating distinct ripple marks on plasma cuts. This machine uses <strong>precision-ground module 1.5 helical rack and pinion</strong>.
+          </p>
+          <p>
+            Helical teeth maintain continuous, overlapping tooth contact at all times, providing whisper-quiet motion, high positional accuracy, and mirror-clean plasma edge finishes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Torch Lifter, THC & Safety Systems -->
+    <section id="thc" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 06</div>
+        <h2 class="section-title">Torch Lifter, Dual IHS &amp; Safety Systems</h2>
+        <p class="section-desc">
+          Zero-deflection ohmic sensing, mechanical floating head backup, and high-speed corner anti-dive locking.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="doc-card">
+          <span class="card-badge cyan mono">PRIMARY IHS</span>
+          <h3>FastCutCNC Ohmic Sensing</h3>
+          <p>
+            A dedicated <strong>FastCutCNC ohmic sensing isolator box</strong> couples directly to the Hypertherm machine torch shield cap. Detects plate contact via electrical continuity with zero downward mechanical force, preventing thin-wall tube deflection during pierce referencing.
+          </p>
+        </div>
+
+        <div class="doc-card">
+          <span class="card-badge mono">BACKUP IHS</span>
+          <h3>Floating Head Microswitch</h3>
+          <p>
+            A precision mechanical floating head slider sits behind the torch mount. If heavy mill scale, rust, or cutting oil prevents ohmic contact, the floating head switch triggers instantly as a mechanical fail-safe before the Z servo stalls.
+          </p>
+        </div>
+
+        <div class="doc-card highlight">
+          <span class="card-badge amber mono">SAFETY &amp; COLLISION</span>
+          <h3>Magnetic Breakaway &amp; Anti-Dive</h3>
+          <p>
+            <strong>Magnetic Breakaway:</strong> High-force neodymium magnets hold the torch carrier. If a cut pipe slug tips up, the torch snaps off cleanly and trips an E-stop circuit.<br><br>
+            <strong>THC Anti-Dive:</strong> RotaryCAM outputs <code>M62/M63</code> high-speed digital outputs to freeze THC before decelerating around corners, stopping torch dives.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Custom Machined Brackets -->
+    <section id="brackets" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 07</div>
+        <h2 class="section-title">Custom CNC-Machined 6061-T6 Components</h2>
+        <p class="section-desc">
+          Precision aluminum adapter plates connecting the commercial drive hardware to the structural steel bed.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="doc-card">
+          <h3>Slew Ring Adapter Flange</h3>
+          <p>
+            CNC-machined 6061-T6 aluminum adapter plate mounting the XSU080318 slewing ring bearing to the front machine upright with concentric O-ring dust seals.
+          </p>
+        </div>
+        <div class="doc-card">
+          <h3>Spring-Loaded Pinion Pivots</h3>
+          <p>
+            Cam-adjusted pivot brackets with calibrated pre-load springs that keep the helical pinion teeth firmly engaged into the rack without binding across temperature swings.
+          </p>
+        </div>
+        <div class="doc-card">
+          <h3>Z-Axis Lifter Slide Plate</h3>
+          <p>
+            Lightweight, pocketed 6061-T6 carrier plate combining the linear guide blocks, ballscrew nut, floating microswitch, and magnetic breakaway sockets into one rigid assembly.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 8: Complete Bill of Materials (BOM) -->
+    <section id="bom" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 08</div>
+        <h2 class="section-title">Complete Bill of Materials (BOM)</h2>
+        <p class="section-desc">
+          The verified commercial hardware specification used to build the Rotary CNC Plasma Cutter v1.
+        </p>
+      </div>
+
+      <div class="bom-table-wrapper">
+        <table class="bom-table">
+          <thead>
+            <tr>
+              <th>Subsystem</th>
+              <th>Component Name</th>
+              <th>Part / Model Number</th>
+              <th style="text-align:center;">Qty</th>
+              <th>Technical Specification &amp; Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="subsystem-col">Structural Bed</td>
+              <td>Main Bed Spine Beam</td>
+              <td class="model-col">5" × 3" × 1/4" HSS</td>
+              <td class="qty-col">1</td>
+              <td>Single continuous 6,096 mm (20 ft) structural steel tube; machined top rail face.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Structural Bed</td>
+              <td>Leveling Pedestals</td>
+              <td class="model-col">M24 Heavy Duty</td>
+              <td class="qty-col">6</td>
+              <td>Adjustable heavy leveling feet with vibration-isolation elastomer foot pads.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Motion Controller</td>
+              <td>4-Axis Ethernet Motion Controller</td>
+              <td class="model-col">CSLab CSMIO/IP-M</td>
+              <td class="qty-col">1</td>
+              <td>125 kHz step/dir, 24V industrial opto-isolated I/O, Ethernet connection.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Controller Software</td>
+              <td>CNC Controller Software</td>
+              <td class="model-col">CSLab SimCNC</td>
+              <td class="qty-col">1</td>
+              <td>SimCNC 4-axis machine control software license.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Servos &amp; Motors</td>
+              <td>A-Axis Rotary Servos (Front &amp; Rear)</td>
+              <td class="model-col">SDHP-3446P-ELN</td>
+              <td class="qty-col">2</td>
+              <td>Teknic ClearPath NEMA 34 High-Power Integrated Brushless Servos.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Servos &amp; Motors</td>
+              <td>X-Axis Bed Travel Servo</td>
+              <td class="model-col">SDHP-3446P-ELN</td>
+              <td class="qty-col">1</td>
+              <td>Teknic ClearPath NEMA 34 High-Power Integrated Brushless Servo.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Servos &amp; Motors</td>
+              <td>Y-Axis Cross-Slide Servo</td>
+              <td class="model-col">CPM-SDSK-2331S-RLN</td>
+              <td class="qty-col">1</td>
+              <td>Teknic ClearPath NEMA 23 High-Torque Integrated Brushless Servo.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Servos &amp; Motors</td>
+              <td>Z-Axis Torch Lifter Servo</td>
+              <td class="model-col">CPM-SDSK-2311S-RQN</td>
+              <td class="qty-col">1</td>
+              <td>Teknic ClearPath NEMA 23 High-Speed Integrated Brushless Servo.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Rotary Mechanics</td>
+              <td>Front Slewing Ring Bearing</td>
+              <td class="model-col">XSU080318</td>
+              <td class="qty-col">1</td>
+              <td>Crossed roller slewing ring bearing with custom machined 6061-T6 faceplate.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Rotary Mechanics</td>
+              <td>Rear Rotary Actuator</td>
+              <td class="model-col">ZCT200 10:1</td>
+              <td class="qty-col">1</td>
+              <td>10:1 zero-backlash hollow rotary platform with large central through-bore.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Rotary Mechanics</td>
+              <td>4-Jaw Independent Chuck</td>
+              <td class="model-col">K72-200 / 250</td>
+              <td class="qty-col">1</td>
+              <td>Heavy-duty 4-jaw chuck with reversible jaws for round, square &amp; rectangular tube.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Linear Guides</td>
+              <td>X-Axis Linear Profile Rails</td>
+              <td class="model-col">HGH25 (6,000 mm)</td>
+              <td class="qty-col">2</td>
+              <td>Precision ground 25 mm linear rails + 4x HGH25CA flanged carriage blocks.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Linear Guides</td>
+              <td>Y-Axis Linear Profile Rails</td>
+              <td class="model-col">HGH25 (1,000 mm)</td>
+              <td class="qty-col">2</td>
+              <td>1,000 mm precision linear rails for transverse torch cross-slide.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Gear Transmission</td>
+              <td>X-Axis Helical Rack &amp; Pinion</td>
+              <td class="model-col">Module 1.5 Helical (6m)</td>
+              <td class="qty-col">6m</td>
+              <td>Hardened steel module 1.5 right-hand helical gear rack + spring-tensioned pinion.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Gear Transmission</td>
+              <td>Y-Axis Helical Rack &amp; Pinion</td>
+              <td class="model-col">Module 1.5 Helical (1m)</td>
+              <td class="qty-col">1m</td>
+              <td>Hardened steel module 1.5 helical gear rack for transverse cross slide.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Torch Height Control</td>
+              <td>Ohmic Sensing Isolator</td>
+              <td class="model-col">FastCutCNC Ohmic Box</td>
+              <td class="qty-col">1</td>
+              <td>Opto-isolated ohmic initial height sensing box with shield wire harness.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Torch Height Control</td>
+              <td>Plasma Machine Interface</td>
+              <td class="model-col">Hypertherm CPC Cable</td>
+              <td class="qty-col">1</td>
+              <td>Divided arc voltage (50:1), arc transfer ok, and torch start signals.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Safety &amp; Lifter</td>
+              <td>Magnetic Breakaway Carrier</td>
+              <td class="model-col">Neodymium + E-Stop Switch</td>
+              <td class="qty-col">1</td>
+              <td>Torch collision breakaway with integrated IP-M emergency stop trip circuit.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Safety &amp; Lifter</td>
+              <td>Floating Head Backup Switch</td>
+              <td class="model-col">Omron Subminiature</td>
+              <td class="qty-col">1</td>
+              <td>Mechanical initial height sensing fail-safe microswitch.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Custom Machined</td>
+              <td>Billet Mounting Plates</td>
+              <td class="model-col">6061-T6 Aluminum</td>
+              <td class="qty-col">1 set</td>
+              <td>CNC-machined servo brackets, slew ring adapter, pinion tensioners, and slide plates.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 9: CAM Software Integration Callout -->
+    <section class="guide-section">
+      <div class="cam-cta-card">
+        <h2>The Hardware is Only Half the Battle.</h2>
+        <p>
+          You cannot cut 3D tube geometries by unrolling flat 2D DXFs in CAD. RotaryCAM transforms raw 3D CAD STEP assemblies directly into machine-ready G-code with zero-bevel saddle compensation, automatic copes, 4D SimCNC feedrate scaling, and full mill-stick nesting.
+        </p>
+        <a href="index.html#waitlist" class="primary-btn">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Join the Beta Waitlist
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">
+      <div class="mono" style="font-weight: 600; color: #fff; margin-bottom: 0.35rem;">rotarycam.app © 2026 Raphael Randschau</div>
+      <div style="color: var(--text-dim); font-size: 0.825rem;">Rotary CNC Plasma Cutter v1 Open Hardware Blueprint • Built for SimCNC, Mach4, LinuxCNC &amp; Masso</div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">← Back to RotaryCAM</a>
+      <a href="index.html#impressum" class="footer-link">Legal Notice &amp; Safety</a>
+      <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
+    </div>
+  </footer>
+
+  <!-- Three.js 3D CAD Viewer Script -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from './vendor/OrbitControls.js';
+
+    const container = document.getElementById('cad-viewport-container');
+    const canvas = document.getElementById('cad-canvas');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const loadingStatus = document.getElementById('loading-status');
+
+    let scene, camera, renderer, controls, modelGroup;
+    let isWireframe = false;
+
+    // View preset buttons
+    const btnIso = document.getElementById('btn-view-iso');
+    const btnSide = document.getElementById('btn-view-side');
+    const btnTop = document.getElementById('btn-view-top');
+    const btnFront = document.getElementById('btn-view-front');
+    const btnWire = document.getElementById('btn-toggle-wire');
+    const btnReset = document.getElementById('btn-reset-view');
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+
+    function initScene() {
+      const width = container.clientWidth || 800;
+      const height = container.clientHeight || 580;
+
+      renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true,
+        preserveDrawingBuffer: true,
+        powerPreference: 'high-performance'
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.35;
+
+      camera = new THREE.PerspectiveCamera(38, width / height, 10, 50000);
+      camera.position.set(4000, 2400, 3600);
+
+      scene = new THREE.Scene();
+
+      // Studio Lighting Rig
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x2d3748, 1.4);
+      scene.add(hemiLight);
+
+      const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
+      keyLight.position.set(4000, 6000, 4000);
+      scene.add(keyLight);
+
+      const fillLight = new THREE.DirectionalLight(0xb8d2f2, 1.2);
+      fillLight.position.set(-4000, 3000, -3000);
+      scene.add(fillLight);
+
+      const rimLight = new THREE.DirectionalLight(0xfff0e2, 1.0);
+      rimLight.position.set(0, 5000, -5000);
+      scene.add(rimLight);
+
+      const bounceLight = new THREE.DirectionalLight(0x8fa3bf, 0.6);
+      bounceLight.position.set(0, -4000, 2000);
+      scene.add(bounceLight);
+
+      const headLight = new THREE.DirectionalLight(0xffffff, 0.7);
+      headLight.position.set(0, 0, 1);
+      camera.add(headLight);
+      scene.add(camera);
+
+      // Controls
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.08;
+      controls.rotateSpeed = 0.8;
+      controls.zoomSpeed = 1.2;
+      controls.panSpeed = 0.8;
+      controls.target.set(0, 0, 0);
+
+      modelGroup = new THREE.Group();
+      scene.add(modelGroup);
+
+      // Render Loop
+      function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      // Resize observer
+      const resizeObserver = new ResizeObserver(() => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w && h) {
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        }
+      });
+      resizeObserver.observe(container);
+    }
+
+    async function loadCadModel() {
+      try {
+        loadingStatus.textContent = 'Fetching 3D CAD mesh (8.7 MB)...';
+        const resp = await fetch('assets/rotary-pipe-mesh.json.gz');
+        if (!resp.ok) {
+          throw new Error('HTTP ' + resp.status + ' ' + resp.statusText);
+        }
+
+        loadingStatus.textContent = 'Decompressing 315 solids...';
+        let jsonData;
+        try {
+          if (window.DecompressionStream && resp.headers.get('content-encoding') !== 'gzip') {
+            const ds = new DecompressionStream('gzip');
+            const decompressed = resp.body.pipeThrough(ds);
+            jsonData = await new Response(decompressed).json();
+          } else {
+            jsonData = await resp.json();
+          }
+        } catch (decompErr) {
+          console.warn('DecompressionStream fallback:', decompErr);
+          jsonData = await resp.json();
+        }
+
+        if (!jsonData || !jsonData.meshes) {
+          throw new Error('Invalid mesh payload');
+        }
+
+        loadingStatus.textContent = 'Building 1,057,421 vertices in WebGL...';
+
+        const defaultMaterial = new THREE.MeshStandardMaterial({
+          color: 0x94a3b8,
+          metalness: 0.55,
+          roughness: 0.35,
+          side: THREE.DoubleSide
+        });
+
+        // Frame center offsets (CAD center: X=2926.5, Y=803.5, Z=-259.5)
+        // Transform: CAD X -> Three.js X, CAD Z (up) -> Three.js Y (up), CAD Y -> Three.js -Z
+        const cx = 2926.5;
+        const cz = -259.5;
+        const cy = 803.5;
+
+        for (let mIdx = 0; mIdx < jsonData.meshes.length; mIdx++) {
+          const meshData = jsonData.meshes[mIdx];
+          const rawPos = meshData.positions;
+          const rawNorm = meshData.normals;
+
+          const vertCount = rawPos.length / 3;
+          const transformedPos = new Float32Array(rawPos.length);
+          const transformedNorm = rawNorm && rawNorm.length === rawPos.length ? new Float32Array(rawNorm.length) : null;
+
+          for (let i = 0; i < rawPos.length; i += 3) {
+            const x = rawPos[i];
+            const y = rawPos[i + 1];
+            const z = rawPos[i + 2];
+
+            transformedPos[i] = x - cx;
+            transformedPos[i + 1] = z - cz;
+            transformedPos[i + 2] = cy - y;
+
+            if (transformedNorm) {
+              transformedNorm[i] = rawNorm[i];
+              transformedNorm[i + 1] = rawNorm[i + 2];
+              transformedNorm[i + 2] = -rawNorm[i + 1];
+            }
+          }
+
+          const geom = new THREE.BufferGeometry();
+          geom.setAttribute('position', new THREE.BufferAttribute(transformedPos, 3));
+          if (transformedNorm) {
+            geom.setAttribute('normal', new THREE.BufferAttribute(transformedNorm, 3));
+          } else {
+            geom.computeVertexNormals();
+          }
+
+          if (meshData.indices && meshData.indices.length > 0) {
+            const idxArray = vertCount > 65535 ? new Uint32Array(meshData.indices) : new Uint16Array(meshData.indices);
+            geom.setIndex(new THREE.BufferAttribute(idxArray, 1));
+          }
+
+          const mesh = new THREE.Mesh(geom, defaultMaterial);
+          mesh.name = meshData.name || ('Solid_' + mIdx);
+          modelGroup.add(mesh);
+        }
+
+        // Hide loading overlay
+        loadingOverlay.classList.add('hidden');
+      } catch (err) {
+        console.error('Failed to load 3D CAD model:', err);
+        loadingStatus.textContent = 'Could not load 3D model: ' + err.message;
+        const sub = loadingOverlay.querySelector('.loading-sub');
+        if (sub) sub.textContent = 'You can still download the full STEP assembly below.';
+      }
+    }
+
+    // View button event handlers
+    function setCameraView(preset) {
+      if (!controls || !camera) return;
+      controls.target.set(0, 0, 0);
+
+      switch (preset) {
+        case 'iso':
+          camera.position.set(4000, 2400, 3600);
+          break;
+        case 'side':
+          camera.position.set(0, 300, 4800);
+          break;
+        case 'top':
+          camera.position.set(0, 5600, 0);
+          break;
+        case 'front':
+          camera.position.set(-4400, 200, 0);
+          break;
+      }
+      controls.update();
+    }
+
+    btnIso.addEventListener('click', () => setCameraView('iso'));
+    btnSide.addEventListener('click', () => setCameraView('side'));
+    btnTop.addEventListener('click', () => setCameraView('top'));
+    btnFront.addEventListener('click', () => setCameraView('front'));
+    btnReset.addEventListener('click', () => setCameraView('iso'));
+
+    btnWire.addEventListener('click', () => {
+      isWireframe = !isWireframe;
+      btnWire.classList.toggle('active', isWireframe);
+      modelGroup.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material.wireframe = isWireframe;
+        }
+      });
+    });
+
+    btnFullscreen.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        container.requestFullscreen().catch(err => console.warn(err));
+      } else {
+        document.exitFullscreen().catch(err => console.warn(err));
+      }
+    });
+
+    // Start
+    initScene();
+    loadCadModel();
+  </script>
+</body>
+</html>
