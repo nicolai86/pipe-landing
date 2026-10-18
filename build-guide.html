@@ -2284,6 +2284,13 @@
               <td>Hardened steel module 1.5 helical gear rack for 20" transverse cross slide.</td>
             </tr>
             <tr>
+              <td class="subsystem-col">Cable Management</td>
+              <td>Energy Chain Cable Carrier</td>
+              <td class="model-col"><a href="https://www.igus.com/product/2500" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">igus 2500-07-125-0 ↗</a></td>
+              <td class="qty-col">5m</td>
+              <td>igus series 2500 snap-open medium energy chain (inner width 77 mm, bend radius 125 mm) routing servo power/feedback, plasma torch leads, ohmic wire, and air lines across bed travel.</td>
+            </tr>
+            <tr>
               <td class="subsystem-col">Torch Height Control</td>
               <td>Ohmic Sensing Isolator</td>
               <td class="model-col"><a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC Ohmic Box ↗</a></td>
@@ -2578,17 +2585,62 @@
     const btnReset = document.getElementById('btn-reset-view');
     const btnFullscreen = document.getElementById('btn-fullscreen');
 
+    // Safe WebGLRenderer factory with fallback and error handling
+    function createSafeRenderer(targetCanvas, customOpts = {}) {
+      if (!targetCanvas) return null;
+      const defaultOpts = {
+        canvas: targetCanvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'default',
+        failIfMajorPerformanceCaveat: false
+      };
+      const opts = Object.assign({}, defaultOpts, customOpts);
+
+      try {
+        return new THREE.WebGLRenderer(opts);
+      } catch (err1) {
+        console.warn('Primary WebGLRenderer creation failed, attempting low-overhead fallback:', err1);
+        try {
+          return new THREE.WebGLRenderer({
+            canvas: targetCanvas,
+            antialias: false,
+            alpha: true,
+            powerPreference: 'default',
+            failIfMajorPerformanceCaveat: false
+          });
+        } catch (err2) {
+          console.error('All WebGLRenderer creation attempts failed:', err2);
+          return null;
+        }
+      }
+    }
+
     function initScene() {
       const width = container.clientWidth || 800;
       const height = container.clientHeight || 580;
 
-      renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: true,
-        alpha: true,
+      renderer = createSafeRenderer(canvas, {
         preserveDrawingBuffer: true,
-        powerPreference: 'high-performance'
+        powerPreference: 'default'
       });
+
+      if (!renderer) {
+        if (loadingStatus) {
+          loadingStatus.innerHTML = '<span style="color:#ef4444;font-size:0.95rem;">WebGL context could not be created.<br><span style="font-size:0.8rem;color:var(--text-dim);">Your browser GPU process may be restricted or context limits reached.</span><br><button onclick="location.reload()" style="margin-top:12px;padding:6px 16px;background:var(--plasma-amber);color:#000;border:none;border-radius:4px;cursor:pointer;font-weight:bold;font-family:monospace;">Reload Page</button></span>';
+        }
+        return;
+      }
+
+      canvas.addEventListener('webglcontextlost', (e) => {
+        e.preventDefault();
+        console.warn('3D CAD Assembly WebGL context lost.');
+      }, false);
+      canvas.addEventListener('webglcontextrestored', () => {
+        console.log('3D CAD Assembly WebGL context restored.');
+        initScene();
+      }, false);
+
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -2910,229 +2962,262 @@
       if (!pcbCanvas) return;
 
       const pcbParent = pcbCanvas.parentElement;
-      const width = pcbParent.clientWidth || 480;
-      const height = pcbParent.clientHeight || 440;
+      let initialized = false;
+      let pcbRenderer = null;
+      let pcbScene = null;
+      let pcbCamera = null;
+      let pcbControls = null;
+      let isVisible = false;
 
-      const pcbRenderer = new THREE.WebGLRenderer({
-        canvas: pcbCanvas,
-        antialias: true,
-        alpha: true,
-        powerPreference: 'high-performance'
-      });
-      pcbRenderer.setSize(width, height);
-      pcbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      pcbRenderer.toneMapping = THREE.ACESFilmicToneMapping;
-      pcbRenderer.toneMappingExposure = 1.3;
+      function setupViewer() {
+        if (initialized) return;
+        initialized = true;
 
-      const pcbScene = new THREE.Scene();
+        const width = pcbParent.clientWidth || 480;
+        const height = pcbParent.clientHeight || 440;
 
-      const pcbCamera = new THREE.PerspectiveCamera(38, width / height, 1, 5000);
-      pcbCamera.position.set(-110, 95, 120);
+        pcbRenderer = createSafeRenderer(pcbCanvas, {
+          powerPreference: 'default'
+        });
 
-      // Studio Lighting
-      const hemi = new THREE.HemisphereLight(0xffffff, 0x181c24, 1.4);
-      pcbScene.add(hemi);
-
-      const key = new THREE.DirectionalLight(0xffffff, 1.8);
-      key.position.set(160, 260, 200);
-      pcbScene.add(key);
-
-      const fill = new THREE.DirectionalLight(0xa5b4fc, 1.0);
-      fill.position.set(-220, 140, -160);
-      pcbScene.add(fill);
-
-      const rim = new THREE.DirectionalLight(0xfef08a, 0.7);
-      rim.position.set(0, 220, -220);
-      pcbScene.add(rim);
-
-      const headLight = new THREE.DirectionalLight(0xffffff, 0.75);
-      headLight.position.set(0, 0, 1);
-      pcbCamera.add(headLight);
-      pcbScene.add(pcbCamera);
-
-      // Controls
-      const pcbControls = new OrbitControls(pcbCamera, pcbCanvas);
-      pcbControls.enableDamping = true;
-      pcbControls.dampingFactor = 0.08;
-      pcbControls.rotateSpeed = 0.8;
-      pcbControls.zoomSpeed = 1.2;
-      pcbControls.panSpeed = 0.8;
-      pcbControls.target.set(0, 0, 0);
-      pcbControls.autoRotate = true;
-      pcbControls.autoRotateSpeed = 0.9;
-
-      // Pause auto-rotation on user drag
-      pcbControls.addEventListener('start', () => {
-        pcbControls.autoRotate = false;
-      });
-
-      const pcbGroup = new THREE.Group();
-      pcbScene.add(pcbGroup);
-
-      // Load Mesh
-      async function loadMesh() {
-        try {
-          const resp = await fetch(meshUrl);
-          if (!resp.ok) throw new Error('HTTP ' + resp.status);
-          const stream = resp.body.pipeThrough(new DecompressionStream('gzip'));
-          const text = await new Response(stream).text();
-          const data = JSON.parse(text);
-
-          for (const m of data.meshes) {
-            const geom = new THREE.BufferGeometry();
-            geom.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3));
-            if (m.normals && m.normals.length === m.positions.length) {
-              geom.setAttribute('normal', new THREE.Float32BufferAttribute(m.normals, 3));
-            } else {
-              geom.computeVertexNormals();
-            }
-            if (m.indices && m.indices.length > 0) {
-              geom.setIndex(m.indices);
-            }
-
-            const c = m.color || [0.12, 0.12, 0.14];
-            const matType = m.material || 'default';
-
-            let roughness = 0.55;
-            let metalness = 0.10;
-            let col = new THREE.Color(c[0], c[1], c[2]);
-            let polygonOffset = false;
-            let poFactor = 0;
-            let poUnits = 0;
-
-            let isTransparent = false;
-            let opacityVal = 1.0;
-
-            switch (matType) {
-              case 'soldermask':
-                col = new THREE.Color(0.04, 0.44, 0.14); // Authentic Fusion emerald green
-                roughness = 0.38;
-                metalness = 0.04;
-                isTransparent = true;
-                opacityVal = 0.90; // Subtle translucency to reveal copper trace relief beneath
-                polygonOffset = true;
-                poFactor = -1.0; // In FRONT of copper, covering the board
-                poUnits = -1.0;
-                break;
-              case 'copper':
-                col = new THREE.Color(0.96, 0.68, 0.12); // Lustrous metallic gold/amber copper
-                roughness = 0.22;
-                metalness = 0.88;
-                polygonOffset = true;
-                poFactor = 2.0; // Sits BEHIND the green soldermask
-                poUnits = 2.0;
-                break;
-              case 'metal':
-                col = new THREE.Color(0.85, 0.88, 0.92); // Satin silver leads, pins, and solder
-                roughness = 0.18;
-                metalness = 0.95;
-                polygonOffset = true;
-                poFactor = -3.0; // Sits ABOVE soldermask
-                poUnits = -3.0;
-                break;
-              case 'plastic':
-                col = new THREE.Color(0.08, 0.08, 0.09); // Matte dark IC packages and Molex housings
-                roughness = 0.78;
-                metalness = 0.03;
-                break;
-              case 'ceramic':
-                col = new THREE.Color(0.68, 0.54, 0.44); // SMD capacitor ceramic body
-                roughness = 0.60;
-                metalness = 0.08;
-                break;
-              case 'led':
-                col = new THREE.Color(0.12, 0.38, 0.95); // Deep blue LED
-                roughness = 0.15;
-                metalness = 0.10;
-                break;
-              case 'fr4':
-                col = new THREE.Color(0.48, 0.42, 0.28); // Natural composite FR-4 substrate edge
-                roughness = 0.70;
-                metalness = 0.02;
-                polygonOffset = true;
-                poFactor = 4.0; // At the very bottom
-                poUnits = 4.0;
-                break;
-              case 'silkscreen':
-                col = new THREE.Color(1.0, 1.0, 1.0); // White component markings
-                roughness = 0.30;
-                metalness = 0.0;
-                polygonOffset = true;
-                poFactor = -4.0; // Above soldermask
-                poUnits = -4.0;
-                break;
-              default:
-                roughness = 0.55;
-                metalness = 0.15;
-                break;
-            }
-
-            const mat = new THREE.MeshStandardMaterial({
-              color: col,
-              roughness: roughness,
-              metalness: metalness,
-              transparent: isTransparent,
-              opacity: opacityVal,
-              side: THREE.DoubleSide,
-              polygonOffset: polygonOffset,
-              polygonOffsetFactor: poFactor,
-              polygonOffsetUnits: poUnits
-            });
-
-            const mesh = new THREE.Mesh(geom, mat);
-            pcbGroup.add(mesh);
+        if (!pcbRenderer) {
+          if (pcbLoading) {
+            pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem; text-align: center; padding: 1rem;">WebGL context unavailable<br><span style="font-size:0.72rem;color:var(--text-dim);">Too many active 3D contexts or GPU disabled.</span><br><button onclick="location.reload()" style="margin-top:8px;padding:4px 10px;background:var(--plasma-amber);color:#000;border:none;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:bold;">Reload</button></div>';
           }
+          return;
+        }
 
-          // Silkscreen Vector Decal Projection from .brd
-          if (silkscreenUrl && data.board) {
-            const b = data.board;
-            const texLoader = new THREE.TextureLoader();
-            texLoader.load(silkscreenUrl, (tex) => {
-              tex.colorSpace = THREE.SRGBColorSpace;
-              const decalGeo = new THREE.PlaneGeometry(b.width, b.height);
-              const decalMat = new THREE.MeshBasicMaterial({
-                map: tex,
-                transparent: true,
-                opacity: 0.96,
-                depthWrite: false,
+        pcbCanvas.addEventListener('webglcontextlost', (e) => {
+          e.preventDefault();
+          console.warn('PCB WebGL context lost on ' + canvasId);
+        }, false);
+
+        pcbRenderer.setSize(width, height);
+        pcbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        pcbRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        pcbRenderer.toneMappingExposure = 1.3;
+
+        pcbScene = new THREE.Scene();
+
+        pcbCamera = new THREE.PerspectiveCamera(38, width / height, 1, 5000);
+        pcbCamera.position.set(-110, 95, 120);
+
+        // Studio Lighting
+        const hemi = new THREE.HemisphereLight(0xffffff, 0x181c24, 1.4);
+        pcbScene.add(hemi);
+
+        const key = new THREE.DirectionalLight(0xffffff, 1.8);
+        key.position.set(160, 260, 200);
+        pcbScene.add(key);
+
+        const fill = new THREE.DirectionalLight(0xa5b4fc, 1.0);
+        fill.position.set(-220, 140, -160);
+        pcbScene.add(fill);
+
+        const rim = new THREE.DirectionalLight(0xfef08a, 0.7);
+        rim.position.set(0, 220, -220);
+        pcbScene.add(rim);
+
+        const headLight = new THREE.DirectionalLight(0xffffff, 0.75);
+        headLight.position.set(0, 0, 1);
+        pcbCamera.add(headLight);
+        pcbScene.add(pcbCamera);
+
+        // Controls
+        pcbControls = new OrbitControls(pcbCamera, pcbCanvas);
+        pcbControls.enableDamping = true;
+        pcbControls.dampingFactor = 0.08;
+        pcbControls.rotateSpeed = 0.8;
+        pcbControls.zoomSpeed = 1.2;
+        pcbControls.panSpeed = 0.8;
+        pcbControls.target.set(0, 0, 0);
+        pcbControls.autoRotate = true;
+        pcbControls.autoRotateSpeed = 0.9;
+
+        // Pause auto-rotation on user drag
+        pcbControls.addEventListener('start', () => {
+          pcbControls.autoRotate = false;
+        });
+
+        const pcbGroup = new THREE.Group();
+        pcbScene.add(pcbGroup);
+
+        // Load Mesh
+        async function loadMesh() {
+          try {
+            const resp = await fetch(meshUrl);
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            const stream = resp.body.pipeThrough(new DecompressionStream('gzip'));
+            const text = await new Response(stream).text();
+            const data = JSON.parse(text);
+
+            for (const m of data.meshes) {
+              const geom = new THREE.BufferGeometry();
+              geom.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3));
+              if (m.normals && m.normals.length === m.positions.length) {
+                geom.setAttribute('normal', new THREE.Float32BufferAttribute(m.normals, 3));
+              } else {
+                geom.computeVertexNormals();
+              }
+              if (m.indices && m.indices.length > 0) {
+                geom.setIndex(m.indices);
+              }
+
+              const c = m.color || [0.12, 0.12, 0.14];
+              const matType = m.material || 'default';
+
+              let roughness = 0.55;
+              let metalness = 0.10;
+              let col = new THREE.Color(c[0], c[1], c[2]);
+              let polygonOffset = false;
+              let poFactor = 0;
+              let poUnits = 0;
+
+              let isTransparent = false;
+              let opacityVal = 1.0;
+
+              switch (matType) {
+                case 'soldermask':
+                  col = new THREE.Color(0.04, 0.44, 0.14); // Authentic Fusion emerald green
+                  roughness = 0.38;
+                  metalness = 0.04;
+                  isTransparent = true;
+                  opacityVal = 0.90; // Subtle translucency to reveal copper trace relief beneath
+                  polygonOffset = true;
+                  poFactor = -1.0; // In FRONT of copper, covering the board
+                  poUnits = -1.0;
+                  break;
+                case 'copper':
+                  col = new THREE.Color(0.96, 0.68, 0.12); // Lustrous metallic gold/amber copper
+                  roughness = 0.22;
+                  metalness = 0.88;
+                  polygonOffset = true;
+                  poFactor = 2.0; // Sits BEHIND the green soldermask
+                  poUnits = 2.0;
+                  break;
+                case 'metal':
+                  col = new THREE.Color(0.85, 0.88, 0.92); // Satin silver leads, pins, and solder
+                  roughness = 0.18;
+                  metalness = 0.95;
+                  polygonOffset = true;
+                  poFactor = -3.0; // Sits ABOVE soldermask
+                  poUnits = -3.0;
+                  break;
+                case 'plastic':
+                  col = new THREE.Color(0.08, 0.08, 0.09); // Matte dark IC packages and Molex housings
+                  roughness = 0.78;
+                  metalness = 0.03;
+                  break;
+                case 'ceramic':
+                  col = new THREE.Color(0.68, 0.54, 0.44); // SMD capacitor ceramic body
+                  roughness = 0.60;
+                  metalness = 0.08;
+                  break;
+                case 'led':
+                  col = new THREE.Color(0.12, 0.38, 0.95); // Deep blue LED
+                  roughness = 0.15;
+                  metalness = 0.10;
+                  break;
+                case 'fr4':
+                  col = new THREE.Color(0.48, 0.42, 0.28); // Natural composite FR-4 substrate edge
+                  roughness = 0.70;
+                  metalness = 0.02;
+                  polygonOffset = true;
+                  poFactor = 4.0; // At the very bottom
+                  poUnits = 4.0;
+                  break;
+                case 'silkscreen':
+                  col = new THREE.Color(1.0, 1.0, 1.0); // White component markings
+                  roughness = 0.30;
+                  metalness = 0.0;
+                  polygonOffset = true;
+                  poFactor = -4.0; // Above soldermask
+                  poUnits = -4.0;
+                  break;
+                default:
+                  roughness = 0.55;
+                  metalness = 0.15;
+                  break;
+              }
+
+              const mat = new THREE.MeshStandardMaterial({
+                color: col,
+                roughness: roughness,
+                metalness: metalness,
+                transparent: isTransparent,
+                opacity: opacityVal,
                 side: THREE.DoubleSide,
-                polygonOffset: true,
-                polygonOffsetFactor: -5.0,
-                polygonOffsetUnits: -5.0
+                polygonOffset: polygonOffset,
+                polygonOffsetFactor: poFactor,
+                polygonOffsetUnits: poUnits
               });
-              const decalMesh = new THREE.Mesh(decalGeo, decalMat);
-              decalMesh.position.set(
-                (b.min_x + b.max_x) / 2.0,
-                b.top_z + 0.08,
-                -(b.min_y + b.max_y) / 2.0
-              );
-              decalMesh.rotation.x = -Math.PI / 2;
-              pcbGroup.add(decalMesh);
-            });
-          }
 
-          const bounds = data.bounds || { x: 80, y: 20, z: 80 };
-          const maxDim = Math.max(bounds.x, bounds.y, bounds.z);
-          pcbCamera.position.set(-maxDim * 1.15, maxDim * 1.05, maxDim * 1.25);
-          pcbCamera.lookAt(0, 0, 0);
-          pcbControls.target.set(0, 0, 0);
-          pcbControls.minDistance = maxDim * 0.35;
-          pcbControls.maxDistance = maxDim * 4.5;
-          pcbControls.update();
+              const mesh = new THREE.Mesh(geom, mat);
+              pcbGroup.add(mesh);
+            }
 
-          if (pcbLoading) {
-            pcbLoading.classList.add('hidden');
-          }
-        } catch (err) {
-          console.error('Failed to load PCB model:', meshUrl, err);
-          if (pcbLoading) {
-            pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem;">Failed to load 3D model</div>';
+            // Silkscreen Vector Decal Projection from .brd
+            if (silkscreenUrl && data.board) {
+              const b = data.board;
+              const texLoader = new THREE.TextureLoader();
+              texLoader.load(silkscreenUrl, (tex) => {
+                tex.colorSpace = THREE.SRGBColorSpace;
+                const decalGeo = new THREE.PlaneGeometry(b.width, b.height);
+                const decalMat = new THREE.MeshBasicMaterial({
+                  map: tex,
+                  transparent: true,
+                  opacity: 0.96,
+                  depthWrite: false,
+                  side: THREE.DoubleSide,
+                  polygonOffset: true,
+                  polygonOffsetFactor: -5.0,
+                  polygonOffsetUnits: -5.0
+                });
+                const decalMesh = new THREE.Mesh(decalGeo, decalMat);
+                decalMesh.position.set(
+                  (b.min_x + b.max_x) / 2.0,
+                  b.top_z + 0.08,
+                  -(b.min_y + b.max_y) / 2.0
+                );
+                decalMesh.rotation.x = -Math.PI / 2;
+                pcbGroup.add(decalMesh);
+              });
+            }
+
+            const bounds = data.bounds || { x: 80, y: 20, z: 80 };
+            const maxDim = Math.max(bounds.x, bounds.y, bounds.z);
+            pcbCamera.position.set(-maxDim * 1.15, maxDim * 1.05, maxDim * 1.25);
+            pcbCamera.lookAt(0, 0, 0);
+            pcbControls.target.set(0, 0, 0);
+            pcbControls.minDistance = maxDim * 0.35;
+            pcbControls.maxDistance = maxDim * 4.5;
+            pcbControls.update();
+
+            if (pcbLoading) {
+              pcbLoading.classList.add('hidden');
+            }
+          } catch (err) {
+            console.error('Failed to load PCB model:', meshUrl, err);
+            if (pcbLoading) {
+              pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem;">Failed to load 3D model</div>';
+            }
           }
         }
+
+        function animate() {
+          requestAnimationFrame(animate);
+          if (isVisible && pcbRenderer && pcbScene && pcbCamera) {
+            pcbControls.update();
+            pcbRenderer.render(pcbScene, pcbCamera);
+          }
+        }
+        animate();
+        loadMesh();
       }
 
       // Responsive resize
       const ro = new ResizeObserver(() => {
+        if (!pcbRenderer || !pcbCamera) return;
         const w = pcbParent.clientWidth;
         const h = pcbParent.clientHeight;
         if (w > 0 && h > 0) {
@@ -3143,24 +3228,16 @@
       });
       ro.observe(pcbParent);
 
-      // Visibility-based rendering (IntersectionObserver)
-      let isVisible = false;
+      // Lazy load only when within 300px of viewport
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           isVisible = entry.isIntersecting;
+          if (entry.isIntersecting && !initialized) {
+            setupViewer();
+          }
         });
-      }, { threshold: 0.05 });
+      }, { rootMargin: '300px 0px', threshold: 0.01 });
       io.observe(pcbCanvas);
-
-      function animate() {
-        requestAnimationFrame(animate);
-        if (isVisible) {
-          pcbControls.update();
-          pcbRenderer.render(pcbScene, pcbCamera);
-        }
-      }
-      animate();
-      loadMesh();
     }
 
     // Initialize PCB Viewers with Mesh + Silkscreen Projection (cache-busted for production CDN/browser cache)
