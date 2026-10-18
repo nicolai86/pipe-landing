@@ -2897,7 +2897,7 @@
     // -------------------------------------------------------------
     // Generic Interactive PCB 3D Viewer Function
     // -------------------------------------------------------------
-    function initPcbViewer(canvasId, loadingId, meshUrl) {
+    function initPcbViewer(canvasId, loadingId, meshUrl, silkscreenUrl) {
       const pcbCanvas = document.getElementById(canvasId);
       const pcbLoading = document.getElementById(loadingId);
       if (!pcbCanvas) return;
@@ -2983,29 +2983,112 @@
               geom.setIndex(m.indices);
             }
 
-            // Direct CAD Color from Fusion 360 STEP extraction
             const c = m.color || [0.12, 0.12, 0.14];
-            // Green board substrate / solder mask detection
-            const isBoard = (c[1] > 0.18 && c[0] < 0.05 && c[2] < 0.05);
-            // Copper / gold pads detection
-            const isCopper = (c[0] > 0.7 && c[1] > 0.5 && c[2] < 0.4);
-            // Solder / metal pins / leads detection
-            const isMetal = (Math.abs(c[0] - c[1]) < 0.03 && Math.abs(c[1] - c[2]) < 0.03 && c[0] > 0.45);
-            // Silkscreen detection
-            const isSilkscreen = (c[0] > 0.9 && c[1] > 0.9 && c[2] > 0.9);
+            const matType = m.material || 'default';
+
+            let roughness = 0.55;
+            let metalness = 0.10;
+            let col = new THREE.Color(c[0], c[1], c[2]);
+            let polygonOffset = false;
+            let poFactor = 0;
+            let poUnits = 0;
+
+            switch (matType) {
+              case 'soldermask':
+                col = new THREE.Color(0.04, 0.44, 0.14); // Authentic Fusion emerald green
+                roughness = 0.42;
+                metalness = 0.04;
+                polygonOffset = true;
+                poFactor = 2.0; // Sits slightly behind copper and silkscreen
+                poUnits = 2.0;
+                break;
+              case 'copper':
+                col = new THREE.Color(0.96, 0.68, 0.12); // Lustrous metallic gold/amber copper
+                roughness = 0.22;
+                metalness = 0.88;
+                polygonOffset = true;
+                poFactor = -1.0;
+                poUnits = -1.0;
+                break;
+              case 'metal':
+                col = new THREE.Color(0.85, 0.88, 0.92); // Satin silver leads, pins, and solder
+                roughness = 0.18;
+                metalness = 0.95;
+                break;
+              case 'plastic':
+                col = new THREE.Color(0.08, 0.08, 0.09); // Matte dark IC packages and Molex housings
+                roughness = 0.78;
+                metalness = 0.03;
+                break;
+              case 'ceramic':
+                col = new THREE.Color(0.68, 0.54, 0.44); // SMD capacitor ceramic body
+                roughness = 0.60;
+                metalness = 0.08;
+                break;
+              case 'led':
+                col = new THREE.Color(0.12, 0.38, 0.95); // Deep blue LED
+                roughness = 0.15;
+                metalness = 0.10;
+                break;
+              case 'fr4':
+                col = new THREE.Color(0.48, 0.42, 0.28); // Natural composite FR-4 substrate edge
+                roughness = 0.70;
+                metalness = 0.02;
+                break;
+              case 'silkscreen':
+                col = new THREE.Color(1.0, 1.0, 1.0); // White component markings
+                roughness = 0.30;
+                metalness = 0.0;
+                polygonOffset = true;
+                poFactor = -3.0;
+                poUnits = -3.0;
+                break;
+              default:
+                roughness = 0.55;
+                metalness = 0.15;
+                break;
+            }
 
             const mat = new THREE.MeshStandardMaterial({
-              color: new THREE.Color(c[0], c[1], c[2]),
-              roughness: isBoard ? 0.62 : (isCopper || isMetal ? 0.22 : (isSilkscreen ? 0.4 : 0.75)),
-              metalness: isMetal ? 0.92 : (isCopper ? 0.85 : 0.06),
+              color: col,
+              roughness: roughness,
+              metalness: metalness,
               side: THREE.DoubleSide,
-              polygonOffset: !isBoard,
-              polygonOffsetFactor: -1.0,
-              polygonOffsetUnits: -1.0
+              polygonOffset: polygonOffset,
+              polygonOffsetFactor: poFactor,
+              polygonOffsetUnits: poUnits
             });
 
             const mesh = new THREE.Mesh(geom, mat);
             pcbGroup.add(mesh);
+          }
+
+          // Silkscreen Vector Decal Projection from .brd
+          if (silkscreenUrl && data.board) {
+            const b = data.board;
+            const texLoader = new THREE.TextureLoader();
+            texLoader.load(silkscreenUrl, (tex) => {
+              tex.colorSpace = THREE.SRGBColorSpace;
+              const decalGeo = new THREE.PlaneGeometry(b.width, b.height);
+              const decalMat = new THREE.MeshBasicMaterial({
+                map: tex,
+                transparent: true,
+                opacity: 0.96,
+                depthWrite: false,
+                side: THREE.DoubleSide,
+                polygonOffset: true,
+                polygonOffsetFactor: -4.0,
+                polygonOffsetUnits: -4.0
+              });
+              const decalMesh = new THREE.Mesh(decalGeo, decalMat);
+              decalMesh.position.set(
+                (b.min_x + b.max_x) / 2.0,
+                b.top_z + 0.06,
+                -(b.min_y + b.max_y) / 2.0
+              );
+              decalMesh.rotation.x = -Math.PI / 2;
+              pcbGroup.add(decalMesh);
+            });
           }
 
           const bounds = data.bounds || { x: 80, y: 20, z: 80 };
@@ -3060,10 +3143,10 @@
       loadMesh();
     }
 
-    // Initialize PCB Viewers
-    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz');
-    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz');
-    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz');
+    // Initialize PCB Viewers with Mesh + Silkscreen Projection
+    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz', 'assets/cslab-ip-m-silkscreen.svg');
+    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz', 'assets/rs422-splitter-silkscreen.svg');
+    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz', 'assets/z-axis-thc-silkscreen.svg');
   </script>
 
   <!-- Video Player Modal -->
