@@ -1286,10 +1286,10 @@
             <span class="card-badge cyan mono">CUSTOM HARDWARE DESIGN • V3 CARRIER HAT</span>
             <h3>CSLab CSMIO/IP-M Breakout HAT</h3>
             <p>
-              In a high-power CNC plasma cabinet, running loose flying leads from ClearPath servos, proximity limit switches, and torch signals directly into motion controller terminals creates high-frequency electrical noise, ground loops, and a maintenance nightmare.
+              In a high-power CNC plasma cabinet, running loose flying leads from ClearPath servos, proximity limit switches, and torch signals directly into motion controller terminals creates electrical noise, ground loops, and a maintenance nightmare.
             </p>
             <p>
-              To eliminate wiring clutter and protect delicate logic lines, we designed a custom 4-layer carrier shield (HAT) that mates directly to the CSLab CSMIO/IP-M. It provides heavy-duty pluggable screw terminals, dedicated 24V isolated I/O routing, onboard power filtering, and hardware LED diagnostic indicators for every motion axis, enable line, and limit sensor.
+              To eliminate wiring clutter and organize all cabinet connections, we designed a custom 2-layer carrier shield (HAT) that mates directly to the CSLab CSMIO/IP-M. It provides heavy-duty pluggable screw terminals, clean 24V industrial field wiring distribution, onboard filtering, and hardware LED diagnostic indicators for every motion axis, enable line, and limit sensor. Galvanic opto-isolation is handled upstream by the FastCutCNC Hypertherm interface box and the IP-M's native inputs.
             </p>
             <div class="pcb-specs-grid">
               <div class="pcb-spec-item">
@@ -1298,15 +1298,15 @@
               </div>
               <div class="pcb-spec-item">
                 <span class="pcb-spec-label">Layer Stack</span>
-                <span class="pcb-spec-value">4-Layer (Internal GND/PWR)</span>
+                <span class="pcb-spec-value">2-Layer PCB (Ground Pour)</span>
               </div>
               <div class="pcb-spec-item">
                 <span class="pcb-spec-label">Field Terminals</span>
                 <span class="pcb-spec-value">Pluggable Screw Terminals</span>
               </div>
               <div class="pcb-spec-item">
-                <span class="pcb-spec-label">Noise Hardening</span>
-                <span class="pcb-spec-value">24V Opto-Isolated + TVS</span>
+                <span class="pcb-spec-label">Cabinet Interface</span>
+                <span class="pcb-spec-value">FastCutCNC &amp; 24V Field Bus</span>
               </div>
             </div>
           </div>
@@ -1555,7 +1555,7 @@
               Most CNC plasma height controllers rely on sluggish UP/DOWN bang-bang relays or closed proprietary lifter drives. This custom controller is a standalone <strong>10 kHz RS-422 differential Step/Dir interposer</strong> powered by a 170 MHz ARM Cortex-M4F DSP that sits directly inline between the CSLab IP-M motion controller and the Z-axis ClearPath servo.
             </p>
             <p>
-              During rapids, G31 touch-offs, and pierce lifts, it acts as a zero-drift digital pass-through. The instant the plasma arc transfers and <code>THC_ENA</code> asserts, the DSP blends real-time arc-voltage corrections directly into the step stream.
+              During rapids, initial height sensing (IHS) touch-offs, and pierce lifts, it acts as a zero-drift digital pass-through. The instant the plasma arc transfers and <code>THC_ENA</code> asserts, the DSP blends real-time arc-voltage corrections directly into the step stream.
             </p>
             <div class="callout-box" style="margin: 1rem 0;">
               <div class="callout-title">
@@ -1883,7 +1883,7 @@
               <td>CSLab IP-M Breakout Carrier HAT</td>
               <td class="model-col">Hardware v3 HAT</td>
               <td class="qty-col">1</td>
-              <td>Custom 4-layer PCB with pluggable screw terminals, 24V isolated I/O routing, and LED status indicators.</td>
+              <td>Custom 2-layer PCB with pluggable screw terminals, 24V industrial I/O routing, and LED status indicators.</td>
             </tr>
             <tr>
               <td class="subsystem-col">Custom Electronics</td>
