@@ -2024,6 +2024,43 @@
             </div>
           </div>
         </div>
+
+        <!-- Subsection 5: Grounding, Galvanic Isolation & Shielding Strategy -->
+        <div style="margin-top: 2.5rem;">
+          <h4 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="mono" style="color: var(--plasma-amber); font-size: 0.95rem;">05.</span>
+            Direct Workpiece Grounding, Galvanic Isolation &amp; Field Shielding Strategy
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
+            CNC plasma cutting produces severe RF electromagnetic interference (EMI) and 20–100A+ continuous cutting return currents. Allowing return current to travel through linear guide bearings, helical racks, or the machine chassis causes electrical discharge machining (micro-arcing) inside bearing raceways and injects heavy ground bounce into servo encoders. This machine implements strict galvanic separation and dedicated rotary grounding:
+          </p>
+
+          <div class="grid-3" style="gap: 1.25rem;">
+            <div class="doc-card highlight">
+              <span class="card-badge amber mono">CHASSIS ISOLATION</span>
+              <h3>FR-4 Galvanic Isolation Washers</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Both the front XSU080318 slewing ring headstock and rear ZCT200 rotary actuator are <strong>physically and electrically isolated from the steel frame</strong>. Custom-machined high-dielectric FR-4 composite washers and blind insulated nuts decouple the chuck mounts, ensuring 100% of the cutting arc return stays off the structural frame, linear rails, and precision bearings.
+              </p>
+            </div>
+
+            <div class="doc-card highlight">
+              <span class="card-badge amber mono">ROTARY RETURN PATH</span>
+              <h3>Spring-Mounted 4/0 AWG Ground Contact</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Because raw 20-foot pipe rotates continuously at up to 100 RPM, standard clamped ground leads would wrap around the stock and rip off. The workpiece is grounded directly at the rear of the ZCT200 hollow actuator via a heavy-duty, spring-mounted <strong>4/0 AWG (0000) grounding wire contact</strong>. This establishes a constant, massive, low-resistance return path straight to the Hypertherm work lead with zero arc wander.
+              </p>
+            </div>
+
+            <div class="doc-card highlight">
+              <span class="card-badge cyan mono">100% DOUBLE-SHIELDED</span>
+              <h3>Double-Shielded Field Cabling Everywhere</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                <strong>Every single wire outside the control box is double-shielded cable</strong> (braided copper outer mesh + foil inner shield with drain wire). This applies to all ClearPath motor DC bus and step/dir leads, proximity limit sensors, ohmic sense wires, and THC signal lines. All shields drain exclusively to the single-point copper star ground bus bar inside the control box.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -2245,7 +2282,10 @@
           Scope Notice: Cabling, Interconnects &amp; Control Box Hardware
         </div>
         <p style="margin-bottom: 0.65rem;">
-          This BOM details the major mechanical structure, precision linear guides, gearboxes, actuators, servos, and custom breakout PCBs. It does <strong>not</strong> exhaustively list general wiring infrastructure, such as <strong>TE Connectivity / Molex industrial circular &amp; rectangular connectors</strong>, shielded continuous-flex servo motor leads, high-voltage plasma torch leads, shielded twisted-pair sensor cables, or ohmic shield wires.
+          This BOM details the major mechanical structure, precision linear guides, gearboxes, actuators, servos, and custom breakout PCBs. It does <strong>not</strong> exhaustively list general wiring infrastructure, such as <strong>TE Connectivity / Molex industrial circular &amp; rectangular connectors</strong>, high-voltage plasma torch leads, or auxiliary terminal jumpers.
+        </p>
+        <p style="margin-bottom: 0.65rem;">
+          <strong>Critical Shielding Rule:</strong> Every wire outside the control box must be <strong>double-shielded cable</strong> (braided copper outer mesh + foil inner shield with drain wire). This applies unconditionally to all ClearPath motor DC power and step/dir feedback leads, inductive proximity sensor cables, ohmic sense lines, and THC signal lines. In continuous-flex cable carriers, use high-flex double-shielded drag-chain rated cable (e.g. igus chainflex or Lapp Olflex) with all drain wires bonded exclusively to the copper star ground bus bar inside the enclosure.
         </p>
         <p>
           In addition, standard control box enclosure hardware (including DIN rails, 24V DC auxiliary logic power supplies, industrial contactors, terminal blocks, fuse holders, circuit breakers, emergency stop contact blocks, and enclosure cooling fans) must be planned and sourced according to your control cabinet layout and local electrical safety codes.
@@ -2445,6 +2485,20 @@
               <td class="model-col">Omron Subminiature</td>
               <td class="qty-col">1</td>
               <td>Mechanical initial height sensing fail-safe microswitch.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Grounding &amp; Isolation</td>
+              <td>Rotary Workpiece Ground Assembly</td>
+              <td class="model-col">Spring-Mounted 4/0 AWG</td>
+              <td class="qty-col">1</td>
+              <td>Heavy-duty spring-mounted 4/0 AWG (0000) copper grounding wire contact mounted at the rear of the ZCT200 hollow rotary actuator for direct, low-resistance workpiece arc return during continuous multi-revolution rotation.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Grounding &amp; Isolation</td>
+              <td>Galvanic Isolation Hardware</td>
+              <td class="model-col">FR-4 Washers &amp; Blind Nuts</td>
+              <td class="qty-col">1 set</td>
+              <td>High-dielectric FR-4 composite isolation washers and blind insulated nuts decoupling both the front slewing ring and rear rotary chuck from the steel frame, preventing 20–100A cutting return current from entering linear bearings or machine chassis.</td>
             </tr>
             <tr>
               <td class="subsystem-col">Custom Machined</td>
