@@ -895,9 +895,160 @@
       color: #000;
     }
 
+    /* PCB Showcase Card */
+    .pcb-showcase-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 2.25rem 0 1.5rem;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+    }
+
+    .pcb-viewport-box {
+      position: relative;
+      background: radial-gradient(circle at 50% 50%, #11151c 0%, #080a0d 100%);
+      min-height: 440px;
+      height: 100%;
+      border-right: 1px solid var(--surface-border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pcb-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .pcb-canvas:active {
+      cursor: grabbing;
+    }
+
+    .pcb-loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: #090b0e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      z-index: 10;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .pcb-loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .pcb-viewport-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(15, 18, 24, 0.85);
+      border: 1px solid var(--surface-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      pointer-events: none;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pcb-viewport-badge .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--plasma-amber);
+      box-shadow: 0 0 8px var(--plasma-amber);
+    }
+
+    .pcb-details-box {
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--surface);
+    }
+
+    .pcb-details-box h3 {
+      font-size: 1.4rem;
+      margin: 0.4rem 0 0.85rem;
+      color: #fff;
+    }
+
+    .pcb-details-box p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 0.85rem;
+    }
+
+    .pcb-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin: 1.25rem 0 1.5rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pcb-spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .pcb-spec-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dim);
+    }
+
+    .pcb-spec-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .pcb-download-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--surface-border);
+    }
+
     @media (max-width: 900px) {
       .specs-strip, .grid-2, .grid-3 {
         grid-template-columns: 1fr;
+      }
+      .pcb-showcase-card {
+        grid-template-columns: 1fr;
+      }
+      .pcb-viewport-box {
+        min-height: 340px;
+        border-right: none;
+        border-bottom: 1px solid var(--surface-border);
       }
       .video-grid {
         grid-template-columns: 1fr 1fr;
@@ -1090,6 +1241,7 @@
           <p>
             Hardware-level <strong>24V industrial opto-isolated I/O</strong> guarantees complete immunity against high-voltage electrical noise, pilot arc RF interference, and plasma high-frequency start spikes.
           </p>
+          <a href="https://en.cs-lab.eu/product/4-axis-cnc-control-system-csmio-ip-m-board-with-software/" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--plasma-amber); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; margin-top: 0.5rem;">↗ CSLab CSMIO/IP-M Official Product Page</a>
         </div>
 
         <div class="doc-card highlight">
@@ -1112,6 +1264,58 @@
             <p>
               <strong>If your controller supports G93 (inverse time feedrate):</strong> You're all set also. RotaryCAM natively outputs standard G93 inverse time mode (supported on Mach4, LinuxCNC, Masso, and modern CNCs), where every rotary block specifies the exact reciprocal time required for constant surface speed cutting.
             </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSLab IP-M Breakout HAT PCB Showcase -->
+      <div class="pcb-showcase-card">
+        <div class="pcb-viewport-box" id="cslab-ip-m-viewport">
+          <div class="pcb-viewport-badge">
+            <span class="status-dot"></span>
+            <span>Interactive 3D Board Model • Drag to Orbit • Scroll to Zoom</span>
+          </div>
+          <div class="pcb-loading-overlay" id="cslab-ip-m-loading">
+            <div class="spinner"></div>
+            <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);">Loading 3D Board Model…</div>
+          </div>
+          <canvas id="cslab-ip-m-canvas" class="pcb-canvas"></canvas>
+        </div>
+        <div class="pcb-details-box">
+          <div>
+            <span class="card-badge cyan mono">CUSTOM HARDWARE DESIGN • V3 CARRIER HAT</span>
+            <h3>CSLab CSMIO/IP-M Breakout HAT</h3>
+            <p>
+              In a high-power CNC plasma cabinet, running loose flying leads from ClearPath servos, proximity limit switches, and torch signals directly into motion controller terminals creates high-frequency electrical noise, ground loops, and a maintenance nightmare.
+            </p>
+            <p>
+              To eliminate wiring clutter and protect delicate logic lines, we designed a custom 4-layer carrier shield (HAT) that mates directly to the CSLab CSMIO/IP-M. It provides heavy-duty pluggable screw terminals, dedicated 24V isolated I/O routing, onboard power filtering, and hardware LED diagnostic indicators for every motion axis, enable line, and limit sensor.
+            </p>
+            <div class="pcb-specs-grid">
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">PCB Form Factor</span>
+                <span class="pcb-spec-value">Direct IP-M Carrier HAT</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Layer Stack</span>
+                <span class="pcb-spec-value">4-Layer (Internal GND/PWR)</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Field Terminals</span>
+                <span class="pcb-spec-value">Pluggable Screw Terminals</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Noise Hardening</span>
+                <span class="pcb-spec-value">24V Opto-Isolated + TVS</span>
+              </div>
+            </div>
+          </div>
+          <div class="pcb-download-row">
+            <a href="assets/cslab-ip-m-v3.zip" download class="primary-btn" style="padding: 0.7rem 1.4rem; font-size: 0.88rem;">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download HAT Design Package (5.8 MB ZIP)
+            </a>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Fusion 360 Schematic, PCB, Gerbers &amp; STEP</span>
           </div>
         </div>
       </div>
@@ -1154,6 +1358,61 @@
             <strong>Y-Axis:</strong> CPM-SDSK-2331S-RLN drives the 1-meter cross slide.<br>
             <strong>Z-Axis:</strong> CPM-SDSK-2311S-RQN provides rapid vertical retracts and ultra-low latency response to THC voltage tracking.
           </p>
+        </div>
+      </div>
+
+      <!-- RS422 Differential Step/Dir Splitter PCB Showcase -->
+      <div class="pcb-showcase-card">
+        <div class="pcb-viewport-box" id="rs422-viewport">
+          <div class="pcb-viewport-badge">
+            <span class="status-dot"></span>
+            <span>Interactive 3D Board Model • Drag to Orbit • Scroll to Zoom</span>
+          </div>
+          <div class="pcb-loading-overlay" id="rs422-loading">
+            <div class="spinner"></div>
+            <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);">Loading 3D Board Model…</div>
+          </div>
+          <canvas id="rs422-canvas" class="pcb-canvas"></canvas>
+        </div>
+        <div class="pcb-details-box">
+          <div>
+            <span class="card-badge amber mono">HARDWARE SYNCHRONIZATION • RS422 SPLITTER V1</span>
+            <h3>Active RS422 Differential Step/Dir Splitter</h3>
+            <p>
+              <strong>The Architecture Challenge:</strong> This machine is controlled by a cost-effective 4-axis industrial motion controller (CSLab CSMIO/IP-M: X, Y, Z, A). However, to rotate a full 20-foot (6-meter) structural tube without torsional twist or angle lag between ends, the rotary axis is driven by <strong>two synchronized NEMA 34 Teknic ClearPath servos</strong>—one at the rear ZCT200 rotary actuator and one at the front XSU080318 slewing ring headstock.
+            </p>
+            <p>
+              Because the controller only has one physical A-axis step/dir channel, both servos must receive the exact same pulse train. Wiring two high-speed differential servo inputs in raw parallel to a single controller channel causes transmission line impedance mismatches, signal reflections, and pulse jitter at 125 kHz.
+            </p>
+            <p>
+              <strong>The Hardware Solution:</strong> We designed an active differential RS422 splitter PCB. It receives the single differential Step/Dir pulse stream from the IP-M, buffers the signals through high-speed RS-422 line receivers, and drives two independent, impedance-matched, actively buffered differential output pairs. Both servos receive zero-latency pulses in perfect hardware lockstep with zero software overhead.
+            </p>
+            <div class="pcb-specs-grid">
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Input Channel</span>
+                <span class="pcb-spec-value">1x Differential RS-422 (IP-M)</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Output Channels</span>
+                <span class="pcb-spec-value">2x Buffered RS-422 (Dual A)</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Channel Skew</span>
+                <span class="pcb-spec-value">&lt; 5 ns (Hardware Lockstep)</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Supply &amp; Protection</span>
+                <span class="pcb-spec-value">24V DC + TVS Surge Clamp</span>
+              </div>
+            </div>
+          </div>
+          <div class="pcb-download-row">
+            <a href="assets/RS422-splitter-v1.zip" download class="primary-btn" style="padding: 0.7rem 1.4rem; font-size: 0.88rem;">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download Splitter Package (1.6 MB ZIP)
+            </a>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Fusion 360 Schematic, PCB, Gerbers &amp; STEP</span>
+          </div>
         </div>
       </div>
     </section>
@@ -1251,7 +1510,7 @@
           <span class="card-badge cyan mono">PRIMARY IHS</span>
           <h3>FastCutCNC Ohmic Sensing</h3>
           <p>
-            A dedicated <strong>FastCutCNC ohmic sensing isolator box</strong> couples directly to the Hypertherm machine torch shield cap. Detects plate contact via electrical continuity with zero downward mechanical force, preventing thin-wall tube deflection during pierce referencing.
+            A dedicated <a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC ohmic sensing isolator box ↗</a> couples directly to the Hypertherm machine torch shield cap. Detects plate contact via electrical continuity with zero downward mechanical force, preventing thin-wall tube deflection during pierce referencing.
           </p>
         </div>
 
@@ -1264,12 +1523,84 @@
         </div>
 
         <div class="doc-card highlight">
-          <span class="card-badge amber mono">SAFETY &amp; COLLISION</span>
-          <h3>Magnetic Breakaway &amp; Anti-Dive</h3>
+          <span class="card-badge amber mono">TORCH LIFTER &amp; BREAKAWAY</span>
+          <h3>Karvecut MAGFLO-PRO-A Lifter</h3>
           <p>
-            <strong>Magnetic Breakaway:</strong> High-force neodymium magnets hold the torch carrier. If a cut pipe slug tips up, the torch snaps off cleanly and trips an E-stop circuit.<br><br>
-            <strong>THC Anti-Dive:</strong> RotaryCAM outputs <code>M62/M63</code> high-speed digital outputs to freeze THC before decelerating around corners, stopping torch dives.
+            The torch carriage is mounted to an industrial <a href="https://karvecutcnc.com/products/copy-of-magflo-pro-a-series-cnc-plasma-lifter-torch-protection-system" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Karvecut MAGFLO-PRO-A CNC plasma lifter ↗</a> featuring an integrated magnetic breakaway torch protection system.
           </p>
+          <p>
+            High-force neodymium magnets hold the torch carrier. If a severed tube slug tips up, the torch snaps off cleanly without bending the torch barrel and instantly trips the IP-M emergency stop.
+          </p>
+        </div>
+      </div>
+
+      <!-- Real-Time 10 kHz DSP Torch Height Controller PCB Showcase -->
+      <div class="pcb-showcase-card">
+        <div class="pcb-viewport-box" id="thc-viewport">
+          <div class="pcb-viewport-badge">
+            <span class="status-dot"></span>
+            <span>Interactive 3D Board Model • Drag to Orbit • Scroll to Zoom</span>
+          </div>
+          <div class="pcb-loading-overlay" id="thc-loading">
+            <div class="spinner"></div>
+            <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);">Loading 3D Board Model…</div>
+          </div>
+          <canvas id="thc-canvas" class="pcb-canvas"></canvas>
+        </div>
+        <div class="pcb-details-box">
+          <div>
+            <span class="card-badge amber mono">AUTONOMOUS DSP • HARDWARE V1</span>
+            <h3>Real-Time 10 kHz Step/Dir Interposer THC</h3>
+            <p>
+              Most CNC plasma height controllers rely on sluggish UP/DOWN bang-bang relays or closed proprietary lifter drives. This custom controller is a standalone <strong>10 kHz RS-422 differential Step/Dir interposer</strong> powered by a 170 MHz ARM Cortex-M4F DSP that sits directly inline between the CSLab IP-M motion controller and the Z-axis ClearPath servo.
+            </p>
+            <p>
+              During rapids, G31 touch-offs, and pierce lifts, it acts as a zero-drift digital pass-through. The instant the plasma arc transfers and <code>THC_ENA</code> asserts, the DSP blends real-time arc-voltage corrections directly into the step stream.
+            </p>
+            <div class="callout-box" style="margin: 1rem 0;">
+              <div class="callout-title">
+                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                What This Means for Cut Quality &amp; Process Reliability
+              </div>
+              <p style="margin-bottom: 0.5rem;">
+                <strong>&plusmn;0.25V (~120 &mu;m) Standoff Regulation:</strong> Holding torch height within fractions of a millimeter across a 20-foot pipe completely eliminates bevel angle variation, producing square, perpendicular kerf walls ready to weld without angle-grinder fitting.
+              </p>
+              <p style="margin-bottom: 0.5rem;">
+                <strong>Dross &amp; Slag Elimination:</strong> Prevents torch climbing (which flares the arc and leaves heavy bottom dross) and torch diving (which causes nozzle double-arcing and slag spatter contamination).
+              </p>
+              <p style="margin-bottom: 0.5rem;">
+                <strong>Predictive dV/dt Anti-Dive:</strong> Crossing pre-pierced holes or tube voids causes arc voltage to surge. The DSP detects <code>dV/dt</code> spikes within milliseconds and instantaneously freezes Z motion before the torch can dive into the void.
+              </p>
+              <p>
+                <strong>Zero-Drift Automatic Unwinding:</strong> Tracks all injected THC microsteps and smoothly unwinds back to the CNC's true commanded coordinate when the cut ends, guaranteeing zero accumulated Z drift across thousands of cuts.
+              </p>
+            </div>
+            <div class="pcb-specs-grid">
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">DSP Core</span>
+                <span class="pcb-spec-value">170 MHz STM32G431 Cortex-M4F</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Loop Frequency</span>
+                <span class="pcb-spec-value">10 kHz Hardware Interrupt</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Height Accuracy</span>
+                <span class="pcb-spec-value">&plusmn;0.25V (~120 &mu;m Standoff)</span>
+              </div>
+              <div class="pcb-spec-item">
+                <span class="pcb-spec-label">Tracking Lock</span>
+                <span class="pcb-spec-value">26.1 ms Post-Pierce Acquisition</span>
+              </div>
+            </div>
+          </div>
+          <div class="pcb-download-row">
+            <a href="assets/z-axis-thc-v1.step.gz" download class="primary-btn" style="padding: 0.7rem 1.4rem; font-size: 0.88rem;">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              Download THC Controller 3D STEP Model (4.4 MB GZ)
+            </a>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Complete 3D Assembly with All SMT &amp; Passive Components</span>
+          </div>
         </div>
       </div>
     </section>
@@ -1536,7 +1867,7 @@
             <tr>
               <td class="subsystem-col">Motion Controller</td>
               <td>4-Axis Ethernet Motion Controller</td>
-              <td class="model-col">CSLab CSMIO/IP-M</td>
+              <td class="model-col"><a href="https://en.cs-lab.eu/product/4-axis-cnc-control-system-csmio-ip-m-board-with-software/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">CSLab CSMIO/IP-M ↗</a></td>
               <td class="qty-col">1</td>
               <td>125 kHz step/dir, 24V industrial opto-isolated I/O, Ethernet connection.</td>
             </tr>
@@ -1546,6 +1877,27 @@
               <td class="model-col">CSLab SimCNC</td>
               <td class="qty-col">1</td>
               <td>SimCNC 4-axis machine control software license.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Custom Electronics</td>
+              <td>CSLab IP-M Breakout Carrier HAT</td>
+              <td class="model-col">Hardware v3 HAT</td>
+              <td class="qty-col">1</td>
+              <td>Custom 4-layer PCB with pluggable screw terminals, 24V isolated I/O routing, and LED status indicators.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Custom Electronics</td>
+              <td>Active RS422 Step/Dir Splitter</td>
+              <td class="model-col">Hardware v1 Splitter</td>
+              <td class="qty-col">1</td>
+              <td>Active differential RS-422 line buffer driving dual A-axis ClearPath servos in hardware lockstep.</td>
+            </tr>
+            <tr>
+              <td class="subsystem-col">Custom Electronics</td>
+              <td>Plasma Z-Axis THC Controller</td>
+              <td class="model-col">Hardware v1 THC</td>
+              <td class="qty-col">1</td>
+              <td>10 kHz STM32G431 Cortex-M4F real-time Step/Dir interposer with &plusmn;0.25V standoff regulation &amp; dV/dt anti-dive.</td>
             </tr>
             <tr>
               <td class="subsystem-col">Servos &amp; Motors</td>
@@ -1627,7 +1979,7 @@
             <tr>
               <td class="subsystem-col">Torch Height Control</td>
               <td>Ohmic Sensing Isolator</td>
-              <td class="model-col">FastCutCNC Ohmic Box</td>
+              <td class="model-col"><a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC Ohmic Box ↗</a></td>
               <td class="qty-col">1</td>
               <td>Opto-isolated ohmic initial height sensing box with shield wire harness.</td>
             </tr>
@@ -1640,10 +1992,10 @@
             </tr>
             <tr>
               <td class="subsystem-col">Safety &amp; Lifter</td>
-              <td>Magnetic Breakaway Carrier</td>
-              <td class="model-col">Neodymium + E-Stop Switch</td>
+              <td>Z-Axis Plasma Lifter &amp; Breakaway</td>
+              <td class="model-col"><a href="https://karvecutcnc.com/products/copy-of-magflo-pro-a-series-cnc-plasma-lifter-torch-protection-system" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Karvecut MAGFLO-PRO-A ↗</a></td>
               <td class="qty-col">1</td>
-              <td>Torch collision breakaway with integrated IP-M emergency stop trip circuit.</td>
+              <td>Torch collision magnetic breakaway with integrated IP-M emergency stop trip circuit.</td>
             </tr>
             <tr>
               <td class="subsystem-col">Safety &amp; Lifter</td>
@@ -1661,6 +2013,98 @@
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- McMaster-Carr Fasteners & Hardware Breakdown -->
+      <div style="margin-top: 3.5rem;">
+        <div style="margin-bottom: 1.5rem;">
+          <span class="card-badge amber mono">HARDWARE SPECIFICATION</span>
+          <h3 style="font-size: 1.5rem; margin-top: 0.4rem; color: #fff;">McMaster-Carr Fasteners &amp; Assembly Hardware Breakdown</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 820px; line-height: 1.6;">
+            A breakdown of the verified fasteners, square nuts, die springs, and structural hardware sourced from McMaster-Carr used to assemble the chassis, linear carriages, and rotary headstocks.
+          </p>
+        </div>
+
+        <div class="bom-table-wrapper">
+          <table class="bom-table">
+            <thead>
+              <tr>
+                <th>McMaster Part #</th>
+                <th>Component Description</th>
+                <th>Size / Thread Spec</th>
+                <th>Engineering Rationale &amp; Assembly Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="model-col">97259A104</td>
+                <td>Thin-Profile Steel Square Nuts (Zinc-Plated)</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">M6 × 1 mm</td>
+                <td>Ultra-low 3.2 mm nut thickness slides freely into structural aluminum T-slots and tight bracket pockets where standard hex nuts bind.</td>
+              </tr>
+              <tr>
+                <td class="model-col">96887A121</td>
+                <td>Class 5 Black Zinc-Plated Square Nuts</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">M6 × 1 mm</td>
+                <td>High-strength captive square nuts for mounting beam gussets, cable carrier brackets, and structural spine clamps.</td>
+              </tr>
+              <tr>
+                <td class="model-col">93070A149</td>
+                <td>Alloy Steel Low-Profile Socket Head Screws</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">M6 × 1 mm, 25 mm L</td>
+                <td>Low-profile head height (4.0 mm) provides critical clearance over HGH25 linear bearing blocks and tight rotary bracket faces without head collision.</td>
+              </tr>
+              <tr>
+                <td class="model-col">93070A147</td>
+                <td>Alloy Steel Low-Profile Socket Head Screws</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">M6 × 1 mm, 20 mm L</td>
+                <td>Low-profile mounting screws for motor adapter plates, crossed-roller bearing retaining rings, and encoder cover plates.</td>
+              </tr>
+              <tr>
+                <td class="model-col">91502A177</td>
+                <td>Blue Zinc-Plated Socket Head Screws</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">M6 × 1 mm, 65 mm L</td>
+                <td>Deep structural clamping across thick CNC-machined 6061-T6 aluminum pillow blocks and helical rack tensioner pivot arms.</td>
+              </tr>
+              <tr>
+                <td class="model-col">93975A730</td>
+                <td>Tabbed Steel Weld Nuts</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">M6 × 1 mm</td>
+                <td>TIG-welded inside structural steel tubing and chassis legs to provide permanent high-strength blind threaded attachment points.</td>
+              </tr>
+              <tr>
+                <td class="model-col">92161A340</td>
+                <td>Grade 8 Heavy-Duty Leveling Screws</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">5/8"-11 Thread, 4" L</td>
+                <td>Heavy-duty leveling bolts threaded through pedestal baseplates to establish 0.05 mm planar alignment along the entire 20-foot spine.</td>
+              </tr>
+              <tr>
+                <td class="model-col">9573K51</td>
+                <td>Medium-Duty Rectangular Wire Die Springs</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">Chrome Silicon Steel</td>
+                <td>Provides constant, adjustable spring pre-load on the pivoting motor mount, keeping helical pinion and rack tightly meshed with zero backlash.</td>
+              </tr>
+              <tr>
+                <td class="model-col">60355K58</td>
+                <td>Precision Steel Conveyor Rollers</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">1.9" Dia, 16 Ga Steel</td>
+                <td>Low-friction roller support cradles along the bed that support heavy 20-foot raw steel tubes without scratching or binding during rotation.</td>
+              </tr>
+              <tr>
+                <td class="model-col">5537K13</td>
+                <td>Electrolytic Tough Pitch Copper Bus Bar</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">1/4" × 1" × 12" Solid</td>
+                <td>Single-point star grounding bus bar bonding the plasma work clamp return, chassis frame, and electronics shield to eliminate electrical noise.</td>
+              </tr>
+              <tr>
+                <td class="model-col">Tooling &amp; Taps</td>
+                <td>Spiral-Point Machine Taps &amp; HSS Drills</td>
+                <td class="qty-col" style="text-align: left; width: auto; font-weight: normal; color: var(--text);">M5×0.8, M6×1.0, M8×1.25</td>
+                <td>Production spiral-point taps and matched jobber drills (#7, 4.2mm, 5.0mm, 6.8mm) for tapping all blind holes in custom 6061 plates and steel bed.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -1699,7 +2143,7 @@
             You can build your own relay-isolated ohmic sensing circuit or rely exclusively on a mechanical floating head microswitch. However, plasma arcs generate violent high-voltage electrical noise and ground potential shifts that can easily blow unshielded 5V/24V controller inputs.
           </p>
           <p>
-            The FastCutCNC ohmic box provides industrial-grade opto-isolation between the plasma arc and the CSLab IP-M controller, and plugs directly into the Hypertherm machine interface cable. It provides plug-and-play arc transfer, arc voltage division, and reliable touch-off without ground loop interference.
+            The <a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC ohmic box ↗</a> provides industrial-grade opto-isolation between the plasma arc and the CSLab IP-M controller, and plugs directly into the Hypertherm machine interface cable. It provides plug-and-play arc transfer, arc voltage division, and reliable touch-off without ground loop interference.
           </p>
         </div>
 
@@ -2137,6 +2581,224 @@
     // Start
     initScene();
     loadCadModel();
+
+    // -------------------------------------------------------------
+    // Generic Interactive PCB 3D Viewer Function
+    // -------------------------------------------------------------
+    function initPcbViewer(canvasId, loadingId, meshUrl) {
+      const pcbCanvas = document.getElementById(canvasId);
+      const pcbLoading = document.getElementById(loadingId);
+      if (!pcbCanvas) return;
+
+      const pcbParent = pcbCanvas.parentElement;
+      const width = pcbParent.clientWidth || 480;
+      const height = pcbParent.clientHeight || 440;
+
+      const pcbRenderer = new THREE.WebGLRenderer({
+        canvas: pcbCanvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+      pcbRenderer.setSize(width, height);
+      pcbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      pcbRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+      pcbRenderer.toneMappingExposure = 1.3;
+
+      const pcbScene = new THREE.Scene();
+
+      const pcbCamera = new THREE.PerspectiveCamera(38, width / height, 1, 5000);
+      pcbCamera.position.set(-110, 95, 120);
+
+      // Studio Lighting
+      const hemi = new THREE.HemisphereLight(0xffffff, 0x181c24, 1.4);
+      pcbScene.add(hemi);
+
+      const key = new THREE.DirectionalLight(0xffffff, 1.8);
+      key.position.set(160, 260, 200);
+      pcbScene.add(key);
+
+      const fill = new THREE.DirectionalLight(0xa5b4fc, 1.0);
+      fill.position.set(-220, 140, -160);
+      pcbScene.add(fill);
+
+      const rim = new THREE.DirectionalLight(0xfef08a, 0.7);
+      rim.position.set(0, 220, -220);
+      pcbScene.add(rim);
+
+      const headLight = new THREE.DirectionalLight(0xffffff, 0.75);
+      headLight.position.set(0, 0, 1);
+      pcbCamera.add(headLight);
+      pcbScene.add(pcbCamera);
+
+      // Controls
+      const pcbControls = new OrbitControls(pcbCamera, pcbCanvas);
+      pcbControls.enableDamping = true;
+      pcbControls.dampingFactor = 0.08;
+      pcbControls.rotateSpeed = 0.8;
+      pcbControls.zoomSpeed = 1.2;
+      pcbControls.panSpeed = 0.8;
+      pcbControls.target.set(0, 0, 0);
+      pcbControls.autoRotate = true;
+      pcbControls.autoRotateSpeed = 0.9;
+
+      // Pause auto-rotation on user drag
+      pcbControls.addEventListener('start', () => {
+        pcbControls.autoRotate = false;
+      });
+
+      // Material Library
+      const matBoard = new THREE.MeshStandardMaterial({
+        color: 0x16432f,
+        roughness: 0.65,
+        metalness: 0.12
+      });
+      const matSilkscreen = new THREE.MeshStandardMaterial({
+        color: 0xf1f5f9,
+        roughness: 0.5,
+        metalness: 0.08
+      });
+      const matGold = new THREE.MeshStandardMaterial({
+        color: 0xd4af37,
+        roughness: 0.28,
+        metalness: 0.88
+      });
+      const matMetal = new THREE.MeshStandardMaterial({
+        color: 0xc8d0db,
+        roughness: 0.22,
+        metalness: 0.92
+      });
+      const matIC = new THREE.MeshStandardMaterial({
+        color: 0x181a1f,
+        roughness: 0.78,
+        metalness: 0.08
+      });
+      const matTerminal = new THREE.MeshStandardMaterial({
+        color: 0x15803d,
+        roughness: 0.45,
+        metalness: 0.05
+      });
+      const matDarkPlastic = new THREE.MeshStandardMaterial({
+        color: 0x27272a,
+        roughness: 0.65,
+        metalness: 0.08
+      });
+
+      const pcbGroup = new THREE.Group();
+      pcbScene.add(pcbGroup);
+
+      // Load Mesh
+      async function loadMesh() {
+        try {
+          const resp = await fetch(meshUrl);
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          const stream = resp.body.pipeThrough(new DecompressionStream('gzip'));
+          const text = await new Response(stream).text();
+          const data = JSON.parse(text);
+
+          for (const m of data.meshes) {
+            const geom = new THREE.BufferGeometry();
+            geom.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3));
+            if (m.normals && m.normals.length === m.positions.length) {
+              geom.setAttribute('normal', new THREE.Float32BufferAttribute(m.normals, 3));
+            } else {
+              geom.computeVertexNormals();
+            }
+            if (m.indices && m.indices.length > 0) {
+              geom.setIndex(m.indices);
+            }
+
+            // Bounding box heuristic for component materials
+            let minX = Infinity, maxX = -Infinity;
+            let minY = Infinity, maxY = -Infinity;
+            let minZ = Infinity, maxZ = -Infinity;
+            const pos = m.positions;
+            for (let j = 0; j < pos.length; j += 3) {
+              const x = pos[j], y = pos[j + 1], z = pos[j + 2];
+              if (x < minX) minX = x; if (x > maxX) maxX = x;
+              if (y < minY) minY = y; if (y > maxY) maxY = y;
+              if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
+            }
+            const dx = maxX - minX, dy = maxY - minY, dz = maxZ - minZ;
+            const fp = dx * dz;
+
+            let mat = matMetal;
+            if (fp > 2000 && dy >= 0.4) {
+              mat = matBoard;
+            } else if (fp > 2000 && dy < 0.2) {
+              mat = matSilkscreen;
+            } else if (dy > 8.0 && fp > 80) {
+              mat = matTerminal;
+            } else if (dy > 5.5 && fp <= 80) {
+              mat = matDarkPlastic;
+            } else if (dy > 1.2 && fp > 18) {
+              mat = matIC;
+            } else if (dx < 3.2 && dz < 3.2 && dy > 1.4) {
+              mat = matGold;
+            } else {
+              mat = matMetal;
+            }
+
+            const mesh = new THREE.Mesh(geom, mat);
+            pcbGroup.add(mesh);
+          }
+
+          const bounds = data.bounds || { x: 80, y: 20, z: 80 };
+          const maxDim = Math.max(bounds.x, bounds.y, bounds.z);
+          pcbCamera.position.set(-maxDim * 1.15, maxDim * 1.05, maxDim * 1.25);
+          pcbCamera.lookAt(0, 0, 0);
+          pcbControls.target.set(0, 0, 0);
+          pcbControls.minDistance = maxDim * 0.35;
+          pcbControls.maxDistance = maxDim * 4.5;
+          pcbControls.update();
+
+          if (pcbLoading) {
+            pcbLoading.classList.add('hidden');
+          }
+        } catch (err) {
+          console.error('Failed to load PCB model:', meshUrl, err);
+          if (pcbLoading) {
+            pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem;">Failed to load 3D model</div>';
+          }
+        }
+      }
+
+      // Responsive resize
+      const ro = new ResizeObserver(() => {
+        const w = pcbParent.clientWidth;
+        const h = pcbParent.clientHeight;
+        if (w > 0 && h > 0) {
+          pcbCamera.aspect = w / h;
+          pcbCamera.updateProjectionMatrix();
+          pcbRenderer.setSize(w, h);
+        }
+      });
+      ro.observe(pcbParent);
+
+      // Visibility-based rendering (IntersectionObserver)
+      let isVisible = false;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isVisible = entry.isIntersecting;
+        });
+      }, { threshold: 0.05 });
+      io.observe(pcbCanvas);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        if (isVisible) {
+          pcbControls.update();
+          pcbRenderer.render(pcbScene, pcbCamera);
+        }
+      }
+      animate();
+      loadMesh();
+    }
+
+    // Initialize PCB Viewers
+    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz');
+    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz');
+    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz');
   </script>
 
   <!-- Video Player Modal -->
