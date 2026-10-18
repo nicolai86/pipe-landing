@@ -1216,6 +1216,7 @@
         <a href="#videos">Videos</a>
         <a href="#bom">BOM</a>
         <a href="#faq">FAQ</a>
+        <a href="#learnings">v2 Learnings</a>
       </div>
       <a href="index.html#waitlist" class="nav-cta">Join Beta Waitlist</a>
     </nav>
@@ -2695,7 +2696,95 @@
       </div>
     </section>
 
-    <!-- Section 10: CAM Software Integration Callout -->
+    <!-- Section 11: Real-World Learnings & The Roadmap to v2 -->
+    <section id="learnings" class="guide-section">
+      <div class="section-header">
+        <div class="section-num">Section 11</div>
+        <h2 class="section-title">Build Learnings &amp; What I'll Change in v2</h2>
+        <p class="section-desc">
+          This page has shown you all the pieces that work great in this build. But after thousands of production cuts on full 20-foot sticks: what would I change?
+        </p>
+      </div>
+
+      <!-- Critical Controller & Hypertherm Serial Callout -->
+      <div class="callout-box" style="margin-bottom: 2.25rem; border-color: rgba(245, 158, 11, 0.45); border-left-color: var(--plasma-amber); background: rgba(20, 23, 29, 0.85); box-shadow: 0 10px 30px rgba(0,0,0,0.35);">
+        <div class="callout-title" style="color: var(--plasma-amber); font-size: 1rem;">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Critical Architecture Note: Heavily Modified SimCNC &amp; Hypertherm RS485 Interface
+        </div>
+        <p style="color: var(--text); font-size: 0.92rem; line-height: 1.6; margin-bottom: 0.75rem;">
+          Stock CNC software and basic off-the-shelf plasma setups fall far short for high-precision rotary tube cutting. To achieve top-tier edge squareness, zero arc wander, and reliable operation on this machine, two foundational controller customizations were implemented:
+        </p>
+        <p style="color: var(--text); font-size: 0.92rem; line-height: 1.6; margin-bottom: 0.75rem;">
+          <strong>1. Deeply Customized SimCNC Environment:</strong> Standard SimCNC lacks native multi-axis rotary kinematic feedrate blending (G94 inverse-time compensation). I heavily modified stock SimCNC with custom Python screen scripts, kinematics macros, and custom real-time interlock logic to handle coordinate transformations, automatic stock offsets, and 4D trajectory feedrate scaling.
+        </p>
+        <p style="color: var(--text); font-size: 0.92rem; line-height: 1.6; margin-bottom: 0;">
+          <strong>2. Hypertherm RS485 Serial Communication Cards:</strong> Rather than relying solely on raw analog 50:1 divided arc voltage and basic dry-contact relays, the plasma power supply is directly patched into the CNC controller via Hypertherm RS485 serial interface cards. This provides bidirectional digital telemetry—enabling automated cut-chart amperage selection, real-time gas pressure monitoring, consumable wear tracking, and instant diagnostic fault reporting right on the operator console. <strong>I deem both of these integrations absolutely necessary for a top-quality, production-grade rotary machine.</strong>
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="doc-card highlight">
+          <span class="card-badge amber mono">MACHINE FOOTPRINT</span>
+          <h3>Moving-Cutter X-Axis vs. Moving-Stock Feed</h3>
+          <p>
+            <strong>The biggest architectural shift for v2 is making the X-axis move the cutter instead of the stock.</strong>
+          </p>
+          <p>
+            In this v1 design, the cutting torch station is stationary while the raw 20-foot stick is pushed forward along the X-axis bed. When you slide in 20 feet of raw tube and need to cut a feature near the far tail end, you must physically support ~20 feet of tube stick-out extending beyond the machine frame. This means the actual shop floor footprint required is roughly <strong>40 feet (12 meters)</strong>.
+          </p>
+          <p>
+            When the X-axis moves the cutter along the 20-foot bed while the stock stays in place and only rotates, the entire machine footprint is strictly <strong>20 feet (6 meters)—nothing more, nothing else</strong>.
+          </p>
+        </div>
+
+        <div class="doc-card highlight">
+          <span class="card-badge cyan mono">SHOP ENVIRONMENT &amp; SMOKE CONTROL</span>
+          <h3>Internal Water Quenching vs. Air Exhaust Blowers</h3>
+          <p>
+            <strong>Stationary stock unlocks continuous water flushing to keep the shop 100% clean.</strong>
+          </p>
+          <p>
+            When 20-foot tube moves back and forth during cutting, capturing toxic plasma smoke and molten slag requires high-power pressurized shop blowers and massive exhaust hood ducting.
+          </p>
+          <p>
+            With an X-axis that moves the torch while the stock rotates in a fixed axial position, you can clamp a water coupling to the rear spindle bore and run continuous water through the inside of the tube during cuts. The water immediately quenches sparks, dissolves plasma smoke at the point of origin, cools the steel to prevent thermal bowing, and flushes dross straight into a settling tank without fans or dirty shop air.
+          </p>
+        </div>
+
+        <div class="doc-card">
+          <span class="card-badge mono">5-AXIS / 6-AXIS BEVEL HEAD</span>
+          <h3>6-Axis Rotary Kinematics (XYZABC Articulated Torch)</h3>
+          <p>
+            <strong>Adding torch roll and tilt for true 3D weld-prep bevels and complex geometry.</strong>
+          </p>
+          <p>
+            This v1 machine uses true 4-axis kinematics (XYZ + continuous A-axis rotation). Perpendicular torch cutting works phenomenally for copes, holes, and saddle joints, but heavy-wall structural tubing and roll-cage tube require a 30° to 45° weld-prep bevel on the cut edge to achieve 100% weld penetration.
+          </p>
+          <p>
+            In v2, I really want a <strong>6-axis CNC rotary (XYZABC)</strong> with a compact 2-axis motorized tilting wrist (B/C axes) on the torch lifter. Being able to dynamically roll and tilt the torch allows cutting weld-ready chamfers, countersunk bolt holes, and intricate intersecting copes with zero post-processing.
+          </p>
+        </div>
+
+        <div class="doc-card">
+          <span class="card-badge mono">YIELD OPTIMIZATION (v1.1 RETROFIT)</span>
+          <h3>Front Chuck Holding Extension (Saving 50 cm Scrap Drop)</h3>
+          <p>
+            <strong>Eliminating the final 50 cm of wasted stock with a pass-through holding extension.</strong>
+          </p>
+          <p>
+            The current v1 design wastes about <strong>50 cm (~20 inches) of tube</strong> at the end of every 20-foot stick. Because the rear chuck carriage cannot physically pass all the way through the front slewing ring headstock, the final segment of tube cannot be supported directly under the torch nozzle.
+          </p>
+          <p>
+            Before building v2, this will be addressed in a <strong>v1.1 retrofit</strong>: designing a dedicated holding extension / mandrel that passes through the front chuck. This will support the stock all the way through the headstock and allow cutting right down to the last few centimeters of material.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAM Software Integration Callout -->
     <section class="guide-section">
       <div class="cam-cta-card">
         <h2>The Hardware is Only Half the Battle.</h2>
@@ -2720,6 +2809,7 @@
     </div>
     <div class="footer-links">
       <a href="index.html" class="footer-link">← Back to RotaryCAM</a>
+      <a href="#learnings" class="footer-link">v2 Roadmap</a>
       <a href="#disclaimer" class="footer-link">Build Disclaimer</a>
       <a href="index.html#impressum" class="footer-link">Legal Notice &amp; Safety</a>
       <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
