@@ -142,14 +142,33 @@
     }
 
     .nav-links a {
+      position: relative;
       color: var(--text-muted);
       text-decoration: none;
       font-size: 0.85rem;
       transition: color 0.15s ease;
+      padding: 0.25rem 0;
     }
 
     .nav-links a:hover {
       color: #fff;
+    }
+
+    .nav-links a.active:not(.nav-back-link) {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .nav-links a.active:not(.nav-back-link)::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--plasma-amber);
+      border-radius: 2px;
+      box-shadow: 0 0 8px var(--plasma-glow);
     }
 
     .nav-back-link {
@@ -1731,30 +1750,6 @@
         </div>
 
         <!-- Video 3 -->
-        <div class="video-card" data-video-id="7Txh6C-Bx1E">
-          <div class="video-thumb-wrap">
-            <img src="https://i.ytimg.com/vi/7Txh6C-Bx1E/oar2.jpg" alt="First cut test with touch off and pierce" loading="lazy" class="video-thumb">
-            <div class="video-overlay">
-              <div class="play-btn-circle">
-                <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-              <span class="shorts-pill">
-                <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
-                SHORT
-              </span>
-            </div>
-          </div>
-          <div class="video-info">
-            <span class="card-badge mono">PROCESS • IHS &amp; PIERCE</span>
-            <h3 class="video-title">First Cut: Touch-Off &amp; Pierce</h3>
-            <p class="video-desc">Fast ohmic initial height sensing touch-off on the pipe wall, retract to pierce height, arc transfer dwell, and smooth plunge to cut height.</p>
-            <a href="https://www.youtube.com/shorts/7Txh6C-Bx1E" target="_blank" rel="noopener noreferrer" class="video-link mono">
-              Watch on YouTube (Short) ↗
-            </a>
-          </div>
-        </div>
-
-        <!-- Video 4 -->
         <div class="video-card" data-video-id="SxPffLVxEtA">
           <div class="video-thumb-wrap">
             <img src="https://i.ytimg.com/vi/SxPffLVxEtA/oar2.jpg" alt="Rotary plasma cutter A and X axis walkthrough" loading="lazy" class="video-thumb">
@@ -1778,7 +1773,7 @@
           </div>
         </div>
 
-        <!-- Video 5 -->
+        <!-- Video 4 -->
         <div class="video-card" data-video-id="dbIxk7xQxyU">
           <div class="video-thumb-wrap">
             <img src="https://i.ytimg.com/vi/dbIxk7xQxyU/oar2.jpg" alt="Rotary CNC plasma front chuck walkthrough" loading="lazy" class="video-thumb">
@@ -1802,7 +1797,7 @@
           </div>
         </div>
 
-        <!-- Video 6 -->
+        <!-- Video 5 -->
         <div class="video-card" data-video-id="0OIRPtqcSMY">
           <div class="video-thumb-wrap">
             <img src="https://i.ytimg.com/vi/0OIRPtqcSMY/oar2.jpg" alt="Rotary CNC plasma build progress" loading="lazy" class="video-thumb">
@@ -2846,6 +2841,46 @@
           closeVideoModal();
         }
       });
+
+      // -------------------------------------------------------------
+      // Scroll-Spy: Highlight active section in navigation bar
+      // -------------------------------------------------------------
+      const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+      const sections = Array.from(navLinks).map(link => {
+        const id = link.getAttribute('href').substring(1);
+        return document.getElementById(id);
+      }).filter(Boolean);
+
+      function updateActiveNav() {
+        const scrollPos = window.scrollY + 140; // Header height + buffer
+        let currentSectionId = '';
+
+        for (let i = sections.length - 1; i >= 0; i--) {
+          const sec = sections[i];
+          if (sec && sec.offsetTop <= scrollPos) {
+            currentSectionId = sec.id;
+            break;
+          }
+        }
+
+        // If scrolled near page bottom, activate the last section (FAQ)
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 80 && sections.length > 0) {
+          currentSectionId = sections[sections.length - 1].id;
+        }
+
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === '#' + currentSectionId) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
+      window.addEventListener('resize', updateActiveNav, { passive: true });
+      updateActiveNav();
     })();
   </script>
 </body>
