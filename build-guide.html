@@ -1688,11 +1688,11 @@
           <div class="doc-card highlight" style="margin-bottom: 1.5rem;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
               <span class="card-badge amber mono">MODE 1 • PRODUCTION DEFAULT</span>
-              <span class="mono" style="font-size: 0.75rem; color: var(--plasma-amber);">Dual ADC1 (PA3) + ADC2 (PA7)</span>
+              <span class="mono" style="font-size: 0.75rem; color: var(--plasma-amber);">Dual ADC Architecture</span>
             </div>
             <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">1. HYBRID_SAV (Default — EWMV Plateau Lock + Cut-Chart Sanity Window)</h3>
             <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 1rem;">
-              Reads the live plasma arc on ADC1 (PA3) and the CNC's cut-chart preset voltage on ADC2 (PA7, output by simCNC / <code>m3.py</code>). Driven by the statistical EWMV plateau engine, it combines the speed of sample-arc-voltage with the safety of cut-chart bounds:
+              Reads the live plasma arc on ADC and the CNC's cut-chart preset voltage on ADC2 (output by simCNC / <code>m3.py</code>). Driven by the statistical EWMV plateau engine, it combines the speed of sample-arc-voltage with the safety of cut-chart bounds:
             </p>
             <div class="grid-3" style="gap: 1rem;">
               <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
