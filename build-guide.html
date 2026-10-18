@@ -2840,12 +2840,16 @@
     import { OrbitControls } from './vendor/OrbitControls.js';
 
     const container = document.getElementById('cad-viewport-container');
-    const canvas = document.getElementById('cad-canvas');
+    let canvas = document.getElementById('cad-canvas');
     const loadingOverlay = document.getElementById('loading-overlay');
     const loadingStatus = document.getElementById('loading-status');
 
     let scene, camera, renderer, controls, modelGroup;
     let isWireframe = false;
+    let cadAnimId = null;
+    let cadResizeObserver = null;
+    let cadIntersectionObserver = null;
+    let isCadVisible = true;
 
     // Smooth camera transition state (module-level)
     let isAnimatingCamera = false;
@@ -2888,7 +2892,95 @@
     const btnReset = document.getElementById('btn-reset-view');
     const btnFullscreen = document.getElementById('btn-fullscreen');
 
-    // Safe WebGLRenderer factory with fallback and error handling
+    // Resource disposal helpers for leak-free WebGL lifecycle
+    function disposeMaterial(mat) {
+      if (!mat) return;
+      if (Array.isArray(mat)) {
+        mat.forEach(disposeMaterial);
+        return;
+      }
+      for (const key of Object.keys(mat)) {
+        const val = mat[key];
+        if (val && typeof val === 'object' && val.isTexture) {
+          try { val.dispose(); } catch (e) {}
+        }
+      }
+      try { mat.dispose(); } catch (e) {}
+    }
+
+    function disposeHierarchy(root) {
+      if (!root) return;
+      root.traverse((obj) => {
+        if (obj.geometry) {
+          try { obj.geometry.dispose(); } catch (e) {}
+        }
+        if (obj.material) {
+          disposeMaterial(obj.material);
+        }
+      });
+      while (root.children && root.children.length > 0) {
+        root.remove(root.children[0]);
+      }
+    }
+
+    function disposeRenderer(rnd) {
+      if (!rnd) return;
+      try {
+        const gl = rnd.getContext();
+        if (gl) {
+          const loseExt = gl.getExtension('WEBGL_lose_context');
+          if (loseExt) {
+            loseExt.loseContext();
+          }
+        }
+      } catch (err) {
+        console.warn('Error releasing WebGL context:', err);
+      }
+      try {
+        rnd.forceContextLoss();
+      } catch (err) {}
+      try {
+        rnd.dispose();
+      } catch (err) {}
+    }
+
+    // Global WebGL Lifecycle Manager
+    // Enforces Chrome context limit protection across page reloads and between multiple 3D viewers
+    const webglManager = {
+      activePcbTeardown: null,
+      cadTeardown: null,
+
+      registerCadTeardown(fn) {
+        this.cadTeardown = fn;
+      },
+
+      setActivePcbTeardown(fn) {
+        if (this.activePcbTeardown && this.activePcbTeardown !== fn) {
+          try {
+            this.activePcbTeardown();
+          } catch (e) {
+            console.warn('Error tearing down previous PCB viewer:', e);
+          }
+        }
+        this.activePcbTeardown = fn;
+      },
+
+      teardownAll() {
+        if (this.activePcbTeardown) {
+          try { this.activePcbTeardown(); } catch (e) {}
+          this.activePcbTeardown = null;
+        }
+        if (this.cadTeardown) {
+          try { this.cadTeardown(); } catch (e) {}
+          this.cadTeardown = null;
+        }
+      }
+    };
+
+    window.addEventListener('pagehide', () => webglManager.teardownAll());
+    window.addEventListener('beforeunload', () => webglManager.teardownAll());
+
+    // Safe WebGLRenderer factory with fallback, canvas recovery, and error handling
     function createSafeRenderer(targetCanvas, customOpts = {}) {
       if (!targetCanvas) return null;
       const defaultOpts = {
@@ -2909,17 +3001,65 @@
             canvas: targetCanvas,
             antialias: false,
             alpha: true,
-            powerPreference: 'default',
+            powerPreference: 'low-power',
             failIfMajorPerformanceCaveat: false
           });
         } catch (err2) {
-          console.error('All WebGLRenderer creation attempts failed:', err2);
-          return null;
+          console.warn('Low-overhead WebGLRenderer creation failed, attempting fresh canvas clone:', err2);
+          try {
+            const freshCanvas = targetCanvas.cloneNode(false);
+            if (targetCanvas.parentNode) {
+              targetCanvas.parentNode.replaceChild(freshCanvas, targetCanvas);
+            }
+            return new THREE.WebGLRenderer({
+              canvas: freshCanvas,
+              antialias: false,
+              alpha: false,
+              powerPreference: 'low-power',
+              failIfMajorPerformanceCaveat: false
+            });
+          } catch (err3) {
+            console.error('All WebGLRenderer creation attempts failed:', err3);
+            return null;
+          }
         }
       }
     }
 
+    function disposeCadViewer() {
+      if (cadAnimId) {
+        cancelAnimationFrame(cadAnimId);
+        cadAnimId = null;
+      }
+      if (cadResizeObserver) {
+        try { cadResizeObserver.disconnect(); } catch (e) {}
+        cadResizeObserver = null;
+      }
+      if (cadIntersectionObserver) {
+        try { cadIntersectionObserver.disconnect(); } catch (e) {}
+        cadIntersectionObserver = null;
+      }
+      if (controls) {
+        try { controls.dispose(); } catch (e) {}
+        controls = null;
+      }
+      if (modelGroup) {
+        disposeHierarchy(modelGroup);
+        modelGroup = null;
+      }
+      if (scene) {
+        disposeHierarchy(scene);
+        scene = null;
+      }
+      if (renderer) {
+        disposeRenderer(renderer);
+        renderer = null;
+      }
+    }
+
     function initScene() {
+      disposeCadViewer();
+
       const width = container.clientWidth || 800;
       const height = container.clientHeight || 580;
 
@@ -2938,16 +3078,24 @@
         return false;
       }
 
+      canvas = renderer.domElement;
+      webglManager.registerCadTeardown(disposeCadViewer);
+
       canvas.addEventListener('webglcontextlost', (e) => {
         e.preventDefault();
         console.warn('3D CAD Assembly WebGL context lost.');
-      }, false);
+        if (loadingStatus) {
+          loadingStatus.innerHTML = '<span style="color:#ef4444;font-size:0.95rem;">WebGL context lost.<br><span style="font-size:0.8rem;color:var(--text-dim);">Reallocating 3D resources...</span></span>';
+          if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+        }
+      }, { once: true });
+
       canvas.addEventListener('webglcontextrestored', () => {
         console.log('3D CAD Assembly WebGL context restored.');
         if (initScene()) {
           loadCadModel();
         }
-      }, false);
+      }, { once: true });
 
       renderer.setSize(width, height);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -2995,9 +3143,11 @@
         isAnimatingCamera = false;
       });
 
-      // Render Loop
+      // Render Loop with visibility throttling
       function animate() {
-        requestAnimationFrame(animate);
+        cadAnimId = requestAnimationFrame(animate);
+
+        if (!isCadVisible || !renderer || !scene || !camera) return;
 
         if (isAnimatingCamera) {
           const now = performance.now();
@@ -3019,16 +3169,24 @@
       animate();
 
       // Resize observer
-      const resizeObserver = new ResizeObserver(() => {
+      cadResizeObserver = new ResizeObserver(() => {
         const w = container.clientWidth;
         const h = container.clientHeight;
-        if (w && h) {
+        if (w && h && camera && renderer) {
           camera.aspect = w / h;
           camera.updateProjectionMatrix();
           renderer.setSize(w, h);
         }
       });
-      resizeObserver.observe(container);
+      cadResizeObserver.observe(container);
+
+      // Visibility observer: pause 60 FPS rendering when scrolled off-screen
+      cadIntersectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isCadVisible = entry.isIntersecting;
+        });
+      }, { rootMargin: '150px 0px', threshold: 0.01 });
+      cadIntersectionObserver.observe(container);
 
       return true;
     }
@@ -3271,7 +3429,7 @@
     // Generic Interactive PCB 3D Viewer Function
     // -------------------------------------------------------------
     function initPcbViewer(canvasId, loadingId, coverId, meshUrl, silkscreenUrl) {
-      const pcbCanvas = document.getElementById(canvasId);
+      let pcbCanvas = document.getElementById(canvasId);
       const pcbLoading = document.getElementById(loadingId);
       const pcbCover = document.getElementById(coverId);
       if (!pcbCanvas) return;
@@ -3282,10 +3440,62 @@
       let pcbScene = null;
       let pcbCamera = null;
       let pcbControls = null;
+      let pcbGroup = null;
+      let pcbAnimId = null;
+      let ro = null;
+      let io = null;
       let isVisible = true;
+
+      function teardown() {
+        if (!initialized) return;
+
+        if (pcbAnimId) {
+          cancelAnimationFrame(pcbAnimId);
+          pcbAnimId = null;
+        }
+        if (ro) {
+          try { ro.disconnect(); } catch (e) {}
+          ro = null;
+        }
+        if (io) {
+          try { io.disconnect(); } catch (e) {}
+          io = null;
+        }
+        if (pcbControls) {
+          try { pcbControls.dispose(); } catch (e) {}
+          pcbControls = null;
+        }
+        if (pcbGroup) {
+          disposeHierarchy(pcbGroup);
+          pcbGroup = null;
+        }
+        if (pcbScene) {
+          disposeHierarchy(pcbScene);
+          pcbScene = null;
+        }
+        if (pcbRenderer) {
+          disposeRenderer(pcbRenderer);
+          pcbRenderer = null;
+        }
+
+        pcbCamera = null;
+        initialized = false;
+
+        // Restore preview cover so user can click to explore again
+        if (pcbCover) {
+          pcbCover.classList.remove('hidden');
+        }
+        if (pcbLoading) {
+          pcbLoading.classList.add('hidden');
+        }
+      }
 
       function startViewer() {
         if (initialized) return;
+
+        // Enforce single-active PCB viewer across the page to protect WebGL context limits
+        webglManager.setActivePcbTeardown(teardown);
+
         initialized = true;
 
         if (pcbCover) {
@@ -3314,13 +3524,17 @@
           if (pcbLoading) {
             pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem; text-align: center; padding: 1rem;">WebGL context unavailable<br><span style="font-size:0.72rem;color:var(--text-dim);">Too many active 3D contexts or GPU disabled.</span><br><button onclick="location.reload()" style="margin-top:8px;padding:4px 10px;background:var(--plasma-amber);color:#000;border:none;border-radius:4px;cursor:pointer;font-size:0.75rem;font-weight:bold;">Reload</button></div>';
           }
+          initialized = false;
           return;
         }
+
+        pcbCanvas = pcbRenderer.domElement;
 
         pcbCanvas.addEventListener('webglcontextlost', (e) => {
           e.preventDefault();
           console.warn('PCB WebGL context lost on ' + canvasId);
-        }, false);
+          teardown();
+        }, { once: true });
 
         pcbRenderer.setSize(width, height);
         pcbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -3366,10 +3580,10 @@
 
         // Pause auto-rotation on user drag
         pcbControls.addEventListener('start', () => {
-          pcbControls.autoRotate = false;
+          if (pcbControls) pcbControls.autoRotate = false;
         });
 
-        const pcbGroup = new THREE.Group();
+        pcbGroup = new THREE.Group();
         pcbScene.add(pcbGroup);
 
         // Load Mesh
@@ -3379,9 +3593,11 @@
             if (!resp.ok) throw new Error('HTTP ' + resp.status);
             const stream = resp.body.pipeThrough(new DecompressionStream('gzip'));
             const text = await new Response(stream).text();
+            if (!initialized || !pcbGroup || !pcbScene) return;
             const data = JSON.parse(text);
 
             for (const m of data.meshes) {
+              if (!initialized || !pcbGroup) return;
               const geom = new THREE.BufferGeometry();
               geom.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3));
               if (m.normals && m.normals.length === m.positions.length) {
@@ -3491,6 +3707,10 @@
               const b = data.board;
               const texLoader = new THREE.TextureLoader();
               texLoader.load(silkscreenUrl, (tex) => {
+                if (!initialized || !pcbGroup) {
+                  try { tex.dispose(); } catch (e) {}
+                  return;
+                }
                 tex.colorSpace = THREE.SRGBColorSpace;
                 const decalGeo = new THREE.PlaneGeometry(b.width, b.height);
                 const decalMat = new THREE.MeshBasicMaterial({
@@ -3514,6 +3734,8 @@
               });
             }
 
+            if (!initialized || !pcbControls || !pcbCamera) return;
+
             const bounds = data.bounds || { x: 80, y: 20, z: 80 };
             const maxDim = Math.max(bounds.x, bounds.y, bounds.z);
             pcbCamera.position.set(-maxDim * 1.15, maxDim * 1.05, maxDim * 1.25);
@@ -3528,43 +3750,43 @@
             }
           } catch (err) {
             console.error('Failed to load PCB model:', meshUrl, err);
-            if (pcbLoading) {
+            if (pcbLoading && initialized) {
               pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem;">Failed to load 3D model</div>';
             }
           }
         }
 
         function animate() {
-          requestAnimationFrame(animate);
-          if (isVisible && pcbRenderer && pcbScene && pcbCamera) {
+          pcbAnimId = requestAnimationFrame(animate);
+          if (isVisible && pcbRenderer && pcbScene && pcbCamera && pcbControls) {
             pcbControls.update();
             pcbRenderer.render(pcbScene, pcbCamera);
           }
         }
         animate();
         loadMesh();
-      }
 
-      // Responsive resize
-      const ro = new ResizeObserver(() => {
-        if (!pcbRenderer || !pcbCamera) return;
-        const w = pcbParent.clientWidth;
-        const h = pcbParent.clientHeight;
-        if (w > 0 && h > 0) {
-          pcbCamera.aspect = w / h;
-          pcbCamera.updateProjectionMatrix();
-          pcbRenderer.setSize(w, h);
-        }
-      });
-      ro.observe(pcbParent);
-
-      // Pause animation loop when scrolled away
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          isVisible = entry.isIntersecting;
+        // Responsive resize
+        ro = new ResizeObserver(() => {
+          if (!pcbRenderer || !pcbCamera) return;
+          const w = pcbParent.clientWidth;
+          const h = pcbParent.clientHeight;
+          if (w > 0 && h > 0) {
+            pcbCamera.aspect = w / h;
+            pcbCamera.updateProjectionMatrix();
+            pcbRenderer.setSize(w, h);
+          }
         });
-      }, { rootMargin: '100px 0px', threshold: 0.01 });
-      io.observe(pcbCanvas);
+        ro.observe(pcbParent);
+
+        // Pause animation loop when scrolled away
+        io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            isVisible = entry.isIntersecting;
+          });
+        }, { rootMargin: '100px 0px', threshold: 0.01 });
+        io.observe(pcbCanvas);
+      }
     }
 
     // Initialize PCB Viewers with Mesh + Silkscreen Projection (on-demand click to explore)
