@@ -91,6 +91,10 @@ def export_step_mesh(step_path, out_gz_path):
             tri = OCP.BRep.BRep_Tool.Triangulation_s(face, loc)
             if tri is not None:
                 trsf = loc.Transformation()
+                is_reversed = (face.Orientation() == OCP.TopAbs.TopAbs_REVERSED)
+                if trsf.IsNegative():
+                    is_reversed = not is_reversed
+
                 has_normals = tri.HasNormals()
                 n_nodes = tri.NbNodes()
                 
@@ -102,10 +106,11 @@ def export_step_mesh(step_path, out_gz_path):
                     positions.append(round(-(p.Y() - cy), 3))
 
                     if has_normals:
-                        nv = tri.Normal(k)
-                        normals.append(round(nv.X(), 3))
-                        normals.append(round(nv.Z(), 3))
-                        normals.append(round(-nv.Y(), 3))
+                        nv = tri.Normal(k).Transformed(trsf)
+                        sign = -1.0 if is_reversed else 1.0
+                        normals.append(round(sign * nv.X(), 3))
+                        normals.append(round(sign * nv.Z(), 3))
+                        normals.append(round(-sign * nv.Y(), 3))
                     else:
                         normals.extend([0.0, 1.0, 0.0])
 
@@ -113,9 +118,14 @@ def export_step_mesh(step_path, out_gz_path):
                 for k in range(1, n_triangles + 1):
                     t = tri.Triangle(k)
                     i1, i2, i3 = t.Get()
-                    indices.append(vert_offset + i1 - 1)
-                    indices.append(vert_offset + i2 - 1)
-                    indices.append(vert_offset + i3 - 1)
+                    if is_reversed:
+                        indices.append(vert_offset + i1 - 1)
+                        indices.append(vert_offset + i3 - 1)
+                        indices.append(vert_offset + i2 - 1)
+                    else:
+                        indices.append(vert_offset + i1 - 1)
+                        indices.append(vert_offset + i2 - 1)
+                        indices.append(vert_offset + i3 - 1)
 
                 vert_offset += n_nodes
             face_exp.Next()

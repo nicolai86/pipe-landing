@@ -1340,7 +1340,7 @@
               In a high-power CNC plasma cabinet, running loose flying leads from ClearPath servos, proximity limit switches, and torch signals directly into motion controller terminals creates electrical noise, ground loops, and a maintenance nightmare.
             </p>
             <p>
-              To eliminate wiring clutter and organize all cabinet connections, we designed a custom 2-layer carrier shield (HAT) that mates directly to the CSLab CSMIO/IP-M. It provides heavy-duty pluggable screw terminals, clean 24V industrial field wiring distribution, onboard filtering, and hardware LED diagnostic indicators for every motion axis, enable line, and limit sensor. Galvanic opto-isolation is handled upstream by the FastCutCNC Hypertherm interface box and the IP-M's native inputs.
+              To eliminate wiring clutter and organize all cabinet connections, I designed a custom 2-layer carrier shield (HAT) that mates directly to the CSLab CSMIO/IP-M. It provides heavy-duty pluggable screw terminals, clean 24V industrial field wiring distribution, onboard filtering, and hardware LED diagnostic indicators for every motion axis, enable line, and limit sensor. Galvanic opto-isolation is handled upstream by the FastCutCNC Hypertherm interface box and the IP-M's native inputs.
             </p>
             <div class="pcb-specs-grid">
               <div class="pcb-spec-item">
@@ -1388,7 +1388,7 @@
           <h3>2x SDHP-3446P-ELN</h3>
           <p><strong>NEMA 34 High-Power ClearPath</strong></p>
           <p>
-            Dedicated high-power servos drive the front and rear rotary chucks. Electrically synchronized in SimCNC, dual chucks grip both ends of a 20-foot stick, completely eliminating tube twist on thin-wall stock.
+            Dedicated high-power servos drive the front and rear rotary chucks. Synchronized in hardware via the custom RS422 splitter PCB off a single controller axis, dual chucks grip both ends of a 20-foot stick, completely eliminating tube twist on thin-wall stock.
           </p>
         </div>
 
@@ -1406,7 +1406,7 @@
           <h3>CPM-SDSK-2331S / 2311S</h3>
           <p><strong>NEMA 23 High-Torque ClearPath</strong></p>
           <p>
-            <strong>Y-Axis:</strong> CPM-SDSK-2331S-RLN drives the 1-meter cross slide.<br>
+            <strong>Y-Axis:</strong> CPM-SDSK-2331S-RLN drives the 20" cross slide.<br>
             <strong>Z-Axis:</strong> CPM-SDSK-2311S-RQN provides rapid vertical retracts and ultra-low latency response to THC voltage tracking.
           </p>
         </div>
@@ -1436,7 +1436,7 @@
               Because the controller only has one physical A-axis step/dir channel, both servos must receive the exact same pulse train. Wiring two high-speed differential servo inputs in raw parallel to a single controller channel causes transmission line impedance mismatches, signal reflections, and pulse jitter at 125 kHz.
             </p>
             <p>
-              <strong>The Hardware Solution:</strong> We designed an active differential RS422 splitter PCB. It receives the single differential Step/Dir pulse stream from the IP-M, buffers the signals through high-speed RS-422 line receivers, and drives two independent, impedance-matched, actively buffered differential output pairs. Both servos receive zero-latency pulses in perfect hardware lockstep with zero software overhead.
+              <strong>The Hardware Solution:</strong> I designed an active differential RS422 splitter PCB. It receives the single differential Step/Dir pulse stream from the IP-M, buffers the signals through high-speed RS-422 line receivers, and drives two independent, impedance-matched, actively buffered differential output pairs. Both servos receive zero-latency pulses in perfect hardware lockstep with zero software overhead.
             </p>
             <div class="pcb-specs-grid">
               <div class="pcb-spec-item">
@@ -1523,7 +1523,7 @@
           <span class="card-badge mono">X &amp; Y AXIS GUIDES</span>
           <h3>HGH25 Heavy-Load Profile Linear Rails</h3>
           <p>
-            Both the 6-meter bed carriage and the 1-meter cross slide ride on <strong>precision-ground HGH25 linear profile rails</strong> with heavy-load flanged recirculating ball carriage blocks.
+            Both the 6-meter bed carriage and the 20-inch cross slide ride on <strong>precision-ground HGH25 linear profile rails</strong> with heavy-load flanged recirculating ball carriage blocks.
           </p>
           <p>
             Linear rails are bolted directly to the precision-machined top reference surface of the HSS structural spine, ensuring perfect parallelism and zero gantry bind across all 20 feet of travel.
@@ -1677,7 +1677,7 @@
             Three Operating Modes: HYBRID_SAV, PURE_SAV &amp; PRESET
           </h4>
           <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
-            Fixed book-voltage THCs fail in the real world as soon as an electrode wears (increasing arc voltage by +5 V to +10 V and driving the torch into the plate) or when cutting far from the ground clamp. Pure Sample-Arc-Voltage (SAV) systems solve consumable wear by locking onto the initial post-pierce voltage, but fail catastrophically if warped thin sheet springs back after touch-off—locking in a bogus 165–170 V target (0.50"+ standoff) for the rest of the cut. Our controller implements three selectable modes, with <strong>Sanity-Checked HYBRID_SAV + Automatic PURE_SAV Fallback</strong> as the production default:
+            Fixed book-voltage THCs fail in the real world as soon as an electrode wears (increasing arc voltage by +5 V to +10 V and driving the torch into the plate) or when cutting far from the ground clamp. Pure Sample-Arc-Voltage (SAV) systems solve consumable wear by locking onto the initial post-pierce voltage, but fail catastrophically if warped thin sheet springs back after touch-off—locking in a bogus 165–170 V target (0.50"+ standoff) for the rest of the cut. This controller implements three selectable modes, with <strong>Sanity-Checked HYBRID_SAV + Automatic PURE_SAV Fallback</strong> as the production default:
           </p>
 
           <div class="grid-3">
@@ -2436,7 +2436,7 @@
             All custom 6061-T6 aluminum plates were uploaded directly to JLCPCB's online CNC machining portal. You do not need to machine them manually in your own shop.
           </p>
           <p>
-            Download our complete <a href="assets/V1.zip" download style="color: var(--plasma-amber); font-weight: 600;">JLCPCB Machining Package (V1.zip)</a> above. It contains every individual STEP model, quantity requirement, and engineering drawing PDF formatted specifically for drag-and-drop instant quotes on JLCPCB.
+            Download the complete <a href="assets/V1.zip" download style="color: var(--plasma-amber); font-weight: 600;">JLCPCB Machining Package (V1.zip)</a> above. It contains every individual STEP model, quantity requirement, and engineering drawing PDF formatted specifically for drag-and-drop instant quotes on JLCPCB.
           </p>
           <p>
             For commercial rotary drive hardware, the <a href="https://www.aliexpress.com/item/1005008398317265.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">ZCT200 10:1 hollow rotary actuator ↗</a> and <a href="https://www.aliexpress.com/item/1005006498334475.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">XSU080318 crossed roller slewing ring bearing ↗</a> were ordered directly on AliExpress.
@@ -2501,6 +2501,38 @@
 
     let scene, camera, renderer, controls, modelGroup;
     let isWireframe = false;
+
+    // Smooth camera transition state (module-level)
+    let isAnimatingCamera = false;
+    const animStartTarget = new THREE.Vector3();
+    const animEndTarget = new THREE.Vector3();
+    const animStartPos = new THREE.Vector3();
+    const animEndPos = new THREE.Vector3();
+    let animStartTime = 0;
+    const animDuration = 420; // ms
+
+    function animateCameraTo(newTarget, newPos) {
+      if (!controls || !camera) return;
+      animStartTarget.copy(controls.target);
+      animEndTarget.copy(newTarget);
+      animStartPos.copy(camera.position);
+
+      if (newPos) {
+        animEndPos.copy(newPos);
+      } else {
+        const offset = camera.position.clone().sub(controls.target);
+        const dist = offset.length();
+        if (dist > 2500) {
+          offset.setLength(1800);
+        } else if (dist < 600) {
+          offset.setLength(800);
+        }
+        animEndPos.copy(newTarget).add(offset);
+      }
+
+      animStartTime = performance.now();
+      isAnimatingCamera = true;
+    }
 
     // View preset buttons
     const btnIso = document.getElementById('btn-view-iso');
@@ -2568,39 +2600,6 @@
 
       modelGroup = new THREE.Group();
       scene.add(modelGroup);
-
-      // Smooth camera transition state
-      let isAnimatingCamera = false;
-      const animStartTarget = new THREE.Vector3();
-      const animEndTarget = new THREE.Vector3();
-      const animStartPos = new THREE.Vector3();
-      const animEndPos = new THREE.Vector3();
-      let animStartTime = 0;
-      const animDuration = 420; // ms
-
-      function animateCameraTo(newTarget, newPos) {
-        animStartTarget.copy(controls.target);
-        animEndTarget.copy(newTarget);
-        animStartPos.copy(camera.position);
-
-        if (newPos) {
-          animEndPos.copy(newPos);
-        } else {
-          // Maintain viewing direction from current camera position to new target
-          const offset = camera.position.clone().sub(controls.target);
-          const dist = offset.length();
-          // If zoomed far out, bring closer for comfortable single-part inspection
-          if (dist > 2500) {
-            offset.setLength(1800);
-          } else if (dist < 600) {
-            offset.setLength(800);
-          }
-          animEndPos.copy(newTarget).add(offset);
-        }
-
-        animStartTime = performance.now();
-        isAnimatingCamera = true;
-      }
 
       controls.addEventListener('start', () => {
         isAnimatingCamera = false;
@@ -2761,6 +2760,12 @@
       if (!controls || !camera) return;
 
       selectMesh(null);
+
+      document.querySelectorAll('.viewport-toolbar .tool-btn').forEach(b => {
+        if (b.id && b.id.startsWith('btn-view-')) b.classList.remove('active');
+      });
+      const activeBtn = document.getElementById(`btn-view-${preset}`);
+      if (activeBtn) activeBtn.classList.add('active');
 
       switch (preset) {
         case 'iso':
@@ -2965,6 +2970,7 @@
               color: new THREE.Color(c[0], c[1], c[2]),
               roughness: isBoard ? 0.62 : (isCopper || isMetal ? 0.22 : (isSilkscreen ? 0.4 : 0.75)),
               metalness: isMetal ? 0.92 : (isCopper ? 0.85 : 0.06),
+              side: THREE.DoubleSide,
               polygonOffset: !isBoard,
               polygonOffsetFactor: -1.0,
               polygonOffsetUnits: -1.0
