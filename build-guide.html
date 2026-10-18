@@ -3143,11 +3143,12 @@
       loadMesh();
     }
 
-    // Initialize PCB Viewers with Mesh + Silkscreen Projection
-    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz', 'assets/cslab-ip-m-silkscreen.svg');
-    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz', 'assets/rs422-splitter-silkscreen.svg');
-    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz', 'assets/z-axis-thc-silkscreen.svg');
+    // Initialize PCB Viewers with Mesh + Silkscreen Projection (cache-busted for production CDN/browser cache)
+    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz?v=20261018-cad', 'assets/cslab-ip-m-silkscreen.svg?v=20261018-cad');
+    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz?v=20261018-cad', 'assets/rs422-splitter-silkscreen.svg?v=20261018-cad');
+    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz?v=20261018-cad', 'assets/z-axis-thc-silkscreen.svg?v=20261018-cad');
   </script>
+
 
   <!-- Video Player Modal -->
   <div class="video-modal" id="video-modal" aria-hidden="true" role="dialog" aria-label="Video Player">
