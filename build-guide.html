@@ -2993,27 +2993,35 @@
             let poFactor = 0;
             let poUnits = 0;
 
+            let isTransparent = false;
+            let opacityVal = 1.0;
+
             switch (matType) {
               case 'soldermask':
                 col = new THREE.Color(0.04, 0.44, 0.14); // Authentic Fusion emerald green
-                roughness = 0.42;
+                roughness = 0.38;
                 metalness = 0.04;
+                isTransparent = true;
+                opacityVal = 0.90; // Subtle translucency to reveal copper trace relief beneath
                 polygonOffset = true;
-                poFactor = 2.0; // Sits slightly behind copper and silkscreen
-                poUnits = 2.0;
+                poFactor = -1.0; // In FRONT of copper, covering the board
+                poUnits = -1.0;
                 break;
               case 'copper':
                 col = new THREE.Color(0.96, 0.68, 0.12); // Lustrous metallic gold/amber copper
                 roughness = 0.22;
                 metalness = 0.88;
                 polygonOffset = true;
-                poFactor = -1.0;
-                poUnits = -1.0;
+                poFactor = 2.0; // Sits BEHIND the green soldermask
+                poUnits = 2.0;
                 break;
               case 'metal':
                 col = new THREE.Color(0.85, 0.88, 0.92); // Satin silver leads, pins, and solder
                 roughness = 0.18;
                 metalness = 0.95;
+                polygonOffset = true;
+                poFactor = -3.0; // Sits ABOVE soldermask
+                poUnits = -3.0;
                 break;
               case 'plastic':
                 col = new THREE.Color(0.08, 0.08, 0.09); // Matte dark IC packages and Molex housings
@@ -3034,14 +3042,17 @@
                 col = new THREE.Color(0.48, 0.42, 0.28); // Natural composite FR-4 substrate edge
                 roughness = 0.70;
                 metalness = 0.02;
+                polygonOffset = true;
+                poFactor = 4.0; // At the very bottom
+                poUnits = 4.0;
                 break;
               case 'silkscreen':
                 col = new THREE.Color(1.0, 1.0, 1.0); // White component markings
                 roughness = 0.30;
                 metalness = 0.0;
                 polygonOffset = true;
-                poFactor = -3.0;
-                poUnits = -3.0;
+                poFactor = -4.0; // Above soldermask
+                poUnits = -4.0;
                 break;
               default:
                 roughness = 0.55;
@@ -3053,6 +3064,8 @@
               color: col,
               roughness: roughness,
               metalness: metalness,
+              transparent: isTransparent,
+              opacity: opacityVal,
               side: THREE.DoubleSide,
               polygonOffset: polygonOffset,
               polygonOffsetFactor: poFactor,
@@ -3077,13 +3090,13 @@
                 depthWrite: false,
                 side: THREE.DoubleSide,
                 polygonOffset: true,
-                polygonOffsetFactor: -4.0,
-                polygonOffsetUnits: -4.0
+                polygonOffsetFactor: -5.0,
+                polygonOffsetUnits: -5.0
               });
               const decalMesh = new THREE.Mesh(decalGeo, decalMat);
               decalMesh.position.set(
                 (b.min_x + b.max_x) / 2.0,
-                b.top_z + 0.06,
+                b.top_z + 0.08,
                 -(b.min_y + b.max_y) / 2.0
               );
               decalMesh.rotation.x = -Math.PI / 2;
@@ -3144,9 +3157,9 @@
     }
 
     // Initialize PCB Viewers with Mesh + Silkscreen Projection (cache-busted for production CDN/browser cache)
-    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz?v=20261018-cad', 'assets/cslab-ip-m-silkscreen.svg?v=20261018-cad');
-    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz?v=20261018-cad', 'assets/rs422-splitter-silkscreen.svg?v=20261018-cad');
-    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz?v=20261018-cad', 'assets/z-axis-thc-silkscreen.svg?v=20261018-cad');
+    initPcbViewer('cslab-ip-m-canvas', 'cslab-ip-m-loading', 'assets/cslab-ip-m-mesh.json.gz?v=20261018-layers', 'assets/cslab-ip-m-silkscreen.svg?v=20261018-layers');
+    initPcbViewer('rs422-canvas', 'rs422-loading', 'assets/rs422-splitter-mesh.json.gz?v=20261018-layers', 'assets/rs422-splitter-silkscreen.svg?v=20261018-layers');
+    initPcbViewer('thc-canvas', 'thc-loading', 'assets/z-axis-thc-mesh.json.gz?v=20261018-layers', 'assets/z-axis-thc-silkscreen.svg?v=20261018-layers');
   </script>
 
 
