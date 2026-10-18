@@ -1424,31 +1424,31 @@
       renderer.toneMappingExposure = 1.35;
 
       camera = new THREE.PerspectiveCamera(38, width / height, 10, 50000);
-      camera.position.set(4000, 2400, 3600);
+      camera.position.set(3600, 2600, 5200);
 
       scene = new THREE.Scene();
 
       // Studio Lighting Rig
-      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x2d3748, 1.4);
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x222834, 1.4);
       scene.add(hemiLight);
 
       const keyLight = new THREE.DirectionalLight(0xffffff, 1.8);
-      keyLight.position.set(4000, 6000, 4000);
+      keyLight.position.set(4000, 6000, 5000);
       scene.add(keyLight);
 
-      const fillLight = new THREE.DirectionalLight(0xb8d2f2, 1.2);
-      fillLight.position.set(-4000, 3000, -3000);
+      const fillLight = new THREE.DirectionalLight(0xb0cbef, 1.2);
+      fillLight.position.set(-5000, 3000, -4000);
       scene.add(fillLight);
 
-      const rimLight = new THREE.DirectionalLight(0xfff0e2, 1.0);
-      rimLight.position.set(0, 5000, -5000);
+      const rimLight = new THREE.DirectionalLight(0xffedd5, 1.0);
+      rimLight.position.set(0, 6000, -5000);
       scene.add(rimLight);
 
-      const bounceLight = new THREE.DirectionalLight(0x8fa3bf, 0.6);
+      const bounceLight = new THREE.DirectionalLight(0x718096, 0.6);
       bounceLight.position.set(0, -4000, 2000);
       scene.add(bounceLight);
 
-      const headLight = new THREE.DirectionalLight(0xffffff, 0.7);
+      const headLight = new THREE.DirectionalLight(0xffffff, 0.75);
       headLight.position.set(0, 0, 1);
       camera.add(headLight);
       scene.add(camera);
@@ -1488,7 +1488,7 @@
 
     async function loadCadModel() {
       try {
-        loadingStatus.textContent = 'Fetching 3D CAD mesh (8.7 MB)...';
+        loadingStatus.textContent = 'Fetching 3D CAD mesh (11.2 MB)...';
         const resp = await fetch('assets/rotary-pipe-mesh.json.gz');
         if (!resp.ok) {
           throw new Error('HTTP ' + resp.status + ' ' + resp.statusText);
@@ -1513,50 +1513,34 @@
           throw new Error('Invalid mesh payload');
         }
 
-        loadingStatus.textContent = 'Building 1,057,421 vertices in WebGL...';
+        loadingStatus.textContent = 'Rendering 1,057,421 vertices & CAD edges...';
 
         const defaultMaterial = new THREE.MeshStandardMaterial({
-          color: 0x94a3b8,
-          metalness: 0.55,
-          roughness: 0.35,
-          side: THREE.DoubleSide
+          color: 0x8294ab,
+          metalness: 0.35,
+          roughness: 0.45,
+          side: THREE.DoubleSide,
+          polygonOffset: true,
+          polygonOffsetFactor: 1,
+          polygonOffsetUnits: 1
         });
 
-        // Frame center offsets (CAD center: X=2926.5, Y=803.5, Z=-259.5)
-        // Transform: CAD X -> Three.js X, CAD Z (up) -> Three.js Y (up), CAD Y -> Three.js -Z
-        const cx = 2926.5;
-        const cz = -259.5;
-        const cy = 803.5;
+        const edgeMaterial = new THREE.LineBasicMaterial({
+          color: 0x141a24,
+          transparent: true,
+          opacity: 0.85
+        });
 
         for (let mIdx = 0; mIdx < jsonData.meshes.length; mIdx++) {
           const meshData = jsonData.meshes[mIdx];
           const rawPos = meshData.positions;
           const rawNorm = meshData.normals;
-
           const vertCount = rawPos.length / 3;
-          const transformedPos = new Float32Array(rawPos.length);
-          const transformedNorm = rawNorm && rawNorm.length === rawPos.length ? new Float32Array(rawNorm.length) : null;
-
-          for (let i = 0; i < rawPos.length; i += 3) {
-            const x = rawPos[i];
-            const y = rawPos[i + 1];
-            const z = rawPos[i + 2];
-
-            transformedPos[i] = x - cx;
-            transformedPos[i + 1] = z - cz;
-            transformedPos[i + 2] = cy - y;
-
-            if (transformedNorm) {
-              transformedNorm[i] = rawNorm[i];
-              transformedNorm[i + 1] = rawNorm[i + 2];
-              transformedNorm[i + 2] = -rawNorm[i + 1];
-            }
-          }
 
           const geom = new THREE.BufferGeometry();
-          geom.setAttribute('position', new THREE.BufferAttribute(transformedPos, 3));
-          if (transformedNorm) {
-            geom.setAttribute('normal', new THREE.BufferAttribute(transformedNorm, 3));
+          geom.setAttribute('position', new THREE.Float32BufferAttribute(rawPos, 3));
+          if (rawNorm && rawNorm.length === rawPos.length) {
+            geom.setAttribute('normal', new THREE.Float32BufferAttribute(rawNorm, 3));
           } else {
             geom.computeVertexNormals();
           }
@@ -1566,9 +1550,15 @@
             geom.setIndex(new THREE.BufferAttribute(idxArray, 1));
           }
 
-          const mesh = new THREE.Mesh(geom, defaultMaterial);
+          const meshMat = defaultMaterial.clone();
+          const mesh = new THREE.Mesh(geom, meshMat);
           mesh.name = meshData.name || ('Solid_' + mIdx);
           modelGroup.add(mesh);
+
+          // Add crisp CAD edges for mechanical parts
+          const edgesGeom = new THREE.EdgesGeometry(geom, 26);
+          const edgeLines = new THREE.LineSegments(edgesGeom, edgeMaterial);
+          mesh.add(edgeLines);
         }
 
         // Hide loading overlay
@@ -1588,16 +1578,16 @@
 
       switch (preset) {
         case 'iso':
-          camera.position.set(4000, 2400, 3600);
+          camera.position.set(3600, 2600, 5200);
           break;
         case 'side':
-          camera.position.set(0, 300, 4800);
+          camera.position.set(0, 200, 6200);
           break;
         case 'top':
-          camera.position.set(0, 5600, 0);
+          camera.position.set(0, 7200, 0);
           break;
         case 'front':
-          camera.position.set(-4400, 200, 0);
+          camera.position.set(-5200, 300, 1000);
           break;
       }
       controls.update();
