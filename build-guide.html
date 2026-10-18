@@ -1677,41 +1677,56 @@
             Three Operating Modes: HYBRID_SAV, PURE_SAV &amp; PRESET
           </h4>
           <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
-            Fixed book-voltage THCs fail in the real world as soon as an electrode wears (increasing arc voltage by +5 V to +10 V and driving the torch into the plate) or when cutting far from the ground clamp. Pure Sample-Arc-Voltage (SAV) systems solve consumable wear by locking onto the initial post-pierce voltage, but fail catastrophically if warped thin sheet springs back after touch-off—locking in a bogus 165–170 V target (0.50"+ standoff) for the rest of the cut. This controller implements three selectable modes, with <strong>Sanity-Checked HYBRID_SAV + Automatic PURE_SAV Fallback</strong> as the production default:
+            Fixed book-voltage THCs (<code>PRESET</code>) fail as soon as an electrode wears (raising arc voltage by +5 V to +10 V and driving the torch into the plate) or when cutting far from the ground clamp. Conversely, traditional Sample-Arc-Voltage (<code>PURE_SAV</code>) systems solve consumable wear by locking onto the initial post-pierce voltage, but fail if warped thin sheet springs back after touch-off—locking in a bogus 165–170 V target (0.50"+ standoff) for the rest of the cut.<br><br>
+            The firmware supports all three operating modes, with <strong>HYBRID_SAV</strong> as the default:
           </p>
 
-          <div class="grid-3">
-            <div class="doc-card highlight">
-              <span class="card-badge cyan mono">MODE 1 • RAPID LOCK</span>
-              <h3>Statistical EWMV Plateau Lock</h3>
-              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted);">
-                Instead of waiting out a fixed 150–500 ms delay timer after pierce, the DSP computes the real-time <strong>Exponentially Weighted Moving Variance (EWMV)</strong> of the arc voltage at 10 kHz.
-              </p>
-              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted); margin-bottom: 0;">
-                As soon as the plasma column stabilizes into a laminar cut (&sigma;&sup2; &le; threshold for 10.0 ms continuously), it locks the target voltage in as little as <strong>12–78 ms (41.5 ms mean)</strong>—engaging active tracking within <strong>0.13" (3.3 mm)</strong> of reaching full XY cut speed.
-              </p>
+          <!-- Mode 1: HYBRID_SAV (Featured Default) -->
+          <div class="doc-card highlight" style="margin-bottom: 1.5rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <span class="card-badge amber mono">MODE 1 • PRODUCTION DEFAULT</span>
+              <span class="mono" style="font-size: 0.75rem; color: var(--plasma-amber);">Dual ADC1 (PA3) + ADC2 (PA7)</span>
             </div>
-
-            <div class="doc-card highlight">
-              <span class="card-badge amber mono">MODE 2 • PRODUCTION DEFAULT</span>
-              <h3>HYBRID_SAV Dual-ADC Window</h3>
-              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted);">
-                Reads the live plasma arc on ADC1 (PA3) and the CNC's cut-chart preset voltage on ADC2 (PA7 from simCNC <code>m3.py</code>). When the EWMV detector locks onto the post-pierce plateau:
-              </p>
-              <ul style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin: 0 0 0 1.15rem; padding: 0;">
-                <li style="margin-bottom: 0.4rem;"><strong>Inside Sanity Window [Preset - 7.0 V, Preset + 15.0 V]:</strong> Locks true measured voltage—automatically compensating for consumable wear (+6.8 V on 75% worn electrode), work-lead drop, and FineCut arc drag.</li>
-                <li><strong>Out of Bounds (Sheet Springback):</strong> If bowed sheet metal deflected during probing (e.g. 165 V high pierce), clamps target to window boundary and immediately drives torch back to proper cut height (<code>THC_STATE_TRACKING</code>), never freezing the axis.</li>
-              </ul>
+            <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">1. HYBRID_SAV (Default — EWMV Plateau Lock + Cut-Chart Sanity Window)</h3>
+            <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 1rem;">
+              Reads the live plasma arc on ADC1 (PA3) and the CNC's cut-chart preset voltage on ADC2 (PA7, output by simCNC / <code>m3.py</code>). Driven by the statistical EWMV plateau engine, it combines the speed of sample-arc-voltage with the safety of cut-chart bounds:
+            </p>
+            <div class="grid-3" style="gap: 1rem;">
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
+                <div class="mono" style="color: var(--plasma-cyan); font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem;">Statistical EWMV Plateau Lock</div>
+                <p style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0;">
+                  <strong>12–78 ms (41.5 ms mean):</strong> Instead of waiting out a fixed 150–500 ms delay timer after pierce, HYBRID_SAV computes the real-time Exponentially Weighted Moving Variance (EWMV) of the arc voltage at 10 kHz. As soon as the plasma column stabilizes into a laminar cut (&sigma;&sup2; &le; threshold for 10.0 ms), it locks the target voltage in as little as 12 ms—engaging active tracking within 0.13" (3.3 mm) of reaching full XY cut speed.
+                </p>
+              </div>
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
+                <div class="mono" style="color: var(--plasma-amber); font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem;">Asymmetric Cut-Chart Clamping</div>
+                <p style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0;">
+                  <strong>[-7.0 V, +15.0 V]:</strong> If the natural plateau sits inside [Preset - 7.0 V, Preset + 15.0 V], it locks the true measured voltage (automatically compensating for consumable wear, work-lead drop, and FineCut arc drag). If warped metal causes the pierce to start out of bounds (e.g., 165 V), it clamps the target to the window boundary and immediately drives the torch back to proper cut height (<code>THC_STATE_TRACKING</code>), never freezing the axis.
+                </p>
+              </div>
+              <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
+                <div class="mono" style="color: #94a3b8; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem;">Automatic PURE_SAV Fallback</div>
+                <p style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0;">
+                  <strong>ADC2 &lt; 55 V Auto-Detect:</strong> If no valid ADC2 preset is present (ADC2 &lt; 55 V, e.g., after an E-Stop reset or on a CNC controller without an analog output), HYBRID_SAV automatically falls back to PURE_SAV ([55 V .. 200 V] global bounds) with zero operator intervention.
+                </p>
+              </div>
             </div>
+          </div>
 
+          <!-- Mode 2 & Mode 3 -->
+          <div class="grid-2">
             <div class="doc-card">
-              <span class="card-badge mono">MODE 3 • AUTO-FALLBACK</span>
-              <h3>Automatic PURE_SAV &amp; PRESET</h3>
-              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted);">
-                <strong>Zero-Intervention Auto-Fallback:</strong> If the CNC controller's analog preset output is absent (ADC2 &lt; 55 V, e.g. following an E-Stop reset or on a machine without a 0–10 V DAC module), HYBRID_SAV seamlessly falls back to <strong>PURE_SAV</strong> ([55 V .. 200 V] global bounds) with zero operator intervention.
+              <span class="card-badge cyan mono">MODE 2 • AUTONOMOUS RETROFIT</span>
+              <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.5rem;">2. PURE_SAV (Autonomous EWMV Plateau Lock)</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Uses the exact same 10 kHz EWMV statistical plateau detector to lock the post-pierce arc voltage in &lt; 45 ms mean, ignoring ADC2 completely and bounding the target only to the global [55 V .. 200 V] cutting range. Ideal for standalone retrofits without an analog target output from the CNC.
               </p>
-              <p style="font-size: 0.85rem; line-height: 1.55; color: var(--text-muted); margin-bottom: 0;">
-                Can also be configured per machine in <code>machines.json</code> for purely autonomous plateau lock (PURE_SAV) or direct cut-chart voltage tracking (PRESET).
+            </div>
+            <div class="doc-card">
+              <span class="card-badge mono">MODE 3 • DIRECT CNC TRACKING</span>
+              <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.5rem;">3. PRESET (Direct Cut-Chart Tracking)</h3>
+              <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
+                Bypasses <code>THC_STATE_SAMPLING</code> and tracks directly to the live ADC2 analog setpoint from the CNC controller. Useful for dialed-in book-spec cuts with fresh consumables where strict cut-chart voltage compliance is required.
               </p>
             </div>
           </div>
@@ -1724,7 +1739,7 @@
             Deterministic DSP Control Loop Innovations
           </h4>
           <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
-            Running at 10 kHz (100 µs cycle time) on the STM32G431 hardware timer (TIM6), the firmware integrates four mathematical and physical filters designed specifically for rotary plasma kinematics:
+            Running at 10 kHz (100 µs cycle time) on a hardware interrupt timer, the firmware integrates four mathematical and physical filters designed specifically for rotary plasma kinematics:
           </p>
 
           <div class="grid-2">
@@ -1769,10 +1784,13 @@
         <div style="margin-bottom: 2.5rem;">
           <h4 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
             <span class="mono" style="color: var(--plasma-amber); font-size: 0.95rem;">03.</span>
-            Real-World Cut Benchmarks vs. Industrial Lifter Systems
+            Real-World Cut Benchmarks vs. Industrial Lifter Systems*
           </h4>
-          <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
+          <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 0.5rem;">
             Measured across consecutive production and torture-test cuts (56 discrete transient disturbances + 13 continuous multi-inch ramps on corrugated/warped steel and kerf crossings at 191–350 IPM):
+          </p>
+          <p class="mono" style="font-size: 0.78rem; color: var(--text-dim); margin-bottom: 1.25rem;">
+            * Data captured from real-world cut diagnostic runs; actual cutting performance can vary depending on material condition, consumable wear, and workshop electrical environment.
           </p>
 
           <div class="bom-table-wrapper">
@@ -1789,7 +1807,7 @@
               <tbody>
                 <tr>
                   <td class="metric-col">Control Loop &amp; Step Rate</td>
-                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">10 kHz (100 µs)</strong> direct hardware Step/Dir interposer via TIM6 interrupt</td>
+                  <td class="highlight-col"><strong style="color: var(--plasma-amber);">10 kHz (100 µs)</strong> direct hardware Step/Dir interposer via hardware interrupt</td>
                   <td>2–10 kHz (100–500 µs) dedicated DSP/FPGA lifter module with local position/current loop <a href="#ref-1" style="color: var(--plasma-amber);">[1]</a><a href="#ref-2" style="color: var(--plasma-amber);">[2]</a></td>
                   <td>50–1,000 Hz (1–20 ms) via host motion planner or Ethernet/USB buffer (1 kHz LinuxCNC servo-thread <a href="#ref-3" style="color: var(--plasma-amber);">[3]</a>; 100–250 Hz CSMIO/IP <a href="#ref-4" style="color: var(--plasma-amber);">[4]</a>)</td>
                   <td class="verdict-col">Matches top-tier. Completely eliminates the 15–40 ms Ethernet/USB motion lookahead buffer lag.</td>
