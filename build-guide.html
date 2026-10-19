@@ -1274,7 +1274,7 @@
             <button class="tool-btn" id="btn-view-side" title="Side Bed Length View">Side View</button>
             <button class="tool-btn" id="btn-view-top" title="Top View">Top View</button>
             <button class="tool-btn" id="btn-view-front" title="Front Chuck Bore View">Front Chuck</button>
-            <button class="tool-btn" id="btn-toggle-wire" title="Toggle Wireframe Mode">Wireframe</button>
+            <button class="tool-btn" id="btn-view-rear" title="Rear ZCT-200 Rotary Actuator View">Rear Drive (ZCT-200)</button>
             <button class="tool-btn" id="btn-reset-view" title="Reset Camera View">Reset</button>
             <button class="tool-btn" id="btn-fullscreen" title="Toggle Fullscreen">Fullscreen</button>
           </div>
@@ -2845,7 +2845,6 @@
     const loadingStatus = document.getElementById('loading-status');
 
     let scene, camera, renderer, controls, modelGroup;
-    let isWireframe = false;
     let cadAnimId = null;
     let cadResizeObserver = null;
     let cadIntersectionObserver = null;
@@ -2888,7 +2887,7 @@
     const btnSide = document.getElementById('btn-view-side');
     const btnTop = document.getElementById('btn-view-top');
     const btnFront = document.getElementById('btn-view-front');
-    const btnWire = document.getElementById('btn-toggle-wire');
+    const btnRear = document.getElementById('btn-view-rear');
     const btnReset = document.getElementById('btn-reset-view');
     const btnFullscreen = document.getElementById('btn-fullscreen');
 
@@ -3335,6 +3334,10 @@
           // Center orbit target directly on the front chuck assembly
           animateCameraTo(new THREE.Vector3(-2950, 50, 0), new THREE.Vector3(-5200, 250, 800));
           break;
+        case 'rear':
+          // Center orbit target directly on the rear ZCT-200 rotary drive & K72 chuck
+          animateCameraTo(new THREE.Vector3(2950, 50, 0), new THREE.Vector3(5200, 250, 800));
+          break;
       }
     }
 
@@ -3398,19 +3401,8 @@
     btnSide.addEventListener('click', () => setCameraView('side'));
     btnTop.addEventListener('click', () => setCameraView('top'));
     btnFront.addEventListener('click', () => setCameraView('front'));
+    btnRear.addEventListener('click', () => setCameraView('rear'));
     btnReset.addEventListener('click', () => setCameraView('iso'));
-
-    btnWire.addEventListener('click', () => {
-      isWireframe = !isWireframe;
-      btnWire.classList.toggle('active', isWireframe);
-      if (modelGroup) {
-        modelGroup.traverse((child) => {
-          if (child.isMesh && child.material) {
-            child.material.wireframe = isWireframe;
-          }
-        });
-      }
-    });
 
     btnFullscreen.addEventListener('click', () => {
       if (!document.fullscreenElement) {
