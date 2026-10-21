@@ -143,46 +143,54 @@
     }
 
     nav {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 1rem 2rem;
+      padding: 0.9rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 1.25rem;
       border-bottom: none; /* moved to .site-header */
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: #fff;
       text-decoration: none;
       font-family: 'Space Grotesk', sans-serif;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .brand-tag {
       font-size: 0.7rem;
-      background: var(--surface-border);
+      background: rgba(245, 158, 11, 0.15);
       color: var(--plasma-amber);
-      padding: 2px 6px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 7px;
       border-radius: 4px;
       letter-spacing: 0.5px;
+      white-space: nowrap;
+      line-height: 1.2;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.75rem;
+      gap: 1.15rem;
     }
 
     .nav-links a {
       position: relative;
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
+      line-height: 1.2;
+      white-space: nowrap;
       transition: color 0.2s ease;
       padding: 0.25rem 0;
     }
@@ -209,13 +217,18 @@
     }
 
     .nav-cta {
+      display: inline-flex;
+      align-items: center;
       background: var(--surface);
       border: 1px solid var(--surface-border);
       color: var(--text);
-      padding: 0.5rem 1rem;
+      padding: 0.45rem 0.95rem;
       border-radius: var(--radius);
-      font-size: 0.875rem;
+      font-size: 0.85rem;
+      line-height: 1.2;
       text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: all 0.2s ease;
     }
 
@@ -908,7 +921,7 @@
         <a href="#profiles">Tubing &amp; Controllers</a>
         <a href="#kinematics">Machine Safety</a>
         <a href="#simulation">3D Simulation</a>
-        <a href="docs/index.html" style="color: var(--cyan-arc); font-weight: 600;">Documentation</a>
+        <a href="docs/index.html">Documentation</a>
         <a href="build-guide.html">Build Your Own</a>
       </div>
       <a href="#waitlist" class="nav-cta">Request Early Access</a>
