@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation & Workflows — Pipe CAM | 4-Axis CNC Tube & Pipe Plasma CAM</title>
+  <meta name="description" content="Step-by-step visual documentation and engineering guides for Pipe CAM: 4-axis CNC plasma machine configuration, STEP cut-path inspection, zero-bevel compensation, and multi-stick tube nesting." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION
+       ======================================================================== -->
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="../index.html" class="brand" aria-label="Pipe CAM Home">
+        <span class="brand-icon">P</span>
+        <span class="brand-name">Pipe CAM</span>
+        <span class="brand-badge">XYZA</span>
+        <span class="docs-nav-badge">DOCS</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Documentation Navigation">
+        <a href="index.html" class="active">Overview</a>
+        <a href="machine-configuration.html">01. Machine Setup</a>
+        <a href="cut-path-configuration.html">02. Cut Paths &amp; Zero-Bevel</a>
+        <a href="nesting.html">03. Multi-Part Nesting</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="../index.html" class="btn btn-ghost">← Product Home</a>
+        <a href="https://app.pipecam.info" class="btn btn-primary">
+          <span>Launch Web App</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         DOCUMENTATION HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Pipe CAM</a>
+          <span class="sep">/</span>
+          <span class="current">Documentation &amp; Visual Workflows</span>
+        </div>
+
+        <h1 class="docs-title">Operator Guides &amp; <span class="text-gradient-amber">CAM Workflows</span></h1>
+        <p class="docs-subtitle">
+          Follow our step-by-step visual walkthroughs to configure your 4-axis rotary plasma kinematics, inspect and tune per-contour lead-ins and zero-bevel compensation, and pack multi-tube STEP assemblies onto raw stock sticks.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>3 Core Workflows</strong> • 19 Annotated Steps</span>
+          <span class="docs-meta-pill cyan"><strong>Controllers:</strong> SimCNC 3.5 / 3.6 Beta / Generic G94</span>
+          <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) Single &amp; Multi-Body Assemblies</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TUTORIAL CARDS GRID
+         ====================================================================== -->
+    <section class="container">
+      <div class="docs-hub-grid">
+
+        <!-- Guide 1: Machine Configuration -->
+        <a href="machine-configuration.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            <img src="assets/machine-config-2-limits.png" alt="Pipe CAM Machine Profiles & Kinematics Modal" loading="lazy" />
+            <span class="docs-hub-badge">TUTORIAL 01 • 5 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Basic Machine Configuration</h2>
+            <p class="docs-hub-desc">
+              Configure your 4-axis CNC plasma kinematics, controller dialect (G94 vs. G93 inverse-time), synchronous Torch Height Control (THC) locking, and default zero-bevel &amp; corner-loop parameters.
+            </p>
+            <ul class="docs-hub-topics">
+              <li>Velocity, acceleration, jerk &amp; Safe Z clearance limits</li>
+              <li>SimCNC G94+G93 emulation vs. native G93 inverse-time</li>
+              <li>Synchronous M62/M63 THC locking during corner slowdowns</li>
+              <li>Creating, cloning &amp; persisting multiple machine profiles</li>
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 01</span>
+              <span>5 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Guide 2: Cut Path Configuration -->
+        <a href="cut-path-configuration.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            <img src="assets/cut-path-6-zero-bevel.png" alt="Pipe CAM Per-Contour Cut Path & Zero-Bevel Configuration" loading="lazy" />
+            <span class="docs-hub-badge">TUTORIAL 02 • 8 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">UI Layout &amp; STEP Cut Path Configuration</h2>
+            <p class="docs-hub-desc">
+              Tour the 3D CAD assembly inspector, switch between individual tube solids, inspect lead-in/cut/lead-out contours, apply Zero-Bevel Dual-Curve compensation on a saddle joint, and verify in 3D simulation.
+            </p>
+            <ul class="docs-hub-topics">
+              <li>Entire Model Overview &amp; Active CAD Solid switching</li>
+              <li>3D part preview &amp; interactive contour selection (`ENDCUT`)</li>
+              <li>Per-contour Lead-In, Lead-Out, Corner Loop &amp; Zero-Bevel (80%)</li>
+              <li>Full 4-axis (XYZA) 3D toolpath simulation &amp; live DRO</li>
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 02</span>
+              <span>8 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Guide 3: Multi-Part Stick Nesting -->
+        <a href="nesting.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            <img src="assets/nesting-5-compile.png" alt="Pipe CAM Multi-Part Pack Nesting Across Multiple Sticks" loading="lazy" />
+            <span class="docs-hub-badge">TUTORIAL 03 • 6 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Multi-Part Stick Nesting</h2>
+            <p class="docs-hub-desc">
+              Load a complex 37-part Headache Rack assembly, filter parts by detected cross-section profile, automatically pack 17 matching tubes across two 6000 mm sticks at 99.8% efficiency, and export per-stick G-code.
+            </p>
+            <ul class="docs-hub-topics">
+              <li>Automatic cross-section profile detection &amp; filtering</li>
+              <li>Multi-stick 1D bin packing with configurable part spacing</li>
+              <li>One-click Pack G-Code compilation for all sticks</li>
+              <li>Per-stick `.nc` download &amp; 3D multi-stick simulation</li>
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 03</span>
+              <span>6 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- Quick Reference Callout -->
+      <div class="doc-intro-card" style="margin-bottom: 5rem;">
+        <h2>Recommended First-Time Setup Sequence</h2>
+        <p>
+          If you are setting up Pipe CAM for a new rotary plasma table, start with <strong><a href="machine-configuration.html" style="color: var(--amber-400);">Tutorial 01: Basic Machine Configuration</a></strong>. Because Pipe CAM executes a deterministic physics-based S-curve velocity profiler and Tool Center Point (TCP) unwrap in software, entering your machine's true axis velocity/acceleration limits and selecting the right THC lock strategy (`M62/M63` vs. `M-Codes`) ensures your generated G-code runs at peak surface speed without corner divots or rotary motor stalls.
+        </p>
+        <div class="doc-intro-grid">
+          <div class="doc-intro-stat">
+            <span class="label">Step 1 • Configure Hardware</span>
+            <span class="value"><a href="machine-configuration.html" style="color: var(--amber-400);">01. Machine Profiles &amp; THC →</a></span>
+          </div>
+          <div class="doc-intro-stat">
+            <span class="label">Step 2 • Tune Contours</span>
+            <span class="value"><a href="cut-path-configuration.html" style="color: var(--cyan-400);">02. Cut Paths &amp; Zero-Bevel →</a></span>
+          </div>
+          <div class="doc-intro-stat">
+            <span class="label">Step 3 • Nest Full Assemblies</span>
+            <span class="value"><a href="nesting.html" style="color: var(--emerald-400);">03. Multi-Part Stick Nesting →</a></span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <span class="brand-icon">P</span>
+          <span class="brand-name">Pipe CAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="index.html">Documentation Overview</a>
+          <a href="machine-configuration.html">01. Machine Configuration</a>
+          <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
+          <a href="nesting.html">03. Multi-Part Nesting</a>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../index.html#showcase">Showcase</a>
+          <a href="../index.html#features">Capabilities</a>
+          <a href="../index.html#kinematics">4-Axis Kinematics</a>
+          <a href="../build-guide.html">Build Your Own Table</a>
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 Pipe CAM. Engineered for precision 4-axis tube &amp; pipe plasma fabrication.</span>
+      <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • 1D STICK NESTING</span>
+    </div>
+  </footer>
+</body>
+</html>

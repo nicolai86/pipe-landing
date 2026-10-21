@@ -908,6 +908,7 @@
         <a href="#profiles">Tubing &amp; Controllers</a>
         <a href="#kinematics">Machine Safety</a>
         <a href="#simulation">3D Simulation</a>
+        <a href="docs/index.html" style="color: var(--cyan-arc); font-weight: 600;">Documentation</a>
         <a href="build-guide.html">Build Your Own</a>
       </div>
       <a href="#waitlist" class="nav-cta">Request Early Access</a>
@@ -934,6 +935,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
             Join the Beta Waitlist
+          </a>
+          <a href="docs/index.html" class="secondary-btn">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+            </svg>
+            Documentation &amp; Tutorials ↗
           </a>
           <a href="build-guide.html" class="secondary-btn">
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1330,6 +1337,67 @@
     </div>
   </section>
 
+  <!-- Step-by-Step Documentation & Operator Tutorials Section -->
+  <section id="documentation" class="section-wrap" style="padding-top: 1rem; padding-bottom: 3rem;">
+    <div class="section-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1.5rem; max-width: 100%;">
+      <div style="max-width: 720px;">
+        <div class="badge"><span class="mono">OPERATOR DOCUMENTATION &amp; TUTORIALS</span></div>
+        <h2>Step-by-Step Visual CAM Workflows</h2>
+        <p>Follow annotated walkthroughs covering 4-axis machine setup, G94/G93 controller dialects, synchronous THC corner locking, per-contour Zero-Bevel compensation, and multi-stick tube nesting.</p>
+      </div>
+      <a href="docs/index.html" class="secondary-btn" style="border-color: rgba(6, 182, 212, 0.45); color: var(--cyan-arc);">
+        Open Full Documentation Hub →
+      </a>
+    </div>
+
+    <div class="grid-3">
+      <!-- Tutorial 1 Card -->
+      <a href="docs/machine-configuration.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <img src="docs/assets/machine-config-2-limits.png" alt="Tutorial 01: Basic Machine Configuration" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono">TUTORIAL 01 • 5 STEPS</div>
+            <h3 style="color: #fff;">Basic Machine Configuration</h3>
+            <p>Configure linear &amp; rotary velocity/acceleration limits, select G94 vs. G93 inverse-time dialects, set synchronous M62/M63 THC corner locks, and persist multiple profiles.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 01 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 2 Card -->
+      <a href="docs/cut-path-configuration.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <img src="docs/assets/cut-path-6-zero-bevel.png" alt="Tutorial 02: UI Layout and STEP Cut Path Configuration" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--cyan-arc);">TUTORIAL 02 • 8 STEPS</div>
+            <h3 style="color: #fff;">UI Layout &amp; Cut Path Config</h3>
+            <p>Navigate multi-body STEP assemblies, inspect 3D cut contours, apply 80% Zero-Bevel Dual-Curve compensation on a pipe saddle joint, and verify in 4-axis 3D simulation.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--cyan-arc); font-weight: 700;">Read Tutorial 02 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 3 Card -->
+      <a href="docs/nesting.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <img src="docs/assets/nesting-5-compile.png" alt="Tutorial 03: Multi-Part Stick Nesting" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--emerald-cut);">TUTORIAL 03 • 6 STEPS</div>
+            <h3 style="color: #fff;">Multi-Part Stick Nesting</h3>
+            <p>Load a 37-part Headache Rack assembly, filter by detected HSS cross-section profile, pack 17 tubes across two 6000 mm sticks at 99.8% efficiency, and export per-stick G-code.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--emerald-cut); font-weight: 700;">Read Tutorial 03 →</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <!-- Open Hardware Machine Build Guide Callout -->
   <section id="build-guide" class="section-wrap" style="padding-top: 1rem; padding-bottom: 2rem;">
     <div class="card highlight build-guide-card" style="border-color: rgba(245, 158, 11, 0.45); background: linear-gradient(135deg, rgba(20, 23, 29, 0.95) 0%, rgba(245, 158, 11, 0.06) 100%); padding: 2.25rem; border-radius: var(--radius); box-shadow: 0 12px 36px rgba(0,0,0,0.4);">
@@ -1397,6 +1465,7 @@
       <div class="footer-sub">Dedicated 4-axis rotary plasma CAM • Built for SimCNC, Mach4, LinuxCNC &amp; Masso</div>
     </div>
     <div class="footer-links">
+      <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
       <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">Build Your Own Table (Open Hardware) ↗</a>
       <a href="#impressum" id="open-impressum-btn" class="footer-link">Legal Notice &amp; Safety (Impressum)</a>
       <a href="#waitlist" class="footer-link">Early Access Waitlist</a>
