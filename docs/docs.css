@@ -108,18 +108,18 @@ a {
 .site-header nav {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0.9rem 2rem;
+  padding: 0.9rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
+  gap: 0.65rem;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 1.2rem;
+  gap: 0.5rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #fff;
   text-decoration: none;
@@ -129,11 +129,11 @@ a {
 }
 
 .brand-tag {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   background: rgba(245, 158, 11, 0.15);
   color: var(--plasma-amber);
   border: 1px solid rgba(245, 158, 11, 0.3);
-  padding: 2px 7px;
+  padding: 2px 6px;
   border-radius: 4px;
   letter-spacing: 0.5px;
   white-space: nowrap;
@@ -143,14 +143,14 @@ a {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.65rem;
 }
 
 .nav-links a {
   position: relative;
   color: var(--text-secondary);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   line-height: 1.2;
   white-space: nowrap;
   transition: color 0.15s ease;
@@ -643,6 +643,162 @@ a {
   line-height: 1.6;
   color: var(--text-secondary);
   margin: 0;
+}
+
+/* ---------- Code Blocks & Section Dividers (Text/Code Tutorials) ---------- */
+.doc-section-divider {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(6, 182, 212, 0.08));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 2rem;
+  scroll-margin-top: 6rem;
+}
+
+.doc-section-divider.cyan {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(16, 185, 129, 0.06));
+  border-color: rgba(6, 182, 212, 0.38);
+}
+
+.doc-section-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--amber-400);
+  margin-bottom: 0.35rem;
+}
+
+.doc-section-divider.cyan .doc-section-kicker {
+  color: var(--cyan-400);
+}
+
+.doc-section-heading {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.45rem;
+}
+
+.doc-section-desc {
+  color: var(--text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+
+.doc-code-block {
+  margin: 0.65rem 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: #070a0f;
+  box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.7);
+}
+
+.doc-code-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.95rem;
+  background: rgba(15, 21, 32, 0.95);
+  border-bottom: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+.doc-code-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.doc-code-title .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber-500);
+  box-shadow: 0 0 8px var(--amber-500);
+}
+
+.doc-code-title .dot.cyan {
+  background: var(--cyan-400);
+  box-shadow: 0 0 8px var(--cyan-400);
+}
+
+.doc-code-title .dot.emerald {
+  background: var(--emerald-400);
+  box-shadow: 0 0 8px var(--emerald-400);
+}
+
+.doc-code-lang {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--cyan-400);
+  border: 1px solid rgba(6, 182, 212, 0.28);
+}
+
+.doc-code-block pre {
+  margin: 0;
+  padding: 1.05rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.81rem;
+  line-height: 1.62;
+  color: #e2e8f0;
+  tab-size: 4;
+}
+
+.doc-step-body .doc-code-block pre code {
+  font-family: var(--font-mono);
+  font-size: inherit;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  white-space: pre;
+}
+
+.docs-hub-code-preview {
+  width: 100%;
+  height: 100%;
+  padding: 2.3rem 1.15rem 0.9rem;
+  background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.14), transparent 55%),
+              radial-gradient(circle at 20% 85%, rgba(6, 182, 212, 0.12), transparent 55%),
+              #06090e;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.71rem;
+  line-height: 1.48;
+  color: #cbd5e1;
+}
+
+.docs-hub-code-preview .code-line-amber {
+  color: var(--amber-400);
+  font-weight: 600;
+}
+
+.docs-hub-code-preview .code-line-cyan {
+  color: var(--cyan-400);
+}
+
+.docs-hub-code-preview .code-line-emerald {
+  color: var(--emerald-400);
+}
+
+.docs-hub-code-preview .code-line-muted {
+  color: var(--text-muted);
 }
 
 /* ---------- Annotated Screenshot Figure ---------- */

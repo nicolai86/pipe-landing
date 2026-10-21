@@ -81,6 +81,13 @@ struct ImageSpec {
 let defaultCrop = CGRect(x: 224, y: 238, width: 3470, height: 2094)
 let legacyCrop  = CGRect(x: 224, y: 238, width: 3486, height: 2096)
 
+// Standard crop rectangles for Autodesk Fusion 360 window captures:
+// Strips macOS traffic-light title bar and outer window shadow so only the
+// Fusion 360 application bar, DESIGN ribbon, browser tree, viewport, and timeline remain.
+let fusionWindowCrop = CGRect(x: 114, y: 140, width: 3596, height: 2194)
+let fusionMenuCrop   = CGRect(x: 0,   y: 54,  width: 3584, height: 2194)
+let fusionExportCrop = CGRect(x: 2,   y: 60,  width: 3596, height: 2194)
+
 // Standard output dimensions (2/3 downscale of Retina capture, 16:9.6 aspect)
 let outWidth = 2324
 let outHeight = 1397
@@ -572,6 +579,108 @@ let specs: [ImageSpec] = [
             HighlightBox(x: 1235, y: 662, w: 998, h: 285, style: .cyan, label: "1. Build Metadata (Version, Git Commit, Date, Platform & License)", labelPos: .topLeft),
             HighlightBox(x: 1235, y: 995, w: 998, h: 505, style: .amber, label: "2. Release Notes & Recent Highlights Changelog", labelPos: .bottomLeft),
             HighlightBox(x: 1945, y: 1568, w: 215, h: 42, style: .cyan, label: "3. Copy Diagnostics", labelPos: .bottomRight)
+        ]
+    ),
+
+    // TUTORIAL 06: Fusion 360 Structural Member & AI Profile Autodetection
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.50.21.png",
+        outputName: "ai-cad-1-fusion.png",
+        cropRect: fusionWindowCrop,
+        highlights: [
+            HighlightBox(x: 778, y: 112, w: 342, h: 74, style: .amber, label: "1. Structural Member (SM) Add-In Installed in Fusion 360", labelPos: .bottomLeft),
+            HighlightBox(x: 10, y: 298, w: 454, h: 194, style: .cyan, label: "2. Create New Design (rotarycam-demo)", labelPos: .rightCenter)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.50.38.png",
+        outputName: "ai-cad-2-sketch.png",
+        cropRect: fusionWindowCrop,
+        highlights: [
+            HighlightBox(x: 266, y: 112, w: 72, h: 74, style: .amber, label: "1. Click Create Sketch", labelPos: .bottomLeft),
+            HighlightBox(x: 1760, y: 900, w: 350, h: 380, style: .cyan, label: "2. Select Reference Origin Plane", labelPos: .topRight)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.51.35.png",
+        outputName: "ai-cad-3-draw.png",
+        cropRect: fusionWindowCrop,
+        highlights: [
+            HighlightBox(x: 1380, y: 495, w: 1060, h: 1365, style: .amber, label: "1. Draw 2D Tube Centerline Sketch (Lines & Tangent Arcs)", labelPos: .topLeft),
+            HighlightBox(x: 3328, y: 110, w: 170, h: 92, style: .cyan, label: "2. Click Finish Sketch", labelPos: .bottomLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.51.53.png",
+        outputName: "ai-cad-4a-sm-menu.png",
+        cropRect: fusionMenuCrop,
+        highlights: [
+            HighlightBox(x: 245, y: 1358, w: 895, h: 377, style: .amber, label: "1. Create → Structural Member Command (Plus Miter / Notch / Trim)", labelPos: .topRight),
+            HighlightBox(x: 778, y: 112, w: 342, h: 74, style: .cyan, label: "Toolbar Shortcuts: SM / Miter / Notch / Trim", labelPos: .bottomRight)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.52.15.png",
+        outputName: "ai-cad-4b-sm-dialog.png",
+        cropRect: fusionWindowCrop,
+        highlights: [
+            HighlightBox(x: 3092, y: 556, w: 500, h: 814, style: .amber, label: "1. Select Standard (ANSI_AISC), Family (HSS), Size & Wall", labelPos: .topLeft),
+            HighlightBox(x: 1192, y: 484, w: 482, h: 1364, style: .cyan, label: "2. 3D Structural Member Generated Along Sketch Line", labelPos: .topLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.53.01.png",
+        outputName: "ai-cad-4c-sm-complete.png",
+        cropRect: fusionWindowCrop,
+        highlights: [
+            HighlightBox(x: 64, y: 636, w: 306, h: 334, style: .amber, label: "1. Structural Member Components (SM0001:1 – SM0007:1)", labelPos: .rightCenter),
+            HighlightBox(x: 1192, y: 290, w: 1500, h: 1750, style: .cyan, label: "2. Populated 3D Tube & Pipe Assembly with Trimmed Joints", labelPos: .topLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.53.25.png",
+        outputName: "ai-cad-5-combine.png",
+        cropRect: fusionWindowCrop,
+        highlights: [
+            HighlightBox(x: 1480, y: 112, w: 68, h: 74, style: .amber, label: "1. Click Modify → Combine", labelPos: .bottomLeft),
+            HighlightBox(x: 3092, y: 556, w: 500, h: 438, style: .amber, label: "2. Join Contiguous Straight + Bend Segments & Click OK", labelPos: .topLeft),
+            HighlightBox(x: 1480, y: 598, w: 805, h: 405, style: .cyan, label: "3. Merge Into One Solid Body for Cut & Bend Support", labelPos: .bottomLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.54.12.png",
+        outputName: "ai-cad-6-export.png",
+        cropRect: fusionExportCrop,
+        highlights: [
+            HighlightBox(x: 136, y: 8, w: 48, h: 42, style: .cyan, label: "1. File → Export", labelPos: .bottomRight),
+            HighlightBox(x: 1094, y: 658, w: 1408, h: 48, style: .amber, label: "2. Select Type: STEP Files (*.stp *.step)", labelPos: .topRight),
+            HighlightBox(x: 2348, y: 1068, w: 146, h: 56, style: .amber, label: "3. Click Export", labelPos: .topLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.54.52.png",
+        outputName: "ai-cad-7a-drop.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 14, y: 586, w: 468, h: 280, style: .amber, label: "1. Click or Drop Exported .step File into CAD Ingestion", labelPos: .rightCenter)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.54.59.png",
+        outputName: "ai-cad-7b-load.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 18, y: 748, w: 460, h: 112, style: .amber, label: "1. Click 'Load & Process CAD' (rotarycam-demo.step)", labelPos: .rightCenter),
+            HighlightBox(x: 1420, y: 225, w: 480, h: 530, style: .cyan, label: "2. Entire Multi-Body STEP Assembly Previewed", labelPos: .rightCenter)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/Desktop/Screenshot 2026-10-20 at 22.55.37.png",
+        outputName: "ai-cad-8-autodetect.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 14, y: 1178, w: 468, h: 262, style: .amber, label: "1. AI Cross-Section Autodetection (Profile_HSS_Rect 38.1×38.1×3.17mm)", labelPos: .rightCenter),
+            HighlightBox(x: 525, y: 345, w: 710, h: 90, style: .cyan, label: "2. Both Rect & Round Profiles Autodetected & Grouped for Nesting", labelPos: .rightCenter)
         ]
     )
 ]

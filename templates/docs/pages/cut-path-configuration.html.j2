@@ -1,0 +1,292 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Workspace Architecture Overview</h2>
+          <p>
+            Pipe CAM's interface is organized into three vertical zones: the <strong>Left Sidebar</strong> (3D Assembly Overview, STEP file upload/fixtures, active machine profile, and plasma cut parameters), the <strong>Center CAD &amp; Simulation Workspace</strong> (3D Part Preview, 2D Unwrapped Feature Map, and Interactive Feature Table), and the <strong>Right G-Code Post-Processor Terminal</strong> (live compiled G-code with one-click regeneration and export).
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Left Panel</span>
+              <span class="value">3D Assembly &amp; Plasma Params</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Center Workspace</span>
+              <span class="value">Part Inspection &amp; 3D Simulation</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Right Terminal</span>
+              <span class="value">Live XYZA G-Code Post-Processor</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Load the <code class="mono">Saddle Joint (Zero-Bevel)</code> CAD Fixture</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              You can load any single-tube or multi-body <code class="mono">.step</code> / <code class="mono">.stp</code> assembly by dragging it onto the <strong>CAD Geometry</strong> dropzone in the left sidebar. To explore Pipe CAM immediately without uploading a file, use the built-in <strong>Quick CAD Fixtures</strong> panel right below the dropzone.
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Locate the <span class="ui-chip cyan">Quick CAD Fixtures</span> section in the left sidebar.</li>
+              <li>Click <span class="ui-chip">Saddle Joint (Zero-Bevel)</span> (<code class="mono">DUAL-CURVE</code>) to load a two-tube T-joint assembly where a branch pipe (<code class="mono">OD 27.0 mm × 3.0 mm wall</code>) copes onto a main chord tube.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Clicking 'Saddle Joint (Zero-Bevel)' in the Quick CAD Fixtures panel</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-1-fixture.png" alt="Step 1: Quick CAD Fixtures panel highlighting Saddle Joint (Zero-Bevel)" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Switch Active Parts via the Entire Model Overview or Solid Selector</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When a STEP file contains multiple bodies, Pipe CAM automatically decomposes every solid, detects its cross-section profile (<code class="mono">Profile_HSS_Round</code>, <code class="mono">Profile_HSS_Rect</code>, etc.), and extracts its inner and outer wall surfaces.
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Entire Model Overview (Top-Left 3D Viewport):</strong> Shows the full multi-body CAD assembly in 3D. The currently selected tube is highlighted in <strong>amber/orange</strong> (<code class="mono">Part 2: solid_2</code>), while unselected tubes render in translucent steel gray. <strong>Click directly on any tube in this 3D overview</strong> to switch to it immediately.</li>
+              <li><strong>Active CAD Solid Selector Bar (Top of Center Panel):</strong> Displays the active part's detected dimensions (<code class="mono">Part 2: solid_2 (OD 27.0mm • L=54.8mm)</code>). You can also switch between solids using the dropdown menu or the <span class="ui-chip cyan">◀</span> / <span class="ui-chip cyan">▶</span> navigation arrows.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Selecting parts interactively in the Entire Model Overview or Active CAD Solid bar</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-2-overview.png" alt="Step 2: Entire Model Overview 3D assembly viewer and Active CAD Solid selector bar" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Inspect the 3D Part Preview &amp; Extracted Cutting Contours</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Directly below the solid selector, the <strong>3D Part Preview &amp; Cutting Contours</strong> viewport renders the isolated tube along with its color-coded 3D plasma toolpaths:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong style="color: #f87171;">● Red (Lead-In):</strong> Pierce location and entry sweep from the scrap region onto the cut line.</li>
+              <li><strong style="color: #38bdf8;">● Cyan (Cut Contour):</strong> Kerf-compensated 3D cutting trajectory around the tube perimeter.</li>
+              <li><strong style="color: #4ade80;">● Green (Lead-Out):</strong> Overburn / circular exit path at contour completion.</li>
+              <li>Use your mouse to orbit, pan, and zoom the 3D part, or click the quick camera buttons (<code class="mono">Iso</code>, <code class="mono">Side</code>, <code class="mono">End</code>, <code class="mono">Top</code>) in the top-right corner of the viewport.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — 3D Part Preview showing color-coded Lead-In (Red), Cut Contour (Cyan), and Lead-Out (Green)</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-3-preview.png" alt="Step 3: 3D Part Preview and Cutting Contours viewport" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Select the <code class="mono">ENDCUT</code> Row in the Feature Table</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Beneath the 3D preview (and the expandable <strong>2D Unwrapped Stock Feature Map</strong>), the feature table lists every cutting feature detected on the active tube—categorized as <span class="ui-chip emerald">STARTCUT</span> (chuck-side end cut), <span class="ui-chip emerald">ENDCUT</span> (free-end saddle/miter cut), or <span class="ui-chip cyan">CUTOUT</span> (internal holes, slots, and Copes).
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click the <span class="ui-chip">ENDCUT</span> row (<code class="mono">7E99200A-EBB2-4D59-9B57-AB5D515E73D3</code> at <code class="mono">X = 48.3 mm, A = 267.5°</code>) to highlight that specific saddle contour in the 3D viewport above.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — Clicking the ENDCUT row to highlight the saddle joint contour in the 3D preview</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-4-select-endcut.png" alt="Step 4: Selecting the ENDCUT feature row in the feature table" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Click <code class="mono">⚙ Config</code> to Open the Per-Contour Configuration Drawer</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              While each row provides quick inline dropdowns for Lead-In Strategy, Lead-Out Strategy, and Zero-Bevel toggle, clicking <span class="ui-chip">⚙ Config</span> in the right-hand <strong>ACTION</strong> column opens the full four-column engineering drawer for that specific contour:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>1. Lead-In Configuration:</strong> Choose strategy (<code class="mono">Rotational Arc</code>, <code class="mono">Tangent Arc</code>, <code class="mono">Linear</code>), sweep length (<code class="mono">mm</code>), scrap clearance (<code class="mono">mm</code>), and optional <strong>3D Ramp Lead-In (Flying Pierce)</strong> to eliminate stationary pierce blowback.</li>
+              <li><strong>2. Lead-Out Configuration:</strong> Configure overburn extension (<code class="mono">mm</code>) and optional <strong>Zero-Overburn Early Torch-Out</strong> (synchronized <code class="mono">M63</code> torch-off before contour completion to prevent exit divots).</li>
+              <li><strong>3. Corner Loop &amp; Zero-Bevel:</strong> Enable rollout corner loops or configure <strong>Zero-Bevel Dual-Curve Compensation</strong> intensity, fade angle, and weld gap.</li>
+              <li><strong>4. Tabs Configuration:</strong> Leave uncut micro-bridges spaced around the contour to keep heavy slugs or parts attached during cutting.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Expanding the per-contour Lead-In, Lead-Out, Corner Loop &amp; Zero-Bevel drawer</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-5-open-config.png" alt="Step 5: Clicking Config on the ENDCUT row to open the 4-column contour configuration drawer" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 6
+             ================================================================== -->
+        <article class="doc-step-card" id="step-6">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 06</span>
+            <h2 class="doc-step-title">Enable Zero-Bevel Compensation (<code class="mono">80%</code>), Save, and Open 3D Simulation</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              On a 4-axis rotary plasma cutter, the torch is fixed perpendicular to the tube centerline (no 5-axis tilting head). When cutting a thick-walled pipe saddle or miter, the outer surface curve and inner wall curve have different axial heights at the saddle flanks—causing the inner wall to ride high and leave an open gap at the crown if cut strictly along the outer CAD curve.
+            </p>
+            <ul class="doc-bullet-list">
+              <li>In the <strong>Corner Loop &amp; Zero-Bevel</strong> card, check <span class="ui-chip">✓ Apply Zero-Bevel Compensation</span> and set <strong>Intensity (%)</strong> to <code class="mono">80%</code> (with <code class="mono">Cope / Fishmouth</code> enabled).</li>
+              <li>Click <span class="ui-chip cyan">Save</span> on the <code class="mono">ENDCUT</code> row (which updates to <span class="ui-chip emerald">Saved ✓</span> and immediately recompiles the toolpath).</li>
+              <li>Click the <span class="ui-chip">⚡ 3D Cut Simulation</span> tab in the top workspace bar to inspect the compensated 4-axis motion.</li>
+            </ul>
+
+            <div class="doc-callout info">
+              <div class="doc-callout-title">🔬 How Zero-Bevel Dual-Curve Compensation Works</div>
+              <p>
+                Pipe CAM extracts both the <strong>outer surface contour</strong> and the <strong>inner wall contour</strong> directly from your 3D STEP solid. At each angle <code class="mono">A</code> around the saddle, it computes the axial interference between the fixed vertical plasma jet and the mating pipe cylinder, smoothly blending the cut path toward the inner wall intersection at the flanks according to your <strong>Intensity (%)</strong> and <strong>Fade Angle (°)</strong>. The result is a tight, weld-ready fit straight off a 4-axis machine.
+              </p>
+            </div>
+
+            <div class="doc-callout tip" style="margin-top: 1.5rem;">
+              <div class="doc-callout-title">🛠️ Fabricating Bent Tubing? Try 3D Bent Tube "Cut-and-Bend"</div>
+              <p>
+                Need to build a roll cage, header, bumper, or truss with curved tubes without an expensive mandrel bender? Drop your bent round pipe or square/rectangular HSS 3D model straight into RotaryCAM.
+              </p>
+              <p>
+                RotaryCAM automatically detects bends along the 3D centerline and unfolds the curved tube onto straight mill stock with precision mitered pie-cut relief slots and an uncut living-hinge spine.
+              </p>
+              <p>
+                <strong>Dead-Straight HSS Cheek Cuts:</strong> For square and rectangular tubing, RotaryCAM cuts dead-straight cheek walls across flat tube faces with built-in inner-wall relief clearance. Thick steel walls won't pinch or bind early—simply fold the tube by hand to the exact design angle and weld the seam flush with zero grinder fitup.
+              </p>
+              <p style="margin-bottom: 0;">
+                <a href="bending.html" style="color: var(--amber-400); font-weight: 600;">Follow the complete walkthrough in Tutorial 04: Bending HSS &amp; HSS-O Sticks →</a>
+              </p>
+            </div>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 6 — Setting Zero-Bevel Intensity to 80%, saving the contour, and switching to 3D Cut Simulation</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-6-zero-bevel.png" alt="Step 6: Enabling Apply Zero-Bevel Compensation at 80%, clicking Save, and selecting 3D Cut Simulation" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 7
+             ================================================================== -->
+        <article class="doc-step-card" id="step-7">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 07</span>
+            <h2 class="doc-step-title">Run the Interactive 4-Axis 3D Cut Simulation</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              The <strong>3D Machine Simulation</strong> view parses the exact G-code emitted in the right-hand terminal (<code class="mono">PROGRAM: G-CODE</code>) and animates the 4-axis kinematics in real time:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip">▶ Play</span> in the bottom playback bar to start the simulation (you can also scrub the timeline, step <code class="mono">-1s</code> / <code class="mono">+1s</code>, toggle <code class="mono">⚡ 10x Rapids</code>, or adjust playback speed from <code class="mono">0.25x</code> to <code class="mono">8x</code>).</li>
+              <li>Watch the <strong>Live CNC DRO (<code class="mono">XYZA</code>)</strong> overlay in the top-left corner of the viewport track the exact linear (<code class="mono">X, Y, Z</code> in mm), rotary (<code class="mono">A</code> in degrees), and instantaneous feedrate values as the tube rotates beneath the plasma torch.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 7 — Clicking Play in the 3D Cut Simulation with live 4-axis XYZA DRO</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-7-sim-start.png" alt="Step 7: 3D Cut Simulation showing Play button and live CNC DRO (XYZA)" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 8
+             ================================================================== -->
+        <article class="doc-step-card" id="step-8">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 08</span>
+            <h2 class="doc-step-title">Verify the Completed 4-Axis Toolpath &amp; Export G-Code</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When the simulation reaches <code class="mono">100%</code> (<span class="ui-chip emerald">FINISHED</span>), the full 3D toolpath trace—including rapid approaches, rotational arc lead-ins, kerf- and zero-bevel-compensated cut contours, and circular lead-outs—is rendered around the tube cylinder.
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Inspect the right-hand <strong>G-Code Post-Processor Terminal</strong> to review the generated header comments, stock setup, synchronous <code class="mono">M63/M62</code> THC locks, and coordinated <code class="mono">G1 X... Y... Z... A... F...</code> blocks.</li>
+              <li>Click the download button in the G-code terminal header to save your ready-to-run <code class="mono">.nc</code> program.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 8 — Simulation completed at 100% showing the verified 4-axis saddle cut</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-path-8-sim-done.png" alt="Step 8: Completed 3D Cut Simulation at 100% showing full 4-axis toolpath" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+{% endblock %}

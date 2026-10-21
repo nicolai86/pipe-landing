@@ -1,0 +1,85 @@
+{% extends "base.html.j2" %}
+
+{% block main %}
+    <!-- ======================================================================
+         DOCUMENTATION HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Pipe CAM</a>
+          <span class="sep">/</span>
+          <span class="current">Documentation &amp; Visual Workflows</span>
+        </div>
+
+        <h1 class="docs-title">Operator Guides &amp; <span class="text-gradient-amber">CAM Workflows</span></h1>
+        <p class="docs-subtitle">
+          Follow our step-by-step visual walkthroughs and technical references to configure your 4-axis rotary plasma kinematics, tune per-contour lead-ins and zero-bevel compensation, pack multi-tube STEP assemblies onto raw stock sticks, unfold bent HSS &amp; HSS-O sticks with kerf relief cuts, inspect release changelogs, model Fusion 360 Structural Member assemblies for AI profile autodetection, and set up motion-synchronized <code class="mono">M62/M63</code> torch control &amp; 3D ramp lead-ins in SimCNC.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>{{ total_tutorials }} Core Workflows</strong> • {{ total_steps }} Documented Steps</span>
+          <span class="docs-meta-pill cyan"><strong>Controllers:</strong> SimCNC 3.5 / 3.6 Beta / Generic G94</span>
+          <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) Single, Bent &amp; Multi-Body Assemblies</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TUTORIAL CARDS GRID (Generated from central TUTORIALS registry)
+         ====================================================================== -->
+    <section class="container">
+      <div class="docs-hub-grid">
+        {% for t in tutorials %}
+        <!-- Guide {{ t.num }}: {{ t.hub_title | safe }} -->
+        <a href="{{ t.filename }}" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            {% if t.hub_thumb %}
+            <img src="{{ t.hub_thumb }}" alt="{{ t.hub_thumb_alt }}" loading="lazy" />
+            {% else %}
+            {{ t.hub_custom_thumb_html | safe }}
+            {% endif %}
+            <span class="docs-hub-badge">TUTORIAL {{ "%02d"|format(t.num) }} • {{ t.steps_label | upper }}</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">{{ t.hub_title | safe }}</h2>
+            <p class="docs-hub-desc">
+              {{ t.hub_desc | safe }}
+            </p>
+            <ul class="docs-hub-topics">
+              {% for topic in t.hub_topics %}
+              <li>{{ topic | safe }}</li>
+              {% endfor %}
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial {{ "%02d"|format(t.num) }}</span>
+              <span>{{ t.hub_cta_right }} →</span>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+
+      <!-- Quick Reference Callout -->
+      <div class="doc-intro-card" style="margin-bottom: 5rem;">
+        <h2>Recommended First-Time Setup Sequence</h2>
+        <p>
+          If you are setting up Pipe CAM for a new rotary plasma table, start with <strong><a href="machine-configuration.html" style="color: var(--amber-400);">Tutorial 01: Basic Machine Configuration</a></strong> and <strong><a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a></strong>. Because Pipe CAM executes a deterministic physics-based S-curve velocity profiler and Tool Center Point (TCP) unwrap in software, entering your machine's true axis velocity/acceleration limits and wiring <code class="mono">ExtTrajSyncOut0/1</code> (<code class="mono">M62/M63 P0/P1</code>) ensures your generated G-code runs at peak surface speed with zero-overburn early torch extinguish and spatter-free 3D ramp lead-ins.
+        </p>
+        <div class="doc-intro-grid">
+          <div class="doc-intro-stat">
+            <span class="label">Step 1 • Configure Hardware</span>
+            <span class="value"><a href="machine-configuration.html" style="color: var(--amber-400);">01. Machine Profiles</a> &amp; <a href="simcnc-motion-sync.html" style="color: var(--amber-400);">07. SimCNC Sync →</a></span>
+          </div>
+          <div class="doc-intro-stat">
+            <span class="label">Step 2 • Tune Contours &amp; Bends</span>
+            <span class="value"><a href="cut-path-configuration.html" style="color: var(--cyan-400);">02. Cut Paths</a> &amp; <a href="bending.html" style="color: var(--cyan-400);">04. Bending →</a></span>
+          </div>
+          <div class="doc-intro-stat">
+            <span class="label">Step 3 • CAD &amp; Multi-Stick Nesting</span>
+            <span class="value"><a href="ai-autodetection.html" style="color: var(--emerald-400);">06. AI CAD</a> &amp; <a href="nesting.html" style="color: var(--emerald-400);">03. Nesting →</a></span>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

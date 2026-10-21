@@ -1,0 +1,234 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Overview Card -->
+        <div class="doc-intro-card">
+          <h2>Why Accurate Machine Configuration Matters</h2>
+          <p>
+            Unlike flat-sheet 2D plasma tables, a 4-axis rotary tube cutter simultaneously coordinates linear axes (<code class="mono">X, Y, Z</code>) in millimeters with a rotary chuck axis (<code class="mono">A</code>) in degrees. When sweeping around rectangular HSS tube corners or cutting deep pipe saddles, the rotary chuck must rapidly accelerate and decelerate while keeping the plasma arc's surface velocity constant. Pipe CAM uses your machine profile's exact physical limits to compute S-curve trajectories, damp rotary corner singularities, and inject synchronous THC lock commands before the torch slows down.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Kinematics Engine</span>
+              <span class="value">4-Axis S-Curve + ADLS</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Feedrate Modes</span>
+              <span class="value">G94+G93 Spoofing / Native G93 / G94</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">THC Protection</span>
+              <span class="value">Synchronous M62/M63 or Custom M-Codes</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Open the Machine Profiles &amp; Kinematics Configuration</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              From the main Pipe CAM workspace, locate the <strong>CNC Plasma Kinematics</strong> summary card at the bottom of the left sidebar. This card displays your currently active rotary ratio, rapid limits, Z clearance, and post-processor dialect at a glance.
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click the <span class="ui-chip">⚙ Config</span> button in the <strong>CNC Plasma Kinematics</strong> panel on the left sidebar, <em>or</em></li>
+              <li>Click the <span class="ui-chip cyan">⚙ Machines</span> button in the top navigation bar at any time to open the <strong>Machine Profiles &amp; Kinematics</strong> modal.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Opening Machine Profiles &amp; Kinematics from the left sidebar or top bar</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/machine-config-1-open.png" alt="Step 1: Click Config in the CNC Plasma Kinematics panel or Machines in the top bar" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Configure Accurate Axis Kinematics, Velocity, Acceleration &amp; Safe Z Limits</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              The first tab, <span class="ui-chip">Axis Kinematics &amp; Limits</span>, defines the physical capabilities of your CNC table's linear motors (<code class="mono">X, Y, Z</code>) and rotary chuck drive (<code class="mono">A</code>). Entering accurate numbers here is essential because Pipe CAM's internal trajectory planner simulates your machine's exact physics.
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Rotary Drive Ratio &amp; Direction:</strong> Specify your chuck reduction ratio (e.g., <code class="mono">10:1 Rotary</code>) and whether <code class="mono">+A</code> rotation follows right-hand or inverted conventions.</li>
+              <li><strong>Linear Axes (<code class="mono">X / Y / Z</code>) Limits:</strong> Set the true maximum rapid velocity (<code class="mono">mm/min</code>), maximum acceleration (<code class="mono">mm/s²</code>), and S-curve jerk (<code class="mono">mm/s³</code>) your drives can sustain without losing steps or faulting.</li>
+              <li><strong>Rotary Chuck (<code class="mono">A-Axis</code>) Limits:</strong> Set the maximum rotational speed (<code class="mono">deg/min</code>, e.g., <code class="mono">36000°/min</code> = 100 RPM), angular acceleration (<code class="mono">deg/s²</code>), and angular jerk (<code class="mono">deg/s³</code>). During rectangular tube corner transitions, the A-axis is almost always the physical bottleneck—Pipe CAM uses these limits to automatically throttle cutting feedrates around corners.</li>
+              <li><strong>Safe Z Clearance Height:</strong> Defines the safe retract envelope (e.g., <code class="mono">25 mm</code>) above the rotating tube's maximum diagonal radius so rapid moves never clip a spinning square/rectangular corner.</li>
+            </ul>
+
+            <div class="doc-callout info" style="margin-top: 1.5rem;">
+              <div class="doc-callout-title">⚙ Configurable X-Axis Travel &amp; Start Direction (Workpiece Moves vs. Torch Moves)</div>
+              <p>
+                Plasma rotary tables move in one of two physical ways depending on whether your chuck pushes the pipe or your torch gantry rolls along the bed. Configure your machine's exact kinematic direction in the <strong>Axis Kinematics &amp; Limits</strong> tab:
+              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <li>
+                  <strong>Workpiece Moves on X (SimCNC Rotary Chuck Default):</strong>
+                  For rotary tables where the chuck carriage pushes and pulls the tube along the bed beneath a stationary-X plasma torch. RotaryCAM zeroes at the far right-hand free end of the stock using <code class="mono">G92 X-Length</code> (e.g. <code class="mono">G92 X-6000.00 Y0 Z0 A0</code>). The machine cuts each finished tube from the free end first and feeds backward toward <code class="mono">X0</code> at the chuck face, so finished parts drop cleanly onto the scrap table while the remaining tube stays rigidly chucked.
+                </li>
+                <li>
+                  <strong>Torch Moves on X (<code class="mono">0</code> to <code class="mono">max(X)</code>):</strong>
+                  For rotary attachments mounted inside a standard cutting table where the stock stays parked in the chuck and the torch gantry rolls down the tube. RotaryCAM sets your stock datum at <code class="mono">G92 X0 Y0 Z0 A0</code> and cuts forward from <code class="mono">X = 0</code> toward <code class="mono">+max(X)</code> along the bed.
+                </li>
+              </ul>
+              <p style="margin-bottom: 0;">
+                Selecting the matching travel direction ensures your G-code programs never trip machine limit switches, cut in reverse, or drop stock out of the chuck prematurely.
+              </p>
+            </div>
+
+            <div class="doc-callout tip">
+              <div class="doc-callout-title">✓ Multiple Profiles Persisted Across Restarts</div>
+              <p>
+                You can maintain separate profiles for different machines, rotary chucks, or plasma power sources using the left list (<code class="mono">+ New</code> or <code class="mono">Clone</code>). All configured profiles are automatically saved and persisted across browser/app restarts.
+              </p>
+            </div>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Configuring linear &amp; rotary velocity, acceleration, jerk, and Safe Z limits</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/machine-config-2-limits.png" alt="Step 2: Axis Kinematics and Limits tab showing linear and rotary velocity, acceleration, and jerk settings" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Select Controller Dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code>) &amp; Post-Processor Compensation</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Switch to the <span class="ui-chip cyan">Controller &amp; Compensation</span> tab to select how feedrates and toolpath compensations are formatted in your output G-code.
+            </p>
+            <ul class="doc-bullet-list">
+              <li><span class="ui-chip">SimCNC 3.5 IP-M/S (G94 + G93 4-Axis Emulation)</span> — <strong>Recommended for CSLab SimCNC 3.5:</strong> Uses RotaryCAM's hybrid feedrate scaling for older SimCNC releases. Scales <code class="mono">F</code> words so coordinated <code class="mono">XYZA</code> moves cut at true surface speed even on firmware revisions where native <code class="mono">G93</code> has rotary blending quirks.</li>
+              <li><span class="ui-chip">SimCNC 3.6 Beta (G93 Inverse-Time Feed Mode)</span> — Emits true ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code> in inverse minutes) on every coordinated cutting segment, leveraging SimCNC 3.6's upgraded 4-axis trajectory planner for smooth rotary motion.</li>
+              <li><span class="ui-chip">Standard Controller (Native G94 Units-Per-Minute)</span> — Standard <code class="mono">G94</code> feedrate mode for controllers (such as Mach4 or LinuxCNC) that compute rotary radius compensation internally or require standard units-per-minute <code class="mono">F</code> words.</li>
+            </ul>
+
+            <div class="doc-callout danger">
+              <div class="doc-callout-title">⚠ Critical: Only Select Pure G93 If Your Controller Natively Supports It</div>
+              <p>
+                In <code class="mono">G93</code> Inverse-Time mode, the <code class="mono">F</code> word specifies how many times per minute a single micro-segment could be completed (<code class="mono">1 / minutes</code>), resulting in large numeric <code class="mono">F</code> values on short segments. <strong>Only select a pure <code class="mono">G93</code> dialect if your CNC controller natively supports and properly blends <code class="mono">G93</code> inverse-time motion.</strong> If your controller expects standard <code class="mono">G94</code> feedrates (or is running SimCNC 3.5), select <strong>SimCNC 3.5 (G94 + G93 Emulation)</strong> or <strong>Standard Controller (Native G94)</strong> instead.
+              </p>
+            </div>
+
+            <p>
+              Beneath the dialect selector, configure your <strong>Post-Processor Compensation Strategy</strong>:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Enable CAM Velocity Profiling (S-Curve Acceleration &amp; Jerk):</strong> Simulates forward/backward S-curve acceleration in software so velocity transitions and THC lock points match physical reality.</li>
+              <li><strong>Enable ADLS Singularity Damping (HSS Corners):</strong> Applies an Adaptive Damped Least Squares filter to prevent <code class="mono">A-axis</code> angular velocity spikes as the toolpath transitions from a flat HSS wall onto a tight corner radius.</li>
+              <li><strong>Enable Offline Kerf Compensation:</strong> Offsets internal holes (CW) and external contours (CCW) in 3D surface space by half your plasma kerf width so parts mate with zero grinding.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Choosing Controller Dialect (G94+G93 Emulation vs. Native G93 vs. G94) &amp; Compensation</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/machine-config-3-dialect.png" alt="Step 3: Controller and Compensation tab showing G-code dialect dropdown and post-processor compensation checkboxes" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Configure Synchronous THC Lock/Unlock &amp; Plasma Hardware</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Select the <span class="ui-chip cyan">THC &amp; Plasma Hardware</span> tab. On a 4-axis tube cutter, <strong>Torch Height Control (THC) configuration is one of the most important settings in the entire CAM pipeline.</strong>
+            </p>
+            <p>
+              When the torch rolls around a rectangular tube corner or a steep saddle apex, the rotary chuck must slow down to stay within its angular acceleration limit. Whenever plasma cutting speed drops, the plasma arc column widens and arc voltage rises sharply. An unlocked voltage-based THC misinterprets that voltage spike as "torch too high" and drives the torch straight into the steel tube.
+            </p>
+
+            <ul class="doc-bullet-list">
+              <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Choose how Pipe CAM emits THC freeze/unfreeze signals in your G-code—such as synchronous digital output macros (<code class="mono">M63 P0</code> to lock / <code class="mono">M62 P0</code> to unlock without motion planner pauses) or controller-specific M-codes.</li>
+              <li><strong>Dynamic Corner Lock Threshold (<code class="mono">%</code>):</strong> Automatically locks Z-axis height regulation whenever actual surface velocity drops below the configured percentage (e.g., <code class="mono">80%</code>) of target cutting speed, and unlocks it once full surface speed resumes.</li>
+              <li><strong>Lead-In / Lead-Out THC Lock:</strong> Keeps THC locked during pierce, ramp lead-in, and overburn lead-out phases where the plasma arc is stabilizing or crossing an existing kerf.</li>
+            </ul>
+
+            <div class="doc-callout info">
+              <div class="doc-callout-title">⚡ Why Synchronous M62/M63 Matters</div>
+              <p>
+                Standard <code class="mono">M64/M65</code> or custom M-codes on many controllers force an exact-stop motion buffer flush, causing the torch to pause momentarily and blow a divot in the tube wall. Synchronous <code class="mono">M62/M63</code> commands toggle the THC lock pin in lockstep with the next <code class="mono">G1</code> motion block at full lookahead speed.
+              </p>
+            </div>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — Configuring THC Lock/Unlock G-code emission and velocity thresholds</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/machine-config-4-thc.png" alt="Step 4: THC and Plasma Hardware tab showing synchronous THC lock and unlock settings" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Set Default Zero-Bevel &amp; Corner Loop Parameters and Save Profile</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Finally, open the <span class="ui-chip cyan">Zero-Bevel &amp; Corner Loops</span> tab to define the default geometric compensation values applied to new contours (which can still be overridden per contour during part inspection):
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Zero-Bevel Dual-Curve Compensation Defaults:</strong> Configure whether Zero-Bevel parameters are auto-estimated from saddle depth, along with the default <strong>Fade Angle (<code class="mono">90°</code>)</strong>, <strong>Intensity (<code class="mono">100%</code>)</strong>, and weld prep <strong>Side Gap (<code class="mono">mm</code>)</strong>.</li>
+              <li><strong>Corner Looping (Sharp Direction Changes):</strong> Set the minimum/maximum corner angle range (<code class="mono">90°–180°</code>) and loop radius (<code class="mono">3 mm</code>) used when injecting rollout corner loops into scrap to keep sharp external corners crisp.</li>
+              <li><strong>Manage &amp; Persist Profiles:</strong> Use the bottom-left toolbar (<span class="ui-chip">+ New</span>, <span class="ui-chip">Clone</span>, <span class="ui-chip">★ Active</span>) to create or switch profiles, then click the green <span class="ui-chip emerald">Save Profile</span> button in the top-right corner of the modal.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Setting Zero-Bevel &amp; Corner Loop defaults, cloning/activating profiles, and clicking Save Profile</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/machine-config-5-defaults.png" alt="Step 5: Zero-Bevel and Corner Loops tab and Save Profile button" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+{% endblock %}

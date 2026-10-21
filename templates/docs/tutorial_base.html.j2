@@ -1,0 +1,104 @@
+{% extends "base.html.j2" %}
+
+{% block main %}
+    <!-- ======================================================================
+         TUTORIAL HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Pipe CAM</a>
+          <span class="sep">/</span>
+          <a href="index.html">Documentation</a>
+          <span class="sep">/</span>
+          <span class="current">{{ "%02d"|format(page.num) }}. {{ page.breadcrumb_title }}</span>
+        </div>
+
+        <h1 class="docs-title">{{ "%02d"|format(page.num) }}. {{ page.hero_title_html | safe }}</h1>
+        <p class="docs-subtitle">
+          {{ page.hero_subtitle_html | safe }}
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>TUTORIAL {{ "%02d"|format(page.num) }} OF {{ "%02d"|format(total_tutorials) }}</strong> • {{ page.steps_label }}</span>
+          {% for pill in page.meta_pills %}
+          <span class="docs-meta-pill{% if pill.style %} {{ pill.style }}{% endif %}">{{ pill.html | safe }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN DOCUMENTATION SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Tutorial Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Tutorials &amp; Guides</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="index.html">
+                <span class="docs-nav-num">HUB</span>
+                <span>Documentation Overview</span>
+              </a>
+            </li>
+            {% for t in tutorials %}
+            <li>
+              <a href="{{ t.filename }}"{% if page.slug == t.slug %} class="active"{% endif %}>
+                <span class="docs-nav-num">{{ "%02d"|format(t.num) }}</span>
+                <span>{{ t.sidebar_label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            {% for item in page.toc %}
+            <li><a href="#{{ item.id }}"><span class="docs-toc-step">{{ item.badge }}</span> {{ item.label | safe }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Tutorial Column -->
+      <div class="docs-main">
+{% block tutorial_body %}{% endblock %}
+
+        <!-- Pagination -->
+        <nav class="docs-pagination" aria-label="Tutorial Pagination">
+          {% if prev_tutorial %}
+          <a href="{{ prev_tutorial.filename }}" class="docs-page-link prev">
+            <span class="docs-page-dir">← Previous Tutorial ({{ "%02d"|format(prev_tutorial.num) }} of {{ "%02d"|format(total_tutorials) }})</span>
+            <span class="docs-page-title">{{ prev_tutorial.pagination_title }}</span>
+            <span class="docs-page-desc">{{ prev_tutorial.pagination_desc }}</span>
+          </a>
+          {% else %}
+          <a href="index.html" class="docs-page-link prev">
+            <span class="docs-page-dir">← Back to Hub</span>
+            <span class="docs-page-title">Documentation Overview</span>
+            <span class="docs-page-desc">All {{ total_tutorials }} Pipe CAM visual &amp; technical workflows</span>
+          </a>
+          {% endif %}
+          {% if next_tutorial %}
+          <a href="{{ next_tutorial.filename }}" class="docs-page-link next">
+            <span class="docs-page-dir">Next Tutorial ({{ "%02d"|format(next_tutorial.num) }} of {{ "%02d"|format(total_tutorials) }}) →</span>
+            <span class="docs-page-title">{{ "%02d"|format(next_tutorial.num) }}. {{ next_tutorial.pagination_title }}</span>
+            <span class="docs-page-desc">{{ next_tutorial.pagination_desc }}</span>
+          </a>
+          {% else %}
+          <a href="index.html" class="docs-page-link next">
+            <span class="docs-page-dir">Back to Documentation Hub →</span>
+            <span class="docs-page-title">All Tutorials &amp; Guides</span>
+            <span class="docs-page-desc">Return to the Pipe CAM Documentation Overview</span>
+          </a>
+          {% endif %}
+        </nav>
+
+      </div>
+    </section>
+{% endblock %}

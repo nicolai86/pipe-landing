@@ -1453,6 +1453,45 @@
           <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--cyan-arc); font-weight: 700;">Read Tutorial 05 →</div>
         </div>
       </a>
+
+      <!-- Tutorial 6 Card -->
+      <a href="docs/ai-autodetection.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <img src="docs/assets/ai-cad-8-autodetect.png" alt="Tutorial 06: Fusion 360 &amp; AI Profile Autodetection" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--emerald-cut);">TUTORIAL 06 • 8 STEPS</div>
+            <h3 style="color: #fff;">Fusion 360 &amp; AI Autodetection</h3>
+            <p>Model 2D centerline sketches and 3D tube assemblies in Autodesk Fusion 360 with the Structural Member (<code class="mono">SM</code>) plugin so RotaryCAM's <code class="mono">FOVNet</code> AI recognizes profiles out of the box.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--emerald-cut); font-weight: 700;">Read Tutorial 06 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 7 Card -->
+      <a href="docs/simcnc-motion-sync.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.14), transparent 55%), #06090e; aspect-ratio: 16/9.6; overflow: hidden; padding: 1.35rem 1.2rem; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; line-height: 1.5; color: #cbd5e1;">
+          <div>
+            <div style="color: #64748b;"># SimCNC ExternalTrajCtrl + m3.py / m5.py</div>
+            <div style="color: #fbbf24; font-weight: 600;">ExtTrajSyncOut0 (P0) → Out 4 (THC Lock)</div>
+            <div style="color: #22d3ee;">ExtTrajSyncOut1 (P1) → Out 0 (Torch Fire)</div>
+          </div>
+          <div>
+            <div style="color: #34d399;">#1113=1  #1110=0.25  M03  M63 P0</div>
+            <div>G01 X1.2500 Y0.8000 Z#3 F120.0 (3D Ramp)</div>
+            <div style="color: #fbbf24;">M63 P0  M63 P1  G1 ... (0-Overburn Stop)</div>
+          </div>
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--plasma-amber);">TUTORIAL 07 • 12 STEPS</div>
+            <h3 style="color: #fff;">SimCNC Motion-Sync &amp; 3D Ramp</h3>
+            <p>Configure <code class="mono">ExtTrajSyncOut</code> (<code class="mono">M62/M63 P0/P1</code>), direct CSMIO/IP-M <code class="mono">Arc OK</code> polling, and <code class="mono">#1113</code>/<code class="mono">Z#3</code> macros—required for 3D Ramp Lead-Ins and Zero-Overburn Early Torch-Out.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 07 →</div>
+        </div>
+      </a>
     </div>
   </section>
 

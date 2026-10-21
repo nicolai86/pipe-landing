@@ -80,22 +80,21 @@ Then **visually inspect every single generated PNG** in `docs/assets/` using `re
 
 ---
 
-## 2. Documentation HTML & Navigation Consistency Rules
+## 2. Jinja2 Documentation Template Engine & Navigation Consistency Rules
 
-When adding a new tutorial page `docs/<slug>.html`:
+All `docs/*.html` pages (`docs/index.html` and every `docs/<slug>.html` tutorial) are stamped out deterministically from **Jinja2 templates** in `templates/docs/` using [`scripts/build_docs.py`](./scripts/build_docs.py):
 
-1. **Identical Single-Line Top Navigation Bar (`.site-header`)**:
-   - The top `.site-header` navigation bar across `index.html`, `build-guide.html`, and all `docs/*.html` pages must have the exact same height (`69px`), typography, and single-line layout (`white-space: nowrap`).
-   - Every `docs/*.html` file **MUST** include both:
-     - The cache-busted stylesheet link `<link rel="stylesheet" href="docs.css?v=YYYYMMDD" />` (bump the `?v=` date whenever `docs.css` changes), **AND**
-     - The inlined `<style>` block for `.site-header` in `<head>` so that browser or CDN caching of `docs.css` can never break the header layout.
-   - Keep link labels in `.nav-links` concise (`Overview`, `01. Machine`, `02. Cut Paths`, `03. Nesting`, `04. Bending`, `05. Changelog`, etc.) so the navigation bar never wraps onto two lines at desktop widths (`>= 1080px`).
+- **Master Layout Template:** [`templates/docs/base.html.j2`](./templates/docs/base.html.j2) (shared `<head>`, inlined `.site-header` CSS, single-line top navigation bar, lightbox modal, and footer).
+- **Tutorial Shell Template:** [`templates/docs/tutorial_base.html.j2`](./templates/docs/tutorial_base.html.j2) (hero header, `TUTORIAL XX OF YY` badge, sticky left sidebar with "Tutorials & Guides" + "On This Page" TOC, and automatic prev/next `.docs-pagination`).
+- **Per-Page Content Templates:** `templates/docs/pages/<slug>.html.j2` (`index.html.j2`, `machine-configuration.html.j2`, `cut-path-configuration.html.j2`, `nesting.html.j2`, `bending.html.j2`, `changelog.html.j2`, `ai-autodetection.html.j2`, `simcnc-motion-sync.html.j2`).
 
-2. **Cross-Linking Checklist when Adding Tutorial `N`**:
-   - Create `docs/<slug>.html` following the two-column `.docs-shell` template (sticky `.docs-sidebar` on the left with both "Tutorials & Guides" and "On This Page" TOC + `.docs-main` with `.doc-step-card` articles and `.docs-Lightbox` script).
-   - Update `.docs-nav-list` (left sidebar), `.nav-links` (top header), `.docs-meta-pill` (`TUTORIAL XX OF YY`), `.docs-pagination` (prev/next links), and `.footer-links` across **all** `docs/*.html` pages.
-   - Add a card for the new tutorial to `docs/index.html` and to the `#documentation` section of `index.html`.
-   - Add the new URL to `sitemap.xml`.
-
-3. **Automated Link & Asset Verification**:
-   - Before committing, verify that every `href` and `src` across `index.html`, `build-guide.html`, and `docs/*.html` resolves to an existing file on disk, and verify the top navbar layout with headless Chrome at `1202px` width.
+### Workflow when Adding or Updating a Tutorial `N`:
+1. Create or edit `templates/docs/pages/<slug>.html.j2` (extending `tutorial_base.html.j2` and filling `{% block tutorial_body %}...{% endblock %}`).
+2. Add or update the tutorial's metadata entry in the `TUTORIALS` list in [`scripts/build_docs.py`](./scripts/build_docs.py) (and bump `CSS_VERSION` whenever `docs/docs.css` changes).
+3. Run the Jinja2 builder & link verifier:
+   ```bash
+   python3 scripts/build_docs.py --verify
+   ```
+   This automatically stamps out `docs/index.html` and all `docs/<slug>.html` pages with synchronized `.nav-links`, `.docs-nav-list`, `TUTORIAL XX OF YY` pills, `.docs-pagination`, and `.footer-links`, and verifies that every `href` and `src` across the entire site resolves on disk.
+4. Also add a card for the new tutorial to the `#documentation` section of `index.html` and add the new URL to `sitemap.xml`.
+5. Verify with headless Chrome at `1202px` width that `.site-header` remains a single `69px` horizontal bar.
