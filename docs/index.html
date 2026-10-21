@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation & Workflows — Pipe CAM | 4-Axis CNC Tube & Pipe Plasma CAM</title>
-  <meta name="description" content="Step-by-step visual documentation and engineering guides for Pipe CAM: 4-axis CNC plasma machine configuration, STEP cut-path inspection, zero-bevel compensation, and multi-stick tube nesting." />
+  <title>Documentation &amp; Workflows — Pipe CAM | 4-Axis CNC Tube &amp; Pipe Plasma CAM</title>
+  <meta name="description" content="Step-by-step visual documentation and engineering guides for Pipe CAM: 4-axis CNC plasma machine configuration, STEP cut-path inspection, zero-bevel compensation, multi-stick tube nesting, HSS &amp; HSS-O Cut-and-Bend unfolding, and build changelog." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -30,10 +30,11 @@
       <div class="nav-links">
         <a href="../index.html" class="nav-back-link">← Back to RotaryCAM</a>
         <a href="index.html" class="active">Overview</a>
-        <a href="machine-configuration.html">01. Machine Setup</a>
+        <a href="machine-configuration.html">01. Machine</a>
         <a href="cut-path-configuration.html">02. Cut Paths</a>
-        <a href="nesting.html">03. Stick Nesting</a>
-        <a href="../build-guide.html">Build Your Own</a>
+        <a href="nesting.html">03. Nesting</a>
+        <a href="bending.html">04. Bending</a>
+        <a href="changelog.html">05. Changelog</a>
       </div>
 
       <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
@@ -54,13 +55,13 @@
 
         <h1 class="docs-title">Operator Guides &amp; <span class="text-gradient-amber">CAM Workflows</span></h1>
         <p class="docs-subtitle">
-          Follow our step-by-step visual walkthroughs to configure your 4-axis rotary plasma kinematics, inspect and tune per-contour lead-ins and zero-bevel compensation, and pack multi-tube STEP assemblies onto raw stock sticks.
+          Follow our step-by-step visual walkthroughs to configure your 4-axis rotary plasma kinematics, tune per-contour lead-ins and zero-bevel compensation, pack multi-tube STEP assemblies onto raw stock sticks, unfold bent HSS &amp; HSS-O sticks with kerf relief cuts, and inspect release changelogs.
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>3 Core Workflows</strong> • 19 Annotated Steps</span>
+          <span class="docs-meta-pill amber"><strong>5 Core Workflows</strong> • 26 Annotated Steps</span>
           <span class="docs-meta-pill cyan"><strong>Controllers:</strong> SimCNC 3.5 / 3.6 Beta / Generic G94</span>
-          <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) Single &amp; Multi-Body Assemblies</span>
+          <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) Single, Bent &amp; Multi-Body Assemblies</span>
         </div>
       </div>
     </section>
@@ -143,6 +144,54 @@
           </div>
         </a>
 
+        <!-- Guide 4: Bending HSS & HSS-O Sticks -->
+        <a href="bending.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            <img src="assets/bending-4-configure-bend.png" alt="Pipe CAM HSS & HSS-O Cut-and-Bend Unfolding" loading="lazy" />
+            <span class="docs-hub-badge">TUTORIAL 04 • 5 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Bending HSS &amp; HSS-O Sticks</h2>
+            <p class="docs-hub-desc">
+              Load a 3D bent tube STEP fixture, automatically unfold its 3 bends into a straight stick with kerf-bending relief slots, customize cut counts (`3 → 5`) and spine bridge width (`Edge Left: 30 mm`), preview in 3D, and download G-code.
+            </p>
+            <ul class="docs-hub-topics">
+              <li>Automatic 3D bent-tube spine detection &amp; unfolding</li>
+              <li>Collapsible per-bend relief cut inspection (`▸ Cuts (3)`)</li>
+              <li>Custom relief cut count (`5`) &amp; living-hinge spine (`Edge Left: 30 mm`)</li>
+              <li>3D straight-stick Cut Preview &amp; one-click `.nc` export</li>
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 04</span>
+              <span>5 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Guide 5: Build Information & Changelog -->
+        <a href="changelog.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            <img src="assets/changelog-2-modal.png" alt="Pipe CAM About Modal with Build Information & Changelog" loading="lazy" />
+            <span class="docs-hub-badge">TUTORIAL 05 • 2 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Build Information &amp; Changelog</h2>
+            <p class="docs-hub-desc">
+              Open the built-in `ⓘ About` modal from the top-right header bar to inspect exact build provenance (version, Git commit, UTC date, platform, license status), browse recent release highlights, and copy system diagnostics.
+            </p>
+            <ul class="docs-hub-topics">
+              <li>Top-right `ⓘ About` quick access from any workspace tab</li>
+              <li>Version, Git commit hash, platform &amp; license status table</li>
+              <li>Built-in chronological release notes &amp; feature highlights</li>
+              <li>One-click `📋 Copy Diagnostics` for support tickets</li>
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 05</span>
+              <span>2 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+
       </div>
 
       <!-- Quick Reference Callout -->
@@ -157,8 +206,8 @@
             <span class="value"><a href="machine-configuration.html" style="color: var(--amber-400);">01. Machine Profiles &amp; THC →</a></span>
           </div>
           <div class="doc-intro-stat">
-            <span class="label">Step 2 • Tune Contours</span>
-            <span class="value"><a href="cut-path-configuration.html" style="color: var(--cyan-400);">02. Cut Paths &amp; Zero-Bevel →</a></span>
+            <span class="label">Step 2 • Tune Contours &amp; Bends</span>
+            <span class="value"><a href="cut-path-configuration.html" style="color: var(--cyan-400);">02. Cut Paths</a> &amp; <a href="bending.html" style="color: var(--cyan-400);">04. Bending →</a></span>
           </div>
           <div class="doc-intro-stat">
             <span class="label">Step 3 • Nest Full Assemblies</span>
@@ -193,6 +242,8 @@
           <a href="machine-configuration.html">01. Machine Configuration</a>
           <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
           <a href="nesting.html">03. Multi-Part Nesting</a>
+          <a href="bending.html">04. Bending HSS &amp; HSS-O</a>
+          <a href="changelog.html">05. Build Info &amp; Changelog</a>
         </div>
         <div class="footer-col">
           <h4>Product</h4>
@@ -211,7 +262,7 @@
 
     <div class="container footer-bottom">
       <span>&copy; 2026 Pipe CAM. Engineered for precision 4-axis tube &amp; pipe plasma fabrication.</span>
-      <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • 1D STICK NESTING</span>
+      <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING</span>
     </div>
   </footer>
 </body>

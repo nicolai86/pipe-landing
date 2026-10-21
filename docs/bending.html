@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>04. Bending HSS &amp; HSS-O Sticks — Pipe CAM Documentation</title>
+  <meta name="description" content="Step-by-step guide to Pipe CAM's Cut-and-Bend unfolding workflow for square/rectangular HSS and round HSS-O sticks: load a bent tube STEP file, expand relief kerf cuts, customize cut counts and living-hinge spine width (Edge Left), preview the unfolded straight stick in 3D, and export G-code." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION
+       ======================================================================== -->
+  <header class="site-header" id="navbar">
+    <nav aria-label="Documentation Navigation">
+      <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
+        <span>RotaryCAM</span>
+        <span class="brand-tag">v0.2-BETA</span>
+      </a>
+
+      <div class="nav-links">
+        <a href="../index.html" class="nav-back-link">← Back to RotaryCAM</a>
+        <a href="index.html">Overview</a>
+        <a href="machine-configuration.html">01. Machine</a>
+        <a href="cut-path-configuration.html">02. Cut Paths</a>
+        <a href="nesting.html">03. Nesting</a>
+        <a href="bending.html" class="active">04. Bending</a>
+        <a href="changelog.html">05. Changelog</a>
+      </div>
+
+      <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ======================================================================
+         TUTORIAL HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">Pipe CAM</a>
+          <span class="sep">/</span>
+          <a href="index.html">Documentation</a>
+          <span class="sep">/</span>
+          <span class="current">04. Bending HSS &amp; HSS-O Sticks</span>
+        </div>
+
+        <h1 class="docs-title">04. Bending <span class="text-gradient-amber">HSS &amp; HSS-O Sticks</span></h1>
+        <p class="docs-subtitle">
+          How to load a 3D bent tube STEP model, automatically unfold its centerline into a straight stick with kerf-bending relief cuts, customize the number of relief cuts (<code class="mono">3 → 5</code>) and the uncut spine bridge width (<code class="mono">Edge Left: 30 mm</code>), preview the unfolded straight stick in 3D simulation, and download shop-ready G-code.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 04 OF 05</strong> • 5 Steps</span>
+          <span class="docs-meta-pill cyan"><strong>Fixture Used:</strong> HSS Bending [CUT &amp; BEND] (3 Bends)</span>
+          <span class="docs-meta-pill"><strong>Profiles Supported:</strong> Square/Rectangular HSS &amp; Round Tube (HSS-O)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN DOCUMENTATION SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Tutorial Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Tutorials &amp; Guides</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="index.html">
+                <span class="docs-nav-num">HUB</span>
+                <span>Documentation Overview</span>
+              </a>
+            </li>
+            <li>
+              <a href="machine-configuration.html">
+                <span class="docs-nav-num">01</span>
+                <span>Machine Configuration</span>
+              </a>
+            </li>
+            <li>
+              <a href="cut-path-configuration.html">
+                <span class="docs-nav-num">02</span>
+                <span>UI &amp; Cut Path Config</span>
+              </a>
+            </li>
+            <li>
+              <a href="nesting.html">
+                <span class="docs-nav-num">03</span>
+                <span>Multi-Part Stick Nesting</span>
+              </a>
+            </li>
+            <li>
+              <a href="bending.html" class="active">
+                <span class="docs-nav-num">04</span>
+                <span>Bending HSS &amp; HSS-O</span>
+              </a>
+            </li>
+            <li>
+              <a href="changelog.html">
+                <span class="docs-nav-num">05</span>
+                <span>Build Info &amp; Changelog</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#step-1"><span class="docs-toc-step">01</span> Select HSS Bending Fixture</a></li>
+            <li><a href="#step-2"><span class="docs-toc-step">02</span> Select Bend #1 &amp; Click 'Cuts (3)'</a></li>
+            <li><a href="#step-3"><span class="docs-toc-step">03</span> Inspect Expanded Relief Cuts</a></li>
+            <li><a href="#step-4"><span class="docs-toc-step">04</span> Set Cuts to 5 &amp; Edge Left to 30 mm</a></li>
+            <li><a href="#step-5"><span class="docs-toc-step">05</span> Preview Cut Simulation &amp; Download</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Tutorial Column -->
+      <div class="docs-main">
+
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Cut-and-Bend Kerf Relief Unfolding for HSS &amp; Round Pipe</h2>
+          <p>
+            Fabricating curved structural tubes without a dedicated mandrel tube bender—or producing tight-radius, repeatable multi-plane bends that can be hand-pulled and TIG/MIG welded in position—is accomplished with <strong>Cut-and-Bend</strong> (also known as kerf-bending or lobster-back pie-cutting). When you import a bent tube STEP file, Pipe CAM automatically detects every bend along the 3D spine, unfolds the curved geometry back onto a straight stock stick (<code class="mono">PROFILE_HSS_RECT</code> or round <code class="mono">HSS-O</code>), and generates precision pie-cut relief slots across the intrados and side cheeks while leaving an uncut extrados living-hinge spine (<code class="mono">Edge Left</code>).
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Unfolding Engine</span>
+              <span class="value">Automatic 3D Spine &amp; Neutral-Axis Unwrap</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Relief Cut Control</span>
+              <span class="value">Per-Bend Cut Count &amp; Spine Width (<code class="mono">Edge Left</code>)</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Supported Stock</span>
+              <span class="value">Square/Rect HSS &amp; Round Pipe (HSS-O)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Select <code class="mono">HSS Bending [CUT &amp; BEND]</code> from Quick CAD Fixtures</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Start from the main Pipe CAM workspace and locate the <strong>Quick CAD Fixtures</strong> panel on the left sidebar (or drop your own bent-tube <code class="mono">.step</code> file into the CAD Ingestion zone).
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip">HSS Bending [CUT &amp; BEND]</span> at the bottom of the <strong>Quick CAD Fixtures</strong> list.</li>
+              <li>Pipe CAM loads the 3D bent tube CAD solid, detects all 3 bends along its centerline, and calculates the unfolded straight-stock length (<code class="mono">2030.2 mm</code>).</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Selecting 'HSS Bending [CUT &amp; BEND]' from the left Quick CAD Fixtures panel</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/bending-1-fixture.png" alt="Step 1: Selecting HSS Bending [CUT & BEND] in Quick CAD Fixtures" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Select <code class="mono">Bend #1</code> &amp; Click <code class="mono">▸ Cuts (3)</code> Next to Config</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Once loaded, notice the <span class="ui-chip cyan">Bent Tube Unfolded • 3 BENDS</span> badge under <strong>Cross-Section &amp; Dimensions</strong> on the left sidebar (with a <strong>Profile Override</strong> selector supporting both rectangular <code class="mono">Profile_HSS_Rect</code> and <code class="mono">Round Tube (HSS-O)</code>).
+            </p>
+            <ul class="doc-bullet-list">
+              <li>In the bottom feature table, each detected bend is grouped into an interactive collapsible row (<code class="mono">Bend #1</code>, <code class="mono">Bend #2</code>, <code class="mono">Bend #3</code>) showing its bend angle (<span class="ui-chip">BEND 32.5°</span>), bend radius (<code class="mono">R=145.0mm</code>), axial X span (<code class="mono">1384–1466 mm</code>), and spine orientation (<code class="mono">180.0° / Spine 0°</code>).</li>
+              <li>Locate <span class="ui-chip">Bend #1</span> (the first bend group) and click the <span class="ui-chip">▸ Cuts (3)</span> button on the right side of the row—right next to <code class="mono">⚙ Bend</code> and <code class="mono">Save</code>.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Selecting Bend #1 (32.5°, R=145.0mm) and clicking '▸ Cuts (3)' next to Config</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/bending-2-select-cuts.png" alt="Step 2: Selecting Bend #1 and clicking Cuts (3) next to Bend Config" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Inspect the Expanded Relief Cuts &amp; Bend Parameters</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Clicking <code class="mono">▸ Cuts (3)</code> expands the individual relief kerf cutouts belonging to <code class="mono">Bend #1</code> (<code class="mono">Bend #1 • Cut 1/3</code> at <code class="mono">1397.5 mm</code>, <code class="mono">Cut 2/3</code> at <code class="mono">1425.0 mm</code>, and <code class="mono">Cut 3/3</code> at <code class="mono">1452.4 mm</code>):
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Each individual relief cut can have its own <strong>Lead-In Strategy</strong> (<code class="mono">Tangent Arc</code>), <strong>Lead-Out Strategy</strong> (<code class="mono">Circular</code>), and per-contour settings tuned if needed.</li>
+              <li>Directly on the <code class="mono">Bend #1</code> parent row, you have two key inline geometry controls:
+                <ul>
+                  <li><strong><code class="mono">Cuts</code> (default <code class="mono">3</code>):</strong> The number of wedge-shaped relief kerf cuts subdividing the bend arc.</li>
+                  <li><strong><code class="mono">Edge Left</code> (default <code class="mono">13,5 mm</code>):</strong> The width of the uncut metal bridge (living hinge spine) left intact on the outside face of the bend so the tube stays in one piece during cutting and folds cleanly along the outer wall.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Viewing the expanded relief cuts (Cut 1/3..3/3) and inline Cuts / Edge Left controls</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/bending-3-expanded-cuts.png" alt="Step 3: Expanded relief cuts under Bend #1 showing Cuts: 3 and Edge Left: 13.5 mm" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Change <code class="mono">Cuts</code> from <code class="mono">3</code> to <code class="mono">5</code>, Set <code class="mono">Edge Left</code> to <code class="mono">30 mm</code> &amp; Open Cut Preview</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              For a smoother bend radius with smaller per-slot wedge angles—and a wider uncut spine bridge along the back face—let's update <code class="mono">Bend #1</code>:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Change <strong><code class="mono">Cuts</code></strong> from <code class="mono">3</code> to <span class="ui-chip">5</span>.</li>
+              <li>Change <strong><code class="mono">Edge Left</code></strong> from <code class="mono">13,5</code> to <span class="ui-chip">30,0 mm</span>.</li>
+              <li>Click <span class="ui-chip cyan">Save</span> on the right side of the <code class="mono">Bend #1</code> row (confirming <span class="ui-chip emerald">Saved ✓</span>). Pipe CAM immediately recalculates the 5 relief kerf slots (<code class="mono">Cut 1/5</code> through <code class="mono">Cut 5/5</code>), updates the 3D bent-tube preview in the center viewport, and regenerates the G-code.</li>
+              <li>Next, click the <span class="ui-chip">⚡ 3D Cut Simulation</span> (Cut Preview) tab at the top of the workspace to inspect the unfolded straight stick.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — Changing Cuts to 5 and Edge Left to 30.0 mm, saving, and clicking 3D Cut Simulation</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/bending-4-configure-bend.png" alt="Step 4: Setting Cuts to 5 and Edge Left to 30.0 mm on Bend #1 and clicking 3D Cut Simulation" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Verify the Unfolded Straight Stick in 3D Cut Preview &amp; Click <code class="mono">⬇ Download</code></h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              In the <strong>3D Cut Simulation</strong> viewport, Pipe CAM displays the physical straight tube (<code class="mono">2030.2 mm</code> long) exactly as it is chucked on your 4-axis rotary plasma table:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Inspect the 5-Cut Kerf Relief Pattern (Center Viewport):</strong> Scrub or play the simulation to verify the 5 evenly spaced relief cuts wrapping three faces of the HSS stick while leaving the <code class="mono">30.0 mm</code> uncut spine intact on the top face.</li>
+              <li><strong>Download G-Code (Top-Right Header):</strong> Click the green <span class="ui-chip emerald">⬇ Download</span> button in the top-right <strong>G-Code Post-Processor</strong> bar to save your <code class="mono">.nc</code> program (<code class="mono">3349 lines</code>, <code class="mono">167.5s</code> estimated cut time) ready for your CNC controller.</li>
+            </ul>
+
+            <div class="doc-callout tip">
+              <div class="doc-callout-title">✓ Works on Both Square/Rectangular HSS &amp; Round Pipe (HSS-O)</div>
+              <p>
+                Whether your CAD model uses square/rectangular structural tubing (<code class="mono">HSS</code>) or round pipe (<code class="mono">HSS-O</code>), Pipe CAM's Cut-and-Bend engine automatically projects the relief kerf geometry onto the true surface normal—using flat-wall projection with 5-zone corner relief on HSS and cylindrical rotary unwrap on round <code class="mono">HSS-O</code> sticks.
+              </p>
+            </div>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Inspecting the unfolded straight stick in 3D Cut Simulation and clicking '⬇ Download'</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/bending-5-simulate-download.png" alt="Step 5: 3D Cut Simulation of the unfolded straight stick with 5 relief cuts and clicking Download" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- Pagination -->
+        <nav class="docs-pagination" aria-label="Tutorial Pagination">
+          <a href="nesting.html" class="docs-page-link prev">
+            <span class="docs-page-dir">← Previous Tutorial (03 of 05)</span>
+            <span class="docs-page-title">Multi-Part Stick Nesting</span>
+            <span class="docs-page-desc">Load a 37-part assembly, filter by cross-section &amp; pack across multiple sticks</span>
+          </a>
+          <a href="changelog.html" class="docs-page-link next">
+            <span class="docs-page-dir">Next Tutorial (05 of 05) →</span>
+            <span class="docs-page-title">Build Information &amp; Changelog</span>
+            <span class="docs-page-desc">Access version metadata, git commit diagnostics &amp; recent release highlights</span>
+          </a>
+        </nav>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div class="docs-lightbox" id="docsLightbox" role="dialog" aria-modal="true" aria-label="Screenshot Preview">
+    <img class="docs-lightbox-img" id="docsLightboxImg" src="" alt="" />
+    <div class="docs-lightbox-bar">
+      <span id="docsLightboxCaption"></span>
+      <button class="docs-lightbox-close" id="docsLightboxClose" type="button">ESC / Click to Close</button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       FOOTER
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <span class="brand-icon">P</span>
+          <span class="brand-name">Pipe CAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="index.html">Documentation Overview</a>
+          <a href="machine-configuration.html">01. Machine Configuration</a>
+          <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
+          <a href="nesting.html">03. Multi-Part Nesting</a>
+          <a href="bending.html">04. Bending HSS &amp; HSS-O</a>
+          <a href="changelog.html">05. Build Info &amp; Changelog</a>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../index.html#showcase">Showcase</a>
+          <a href="../index.html#features">Capabilities</a>
+          <a href="../index.html#kinematics">4-Axis Kinematics</a>
+          <a href="../build-guide.html">Build Your Own Table</a>
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 Pipe CAM. Engineered for precision 4-axis tube &amp; pipe plasma fabrication.</span>
+      <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById('docsLightbox');
+      const lightboxImg = document.getElementById('docsLightboxImg');
+      const lightboxCaption = document.getElementById('docsLightboxCaption');
+      const lightboxClose = document.getElementById('docsLightboxClose');
+
+      document.querySelectorAll('.doc-figure').forEach((fig) => {
+        const img = fig.querySelector('img');
+        const cap = fig.querySelector('.doc-figure-caption');
+        const open = () => {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightbox.classList.add('open');
+        };
+        fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);
+        const zoomBtn = fig.querySelector('.doc-figure-zoom');
+        if (zoomBtn) zoomBtn.addEventListener('click', open);
+      });
+
+      const close = () => lightbox.classList.remove('open');
+      lightbox.addEventListener('click', (e) => {
+        if (e.target !== lightboxImg) close();
+      });
+      lightboxClose.addEventListener('click', close);
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>
+</body>
+</html>

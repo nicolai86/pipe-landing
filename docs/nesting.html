@@ -30,10 +30,11 @@
       <div class="nav-links">
         <a href="../index.html" class="nav-back-link">← Back to RotaryCAM</a>
         <a href="index.html">Overview</a>
-        <a href="machine-configuration.html">01. Machine Setup</a>
+        <a href="machine-configuration.html">01. Machine</a>
         <a href="cut-path-configuration.html">02. Cut Paths</a>
-        <a href="nesting.html" class="active">03. Stick Nesting</a>
-        <a href="../build-guide.html">Build Your Own</a>
+        <a href="nesting.html" class="active">03. Nesting</a>
+        <a href="bending.html">04. Bending</a>
+        <a href="changelog.html">05. Changelog</a>
       </div>
 
       <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
@@ -60,7 +61,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>TUTORIAL 03 OF 03</strong> • 6 Steps</span>
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 03 OF 05</strong> • 6 Steps</span>
           <span class="docs-meta-pill cyan"><strong>Fixture Used:</strong> Headache Rack [COMPLEX] (37 Parts)</span>
           <span class="docs-meta-pill"><strong>Output:</strong> Multi-Stick 1D Bin Packing (<code class="mono">pack_stick_1.nc</code>, <code class="mono">pack_stick_2.nc</code>)</span>
         </div>
@@ -99,6 +100,18 @@
               <a href="nesting.html" class="active">
                 <span class="docs-nav-num">03</span>
                 <span>Multi-Part Stick Nesting</span>
+              </a>
+            </li>
+            <li>
+              <a href="bending.html">
+                <span class="docs-nav-num">04</span>
+                <span>Bending HSS &amp; HSS-O</span>
+              </a>
+            </li>
+            <li>
+              <a href="changelog.html">
+                <span class="docs-nav-num">05</span>
+                <span>Build Info &amp; Changelog</span>
               </a>
             </li>
           </ul>
@@ -318,6 +331,16 @@
                 When cutting multiple parts out of a long 6000 mm tube held in a single rotary chuck, Pipe CAM always sequences features starting at the farthest free end (<code class="mono">Piece 1/7</code>) and works progressively toward the chuck. Each finished part drops off the free end only after all of its internal cutouts and saddle end-cuts are complete, ensuring the remaining stock is always rigidly clamped by the rotary chuck.
               </p>
             </div>
+
+            <div class="doc-callout info" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">📦 One-Click Multi-Stick Export: Download All Sticks (.zip)</div>
+              <p>
+                When nesting large multi-part assemblies that span across several 20ft / 6000 mm mill sticks, clicking the <strong>Download All Sticks (.zip)</strong> button bundles every compiled G-code program (<code class="mono">pack_stick_1.nc</code>, <code class="mono">pack_stick_2.nc</code>, <code class="mono">pack_stick_3.nc</code>, etc.) into a single organized archive.
+              </p>
+              <p style="margin-bottom: 0;">
+                Copy the single <code class="mono">.zip</code> to your shop USB drive or machine console to run each stick in sequence without downloading files one-by-one or mixing up stock runs.
+              </p>
+            </div>
           </div>
 
           <figure class="doc-figure">
@@ -334,14 +357,14 @@
         <!-- Pagination -->
         <nav class="docs-pagination" aria-label="Tutorial Pagination">
           <a href="cut-path-configuration.html" class="docs-page-link prev">
-            <span class="docs-page-dir">← Previous Tutorial (02 of 03)</span>
+            <span class="docs-page-dir">← Previous Tutorial (02 of 05)</span>
             <span class="docs-page-title">UI Layout &amp; STEP Cut Path Configuration</span>
             <span class="docs-page-desc">Inspect 3D parts, configure per-contour Zero-Bevel &amp; run 3D simulation</span>
           </a>
-          <a href="index.html" class="docs-page-link next">
-            <span class="docs-page-dir">Back to Documentation Hub →</span>
-            <span class="docs-page-title">All Tutorials &amp; Guides</span>
-            <span class="docs-page-desc">Return to the Pipe CAM Documentation Overview</span>
+          <a href="bending.html" class="docs-page-link next">
+            <span class="docs-page-dir">Next Tutorial (04 of 05) →</span>
+            <span class="docs-page-title">04. Bending HSS &amp; HSS-O Sticks</span>
+            <span class="docs-page-desc">Cut-and-bend relief unfolding &amp; straight HSS cheek cuts</span>
           </a>
         </nav>
 
@@ -382,6 +405,8 @@
           <a href="machine-configuration.html">01. Machine Configuration</a>
           <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
           <a href="nesting.html">03. Multi-Part Nesting</a>
+          <a href="bending.html">04. Bending HSS &amp; Round Pipe</a>
+          <a href="changelog.html">05. Build &amp; Changelog</a>
         </div>
         <div class="footer-col">
           <h4>Product</h4>

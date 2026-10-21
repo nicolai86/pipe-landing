@@ -30,10 +30,11 @@
       <div class="nav-links">
         <a href="../index.html" class="nav-back-link">← Back to RotaryCAM</a>
         <a href="index.html">Overview</a>
-        <a href="machine-configuration.html" class="active">01. Machine Setup</a>
+        <a href="machine-configuration.html" class="active">01. Machine</a>
         <a href="cut-path-configuration.html">02. Cut Paths</a>
-        <a href="nesting.html">03. Stick Nesting</a>
-        <a href="../build-guide.html">Build Your Own</a>
+        <a href="nesting.html">03. Nesting</a>
+        <a href="bending.html">04. Bending</a>
+        <a href="changelog.html">05. Changelog</a>
       </div>
 
       <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
@@ -191,6 +192,26 @@
               <li><strong>Safe Z Clearance Height:</strong> Defines the safe retract envelope (e.g., <code class="mono">25 mm</code>) above the rotating tube's maximum diagonal radius so rapid moves never clip a spinning square/rectangular corner.</li>
             </ul>
 
+            <div class="doc-callout info" style="margin-top: 1.5rem;">
+              <div class="doc-callout-title">⚙ Configurable X-Axis Travel &amp; Start Direction (Workpiece Moves vs. Torch Moves)</div>
+              <p>
+                Plasma rotary tables move in one of two physical ways depending on whether your chuck pushes the pipe or your torch gantry rolls along the bed. Configure your machine's exact kinematic direction in the <strong>Axis Kinematics &amp; Limits</strong> tab:
+              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <li>
+                  <strong>Workpiece Moves on X (SimCNC Rotary Chuck Default):</strong>
+                  For rotary tables where the chuck carriage pushes and pulls the tube along the bed beneath a stationary-X plasma torch. RotaryCAM zeroes at the far right-hand free end of the stock using <code class="mono">G92 X-Length</code> (e.g. <code class="mono">G92 X-6000.00 Y0 Z0 A0</code>). The machine cuts each finished tube from the free end first and feeds backward toward <code class="mono">X0</code> at the chuck face, so finished parts drop cleanly onto the scrap table while the remaining tube stays rigidly chucked.
+                </li>
+                <li>
+                  <strong>Torch Moves on X (<code class="mono">0</code> to <code class="mono">max(X)</code>):</strong>
+                  For rotary attachments mounted inside a standard cutting table where the stock stays parked in the chuck and the torch gantry rolls down the tube. RotaryCAM sets your stock datum at <code class="mono">G92 X0 Y0 Z0 A0</code> and cuts forward from <code class="mono">X = 0</code> toward <code class="mono">+max(X)</code> along the bed.
+                </li>
+              </ul>
+              <p style="margin-bottom: 0;">
+                Selecting the matching travel direction ensures your G-code programs never trip machine limit switches, cut in reverse, or drop stock out of the chuck prematurely.
+              </p>
+            </div>
+
             <div class="doc-callout tip">
               <div class="doc-callout-title">✓ Multiple Profiles Persisted Across Restarts</div>
               <p>
@@ -224,9 +245,9 @@
               Switch to the <span class="ui-chip cyan">Controller &amp; Compensation</span> tab to select how feedrates and toolpath compensations are formatted in your output G-code.
             </p>
             <ul class="doc-bullet-list">
-              <li><span class="ui-chip">SimCNC 3.5 IP-M/S (G94 + G93 4-Axis Emulation)</span> — <strong>Recommended for CSLab SimCNC 3.5:</strong> Uses Pipe CAM's hybrid feedrate spoofing so coordinated <code class="mono">XYZA</code> moves execute at true surface speed even on firmware revisions where native <code class="mono">G93</code> has rotary blending quirks.</li>
-              <li><span class="ui-chip">SimCNC 3.6 Beta (G93 Inverse-Time Feed Mode)</span> — Emits true ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code> in inverse minutes) on every coordinated cutting segment.</li>
-              <li><span class="ui-chip">Standard Controller (Native G94 Units-Per-Minute)</span> — Standard <code class="mono">G94</code> feedrate mode for controllers that compute rotary radius compensation internally or require standard units-per-minute <code class="mono">F</code> words.</li>
+              <li><span class="ui-chip">SimCNC 3.5 IP-M/S (G94 + G93 4-Axis Emulation)</span> — <strong>Recommended for CSLab SimCNC 3.5:</strong> Uses RotaryCAM's hybrid feedrate scaling for older SimCNC releases. Scales <code class="mono">F</code> words so coordinated <code class="mono">XYZA</code> moves cut at true surface speed even on firmware revisions where native <code class="mono">G93</code> has rotary blending quirks.</li>
+              <li><span class="ui-chip">SimCNC 3.6 Beta (G93 Inverse-Time Feed Mode)</span> — Emits true ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code> in inverse minutes) on every coordinated cutting segment, leveraging SimCNC 3.6's upgraded 4-axis trajectory planner for smooth rotary motion.</li>
+              <li><span class="ui-chip">Standard Controller (Native G94 Units-Per-Minute)</span> — Standard <code class="mono">G94</code> feedrate mode for controllers (such as Mach4 or LinuxCNC) that compute rotary radius compensation internally or require standard units-per-minute <code class="mono">F</code> words.</li>
             </ul>
 
             <div class="doc-callout danger">
@@ -381,6 +402,8 @@
           <a href="machine-configuration.html">01. Machine Configuration</a>
           <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
           <a href="nesting.html">03. Multi-Part Nesting</a>
+          <a href="bending.html">04. Bending HSS &amp; Round Pipe</a>
+          <a href="changelog.html">05. Build &amp; Changelog</a>
         </div>
         <div class="footer-col">
           <h4>Product</h4>

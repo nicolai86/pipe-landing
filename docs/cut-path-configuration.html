@@ -30,10 +30,11 @@
       <div class="nav-links">
         <a href="../index.html" class="nav-back-link">← Back to RotaryCAM</a>
         <a href="index.html">Overview</a>
-        <a href="machine-configuration.html">01. Machine Setup</a>
+        <a href="machine-configuration.html">01. Machine</a>
         <a href="cut-path-configuration.html" class="active">02. Cut Paths</a>
-        <a href="nesting.html">03. Stick Nesting</a>
-        <a href="../build-guide.html">Build Your Own</a>
+        <a href="nesting.html">03. Nesting</a>
+        <a href="bending.html">04. Bending</a>
+        <a href="changelog.html">05. Changelog</a>
       </div>
 
       <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
@@ -322,6 +323,22 @@
                 Pipe CAM extracts both the <strong>outer surface contour</strong> and the <strong>inner wall contour</strong> directly from your 3D STEP solid. At each angle <code class="mono">A</code> around the saddle, it computes the axial interference between the fixed vertical plasma jet and the mating pipe cylinder, smoothly blending the cut path toward the inner wall intersection at the flanks according to your <strong>Intensity (%)</strong> and <strong>Fade Angle (°)</strong>. The result is a tight, weld-ready fit straight off a 4-axis machine.
               </p>
             </div>
+
+            <div class="doc-callout tip" style="margin-top: 1.5rem;">
+              <div class="doc-callout-title">🛠️ Fabricating Bent Tubing? Try 3D Bent Tube "Cut-and-Bend"</div>
+              <p>
+                Need to build a roll cage, header, bumper, or truss with curved tubes without an expensive mandrel bender? Drop your bent round pipe or square/rectangular HSS 3D model straight into RotaryCAM.
+              </p>
+              <p>
+                RotaryCAM automatically detects bends along the 3D centerline and unfolds the curved tube onto straight mill stock with precision mitered pie-cut relief slots and an uncut living-hinge spine.
+              </p>
+              <p>
+                <strong>Dead-Straight HSS Cheek Cuts:</strong> For square and rectangular tubing, RotaryCAM cuts dead-straight cheek walls across flat tube faces with built-in inner-wall relief clearance. Thick steel walls won't pinch or bind early—simply fold the tube by hand to the exact design angle and weld the seam flush with zero grinder fitup.
+              </p>
+              <p style="margin-bottom: 0;">
+                <a href="bending.html" style="color: var(--amber-400); font-weight: 600;">Follow the complete walkthrough in Tutorial 04: Bending HSS &amp; HSS-O Sticks →</a>
+              </p>
+            </div>
           </div>
 
           <figure class="doc-figure">
@@ -446,6 +463,8 @@
           <a href="machine-configuration.html">01. Machine Configuration</a>
           <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
           <a href="nesting.html">03. Multi-Part Nesting</a>
+          <a href="bending.html">04. Bending HSS &amp; Round Pipe</a>
+          <a href="changelog.html">05. Build &amp; Changelog</a>
         </div>
         <div class="footer-col">
           <h4>Product</h4>
