@@ -5,7 +5,7 @@
         <div class="doc-intro-card">
           <h2>Hypertherm Cut Charts, Automatic Thickness Matching &amp; Feature Toggling</h2>
           <p>
-            Dialing in the correct plasma torch feedrate, arc transfer voltage, pierce delay, and kerf width is the difference between dross-free, weld-ready tube joints and scrap metal. RotaryCAM eliminates trial-and-error by integrating <strong>552 built-in Hypertherm Powermax 45/65/85/105 SYNC Rev 4 (<code class="mono">810500MU</code>) cut presets</strong> directly into the CAM environment—covering Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed processes in both Metric and Imperial units across Mild Steel, Stainless Steel, and Aluminum. When you drop a 3D CAD STEP file onto the table, RotaryCAM's B-Rep inspection engine measures the exact wall thickness of the tube and pairs it with the manufacturer cut chart—loading optimal cut speed, arc voltage, pierce height, and torch air pressure automatically with smart cartridge recommendation for thin-wall vs. thick-wall stock.
+            Dialing in the correct plasma torch feedrate, arc transfer voltage, pierce delay, and kerf width is the difference between dross-free, weld-ready tube joints and scrap metal. RotaryCAM eliminates trial-and-error by integrating <strong>552 built-in Hypertherm Powermax 45/65/85/105 SYNC Rev 4 (<code class="mono">810500MU</code>) cut presets</strong> directly into the CAM environment—covering Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed processes in both Metric and Imperial units across Mild Steel, Stainless Steel, and Aluminum. When you drop a 3D CAD STEP file onto the table, RotaryCAM measures the exact wall thickness directly from your 3D solid and pairs it with the manufacturer cut chart—loading optimal cut speed, arc voltage, pierce height, and torch air pressure automatically with smart cartridge recommendation for thin-wall vs. thick-wall stock.
           </p>
           <p style="margin-top: 0.85rem;">
             Need to tune settings for worn consumables, custom shop gauges, or high-speed production runs? You can edit any parameter inline or add unlimited custom presets. Furthermore, when working on prototypes or custom fabrications where certain mounting holes or slots should be omitted without waiting for CAD revisions, RotaryCAM provides <strong>per-feature enable/disable toggles</strong> right in the single-part feature table—instantly updating the 3D toolpath, reducing the pierce count, and recompiling G-code on the fly while keeping structural sever cuts permanently locked.
@@ -17,7 +17,7 @@
             </div>
             <div class="doc-intro-stat">
               <span class="label">Thickness Pairing</span>
-              <span class="value">Automatic CAD B-Rep Wall Detection</span>
+              <span class="value">Automatic 3D CAD Wall Detection</span>
             </div>
             <div class="doc-intro-stat">
               <span class="label">Selective Cutting</span>
@@ -131,7 +131,7 @@
 
           <div class="doc-step-body">
             <p>
-              When a STEP file is loaded, RotaryCAM's CAD geometry engine examines the inner and outer boundary surfaces (B-Rep topology) of the tube solid and determines its exact nominal wall thickness (for example, <code class="mono">3.56 mm / 1/8"</code>).
+              When a STEP file is loaded, RotaryCAM reads the inner and outer walls of the tube solid to determine its exact nominal wall thickness (for example, <code class="mono">3.56 mm / 1/8"</code>).
             </p>
             <ul class="doc-bullet-list">
               <li>In the left sidebar under <strong>Cross-Section &amp; Dimensions</strong>, locate the <span class="ui-chip amber">3.56mm / 1/8"</span> wall thickness badge.</li>

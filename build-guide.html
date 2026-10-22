@@ -1401,7 +1401,7 @@
               How RotaryCAM Solves This (G94 &amp; G93 Controllers)
             </div>
             <p style="margin-bottom: 0.6rem;">
-              <strong>If your controller only supports standard G94 (units-per-minute):</strong> You can still use RotaryCAM without any hardware changes. RotaryCAM pre-computes <strong>4D Euclidean trajectory feedrate scaling</strong> directly into the G-code, recalculating feedrates dynamically for every motion segment to maintain constant surface torch velocity across flat tube faces and corner radii.
+              <strong>If your controller only supports standard G94 (units-per-minute):</strong> You can still use RotaryCAM without any hardware changes. RotaryCAM calculates <strong>true 4D surface cutting speed</strong> directly into the G-code, recalculating feedrates dynamically for every motion segment to maintain constant surface torch velocity across flat tube faces and corner radii.
             </p>
             <p>
               <strong>If your controller supports G93 (inverse time feedrate):</strong> You're all set also. RotaryCAM natively outputs standard G93 inverse time mode (supported on Mach4, LinuxCNC, Masso, and modern CNCs), where every rotary block specifies the exact reciprocal time required for constant surface speed cutting.
@@ -2037,7 +2037,7 @@
 
             <div class="doc-card">
               <span class="card-badge mono">CUTS #6–#8 • FAIL-SAFE</span>
-              <h3>Seamless HYBRID_SAV &rarr; PURE_SAV E-Stop Recovery</h3>
+              <h3>Automatic HYBRID_SAV &rarr; PURE_SAV E-Stop Recovery</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
                 When an earlier breakaway E-Stop caused the CNC controller to clear its analog target output (<code>#4090 = 0 V</code>), firmware detected ADC2 &lt; 55 V and automatically fell back to PURE_SAV. It locked the natural 139.8 V plateau on a 75%-worn cartridge (+6.8 V above the 133 V book value) and tracked all three subsequent cuts with <strong>0.3–0.6 V mean error</strong>.
               </p>

@@ -5,7 +5,7 @@
         <div class="doc-intro-card">
           <h2>Workspace Architecture Overview</h2>
           <p>
-            Pipe CAM's interface is organized into three vertical zones: the <strong>Left Sidebar</strong> (3D Assembly Overview, STEP file upload/fixtures, active machine profile, and plasma cut parameters), the <strong>Center CAD &amp; Simulation Workspace</strong> (3D Part Preview, 2D Unwrapped Feature Map, and Interactive Feature Table), and the <strong>Right G-Code Post-Processor Terminal</strong> (live compiled G-code with one-click regeneration and export).
+            RotaryCAM's interface is organized into three vertical zones: the <strong>Left Sidebar</strong> (3D Assembly Overview, STEP file upload/fixtures, active machine profile, and plasma cut parameters), the <strong>Center CAD &amp; Simulation Workspace</strong> (3D Part Preview, 2D Unwrapped Feature Map, and Interactive Feature Table), and the <strong>Right G-Code Post-Processor Terminal</strong> (live compiled G-code with one-click regeneration and export).
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -34,7 +34,7 @@
 
           <div class="doc-step-body">
             <p>
-              You can load any single-tube or multi-body <code class="mono">.step</code> / <code class="mono">.stp</code> assembly by dragging it onto the <strong>CAD Geometry</strong> dropzone in the left sidebar. To explore Pipe CAM immediately without uploading a file, use the built-in <strong>Quick CAD Fixtures</strong> panel right below the dropzone.
+              You can load any single-tube or multi-body <code class="mono">.step</code> / <code class="mono">.stp</code> assembly by dragging it onto the <strong>CAD Geometry</strong> dropzone in the left sidebar. To explore RotaryCAM immediately without uploading a file, use the built-in <strong>Quick CAD Fixtures</strong> panel right below the dropzone.
             </p>
             <ul class="doc-bullet-list">
               <li>Locate the <span class="ui-chip cyan">Quick CAD Fixtures</span> section in the left sidebar.</li>
@@ -64,7 +64,7 @@
 
           <div class="doc-step-body">
             <p>
-              When a STEP file contains multiple bodies, Pipe CAM automatically decomposes every solid, detects its cross-section profile (<code class="mono">Profile_HSS_Round</code>, <code class="mono">Profile_HSS_Rect</code>, etc.), and extracts its inner and outer wall surfaces.
+              When a STEP file contains multiple bodies, RotaryCAM automatically separates every solid, detects its cross-section profile (<code class="mono">Profile_HSS_Round</code>, <code class="mono">Profile_HSS_Rect</code>, etc.), and identifies its inner and outer wall surfaces.
             </p>
             <ul class="doc-bullet-list">
               <li><strong>Entire Model Overview (Top-Left 3D Viewport):</strong> Shows the full multi-body CAD assembly in 3D. The currently selected tube is highlighted in <strong>amber/orange</strong> (<code class="mono">Part 2: solid_2</code>), while unselected tubes render in translucent steel gray. <strong>Click directly on any tube in this 3D overview</strong> to switch to it immediately.</li>
@@ -198,7 +198,7 @@
             <div class="doc-callout info">
               <div class="doc-callout-title">🔬 How Zero-Bevel Dual-Curve Compensation Works</div>
               <p>
-                Pipe CAM extracts both the <strong>outer surface contour</strong> and the <strong>inner wall contour</strong> directly from your 3D STEP solid. At each angle <code class="mono">A</code> around the saddle, it computes the axial interference between the fixed vertical plasma jet and the mating pipe cylinder, smoothly blending the cut path toward the inner wall intersection at the flanks according to your <strong>Intensity (%)</strong> and <strong>Fade Angle (°)</strong>. The result is a tight, weld-ready fit straight off a 4-axis machine.
+                When cutting angled saddles or copes with a straight vertical torch, the cut face bevels naturally through the tube wall. If you cut only along the outside line, the inside wall of the tube sticks out too far at the flanks—leaving ugly gaps at the crown that take heavy welding or hand grinding to fill. RotaryCAM solves this by reading both the outside and inside wall curves directly from your 3D solid model. At every degree of rotation, it pulls the cut path back to the inner wall where needed, blending smoothly around the tube so your saddle drops onto the mating pipe with zero gap and zero hand grinding.
               </p>
             </div>
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>05. Build Information & Changelog — Pipe CAM Documentation</title>
-  <meta name="description" content="How to access Pipe CAM's built-in About modal to inspect exact build provenance (version, Git commit hash, UTC build date, platform, and license status), review recent release notes, and copy system diagnostics." />
+  <title>05. Build Information & Changelog — RotaryCAM Documentation</title>
+  <meta name="description" content="How to access RotaryCAM's built-in About modal to verify your installed version, Git commit hash, build date, and license status, review recent release notes, and copy system diagnostics." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,7 +76,7 @@
     <section class="docs-hero">
       <div class="container">
         <div class="docs-breadcrumb">
-          <a href="../index.html">Pipe CAM</a>
+          <a href="../index.html">RotaryCAM</a>
           <span class="sep">/</span>
           <a href="index.html">Documentation</a>
           <span class="sep">/</span>
@@ -85,7 +85,7 @@
 
         <h1 class="docs-title">05. Build Information &amp; <span class="text-gradient-amber">Changelog</span></h1>
         <p class="docs-subtitle">
-          How to inspect your running Pipe CAM version, Git commit hash, UTC build timestamp, platform architecture, and release changelog directly inside the application—and copy one-click diagnostics when reporting shop-floor feedback.
+          How to verify your running RotaryCAM version, Git commit hash, UTC build timestamp, platform architecture, and release changelog directly inside the application—and copy one-click diagnostics when reporting shop-floor feedback.
         </p>
 
         <div class="docs-meta-bar">
@@ -93,7 +93,7 @@
           
           <span class="docs-meta-pill cyan"><strong>Location:</strong> Top-Right Header Bar (<code class="mono">ⓘ About</code>)</span>
           
-          <span class="docs-meta-pill"><strong>Includes:</strong> Build Provenance, Release History &amp; Copy Diagnostics</span>
+          <span class="docs-meta-pill"><strong>Includes:</strong> Version Verification, Release History &amp; Copy Diagnostics</span>
           
         </div>
       </div>
@@ -225,7 +225,7 @@
 
           <div class="doc-step-body">
             <p>
-              From anywhere in the Pipe CAM workspace, look at the top-right application header bar (next to <code class="mono">⚙ Machines</code>):
+              From anywhere in the RotaryCAM workspace, look at the top-right application header bar (next to <code class="mono">⚙ Machines</code>):
             </p>
             <ul class="doc-bullet-list">
               <li>Click the <span class="ui-chip">ⓘ About</span> button in the top-right navigation bar (you can also click the version badge in the bottom-right status bar).</li>
@@ -238,7 +238,7 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/changelog-1-open-about.png" alt="Step 1: Clicking the About button in the top-right header bar of Pipe CAM" loading="lazy" />
+              <img src="assets/changelog-1-open-about.png" alt="Step 1: Clicking the About button in the top-right header bar of RotaryCAM" loading="lazy" />
             </div>
           </figure>
         </article>
@@ -291,8 +291,6 @@
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
                 <li><strong>Full-Speed Square &amp; Rectangular Tube Flat Walls &amp; Clean Lead-Ins:</strong> Torch motion now accelerates smoothly back up to full cutting speed across the flat faces of square and rectangular HSS tubing between corner rotations&mdash;preventing overheated walls, wide kerfs, and heavy low-speed dross&mdash;while straight flat-face lead-ins are emitted as a single clean move without tiny micro-steps.</li>
                 <li><strong>Smooth HSS Corner Rotations &amp; Clean SimCNC 3.6 G93 Corner Tracking:</strong> Fixed a Z-axis height spike on square and rectangular HSS tube corners so the torch glides smoothly around every corner fillet at constant standoff without lifting or jerking mid-corner. Updated the <strong>SimCNC 3.6 Beta (G93 Inverse-Time)</strong> machine profile to track HSS corners perpendicular to the radius by default, eliminating corner-exit bevel lag and flat-face Y-axis overshoot.</li>
-                <li><strong>Higher-Amp Cut Charts Now Actually Cut Faster on Square Tube:</strong> The built-in <strong>SimCNC 3.5</strong> and <strong>SimCNC 3.6 Beta</strong> machine profiles now use acceleration, smoothing, and top-speed limits sized from the real ClearPath servos, 10:1 gearboxes, and rack-and-pinion drives. Before, the torch never reached cut speed on short square-tube walls, so moving from a 45 A to an 85 A cut chart gave you the same slow program. Now the torch reaches full chart speed within a few millimeters of every corner, and 85 A/105 A speeds are no longer capped at 10,000 mm/min.</li>
-                <li><strong>Realistic Simulator Timing for SimCNC 3.6 (G93) Programs:</strong> The 3D cut simulator now plays inverse-time (<code class="mono">G93</code>) programs at true machine speed. Chuck rotations and moves between cuts no longer crawl (a 90° rotation that took almost two minutes now takes the real 3.6 s), rapids use your machine's rapid rate, and the speed readout shows the actual torch speed.</li>
                 <li><strong>Built-In Hypertherm SYNC Rev 4 Cut Charts &amp; Smart Cartridge Recommendation:</strong> Built-in factory Hypertherm Powermax 45/65/85/105 SYNC Rev 4 (<code class="mono">810500MU</code>) cut chart library covering 552 presets across Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed consumables in both Metric and Imperial units for Mild Steel, Stainless Steel, and Aluminum. Features automatic cartridge amperage recommendation for thin-wall vs. thick-wall stock with out-of-range warnings and 1-click cartridge switching, automatically matching feedrate, kerf width, pierce height, pierce delay, cut height, arc voltage, and gas pressure to the part's detected wall thickness as soon as a STEP file is loaded.</li>
                 <li><strong>Dedicated Cut Charts Manager &amp; Manual Overrides:</strong> Dedicated Cut Charts Manager UI (separate from Machine Settings) where operators can add custom material thicknesses, tweak feedrates and kerf widths, or reset to factory Hypertherm tables. Explicit per-session Manual Override in the sidebar with one-click reset back to the thickness-matched chart preset.</li>
                 <li><strong>Selective Feature Enable/Disable in Single Part Inspection:</strong> Operators can now check or uncheck individual holes, slots, notches, cutouts, or scribe marks in Single Part Inspection to skip them in the generated G-code (for both single parts and full-stick pack nesting) without modifying the CAD model. Start and end tube sever cuts are permanently locked on so parts always sever cleanly from the mill stick.</li>
@@ -360,7 +358,7 @@
           <a href="ai-autodetection.html" class="docs-page-link next">
             <span class="docs-page-dir">Next Tutorial (06 of 08) →</span>
             <span class="docs-page-title">06. Fusion 360 & AI Profile Autodetection</span>
-            <span class="docs-page-desc">Model with Structural Member (SM) so FOVNet auto-detects profiles out of the box</span>
+            <span class="docs-page-desc">Model with Structural Member (SM) so RotaryCAM auto-detects tube profiles out of the box</span>
           </a>
           
         </nav>
@@ -388,8 +386,8 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <a href="../index.html" class="brand">
-          <span class="brand-icon">P</span>
-          <span class="brand-name">Pipe CAM</span>
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
           <span class="brand-badge">XYZA</span>
         </a>
         <p class="footer-tagline">
@@ -436,7 +434,7 @@
     </div>
 
     <div class="container footer-bottom">
-      <span>&copy; 2026 Pipe CAM. Engineered for precision 4-axis tube &amp; pipe plasma fabrication.</span>
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
       <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING</span>
     </div>
   </footer>

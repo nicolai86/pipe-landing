@@ -5,7 +5,7 @@
         <div class="doc-intro-card">
           <h2>From Multi-Tube CAD Weldment to Multi-Stick G-Code</h2>
           <p>
-            Real-world structural fabrications—such as roll cages, chassis frames, handrails, and headache racks—contain dozens of tubes across several cross-section sizes in a single STEP file. Pipe CAM automatically classifies every solid by cross-section profile, filters compatible parts for the stock currently loaded in your rotary chuck, nests them end-to-end across as many raw stock sticks as required, and sequences cuts from the free end toward the chuck so the tube remains rigidly supported throughout the entire program.
+            Real-world structural fabrications—such as roll cages, chassis frames, handrails, and headache racks—contain dozens of tubes across several cross-section sizes in a single STEP file. RotaryCAM automatically classifies every solid by cross-section profile, filters compatible parts for the stock currently loaded in your rotary chuck, nests them end-to-end across as many raw stock sticks as required, and sequences cuts from the free end toward the chuck so the tube remains rigidly supported throughout the entire program.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -38,7 +38,7 @@
             </p>
             <ul class="doc-bullet-list">
               <li>Click <span class="ui-chip">Headache Rack [COMPLEX]</span> in the <strong>Quick CAD Fixtures</strong> list.</li>
-              <li>Pipe CAM parses all <strong>37 individual solids</strong> in the assembly, extracting their 3D topology, cross-section dimensions, lengths, and internal/end cut features in seconds.</li>
+              <li>RotaryCAM parses all <strong>37 individual solids</strong> in the assembly, extracting cross-section dimensions, lengths, and cut features in seconds.</li>
             </ul>
           </div>
 
@@ -94,7 +94,7 @@
 
           <div class="doc-step-body">
             <p>
-              Because a single STEP assembly often mixes several different tube sizes (e.g., <code class="mono">38.1 × 38.1 mm</code> main frame posts alongside <code class="mono">25.4 × 25.4 mm</code> louvers and <code class="mono">OD 14.3 mm</code> round bars), Pipe CAM groups parts by their cross-section profile so only matching tubes are nested onto the same physical stick.
+              Because a single STEP assembly often mixes several different tube sizes (e.g., <code class="mono">38.1 × 38.1 mm</code> main frame posts alongside <code class="mono">25.4 × 25.4 mm</code> louvers and <code class="mono">OD 14.3 mm</code> round bars), RotaryCAM groups parts by their cross-section profile so only matching tubes are nested onto the same physical stick.
             </p>
             <ul class="doc-bullet-list">
               <li>Click the <span class="ui-chip">CUTTING PROFILE</span> dropdown bar near the top of the nesting workspace (currently showing <code class="mono">Profile_HSS_Rect (38.1x38.1mm) (7 parts)</code>).</li>
@@ -155,7 +155,7 @@
 
           <div class="doc-step-body">
             <p>
-              Pipe CAM's 1D bin-packing solver immediately arranges all <strong>17 pieces</strong> (<code class="mono">7480.3 mm</code> total cut length) across <strong>2 sticks</strong> of <code class="mono">6000 mm</code> raw stock with a <code class="mono">10.0 mm</code> kerf/part spacing gap:
+              RotaryCAM's 1D nesting solver immediately arranges all <strong>17 pieces</strong> (<code class="mono">7480.3 mm</code> total cut length) across <strong>2 sticks</strong> of <code class="mono">6000 mm</code> raw stock with a <code class="mono">10.0 mm</code> kerf/part spacing gap:
             </p>
             <ul class="doc-bullet-list">
               <li><strong>Stick 1 of 2 Preview Bar:</strong> Packs 7 parts (<code class="mono">Part 10</code>, <code class="mono">Part 9</code>, <code class="mono">Part 34</code>, <code class="mono">Part 36</code>, <code class="mono">Part 4</code>, <code class="mono">Part 24</code>, <code class="mono">Part 35</code>) totaling <code class="mono">5987 mm / 6000 mm</code>—leaving only <code class="mono">13 mm</code> of remainder (<span class="ui-chip emerald">99.8% EFFICIENCY</span>). Use the <code class="mono">◀ Prev Stick</code> / <code class="mono">Next Stick ▶</code> buttons to inspect Stick 2.</li>
@@ -186,7 +186,7 @@
 
           <div class="doc-step-body">
             <p>
-              Once compiled, Pipe CAM automatically switches to the <strong>3D Cut Simulation</strong> view and populates the right-hand <strong>G-Code Post-Processor Terminal</strong> with dedicated tabs for each physical stick:
+              Once compiled, RotaryCAM automatically switches to the <strong>3D Cut Simulation</strong> view and populates the right-hand <strong>G-Code Post-Processor Terminal</strong> with dedicated tabs for each physical stick:
             </p>
             <ul class="doc-bullet-list">
               <li><strong>Switch &amp; Download Stick G-Code (Top-Right Panel):</strong> Click between <span class="ui-chip">Stick 1: pack_stick_1.nc</span> and <span class="ui-chip">Stick 2: pack_stick_2.nc</span>, then click <span class="ui-chip emerald">⬇ Download pack_stick_1.nc</span> to save the G-code file for your CNC controller.</li>
@@ -194,9 +194,9 @@
             </ul>
 
             <div class="doc-callout tip">
-              <div class="doc-callout-title">✓ Why Pipe CAM Cuts from Free-End to Chuck</div>
+              <div class="doc-callout-title">✓ Why RotaryCAM Cuts from Free-End to Chuck</div>
               <p>
-                When cutting multiple parts out of a long 6000 mm tube held in a single rotary chuck, Pipe CAM always sequences features starting at the farthest free end (<code class="mono">Piece 1/7</code>) and works progressively toward the chuck. Each finished part drops off the free end only after all of its internal cutouts and saddle end-cuts are complete, ensuring the remaining stock is always rigidly clamped by the rotary chuck.
+                When cutting multiple parts out of a long 20ft / 6000 mm tube held in a single rotary chuck, RotaryCAM always sequences features starting at the farthest free end (<code class="mono">Piece 1/7</code>) and works progressively toward the chuck. Each finished part drops off cleanly only after all of its internal cutouts and end miters are cut, keeping the remaining tube rigidly clamped in the chuck right up to the final cut.
               </p>
             </div>
 

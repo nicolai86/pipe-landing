@@ -5,13 +5,13 @@
         <div class="doc-intro-card">
           <h2>Why Fusion 360 + Structural Member Is Required Today</h2>
           <p>
-            RotaryCAM includes an embedded neural network (<code class="mono">FOVNet</code>) that inspects 3D B-Rep solids on STEP import and automatically classifies each tube&rsquo;s cross-section family (<code class="mono">Profile_HSS_Rect</code>, <code class="mono">Profile_HSS_Round</code>, <code class="mono">Profile_Angle</code>, <code class="mono">Profile_Channel</code>) along with its outer dimensions and wall thickness.
+            RotaryCAM automatically inspects 3D CAD solids on STEP import to detect each tube&rsquo;s cross-section family (<code class="mono">Profile_HSS_Rect</code>, <code class="mono">Profile_HSS_Round</code>, <code class="mono">Profile_Angle</code>, <code class="mono">Profile_Channel</code>) along with its outer dimensions and wall thickness.
           </p>
           <div class="doc-callout warning" style="margin-top: 1rem; margin-bottom: 1.25rem;">
             <span class="doc-callout-icon">⚠️</span>
             <div>
-              <strong>Current Requirement — Autodesk Fusion 360 + Structural Member Plugin:</strong>
-              Because B-Rep STEP files encode surface parameterization and seam topology differently across CAD kernels, the AI profile classifier must be trained on application-specific STEP shapes. Today, the neural network is trained specifically on <strong>Autodesk Fusion 360</strong> assemblies built with the <strong>Structural Member (<code class="mono">SM</code>)</strong> add-in (as currently only Fusion 360 is available in our training pipeline). Follow the 8 steps below to guarantee 100% automatic profile detection.
+              <strong>Current Requirement — Autodesk Fusion 360 + Structural Member:</strong>
+              Different CAD programs structure solid models with slightly different internal surface math. Today, RotaryCAM&rsquo;s automatic tube scanner is calibrated specifically for <strong>Autodesk Fusion 360</strong> assemblies built with the <strong>Structural Member (<code class="mono">SM</code>)</strong> tool. Follow the 8 steps below to guarantee 100% automatic tube recognition and sizing.
             </div>
           </div>
           <div class="doc-intro-grid">

@@ -5,7 +5,7 @@
         <div class="doc-intro-card">
           <h2>Cut-and-Bend Kerf Relief Unfolding for HSS &amp; Round Pipe</h2>
           <p>
-            Fabricating curved structural tubes without a dedicated mandrel tube bender—or producing tight-radius, repeatable multi-plane bends that can be hand-pulled and TIG/MIG welded in position—is accomplished with <strong>Cut-and-Bend</strong> (also known as kerf-bending or lobster-back pie-cutting). When you import a bent tube STEP file, Pipe CAM automatically detects every bend along the 3D spine, unfolds the curved geometry back onto a straight stock stick (<code class="mono">PROFILE_HSS_RECT</code> or round <code class="mono">HSS-O</code>), and generates precision pie-cut relief slots across the intrados and side cheeks while leaving an uncut extrados living-hinge spine (<code class="mono">Edge Left</code>).
+            Want to build roll cages, bumpers, or chassis hoops without an expensive mandrel bender? RotaryCAM's <strong>Cut-and-Bend</strong> lets you fold bent tubing by hand from straight stock. Drop your 3D bent tube model directly into RotaryCAM. It detects every bend along the tube centerline, unrolls the curved shape onto a straight stick of square HSS or round pipe, and cuts precision pie-slice relief wedges through three walls—leaving an uncut spine along the fourth wall to act as a solid hinge. After cutting, simply pull the bend shut by hand and weld the seams flush with zero grinder fitup.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -34,11 +34,11 @@
 
           <div class="doc-step-body">
             <p>
-              Start from the main Pipe CAM workspace and locate the <strong>Quick CAD Fixtures</strong> panel on the left sidebar (or drop your own bent-tube <code class="mono">.step</code> file into the CAD Ingestion zone).
+              Start from the main RotaryCAM workspace and locate the <strong>Quick CAD Fixtures</strong> panel on the left sidebar (or drop your own bent-tube <code class="mono">.step</code> file into the CAD Ingestion zone).
             </p>
             <ul class="doc-bullet-list">
               <li>Click <span class="ui-chip">HSS Bending [CUT &amp; BEND]</span> at the bottom of the <strong>Quick CAD Fixtures</strong> list.</li>
-              <li>Pipe CAM loads the 3D bent tube CAD solid, detects all 3 bends along its centerline, and calculates the unfolded straight-stock length (<code class="mono">2030.2 mm</code>).</li>
+              <li>RotaryCAM loads the 3D bent tube CAD solid, detects all 3 bends along its centerline, and calculates the unfolded straight-stock length (<code class="mono">2030.2 mm</code>).</li>
             </ul>
           </div>
 
@@ -134,7 +134,7 @@
             <ul class="doc-bullet-list">
               <li>Change <strong><code class="mono">Cuts</code></strong> from <code class="mono">3</code> to <span class="ui-chip">5</span>.</li>
               <li>Change <strong><code class="mono">Edge Left</code></strong> from <code class="mono">13,5</code> to <span class="ui-chip">30,0 mm</span>.</li>
-              <li>Click <span class="ui-chip cyan">Save</span> on the right side of the <code class="mono">Bend #1</code> row (confirming <span class="ui-chip emerald">Saved ✓</span>). Pipe CAM immediately recalculates the 5 relief kerf slots (<code class="mono">Cut 1/5</code> through <code class="mono">Cut 5/5</code>), updates the 3D bent-tube preview in the center viewport, and regenerates the G-code.</li>
+              <li>Click <span class="ui-chip cyan">Save</span> on the right side of the <code class="mono">Bend #1</code> row (confirming <span class="ui-chip emerald">Saved ✓</span>). RotaryCAM immediately recalculates the 5 relief kerf slots (<code class="mono">Cut 1/5</code> through <code class="mono">Cut 5/5</code>), updates the 3D bent-tube preview in the center viewport, and regenerates the G-code.</li>
               <li>Next, click the <span class="ui-chip">⚡ 3D Cut Simulation</span> (Cut Preview) tab at the top of the workspace to inspect the unfolded straight stick.</li>
             </ul>
           </div>
@@ -161,7 +161,7 @@
 
           <div class="doc-step-body">
             <p>
-              In the <strong>3D Cut Simulation</strong> viewport, Pipe CAM displays the physical straight tube (<code class="mono">2030.2 mm</code> long) exactly as it is chucked on your 4-axis rotary plasma table:
+              In the <strong>3D Cut Simulation</strong> viewport, RotaryCAM displays the physical straight tube (<code class="mono">2030.2 mm</code> long) exactly as it is chucked on your 4-axis rotary plasma table:
             </p>
             <ul class="doc-bullet-list">
               <li><strong>Inspect the 5-Cut Kerf Relief Pattern (Center Viewport):</strong> Scrub or play the simulation to verify the 5 evenly spaced relief cuts wrapping three faces of the HSS stick while leaving the <code class="mono">30.0 mm</code> uncut spine intact on the top face.</li>
@@ -171,7 +171,7 @@
             <div class="doc-callout tip">
               <div class="doc-callout-title">✓ Works on Both Square/Rectangular HSS &amp; Round Pipe (HSS-O)</div>
               <p>
-                Whether your CAD model uses square/rectangular structural tubing (<code class="mono">HSS</code>) or round pipe (<code class="mono">HSS-O</code>), Pipe CAM's Cut-and-Bend engine automatically projects the relief kerf geometry onto the true surface normal—using flat-wall projection with 5-zone corner relief on HSS and cylindrical rotary unwrap on round <code class="mono">HSS-O</code> sticks.
+                Whether your CAD model uses square/rectangular structural tubing (<code class="mono">HSS</code>) or round pipe (<code class="mono">HSS-O</code>), RotaryCAM's Cut-and-Bend engine projects the relief cut geometry around the tube walls—with corner relief on square tube and rotary unwrap on round pipe—so thick walls won't pinch or bind when folded shut.
               </p>
             </div>
           </div>

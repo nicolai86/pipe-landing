@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>01. Basic Machine Configuration — Pipe CAM Documentation</title>
-  <meta name="description" content="Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in Pipe CAM." />
+  <title>01. Basic Machine Configuration — RotaryCAM Documentation</title>
+  <meta name="description" content="Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in RotaryCAM." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,7 +76,7 @@
     <section class="docs-hero">
       <div class="container">
         <div class="docs-breadcrumb">
-          <a href="../index.html">Pipe CAM</a>
+          <a href="../index.html">RotaryCAM</a>
           <span class="sep">/</span>
           <a href="index.html">Documentation</a>
           <span class="sep">/</span>
@@ -200,7 +200,7 @@
         <div class="doc-intro-card">
           <h2>Why Accurate Machine Configuration Matters</h2>
           <p>
-            Unlike flat-sheet 2D plasma tables, a 4-axis rotary tube cutter simultaneously coordinates linear axes (<code class="mono">X, Y, Z</code>) in millimeters with a rotary chuck axis (<code class="mono">A</code>) in degrees. When sweeping around rectangular HSS tube corners or cutting deep pipe saddles, the rotary chuck must rapidly accelerate and decelerate while keeping the plasma arc's surface velocity constant. Pipe CAM uses your machine profile's exact physical limits to compute S-curve trajectories, damp rotary corner singularities, and inject synchronous THC lock commands before the torch slows down.
+            Unlike flat-sheet 2D plasma tables, a 4-axis rotary tube cutter simultaneously coordinates linear axes (<code class="mono">X, Y, Z</code>) in millimeters with a rotary chuck axis (<code class="mono">A</code>) in degrees. When sweeping around rectangular HSS tube corners or cutting deep pipe saddles, the rotary chuck must rapidly accelerate and decelerate while keeping the plasma arc's surface velocity constant. RotaryCAM uses your table's exact physical motor limits to calculate smooth rotary acceleration, keep chuck motors from jerking or stalling on sharp tube corners, and freeze your Torch Height Control (THC) before the torch slows down.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -229,7 +229,7 @@
 
           <div class="doc-step-body">
             <p>
-              From the main Pipe CAM workspace, locate the <strong>CNC Plasma Kinematics</strong> summary card at the bottom of the left sidebar. This card displays your currently active rotary ratio, rapid limits, Z clearance, and post-processor dialect at a glance.
+              From the main RotaryCAM workspace, locate the <strong>CNC Plasma Kinematics</strong> summary card at the bottom of the left sidebar. This card displays your currently active rotary ratio, rapid limits, Z clearance, and post-processor dialect at a glance.
             </p>
             <ul class="doc-bullet-list">
               <li>Click the <span class="ui-chip">⚙ Config</span> button in the <strong>CNC Plasma Kinematics</strong> panel on the left sidebar, <em>or</em></li>
@@ -259,12 +259,12 @@
 
           <div class="doc-step-body">
             <p>
-              The first tab, <span class="ui-chip">Axis Kinematics &amp; Limits</span>, defines the physical capabilities of your CNC table's linear motors (<code class="mono">X, Y, Z</code>) and rotary chuck drive (<code class="mono">A</code>). Entering accurate numbers here is essential because Pipe CAM's internal trajectory planner simulates your machine's exact physics.
+              The first tab, <span class="ui-chip">Axis Kinematics &amp; Limits</span>, defines the physical capabilities of your CNC table's linear motors (<code class="mono">X, Y, Z</code>) and rotary chuck drive (<code class="mono">A</code>). Entering your table's real limits ensures RotaryCAM matches your machine's true motor speeds and never asks your chuck to spin faster than it physically can.
             </p>
             <ul class="doc-bullet-list">
               <li><strong>Rotary Drive Ratio &amp; Direction:</strong> Specify your chuck reduction ratio (e.g., <code class="mono">10:1 Rotary</code>) and whether <code class="mono">+A</code> rotation follows right-hand or inverted conventions.</li>
               <li><strong>Linear Axes (<code class="mono">X / Y / Z</code>) Limits:</strong> Set the true maximum rapid velocity (<code class="mono">mm/min</code>), maximum acceleration (<code class="mono">mm/s²</code>), and S-curve jerk (<code class="mono">mm/s³</code>) your drives can sustain without losing steps or faulting.</li>
-              <li><strong>Rotary Chuck (<code class="mono">A-Axis</code>) Limits:</strong> Set the maximum rotational speed (<code class="mono">deg/min</code>, e.g., <code class="mono">36000°/min</code> = 100 RPM), angular acceleration (<code class="mono">deg/s²</code>), and angular jerk (<code class="mono">deg/s³</code>). During rectangular tube corner transitions, the A-axis is almost always the physical bottleneck—Pipe CAM uses these limits to automatically throttle cutting feedrates around corners.</li>
+              <li><strong>Rotary Chuck (<code class="mono">A-Axis</code>) Limits:</strong> Set the maximum rotational speed (<code class="mono">deg/min</code>, e.g., <code class="mono">36000°/min</code> = 100 RPM), angular acceleration (<code class="mono">deg/s²</code>), and angular jerk (<code class="mono">deg/s³</code>). During rectangular tube corner transitions, chuck rotation is almost always the physical bottleneck—RotaryCAM uses these limits to smooth out corner speeds so your steppers or servos never lose steps.</li>
               <li><strong>Safe Z Clearance Height:</strong> Defines the safe retract envelope (e.g., <code class="mono">25 mm</code>) above the rotating tube's maximum diagonal radius so rapid moves never clip a spinning square/rectangular corner.</li>
             </ul>
 
@@ -337,9 +337,9 @@
               Beneath the dialect selector, configure your <strong>Post-Processor Compensation Strategy</strong>:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Enable CAM Velocity Profiling (S-Curve Acceleration &amp; Jerk):</strong> Simulates forward/backward S-curve acceleration in software so velocity transitions and THC lock points match physical reality.</li>
-              <li><strong>Enable ADLS Singularity Damping (HSS Corners):</strong> Applies an Adaptive Damped Least Squares filter to prevent <code class="mono">A-axis</code> angular velocity spikes as the toolpath transitions from a flat HSS wall onto a tight corner radius.</li>
-              <li><strong>Enable Offline Kerf Compensation:</strong> Offsets internal holes (CW) and external contours (CCW) in 3D surface space by half your plasma kerf width so parts mate with zero grinding.</li>
+              <li><strong>Enable Acceleration &amp; Jerk Profiling:</strong> Models your machine's real motor acceleration in software so feedrate changes and THC anti-dive freeze points match what happens on the table.</li>
+              <li><strong>Smooth Rotary Corner Motion (Square &amp; Rectangular Tube):</strong> Automatically smooths chuck rotation when rolling from flat faces into corner fillets, preventing sudden rotational jerks and motor stalls.</li>
+              <li><strong>Enable Kerf Width Compensation:</strong> Automatically offsets hole cuts (CW) and outside profiles (CCW) by half your torch's kerf width so parts fit tight right off the machine.</li>
               <li><strong>Heat-Optimized vs. One-Direction Cut Ordering:</strong> Operators can choose between automatic thermal hedging (staggering internal holes and slots across the tube to prevent heat warping) or strict one-direction monotonic cutting from the free end toward the chuck.</li>
             </ul>
           </div>
@@ -373,7 +373,7 @@
             </p>
 
             <ul class="doc-bullet-list">
-              <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Choose how Pipe CAM emits THC freeze/unfreeze signals in your G-code—such as synchronous digital output macros (<code class="mono">M63 P0</code> to lock / <code class="mono">M62 P0</code> to unlock without motion planner pauses) or controller-specific M-codes.</li>
+              <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Choose how RotaryCAM signals your THC to freeze and unfreeze in G-code—such as synchronous digital output macros (<code class="mono">M63 P0</code> to lock / <code class="mono">M62 P0</code> to unlock without motion planner pauses) or controller-specific M-codes.</li>
               <li><strong>Dynamic Corner Lock Threshold (<code class="mono">%</code>):</strong> Automatically locks Z-axis height regulation whenever actual surface velocity drops below the configured percentage (e.g., <code class="mono">80%</code>) of target cutting speed, and unlocks it once full surface speed resumes.</li>
               <li><strong>Lead-In / Lead-Out THC Lock:</strong> Keeps THC locked during pierce, ramp lead-in, and overburn lead-out phases where the plasma arc is stabilizing or crossing an existing kerf.</li>
             </ul>
@@ -435,7 +435,7 @@
           <a href="index.html" class="docs-page-link prev">
             <span class="docs-page-dir">← Back to Hub</span>
             <span class="docs-page-title">Documentation Overview</span>
-            <span class="docs-page-desc">All 8 Pipe CAM visual &amp; technical workflows</span>
+            <span class="docs-page-desc">All 8 RotaryCAM visual &amp; technical workflows</span>
           </a>
           
           
@@ -470,8 +470,8 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <a href="../index.html" class="brand">
-          <span class="brand-icon">P</span>
-          <span class="brand-name">Pipe CAM</span>
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
           <span class="brand-badge">XYZA</span>
         </a>
         <p class="footer-tagline">
@@ -518,7 +518,7 @@
     </div>
 
     <div class="container footer-bottom">
-      <span>&copy; 2026 Pipe CAM. Engineered for precision 4-axis tube &amp; pipe plasma fabrication.</span>
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
       <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING</span>
     </div>
   </footer>

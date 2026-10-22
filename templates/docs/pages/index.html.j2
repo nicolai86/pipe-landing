@@ -7,7 +7,7 @@
     <section class="docs-hero">
       <div class="container">
         <div class="docs-breadcrumb">
-          <a href="../index.html">Pipe CAM</a>
+          <a href="../index.html">RotaryCAM</a>
           <span class="sep">/</span>
           <span class="current">Documentation &amp; Visual Workflows</span>
         </div>
@@ -64,7 +64,7 @@
       <div class="doc-intro-card" style="margin-bottom: 5rem;">
         <h2>Recommended First-Time Setup Sequence</h2>
         <p>
-          If you are setting up Pipe CAM for a new rotary plasma table, start with <strong><a href="machine-configuration.html" style="color: var(--amber-400);">Tutorial 01: Basic Machine Configuration</a></strong> and <strong><a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a></strong>. Because Pipe CAM executes a deterministic physics-based S-curve velocity profiler and Tool Center Point (TCP) unwrap in software, entering your machine's true axis velocity/acceleration limits and wiring <code class="mono">ExtTrajSyncOut0/1</code> (<code class="mono">M62/M63 P0/P1</code>) ensures your generated G-code runs at peak surface speed with zero-overburn early torch extinguish and spatter-free 3D ramp lead-ins.
+          If you are setting up RotaryCAM on your rotary plasma table, start with <strong><a href="machine-configuration.html" style="color: var(--amber-400);">Tutorial 01: Basic Machine Configuration</a></strong> and <strong><a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a></strong>. RotaryCAM calculates true surface cutting speeds and rotary motion limits directly in software. Setting your table's true axis speeds and wiring <code class="mono">ExtTrajSyncOut0/1</code> (<code class="mono">M62/M63 P0/P1</code>) ensures your torch runs at steady cutting feedrates with zero divots and spatter-free 3D ramp lead-ins.
         </p>
         <div class="doc-intro-grid">
           <div class="doc-intro-stat">

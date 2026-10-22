@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation & Workflows — Pipe CAM | 4-Axis CNC Tube & Pipe Plasma CAM</title>
-  <meta name="description" content="Step-by-step visual documentation and engineering guides for Pipe CAM: 4-axis CNC plasma machine configuration, STEP cut-path inspection, zero-bevel compensation, multi-stick tube nesting, HSS & HSS-O Cut-and-Bend unfolding, Fusion 360 AI autodetection, and SimCNC motion-synchronized torch control." />
+  <title>Documentation & Workflows — RotaryCAM | 4-Axis Rotary CNC Plasma CAM</title>
+  <meta name="description" content="Step-by-step visual documentation and shop tutorials for RotaryCAM: 4-axis machine setup, 3D STEP cut-path inspection, zero-bevel saddle compensation, multi-stick nesting, HSS & round pipe Cut-and-Bend unfolding, Fusion 360 modeling, and SimCNC motion-sync torch control." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,7 +76,7 @@
     <section class="docs-hero">
       <div class="container">
         <div class="docs-breadcrumb">
-          <a href="../index.html">Pipe CAM</a>
+          <a href="../index.html">RotaryCAM</a>
           <span class="sep">/</span>
           <span class="current">Documentation &amp; Visual Workflows</span>
         </div>
@@ -104,7 +104,7 @@
         <a href="machine-configuration.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/machine-config-2-limits.png" alt="Pipe CAM Machine Profiles & Kinematics Modal" loading="lazy" />
+            <img src="assets/machine-config-2-limits.png" alt="RotaryCAM Machine Profiles & Kinematics Modal" loading="lazy" />
             
             <span class="docs-hub-badge">TUTORIAL 01 • 5 STEPS</span>
           </div>
@@ -135,7 +135,7 @@
         <a href="cut-path-configuration.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/cut-path-6-zero-bevel.png" alt="Pipe CAM Per-Contour Cut Path & Zero-Bevel Configuration" loading="lazy" />
+            <img src="assets/cut-path-6-zero-bevel.png" alt="RotaryCAM Per-Contour Cut Path & Zero-Bevel Configuration" loading="lazy" />
             
             <span class="docs-hub-badge">TUTORIAL 02 • 8 STEPS</span>
           </div>
@@ -166,7 +166,7 @@
         <a href="nesting.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/nesting-5-compile.png" alt="Pipe CAM Multi-Part Pack Nesting Across Multiple Sticks" loading="lazy" />
+            <img src="assets/nesting-5-compile.png" alt="RotaryCAM Multi-Part Pack Nesting Across Multiple Sticks" loading="lazy" />
             
             <span class="docs-hub-badge">TUTORIAL 03 • 6 STEPS</span>
           </div>
@@ -197,7 +197,7 @@
         <a href="bending.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/bending-4-configure-bend.png" alt="Pipe CAM HSS & HSS-O Cut-and-Bend Unfolding" loading="lazy" />
+            <img src="assets/bending-4-configure-bend.png" alt="RotaryCAM HSS & HSS-O Cut-and-Bend Unfolding" loading="lazy" />
             
             <span class="docs-hub-badge">TUTORIAL 04 • 5 STEPS</span>
           </div>
@@ -228,14 +228,14 @@
         <a href="changelog.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/changelog-2-modal.png" alt="Pipe CAM About Modal with Build Information & Changelog" loading="lazy" />
+            <img src="assets/changelog-2-modal.png" alt="RotaryCAM About Modal with Build Information & Changelog" loading="lazy" />
             
             <span class="docs-hub-badge">TUTORIAL 05 • 2 STEPS</span>
           </div>
           <div class="docs-hub-content">
             <h2 class="docs-hub-title">Build Information &amp; Changelog</h2>
             <p class="docs-hub-desc">
-              Open the built-in `ⓘ About` modal from the top-right header bar to inspect exact build provenance (version, Git commit, UTC date, platform, license status), browse recent release highlights, and copy system diagnostics.
+              Open the built-in `ⓘ About` modal from the top-right header bar to verify your installed version, Git commit hash, UTC build date, platform, and license status, browse recent release highlights, and copy system diagnostics.
             </p>
             <ul class="docs-hub-topics">
               
@@ -259,14 +259,14 @@
         <a href="ai-autodetection.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/ai-cad-8-autodetect.png" alt="Pipe CAM Fusion 360 Structural Member & AI Profile Autodetection" loading="lazy" />
+            <img src="assets/ai-cad-8-autodetect.png" alt="RotaryCAM Fusion 360 Structural Member & Automatic Tube Detection" loading="lazy" />
             
             <span class="docs-hub-badge">TUTORIAL 06 • 8 STEPS • 11 SCREENSHOTS</span>
           </div>
           <div class="docs-hub-content">
             <h2 class="docs-hub-title">Fusion 360 &amp; AI Profile Autodetection</h2>
             <p class="docs-hub-desc">
-              Design 2D centerline sketches and 3D tube assemblies in Autodesk Fusion 360 using the Structural Member (`SM`) add-in, combine contiguous bend segments, export a full-design STEP file, and watch RotaryCAM&rsquo;s neural network autodetect every cross-section profile.
+              Design 2D centerline sketches and 3D tube assemblies in Autodesk Fusion 360 using the Structural Member (`SM`) add-in, combine contiguous bend segments, export a full-design STEP file, and watch RotaryCAM automatically identify every tube size and wall thickness.
             </p>
             <ul class="docs-hub-topics">
               
@@ -365,7 +365,7 @@
       <div class="doc-intro-card" style="margin-bottom: 5rem;">
         <h2>Recommended First-Time Setup Sequence</h2>
         <p>
-          If you are setting up Pipe CAM for a new rotary plasma table, start with <strong><a href="machine-configuration.html" style="color: var(--amber-400);">Tutorial 01: Basic Machine Configuration</a></strong> and <strong><a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a></strong>. Because Pipe CAM executes a deterministic physics-based S-curve velocity profiler and Tool Center Point (TCP) unwrap in software, entering your machine's true axis velocity/acceleration limits and wiring <code class="mono">ExtTrajSyncOut0/1</code> (<code class="mono">M62/M63 P0/P1</code>) ensures your generated G-code runs at peak surface speed with zero-overburn early torch extinguish and spatter-free 3D ramp lead-ins.
+          If you are setting up RotaryCAM on your rotary plasma table, start with <strong><a href="machine-configuration.html" style="color: var(--amber-400);">Tutorial 01: Basic Machine Configuration</a></strong> and <strong><a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a></strong>. RotaryCAM calculates true surface cutting speeds and rotary motion limits directly in software. Setting your table's true axis speeds and wiring <code class="mono">ExtTrajSyncOut0/1</code> (<code class="mono">M62/M63 P0/P1</code>) ensures your torch runs at steady cutting feedrates with zero divots and spatter-free 3D ramp lead-ins.
         </p>
         <div class="doc-intro-grid">
           <div class="doc-intro-stat">
@@ -395,8 +395,8 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <a href="../index.html" class="brand">
-          <span class="brand-icon">P</span>
-          <span class="brand-name">Pipe CAM</span>
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
           <span class="brand-badge">XYZA</span>
         </a>
         <p class="footer-tagline">
@@ -443,7 +443,7 @@
     </div>
 
     <div class="container footer-bottom">
-      <span>&copy; 2026 Pipe CAM. Engineered for precision 4-axis tube &amp; pipe plasma fabrication.</span>
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
       <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING</span>
     </div>
   </footer>
