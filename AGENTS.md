@@ -98,3 +98,35 @@ All `docs/*.html` pages (`docs/index.html` and every `docs/<slug>.html` tutorial
    This automatically stamps out `docs/index.html` and all `docs/<slug>.html` pages with synchronized `.nav-links`, `.docs-nav-list`, `TUTORIAL XX OF YY` pills, `.docs-pagination`, and `.footer-links`, and verifies that every `href` and `src` across the entire site resolves on disk.
 4. Also add a card for the new tutorial to the `#documentation` section of `index.html` and add the new URL to `sitemap.xml`.
 5. Verify with headless Chrome at `1202px` width that `.site-header` remains a single `69px` horizontal bar.
+
+---
+
+## 3. RotaryCAM Golden Rules of Copywriting & `pipe-copywriter` Subagent (MANDATORY)
+
+Every time documentation (`docs/`, `templates/docs/`), the build guide (`build-guide.html`), or the homepage (`index.html`) is updated or added, `pipe-landing` **MUST invoke the specialized `pipe-copywriter` subagent** to review and rewrite the content to match the RotaryCAM Golden Rules of Copywriting.
+
+### The 3 Golden Rules:
+
+#### #1 Be simple & specific
+Write plain, direct, human language — no jargon, no buzzwords, no fluff. Swap vague words like "seamless" or "leverage" for concrete details that explain HOW something works and WHAT the outcome is.
+
+#### #2 Write like a human, NOT a corporation
+Sound like you're explaining something important to someone you respect — conversational, but not informal, confident, but not stiff. Avoid corporate voice. Write the way you'd talk.
+
+#### #3 Focus on the User, not RotaryCam
+Put the reader first. Focus on what THEY can achieve, not how great RotaryCam is. Make every word earn its place — if it doesn't add value, cut it.
+
+### Fabrication & Welder Voice Guidelines:
+- All copy MUST speak **fabrication language, not software engineering language**. Speak directly to fabricators, welders, chassis builders, and CNC plasma table operators.
+- Never use software engineering jargon (e.g. "B-Rep topology extraction", "Graph Neural Network", "50-micron chordal deflection", "Euclidean manifold", "Jacobian acceleration", "TorchScript").
+- Always translate into real-world welding and fabrication benefits:
+  - "No unrolling solid models to flat 2D DXFs"
+  - "Drop complete 3D STEP assemblies straight in"
+  - "Cuts, fishmouths, copes, miters, and bolt holes detected automatically"
+  - "Zero-gap saddle joints ready to weld with no angle-grinder fitting"
+  - "Cuts round pipe, square tube, rectangular HSS, angle iron, and channel"
+  - "Pack full 20ft/24ft/6m mill sticks with minimal scrap drop"
+  - "Corner anti-dive prevents crashing torch nozzles into rectangular tube corners"
+  - "Swirl gas direction ensures the clean square edge stays on your part, not the scrap"
+  - "100% offline standalone software right at the machine next to the plasma table with zero internet or cloud dependency"
+- Preserve all existing HTML elements, Jinja2 template blocks, styling, anchor IDs, and script dependencies.
