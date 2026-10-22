@@ -340,6 +340,7 @@
               <li><strong>Enable CAM Velocity Profiling (S-Curve Acceleration &amp; Jerk):</strong> Simulates forward/backward S-curve acceleration in software so velocity transitions and THC lock points match physical reality.</li>
               <li><strong>Enable ADLS Singularity Damping (HSS Corners):</strong> Applies an Adaptive Damped Least Squares filter to prevent <code class="mono">A-axis</code> angular velocity spikes as the toolpath transitions from a flat HSS wall onto a tight corner radius.</li>
               <li><strong>Enable Offline Kerf Compensation:</strong> Offsets internal holes (CW) and external contours (CCW) in 3D surface space by half your plasma kerf width so parts mate with zero grinding.</li>
+              <li><strong>Heat-Optimized vs. One-Direction Cut Ordering:</strong> Operators can choose between automatic thermal hedging (staggering internal holes and slots across the tube to prevent heat warping) or strict one-direction monotonic cutting from the free end toward the chuck.</li>
             </ul>
           </div>
 

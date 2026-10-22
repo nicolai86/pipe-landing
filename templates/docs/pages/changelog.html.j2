@@ -91,10 +91,26 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Latest Release: Oct 20 -->
+            <!-- Latest Release: Oct 22 -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--plasma-amber); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 20, 2026</span>
+                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 22, 2026</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">HSS Corner Tracking, Hypertherm SYNC Cut Charts, Feature Toggles &amp; Cut Ordering</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Smooth HSS Corner Rotations &amp; Clean SimCNC 3.6 G93 Corner Tracking:</strong> Fixed a Z-axis height spike on square and rectangular HSS tube corners so the torch glides smoothly around every corner fillet at constant standoff without lifting or jerking mid-corner. Updated the <strong>SimCNC 3.6 Beta (G93 Inverse-Time)</strong> machine profile to track HSS corners perpendicular to the radius by default, eliminating corner-exit bevel lag and flat-face Y-axis overshoot.</li>
+                <li><strong>Built-In Hypertherm SYNC Rev 4 Cut Charts &amp; Smart Cartridge Recommendation:</strong> Built-in factory Hypertherm Powermax 45/65/85/105 SYNC Rev 4 (<code class="mono">810500MU</code>) cut chart library covering 552 presets across Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed consumables in both Metric and Imperial units for Mild Steel, Stainless Steel, and Aluminum. Features automatic cartridge amperage recommendation for thin-wall vs. thick-wall stock with out-of-range warnings and 1-click cartridge switching, automatically matching feedrate, kerf width, pierce height, pierce delay, cut height, arc voltage, and gas pressure to the part's detected wall thickness as soon as a STEP file is loaded.</li>
+                <li><strong>Dedicated Cut Charts Manager &amp; Manual Overrides:</strong> Dedicated Cut Charts Manager UI (separate from Machine Settings) where operators can add custom material thicknesses, tweak feedrates and kerf widths, or reset to factory Hypertherm tables. Explicit per-session Manual Override in the sidebar with one-click reset back to the thickness-matched chart preset.</li>
+                <li><strong>Selective Feature Enable/Disable in Single Part Inspection:</strong> Operators can now check or uncheck individual holes, slots, notches, cutouts, or scribe marks in Single Part Inspection to skip them in the generated G-code (for both single parts and full-stick pack nesting) without modifying the CAD model. Start and end tube sever cuts are permanently locked on so parts always sever cleanly from the mill stick.</li>
+                <li><strong>Configurable Heat-Optimized vs. One-Direction Cut Ordering:</strong> Operators can choose between automatic thermal hedging (staggering internal holes and slots across the tube to prevent heat warping) or strict one-direction monotonic cutting from free-end to chuck.</li>
+                <li><strong>Clean Lead-Out M5 Torch-Off &amp; Immediate Safe-Z Retract:</strong> <code class="mono">M5</code> torch-off now fires cleanly at the end of the lead-out immediately before lifting to safe Z height, eliminating brief post-<code class="mono">M5</code> motion at cut height.</li>
+              </ul>
+            </div>
+
+            <!-- Oct 20 Release -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 20, 2026</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Cut-and-Bend Unfolding, Flat HSS Projection &amp; Multi-Stick ZIP</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
