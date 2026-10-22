@@ -1,0 +1,215 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Hypertherm Cut Charts, Automatic Thickness Matching &amp; Feature Toggling</h2>
+          <p>
+            Dialing in the correct plasma torch feedrate, arc transfer voltage, pierce delay, and kerf width is the difference between dross-free, weld-ready tube joints and scrap metal. RotaryCAM eliminates trial-and-error by integrating <strong>552 built-in Hypertherm Powermax 45/65/85/105 SYNC Rev 4 (<code class="mono">810500MU</code>) cut presets</strong> directly into the CAM environment—covering Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed processes in both Metric and Imperial units across Mild Steel, Stainless Steel, and Aluminum. When you drop a 3D CAD STEP file onto the table, RotaryCAM's B-Rep inspection engine measures the exact wall thickness of the tube and pairs it with the manufacturer cut chart—loading optimal cut speed, arc voltage, pierce height, and torch air pressure automatically with smart cartridge recommendation for thin-wall vs. thick-wall stock.
+          </p>
+          <p style="margin-top: 0.85rem;">
+            Need to tune settings for worn consumables, custom shop gauges, or high-speed production runs? You can edit any parameter inline or add unlimited custom presets. Furthermore, when working on prototypes or custom fabrications where certain mounting holes or slots should be omitted without waiting for CAD revisions, RotaryCAM provides <strong>per-feature enable/disable toggles</strong> right in the single-part feature table—instantly updating the 3D toolpath, reducing the pierce count, and recompiling G-code on the fly while keeping structural sever cuts permanently locked.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Factory Presets</span>
+              <span class="value">552 Hypertherm SYNC Rev 4 Charts</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Thickness Pairing</span>
+              <span class="value">Automatic CAD B-Rep Wall Detection</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Selective Cutting</span>
+              <span class="value">Per-Contour Omission &amp; Safety Locks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Open the Cut Charts Manager (<code class="mono">🔥 Cut Charts</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              The Cut Charts Manager is accessible from anywhere in RotaryCAM—whether you are inspecting an entire 3D assembly, dialing in lead-ins on a single tube, or packing multi-part nests across raw stock sticks.
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Look at the top-right header bar in RotaryCAM, immediately next to the <code class="mono">ⓘ About</code> button.</li>
+              <li>Click the <span class="ui-chip amber">🔥 Cut Charts</span> button.</li>
+              <li>This opens the full Cut Charts Manager modal, providing instant access to all factory presets, custom shop charts, and live search filters without unloading your active CAD model or resetting toolpaths.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Clicking '🔥 Cut Charts' in the top-right header bar</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-charts-1-open.png" alt="Step 1: Clicking Cut Charts button in top-right application header" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Browse &amp; Filter the 552 Factory Hypertherm Cut Charts</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              RotaryCAM ships with a comprehensive library of <strong>552 factory cut presets</strong> derived directly from official Hypertherm cut charts for the <strong>Powermax 45/65/85/105 SYNC Rev 4 (<code class="mono">810500MU</code>)</strong> platform.
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Material Filter:</strong> Switch seamlessly between <code class="mono">Mild Steel</code>, <code class="mono">Stainless Steel</code>, and <code class="mono">Aluminum</code>.</li>
+              <li><strong>Amperage &amp; Consumables:</strong> Filter by torch cartridge (<code class="mono">45A</code>, <code class="mono">65A</code>, <code class="mono">85A</code>, <code class="mono">105A</code>) and process type (<code class="mono">Standard Best Quality</code>, <code class="mono">Standard High Prod</code>, <code class="mono">FineCut High Speed</code>, or <code class="mono">FineCut Low Speed</code> with smart thin-wall cartridge recommendations).</li>
+              <li><strong>Source &amp; Units:</strong> Toggle between <code class="mono">Factory</code> manufacturer presets and your shop's own <code class="mono">Custom</code> tuned charts, with full support for Metric (<code class="mono">mm</code>, <code class="mono">mm/min</code>) and Imperial (<code class="mono">in</code>, <code class="mono">IPM</code>) units.</li>
+              <li><strong>Complete Cutting Specs:</strong> Each chart entry provides torch feedrate, recommended arc voltage for Torch Height Control (THC), kerf width compensation, pierce height, cut height, pierce dwell time (<code class="mono">seconds</code>), and plasma air pressure (<code class="mono">PSI</code>).</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Browsing and filtering the 552 factory Hypertherm cut charts table</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-charts-2-modal.png" alt="Step 2: Browsing and filtering 552 Hypertherm cut charts in RotaryCAM" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Edit Parameters Inline or Add Custom Shop Presets</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Every shop table behaves slightly differently depending on torch air quality, ground clamp placement, and table rigidity. RotaryCAM allows fabricators to fine-tune any cut preset or define custom shop profiles.
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Inline Editing:</strong> Double-click or click into any cell in a cut chart row—such as <code class="mono">Cut Speed</code>, <code class="mono">Kerf Width</code>, <code class="mono">Arc Voltage</code>, or <code class="mono">Pierce Delay</code>. Adjust the value to match your torch setup and click the <span class="ui-chip cyan">Save</span> button on that row.</li>
+              <li><strong>Add Custom Presets:</strong> To store settings for non-standard wall thicknesses, specialized alloys (such as 4130 chromoly), or proprietary consumables, click the <span class="ui-chip cyan">+ Add Preset</span> button in the top-right header of the modal.</li>
+              <li><strong>Persistent Storage:</strong> Custom presets and edited values are stored locally in persistent storage, remaining available across browser refreshes and application restarts.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Editing cut chart row parameters inline or creating custom shop presets</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-charts-3-edit.png" alt="Step 3: Editing cut parameters inline or clicking Add Preset" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Inspect Automatic Wall-Thickness Matching</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When a STEP file is loaded, RotaryCAM's CAD geometry engine examines the inner and outer boundary surfaces (B-Rep topology) of the tube solid and determines its exact nominal wall thickness (for example, <code class="mono">3.56 mm / 1/8"</code>).
+            </p>
+            <ul class="doc-bullet-list">
+              <li>In the left sidebar under <strong>Cross-Section &amp; Dimensions</strong>, locate the <span class="ui-chip amber">3.56mm / 1/8"</span> wall thickness badge.</li>
+              <li>RotaryCAM automatically queries the cut chart database and binds the matching Hypertherm preset to the cutting session—populating the <strong>Feedrate</strong> (<code class="mono">2850 mm/min</code>), <strong>Kerf Compensation</strong> (<code class="mono">1.25 mm</code>), <strong>Arc Voltage</strong> (<code class="mono">128 V</code>), and <strong>Pierce Delay</strong> (<code class="mono">0.4 s</code>).</li>
+              <li><strong>Manual Override:</strong> Need to cut 1/8" wall tube at lower amperage (e.g. 45A FineCut instead of 65A standard)? Simply select an alternative preset from the dropdown menu, or click the reset icon to snap back to the auto-detected baseline.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — Automatic wall-thickness matching badge and cut parameters in the left sidebar</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-charts-4-session.png" alt="Step 4: Automatic wall thickness matching badge and cut parameters in sidebar" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Toggle Contours in Single Part Inspection</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              In real-world tube fabrication, models often include holes meant for hand-drilling post-assembly, clearance slots for optional accessories, or alignment features that should not be cut during a specific production batch. Returning to CAD to suppress or delete features is slow and error-prone.
+            </p>
+            <ul class="doc-bullet-list">
+              <li>In Single Part Inspection, look at the feature table below the 3D viewport. Every detected feature is listed with its contour type, axial position, and geometry dimensions.</li>
+              <li><strong>Feature Enable/Disable Checkboxes:</strong> Each internal feature (<code class="mono">HOLE</code>, <code class="mono">SLOT</code>, <code class="mono">CUTOUT</code>, <code class="mono">SCRIBE</code>) has an interactive checkbox in the left-hand column. Unchecking a box instantly omits that cut from production.</li>
+              <li><strong>Permanent Sever Cut Lock:</strong> Notice that the tube severance cuts (<code class="mono">STARTCUT</code> and <code class="mono">ENDCUT</code>) have locked checkmarks with a lock badge. Sever cuts cannot be accidentally unchecked, guaranteeing that cut parts always drop cleanly from the raw tube stick.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Feature table checkboxes for internal cutouts with locked cutoff cuts</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-charts-5-checkbox.png" alt="Step 5: Interactive enable/disable checkboxes for tube cutouts with locked sever cuts" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 6
+             ================================================================== -->
+        <article class="doc-step-card" id="step-6">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 06</span>
+            <h2 class="doc-step-title">Verify Omitted Toolpaths &amp; Live G-Code</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When you uncheck an internal feature, RotaryCAM immediately updates the entire cutting pipeline without requiring a manual re-generation step:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>3D Viewport Toolpath:</strong> The cut path for the disabled feature disappears from the 3D preview. Zero lead-in, cut contour, or lead-out motions are plotted for that geometry.</li>
+              <li><strong>Pierce Counter &amp; Machine Time:</strong> The total pierce count in the kinematics bar updates immediately (for example, reducing from 5 to 4 pierces). Cycle time estimates update accordingly, saving plasma gas, nozzle wear, and machine cycle time.</li>
+              <li><strong>Live Recompiled G-Code:</strong> The G-code viewer on the right automatically recompiles. The rapid plunge (<code class="mono">G00</code>), torch ignition (<code class="mono">M03</code>), pierce dwell (<code class="mono">G04</code>), cutting feed (<code class="mono">G01</code>), and torch shutoff (<code class="mono">M05</code>) commands for the omitted feature are completely eliminated from the exported file.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 6 — Omitted feature removed from 3D toolpath, pierce count reduced, and G-code updated</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/cut-charts-6-omitted.png" alt="Step 6: Omitted feature excluded from 3D cut path and live G-code recompiled" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+{% endblock %}

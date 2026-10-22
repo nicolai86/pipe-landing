@@ -682,6 +682,64 @@ let specs: [ImageSpec] = [
             HighlightBox(x: 14, y: 1178, w: 468, h: 262, style: .amber, label: "1. AI Cross-Section Autodetection (Profile_HSS_Rect 38.1×38.1×3.17mm)", labelPos: .rightCenter),
             HighlightBox(x: 525, y: 345, w: 710, h: 90, style: .cyan, label: "2. Both Rect & Round Profiles Autodetected & Grouped for Nesting", labelPos: .rightCenter)
         ]
+    ),
+
+    // TUTORIAL 08: Plasma Cut Charts, Torch Settings & Feature Toggling
+    ImageSpec(
+        inputPath: "/Users/nicolai86/.gemini/antigravity-cli/brain/0476b7a3-b2ad-4dbc-9091-35ddef95e1e2/scratch/docs_screenshots/01-start-cut-charts-btn.png",
+        outputName: "cut-charts-1-open.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 2315, y: 10, w: 145, h: 44, style: .amber, label: "Click '🔥 Cut Charts' in the Top-Right Header Bar", labelPos: .bottomLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/.gemini/antigravity-cli/brain/0476b7a3-b2ad-4dbc-9091-35ddef95e1e2/scratch/docs_screenshots/02-cut-charts-modal.png",
+        outputName: "cut-charts-2-modal.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 785, y: 470, w: 1900, h: 105, style: .amber, label: "1. Filter by Material, Torch Amperage, Consumables & Source", labelPos: .topLeft),
+            HighlightBox(x: 785, y: 600, w: 1900, h: 440, style: .cyan, label: "2. 145 Factory Hypertherm Cut Presets (Feedrate, Kerf, Voltages, Piercing)", labelPos: .bottomLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/.gemini/antigravity-cli/brain/0476b7a3-b2ad-4dbc-9091-35ddef95e1e2/scratch/docs_screenshots/03-cut-charts-edit-row.png",
+        outputName: "cut-charts-3-edit.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 785, y: 1150, w: 1900, h: 60, style: .amber, label: "1. Tweak Feedrate, Kerf, Voltages, Piercing & Arc Pressure", labelPos: .topLeft),
+            HighlightBox(x: 2526, y: 1158, w: 72, h: 50, style: .cyan, label: "2. Save Custom Cut Parameters", labelPos: .bottomRight),
+            HighlightBox(x: 2352, y: 505, w: 142, h: 48, style: .cyan, label: "3. Or Click '+ Add Preset' for Custom Shop Gauges", labelPos: .bottomLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/.gemini/antigravity-cli/brain/0476b7a3-b2ad-4dbc-9091-35ddef95e1e2/scratch/docs_screenshots/04-session-cut-settings.png",
+        outputName: "cut-charts-4-session.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 15, y: 1420, w: 450, h: 75, style: .amber, label: "1. Select Material, Amperage Cartridge & Consumables", labelPos: .topRight),
+            HighlightBox(x: 15, y: 1525, w: 450, h: 75, style: .cyan, label: "2. Automatically Matched to Detected Tube Wall (3.56mm / 1/8\")", labelPos: .rightCenter),
+            HighlightBox(x: 15, y: 1615, w: 450, h: 360, style: .cyan, label: "3. Auto-Loaded Hypertherm Parameters (or Override Manually)", labelPos: .rightCenter)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/.gemini/antigravity-cli/brain/0476b7a3-b2ad-4dbc-9091-35ddef95e1e2/scratch/docs_screenshots/05-single-part-feature-checkbox.png",
+        outputName: "cut-charts-5-checkbox.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 520, y: 1060, w: 605, h: 240, style: .amber, label: "1. Internal Features (Holes, Cutouts, Slots) Have Enable/Disable Checkboxes", labelPos: .topLeft),
+            HighlightBox(x: 520, y: 1305, w: 715, h: 118, style: .cyan, label: "2. Start & End Sever Cuts Are Permanently Locked (Parts Always Drop Clean)", labelPos: .bottomLeft)
+        ]
+    ),
+    ImageSpec(
+        inputPath: "/Users/nicolai86/.gemini/antigravity-cli/brain/0476b7a3-b2ad-4dbc-9091-35ddef95e1e2/scratch/docs_screenshots/06-feature-omitted.png",
+        outputName: "cut-charts-6-omitted.png",
+        cropRect: defaultCrop,
+        highlights: [
+            HighlightBox(x: 1350, y: 550, w: 800, h: 650, style: .cyan, label: "1. Omitted Features Excluded from 3D Cut Path (Zero Toolpath Generated)", labelPos: .topLeft),
+            HighlightBox(x: 1880, y: 222, w: 435, h: 50, style: .amber, label: "2. Pierces Automatically Reduced (4 Pierces Total)", labelPos: .topLeft),
+            HighlightBox(x: 2780, y: 85, w: 695, h: 1850, style: .amber, label: "3. G-Code Instantly Recompiled (Omitted Cuts Skipped in Program)", labelPos: .bottomLeft)
+        ]
     )
 ]
 
