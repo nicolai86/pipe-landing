@@ -3,9 +3,9 @@
 {% block tutorial_body %}
         <!-- Intro Card -->
         <div class="doc-intro-card">
-          <h2>Instant Version Verification &amp; Release Notes</h2>
+          <h2>Instant Version Verification, File Storage &amp; Release Notes</h2>
           <p>
-            Whether you are verifying that your shop station is running the latest CAM solver update, checking what new post-processor or CAD unfolding features were added in a recent release, or copying system diagnostics for support, the built-in <strong>About RotaryCAM</strong> dialog provides full build provenance and a chronological changelog in one click.
+            Whether you are verifying that your shop table is running the latest CAM engine update, locating your saved machine kinematics and Hypertherm cut charts to transfer them to a new shop PC, or copying system diagnostics for support, the built-in <strong>About RotaryCAM</strong> dialog and local storage directories keep your shop cutting without interruption.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -13,8 +13,8 @@
               <span class="value">Version, Git Commit &amp; UTC Build Date</span>
             </div>
             <div class="doc-intro-stat">
-              <span class="label">What Changed</span>
-              <span class="value">Built-In Release Notes &amp; Feature Highlights</span>
+              <span class="label">Local Storage</span>
+              <span class="value">Machine Profiles, Cut Charts &amp; Licenses</span>
             </div>
             <div class="doc-intro-stat">
               <span class="label">Support Export</span>
@@ -81,12 +81,155 @@
               <img src="assets/changelog-2-modal.png" alt="Step 2: About RotaryCAM modal displaying build metadata, release changelog, and Copy Diagnostics button" loading="lazy" />
             </div>
           </figure>
+        </article>
 
-          <!-- Changelog Transcript Section -->
-          <div class="doc-step-body" id="release-transcript" style="margin-top: 2rem;">
-            <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-              <span>🗓️</span> Current Release Changelog Entries
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="storage-locations">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">System Storage &amp; Local File Locations (macOS, Windows, Linux)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              RotaryCAM keeps all machine settings, plasma charts, and project history entirely local on your machine. When you calibrate a 4-axis chuck, fine-tune cut parameters for thin-wall tubing, or nest parts across raw sticks, your data stays on your local solid-state drive—never locked behind cloud servers or lost when the shop Wi-Fi cuts out.
+            </p>
+
+            <h3 style="font-size: 1.15rem; color: #fff; margin-top: 0.5rem; margin-bottom: 0.25rem;">
+              What RotaryCAM Stores on Your System
             </h3>
+            <p>
+              Here is what each file and folder does during daily shop cutting:
+            </p>
+
+            <div style="overflow-x: auto; margin: 0.25rem 0 1rem;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; background: rgba(15, 20, 28, 0.6); border: 1px solid var(--border-subtle); border-radius: 8px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.04);">
+                    <th style="padding: 0.75rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); width: 220px;">File / Folder</th>
+                    <th style="padding: 0.75rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">Stored Information &amp; Settings</th>
+                    <th style="padding: 0.75rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); width: 240px;">Shop Floor Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><code class="mono" style="color: var(--amber-400);">machines.json</code></td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><strong>4-Axis Kinematics &amp; Machine Profiles:</strong> Rotary chuck gear ratios (e.g. 10:1 or 20:1), maximum motor velocities, acceleration limits, G94/G93 controller dialect, Safe Z clearance, Torch Height Control (THC) M-codes (<code class="mono">M62/M63 P1</code>), and zero-bevel defaults.</td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top; color: var(--text-secondary);">Your rotary table's motion DNA. Back this up to move your table settings to another computer.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><code class="mono" style="color: var(--cyan-400);">presets.json</code><br /><code class="mono" style="color: var(--cyan-400); font-size: 0.75rem;">advanced_settings.json</code></td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><strong>Cut Charts &amp; Plasma Presets:</strong> Tuned Hypertherm Powermax SYNC cut charts, custom shop material gauges, kerf widths, cutting feedrates, arc voltages, pierce/cut heights, and pierce dwell times.</td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top; color: var(--text-secondary);">Your dialled-in cut recipes. Transfer this file so you never re-test kerf widths twice.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><code class="mono" style="color: var(--emerald-400);">processed_files.json</code><br /><code class="mono" style="color: var(--emerald-400); font-size: 0.75rem;">bundles/&lt;uuid&gt;/</code></td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><strong>CAD Sessions &amp; Processed Assemblies:</strong> Recent project history, uploaded 3D STEP models, extracted parts, and compiled multi-stick nesting layouts.</td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top; color: var(--text-secondary);">Re-opens your active tubes and nests instantly across app restarts without re-importing CAD.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><code class="mono" style="color: var(--amber-400);">rotarycam.lic</code></td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><strong>Offline License Token:</strong> Cryptographically signed Ed25519 offline license key that unlocks Pro features (dual-curve zero-bevel, multi-stick pack nesting, and custom kinematics).</td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top; color: var(--text-secondary);">Drop in once to unlock RotaryCAM forever on air-gapped shop tables with zero internet access.</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><code class="mono" style="color: var(--text-secondary);">auth_store.json</code></td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top;"><strong>Local Auth Store:</strong> Local user session tokens and offline rate-limit status.</td>
+                    <td style="padding: 0.85rem 1rem; vertical-align: top; color: var(--text-secondary);">Keeps your signed-in account state active on the shop computer.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="font-size: 1.15rem; color: #fff; margin-top: 1rem; margin-bottom: 0.25rem;">
+              Exact Local Storage Paths by Operating System
+            </h3>
+            <p>
+              Depending on whether your shop PC runs Windows, macOS, or Linux, RotaryCAM puts its configuration files, cut charts, and license tokens in standard system application directories:
+            </p>
+
+            <!-- macOS Paths -->
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot"></span> macOS (Shop Mac or Field Laptop)</span>
+                <span class="doc-code-lang">macOS</span>
+              </div>
+              <pre><code># Configuration, machine profiles, cut charts &amp; session bundles
+~/Library/Application Support/pipe-macos/
+
+# Offline license drop-in (or place next to the RotaryCAM binary)
+~/Library/Application Support/RotaryCAM/</code></pre>
+            </div>
+
+            <!-- Windows Paths -->
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot cyan"></span> Windows (Shop Plasma Table PC)</span>
+                <span class="doc-code-lang">Windows</span>
+              </div>
+              <pre><code># Configuration, machine profiles, cut charts &amp; session bundles
+%APPDATA%\pipe-macos\
+# (Typically: C:\Users\&lt;Username&gt;\AppData\Roaming\pipe-macos\)
+
+# Offline license drop-in (or place next to RotaryCAM.exe)
+%APPDATA%\RotaryCAM\
+# (Typically: C:\Users\&lt;Username&gt;\AppData\Roaming\RotaryCAM\)</code></pre>
+            </div>
+
+            <!-- Linux Paths -->
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot emerald"></span> Linux (LinuxCNC &amp; Industrial Touch Controllers)</span>
+                <span class="doc-code-lang">Linux</span>
+              </div>
+              <pre><code># Configuration, machine profiles, cut charts &amp; session bundles
+~/.config/pipe-macos/
+# (Or $XDG_CONFIG_HOME/pipe-macos/)
+
+# Offline license drop-in (or place next to the rotarycam binary)
+~/.config/RotaryCAM/
+# (Or $XDG_CONFIG_HOME/RotaryCAM/)</code></pre>
+            </div>
+
+            <!-- Callout: Backing Up Machine Profiles & Presets -->
+            <div class="doc-callout tip" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">✓ How to Back Up &amp; Transfer Profiles to a New Plasma Table PC</div>
+              <p>
+                When switching shop computers or setting up a second rotary table, you do not have to re-enter gear ratios or re-tune torch cut speeds by hand:
+              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>1. Plug in a USB thumb drive:</strong> Open the <code class="mono">pipe-macos</code> folder on your old PC (see paths above).</li>
+                <li><strong>2. Copy your tuned files:</strong> Copy <code class="mono">machines.json</code> (your chuck ratios, motor velocities, and Safe Z limits) and <code class="mono">presets.json</code> (your dialled-in kerf widths, feedrates, and torch height voltages).</li>
+                <li><strong>3. Paste into the new PC:</strong> Install RotaryCAM on the new machine, paste both files into its <code class="mono">pipe-macos</code> folder, and launch RotaryCAM. All your machine kinematics and plasma charts are ready to cut immediately.</li>
+              </ul>
+            </div>
+
+            <!-- Callout: Air-Gapped Offline License Drop-in -->
+            <div class="doc-callout info" style="margin-top: 1rem;">
+              <div class="doc-callout-title">🔑 Offline License Activation (Air-Gapped Shop Tables)</div>
+              <p>
+                Rotary plasma tables often sit in metal shop buildings with spotty Wi-Fi or on dedicated air-gapped machine computers with zero internet access. RotaryCAM never requires online activation or recurring server pings:
+              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Drop-in location:</strong> Copy your signed <code class="mono">rotarycam.lic</code> license file into the <code class="mono">RotaryCAM</code> application support folder (or place it directly in the same folder as the RotaryCAM executable).</li>
+                <li><strong>Immediate unlock:</strong> RotaryCAM checks the cryptographic Ed25519 signature locally in under 5 milliseconds on startup, unlocking zero-bevel saddle compensation, multi-stick nesting, and custom kinematics forever without touching the internet.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             RELEASE LOG
+             ================================================================== -->
+        <article class="doc-step-card" id="release-transcript">
+          <div class="doc-step-header">
+            <span class="doc-step-badge" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan-400); border-color: rgba(6, 182, 212, 0.35);">LOG</span>
+            <h2 class="doc-step-title">Current Release Changelog Entries</h2>
+          </div>
+
+          <div class="doc-step-body">
             <p style="color: var(--text-secondary); margin-bottom: 1.25rem;">
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
