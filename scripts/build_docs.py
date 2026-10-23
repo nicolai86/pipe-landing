@@ -61,7 +61,7 @@ TUTORIALS = [
         "steps_label": "5 Steps",
         "meta_pills": [
             {"style": "cyan", "html": "<strong>Persistence:</strong> Multi-Profile Saved Across Restarts"},
-            {"style": "", "html": "<strong>Applies To:</strong> SimCNC 3.5 / 3.6 Beta / Generic 4-Axis G94"},
+            {"style": "", "html": "<strong>Applies To:</strong> Any 4-Axis CNC (G93 / G94) • SimCNC, Mach4, LinuxCNC"},
         ],
         "toc": [
             {"id": "step-1", "badge": "01", "label": "Open Machine Profiles Modal"},
