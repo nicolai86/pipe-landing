@@ -387,6 +387,60 @@ TUTORIALS = [
         "hub_cta_right": "6 Annotated Screenshots",
         "has_lightbox": True,
     },
+    {
+        "num": 9,
+        "slug": "mcp-offline-workflows",
+        "filename": "mcp-offline-workflows.html",
+        "nav_short": "MCP & AI",
+        "sidebar_label": "Offline MCP & AI Automation",
+        "footer_label": "Offline MCP & AI Automation",
+        "breadcrumb_title": "Offline Model Context Protocol (MCP) & AI Automation",
+        "meta_title": "09. Offline Model Context Protocol (MCP) & AI Automation — RotaryCAM Documentation",
+        "meta_description": "Step-by-step guide to RotaryCAM's 100% offline Model Context Protocol (MCP) server: connect Claude Desktop, Cursor, or LM Studio, run first-principles drive math, analyze STEP CAD files, apply zero-bevel copes, and emit production G-code air-gapped.",
+        "hero_title_html": 'Offline Model Context Protocol (MCP) &amp; <span class="text-gradient-amber">AI Automation</span>',
+        "hero_subtitle_html": 'How to connect local AI coding assistants (Claude Desktop, Cursor, LM Studio) to RotaryCAM&rsquo;s 100% offline MCP stdio server (<code class="mono">rotarycam-mcp</code>), calculate drive kinematics with first-principles physics, inspect STEP CAD solids, apply dual-curve zero-bevel compensation, and emit shop-ready G-code without sending a single byte to the cloud.',
+        "steps_count": 8,
+        "steps_label": "8 Steps • Integration Guide",
+        "meta_pills": [
+            {"style": "cyan", "html": "<strong>100% Air-Gapped:</strong> Standard JSON-RPC 2.0 over Stdio"},
+            {"style": "", "html": "<strong>Supported Clients:</strong> Claude Desktop, Cursor, VS Code, LM Studio"},
+        ],
+        "toc": [
+            {"id": "step-1", "badge": "01", "label": "Locate Binary &amp; Activate License"},
+            {"id": "step-2", "badge": "02", "label": "Configure Claude Desktop"},
+            {"id": "step-3", "badge": "03", "label": "Configure Cursor &amp; VS Code"},
+            {"id": "step-4", "badge": "04", "label": "Air-Gapped Setup with Open LLMs"},
+            {"id": "step-5", "badge": "05", "label": "First-Principles Drive Math"},
+            {"id": "step-6", "badge": "06", "label": "Headless STEP CAD Analysis"},
+            {"id": "step-7", "badge": "07", "label": "Dual-Curve Zero-Bevel Compensation"},
+            {"id": "step-8", "badge": "08", "label": "Generate G-Code &amp; 3D Visual Handoff"},
+        ],
+        "pagination_title": "Offline MCP & AI Automation",
+        "pagination_desc": "Connect local AI assistants, run drive math, analyze CAD & emit production G-code",
+        "hub_thumb": None,
+        "hub_custom_thumb_html": """<div class="docs-hub-code-preview">
+              <div>
+                <div class="code-line-muted"># rotarycam-mcp stdio (JSON-RPC 2.0)</div>
+                <div class="code-line-amber">Claude Desktop / Cursor / LM Studio</div>
+                <div class="code-line-cyan">→ analyze_step(path="rollcage.step")</div>
+              </div>
+              <div>
+                <div class="code-line-emerald">→ apply_zero_bevel(intensity=60.0)</div>
+                <div>→ generate_gcode(mode="auto")</div>
+                <div class="code-line-amber">→ open_in_rotarycam() → WebGL 3D</div>
+              </div>
+            </div>""",
+        "hub_title": "Offline MCP &amp; AI Automation",
+        "hub_desc": "Connect Claude Desktop, Cursor, or LM Studio to RotaryCAM's 100% offline `rotarycam-mcp` stdio server. Calculate drive kinematics from pitch and gear ratios, inspect STEP files, apply zero-bevel copes, and generate G-code air-gapped.",
+        "hub_topics": [
+            "100% offline stdio server for macOS, Linux, and Windows",
+            "First-principles drive math (rack-and-pinion, ballscrew, rotary)",
+            "STEP CAD feature extraction &amp; dual-curve zero-bevel compensation",
+            "Headless G-code generation &amp; interactive 3D WebGL handoff",
+        ],
+        "hub_cta_right": "8-Step Technical Reference",
+        "has_lightbox": False,
+    },
 ]
 
 

@@ -62,6 +62,8 @@
         
         <a href="cut-charts-and-features.html">08. Cut Charts</a>
         
+        <a href="mcp-offline-workflows.html">09. MCP & AI</a>
+        
       </div>
 
       <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
@@ -87,7 +89,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>8 Core Workflows</strong> • 52 Documented Steps</span>
+          <span class="docs-meta-pill amber"><strong>9 Core Workflows</strong> • 60 Documented Steps</span>
           <span class="docs-meta-pill cyan"><strong>Controllers:</strong> SimCNC 3.5 / 3.6 Beta / Generic G94</span>
           <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) Single, Bent &amp; Multi-Body Assemblies</span>
         </div>
@@ -359,6 +361,48 @@
           </div>
         </a>
         
+        <!-- Guide 9: Offline MCP &amp; AI Automation -->
+        <a href="mcp-offline-workflows.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            
+            <div class="docs-hub-code-preview">
+              <div>
+                <div class="code-line-muted"># rotarycam-mcp stdio (JSON-RPC 2.0)</div>
+                <div class="code-line-amber">Claude Desktop / Cursor / LM Studio</div>
+                <div class="code-line-cyan">→ analyze_step(path="rollcage.step")</div>
+              </div>
+              <div>
+                <div class="code-line-emerald">→ apply_zero_bevel(intensity=60.0)</div>
+                <div>→ generate_gcode(mode="auto")</div>
+                <div class="code-line-amber">→ open_in_rotarycam() → WebGL 3D</div>
+              </div>
+            </div>
+            
+            <span class="docs-hub-badge">TUTORIAL 09 • 8 STEPS • INTEGRATION GUIDE</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Offline MCP &amp; AI Automation</h2>
+            <p class="docs-hub-desc">
+              Connect Claude Desktop, Cursor, or LM Studio to RotaryCAM's 100% offline `rotarycam-mcp` stdio server. Calculate drive kinematics from pitch and gear ratios, inspect STEP files, apply zero-bevel copes, and generate G-code air-gapped.
+            </p>
+            <ul class="docs-hub-topics">
+              
+              <li>100% offline stdio server for macOS, Linux, and Windows</li>
+              
+              <li>First-principles drive math (rack-and-pinion, ballscrew, rotary)</li>
+              
+              <li>STEP CAD feature extraction &amp; dual-curve zero-bevel compensation</li>
+              
+              <li>Headless G-code generation &amp; interactive 3D WebGL handoff</li>
+              
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 09</span>
+              <span>8-Step Technical Reference →</span>
+            </div>
+          </div>
+        </a>
+        
       </div>
 
       <!-- Quick Reference Callout -->
@@ -425,6 +469,8 @@
           <a href="simcnc-motion-sync.html">07. SimCNC Motion-Sync & Ramp</a>
           
           <a href="cut-charts-and-features.html">08. Cut Charts & Feature Toggles</a>
+          
+          <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
           
         </div>
         <div class="footer-col">
