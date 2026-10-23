@@ -282,8 +282,22 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Latest Release: Oct 22 -->
+            <!-- Latest Release: Oct 23 -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--plasma-amber); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 23, 2026</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">100% Offline Model Context Protocol (MCP) Stdio Server &amp; First-Principles Drive Math</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>100% Offline Model Context Protocol (MCP) Stdio Server (<code class="mono">rotarycam-mcp</code>):</strong> Shipped a standalone, offline MCP server binary for macOS (arm64), Linux (x64), and Windows (x64) co-located directly inside the release bundle. Connect it to Claude Desktop, Cursor, or any local MCP client to configure machines, inspect CAD geometry, and generate production rotary plasma G-code using your local <code class="mono">rotarycam.lic</code> without sending a single byte to the cloud.</li>
+                <li><strong>Drive Math Without Magic Numbers:</strong> S-curve jerk, acceleration, and velocity calculation tools (<code class="mono">rack_pinion_travel</code>, <code class="mono">lead_screw_travel</code>, <code class="mono">rotary_travel</code>, <code class="mono">axis_max_velocity</code>, <code class="mono">axis_max_acceleration</code>, <code class="mono">axis_jerk_from_ramp</code>) let AI assistants calculate your machine kinematic limits directly from motor RPM, gearbox ratio, pinion tooth count, or screw pitch using first-principles physics.</li>
+                <li><strong>Headless STEP CAM Analysis &amp; Zero-Bevel Toolpathing:</strong> AI assistants can analyze solid STEP geometry (<code class="mono">analyze_step</code>), calculate dual-curve zero-bevel compensation on copes and saddles at your chosen intensity (e.g. 60% intensity via <code class="mono">apply_zero_bevel</code>), and emit machine-ready G-code for both single parts and full mill sticks (<code class="mono">generate_gcode</code>) with 100% parity with the desktop app.</li>
+                <li><strong>Interactive 3D Handoff (<code class="mono">open_in_rotarycam</code>):</strong> One tool call opens your active part and toolpath in RotaryCAM's local 3D WebGL viewer and cut simulator in your browser, keeping the headless workflow connected to your visual verification.</li>
+              </ul>
+            </div>
+
+            <!-- Oct 22 Release -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
                 <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 22, 2026</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Full-Speed HSS Flat Walls, Corner Tracking, Hypertherm SYNC Cut Charts &amp; Feature Toggles</span>
