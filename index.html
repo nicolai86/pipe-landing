@@ -932,13 +932,18 @@
   <section class="hero">
     <div>
       <div class="badge">
-        <span class="mono">100% OFFLINE DESKTOP &amp; WEB APP</span>
+        <span class="mono">ZERO 2D UNROLLING</span>
         <span>•</span>
-        <span>ZERO CLOUD • ZERO 2D UNROLLING</span>
+        <span class="mono">100% OFFLINE</span>
+        <span>•</span>
+        <span class="mono" style="color: var(--plasma-amber);">BUILT-IN MCP AUTOMATION</span>
       </div>
       <h1>Raw 3D CAD Assemblies In. <span>Clean 4-Axis Plasma G-Code Out.</span></h1>
       <p>
         Stop wasting hours flattening 3D tubing into distorted 2D DXFs in CAD. Drop your finished 3D CAD frame, roll cage, or truss straight into RotaryCAM. It detects your pipe, tube, cope, and hole cuts automatically, calculates zero-gap saddle joints that fit tight with no grinder work, and outputs machine-ready G-code for your 4-axis rotary plasma table.
+      </p>
+      <p style="margin-top: 0.85rem; color: var(--text-dim); font-size: 0.95rem; line-height: 1.55;">
+        Want to accelerate your workflow even further? With built-in <strong>Model Context Protocol (MCP)</strong> support, you can automate tube inspection, zero-beveling, and multi-stick nesting directly from <strong>Claude Desktop</strong>, <strong>Cursor</strong>, or your local offline AI assistant—100% air-gapped at the machine.
       </p>
 
       <div class="cta-group" id="download">
@@ -948,6 +953,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
             Join the Beta Waitlist
+          </a>
+          <a href="docs/mcp-offline-workflows.html" class="secondary-btn" style="border-color: rgba(245, 158, 11, 0.35); color: #f59e0b;">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+            Offline MCP Guide ↗
           </a>
           <a href="docs/index.html" class="secondary-btn">
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -962,7 +973,7 @@
             Build Your Own ↗
           </a>
         </div>
-        <div class="sub-cta mono" style="text-align: left;">Free during beta • Built for SimCNC &amp; standard 4-axis controllers</div>
+        <div class="sub-cta mono" style="text-align: left;">Free during beta • Built-in Claude &amp; Cursor stdio server • Built for SimCNC &amp; 4-axis controllers</div>
       </div>
     </div>
 
@@ -1071,7 +1082,7 @@
     </div>
 
     <!-- Showcase Item 5: Machine Kinematics & THC -->
-    <div class="showcase-card" style="margin-bottom: 0;">
+    <div class="showcase-card">
       <div class="showcase-header">
         <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">CONTROLLER & THC INTEGRATION</span>
         <h3>Machine Profiles & Hardware Torch Height Control (THC)</h3>
@@ -1087,6 +1098,44 @@
       </div>
       <div class="showcase-img-container">
         <img src="assets/machine-kinematics.png" alt="Machine Kinematics and Hardware THC Synchronization in RotaryCAM" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Showcase Item 6: Built-In MCP Automation -->
+    <div class="showcase-card" id="mcp" style="margin-bottom: 0;">
+      <div class="showcase-header">
+        <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">BUILT-IN MCP AUTOMATION</span>
+        <h3>MCP-First AI Integration — Speed Up Your Shop Workflow</h3>
+        <p>
+          Automate repetitive CAM tasks directly from your AI assistant. RotaryCAM ships with a native, 100% offline <code class="mono">rotarycam-mcp</code> stdio server. Ask Claude Desktop, Cursor, or your local offline LLM to calculate motor drive ratios, inspect STEP weldments, apply dual-curve zero-bevel saddle compensation, and emit production G-code—then launch the interactive 3D WebGL simulator with one command (<code class="mono">open_in_rotarycam</code>). Zero cloud uploads, 100% local.
+        </p>
+        <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>Claude &amp; Cursor Stdio</span>
+          <span class="pill"><span class="pill-dot"></span>100% Air-Gapped</span>
+          <span class="pill"><span class="pill-dot"></span>19 Drive &amp; CAM Tools</span>
+          <span class="pill"><span class="pill-dot"></span>Live 3D Handoff</span>
+        </div>
+        <div style="margin-top: 1.25rem;">
+          <a href="docs/mcp-offline-workflows.html" class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.88rem; text-decoration: none;">
+            Read Tutorial 09: Offline MCP &amp; AI Automation Guide →
+          </a>
+        </div>
+      </div>
+      <div class="showcase-img-container" style="background: #000; padding: 1.5rem; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+        <div style="width: 100%; font-family: monospace; font-size: 0.82rem; line-height: 1.8;">
+          <div style="color: var(--text-dim); margin-bottom: 0.25rem;"># Ask Claude Desktop or Cursor:</div>
+          <div style="color: #fff; margin-bottom: 0.85rem; font-weight: 600;">"Analyze rollcage-main-hoop.step in RotaryCAM, apply 60% zero-bevel compensation to round copes, and open in the 3D simulator."</div>
+          <div style="background: #090b0e; border: 1px solid var(--surface-border); border-radius: 6px; padding: 1rem;">
+            <div style="color: var(--plasma-amber); font-weight: 600;">→ analyze_step(path="rollcage-main-hoop.step")</div>
+            <div style="color: #94a3b8; margin-left: 1rem; font-size: 0.76rem;">Detected: Profile_HSS_Round (OD 44.45mm, Wall 3.1mm, 1 Saddle Cope)</div>
+            <div style="color: var(--cyan-arc); font-weight: 600; margin-top: 0.4rem;">→ apply_zero_bevel(intensity=60.0)</div>
+            <div style="color: #94a3b8; margin-left: 1rem; font-size: 0.76rem;">Applied: Dual-curve inner intersection clamping on saddle cope</div>
+            <div style="color: var(--emerald-cut); font-weight: 600; margin-top: 0.4rem;">→ generate_gcode(mode="auto")</div>
+            <div style="color: #94a3b8; margin-left: 1rem; font-size: 0.76rem;">Output: rollcage-main-hoop.nc (1,562 lines, SimCNC 4D velocity scaled)</div>
+            <div style="color: #f59e0b; font-weight: 600; margin-top: 0.4rem;">→ open_in_rotarycam()</div>
+            <div style="color: #94a3b8; margin-left: 1rem; font-size: 0.76rem;">Opened interactive 3D WebGL cut simulation at http://localhost:3000/process/...</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
