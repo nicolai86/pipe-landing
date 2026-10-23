@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary SEO Meta -->
+  <title>RotaryCAM | Release Notes, Changelog &amp; Beta Downloads</title>
+  <meta name="title" content="RotaryCAM | Release Notes, Changelog &amp; Beta Downloads" />
+  <meta name="description" content="Download the latest RotaryCAM 4-axis rotary CNC plasma CAM beta for macOS, Windows, and Linux. Detailed release notes, zero-bevel updates, 1D stick nesting, and offline MCP tools." />
+  <meta name="keywords" content="RotaryCAM changelog, rotary plasma downloads, SimCNC 4-axis G-code, pipe plasma release notes, zero-bevel saddle CAM, tube nesting software" />
+  <meta name="author" content="Raphael Randschau" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://rotarycam.app/changelog.html" />
+  <meta name="theme-color" content="#0d0f12" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rotarycam.app/changelog.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="RotaryCAM | Release Notes, Changelog &amp; Direct Beta Downloads" />
+  <meta property="og:description" content="Direct downloads for macOS, Windows, and Linux. Read the latest engineering release notes for 4-axis rotary plasma cutting." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://rotarycam.app/changelog.html" />
+  <meta name="twitter:title" content="RotaryCAM | Release Notes, Changelog &amp; Beta Downloads" />
+  <meta name="twitter:description" content="Direct downloads for macOS, Windows, and Linux. 100% offline 4-axis rotary CNC plasma CAM." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%2314171d' stroke='%23f59e0b' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='16' r='4' fill='%23f59e0b'/></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --surface: #14171d;
+      --surface-border: #232833;
+      --surface-hover: #1c212b;
+      --plasma-amber: #f59e0b;
+      --plasma-glow: rgba(245, 158, 11, 0.2);
+      --cyan-arc: #06b6d4;
+      --emerald-cut: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.2);
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --code-bg: #090b0e;
+      --radius: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 85px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .brand {
+      font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #fff;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Site Header */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 15, 18, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .site-header nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-tag {
+      font-size: 0.7rem;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--plasma-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .nav-links a {
+      position: relative;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.15s ease;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-links a.active {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--plasma-amber);
+      border-radius: 2px;
+      box-shadow: 0 0 8px var(--plasma-glow);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--plasma-amber);
+      color: #000;
+      padding: 0.48rem 1.05rem;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.2;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 0 16px var(--plasma-glow);
+    }
+
+    .nav-cta:hover {
+      background: #fbbf24;
+      transform: translateY(-1px);
+    }
+
+    /* Hero / Header Section */
+    .page-hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem 2.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--plasma-amber);
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2.1rem, 3.8vw, 3rem);
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .page-hero h1 span {
+      background: linear-gradient(135deg, #fff 40%, var(--plasma-amber));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .page-hero p.lead {
+      font-size: 1.12rem;
+      color: var(--text-muted);
+      max-width: 820px;
+      line-height: 1.65;
+    }
+
+    /* Public Beta & License Card */
+    .beta-card {
+      background: linear-gradient(145deg, rgba(20, 23, 29, 0.98), rgba(26, 31, 41, 0.98));
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 12px;
+      padding: 2.25rem;
+      margin: 2rem 0 3.5rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 25px rgba(245, 158, 11, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .beta-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--plasma-amber), var(--cyan-arc), var(--emerald-cut));
+    }
+
+    .beta-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .beta-header h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .beta-header p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      max-width: 780px;
+    }
+
+    .cycle-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald-cut);
+      padding: 0.35rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    /* Beta Feature Bullets */
+    .beta-features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .beta-feat-item {
+      background: rgba(10, 12, 16, 0.6);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 1rem 1.15rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .beta-feat-icon {
+      color: var(--emerald-cut);
+      font-size: 1.1rem;
+      line-height: 1.2;
+    }
+
+    .beta-feat-title {
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .beta-feat-desc {
+      color: var(--text-dim);
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    /* Downloads Grid */
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .download-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .download-card:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    }
+
+    .download-card.highlight {
+      border-color: var(--plasma-amber);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(20, 23, 29, 0.95) 100%);
+    }
+
+    .download-os-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .download-os-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .download-os-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .download-os-sub {
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--plasma-amber);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      margin-top: 1rem;
+      box-shadow: 0 0 18px var(--plasma-glow);
+    }
+
+    .download-btn:hover {
+      background: #fbbf24;
+      transform: translateY(-1px);
+    }
+
+    .download-note {
+      margin-top: 0.85rem;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.55rem 0.75rem;
+      border-radius: 6px;
+    }
+
+    .download-note code {
+      color: var(--cyan-arc);
+      background: rgba(6, 182, 212, 0.1);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      word-break: break-all;
+    }
+
+    /* License Token Block */
+    .license-block {
+      background: #090b0e;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .license-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .license-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--plasma-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 0.4rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .copy-btn:hover {
+      background: var(--plasma-amber);
+      color: #000;
+    }
+
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--emerald-cut);
+      border-color: var(--emerald-cut);
+    }
+
+    .license-box {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cyan-arc);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      word-break: break-all;
+      max-height: 85px;
+      overflow-y: auto;
+      user-select: all;
+      line-height: 1.5;
+    }
+
+    .license-helper {
+      margin-top: 0.65rem;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    /* Changelog Entries Timeline */
+    .changelog-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+    }
+
+    .timeline-wrap {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 15px;
+      bottom: 20px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--plasma-amber), rgba(35, 40, 51, 0.5));
+    }
+
+    .release-entry {
+      position: relative;
+      margin-bottom: 3.5rem;
+    }
+
+    .release-marker {
+      position: absolute;
+      left: -2.5rem;
+      top: 6px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--plasma-amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px var(--plasma-glow);
+    }
+
+    .release-marker::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--plasma-amber);
+    }
+
+    .release-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 2rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      transition: border-color 0.2s ease;
+    }
+
+    .release-card:hover {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .release-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .release-date-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .release-date {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .release-version-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--plasma-amber);
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .release-summary {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* Change Item Badges */
+    .change-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .change-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    .badge-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 2px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 3px;
+      line-height: 1.3;
+    }
+
+    .badge-new {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald-cut);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .badge-improvement {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--cyan-arc);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+    }
+
+    .badge-fix {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--plasma-amber);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    .badge-performance {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+    }
+
+    .change-content strong {
+      color: #fff;
+    }
+
+    .change-content code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--plasma-amber);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* Footer */
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .footer-brand {
+      color: #f1f5f9;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-sub {
+      color: var(--text-dim);
+      font-size: 0.825rem;
+      line-height: 1.5;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s ease;
+      cursor: pointer;
+    }
+
+    .footer-link:hover {
+      color: var(--plasma-amber);
+    }
+
+    @media (max-width: 900px) {
+      .download-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+      .timeline-wrap {
+        padding-left: 2rem;
+      }
+      .release-marker {
+        left: -2rem;
+        width: 20px;
+        height: 20px;
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+      .footer-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <nav>
+      <a href="index.html" class="brand">
+        <span>RotaryCAM</span>
+        <span class="brand-tag">v0.2-BETA</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+        <a href="index.html#features">Features</a>
+        <a href="docs/index.html">Documentation</a>
+        <a href="build-guide.html">Build Your Own Table</a>
+        <a href="changelog.html" class="active">Changelog</a>
+      </div>
+      <a href="#downloads" class="nav-cta">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Download Beta
+      </a>
+    </nav>
+  </header>
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="hero-badge">
+      <span class="mono">OPEN PUBLIC BETA</span>
+      <span>•</span>
+      <span class="mono">30-DAY WORKSTATION LICENSE</span>
+      <span>•</span>
+      <span class="mono">100% OFFLINE</span>
+    </div>
+    <h1>Public Beta Releases &amp; <span>Engineering Changelog</span></h1>
+    <p class="lead">
+      Direct downloads for cutting station PCs and CAD workstations. RotaryCAM processes raw STEP assemblies into production 4-axis rotary plasma G-code directly on your machine with zero cloud connectivity. Every installer includes zero-bevel saddle compensation, 1D mill-stick nesting, and offline MCP automation.
+    </p>
+
+    <!-- Public Beta Announcement & License Card -->
+    <div class="beta-card" id="downloads">
+      <div class="beta-header">
+        <div>
+          <h2>Direct Beta Downloads (Latest Builds)</h2>
+          <p>
+            RotaryCAM is currently in open Public Beta with a 30-day renewal cycle. Extract the archive to your machine and start cutting immediately.
+          </p>
+        </div>
+        <div class="cycle-badge mono">
+          <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--emerald-cut); box-shadow: 0 0 6px var(--emerald-cut);"></span>
+          30-Day Auto Renewal
+        </div>
+      </div>
+
+      <!-- Feature Scope List -->
+      <div class="beta-features-grid">
+        <div class="beta-feat-item">
+          <div class="beta-feat-icon">✓</div>
+          <div>
+            <div class="beta-feat-title">Zero-Bevel Saddle Joints</div>
+            <div class="beta-feat-desc">Dual-curve compensation aligns perpendicular torch cuts with inner pipe walls for zero-gap fitups.</div>
+          </div>
+        </div>
+        <div class="beta-feat-item">
+          <div class="beta-feat-icon">✓</div>
+          <div>
+            <div class="beta-feat-title">1D Mill-Stick Nesting</div>
+            <div class="beta-feat-desc">Pack up to 10 matching tubes per 20ft / 6m stock with auto kerf and thermal hop sequencing.</div>
+          </div>
+        </div>
+        <div class="beta-feat-item">
+          <div class="beta-feat-icon">✓</div>
+          <div>
+            <div class="beta-feat-title">3D Cut-and-Bend Unfolding</div>
+            <div class="beta-feat-desc">Unfold up to 10 bends per stick for square/rectangular HSS and round pipe with living-hinge spines.</div>
+          </div>
+        </div>
+        <div class="beta-feat-item">
+          <div class="beta-feat-icon" style="color: var(--plasma-amber);">ℹ</div>
+          <div>
+            <div class="beta-feat-title">Production Notice</div>
+            <div class="beta-feat-desc">Tab cutting (uncut bridge holding) is reserved for the full v1.0 release. All other CAM features active.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download Buttons Grid -->
+      <div class="download-grid">
+        <!-- macOS -->
+        <div class="download-card" id="card-macos">
+          <div>
+            <div class="download-os-header">
+              <div class="download-os-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.64-.78 1.08-1.86.96-2.95-1 .04-2.16.66-2.84 1.45-.58.67-1.1 1.76-.96 2.82 1.11.09 2.22-.56 2.84-1.32z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="download-os-title">macOS</div>
+                <div class="download-os-sub">Apple Silicon (arm64)</div>
+              </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.82rem; line-height: 1.45;">
+              Native Apple Silicon build. Optimized for Metal 3D CAD visualization and local neural network inference.
+            </p>
+          </div>
+          <div>
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-macOS-latest.zip" class="download-btn" id="btn-macos">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              Download for macOS (.zip)
+            </a>
+            <div class="download-note">
+              <strong>Terminal note:</strong> If macOS Gatekeeper blocks opening, run:
+              <br><code>xattr -cr /Applications/RotaryCAM.app</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Windows -->
+        <div class="download-card" id="card-windows">
+          <div>
+            <div class="download-os-header">
+              <div class="download-os-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                </svg>
+              </div>
+              <div>
+                <div class="download-os-title">Windows</div>
+                <div class="download-os-sub">64-bit (x64)</div>
+              </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.82rem; line-height: 1.45;">
+              Windows 10 / 11 64-bit desktop build. Pre-packaged with headless server, WebGL simulator, and stdio MCP server.
+            </p>
+          </div>
+          <div>
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-Windows-latest.zip" class="download-btn" id="btn-windows">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              Download for Windows (.zip)
+            </a>
+            <div class="download-note">
+              <strong>SmartScreen note:</strong> Click <em>"More info"</em> &rarr; <em>"Run anyway"</em> on first launch.
+            </div>
+          </div>
+        </div>
+
+        <!-- Linux -->
+        <div class="download-card" id="card-linux">
+          <div>
+            <div class="download-os-header">
+              <div class="download-os-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.001 2c-3.14 0-5.69 2.55-5.69 5.69 0 1.25.4 2.41 1.08 3.36C5.55 12.18 4 14.86 4 18c0 .55.45 1 1 1h14c.55 0 1-.45 1-1 0-3.14-1.55-5.82-3.39-6.95.68-.95 1.08-2.11 1.08-3.36 0-3.14-2.55-5.69-5.69-5.69zm0 2.28c1.88 0 3.41 1.53 3.41 3.41 0 .61-.17 1.18-.45 1.68-.78-.44-1.81-.68-2.96-.68s-2.18.24-2.96.68c-.28-.5-.45-1.07-.45-1.68 0-1.88 1.53-3.41 3.41-3.41zM6.22 17c.56-2.58 2.87-4.5 5.78-4.5s5.22 1.92 5.78 4.5H6.22z"/>
+                </svg>
+              </div>
+              <div>
+                <div class="download-os-title">Linux</div>
+                <div class="download-os-sub">x86_64 (x64)</div>
+              </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.82rem; line-height: 1.45;">
+              Standalone x86_64 binary. Ideal for shop-floor LinuxCNC and dedicated industrial touchscreen controllers.
+            </p>
+          </div>
+          <div>
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-Linux-latest.zip" class="download-btn" id="btn-linux">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+              </svg>
+              Download for Linux (.zip)
+            </a>
+            <div class="download-note">
+              <strong>Shell note:</strong> Extract and run <code>chmod +x RotaryCAM</code> before starting.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fallback License Key Block -->
+      <div class="license-block">
+        <div class="license-header">
+          <div class="license-title">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--plasma-amber)">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+            </svg>
+            Fallback Offline License Token (Pre-bundled in all .zip files)
+          </div>
+          <button type="button" class="copy-btn" id="copy-license-btn" onclick="copyLicenseToken()">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <span id="copy-btn-text">📋 Copy License Token</span>
+          </button>
+        </div>
+        <div class="license-box" id="license-token-text">eyJ1c2VySWQiOiJ1c3JfcHVibGljX2JldGEiLCJlbWFpbCI6ImJldGFAcm90YXJ5Y2FtLmFwcCIsIm5hbWUiOiJQdWJsaWMgQmV0YSBXb3Jrc3RhdGlvbiIsInRpZXIiOiJiZXRhIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTIzVDE5OjA5OjEyWiIsImV4cGlyZXNBdCI6IjIwMjYtMTEtMjJUMTk6MDk6MTJaIiwicGVybWlzc2lvbnMiOnsibWF4VXBsb2Fkc1BlcldpbmRvdyI6bnVsbCwidXBsb2FkV2luZG93U2Vjb25kcyI6bnVsbCwibWF4TmVzdGluZ09iamVjdHMiOjEwLCJhbGxvd0N1c3RvbU1hY2hpbmVzIjp0cnVlLCJhbGxvd0ZlYXR1cmVPdmVycmlkZXMiOnRydWUsImFsbG93UGFja01vZGUiOnRydWUsImFsbG93WmVyb0JldmVsIjp0cnVlLCJhbGxvd0c5M0ludmVyc2VUaW1lIjp0cnVlLCJhbGxvd1R1YmVCZW5kaW5nIjp0cnVlLCJtYXhCZW5kc1BlckZpbGUiOjEwLCJtYXhCZW5kc1BlcldpbmRvdyI6MTAsImFsbG93VGFicyI6ZmFsc2V9fQ.mXcCAURae4ysuM2bbLPpn3Kmmf6z22ZZ2bpD-81RdZEEXFi4OFgiFW0YF63PBnx-5wF17ZjWx_o_kYGhHGT6AQ</div>
+        <div class="license-helper">
+          Every zip archive comes with <code class="mono" style="color: #fff;">rotarycam.lic</code> pre-installed in the root folder. If you ever need to re-authenticate or run the standalone MCP server independently, paste this signed token into the application login screen or copy it into your working directory as <code class="mono" style="color: #fff;">rotarycam.lic</code>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chronological Release Entries -->
+  <main class="changelog-section">
+    <div class="timeline-wrap">
+
+      <!-- ================================================================
+           RELEASE: October 23, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.2.4">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 23, 2026</span>
+              <span class="release-version-pill">v0.2.4</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Offline MCP Server &bull; Kinematics Physics Tools &bull; Headless CAM</span>
+          </div>
+          <p class="release-summary">
+            Shipped a standalone, 100% offline Model Context Protocol (MCP) stdio server directly inside release bundles. Fabricators can now automate CAD inspection, zero-beveling, kinematics physics calculations, and G-code generation through Claude Desktop, Cursor, or local LLMs without sending any files to the cloud.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>100% Offline MCP Stdio Server (<code>rotarycam-mcp</code>):</strong> Shipped cross-platform binaries for macOS (arm64), Linux (x64), and Windows (x64). Automatically discovers co-located <code>rotarycam.lic</code> and executes 19 CAD, CAM, kinematics, and nesting tools locally.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Kinematics Physics Tools:</strong> Added first-principles mechanical verification tools: <code>axis_max_velocity</code>, <code>axis_max_acceleration</code>, <code>axis_jerk_from_ramp</code>, <code>lead_screw_travel</code>, <code>rack_pinion_travel</code>, and <code>rotary_travel</code> to validate axis drive gearing and stepper/servo limits before cutting.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Headless STEP CAM Automation:</strong> Exposing <code>analyze_step</code>, <code>apply_zero_bevel</code>, and <code>generate_gcode</code> for fully automated script-driven CAM toolpath generation directly from terminal sessions.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>WebGL 3D Handoff (<code>open_in_rotarycam</code>):</strong> Terminal and MCP workflows can launch the interactive 3D WebGL viewport in your default browser with a single tool call, instantly loading your STEP solid with colored cut contours.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-performance">PERFORMANCE</span>
+              <div class="change-content">
+                <strong>Zero-Network License Validation:</strong> Offline Ed25519 signature checks verify license tokens in under 1 millisecond with zero external network socket requests.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
+           RELEASE: October 22, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.2.3">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 22, 2026</span>
+              <span class="release-version-pill">v0.2.3</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">ClearPath Servos &bull; M108 Toggle &bull; Bent Rectangular HSS</span>
+          </div>
+          <p class="release-summary">
+            Tuned machine motion presets for high-speed Teknic ClearPath servos, defaulted M108 auxiliary velocity off for SimCNC compatibility, improved rectangular HSS spine unrolling, and refined G93 inverse-time simulator timing.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Tuned Teknic ClearPath Servo Profiles:</strong> Added pre-configured acceleration and jerk limits matched to 10:1 planetary rotary chucks and ClearPath CPM-SDSK servos.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>M108 Feed Velocity Toggle Defaulted Off:</strong> Auxiliary M108 velocity commands are now optional and defaulted to off to eliminate syntax conflicts on standard SimCNC and Mach4 controllers.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Continuous-Spine Bent Rectangular HSS Unrolling:</strong> Unfolding rectangular tubing across non-square cross-sections preserves uncut living-hinge webs without tearing corner geometry.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-performance">PERFORMANCE</span>
+              <div class="change-content">
+                <strong>Realistic G93 Simulator Timing:</strong> 3D toolpath simulation now accurately calculates rotary axis acceleration ramps and G93 inverse-time cycles, matching actual machine cutting times within 2%.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Non-Resident Session Storage:</strong> Disk-backed streaming session storage prevents RAM spikes when processing large assemblies with dozens of complex tubes.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
+           RELEASE: October 20, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.2.2">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 20, 2026</span>
+              <span class="release-version-pill">v0.2.2</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">3D Cut-and-Bend Unfolding &bull; Multi-Stick ZIP Export &bull; SimCNC 3.6</span>
+          </div>
+          <p class="release-summary">
+            Introduced 3D Bent Tube cut-and-bend unfolding for square and rectangular tubing, multi-stick ZIP G-code bundling, dedicated SimCNC 3.5 vs. 3.6 beta post-processor profiles, and flat wall corner tracking.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>3D Bent Tube Cut-and-Bend Unfolding:</strong> Import 3D bent tube STEP files. RotaryCAM automatically detects bend centerlines, unfolds the tube into a straight stick, and programs kerf-relief slots with living hinge spines.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Multi-Stick ZIP Download:</strong> Automatically packages all nested sticks into a single ZIP archive containing individual numerical control files (<code>stick_01.nc</code>, <code>stick_02.nc</code>) and a complete nesting manifest.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>SimCNC 3.5 vs. 3.6 Beta Controller Profiles:</strong> Tailored G-code output supporting SimCNC 3.6 beta kinematics updates and legacy 3.5 motion scripts.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Configurable X Travel Direction:</strong> Machine profiles now support toggling +X forward vs. -X forward motion to match your rotary chuck orientation (front-mounted vs. rear-mounted).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Collapsible Bend Groups:</strong> Inspect each bend independently, override relief cut counts (e.g. <code>3 &rarr; 5</code> cuts), and adjust uncut web width (<code>Edge Left: 30 mm</code>) directly in the cut-path panel.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Flat HSS Cheek Cut Corner Tracking:</strong> Fixed lead-in divots on rectangular tube flat walls by forcing straight-line tangent entries on outer corner radiuses.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
+           RELEASE: October 18, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.2.1">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 18, 2026</span>
+              <span class="release-version-pill">v0.2.1</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">1D Mill-Stick Nesting &bull; Kerf Compensation &bull; Remnant Management</span>
+          </div>
+          <p class="release-summary">
+            Shipped universal multi-part stick nesting. Pack full CAD chassis frames and headache racks across standard 20ft / 6m mill sticks with automated kerf spacing, remnant tracking, and thermal hop cut sequencing.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Universal 1D Stick Nesting:</strong> Ingest multi-body assemblies (up to 37 tubes) and pack matching cross-sections across multiple sticks with configurable inter-part gaps (e.g. <code>10 mm</code>).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Remnant Management &amp; Cut Efficiency:</strong> Computes exact remnant offcut lengths and displays stick utilization percentages (consistently exceeding 99% on production runs).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-performance">PERFORMANCE</span>
+              <div class="change-content">
+                <strong>Thermal Hop Sequencing:</strong> Alternates cut contours along opposite ends of the tube to minimize localized heat buildup and eliminate thermal expansion drift during long cutting jobs.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Automatic Profile Cross-Section Filtering:</strong> Automatically separates 2x2 square tubing from 1.75in round tube and routes parts to corresponding stock nests.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
+           RELEASE: October 16, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.2.0">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 16, 2026</span>
+              <span class="release-version-pill">v0.2.0</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Dual-Curve Zero-Bevel &bull; 4D Feedrate Scaling &bull; FOVNet AI</span>
+          </div>
+          <p class="release-summary">
+            Initial public beta milestone: Dual-curve zero-bevel saddle joint compensation, 4D SimCNC feedrate scaling, and deep neural network solid profile classification from raw STEP B-Rep topology.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Dual-Curve Zero-Bevel Saddle Compensation:</strong> Solves the perpendicular torch problem on round pipe. Shifts cutting curves to the inner cylinder intersection, eliminating grinding for tight, zero-gap saddle fitups.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>4D SimCNC Trajectory Feedrate Scaling:</strong> Dynamically calculates 4D Euclidean motion vector scaling (<code>useSimCNC: true</code>) to guarantee steady surface torch velocity across rapid rotary moves without native inverse-time support.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>FOVNet Solid Profile Classifier:</strong> Graph neural network analyzes 3D STEP geometry directly, identifying round pipe, square tube, rectangular HSS, angle iron, and channel profiles instantly.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Dynamic THC Corner Anti-Dive Locking:</strong> Issues synchronized <code>M62</code> / <code>M63</code> high-speed digital output commands during corner slowdowns, preventing the torch from diving into the tube wall.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-brand mono">rotarycam.app &copy; 2026 Raphael Randschau</div>
+      <div class="footer-sub">Dedicated 4-axis rotary plasma CAM &bull; Built for SimCNC, Mach4, LinuxCNC &amp; Masso</div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
+      <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">Build Your Own Table ↗</a>
+      <a href="changelog.html" class="footer-link" style="color: #fff;">Changelog</a>
+      <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
+    </div>
+  </footer>
+
+  <!-- Scripts: 1-Click License Token Copy & Platform Detection -->
+  <script>
+    function copyLicenseToken() {
+      const text = document.getElementById('license-token-text').innerText.trim();
+      const btn = document.getElementById('copy-license-btn');
+      const btnText = document.getElementById('copy-btn-text');
+
+      navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btnText.textContent = '✓ Copied to Clipboard!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btnText.textContent = '📋 Copy License Token';
+        }, 3000);
+      }).catch(err => {
+        console.error('Failed to copy token:', err);
+        // Fallback selection
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById('license-token-text'));
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        btnText.textContent = 'Selected — Press Ctrl+C / Cmd+C';
+      });
+    }
+
+    // Auto-highlight user's platform download card
+    document.addEventListener('DOMContentLoaded', () => {
+      const platform = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase();
+      const ua = navigator.userAgent.toLowerCase();
+
+      if (platform.includes('mac') || ua.includes('macintosh')) {
+        document.getElementById('card-macos')?.classList.add('highlight');
+      } else if (platform.includes('win') || ua.includes('windows')) {
+        document.getElementById('card-windows')?.classList.add('highlight');
+      } else if (platform.includes('linux') || ua.includes('linux')) {
+        document.getElementById('card-linux')?.classList.add('highlight');
+      }
+    });
+  </script>
+</body>
+</html>
