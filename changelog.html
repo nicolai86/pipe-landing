@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.2-BETA</span>
+        <span class="brand-tag">v0.2.4-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -1269,5 +1269,14 @@
       }
     });
   </script>
+<script src="version.js"></script>
+<script>
+  (function () {
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.2.4-BETA';
+    document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
+    var d = document.getElementById('disclaimer-version');
+    if (d) { d.textContent = v; }
+  })();
+</script>
 </body>
 </html>

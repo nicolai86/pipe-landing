@@ -32,11 +32,15 @@ except ImportError:
     raise RuntimeError("Jinja2 is required to run scripts/build_docs.py. Install with `pip install jinja2`.")
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import version
 TEMPLATES_DIR = ROOT_DIR / "templates" / "docs"
 PAGES_TEMPLATE_DIR = TEMPLATES_DIR / "pages"
 DOCS_OUT_DIR = ROOT_DIR / "docs"
 
 CSS_VERSION = "20261023"
+VERSION = version.resolve_version()
+BETA_LABEL = version.beta_label(VERSION)
 FOOTER_TECH_STRIP = "G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING"
 
 # Central single-source-of-truth registry of all documentation tutorials
@@ -498,6 +502,8 @@ def build_all_docs():
         total_tutorials=total_tutorials,
         total_steps=total_steps,
         css_version=CSS_VERSION,
+        version=VERSION,
+        beta_label=BETA_LABEL,
         footer_tech_strip=FOOTER_TECH_STRIP,
     )
     (DOCS_OUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
@@ -516,6 +522,8 @@ def build_all_docs():
             prev_tutorial=prev_t,
             next_tutorial=next_t,
             css_version=CSS_VERSION,
+            version=VERSION,
+            beta_label=BETA_LABEL,
             footer_tech_strip=FOOTER_TECH_STRIP,
         )
         out_path = DOCS_OUT_DIR / t["filename"]
