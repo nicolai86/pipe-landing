@@ -12,21 +12,70 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="docs.css?v=20261022" />
+  <link rel="stylesheet" href="docs.css?v=20261023" />
   <style>
-    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; }
-    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.65rem; }
-    .site-header .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; flex-shrink: 0; }
-    .site-header .brand-tag { font-size: 0.68rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; }
-    .site-header .nav-links { display: flex; align-items: center; gap: 0.65rem; }
-    .site-header .nav-links a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.78rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.25rem 0; }
-    .site-header .nav-links a:hover { color: #fff; }
-    .site-header .nav-links a.active:not(.nav-back-link) { color: #fff; font-weight: 600; }
-    .site-header .nav-links a.active:not(.nav-back-link)::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.22); }
-    .site-header .nav-back-link { color: #f59e0b !important; font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem; }
-    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: all 0.2s ease; }
+    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
+    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
+    
+    .site-header-left { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .site-header .brand { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+    .site-header .brand-tag { font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .site-header .nav-back-link { color: #94a3b8 !important; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.15s ease; white-space: nowrap; }
+    .site-header .nav-back-link:hover { color: #f59e0b !important; }
+    .site-header .nav-divider { width: 1px; height: 16px; background: #232833; }
+
+    .site-header .nav-links { display: flex; align-items: center; gap: 1.35rem; flex-shrink: 0; }
+    .site-header .nav-links > a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.82rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.35rem 0; font-weight: 500; }
+    .site-header .nav-links > a:hover { color: #fff; }
+    .site-header .nav-links > a.active { color: #fff; font-weight: 600; }
+    .site-header .nav-links > a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+
+    /* Interactive Tutorials Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { background: transparent; border: none; color: #94a3b8; font-size: 0.82rem; font-family: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.35rem 0; transition: color 0.15s ease; }
+    .nav-dropdown-trigger:hover, .nav-dropdown:hover .nav-dropdown-trigger, .nav-dropdown-trigger.active { color: #fff; }
+    .nav-dropdown-trigger.active { font-weight: 600; }
+    .nav-dropdown-trigger .dropdown-caret { transition: transform 0.2s ease; opacity: 0.7; }
+    .nav-dropdown:hover .dropdown-caret, .nav-dropdown:focus-within .dropdown-caret { transform: rotate(180deg); opacity: 1; color: #f59e0b; }
+    .nav-active-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 1px 5px; border-radius: 4px; font-weight: 700; line-height: 1.2; }
+    .nav-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #232833; padding: 1px 5px; border-radius: 4px; font-weight: 600; line-height: 1.2; }
+
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 0.65rem); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(18, 22, 29, 0.98); border: 1px solid #232833; border-radius: 10px; box-shadow: 0 16px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); padding: 0.75rem; width: 560px; max-width: calc(100vw - 2rem); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; z-index: 1050; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: none; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .nav-dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.55rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.45rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+    .nav-dropdown-count { color: #f59e0b; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.5rem; max-height: 380px; }
+    .nav-dropdown-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.45rem 0.6rem; border-radius: 6px; text-decoration: none; color: #cbd5e1; transition: background 0.15s ease, color 0.15s ease; position: relative; }
+    .nav-dropdown-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .nav-dropdown-item.active { background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-dropdown-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #64748b; background: rgba(255,255,255,0.04); padding: 2px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+    .nav-dropdown-item.active .nav-dropdown-num { color: #f59e0b; background: rgba(245, 158, 11, 0.18); }
+    .nav-dropdown-content { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+    .nav-dropdown-title { font-size: 0.78rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-dropdown-sub { font-size: 0.66rem; color: #64748b; line-height: 1.2; }
+    .nav-dropdown-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink: 0; }
+
+    /* Right Section */
+    .site-header-right { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; font-weight: 500; }
     .site-header .nav-cta:hover { border-color: #f59e0b; color: #fff; }
-    @media (max-width: 1080px) { .site-header .nav-links { display: none; } }
+    
+    .nav-mobile-toggle { display: none; background: #14171d; border: 1px solid #232833; color: #94a3b8; border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; padding: 0; }
+    .nav-mobile-toggle:hover { color: #fff; border-color: #f59e0b; }
+
+    /* Mobile Drawer */
+    .docs-mobile-drawer { display: none; position: fixed; inset: 0; top: 57px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 999; padding: 1.5rem; overflow-y: auto; flex-direction: column; gap: 1.25rem; }
+    .docs-mobile-drawer.open { display: flex; }
+    .docs-mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .docs-mobile-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .docs-mobile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 8px; text-decoration: none; color: #cbd5e1; background: rgba(255,255,255,0.02); border: 1px solid #232833; font-size: 0.88rem; }
+    .docs-mobile-link:hover, .docs-mobile-link.active { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+
+    @media (max-width: 960px) {
+      .site-header .nav-links { display: none; }
+      .site-header .nav-divider { display: none; }
+      .nav-mobile-toggle { display: inline-flex; }
+    }
   </style>
 </head>
 <body>
@@ -37,38 +86,248 @@
        ======================================================================== -->
   <header class="site-header" id="navbar">
     <nav aria-label="Documentation Navigation">
-      <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
-        <span>RotaryCAM</span>
-        <span class="brand-tag">v0.2-BETA</span>
-      </a>
-
-      <div class="nav-links">
-        <a href="../index.html" class="nav-back-link">← RotaryCAM</a>
-        <a href="index.html">Overview</a>
-        
-        <a href="machine-configuration.html">01. Machine</a>
-        
-        <a href="cut-path-configuration.html">02. Cut Paths</a>
-        
-        <a href="nesting.html">03. Nesting</a>
-        
-        <a href="bending.html">04. Bending</a>
-        
-        <a href="changelog.html" class="active">05. Changelog</a>
-        
-        <a href="ai-autodetection.html">06. AI CAD</a>
-        
-        <a href="simcnc-motion-sync.html">07. SimCNC</a>
-        
-        <a href="cut-charts-and-features.html">08. Cut Charts</a>
-        
-        <a href="mcp-offline-workflows.html">09. MCP & AI</a>
-        
+      <div class="site-header-left">
+        <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.2-BETA</span>
+        </a>
+        <div class="nav-divider" aria-hidden="true"></div>
+        <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
       </div>
 
-      <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+
+        <!-- Tutorials Dropdown -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger active" aria-expanded="false" aria-haspopup="true">
+            <span>Tutorials</span>
+            
+            <span class="nav-active-badge">05</span>
+            
+            <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-header">
+              <span>All Workflows &amp; Tutorials</span>
+              <span class="nav-dropdown-count">9 Guides</span>
+            </div>
+            <div class="nav-dropdown-grid">
+              
+              <a href="machine-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">01</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Machine Configuration</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-path-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">02</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">UI & Cut Path Config</span>
+                  <span class="nav-dropdown-sub">8 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="nesting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">03</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Multi-Part Stick Nesting</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="bending.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">04</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Bending HSS & HSS-O</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="changelog.html" class="nav-dropdown-item active" role="menuitem">
+                <span class="nav-dropdown-num">05</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Build Info & Changelog</span>
+                  <span class="nav-dropdown-sub">2 Steps</span>
+                </span>
+                
+                <span class="nav-dropdown-dot" title="Current Guide"></span>
+                
+              </a>
+              
+              <a href="ai-autodetection.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">06</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Fusion 360 & AI Autodetect</span>
+                  <span class="nav-dropdown-sub">8 Steps • 11 Screenshots</span>
+                </span>
+                
+              </a>
+              
+              <a href="simcnc-motion-sync.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">07</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">SimCNC Motion-Sync & 3D Ramp</span>
+                  <span class="nav-dropdown-sub">12 Steps • Technical Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-charts-and-features.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">08</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
+                  <span class="nav-dropdown-sub">6 Steps • Visual Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="mcp-offline-workflows.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">09</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Offline MCP & AI Automation</span>
+                  <span class="nav-dropdown-sub">8 Steps • Integration Guide</span>
+                </span>
+                
+              </a>
+              
+            </div>
+          </div>
+        </div>
+
+        <a href="../build-guide.html">Machine Blueprint</a>
+        <a href="changelog.html" class="active">Changelog</a>
+      </div>
+
+      <div class="site-header-right">
+        <a href="../index.html#waitlist" class="nav-cta">Request Early Access</a>
+        <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
     </nav>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
+    <div class="docs-mobile-section-title">Navigation</div>
+    <div class="docs-mobile-list">
+      <a href="../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="index.html" class="docs-mobile-link">Documentation Hub Overview</a>
+      <a href="../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
+      <a href="changelog.html" class="docs-mobile-link active">Release Notes &amp; Changelog</a>
+    </div>
+
+    <div class="docs-mobile-section-title" style="margin-top: 1rem;">Tutorials &amp; Guides</div>
+    <div class="docs-mobile-list">
+      
+      <a href="machine-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">01</span>
+        <span>Machine Configuration</span>
+      </a>
+      
+      <a href="cut-path-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">02</span>
+        <span>UI & Cut Path Config</span>
+      </a>
+      
+      <a href="nesting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">03</span>
+        <span>Multi-Part Stick Nesting</span>
+      </a>
+      
+      <a href="bending.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">04</span>
+        <span>Bending HSS & HSS-O</span>
+      </a>
+      
+      <a href="changelog.html" class="docs-mobile-link active">
+        <span class="nav-dropdown-num">05</span>
+        <span>Build Info & Changelog</span>
+      </a>
+      
+      <a href="ai-autodetection.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">06</span>
+        <span>Fusion 360 & AI Autodetect</span>
+      </a>
+      
+      <a href="simcnc-motion-sync.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">07</span>
+        <span>SimCNC Motion-Sync & 3D Ramp</span>
+      </a>
+      
+      <a href="cut-charts-and-features.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">08</span>
+        <span>Cut Charts & Feature Toggles</span>
+      </a>
+      
+      <a href="mcp-offline-workflows.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">09</span>
+        <span>Offline MCP & AI Automation</span>
+      </a>
+      
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="../index.html#waitlist" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Request Early Access ↗</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Mobile drawer toggle
+      const toggle = document.getElementById('navMobileToggle');
+      const drawer = document.getElementById('docsMobileDrawer');
+      if (toggle && drawer) {
+        toggle.addEventListener('click', function () {
+          const isOpen = drawer.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        drawer.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            drawer.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Desktop/tablet dropdown toggle on click
+      const ddTrigger = document.querySelector('.nav-dropdown-trigger');
+      const dd = document.querySelector('.nav-dropdown');
+      if (ddTrigger && dd) {
+        ddTrigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = dd.classList.toggle('open');
+          ddTrigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function (e) {
+          if (!dd.contains(e.target)) {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
 
   <main>
 

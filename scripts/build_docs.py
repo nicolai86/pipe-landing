@@ -36,7 +36,7 @@ TEMPLATES_DIR = ROOT_DIR / "templates" / "docs"
 PAGES_TEMPLATE_DIR = TEMPLATES_DIR / "pages"
 DOCS_OUT_DIR = ROOT_DIR / "docs"
 
-CSS_VERSION = "20261022"
+CSS_VERSION = "20261023"
 FOOTER_TECH_STRIP = "G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING"
 
 # Central single-source-of-truth registry of all documentation tutorials
