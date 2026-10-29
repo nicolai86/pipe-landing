@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.2.4-BETA</span>
+        <span class="brand-tag">v0.3.0-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -961,6 +961,75 @@
   <!-- Chronological Release Entries -->
   <main class="changelog-section">
     <div class="timeline-wrap">
+
+      <!-- ================================================================
+           RELEASE: October 29, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.3.0">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 29, 2026</span>
+              <span class="release-version-pill">v0.3.0</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">VectorNester 2.0 2D Sheet Nesting &bull; Guaranteed G94 Flat Cutting &bull; 5-Rule THC Filter &bull; Max Amperage Cap</span>
+          </div>
+          <p class="release-summary">
+            Pack flat brackets and gussets across 2D sheets alongside your tube nests with VectorNester 2.0 (including Part-in-Hole cavity nesting and adaptive guillotine remnant optimization), cut flat stock in guaranteed G94 linear feedrate mode even on G93 rotary machines, switch nesting profiles instantaneously, keep hardware THC active across every flat HSS face, and cap Hypertherm SYNC cartridge selection to your plasma power supply's rated amperage.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>2D XY Sheet Nesting with VectorNester 2.0:</strong> Pack flat bar and sheet parts (<code>Profile_Flat</code>) across configurable <em>Sheet Length (X)</em> and <em>Sheet Width (Y)</em> stock using adaptive guillotine remnant optimization, obstacle-relative edge matching, and Part-in-Hole interior cavity nesting with automatic inside-out containment cut ordering so inner parts sever before the outer ring drops. Includes an interactive 2D SVG nest preview showing part contours, interior holes, and 90&deg; rotations, plus exact 3D simulator sheet dimensions.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Guaranteed <code>G94</code> Linear Feedrates on Flat Stock:</strong> Flat stock always outputs standard <code>G94</code> (mm/min or IPM) linear feedrates in both single-part and pack mode&mdash;even when your active machine profile is set to <code>G93</code> inverse-time mode for rotary tubes.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-performance">PERFORMANCE</span>
+              <div class="change-content">
+                <strong>Instant Nesting Profile Switching:</strong> Switching cutting profiles or editing nesting quantities in Multi-Part Pack Nesting immediately cancels any in-flight G-code compilation and replaces pending UI swaps (<code>hx-sync</code>) so your workspace responds instantaneously.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Max Plasma Amperage Machine Cap (<code>maxAmperage</code>):</strong> Set your plasma power supply's rated limit (45A, 65A, 85A, or 105A) under <em>Machine Settings &rarr; THC &amp; Plasma Hardware</em>. Smart cartridge selection caps recommendations to your machine's max amperage, grays out oversized cartridges, and warns you if a selected preset exceeds your power supply.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>5-Rule Hardware THC <code>M63</code>/<code>M62</code> Filter &amp; Full HSS Sever Unlock:</strong> Locks hardware THC (<code>M63 P0</code>) across lead-ins, sharp turns (&gt;10&deg; or <code>R &lt; 15 mm</code>), 4-axis tube corners, slowdowns (&lt;85% feed), and pierce craters, then unlocks (<code>M62 P0</code>) cleanly across every flat wall on square and rectangular HSS sever cuts (<code>Startcut</code> / <code>Endcut</code>, down to 1&Prime;&times;1&Prime; / 25.4&times;25.4 mm tube).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Round &amp; Rectangular Tube Preamble Macros (<code>#1120</code> Material Width):</strong> Add custom startup macros for round pipe (<code>roundPreambleMacro</code>) and square/rectangular HSS (<code>rectangularPreambleMacro</code>) in Machine Settings. Your G-code preamble automatically sets <code>#1120</code> to the part's width at <code>A=0</code> before running your ohmic torch-centering routine.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>One-Direction (<code>X</code>) Cut Ordering &amp; Optional Post-<code>M5</code> Dwell:</strong> Built-in profiles now cut sequentially in one direction along <code>X</code> by default so long tubes feed smoothly out of your chuck and rollers without back-and-forth rapids (turn Thermal Hedging back on anytime for thin-wall stock). The post-<code>M5</code> <code>G4 P200</code> Z-axis unwind dwell is also now optional and off by default for faster retracts.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Flat Profile 3D Cut Preview, Profile Override Reset &amp; Single Default Machine:</strong> Cutting paths on flat bar and plate parts now sit flat on the 3D surface instead of wrapping around an imaginary cylinder, a <code>&#x21BA; Reset</code> button restores the auto-detected profile after a manual override, and your chosen default machine profile is strictly enforced and loaded on every new STEP file.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
 
       <!-- ================================================================
            RELEASE: October 23, 2026
@@ -1272,7 +1341,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.2.4-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.3.0-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }

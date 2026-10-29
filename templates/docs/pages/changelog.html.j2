@@ -67,7 +67,7 @@
             </p>
             <ul class="doc-bullet-list">
               <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v{{ version }}</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
-              <li><strong>2. What Changed — Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities—such as <em>Simultaneous X/Y/A Pre-Pierce Positioning in G93 Mode</em>, <em>Tube Bending Quota &amp; License Support</em>, <em>3D Bent Tube "Cut-and-Bend" Unfolding</em>, <em>Straight HSS Cheek Cuts &amp; 5-Zone Corner Relief</em>, <em>Multi-Stick Nesting <code class="mono">.zip</code> Export</em>, and <em>SimCNC 3.5 vs. 3.6 Beta Profiles</em>.</li>
+              <li><strong>2. What Changed — Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities—such as <em>2D XY Sheet Nesting (VectorNester 2.0)</em>, <em>Guaranteed G94 Flat Cutting</em>, <em>Instant Nesting Profile Switching</em>, <em>5-Rule Hardware THC M63/M62 Filter &amp; HSS Sever Flat-Face Unlock</em>, <em>Maximum Plasma Amperage Machine Cap</em>, and <em>100% Offline MCP Stdio Server</em>.</li>
               <li><strong>3. Copy Diagnostics (Bottom-Right):</strong> Click <span class="ui-chip emerald">📋 Copy Diagnostics</span> to copy a formatted snapshot of your build metadata and environment to the clipboard when reporting an issue or requesting support.</li>
             </ul>
           </div>
@@ -234,10 +234,53 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Latest Release: Oct 22 -->
+            <!-- Latest Release: Oct 29 (v0.3.0) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--plasma-amber); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 22, 2026</span>
+                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 29, 2026 (v0.3.0)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">2D XY Sheet Nesting (VectorNester 2.0), Guaranteed G94 Flat Cutting, Instant Nesting Profile Switching, Max Amperage Cap &amp; HSS Sever THC Unlock</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>2D XY Sheet Nesting (VectorNester 2.0):</strong> Multi-Part Pack Nesting now packs flat bar and sheet parts (<code class="mono">Profile_Flat</code>) across configurable <em>Sheet Length (X)</em> and <em>Sheet Width (Y)</em> stock using adaptive guillotine remnant optimization, obstacle-relative edge matching, and Part-in-Hole interior cavity nesting with automatic inside-out containment cut ordering. Includes an interactive 2D SVG sheet layout preview showing part perimeters, interior holes/cutouts, and 90&deg; rotations, plus exact 3D simulator sheet dimensions.</li>
+                <li><strong>Guaranteed <code class="mono">G94</code> Feedrate Mode on Flat Stock:</strong> Flat stock always outputs standard <code class="mono">G94</code> units-per-minute feedrates in both single-part and pack mode&mdash;even when your active machine profile is configured for <code class="mono">G93</code> rotary inverse-time mode, so linear XY plate cutting always runs in mm/min or IPM.</li>
+                <li><strong>Instant Nesting Profile Switching &amp; In-Flight G-Code Cancellation:</strong> Switching cutting profiles or editing nesting quantities in Multi-Part Pack Nesting immediately aborts any in-flight G-code compilation and replaces pending UI swaps (<code class="mono">hx-sync</code>) so your workspace responds instantaneously.</li>
+                <li><strong>Flat Profile 3D Cut Contour Projection &amp; Profile Override Reset:</strong> Cutting contours, lead-ins, and lead-outs on flat bar and plate parts (<code class="mono">Profile_Flat</code>) project directly onto the flat 3D plate surface instead of wrapping around a cylinder, plus a one-click <code class="mono">&#x21BA; Reset</code> button on Profile Override restores the originally detected profile.</li>
+                <li><strong>Hardware THC Unlock Across All HSS Sever Cut Flat Faces:</strong> Unlocks hardware THC (<code class="mono">M62 P0</code>) cleanly across every flat face on rectangular and square HSS sever cuts (<code class="mono">Endcut</code> / <code class="mono">Startcut</code>, down to 1&Prime;&times;1&Prime; / 25.4&times;25.4 mm tubes) by preventing 4-axis rotary corner tangency vertices and slowdown/breakout segments from double-padding adjacent straight runs.</li>
+                <li><strong>Max Plasma Amperage Machine Setting (<code class="mono">maxAmperage</code>):</strong> Set your plasma power supply's rated limit (45A, 65A, 85A, or 105A) under <em>Machine Settings &rarr; THC &amp; Plasma Hardware</em>. Automatic Hypertherm SYNC cartridge selection caps recommendations to your machine's maximum amperage, disables oversized cartridges in the session selector, and warns if a selected cartridge exceeds your power supply.</li>
+                <li><strong>Single-Default Machine Profile &amp; Optional Post-<code class="mono">M5</code> Unwind Dwell:</strong> Enforces a single default machine profile that automatically applies whenever you load a new STEP file, and makes the post-<code class="mono">M5</code> Z-axis unwind dwell (<code class="mono">G4 P200</code>) optional and disabled by default so machines that do not need a post-cut dwell retract immediately.</li>
+              </ul>
+            </div>
+
+            <!-- Oct 26 Release -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 26, 2026</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">5-Rule Hardware THC M63/M62 Filter, Per-Profile Preamble Macros &amp; One-Direction Cut Ordering</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Per-Profile Closed-Stock Preamble Macros &amp; <code class="mono">#1120</code> Material Width:</strong> Optional startup preamble macros for Round Tube (<code class="mono">roundPreambleMacro</code>) and Rectangular/Square HSS (<code class="mono">rectangularPreambleMacro</code>) in Machine Settings that assign <code class="mono">#1120</code> to the material width at <code class="mono">A=0</code> before running your ohmic torch-centering routine.</li>
+                <li><strong>One-Direction (Monotonic <code class="mono">X</code>) Cut Ordering by Default:</strong> Disabled Thermal Hedging by default across built-in machine profiles so stock feeds in one direction along <code class="mono">X</code> out of the chuck and support rollers. You can still turn Thermal Hedging on in the sidebar or Machine Settings for heat-sensitive thin-wall tubing.</li>
+                <li><strong>5-Rule Hardware THC <code class="mono">M63</code>/<code class="mono">M62</code> Post-Processor Filter:</strong> Deterministic multi-pass filter over <code class="mono">G1</code> segments that locks THC (<code class="mono">M63 P0</code>) on lead-ins/outs, sharp deflections (&gt;10&deg;) or tight radii (<code class="mono">R &lt; 15 mm</code>), 4-axis tube corner rotations, feedrate drops (&lt;85% target speed), and pierce crater proximity (&le;5 mm), with acceleration/deceleration padding and straight-run hysteresis so THC only unlocks on settled flat runs.</li>
+              </ul>
+            </div>
+
+            <!-- Oct 23 Release -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 23, 2026 (v0.2.4)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">100% Offline MCP Stdio Server, Drive Physics Tools &amp; Bent HSS Preview Alignment</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>100% Offline Model Context Protocol (MCP) Stdio Server (<code class="mono">rotarycam-mcp</code>):</strong> Standalone, 100% offline MCP server binary for macOS (arm64), Linux (x64), and Windows (x64) bundled directly with RotaryCAM. Connect Claude Desktop, Cursor, or local open-weights models to configure machines, analyze STEP files, apply zero-bevel compensation, and generate production G-code using your local <code class="mono">rotarycam.lic</code> without sending a single byte to the cloud.</li>
+                <li><strong>First-Principles Drive Physics Tools:</strong> Calculate pitch diameters, travel per motor revolution, velocity, acceleration, and S-curve jerk directly from gearbox ratios, pinion teeth, and screw pitch (<code class="mono">rack_pinion_travel</code>, <code class="mono">lead_screw_travel</code>, <code class="mono">rotary_travel</code>, <code class="mono">axis_max_velocity</code>, <code class="mono">axis_max_acceleration</code>, <code class="mono">axis_jerk_from_ramp</code>).</li>
+                <li><strong>Bent Rectangular HSS 3D Feature Overlay Alignment:</strong> Fixed 3D Part Preview feature overlay projection on bent rectangular/square HSS tubes so Intrados and Extrados cutouts align accurately with the 3D CAD mesh.</li>
+              </ul>
+            </div>
+
+            <!-- Oct 22 Release -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Oct 22, 2026</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Full-Speed HSS Flat Walls, Corner Tracking, Hypertherm SYNC Cut Charts &amp; Feature Toggles</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
