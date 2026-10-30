@@ -1006,7 +1006,13 @@
             <li class="change-item">
               <span class="badge-tag badge-improvement">IMPROVEMENT</span>
               <div class="change-content">
-                <strong>5-Rule Hardware THC <code>M63</code>/<code>M62</code> Filter &amp; Full HSS Sever Unlock:</strong> Locks hardware THC (<code>M63 P0</code>) across lead-ins, sharp turns (&gt;10&deg; or <code>R &lt; 15 mm</code>), 4-axis tube corners, slowdowns (&lt;85% feed), and pierce craters, then unlocks (<code>M62 P0</code>) cleanly across every flat wall on square and rectangular HSS sever cuts (<code>Startcut</code> / <code>Endcut</code>, down to 1&Prime;&times;1&Prime; / 25.4&times;25.4 mm tube).
+                <strong>5-Rule Hardware THC <code>M63</code>/<code>M62</code> Filter &amp; Full HSS Sever Unlock:</strong> Locks hardware THC (<code>M63 P0</code>) across lead-ins, sharp turns (&gt;10&deg; or <code>R &lt; 15 mm</code>), 4-axis tube corners, slowdowns (&lt;85% feed), and pierce craters, while keeping corner-approach deceleration ramps from double-locking straight flat faces outside the geometric corner window&mdash;so hardware THC unlocks (<code>M62 P0</code>) cleanly across all 3 full flat faces on 1&Prime;&times;1&Prime; (<code>25.4&times;25.4 mm</code>) HSS <code>Startcut</code> and <code>Endcut</code> severs even at high plasma cutting speeds.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Full-Speed <code>G93</code> Inter-Feature Indexing, Contiguous Snake A-Axis Cutout Ordering &amp; Optional <code>#1111</code>/<code>#1112</code> Outputs:</strong> Native <code>G93</code> inverse-time indexing moves between cuts now run at your full machine <code>maxVelA</code> and <code>rapidRate</code> limits instead of the non-G93 <em>Safe Rotation</em> speed (<code>interFeatureRotationFeedRate</code>), automatically disabling <em>Safe Rotation (&deg;/min)</em> in Machine Settings when <code>G93</code> mode is active. Co-axial internal cutouts at the same X station now cut in a contiguous circular chain and alternate (snake) direction from station to station&mdash;eliminating 180&deg; cross-face jumps and cumulative negative A-axis wind-up&mdash;and new per-machine <em>Emit Amperage (<code>#1111</code>)</em> and <em>Emit Gas Pressure (<code>#1112</code>)</em> checkboxes under <em>Machine Settings &rarr; Dynamic Parameter Modulation</em> (off by default) let you emit pre-pierce RS485 parameters only when your cutter uses them.
               </div>
             </li>
             <li class="change-item">
