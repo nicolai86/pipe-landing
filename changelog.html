@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.3.1-BETA</span>
+        <span class="brand-tag">v0.3.2-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -961,6 +961,51 @@
   <!-- Chronological Release Entries -->
   <main class="changelog-section">
     <div class="timeline-wrap">
+
+      <!-- ================================================================
+           RELEASE: October 31, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.3.2">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 31, 2026</span>
+              <span class="release-version-pill">v0.3.2</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Batch Feature Overrides &bull; 3D Ramp &amp; Corner-Safe Zero-Overburn Defaults &bull; Small-Tube Pierce Derating &bull; SimCNC #1091/#1092</span>
+          </div>
+          <p class="release-summary">
+            Select multiple cuts at once to batch-apply Zero-Bevel, Corner Loop, 3D Ramp Lead-In, Zero-Overburn, Tabs, and Feedrate overrides in one step, get cleaner entries and exits out of the box with 3D Ramp Lead-In and corner-safe Zero-Overburn enabled by default on closed profiles, pierce dead-center on straight HSS cutout walls with automatic pierce-dwell derating on narrow (&lt;1.5&Prime;) tubes, and pass effective pierce delay (<code>#1091</code>) and surface cut feedrate (<code>#1092</code>) directly to your SimCNC <code>m3.py</code> macro.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Batch Feature Selection &amp; Batch Overrides:</strong> Select multiple features at once (Shift-click range selection, Select All, or filter by feature type) to batch-apply enable/disable, Zero-Bevel, Corner Loop, 3D Ramp Lead-In, Zero-Overburn, Tabs, and Feedrate overrides in one step.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>3D Ramp Lead-In &amp; Corner-Safe Zero-Overburn Smart Defaults:</strong> Enabled by default across closed-profile sever cuts (<code>Startcut</code>/<code>Endcut</code>), cutouts, and holes, with automatic post-corner straight buffer protection (<code>max(kerfWidth, 1.5 mm)</code>) after 90&deg; corners and exact straight-segment splitting so early torch-out (<code>M5</code>) never extinguishes mid-corner.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Straight-Wall Midpoint Pierce &amp; Small-Tube Cavity Pierce Derating:</strong> Pierces at the true geometric midpoint of unsubdivided straight axial cutout walls on rectangular/square HSS tubes (scaling corner and weld-seam exclusion zones on small <code>&lt; 1.5&Prime;</code> tubes so flat-face walls aren't skipped), and automatically derates stationary pierce dwell on narrow hollow tubes (<code>D_cavity &lt; 1.5&Prime;</code> / <code>38.1 mm</code>, plus <code>0.25s</code> 12 GA Mild Steel presets) so the plasma jet doesn't blow across the inner cavity and scar the opposite wall.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>SimCNC <code>m3.py</code> Pre-Pierce Parameters (<code>#1091</code> &amp; <code>#1092</code>):</strong> Emits <code>#1091</code> (effective stationary pierce delay in seconds) and <code>#1092</code> (calculated surface cut feedrate) before <code>M3</code> for dynamic SimCNC torch-on macro control.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
 
       <!-- ================================================================
            RELEASE: October 30, 2026
@@ -1386,7 +1431,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.3.1-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.3.2-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
