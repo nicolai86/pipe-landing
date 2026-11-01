@@ -973,16 +973,22 @@
               <span class="release-date">October 31, 2026</span>
               <span class="release-version-pill">v0.3.2</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Batch Feature Overrides &bull; 3D Ramp &amp; Corner-Safe Zero-Overburn Defaults &bull; Small-Tube Pierce Derating &bull; SimCNC #1091/#1092</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">EasyScribe Per-Feature Scribe Mode &bull; Sidecar Markings (.markings.json) &bull; Batch Feature Overrides &bull; 3D Ramp &amp; Zero-Overburn Defaults &bull; SimCNC #1091/#1092</span>
           </div>
           <p class="release-summary">
-            Select multiple cuts at once to batch-apply Zero-Bevel, Corner Loop, 3D Ramp Lead-In, Zero-Overburn, Tabs, and Feedrate overrides in one step, get cleaner entries and exits out of the box with 3D Ramp Lead-In and corner-safe Zero-Overburn enabled by default on closed profiles, pierce dead-center on straight HSS cutout walls with automatic pierce-dwell derating on narrow (&lt;1.5&Prime;) tubes, and pass effective pierce delay (<code>#1091</code>) and surface cut feedrate (<code>#1092</code>) directly to your SimCNC <code>m3.py</code> macro.
+            Switch any individual CAD contour or an entire tube/sheet (<em>✏️ Scribe All</em>) between plasma cutting (<code>#1114=1</code>) and mechanical EasyScribe marking (<code>#1114=3</code>) with <code>.markings.json</code> sidecar support, batch-apply overrides across multiple cuts at once, get cleaner entries and exits out of the box with 3D Ramp Lead-In and corner-safe Zero-Overburn enabled by default on closed profiles, pierce dead-center on straight HSS cutout walls with automatic pierce-dwell derating on narrow (&lt;1.5&Prime;) tubes, and pass effective pierce delay (<code>#1091</code>) and surface cut feedrate (<code>#1092</code>) directly to your SimCNC <code>m3.py</code> macro.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Batch Feature Selection &amp; Batch Overrides:</strong> Select multiple features at once (Shift-click range selection, Select All, or filter by feature type) to batch-apply enable/disable, Zero-Bevel, Corner Loop, 3D Ramp Lead-In, Zero-Overburn, Tabs, and Feedrate overrides in one step.
+                <strong>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code>.markings.json</code>):</strong> Switch any individual CAD feature (holes, notches, cutouts, end cuts) or an entire tube or sheet (<code>✏️ Scribe All</code>) between <strong>⚡ Cut</strong> (<code>#1114=1</code>) and <strong>✏️ Scribe</strong> (<code>#1114=3</code>) directly in the feature table or batch toolbar. Upload <code>.markings.json</code> sidecar files alongside <code>.step</code> models (or inside a <code>.zip</code>) and set any layout mark to scribe or cut. In Scribe mode, RotaryCAM traces the exact CAD line with zero kerf offset, no lead-in/out, and corner-tilt damping bypassed so spring-loaded mechanical scribes (like EasyScribe at <code>-3 mm</code> compression) stay perpendicular around square/rectangular HSS and round HSS-O corners—automatically sequenced before plasma cuts.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Batch Feature Selection &amp; Batch Overrides:</strong> Select multiple features at once (Shift-click range selection, Select All, or filter by feature type) to batch-apply enable/disable, Cut/Scribe mode, Zero-Bevel, Corner Loop, 3D Ramp Lead-In, Zero-Overburn, Tabs, and Feedrate overrides in one step.
               </div>
             </li>
             <li class="change-item">
