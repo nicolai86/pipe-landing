@@ -818,7 +818,7 @@
           <div class="beta-feat-icon">✓</div>
           <div>
             <div class="beta-feat-title">1D Mill-Stick Nesting</div>
-            <div class="beta-feat-desc">Pack up to 10 matching tubes per 20ft / 6m stock with auto kerf and thermal hop sequencing.</div>
+            <div class="beta-feat-desc">Pack up to 10 matching tubes per 20ft / 6m stick with interlocking miters/copes, common-line sever cuts, and thermal hop sequencing.</div>
           </div>
         </div>
         <div class="beta-feat-item">
@@ -973,12 +973,24 @@
               <span class="release-date">October 31, 2026</span>
               <span class="release-version-pill">v0.3.2</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">EasyScribe &amp; Plasma Mark Modes (#1114=1/2/3) &bull; Sidecar Markings (.markings.json) &bull; Batch Feature Overrides &bull; 3D Ramp &amp; Zero-Overburn Defaults &bull; SimCNC #1091/#1092</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Interlocking Miter &amp; Cope Nesting &bull; Common-Line Sever Cuts &bull; EasyScribe &amp; Plasma Mark (#1114=1/2/3) &bull; Batch Overrides &bull; 3D Ramp &amp; Zero-Overburn Defaults</span>
           </div>
           <p class="release-summary">
-            Switch any individual CAD contour or an entire tube/sheet (<em>✏️ Scribe All</em>) between full plasma cutting (<code>⚡ Cut</code>, <code>#1114=1</code>), low-amperage plasma scoring/etching (<code>🔥 Plasma Mark</code>, <code>#1114=2</code>), and mechanical EasyScribe proofing (<code>✏️ Scribe</code>, <code>#1114=3</code>) with <code>.markings.json</code> sidecar support, batch-apply overrides across multiple cuts at once, get cleaner entries and exits out of the box with 3D Ramp Lead-In and corner-safe Zero-Overburn enabled by default on closed profiles, pierce dead-center on straight HSS cutout walls with automatic pierce-dwell derating on narrow (&lt;1.5&Prime;) tubes, and pass effective pierce delay (<code>#1091</code>) and surface cut feedrate (<code>#1092</code>) directly to your SimCNC <code>m3.py</code> macro.
+            Pack more parts onto every mill stick by automatically flipping tubes 180&deg; end-for-end and rolling them on the A-axis so angled miters and fishmouth copes interlock tightly with zero triangular scrap wedges, merge matching 90&deg; cutoffs or complementary miters into a single shared common-line sever cut to cut cutoff pierces in half, switch any contour or entire tube/sheet between full plasma cutting (<code>⚡ Cut</code>, <code>#1114=1</code>), low-amperage plasma scoring (<code>🔥 Plasma Mark</code>, <code>#1114=2</code>), and mechanical EasyScribe proofing (<code>✏️ Scribe</code>, <code>#1114=3</code>) with <code>.markings.json</code> sidecar support, batch-apply overrides across multiple cuts at once, and get cleaner entries and exits out of the box with 3D Ramp Lead-In and corner-safe Zero-Overburn enabled by default.
           </p>
           <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Interlocking Miter &amp; Cope Stick Nesting (180&deg; End-for-End Flip + A-Axis Roll):</strong> When packing tubes onto a raw stick, you no longer lose inches of material to triangular scrap wedges between angled ends. RotaryCAM automatically tests 180&deg; end-for-end flips and A-axis roll rotations on every tube in your stick pack so adjacent miters and fishmouth copes nest tightly into each other—fitting more parts onto every 20ft / 24ft / 6m stick.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Optional Single-Cut Common-Line Severing:</strong> Turn on the new <strong>Common-line sever cuts</strong> toggle in Multi-Part Pack Nesting to merge matching 90&deg; square cutoffs or complementary miter joints into a single shared sever cut with an on-kerf pierce—cutting your cutoff pierces in half, saving torch consumables, and eliminating loose scrap rings between parts.
+              </div>
+            </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">

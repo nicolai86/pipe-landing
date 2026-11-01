@@ -470,7 +470,7 @@
         <div class="doc-intro-card">
           <h2>From Multi-Tube CAD Weldment to Multi-Stick G-Code</h2>
           <p>
-            Real-world structural fabrications—such as roll cages, chassis frames, handrails, and headache racks—contain dozens of tubes across several cross-section sizes in a single STEP file. RotaryCAM automatically classifies every solid by cross-section profile, filters compatible parts for the stock currently loaded in your rotary chuck, nests them end-to-end across as many raw stock sticks as required, and sequences cuts from the free end toward the chuck so the tube remains rigidly supported throughout the entire program.
+            Real-world structural fabrications—such as roll cages, chassis frames, handrails, and headache racks—contain dozens of tubes across several cross-section sizes in a single STEP file. RotaryCAM automatically classifies every solid by cross-section profile, filters compatible parts for the stock currently loaded in your rotary chuck, flips and rolls tubes so angled miters and fishmouth copes interlock tightly end-to-end across raw sticks, optionally merges matching ends into a single shared common-line sever cut, and sequences cuts from the free end toward the chuck so your tube stays rigidly supported throughout the entire program.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -479,7 +479,7 @@
             </div>
             <div class="doc-intro-stat">
               <span class="label">Packing Algorithm</span>
-              <span class="value">Multi-Stick 1D Bin Packing</span>
+              <span class="value">Interlocking 1D + Common-Line</span>
             </div>
             <div class="doc-intro-stat">
               <span class="label">Cut Sequencing</span>
@@ -624,9 +624,18 @@
             </p>
             <ul class="doc-bullet-list">
               <li><strong>Stick 1 of 2 Preview Bar:</strong> Packs 7 parts (<code class="mono">Part 10</code>, <code class="mono">Part 9</code>, <code class="mono">Part 34</code>, <code class="mono">Part 36</code>, <code class="mono">Part 4</code>, <code class="mono">Part 24</code>, <code class="mono">Part 35</code>) totaling <code class="mono">5987 mm / 6000 mm</code>—leaving only <code class="mono">13 mm</code> of remainder (<span class="ui-chip emerald">99.8% EFFICIENCY</span>). Use the <code class="mono">◀ Prev Stick</code> / <code class="mono">Next Stick ▶</code> buttons to inspect Stick 2.</li>
-              <li><strong>Customizable Quantities &amp; Spacing:</strong> Adjust <strong>Part Spacing (Gap)</strong> (<code class="mono">10 mm</code>), <strong>Stock Tube Length</strong> (<code class="mono">6000 mm</code>), enable <strong>Auto-tab pack seams</strong> to keep pieces joined on the stick, or increment part quantities (<code class="mono">- / +</code>) in the table below.</li>
+              <li><strong>Automatic Interlocking Miter &amp; Cope Nesting (180&deg; Flip + A-Axis Roll):</strong> You never have to waste triangular scrap wedges between angled tube ends. RotaryCAM automatically tests 180&deg; end-for-end flips and A-axis roll rotations on every tube in the pack so adjacent miters and fishmouth copes tuck tightly into each other.</li>
+              <li><strong>Optional Single-Cut Common-Line Severing:</strong> Check <strong>Common-line sever cuts</strong> to merge matching 90&deg; square cutoffs or complementary miter joints into a single shared sever cut with an on-kerf pierce—cutting your cutoff pierces in half and eliminating scrap rings between parts.</li>
+              <li><strong>Customizable Quantities, Spacing &amp; Seams:</strong> Adjust <strong>Part Spacing (Gap)</strong> (<code class="mono">10 mm</code>), <strong>Stock Tube Length</strong> (<code class="mono">6000 mm</code>), enable <strong>Auto-tab pack seams</strong> to keep pieces joined on the stick, or increment part quantities (<code class="mono">- / +</code>) in the table below.</li>
               <li>Click the green <span class="ui-chip emerald">⚡ Compile Pack G-Code</span> button at the top of the nesting panel to generate the multi-stick 4-axis G-code programs.</li>
             </ul>
+
+            <div class="doc-callout tip" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">✓ How Interlocking Miters &amp; Common-Line Sever Cuts Save Stock &amp; Consumables</div>
+              <p style="margin-bottom: 0;">
+                When nesting mitered frame rails or fishmouth-coped roll cage tubes, keeping parts in their raw CAD orientation leaves dead triangular air gaps between pieces. By automatically testing 180&deg; end-for-end flips and A-axis roll angles on every tube, RotaryCAM nests matching angles face-to-face. Turning on <strong>Common-line sever cuts</strong> takes it one step further: wherever two adjacent parts meet at a matching 90&deg; cutoff or complementary miter, the torch pierces once on the kerf line and severs both parts in a single pass—saving half your cutoff pierces and leaving zero loose scrap rings on the table.
+              </p>
+            </div>
           </div>
 
           <figure class="doc-figure">
