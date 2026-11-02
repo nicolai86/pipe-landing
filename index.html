@@ -1301,12 +1301,12 @@
       <div class="card">
         <div>
           <div class="card-num mono">04 / MACHINE SAFETY</div>
-          <h3>Corner Anti-Dive & Chuck Acceleration Damping</h3>
-          <p>Spinning square tube around a 90° corner requires immense rotary speed that can stall stepper motors or jerk your chuck. RotaryCAM smooths rotary acceleration around corners and automatically signals your Torch Height Control (THC) to freeze, preventing the torch from diving into the tube.</p>
+          <h3>Chuck Jaw &ldquo;No-Cut&rdquo; Zones, Corner Anti-Dive &amp; Acceleration Damping</h3>
+          <p>Spinning square tube around a 90° corner requires immense rotary speed that can stall stepper motors or jerk your chuck. RotaryCAM smooths rotary acceleration around corners, freezes Torch Height Control (THC) to stop torch diving, and enforces configurable Chuck Jaw Dead Zones (65 mm) and Min Chuck Grip lengths (80 mm) with 3D red no-cut collision sleeves so your torch never hits the jaws.</p>
         </div>
         <div class="pill-list mono">
+          <span class="pill"><span class="pill-dot"></span>Chuck Jaw Dead Zone</span>
           <span class="pill"><span class="pill-dot"></span>Anti-Dive Corner Freeze</span>
-          <span class="pill"><span class="pill-dot"></span>Protects Torch Consumables</span>
           <span class="pill"><span class="pill-dot"></span>No Stalled Steppers</span>
         </div>
       </div>
@@ -1329,13 +1329,13 @@
       <div class="card">
         <div>
           <div class="card-num mono">06 / MATERIAL SAVINGS</div>
-          <h3>Interlocking Stick Nesting &amp; Common-Line Severing</h3>
-          <p>Cut entire projects out of standard 20ft / 24ft mill sticks with less than 1% scrap drop. Automatically flips tubes 180° end-for-end and rolls them on the A-axis so angled miters and fishmouth copes interlock tightly without triangular scrap wedges, and merges matching cutoffs or miters into a single shared common-line sever cut to cut cutoff pierces in half.</p>
+          <h3>Interlocking Stick Nesting, Common-Line Cuts &amp; Min Stock Length</h3>
+          <p>Cut entire projects out of standard 20ft / 24ft mill sticks with less than 1% scrap drop. Automatically flips tubes 180° end-for-end and rolls them on the A-axis so angled miters and fishmouth copes interlock tightly without triangular scrap wedges, merges matching cutoffs into a single shared common-line sever cut, and subtracts your chuck jaw dead zone to show the exact Min Stock to Load.</p>
         </div>
         <div class="pill-list mono">
           <span class="pill"><span class="pill-dot"></span>Interlocking Miters &amp; Copes</span>
           <span class="pill"><span class="pill-dot"></span>Common-Line Sever Cuts</span>
-          <span class="pill"><span class="pill-dot"></span>Prevents Tube Bowing</span>
+          <span class="pill"><span class="pill-dot"></span>Exact Min Stock to Load</span>
           <span class="pill"><span class="pill-dot"></span>Auto-Tabbing</span>
         </div>
       </div>
@@ -1372,14 +1372,14 @@
       <!-- Feature 9 -->
       <div class="card">
         <div>
-          <div class="card-num mono">09 / FEATURE TOGGLING</div>
-          <h3>Omit Holes &amp; Slots Without CAD Redraws</h3>
-          <p>Don't send models back to the engineering department just to skip a hole. RotaryCAM gives you interactive checkboxes for every detected hole, slot, and cutout. Uncheck any contour to instantly drop it from the toolpath, reduce pierce counts, and recompile live G-code while cutoff cuts stay locked.</p>
+          <div class="card-num mono">09 / PART-ID STENCILING &amp; WITNESS MARKS</div>
+          <h3>Auto-Scribe Part IDs, Weld Witness Marks &amp; Feature Toggles</h3>
+          <p>Stencil single-stroke Part IDs (P1, P2) onto the longest clear face and automatically scribe weld alignment witness marks where branch tubes or brackets touch a main header tube—so you can sort parts and tack-weld frames without a tape measure using EasyScribe (#1114=3) or 15A Plasma Mark (#1114=2). Plus, uncheck any hole or slot to skip it without waiting on CAD redraws.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Zero CAD Revision Waiting</span>
-          <span class="pill"><span class="pill-dot"></span>Instant G-Code Recompile</span>
-          <span class="pill"><span class="pill-dot"></span>Permanent Sever Cut Safety</span>
+          <span class="pill"><span class="pill-dot"></span>Auto-Scribe Part IDs</span>
+          <span class="pill"><span class="pill-dot"></span>Weld Fit-Up Witness Marks</span>
+          <span class="pill"><span class="pill-dot"></span>EasyScribe &amp; 15A Plasma Mark</span>
         </div>
       </div>
     </div>
