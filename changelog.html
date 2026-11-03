@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.3.2-BETA</span>
+        <span class="brand-tag">v0.4.0-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -963,20 +963,20 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
-           RELEASE: October 31, 2026
+           RELEASE: November 2, 2026 (v0.4.0)
            ================================================================ -->
-      <article class="release-entry" id="v0.3.2">
+      <article class="release-entry" id="v0.4.0">
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">October 31, 2026</span>
-              <span class="release-version-pill">v0.3.2</span>
+              <span class="release-date">November 2, 2026</span>
+              <span class="release-version-pill">v0.4.0</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Auto-Scribe Part IDs &amp; Weld Witness Marks &bull; Chuck Jaw &ldquo;No-Cut&rdquo; Zones &bull; Interlocking Miter &amp; Cope Nesting &bull; Common-Line Sever Cuts &bull; EasyScribe &amp; Plasma Mark (#1114=1/2/3)</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Auto-Scribe Part IDs &amp; Weld Witness Marks &bull; Chuck Jaw &ldquo;No-Cut&rdquo; Zones &bull; 3D Simulator Fitted Stock &amp; Chuck Beyond Last Cut</span>
           </div>
           <p class="release-summary">
-            Stencil single-stroke Part IDs (<code>P1</code>, <code>P2</code>) and automatic multi-body weld alignment witness marks right onto your tubes with zero sidecar files required so you can sort parts and tack-weld frames without a tape measure. Protect your torch and chuck with configurable Chuck Jaw Dead Zones (<code>65 mm</code>), Min Chuck Grip lengths (<code>80 mm</code>), 3D red no-cut collision sleeves, and exact <strong>Min Stock to Load</strong> readouts. Pack more parts onto every mill stick by automatically flipping tubes 180&deg; end-for-end and rolling them on the A-axis so miters and fishmouth copes interlock tightly, merge matching cutoffs into a single shared common-line sever cut, and switch any contour between full plasma cutting (<code>⚡ Cut</code>, <code>#1114=1</code>), low-amperage plasma marking (<code>🔥 Plasma Mark</code>, <code>#1114=2</code>), and mechanical EasyScribe proofing (<code>✏️ Scribe</code>, <code>#1114=3</code>).
+            Stencil single-stroke Part IDs (<code>P1</code>, <code>P2</code>) and automatic multi-body weld alignment witness marks right onto your tubes with zero sidecar files required so you can sort parts and tack-weld frames without a tape measure. Protect your torch and chuck with configurable Chuck Jaw Dead Zones (<code>65 mm</code>), Min Chuck Grip lengths (<code>80 mm</code>), 3D red no-cut collision sleeves positioned strictly beyond the last cut, and exact <strong>Min Stock to Load</strong> readouts.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -991,6 +991,33 @@
                 <strong>Chuck Jaw, Steady-Rest &amp; Roller &ldquo;No-Cut&rdquo; Collision Zones &amp; Minimum Stick Load Length:</strong> Set your machine's <strong>Chuck Jaw Dead Zone</strong> (default <code>65 mm</code>), <strong>Min Chuck Grip Length</strong> (default <code>80 mm</code>), and steady-rest/roller keep-out bands in Machine Settings. RotaryCAM automatically subtracts the chuck dead zone from raw stick capacity during 1D tube nesting (<code>L_available = L_stick - L_dead</code>), calculates and displays the exact <strong>Min Stock to Load</strong> (<code>L_cut + L_dead</code>) in Single-Part and Pack Mode, renders 3D rotary chuck jaws and a translucent red no-cut zone in the CAD viewer, 3D simulator, and 1D stick bar, and flags pre-flight collision warnings before you hit Cycle Start.
               </div>
             </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>3D Cut Simulator Fitted Stock Bounds, Chuck Beyond Last Cut &amp; Live Torch Tracking:</strong> Simulated rotary stock now extends strictly across the required G-code cut span plus the uncut chuck dead-zone tail beyond the last cut so the 3D chuck jaws and red keep-out sleeve never overlap active cuts, while the camera follows the torch along the tube without bobbing on Z plunges and supports full-stick visibility up to 100,000 mm.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
+           RELEASE: October 31, 2026
+           ================================================================ -->
+      <article class="release-entry" id="v0.3.2">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">October 31, 2026</span>
+              <span class="release-version-pill">v0.3.2</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Interlocking Miter &amp; Cope Nesting &bull; Common-Line Sever Cuts &bull; EasyScribe &amp; Plasma Mark (#1114=1/2/3) &bull; Batch Overrides &bull; 3D Ramp &amp; Zero-Overburn Defaults</span>
+          </div>
+          <p class="release-summary">
+            Pack more parts onto every mill stick by automatically flipping tubes 180&deg; end-for-end and rolling them on the A-axis so miters and fishmouth copes interlock tightly, merge matching cutoffs into a single shared common-line sever cut, and switch any contour between full plasma cutting (<code>⚡ Cut</code>, <code>#1114=1</code>), low-amperage plasma marking (<code>🔥 Plasma Mark</code>, <code>#1114=2</code>), and mechanical EasyScribe proofing (<code>✏️ Scribe</code>, <code>#1114=3</code>).
+          </p>
+          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
@@ -1461,7 +1488,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.3.2-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.4.0-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }

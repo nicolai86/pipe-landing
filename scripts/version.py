@@ -19,14 +19,17 @@ from pathlib import Path
 
 MAIN_REMOTE = "https://github.com/nicolai86/pipe-macos.git"
 ROOT = Path(__file__).resolve().parent.parent
-TAG_RE = re.compile(r"^refs/tags/v(\d+)\.(\d+)\.(\d+)$")
+TAG_RE = re.compile(r"^refs/tags/v(\d+)\.(\d+)(?:\.(\d+))?$")
 FALLBACK = "0.0.0-dev"
 
 
 def resolve_version(remote=MAIN_REMOTE):
     env = os.environ.get("ROTARYCAM_VERSION", "").strip()
     if env:
-        return env.lstrip("v")
+        v = env.lstrip("v")
+        if re.fullmatch(r"\d+\.\d+", v):
+            v += ".0"
+        return v
 
     try:
         out = subprocess.check_output(
@@ -44,7 +47,8 @@ def resolve_version(remote=MAIN_REMOTE):
             continue
         m = TAG_RE.match(fields[1].replace("^{}", ""))
         if m:
-            candidates.append(tuple(int(x) for x in m.groups()))
+            maj, min_, pat = m.group(1), m.group(2), m.group(3) or "0"
+            candidates.append((int(maj), int(min_), int(pat)))
 
     if not candidates:
         return FALLBACK

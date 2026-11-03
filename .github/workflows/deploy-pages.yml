@@ -1,0 +1,57 @@
+name: Deploy Landing Page (GitHub Pages)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Build & Deploy Homepage on Tag (v*)
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Jinja2 and stamp version / verify docs
+        shell: bash
+        run: |
+          set -euo pipefail
+          pip install --quiet jinja2
+          if [[ "${GITHUB_REF:-}" == refs/tags/v* ]]; then
+            export ROTARYCAM_VERSION="${GITHUB_REF#refs/tags/}"
+          fi
+          python3 scripts/version.py --write-js version.js
+          python3 scripts/build_docs.py --verify
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
