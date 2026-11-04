@@ -973,16 +973,28 @@
               <span class="release-date">November 2, 2026</span>
               <span class="release-version-pill">v0.4.0</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Auto-Scribe Part IDs &amp; Weld Witness Marks &bull; Chuck Jaw &ldquo;No-Cut&rdquo; Zones &bull; 3D Simulator Fitted Stock &amp; Chuck Beyond Last Cut</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Auto-Scribe Part IDs &amp; Multi-Stroke Witness Marks &bull; 1/8&Prime; Cut Presets &amp; Auto Interpolation &bull; Chuck Jaw &ldquo;No-Cut&rdquo; Zones &bull; 3D Simulator Fitted Stock</span>
           </div>
           <p class="release-summary">
-            Stencil single-stroke Part IDs (<code>P1</code>, <code>P2</code>) and automatic multi-body weld alignment witness marks right onto your tubes with zero sidecar files required so you can sort parts and tack-weld frames without a tape measure. Protect your torch and chuck with configurable Chuck Jaw Dead Zones (<code>65 mm</code>), Min Chuck Grip lengths (<code>80 mm</code>), 3D red no-cut collision sleeves positioned strictly beyond the last cut, and exact <strong>Min Stock to Load</strong> readouts.
+            Stencil single-stroke Part IDs (<code>P1</code>, <code>P2</code>) and clean multi-stroke weld witness marks onto your tubes and flat plates so you can sort parts and tack-weld frames without a tape measure. Cut <code>1/8&Prime;</code> (<code>3.175 mm</code>) structural wall and in-between tube gauges with built-in presets and automatic cut-chart interpolation, and protect your torch and chuck with configurable Chuck Jaw Dead Zones (<code>65 mm</code>), 3D red no-cut collision sleeves, and exact <strong>Min Stock to Load</strong> readouts.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
                 <strong>Built-In Part-ID Stenciling &amp; Assembly Weld Witness Marks (Zero Sidecar Required):</strong> Turn on one-click <strong>Auto-Scribe Part IDs</strong> to stencil single-stroke CNC stick-font labels (<code>P1</code>, <code>P2</code>, or your own custom text) onto the longest clear flat face or round-tube top crest&mdash;automatically steering clear of holes, miters, and <code>.markings.json</code> artwork with clean <code>M5</code> &rarr; <code>G0</code> &rarr; <code>M3 S1</code> rapid hops between strokes via mechanical <strong>EasyScribe</strong> (<code>#1114=3</code>) or low-amperage <strong>Plasma Mark</strong> (<code>#1114=2</code> at <code>#1111=15A</code>). When you load a multi-body STEP assembly where branch tubes or flat brackets touch a main header tube (<code>&le; 0.5 mm</code>), RotaryCAM automatically detects the contact footprint and scribes <code>5 mm</code> weld alignment witness marks on the main tube so you can line up and tack-weld joints without a tape measure.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Clean Multi-Stroke Witness Marks on Flat &amp; Tube Assemblies:</strong> Fixed multi-stroke witness mark G-code on flat plates and HSS/pipe assemblies so the torch turns off (<code>M5</code>) and retracts cleanly to Safe Z between every layout dash&mdash;never dragging a live arc between marks&mdash;and steps across louver and slot grids in one smooth direction in both Single-Part and Pack Mode.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets:</strong> Added built-in <code>1/8&Prime;</code> (<code>3.175 mm</code>) Mild Steel and Stainless Steel Hypertherm SYNC presets plus automatic cut-chart interpolation whenever your tube wall or plate thickness falls between standard gauge rows&mdash;automatically blending feedrate, arc voltage, and pierce delay from the nearest thinner and thicker charts so non-standard wall tubing cuts cleanly right off the CAD model.
               </div>
             </li>
             <li class="change-item">
