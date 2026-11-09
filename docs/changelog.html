@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.4.1-BETA</span>
+          <span class="brand-tag">v0.5.0-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -527,8 +527,8 @@
               The <strong>About RotaryCAM</strong> modal opens over the workspace and is divided into three sections:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.4.1</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
-              <li><strong>2. What Changed — Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities—such as <em>Automatic Piece Labeling, Mating Joint Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Multi-Stroke Assembly Weld Witness Marks</em>, <em>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets</em>, <em>Chuck Jaw &amp; Slew-Ring &ldquo;No-Cut&rdquo; Dead Zones &amp; Minimum Stick Load Length</em>, <em>Interlocking Miter &amp; Cope Stick Nesting (180&deg; Flip + A-Axis Roll)</em>, <em>Single-Cut Common-Line Severing</em>, <em>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code class="mono">.markings.json</code>)</em>, <em>Batch Feature Selection &amp; Overrides</em>, <em>2D XY Sheet Nesting (VectorNester 2.0)</em>, and <em>100% Offline MCP Stdio Server</em>.</li>
+              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.5.0</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
+              <li><strong>2. What Changed — Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities—such as <em>I-Beam &amp; C-Channel 4-Axis Beamline Emulation with Dynamic Knee-Clearance Rotation</em>, <em>Stationary Center-Point Dimple &amp; Peck Marking (<code class="mono">Contour</code> vs <code class="mono">Center Point</code>)</em>, <em>Automatic Piece Labeling, Mating Joint Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Multi-Stroke Assembly Weld Witness Marks</em>, <em>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets</em>, <em>Chuck Jaw &amp; Slew-Ring &ldquo;No-Cut&rdquo; Dead Zones &amp; Minimum Stick Load Length</em>, <em>Interlocking Miter &amp; Cope Stick Nesting (180&deg; Flip + A-Axis Roll)</em>, <em>Single-Cut Common-Line Severing</em>, <em>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code class="mono">.markings.json</code>)</em>, <em>Batch Feature Selection &amp; Overrides</em>, <em>2D XY Sheet Nesting (VectorNester 2.0)</em>, and <em>100% Offline MCP Stdio Server</em>.</li>
               <li><strong>3. Copy Diagnostics (Bottom-Right):</strong> Click <span class="ui-chip emerald">📋 Copy Diagnostics</span> to copy a formatted snapshot of your build metadata and environment to the clipboard when reporting an issue or requesting support.</li>
             </ul>
           </div>
@@ -695,10 +695,25 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Latest Release: Nov 4 (v0.4.1) -->
+            <!-- Latest Release: Nov 9 (v0.5.0) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--plasma-amber); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 4, 2026 (v0.4.1)</span>
+                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 9, 2026 (v0.5.0)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">I-Beam &amp; C-Channel 4-Axis Beamline Emulation, Knee-Clearance Rotation &amp; Stationary Center-Point Marking</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>I-Beam &amp; C-Channel &ldquo;Beamline Emulation&rdquo; on a 4-Axis Rotary (<code class="mono">Profile_IBeam</code> &amp; <code class="mono">Profile_Channel</code>):</strong> Cut structural I-Beams (H-Beams) and C-Channels directly on your 4-axis XYZA rotary plasma cutter without a 5-axis bevel head.</li>
+                <li><strong>Outside-Only Flange (&ldquo;Leg&rdquo;) Cutting with Tangent Tip Lead-Ins:</strong> Cuts both outer flange legs from the outside (<code class="mono">A = 0&deg;</code> and <code class="mono">A = 180&deg;</code>, <code class="mono">Z = 0</code>) and extends lead-ins and lead-outs straight off the flange tips in thin air without wrapping or diving into the web.</li>
+                <li><strong>Recessed Central Web Cutting &amp; Dynamic Knee-Clearance Rotation:</strong> Drops the torch down into the recessed central web (<code class="mono">A = &plusmn;90&deg;</code>) for web holes, full-web slots, and copes, and automatically rotates the beam (up to <code class="mono">45&deg;</code>) as the torch approaches the inside web-to-flange knee so the overhanging flange leg swings out of the way of your torch shield cup&mdash;letting the arc cut all the way into the inside root fillet without colliding with the legs.</li>
+                <li><strong>Separate Per-Wall Sever Cuts &amp; Safe Z Retracts:</strong> Compound miter and cope end cuts across the top leg, web, and bottom leg are automatically split into separate per-wall cuts with safe Z retracts above the flange tip swing radius between rotations, plus full 3D stock &amp; flange-clearance visualization in the 3D Cut Simulator and CAD Viewer.</li>
+                <li><strong>Stationary Center-Point Marking (<code class="mono">Contour</code> vs <code class="mono">Center Point</code> &mdash; Plasma Dimple &amp; Scribe Peck):</strong> Switch any hole or cutout to a single stationary center-point mark (<code class="mono">Contour</code> vs <code class="mono">Center Point</code>) to dimple drill or punch centers with a timed plasma spot or pneumatic scribe peck (<code class="mono">#1115</code> dwell &amp; <code class="mono">#1116</code> standoff).</li>
+              </ul>
+            </div>
+
+            <!-- Nov 4 Release (v0.4.1) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 4, 2026 (v0.4.1)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Follow Along in the G-Code While the Simulator Runs &amp; Cleaner Single-Part View</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">

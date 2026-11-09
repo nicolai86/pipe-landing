@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.4.1-BETA</span>
+        <span class="brand-tag">v0.5.0-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -961,6 +961,57 @@
   <!-- Chronological Release Entries -->
   <main class="changelog-section">
     <div class="timeline-wrap">
+
+      <!-- ================================================================
+           RELEASE: November 9, 2026 (v0.5.0)
+           ================================================================ -->
+      <article class="release-entry" id="v0.5.0">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 9, 2026</span>
+              <span class="release-version-pill">v0.5.0</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">I-Beam &amp; C-Channel 4-Axis Beamline Cutting &bull; Knee-Clearance Rotation &bull; Center-Point Dimple &amp; Peck Marking</span>
+          </div>
+          <p class="release-summary">
+            Cut structural I-Beams (H-Beams) and C-Channels right on your 4-axis XYZA rotary plasma table without a 5-axis bevel head, and dimple drill or punch centers with a single stationary plasma spot or pneumatic scribe peck.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Cut Structural I-Beams &amp; C-Channels on a 4-Axis Rotary (&ldquo;Beamline Emulation&rdquo;):</strong> Drop in 3D STEP models of structural I-Beams (H-Beams) or C-Channels (<code>Profile_IBeam</code> &amp; <code>Profile_Channel</code>) and cut flange bolt holes, web slots, miters, and copes directly on your 4-axis XYZA rotary plasma cutter without needing a 5-axis bevel head.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Outside-Only Flange (&ldquo;Leg&rdquo;) Cuts with Straight-Off-the-Tip Lead-Ins:</strong> Cut both outer flange legs from the outside (<code>A = 0&deg;</code> and <code>A = 180&deg;</code>, <code>Z = 0</code>) while extending lead-ins and lead-outs straight off the flange tips in thin air so the torch starts cleanly outside the steel without wrapping around the edge or diving into the web.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Recessed Central Web Cutting &amp; Dynamic Knee-Clearance Rotation:</strong> For web holes, full-web slots, and copes, the torch drops down into the recessed central web (<code>A = &plusmn;90&deg;</code>) and automatically rotates the beam up to <code>45&deg;</code> as the torch approaches the inside web-to-flange knee so the overhanging flange leg swings out of the way of your torch shield cup&mdash;letting the arc cut all the way into the inside root fillet without colliding with the legs.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Separate Per-Wall Sever Cuts &amp; Safe Swing-Radius Retracts:</strong> Compound miter and cope end cuts across the top leg, web, and bottom leg are automatically split into separate per-wall cuts with safe Z retracts above the flange-tip swing radius between rotations, plus full 3D stock and flange-clearance visualization in the 3D Cut Simulator and CAD Viewer.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Stationary Center-Point Marking (<code>Contour</code> vs <code>Center Point</code> &mdash; Plasma Dimple &amp; Scribe Peck):</strong> Switch any hole or cutout from full <code>Contour</code> cutting to a single stationary <code>Center Point</code> mark to dimple drill or punch centers with a timed plasma spot or pneumatic scribe peck (<code>#1115</code> dwell &amp; <code>#1116</code> standoff).
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
 
       <!-- ================================================================
            RELEASE: November 4, 2026 (v0.4.1)
@@ -1533,7 +1584,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.4.1-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.5.0-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
