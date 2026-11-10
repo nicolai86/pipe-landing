@@ -973,16 +973,22 @@
               <span class="release-date">November 10, 2026</span>
               <span class="release-version-pill">v0.5.1</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-CAD C-Channel &amp; Open-Profile Detection &bull; Open-Ended Terminal Web Slots &bull; ~30&times; Faster STEP Assembly Loading</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-CAD C-Channel &amp; Open-Profile Detection &bull; True-to-Model C-Channel Miter &amp; Slotted End Cuts &bull; ~30&times; Faster STEP Assembly Loading</span>
           </div>
           <p class="release-summary">
-            Load tapered-flange and heavily notched C-Channels from Fusion 360 or any CAD package without profile mix-ups, cut open-ended web slots cleanly through channel ends, and open 37-part weldment assemblies in ~9 seconds instead of 4+ minutes.
+            Load tapered-flange and heavily notched C-Channels from Fusion 360 or any CAD package without profile mix-ups, cut compound miters and open-ended web slots cleanly across the outer web and both flanges with crisp 90&deg; corners, and open 37-part weldment assemblies in ~9 seconds instead of 4+ minutes.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-improvement">IMPROVEMENT</span>
               <div class="change-content">
                 <strong>Multi-CAD C-Channel &amp; Open-Profile Detection (<code>C4x4.0</code> / <code>C4x4.5</code>, Tapered Flanges &amp; Notched Channels):</strong> Drop in standard American (<code>C</code> &amp; <code>MC</code>, including sloped-flange <code>C4x4.0</code> and <code>C4x4.5</code>), European (<code>UPN</code> &amp; <code>UPE</code>), or <code>PFC</code> structural channels exported from Fusion 360 and other CAD tools&mdash;even with steep inner flange slopes, circular flange-tip notches, and open-ended web slots&mdash;and your part always detects as C-Channel instead of getting confused with I-Beam.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>True-to-Model C-Channel Miter &amp; Slotted End Cuts:</strong> Compound miter and cope end cuts that wrap across the outer web and both flanges now follow your 3D CAD geometry cleanly with crisp 90&deg; flange-to-web corners instead of stair-stepping from recessed-web torch-flange clearance clamping. Long slots cut into the web no longer throw off flange thickness detection, and the 3D CAD viewer toolpath overlay sits right on the outer web of the channel.
               </div>
             </li>
             <li class="change-item">
