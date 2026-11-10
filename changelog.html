@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.5.1-BETA</span>
+        <span class="brand-tag">v0.5.2-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -964,32 +964,38 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
-           RELEASE: Founding Fabricator Licensing & Open-Profile Edge Notches
+           RELEASE: November 10, 2026 (v0.5.2)
            ================================================================ -->
-      <article class="release-entry" id="founding-licensing">
+      <article class="release-entry" id="v0.5.2">
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 10, 2026</span>
-              <span class="release-version-pill">v0.5.1 &bull; FOUNDING LAUNCH</span>
+              <span class="release-version-pill">v0.5.2 &bull; FOUNDING LAUNCH</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Founding Fabricator Perpetual Offline Licenses &bull; Clean Edge-Drop Notches on Open Profiles</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">True-to-Model C-Channel Miter &amp; Slotted End Cuts &bull; Clean Edge Cutouts (Lead-Out: None) &bull; Founding Fabricator Perpetual Offline Licenses</span>
           </div>
           <p class="release-summary">
-            Own RotaryCAM offline forever with a one-time Maker ($199) or Pro Shop ($399) Founding Fabricator license, and cut edge-breaking notches on C-Channel, I-Beam, and Angle Iron cleanly without extra lead-out tails.
+            Cut compound miters and deep end-breaking web slots on C-Channel cleanly along your 3D CAD geometry, shut the torch off right at the open edge on flange notches and slots without over-running into good steel, and own your table's CAM setup offline forever with a one-time Maker ($199) or Pro Shop ($399) license.
           </p>
           <ul class="change-list">
             <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
+              <span class="badge-tag badge-fix">FIX</span>
               <div class="change-content">
-                <strong>Founding Fabricator Perpetual Offline Licenses (<code>Maker</code> &amp; <code>Pro Shop</code>):</strong> Buy once and run <code>rotarycam.lic</code> 100% air-gapped at your plasma table forever&mdash;your table never stops cutting if shop Wi-Fi goes down or you skip future update renewals. Choose <strong>Maker ($199)</strong> for 2 computers (Round Pipe, Square/Rect HSS &amp; Flat Bar, Zero-Bevel, custom machines, up to 5 parts/stick &amp; 5 bends/file, plus your shop name in the G-code header), or <strong>Pro Shop ($399)</strong> for 3 computers plus Angle Iron, C-Channel &amp; I-Beam cutting, unlimited multi-stick nesting with common-line sever cuts, tab cutting, part-ID scribing, and headless MCP automation. Both include 1 full year of updates (<a href="index.html#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">compare tiers &rarr;</a>).
+                <strong>True-to-Model C-Channel Miter &amp; Slotted End Cuts:</strong> Cut compound miters, notched copes, and deep end-breaking web slots on C-Channel cleanly along your 3D CAD lines&mdash;with accurate flange thickness even when a deep slot splits the end cap, full-travel miter paths without stair-stepped flange cutbacks, safe Z retracts pinned right to each flange-to-web corner, and a 3D toolpath preview that sits squarely on the outer web.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-improvement">IMPROVEMENT</span>
               <div class="change-content">
-                <strong>No Extra Lead-Out Tail on Open-Profile Edge Cutouts &amp; Notches (<code>Lead-Out: None</code>):</strong> Edge cutouts and notches that break through an open leg tip&mdash;such as flange-intersecting holes on C-Channel, I-Beam, and Angle Iron&mdash;now default their lead-out to <code>None</code>. Because the scrap slug drops free off the open edge as soon as the torch exits the steel, skipping the lead-out saves cut time and prevents the arc from burning back toward your finished edge.
+                <strong>Clean Edge Cutouts Without Lead-Out Overrun (<code>Lead-Out: None</code> Default):</strong> Flange-tip notches, copes, and open-ended web slots on Angle Iron, C-Channel, and I-Beam now default to <code>Lead-Out: None</code> so your torch shuts off cleanly right as it exits the open steel edge&mdash;letting the scrap slug drop free instead of over-running into good stock.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Founding Fabricator Perpetual Offline Licenses (<code>Maker</code> &amp; <code>Pro Shop</code>):</strong> Own your CAM setup outright with a 100% offline <code>rotarycam.lic</code> file that runs air-gapped at your plasma table forever&mdash;with full 3D preview unlocked on every profile and feature before you buy, plus instant checkout claim or USB thumb-drive activation. Pick <strong>Maker ($199)</strong> for 2 computers (Round Pipe, Square/Rect HSS &amp; Flat Bar, Zero-Bevel, custom machines, up to 5 parts/stick &amp; 5 bends/file, plus your shop name in the G-code header), or <strong>Pro Shop ($399)</strong> for 3 computers plus Angle Iron, C-Channel &amp; I-Beam cutting, unlimited multi-stick nesting with common-line sever cuts, tab cutting, part-ID scribing, and headless MCP automation&mdash;both with 1 full year of updates (<a href="index.html#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">compare tiers &rarr;</a>).
               </div>
             </li>
           </ul>
@@ -1007,22 +1013,16 @@
               <span class="release-date">November 10, 2026</span>
               <span class="release-version-pill">v0.5.1</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-CAD C-Channel &amp; Open-Profile Detection &bull; True-to-Model C-Channel Miter &amp; Slotted End Cuts &bull; ~30&times; Faster STEP Assembly Loading</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-CAD C-Channel &amp; Open-Profile Detection &bull; Open-Ended Terminal Web Slots &bull; ~30&times; Faster STEP Assembly Loading</span>
           </div>
           <p class="release-summary">
-            Load tapered-flange and heavily notched C-Channels from Fusion 360 or any CAD package without profile mix-ups, cut compound miters and open-ended web slots cleanly across the outer web and both flanges with crisp 90&deg; corners, and open 37-part weldment assemblies in ~9 seconds instead of 4+ minutes.
+            Load tapered-flange and heavily notched C-Channels from Fusion 360 or any CAD package without profile mix-ups, trace open-ended terminal web slots and opposite-flange bolt holes cleanly, and open 37-part weldment assemblies in ~9 seconds instead of 4+ minutes.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-improvement">IMPROVEMENT</span>
               <div class="change-content">
                 <strong>Multi-CAD C-Channel &amp; Open-Profile Detection (<code>C4x4.0</code> / <code>C4x4.5</code>, Tapered Flanges &amp; Notched Channels):</strong> Drop in standard American (<code>C</code> &amp; <code>MC</code>, including sloped-flange <code>C4x4.0</code> and <code>C4x4.5</code>), European (<code>UPN</code> &amp; <code>UPE</code>), or <code>PFC</code> structural channels exported from Fusion 360 and other CAD tools&mdash;even with steep inner flange slopes, circular flange-tip notches, and open-ended web slots&mdash;and your part always detects as C-Channel instead of getting confused with I-Beam.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>True-to-Model C-Channel Miter &amp; Slotted End Cuts:</strong> Compound miter and cope end cuts that wrap across the outer web and both flanges now follow your 3D CAD geometry cleanly with crisp 90&deg; flange-to-web corners instead of stair-stepping from recessed-web torch-flange clearance clamping. Long slots cut into the web no longer throw off flange thickness detection, and the 3D CAD viewer toolpath overlay sits right on the outer web of the channel.
               </div>
             </li>
             <li class="change-item">
@@ -1670,7 +1670,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.5.1-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.5.2-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
