@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.5.0-BETA</span>
+        <span class="brand-tag">v0.5.1-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -963,6 +963,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 10, 2026 (v0.5.1)
+           ================================================================ -->
+      <article class="release-entry" id="v0.5.1">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 10, 2026</span>
+              <span class="release-version-pill">v0.5.1</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-CAD C-Channel &amp; Open-Profile Detection &bull; Open-Ended Terminal Web Slots &bull; ~30&times; Faster STEP Assembly Loading</span>
+          </div>
+          <p class="release-summary">
+            Load tapered-flange and heavily notched C-Channels from Fusion 360 or any CAD package without profile mix-ups, cut open-ended web slots cleanly through channel ends, and open 37-part weldment assemblies in ~9 seconds instead of 4+ minutes.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Multi-CAD C-Channel &amp; Open-Profile Detection (<code>C4x4.0</code> / <code>C4x4.5</code>, Tapered Flanges &amp; Notched Channels):</strong> Drop in standard American (<code>C</code> &amp; <code>MC</code>, including sloped-flange <code>C4x4.0</code> and <code>C4x4.5</code>), European (<code>UPN</code> &amp; <code>UPE</code>), or <code>PFC</code> structural channels exported from Fusion 360 and other CAD tools&mdash;even with steep inner flange slopes, circular flange-tip notches, and open-ended web slots&mdash;and your part always detects as C-Channel instead of getting confused with I-Beam.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Open-Ended Terminal Web Slot Cutting &amp; Opposite-Flange Bolt Holes:</strong> Open-ended axial web slots breaking through C-Channel end caps now trace all the way down both slot walls and around the semicircular bottom instead of jumping straight across the mouth, and bolt holes on both flanges extract cleanly.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>~30&times; Faster Multi-Part STEP Assembly &amp; Witness-Mark Loading:</strong> Drop in a large multi-part weldment STEP file&mdash;like a 37-part <em>Headache Rack</em>&mdash;and all your tubes, plates, weld witness marks, and mating end-cut tags load in ~9 seconds instead of ~4.5 minutes, with live progress keep-alive so heavy assemblies always finish loading before opening your workspace.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 9, 2026 (v0.5.0)
            ================================================================ -->
       <article class="release-entry" id="v0.5.0">
@@ -973,28 +1012,16 @@
               <span class="release-date">November 9, 2026</span>
               <span class="release-version-pill">v0.5.0</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">I-Beam &amp; C-Channel 4-Axis Beamline Cutting &bull; Knee-Clearance Rotation &bull; Center-Point Dimple &amp; Peck Marking &bull; ~30&times; Faster Assembly Loading</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">I-Beam &amp; C-Channel 4-Axis Beamline Cutting &bull; Knee-Clearance Rotation &bull; Center-Point Dimple &amp; Peck Marking</span>
           </div>
           <p class="release-summary">
-            Cut structural I-Beams (H-Beams) and C-Channels right on your 4-axis XYZA rotary plasma table without a 5-axis bevel head, dimple drill or punch centers with a single stationary plasma spot or pneumatic scribe peck, load large multi-part weldment STEP files ~30&times; faster, or click <code>I-Beam [BEAMLINE]</code> in the left sidebar to load a sample beam and watch the toolpath run in 3D.
+            Cut structural I-Beams (H-Beams) and C-Channels right on your 4-axis XYZA rotary plasma table without a 5-axis bevel head, dimple drill or punch centers with a single stationary plasma spot or pneumatic scribe peck, or click <code>I-Beam [BEAMLINE]</code> in the left sidebar to load a sample beam and watch the toolpath run in 3D.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
                 <strong>Cut Structural I-Beams &amp; C-Channels on a 4-Axis Rotary (&ldquo;Beamline Emulation&rdquo;):</strong> Drop in 3D STEP models of structural I-Beams (H-Beams) or C-Channels (<code>Profile_IBeam</code> &amp; <code>Profile_Channel</code>) and cut flange bolt holes, web slots, miters, and copes directly on your 4-axis XYZA rotary plasma cutter without needing a 5-axis bevel head.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>C-Channel Detection &amp; Tapered-Flange Structural Support (<code>C</code>, <code>MC</code>, <code>UPN</code>, <code>UPE</code> &amp; <code>PFC</code>):</strong> Drop in standard American (<code>C</code> &amp; <code>MC</code>), European (<code>UPN</code> &amp; <code>UPE</code>), or <code>PFC</code> structural channels exported from any CAD program, and your channel stock comes in ready to cut automatically&mdash;including hot-rolled tapered-flange channels with mitered ends and matching bolt holes through both flanges.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Reliable C-Channel Detection on Notched &amp; Sloped-Flange Channels (<code>C4x4.0</code> / <code>C4x4.5</code>):</strong> C-Channel parts exported from Fusion 360 and other CAD tools with heavy flange-tip notches, open-ended web slots, or sloped inner flanges (such as AISC <code>C4x4.0</code> and <code>C4x4.5</code> structural channels) now reliably detect as C-Channel instead of getting confused with I-Beam.
               </div>
             </li>
             <li class="change-item">
@@ -1025,18 +1052,6 @@
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
                 <strong>Stationary Center-Point Marking (<code>Contour</code> vs <code>Center Point</code> &mdash; Plasma Dimple &amp; Scribe Peck):</strong> Switch any hole or cutout from full <code>Contour</code> cutting to a single stationary <code>Center Point</code> mark to dimple drill or punch centers with a timed plasma spot or pneumatic scribe peck (<code>#1115</code> dwell &amp; <code>#1116</code> standoff).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>~30&times; Faster Multi-Part Assembly &amp; Weld Witness Loading:</strong> Drop in a large multi-part weldment STEP file&mdash;like a 37-part <em>Headache Rack</em>&mdash;and all your tubes, plates, weld witness marks, and mating end-cut tags load in ~9 seconds instead of 4+ minutes, so you can get straight to nesting and cutting.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Large Multi-Part STEP Assemblies Finish Loading Before Opening:</strong> When you load a heavy multi-part STEP assembly that takes longer than 20 seconds to process&mdash;like a 37-piece <em>Headache Rack</em>&mdash;the loading screen no longer cuts out early at 20 seconds. It tracks live progress until every tube, plate, and cut path is ready before opening your workspace.
               </div>
             </li>
           </ul>
@@ -1614,7 +1629,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.5.0-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.5.1-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
