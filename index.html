@@ -46,14 +46,36 @@
     "@type": "SoftwareApplication",
     "name": "RotaryCAM",
     "applicationCategory": "ComputerAidedManufacturingApplication",
-    "operatingSystem": "macOS, Web, Linux, Windows",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/InStock",
-      "description": "Free Early Access Beta"
-    },
+    "operatingSystem": "macOS, Windows, Linux",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Public Beta (30-Day Rolling Offline Evaluation)",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://rotarycam.app/#download",
+        "description": "Free 30-day offline evaluation with full 3D STEP assembly inspection, Round/Square/Flat G-code, Zero-Bevel saddle compensation, 552 Hypertherm cut charts, and up to 5 parts/stick & 5 bends/file."
+      },
+      {
+        "@type": "Offer",
+        "name": "Maker Perpetual Offline License (Founding Fabricator)",
+        "price": "199",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://rotarycam.app/#pricing",
+        "description": "Perpetual air-gapped offline license (rotarycam.lic) for 2 computers with 1 full year of updates included ($59/yr optional thereafter), Round/Square/Flat G-code, Zero-Bevel, custom machines, and your shop name stamped in every G-code header."
+      },
+      {
+        "@type": "Offer",
+        "name": "Pro Shop Perpetual Offline License (Founding Fabricator)",
+        "price": "399",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "url": "https://rotarycam.app/#pricing",
+        "description": "Commercial perpetual offline license (rotarycam.lic) for 3 computers with 1 full year of updates included ($99/yr optional thereafter), Angle Iron/C-Channel/I-Beam 4-axis beamline cutting, unlimited multi-stick nesting with common-line sever cuts, unlimited 3D cut-and-bend unfolding, tabbing, part-ID scribing, and headless MCP automation."
+      }
+    ],
     "description": "Dedicated 4-axis rotary CNC plasma CAM software. Transforms 3D CAD STEP assemblies directly into machine-ready G-code with automatic tube copes, zero-bevel saddle compensation, SimCNC 4D speed scaling, and full mill-stick nesting.",
     "url": "https://rotarycam.app",
     "author": {
@@ -68,12 +90,12 @@
     "featureList": [
       "Direct 3D CAD STEP Assembly Ingestion",
       "Zero 2D DXF Unrolling Required",
-      "Round Pipe, Square Tube, Rectangular HSS, and Angle Iron Support",
+      "Round Pipe, Square/Rect HSS, Flat Bar, Angle Iron, C-Channel, and I-Beam Support",
       "Zero-Gap Dual-Curve Saddle Joint Compensation",
       "SimCNC 4D Trajectory Feedrate Scaling",
       "Dynamic THC Corner Anti-Dive Locking (M62/M63)",
-      "1D Mill Stick Nesting with Thermal Hop Sequencing",
-      "100% Offline Standalone Desktop Application"
+      "1D Mill Stick Nesting with Common-Line Sever Cuts & 180-Degree Interlocking",
+      "Perpetual 100% Air-Gapped Offline Desktop Licensing (rotarycam.lic)"
     ]
   }
   </script>
@@ -145,11 +167,11 @@
     nav {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 0.9rem 2rem;
+      padding: 0.9rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.25rem;
+      gap: 1rem;
       border-bottom: none; /* moved to .site-header */
     }
 
@@ -181,14 +203,14 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.15rem;
+      gap: 0.95rem;
     }
 
     .nav-links a {
       position: relative;
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       line-height: 1.2;
       white-space: nowrap;
       transition: color 0.2s ease;
@@ -931,7 +953,502 @@
       background: rgba(245, 158, 11, 0.4);
     }
 
+    /* Pricing & Founding Fabricator Licensing */
+    .pricing-promise-bar {
+      background: linear-gradient(135deg, rgba(20, 23, 29, 0.96), rgba(26, 31, 41, 0.94));
+      border: 1px solid rgba(245, 158, 11, 0.32);
+      border-radius: 10px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 2.25rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.38);
+    }
+
+    .pricing-promise-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .pricing-promise-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--plasma-amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pricing-promise-title {
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 0.2rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .pricing-promise-desc {
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 2rem 1.85rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pricing-card:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--plasma-amber);
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.07) 0%, rgba(20, 23, 29, 0.98) 38%);
+      box-shadow: 0 22px 52px rgba(0, 0, 0, 0.55), 0 0 28px rgba(245, 158, 11, 0.12);
+    }
+
+    .pricing-ribbon {
+      position: absolute;
+      top: -13px;
+      left: 1.85rem;
+      background: var(--plasma-amber);
+      color: #000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.69rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      text-transform: uppercase;
+    }
+
+    .pricing-tier-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.65rem;
+    }
+
+    .pricing-tier-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--cyan-arc);
+    }
+
+    .pricing-save-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald-cut);
+      white-space: nowrap;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .pricing-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin: 0.5rem 0 0.35rem;
+    }
+
+    .pricing-price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.65rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .pricing-strike {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      text-decoration: line-through;
+    }
+
+    .pricing-cadence {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-subnote {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-bottom: 1.15rem;
+      margin-bottom: 1.15rem;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .pricing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.72rem;
+      margin: 0 0 1.75rem;
+      padding: 0;
+    }
+
+    .pricing-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .pricing-list li strong {
+      color: #fff;
+    }
+
+    .pricing-check {
+      color: var(--emerald-cut);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pricing-plus-divider {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--plasma-amber);
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      margin: 0.15rem 0;
+    }
+
+    .pricing-cta-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-top: auto;
+    }
+
+    .pricing-cta {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .pricing-cta-maker {
+      border-color: rgba(6, 182, 212, 0.5);
+      color: #fff;
+      background: rgba(6, 182, 212, 0.12);
+    }
+
+    .pricing-cta-maker:hover {
+      border-color: var(--cyan-arc);
+      background: rgba(6, 182, 212, 0.22);
+      color: #fff;
+    }
+
+    .pricing-upgrade-link {
+      background: none;
+      border: none;
+      padding: 0.2rem 0;
+      color: var(--plasma-amber);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .pricing-upgrade-link:hover {
+      color: #fbbf24;
+      text-decoration: underline;
+    }
+
+    .pricing-foot-bar {
+      margin-top: 1.5rem;
+      background: rgba(13, 15, 18, 0.75);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 1rem 1.35rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-inline-btn {
+      background: none;
+      border: none;
+      padding: 0;
+      color: var(--cyan-arc);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .pricing-inline-btn:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    /* Checkout & Claim License Modal */
+    .lic-modal-card {
+      max-width: 620px;
+    }
+
+    .lic-plan-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .lic-plan-tab {
+      background: rgba(13, 15, 18, 0.8);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 0.65rem 0.8rem;
+      text-align: left;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .lic-plan-tab:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+      color: #fff;
+    }
+
+    .lic-plan-tab.active {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: var(--plasma-amber);
+      color: #fff;
+    }
+
+    .lic-plan-tab-name {
+      font-weight: 600;
+      font-size: 0.83rem;
+    }
+
+    .lic-plan-tab-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--plasma-amber);
+      white-space: nowrap;
+    }
+
+    .lic-summary-box {
+      background: #090b0e;
+      border: 1px solid var(--surface-border);
+      border-left: 3px solid var(--plasma-amber);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .lic-field {
+      margin-bottom: 1.05rem;
+    }
+
+    .lic-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .lic-label-hint {
+      font-size: 0.74rem;
+      font-weight: 400;
+      color: var(--text-dim);
+    }
+
+    .lic-input, .lic-textarea {
+      width: 100%;
+      background: #090b0e;
+      border: 1px solid var(--surface-border);
+      border-radius: 6px;
+      padding: 0.7rem 0.85rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.15s ease;
+    }
+
+    .lic-textarea {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      resize: vertical;
+    }
+
+    .lic-input:focus, .lic-textarea:focus {
+      outline: none;
+      border-color: var(--plasma-amber);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15);
+    }
+
+    .lic-stamp-preview {
+      margin-top: 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.07);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      border-radius: 5px;
+      padding: 0.35rem 0.65rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .lic-upload-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.45rem;
+    }
+
+    .lic-file-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      color: var(--cyan-arc);
+      padding: 0.32rem 0.7rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .lic-file-btn:hover {
+      background: rgba(6, 182, 212, 0.22);
+      color: #fff;
+    }
+
+    .lic-status-box {
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      display: none;
+    }
+
+    .lic-status-box.error {
+      display: block;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #fecaca;
+    }
+
+    .lic-status-box.fallback {
+      display: block;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.38);
+      color: var(--text);
+    }
+
+    .lic-claim-token-box {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--cyan-arc);
+      background: #05070a;
+      border: 1px solid var(--surface-border);
+      border-radius: 6px;
+      padding: 0.85rem 1rem;
+      word-break: break-all;
+      max-height: 110px;
+      overflow-y: auto;
+      user-select: all;
+      line-height: 1.5;
+      margin: 0.75rem 0 1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .pricing-grid, .pricing-promise-bar {
+        grid-template-columns: 1fr;
+      }
+      .pricing-card.featured {
+        margin-top: 0.5rem;
+      }
+    }
+
     @media (max-width: 900px) {
+      .lic-plan-tabs {
+        grid-template-columns: 1fr;
+      }
       .hero, .feature-strip-inner, .grid-2 {
         grid-template-columns: 1fr;
         gap: 2.5rem;
@@ -975,11 +1492,12 @@
       <div class="nav-links">
         <a href="#showcase">Showcase</a>
         <a href="#features">Features</a>
-        <a href="#profiles">Tubing &amp; Controllers</a>
+        <a href="#profiles">Profiles</a>
         <a href="#kinematics">Machine Safety</a>
-        <a href="#simulation">3D Simulation</a>
-        <a href="docs/index.html">Documentation</a>
-        <a href="build-guide.html">Build Your Own</a>
+        <a href="#simulation">3D Sim</a>
+        <a href="#pricing">Pricing</a>
+        <a href="docs/index.html">Docs</a>
+        <a href="build-guide.html">Build Guide</a>
         <a href="changelog.html">Changelog</a>
       </div>
       <a href="#download" class="nav-cta">Download Beta</a>
@@ -1005,14 +1523,20 @@
       </p>
 
       <div class="cta-group" id="download">
-        <div style="display: flex; gap: 0.85rem; flex-wrap: wrap; align-items: center;">
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
           <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-macOS-latest.zip" class="primary-btn" id="hero-download-btn">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
             <span id="hero-download-text">Download Public Beta (macOS)</span>
           </a>
-          <a href="changelog.html" class="secondary-btn" style="border-color: rgba(245, 158, 11, 0.35); color: #f59e0b;">
+          <a href="#pricing" class="secondary-btn" style="border-color: rgba(245, 158, 11, 0.45); color: var(--plasma-amber);">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+            </svg>
+            Founding Pricing &mdash; $199
+          </a>
+          <a href="changelog.html" class="secondary-btn">
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
@@ -1023,12 +1547,6 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
             </svg>
             Tutorials ↗
-          </a>
-          <a href="build-guide.html" class="secondary-btn">
-            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-            </svg>
-            Build Your Own ↗
           </a>
         </div>
 
@@ -1056,7 +1574,7 @@
           <div id="note-linux" style="display: none;"><strong>Linux note:</strong> After extracting the archive, mark binary executable with <code>chmod +x RotaryCAM</code>.</div>
         </div>
 
-        <div class="sub-cta mono" style="text-align: left;">Free 30-day public beta &bull; Zero-bevel &amp; 1D nesting active &bull; 100% offline at the machine</div>
+        <div class="sub-cta mono" style="text-align: left;">Free 30-day public beta &bull; Buy once ($199 Maker / $399 Pro Shop), own offline forever</div>
       </div>
     </div>
 
@@ -1399,12 +1917,12 @@
         <div>
           <div class="card-num mono">SUPPORTED TUBING & PROFILES</div>
           <h3 style="margin-bottom: 1rem;">Complete Structural Tubing Range</h3>
-          <p style="margin-bottom: 1.5rem;">Handles round pipe, square tube, angle iron, and plate with dedicated toolpaths:</p>
+          <p style="margin-bottom: 1.5rem;">Handles round pipe, square tube, open structural beams, and flat plate with dedicated toolpaths:</p>
           <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem;" class="mono">
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Round Pipe & Tubing:</strong> 1/8" pipe up to 16" heavy casing</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Square & Rectangular Tubing (HSS):</strong> 1/2" up to 16"+ with corner radius tracking</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Structural Angle Iron:</strong> Equal & unequal leg L-profile with heel tracking</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Sheet & Plate:</strong> Cut brackets, tabs, and gussets on the same table</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Round Pipe &amp; Tubing:</strong> 1/8" pipe up to 16" heavy casing</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Square &amp; Rectangular Tubing (HSS):</strong> 1/2" up to 16"+ with corner radius tracking</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Angle Iron, C-Channel &amp; I-Beam:</strong> 4-axis beamline cutting on legs &amp; recessed webs</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Sheet &amp; Plate:</strong> Cut brackets, tabs, and gussets on the same table</li>
           </ul>
         </div>
         <div class="pill-list mono" style="margin-top: 1.5rem;">
@@ -1522,6 +2040,183 @@
         <span style="color: var(--plasma-amber);">Dual Deployment:</span> Standalone 100% Offline Desktop App (Native Metal) • Zero-Install Web App (Go + HTMX) • Headless REST Automation (<span class="mono">PipeServer</span>)
       </div>
       <a href="#download" class="nav-cta mono" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">Download Beta →</a>
+    </div>
+  </section>
+
+  <!-- Founding Fabricator Licensing & Pricing Section -->
+  <section id="pricing" class="section-wrap" style="padding-top: 1rem;">
+    <div class="section-header" style="max-width: 840px; margin-bottom: 2.25rem;">
+      <div class="badge">
+        <span class="mono">FOUNDING FABRICATOR PRICING</span>
+        <span>&bull;</span>
+        <span class="mono" style="color: var(--emerald-cut);">PERPETUAL OFFLINE LICENSE</span>
+      </div>
+      <h2>Buy Once. Own Your Shop Software Forever.</h2>
+      <p>
+        Your plasma table shouldn't stop cutting because shop Wi-Fi went down or a cloud subscription lapsed. Every paid license gives you a signed, 100% air-gapped <code class="mono" style="color: var(--cyan-arc);">rotarycam.lic</code> file you own forever, plus <strong>1 full year of new releases</strong>. Keep running your version forever at $0, or renew updates in Year 2+ only when you want newer features.
+      </p>
+    </div>
+
+    <!-- Core Offline Ownership Promise Strip -->
+    <div class="pricing-promise-bar">
+      <div class="pricing-promise-item">
+        <div class="pricing-promise-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="pricing-promise-title">100% Air-Gapped <code class="mono" style="font-size: 0.82rem; color: var(--plasma-amber);">rotarycam.lic</code></div>
+          <div class="pricing-promise-desc">Carry your key to the plasma table on a USB stick. Zero online logins, zero internet checks, and zero customer CAD uploads.</div>
+        </div>
+      </div>
+
+      <div class="pricing-promise-item">
+        <div class="pricing-promise-icon" style="color: var(--emerald-cut); border-color: rgba(16, 185, 129, 0.35); background: rgba(16, 185, 129, 0.12);">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="pricing-promise-title">Never Stops Cutting</div>
+          <div class="pricing-promise-desc">Buy once and keep cutting on your installed version forever—even if you never spend another dollar on updates.</div>
+        </div>
+      </div>
+
+      <div class="pricing-promise-item">
+        <div class="pricing-promise-icon" style="color: var(--cyan-arc); border-color: rgba(6, 182, 212, 0.35); background: rgba(6, 182, 212, 0.12);">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </div>
+        <div>
+          <div class="pricing-promise-title">1 Full Year of Updates Included</div>
+          <div class="pricing-promise-desc">Every release for 12 months is included. Optional Year 2+ renewal (<span class="mono">$59/yr</span> Maker &bull; <span class="mono">$99/yr</span> Pro Shop) only if you want newer releases.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-Tier Pricing Cards -->
+    <div class="pricing-grid">
+      <!-- Card 1: Public Beta -->
+      <div class="pricing-card">
+        <div>
+          <div class="pricing-tier-meta">
+            <span class="pricing-tier-tag" style="color: var(--text-muted);">30-Day Rolling Eval</span>
+            <span class="pricing-save-pill" style="background: rgba(255,255,255,0.05); border-color: var(--surface-border); color: var(--text-muted);">PRE-BUNDLED IN ZIP</span>
+          </div>
+          <h3>Public Beta</h3>
+          <div class="pricing-price-row">
+            <span class="pricing-price">$0</span>
+            <span class="pricing-cadence">free 30-day offline eval</span>
+          </div>
+          <p class="pricing-subnote">
+            Drop in your own 3D STEP weldments and cut real parts on your rotary table before spending a dollar.
+          </p>
+
+          <ul class="pricing-list">
+            <li><span class="pricing-check">✓</span><span>Load &amp; inspect <strong>any</strong> 3D STEP part or assembly in the 3D Viewer (all profiles)</span></li>
+            <li><span class="pricing-check">✓</span><span>Machine-ready G-code for <strong>Round Pipe, Square/Rect HSS &amp; Flat Bar</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Zero-Bevel</strong> inside-wall saddle &amp; miter compensation</span></li>
+            <li><span class="pricing-check">✓</span><span>Custom machine profiles &amp; <strong>552 Hypertherm</strong> cut charts</span></li>
+            <li><span class="pricing-check">✓</span><span>Up to <strong>5 parts/stick</strong> (1D Pack Mode) &amp; <strong>5 bends/file</strong> (3D Cut-and-Bend)</span></li>
+          </ul>
+        </div>
+
+        <div class="pricing-cta-wrap">
+          <a href="#download" class="secondary-btn pricing-cta">Download Free Beta</a>
+          <div class="mono" style="font-size: 0.74rem; color: var(--text-dim); text-align: center;">macOS, Windows &amp; Linux &bull; No credit card needed</div>
+        </div>
+      </div>
+
+      <!-- Card 2: Maker -->
+      <div class="pricing-card">
+        <div>
+          <div class="pricing-tier-meta">
+            <span class="pricing-tier-tag">Founding Fabricator</span>
+            <span class="pricing-save-pill">SAVE $50 UNTIL V1.0</span>
+          </div>
+          <h3>Maker</h3>
+          <div class="pricing-price-row">
+            <span class="pricing-price">$199</span>
+            <span class="pricing-strike">$249</span>
+            <span class="pricing-cadence">one-time &bull; own forever</span>
+          </div>
+          <p class="pricing-subnote">
+            Built for home shops, race-car builders, and custom chassis fabricators cutting round pipe, square tube, and plate.
+          </p>
+
+          <ul class="pricing-list">
+            <li><span class="pricing-check">✓</span><span><strong>Perpetual Offline License</strong> (<code class="mono" style="color: var(--cyan-arc);">rotarycam.lic</code>) &mdash; removes the 30-day clock forever</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>1 Year of Updates Included</strong> (<span class="mono">$59/yr</span> optional thereafter)</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>2 Computers</strong> (Office CAD PC + Shop Table PC)</span></li>
+            <li><span class="pricing-check">✓</span><span>Everything in Public Beta: <strong>Round, Square/Rect HSS &amp; Flat Bar</strong>, <strong>Zero-Bevel</strong>, Custom Machines, <strong>5 parts/stick</strong> &amp; <strong>5 bends/file</strong></span></li>
+            <li><span class="pricing-check">✓</span><span>Your shop or builder name stamped in the UI &amp; G-code header</span></li>
+          </ul>
+        </div>
+
+        <div class="pricing-cta-wrap">
+          <button type="button" class="secondary-btn pricing-cta pricing-cta-maker" onclick="openLicenseCheckout('maker')">
+            Buy Maker License &mdash; $199
+          </button>
+          <div class="mono" style="font-size: 0.74rem; color: var(--text-dim); text-align: center;">Instant signed <code class="mono">rotarycam.lic</code> download after checkout</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Pro Shop (Highlighted) -->
+      <div class="pricing-card featured">
+        <div class="pricing-ribbon">★ Most Popular for Commercial Shops</div>
+        <div>
+          <div class="pricing-tier-meta" style="margin-top: 0.2rem;">
+            <span class="pricing-tier-tag" style="color: var(--plasma-amber);">Founding Fabricator</span>
+            <span class="pricing-save-pill">SAVE $100 UNTIL V1.0</span>
+          </div>
+          <h3>Pro Shop</h3>
+          <div class="pricing-price-row">
+            <span class="pricing-price">$399</span>
+            <span class="pricing-strike">$499</span>
+            <span class="pricing-cadence">one-time &bull; own forever</span>
+          </div>
+          <p class="pricing-subnote">
+            Full structural steel, bundle nesting, tabbing, and part-ID stenciling for commercial fab shops running daily jobs.
+          </p>
+
+          <ul class="pricing-list">
+            <li><span class="pricing-check">✓</span><span><strong>Perpetual Offline License</strong> + <strong>1 Year of Updates Included</strong> (<span class="mono">$99/yr</span> optional thereafter)</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>3 Computers</strong> (Engineering Office + Foreman Laptop + Shop Table PC)</span></li>
+            <li class="pricing-plus-divider">Everything in Maker, PLUS:</li>
+            <li><span class="pricing-check">✓</span><span><strong>Open Structural Profiles:</strong> Angle Iron, C-Channel &amp; I-Beam 4-axis beamline cutting</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Unlimited Multi-Stick Pack Nesting:</strong> 1-click <code class="mono">.zip</code> batch export, 180&deg; flip interlocking &amp; <strong>Common-Line Shared Sever Cuts</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Unlimited 3D Cut-and-Bend Unfolding</strong> (no 5-bend cap)</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Tab Cutting &amp; Auto-Tab Pack Seams</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Auto-Scribe Part ID Stencils (<code class="mono">P1, P2...</code>), Weld Witness Marks &amp; DXF/SVG Sidecars</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Full Headless AI / MCP Automation (<code class="mono">rotarycam-mcp</code>)</strong></span></li>
+          </ul>
+        </div>
+
+        <div class="pricing-cta-wrap">
+          <button type="button" class="primary-btn pricing-cta" onclick="openLicenseCheckout('pro')">
+            Buy Pro Shop License &mdash; $399
+          </button>
+          <button type="button" class="pricing-upgrade-link" onclick="openLicenseCheckout('upgrade_pro')">
+            Already own Maker? Upgrade to Pro Shop for $200 &rarr;
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Existing License Holders / Year 2+ Optional Update Renewal Strip -->
+    <div class="pricing-foot-bar">
+      <div>
+        <strong style="color: #fff;">Already running a perpetual key?</strong> Upgrade Maker to Pro Shop anytime for the $200 price difference, or add 12 months of newer releases in Year 2+.
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <button type="button" class="pricing-inline-btn" onclick="openLicenseCheckout('upgrade_pro')">Upgrade Maker &rarr; Pro ($200)</button>
+        <span style="color: var(--surface-border);">|</span>
+        <button type="button" class="pricing-inline-btn" onclick="openLicenseCheckout('renew_maker')">Renew Maker Updates ($59/yr)</button>
+        <span style="color: var(--surface-border);">|</span>
+        <button type="button" class="pricing-inline-btn" onclick="openLicenseCheckout('renew_pro')">Renew Pro Updates ($99/yr)</button>
+      </div>
     </div>
   </section>
 
@@ -1725,6 +2420,7 @@
       <div class="footer-sub">Dedicated 4-axis rotary plasma CAM • Built for SimCNC, Mach4, LinuxCNC &amp; Masso</div>
     </div>
     <div class="footer-links">
+      <a href="#pricing" class="footer-link" style="color: var(--emerald-cut);">Pricing &amp; Offline Keys</a>
       <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
       <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">Build Your Own Table (Open Hardware) ↗</a>
       <a href="changelog.html" class="footer-link" style="color: #fff;">Changelog &amp; Downloads ↗</a>
@@ -1975,6 +2671,599 @@
         updateHeroPlatform('macos');
       }
     });
+  </script>
+
+  <!-- Founding Fabricator License Checkout & Claim Modal -->
+  <div id="license-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="lic-modal-title">
+    <div class="modal-card lic-modal-card">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h2 id="lic-modal-title" class="modal-title">Get Your Perpetual Offline License</h2>
+          <span id="lic-modal-badge" class="modal-badge mono">100% OFFLINE &bull; ROTARYCAM.LIC</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="lic-modal-close" aria-label="Close license modal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- VIEW A: Checkout Form -->
+      <div class="modal-body" id="lic-checkout-view">
+        <div class="lic-plan-tabs" role="tablist" aria-label="License Plan">
+          <button type="button" class="lic-plan-tab" data-plan="maker" onclick="selectLicensePlan('maker')">
+            <span class="lic-plan-tab-name">Maker (2 PCs)</span>
+            <span class="lic-plan-tab-price">$199</span>
+          </button>
+          <button type="button" class="lic-plan-tab active" data-plan="pro" onclick="selectLicensePlan('pro')">
+            <span class="lic-plan-tab-name">Pro Shop (3 PCs)</span>
+            <span class="lic-plan-tab-price">$399</span>
+          </button>
+          <button type="button" class="lic-plan-tab" data-plan="upgrade_pro" onclick="selectLicensePlan('upgrade_pro')">
+            <span class="lic-plan-tab-name">Upgrade Maker &rarr; Pro</span>
+            <span class="lic-plan-tab-price">$200</span>
+          </button>
+          <button type="button" class="lic-plan-tab" data-plan="renew_pro" id="lic-tab-renew" onclick="selectLicensePlan(window.__licRenewDefault || 'renew_pro')">
+            <span class="lic-plan-tab-name" id="lic-tab-renew-label">Renew Updates (1 Yr)</span>
+            <span class="lic-plan-tab-price" id="lic-tab-renew-price">$59/$99</span>
+          </button>
+        </div>
+
+        <div id="lic-renew-subtoggle" style="display: none; gap: 0.5rem; margin-bottom: 1rem;">
+          <button type="button" class="platform-chip" id="lic-renew-maker-chip" onclick="selectLicensePlan('renew_maker')">Maker Renewal &mdash; $59/yr</button>
+          <button type="button" class="platform-chip" id="lic-renew-pro-chip" onclick="selectLicensePlan('renew_pro')">Pro Shop Renewal &mdash; $99/yr</button>
+        </div>
+
+        <div class="lic-summary-box">
+          <div>
+            <div id="lic-summary-title" style="color: #fff; font-weight: 700; font-size: 0.96rem;">Pro Shop &mdash; Founding Fabricator Perpetual License</div>
+            <div id="lic-summary-desc" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.15rem;">3 Computers &bull; Open Profiles, Unlimited Nesting, Tabs &amp; Auto-Scribe &bull; 1 Yr Updates</div>
+          </div>
+          <div style="text-align: right;">
+            <span id="lic-summary-price" class="mono" style="font-size: 1.35rem; font-weight: 700; color: var(--plasma-amber);">$399</span>
+            <div class="mono" style="font-size: 0.68rem; color: var(--text-dim);">USD one-time</div>
+          </div>
+        </div>
+
+        <form id="lic-checkout-form" novalidate>
+          <div class="lic-field" id="lic-existing-group" style="display: none;">
+            <div class="lic-upload-row">
+              <label for="lic-existing-token" class="lic-label" style="margin-bottom: 0;">
+                <span>Existing <code class="mono" style="color: var(--cyan-arc);">rotarycam.lic</code> Key *</span>
+              </label>
+              <label class="lic-file-btn" for="lic-file-input">
+                <span>📂 Upload rotarycam.lic</span>
+                <input type="file" id="lic-file-input" accept=".lic,.txt,text/plain" style="display: none;" />
+              </label>
+            </div>
+            <textarea id="lic-existing-token" class="lic-textarea" rows="3" placeholder="Paste your existing rotarycam.lic key here or click Upload above..."></textarea>
+            <div id="lic-token-detected" class="mono" style="display: none; margin-top: 0.35rem; font-size: 0.74rem; color: var(--emerald-cut);"></div>
+          </div>
+
+          <div class="lic-field">
+            <label for="lic-shop-name" class="lic-label">
+              <span>Shop or Builder Name</span>
+              <span class="lic-label-hint">Optional &mdash; stamped in UI &amp; G-code header</span>
+            </label>
+            <input type="text" id="lic-shop-name" class="lic-input" maxlength="80" autocomplete="organization" placeholder="e.g. Ironworks Chassis &amp; Fab" />
+            <div class="lic-stamp-preview" id="lic-stamp-preview">; Licensed to: Your Shop Name (Pro Shop Perpetual)</div>
+          </div>
+
+          <div class="lic-field" style="margin-bottom: 1.25rem;">
+            <label for="lic-email" class="lic-label">
+              <span>Email Address *</span>
+              <span class="lic-label-hint">For Stripe receipt &amp; backup key copy</span>
+            </label>
+            <input type="email" id="lic-email" class="lic-input" required autocomplete="email" placeholder="welder@yourshop.com" />
+          </div>
+
+          <button type="submit" id="lic-submit-btn" class="primary-btn" style="width: 100%; font-family: inherit; font-size: 0.95rem; border: none; cursor: pointer;">
+            Continue to Stripe Checkout &mdash; $399 &rarr;
+          </button>
+          <div class="mono" style="margin-top: 0.55rem; font-size: 0.73rem; color: var(--text-dim); text-align: center;">
+            Instant <code class="mono" style="color: var(--text-muted);">rotarycam.lic</code> download right after payment &bull; Encrypted Stripe Checkout
+          </div>
+
+          <div id="lic-checkout-status" class="lic-status-box" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+
+      <!-- VIEW B: Post-Checkout License Claim (?claim_session_id=cs_...) -->
+      <div class="modal-body" id="lic-claim-view" style="display: none;">
+        <div id="lic-claim-loading" style="padding: 1.5rem 0; text-align: center;">
+          <div class="mono" style="color: var(--plasma-amber); font-size: 0.95rem; font-weight: 700; margin-bottom: 0.45rem;">
+            Signing your offline rotarycam.lic key&hellip;
+          </div>
+          <p style="margin: 0; font-size: 0.86rem; color: var(--text-muted);">
+            Confirming your order and stamping your offline rotarycam.lic key file.
+          </p>
+        </div>
+
+        <div id="lic-claim-ready" style="display: none;">
+          <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 8px; padding: 0.9rem 1.1rem; margin-bottom: 1rem;">
+            <div style="color: var(--emerald-cut); font-weight: 700; font-size: 0.95rem;" id="lic-claim-headline">
+              ✓ Your Perpetual Offline License Is Ready!
+            </div>
+            <div style="color: var(--text-muted); font-size: 0.82rem; margin-top: 0.2rem;" id="lic-claim-meta">
+              Save a backup copy to a USB thumb drive—this file activates your shop computers offline forever.
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+            <button type="button" id="lic-download-btn" class="primary-btn" style="flex: 1; min-width: 210px; border: none; cursor: pointer; font-family: inherit; font-size: 0.9rem;">
+              ⬇ Download rotarycam.lic
+            </button>
+            <button type="button" id="lic-copy-btn" class="secondary-btn" style="cursor: pointer; font-family: inherit; font-size: 0.86rem;">
+              📋 Copy License Key
+            </button>
+          </div>
+
+          <div id="lic-claim-token-text" class="lic-claim-token-box"></div>
+
+          <h3 style="margin-top: 1.1rem; margin-bottom: 0.55rem; font-size: 0.96rem;">Activate Offline at Your Plasma Table in 3 Steps</h3>
+          <ol style="margin: 0 0 0.5rem 1.25rem; color: var(--text-muted); font-size: 0.85rem; line-height: 1.6;">
+            <li style="margin-bottom: 0.4rem;"><strong style="color: #fff;">Save <code class="mono">rotarycam.lic</code> to a USB drive:</strong> Keep a copy alongside your machine backups so you never have to re-download it.</li>
+            <li style="margin-bottom: 0.4rem;"><strong style="color: #fff;">Drop it into RotaryCAM:</strong> Place <code class="mono">rotarycam.lic</code> right next to the RotaryCAM app executable—or into <code class="mono">%APPDATA%\RotaryCAM\</code> (Windows), <code class="mono">~/Library/Application Support/RotaryCAM/</code> (macOS), or <code class="mono">~/.config/RotaryCAM/</code> (Linux). You can also paste the key directly on the RotaryCAM license screen.</li>
+            <li><strong style="color: #fff;">Start cutting offline:</strong> Relaunch RotaryCAM. Your shop name and perpetual license unlock immediately with zero Wi-Fi required.</li>
+          </ol>
+        </div>
+
+        <div id="lic-claim-error" class="lic-status-box fallback" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const isTestStripeEnv = new URLSearchParams(window.location.search).get('stripe_env') === 'test';
+      const LICENSE_API_BASE = isTestStripeEnv ? 'https://license-test.rotarycam.app' : 'https://license.rotarycam.app';
+
+      const PLANS = {
+        maker: {
+          tier: 'maker',
+          action: 'buy',
+          price: 199,
+          priceLabel: '$199',
+          cadence: 'USD one-time',
+          title: 'Maker — Founding Fabricator Perpetual License',
+          desc: '2 Computers • Round/Square/Flat G-Code & Zero-Bevel • 1 Yr Updates ($59/yr optional later)',
+          cta: 'Continue to Stripe Checkout — $199 →',
+          stampTier: 'Maker Perpetual',
+          needsExisting: false
+        },
+        pro: {
+          tier: 'pro',
+          action: 'buy',
+          price: 399,
+          priceLabel: '$399',
+          cadence: 'USD one-time',
+          title: 'Pro Shop — Founding Fabricator Perpetual License',
+          desc: '3 Computers • Open Profiles, Unlimited Nesting, Tabs, Scribe & MCP • 1 Yr Updates',
+          cta: 'Continue to Stripe Checkout — $399 →',
+          stampTier: 'Pro Shop Perpetual',
+          needsExisting: false
+        },
+        upgrade_pro: {
+          tier: 'pro',
+          action: 'upgrade',
+          price: 200,
+          priceLabel: '$200',
+          cadence: 'USD one-time upgrade',
+          title: 'Upgrade Maker → Pro Shop Perpetual License',
+          desc: 'Unlocks Open Profiles, Unlimited Nesting, Tabs, Scribe, MCP + 3rd Computer',
+          cta: 'Continue to Upgrade Checkout — $200 →',
+          stampTier: 'Pro Shop Perpetual',
+          needsExisting: true
+        },
+        renew_maker: {
+          tier: 'maker',
+          action: 'renew',
+          price: 59,
+          priceLabel: '$59',
+          cadence: 'USD / +12 months updates',
+          title: 'Maker License — +1 Year of New Releases',
+          desc: 'Extends your perpetual Maker key for another 12 months of updates',
+          cta: 'Continue to Renewal Checkout — $59 →',
+          stampTier: 'Maker Perpetual',
+          needsExisting: true
+        },
+        renew_pro: {
+          tier: 'pro',
+          action: 'renew',
+          price: 99,
+          priceLabel: '$99',
+          cadence: 'USD / +12 months updates',
+          title: 'Pro Shop License — +1 Year of New Releases',
+          desc: 'Extends your perpetual Pro Shop key for another 12 months of updates',
+          cta: 'Continue to Renewal Checkout — $99 →',
+          stampTier: 'Pro Shop Perpetual',
+          needsExisting: true
+        }
+      };
+
+      let activePlanKey = 'pro';
+      let claimedTokenValue = '';
+
+      const licModal = document.getElementById('license-modal');
+      const checkoutView = document.getElementById('lic-checkout-view');
+      const claimView = document.getElementById('lic-claim-view');
+      const closeBtn = document.getElementById('lic-modal-close');
+      const shopInput = document.getElementById('lic-shop-name');
+      const emailInput = document.getElementById('lic-email');
+      const existingGroup = document.getElementById('lic-existing-group');
+      const existingInput = document.getElementById('lic-existing-token');
+      const fileInput = document.getElementById('lic-file-input');
+      const detectedEl = document.getElementById('lic-token-detected');
+      const stampPreview = document.getElementById('lic-stamp-preview');
+      const statusBox = document.getElementById('lic-checkout-status');
+      const submitBtn = document.getElementById('lic-submit-btn');
+      const form = document.getElementById('lic-checkout-form');
+
+      function decodeLicensePayload(rawToken) {
+        if (!rawToken || typeof rawToken !== 'string') return null;
+        const trimmed = rawToken.trim();
+        const parts = trimmed.split('.');
+        if (parts.length !== 2 || !parts[0] || !parts[1]) return null;
+        try {
+          let b64 = parts[0].replace(/-/g, '+').replace(/_/g, '/');
+          while (b64.length % 4 !== 0) b64 += '=';
+          const jsonStr = decodeURIComponent(escape(window.atob(b64)));
+          return JSON.parse(jsonStr);
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function escapeHtml(str) {
+        return String(str || '').replace(/[&<>"']/g, function (ch) {
+          return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+        });
+      }
+
+      function updateStampPreview() {
+        const meta = PLANS[activePlanKey] || PLANS.pro;
+        const name = (shopInput && shopInput.value.trim()) ? shopInput.value.trim() : 'Your Shop Name';
+        if (stampPreview) {
+          stampPreview.textContent = `; Licensed to: ${name} (${meta.stampTier})`;
+        }
+      }
+
+      window.selectLicensePlan = function (planKey) {
+        if (!PLANS[planKey]) planKey = 'pro';
+        activePlanKey = planKey;
+        if (planKey === 'renew_maker' || planKey === 'renew_pro') {
+          window.__licRenewDefault = planKey;
+        }
+        const meta = PLANS[planKey];
+
+        document.querySelectorAll('.lic-plan-tab').forEach((tab) => {
+          const tPlan = tab.getAttribute('data-plan');
+          const isRenewTab = tPlan === 'renew_pro' && (planKey === 'renew_maker' || planKey === 'renew_pro');
+          tab.classList.toggle('active', tPlan === planKey || isRenewTab);
+        });
+
+        const renewSub = document.getElementById('lic-renew-subtoggle');
+        if (renewSub) {
+          const isRenew = planKey === 'renew_maker' || planKey === 'renew_pro';
+          renewSub.style.display = isRenew ? 'flex' : 'none';
+          document.getElementById('lic-renew-maker-chip')?.classList.toggle('active', planKey === 'renew_maker');
+          document.getElementById('lic-renew-pro-chip')?.classList.toggle('active', planKey === 'renew_pro');
+        }
+
+        const titleEl = document.getElementById('lic-summary-title');
+        const descEl = document.getElementById('lic-summary-desc');
+        const priceEl = document.getElementById('lic-summary-price');
+        if (titleEl) titleEl.textContent = meta.title;
+        if (descEl) descEl.textContent = meta.desc;
+        if (priceEl) priceEl.textContent = meta.priceLabel;
+        if (existingGroup) existingGroup.style.display = meta.needsExisting ? 'block' : 'none';
+        if (submitBtn && !submitBtn.disabled) submitBtn.textContent = meta.cta;
+        if (statusBox) {
+          statusBox.className = 'lic-status-box';
+          statusBox.style.display = 'none';
+          statusBox.innerHTML = '';
+        }
+        updateStampPreview();
+      };
+
+      window.openLicenseCheckout = function (planKey) {
+        if (!licModal) return;
+        document.getElementById('lic-modal-title').textContent = 'Get Your Perpetual Offline License';
+        if (checkoutView) checkoutView.style.display = 'block';
+        if (claimView) claimView.style.display = 'none';
+        window.selectLicensePlan(planKey || 'pro');
+        licModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+          if (PLANS[activePlanKey]?.needsExisting) {
+            existingInput?.focus();
+          } else {
+            shopInput?.focus();
+          }
+        }, 60);
+      };
+
+      function closeLicenseModal() {
+        if (!licModal) return;
+        licModal.classList.remove('active');
+        document.body.style.overflow = '';
+        const url = new URL(window.location.href);
+        if (url.searchParams.has('claim_session_id') || url.searchParams.has('session_id')) {
+          url.searchParams.delete('claim_session_id');
+          url.searchParams.delete('session_id');
+          history.replaceState(null, '', url.pathname + url.search + url.hash);
+        }
+      }
+
+      closeBtn?.addEventListener('click', closeLicenseModal);
+      licModal?.addEventListener('click', (e) => {
+        if (e.target === licModal) closeLicenseModal();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && licModal?.classList.contains('active')) {
+          closeLicenseModal();
+        }
+      });
+
+      shopInput?.addEventListener('input', updateStampPreview);
+
+      function handleExistingTokenChange() {
+        if (!existingInput || !detectedEl) return;
+        const parsed = decodeLicensePayload(existingInput.value);
+        if (parsed && (parsed.tier || parsed.email || parsed.name)) {
+          detectedEl.style.display = 'block';
+          detectedEl.textContent = `✓ Key read: ${parsed.name || parsed.email || 'Licensed User'} (${(parsed.tier || 'offline').toUpperCase()})`;
+          if (shopInput && !shopInput.value.trim() && parsed.name) {
+            shopInput.value = parsed.name;
+            updateStampPreview();
+          }
+          if (emailInput && !emailInput.value.trim() && parsed.email) {
+            emailInput.value = parsed.email;
+          }
+        } else {
+          detectedEl.style.display = 'none';
+          detectedEl.textContent = '';
+        }
+      }
+
+      existingInput?.addEventListener('input', handleExistingTokenChange);
+
+      fileInput?.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (existingInput) {
+            existingInput.value = String(reader.result || '').trim();
+            handleExistingTokenChange();
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      function buildFallbackMailto(meta, shopName, email, existingLic) {
+        const subject = `Founding Fabricator License — ${meta.title} (${meta.priceLabel})`;
+        const lines = [
+          `Hi Raphael,`,
+          ``,
+          `Please send a Stripe Checkout link for:`,
+          `• Plan: ${meta.title} (${meta.priceLabel})`,
+          `• Shop / Builder Name (G-code stamp): ${shopName || '(not specified)'}`,
+          `• Email: ${email || '(not specified)'}`
+        ];
+        if (meta.needsExisting && existingLic) {
+          const parsed = decodeLicensePayload(existingLic);
+          lines.push(`• Existing License ID: ${parsed?.userId || existingLic.slice(0, 36) + '...'}`);
+        }
+        lines.push(``, `Thanks!`);
+        return `mailto:contact@rotarycam.app?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+      }
+
+      form?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const meta = PLANS[activePlanKey] || PLANS.pro;
+        const shopName = (shopInput?.value || '').trim();
+        const email = (emailInput?.value || '').trim();
+        const existingLic = (existingInput?.value || '').trim();
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          statusBox.className = 'lic-status-box error';
+          statusBox.style.display = 'block';
+          statusBox.textContent = 'Please enter a valid email address so we can send your receipt and backup license key.';
+          emailInput?.focus();
+          return;
+        }
+
+        if (meta.needsExisting && !existingLic) {
+          statusBox.className = 'lic-status-box error';
+          statusBox.style.display = 'block';
+          statusBox.textContent = 'Please paste or upload your existing rotarycam.lic key to upgrade or renew.';
+          existingInput?.focus();
+          return;
+        }
+
+        statusBox.style.display = 'none';
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Connecting to Stripe Checkout…';
+
+        const pageBase = window.location.origin + window.location.pathname;
+        const successQuery = isTestStripeEnv
+          ? '?stripe_env=test&claim_session_id={CHECKOUT_SESSION_ID}'
+          : '?claim_session_id={CHECKOUT_SESSION_ID}';
+        const cancelQuery = isTestStripeEnv ? '?stripe_env=test' : '';
+        const payload = {
+          plan: activePlanKey,
+          sku: activePlanKey,
+          tier: meta.tier,
+          action: meta.action,
+          name: shopName,
+          shopName: shopName,
+          email: email,
+          existingLicense: meta.needsExisting ? existingLic : undefined,
+          existingToken: meta.needsExisting ? existingLic : undefined,
+          successUrl: pageBase + successQuery,
+          cancelUrl: pageBase + cancelQuery + '#pricing'
+        };
+
+        try {
+          const res = await fetch(`${LICENSE_API_BASE}/checkout`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          let data = null;
+          try {
+            data = await res.json();
+          } catch (_) {
+            data = null;
+          }
+
+          const redirectUrl = data && (data.checkoutUrl || data.url || data.redirectUrl);
+          if (res.ok && redirectUrl) {
+            window.location.assign(redirectUrl);
+            return;
+          }
+
+          if (res.status >= 400 && res.status < 500 && res.status !== 404 && data && (data.error || data.message)) {
+            statusBox.className = 'lic-status-box error';
+            statusBox.style.display = 'block';
+            statusBox.textContent = data.error || data.message;
+          } else {
+            throw new Error((data && (data.error || data.message)) || `HTTP ${res.status}`);
+          }
+        } catch (_) {
+          const mailHref = buildFallbackMailto(meta, shopName, email, existingLic);
+          statusBox.className = 'lic-status-box fallback';
+          statusBox.style.display = 'block';
+          statusBox.innerHTML =
+            `<strong style="color: #fff;">Online checkout is temporarily unreachable from this browser.</strong><br>` +
+            `<span style="color: var(--text-muted);">Lock in your Founding Fabricator rate (${escapeHtml(meta.priceLabel)}) directly by email and we will send your Stripe link + signed <code class="mono">rotarycam.lic</code> key right over:</span>` +
+            `<div style="margin-top: 0.7rem;"><a href="mailto:contact@rotarycam.app" id="lic-fallback-mail-btn" class="primary-btn" style="padding: 0.6rem 1.1rem; font-size: 0.84rem; text-decoration: none;">✉️ Request ${escapeHtml(meta.priceLabel)} Checkout Link via Email &rarr;</a></div>`;
+          const fbLink = document.getElementById('lic-fallback-mail-btn');
+          if (fbLink) fbLink.setAttribute('href', mailHref);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = meta.cta;
+        }
+      });
+
+      function downloadClaimedLicense() {
+        if (!claimedTokenValue) return;
+        const blob = new Blob([claimedTokenValue.trim() + '\n'], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'rotarycam.lic';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+      }
+
+      document.getElementById('lic-download-btn')?.addEventListener('click', downloadClaimedLicense);
+
+      document.getElementById('lic-copy-btn')?.addEventListener('click', function () {
+        if (!claimedTokenValue) return;
+        const btn = this;
+        navigator.clipboard.writeText(claimedTokenValue.trim()).then(() => {
+          const prev = btn.textContent;
+          btn.textContent = '✓ Copied rotarycam.lic!';
+          setTimeout(() => { btn.textContent = prev; }, 2500);
+        });
+      });
+
+      async function runClaimFlow(sessionId) {
+        if (!licModal || !sessionId) return;
+        document.getElementById('lic-modal-title').textContent = 'Download Your Offline License';
+        if (checkoutView) checkoutView.style.display = 'none';
+        if (claimView) claimView.style.display = 'block';
+
+        const loadingEl = document.getElementById('lic-claim-loading');
+        const readyEl = document.getElementById('lic-claim-ready');
+        const errorEl = document.getElementById('lic-claim-error');
+        loadingEl.style.display = 'block';
+        readyEl.style.display = 'none';
+        errorEl.style.display = 'none';
+
+        licModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+
+        let lastErr = '';
+        for (let attempt = 0; attempt < 4; attempt++) {
+          try {
+            const res = await fetch(`${LICENSE_API_BASE}/claim?session_id=${encodeURIComponent(sessionId)}`, {
+              method: 'GET',
+              headers: { 'Accept': 'application/json, text/plain;q=0.9' }
+            });
+
+            if (res.status === 202 && attempt < 3) {
+              await new Promise((r) => setTimeout(r, 1500));
+              continue;
+            }
+
+            const ctype = (res.headers.get('content-type') || '').toLowerCase();
+            let token = '';
+            let data = null;
+
+            if (ctype.includes('application/json')) {
+              data = await res.json();
+              if (data && data.status === 'pending' && attempt < 3) {
+                await new Promise((r) => setTimeout(r, 1500));
+                continue;
+              }
+              token = (data && (data.token || data.license || data.licenseKey || data.rotarycam_lic)) || '';
+            } else if (res.ok) {
+              token = (await res.text()).trim();
+            }
+
+            if (res.ok && token) {
+              claimedTokenValue = token.trim();
+              const parsed = (data && data.payload) || decodeLicensePayload(claimedTokenValue) || {};
+              const tierLabel = (parsed.tier || data?.tier || 'Perpetual').toString().toUpperCase();
+              const licensee = parsed.name || data?.name || parsed.email || '';
+
+              document.getElementById('lic-claim-token-text').textContent = claimedTokenValue;
+              document.getElementById('lic-claim-headline').textContent =
+                licensee ? `✓ ${tierLabel} License Ready — Stamped for ${licensee}` : `✓ Your ${tierLabel} Offline License Is Ready!`;
+
+              loadingEl.style.display = 'none';
+              readyEl.style.display = 'block';
+              return;
+            }
+
+            lastErr = (data && (data.error || data.message)) || `HTTP ${res.status}`;
+            break;
+          } catch (err) {
+            lastErr = err && err.message ? err.message : 'Network unreachable';
+            break;
+          }
+        }
+
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+        const supportMail = `mailto:support@rotarycam.app?subject=${encodeURIComponent('Claim rotarycam.lic — Session ' + sessionId)}&body=${encodeURIComponent('Hi Raphael,\n\nI completed Stripe checkout (session: ' + sessionId + '). Could you send my signed rotarycam.lic file?\n\nThanks!')}`;
+        errorEl.innerHTML =
+          `<strong style="color: #fff;">Couldn't reach the license server to claim session <code class="mono">${escapeHtml(sessionId)}</code>.</strong><br>` +
+          `<span style="color: var(--text-muted);">Check your internet connection and click Retry, or email us your session ID and we will send your signed <code class="mono">rotarycam.lic</code> file right away (${escapeHtml(lastErr)}).</span>` +
+          `<div style="display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.75rem;">` +
+          `<button type="button" class="primary-btn" id="lic-claim-retry-btn" style="padding: 0.55rem 1rem; font-size: 0.84rem; border: none; cursor: pointer; font-family: inherit;">↻ Retry Claim</button>` +
+          `<a href="mailto:support@rotarycam.app" id="lic-claim-mail-btn" class="secondary-btn" style="padding: 0.55rem 1rem; font-size: 0.84rem; text-decoration: none;">✉️ Email Support with Session ID</a>` +
+          `</div>`;
+        document.getElementById('lic-claim-mail-btn')?.setAttribute('href', supportMail);
+        document.getElementById('lic-claim-retry-btn')?.addEventListener('click', () => runClaimFlow(sessionId));
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        updateStampPreview();
+        const params = new URLSearchParams(window.location.search);
+        const claimId = params.get('claim_session_id') || (params.get('session_id')?.startsWith('cs_') ? params.get('session_id') : null);
+        if (claimId) {
+          runClaimFlow(claimId.trim());
+        }
+      });
+    })();
   </script>
 <script src="version.js"></script>
 <script>
