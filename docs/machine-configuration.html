@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.5.2-BETA</span>
+          <span class="brand-tag">v0.5.3-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -121,7 +121,7 @@
                 <span class="nav-dropdown-num">01</span>
                 <span class="nav-dropdown-content">
                   <span class="nav-dropdown-title">Machine Configuration</span>
-                  <span class="nav-dropdown-sub">5 Steps</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
                 </span>
                 
                 <span class="nav-dropdown-dot" title="Current Guide"></span>
@@ -348,15 +348,15 @@
 
         <h1 class="docs-title">01. Basic <span class="text-gradient-amber">Machine Configuration</span></h1>
         <p class="docs-subtitle">
-          How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, and default cut compensation profiles.
+          How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 6 major controllers.
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>TUTORIAL 01 OF 09</strong> • 5 Steps</span>
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 01 OF 09</strong> • 6 Steps</span>
           
           <span class="docs-meta-pill cyan"><strong>Persistence:</strong> Multi-Profile Saved Across Restarts</span>
           
-          <span class="docs-meta-pill"><strong>Applies To:</strong> Any 4-Axis CNC (G93 / G94) • SimCNC, Mach4, LinuxCNC</span>
+          <span class="docs-meta-pill"><strong>Applies To:</strong> LinuxCNC QTPlasmaC • FireControl • Mach4 • MASSO G3 • Mach3 • Centroid Acorn • SimCNC</span>
           
         </div>
       </div>
@@ -453,11 +453,13 @@
             
             <li><a href="#step-2"><span class="docs-toc-step">02</span> Axis Kinematics &amp; Physical Limits</a></li>
             
-            <li><a href="#step-3"><span class="docs-toc-step">03</span> Controller Dialect (G94 vs. G93)</a></li>
+            <li><a href="#step-3"><span class="docs-toc-step">03</span> Controller Dialect &amp; Post-Processor</a></li>
             
             <li><a href="#step-4"><span class="docs-toc-step">04</span> THC Lock/Unlock &amp; Hardware</a></li>
             
             <li><a href="#step-5"><span class="docs-toc-step">05</span> Zero-Bevel Defaults &amp; Saving</a></li>
+            
+            <li><a href="#step-6"><span class="docs-toc-step">06</span> Supported CNC Controllers Setup</a></li>
             
           </ul>
         </div>
@@ -584,23 +586,35 @@
         <article class="doc-step-card" id="step-3">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 03</span>
-            <h2 class="doc-step-title">Select Controller Dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code>) &amp; Post-Processor Compensation</h2>
+            <h2 class="doc-step-title">Select Controller Dialect &amp; Post-Processor Compensation</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              Switch to the <span class="ui-chip cyan">Controller &amp; Compensation</span> tab to select how feedrates and toolpath compensations are formatted in your output G-code.
+              Switch to the <span class="ui-chip cyan">Controller &amp; Compensation</span> tab to select your CNC plasma controller post-processor. RotaryCAM includes drop-in, zero-hand-edit post-processors for all major industrial, prosumer, and DIY plasma controllers across both <strong>Maker ($199)</strong> and <strong>Pro Shop ($399)</strong> licenses:
             </p>
             <ul class="doc-bullet-list">
-              <li><span class="ui-chip">SimCNC 3.5 IP-M/S (G94 + G93 4-Axis Emulation)</span> — <strong>Recommended for CSLab SimCNC 3.5:</strong> Uses RotaryCAM's hybrid feedrate scaling for older SimCNC releases. Scales <code class="mono">F</code> words so coordinated <code class="mono">XYZA</code> moves cut at true surface speed even on firmware revisions where native <code class="mono">G93</code> has rotary blending quirks.</li>
-              <li><span class="ui-chip">SimCNC 3.6 Beta (G93 Inverse-Time Feed Mode)</span> — Emits true ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code> in inverse minutes) on every coordinated cutting segment, leveraging SimCNC 3.6's upgraded 4-axis trajectory planner for smooth rotary motion.</li>
-              <li><span class="ui-chip">Standard Controller (Native G94 Units-Per-Minute)</span> — Standard <code class="mono">G94</code> feedrate mode for controllers (such as Mach4 or LinuxCNC) that compute rotary radius compensation internally or require standard units-per-minute <code class="mono">F</code> words.</li>
+              <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span> — Native LinuxCNC 2.9/2.10 plasma post with self-contained <code class="mono">(o=0, ...)</code> process parameter comments or <code class="mono">M190</code> material table lookup, <code class="mono">M3 $0 S1</code> plasma spindle codes, active-high <code class="mono">M62 P2</code> THC lock / <code class="mono">M63 P2</code> unlock on pin 2, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
+              <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span> — Optimized for CrossFire, CrossFire PRO, and CrossFire XR tables. Emits mandatory <code class="mono">(v1.6-sc)</code> line 1 sentinels, <code class="mono">(PS&lt;feed&gt;)</code> footers, paren-only comments, automatic <code class="mono">G38.2</code>/<code class="mono">G38.4</code> IHS touch-off loops, <code class="mono">H0</code>/<code class="mono">H1</code> THC toggles, and unwrapped <code class="mono">Y</code>-axis rotary chuck cutting in <code class="mono">G94</code>.</li>
+              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS / TMC3in1) (.tap)</span> — Selectable dual hardware modes for Warp9 TMC3in1 / WarpRunner (emitting <code class="mono">m2020 (...)</code> registers with mandatory <code class="mono">G04 P0.1</code> Lua dwells and motion-synced <code class="mono">M62/M63 P#</code> torch/THC control) or Standard ESS / external THC (<code class="mono">G31</code> probe + switch offset + <code class="mono">G92 Z</code> + <code class="mono">M3/M5</code>) with full <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span> — Native <code class="mono">T112 M6</code> plasma mode, automated <code class="mono">G200</code> parameter blocks with millisecond pierce delays (<code class="mono">D&lt;ms&gt;</code>), explicit buffered <code class="mono">M666</code> (THC OFF) / <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) corner anti-dive protection, and <code class="mono">G93</code> rotary motion.</li>
+              <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span> — Clean <code class="mono">G64</code> constant velocity (without syntax-breaking <code class="mono">P</code> words), <code class="mono">G31</code> straight probe or <code class="mono">G28.1</code> floating-head reference with switch-offset compensation, high-speed motion-synced <code class="mono">M11 P#</code> (THC hold) / <code class="mono">M10 P#</code> (THC release) to stop blowout divots, and mandatory <code class="mono">G93</code> rotary inverse-time feedrates.</li>
+              <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span> — Automated controller-managed cycle macros including <code class="mono">G64 ON</code> plasma smoothing, <code class="mono">M65</code> material profile loading, <code class="mono">M61</code> touch-off + pierce cycle, <code class="mono">M62</code> torch-off + retract cycle, <code class="mono">M36</code>/<code class="mono">M35</code> THC lock/unlock, and native <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6 (.nc)</span> — 4-axis Euclidean trajectory feedrate spoofing for SimCNC 3.5 or pure ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code>) for SimCNC 3.6, coupled with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
+              <li><span class="ui-chip">Generic RS-274 (.nc)</span> — Standard ISO 6983 G-code with decimal seconds dwells (<code class="mono">G4 P&lt;sec&gt;</code>) and configurable M-codes for open-source and industrial controllers.</li>
             </ul>
 
-            <div class="doc-callout danger">
-              <div class="doc-callout-title">⚠ Critical: Only Select Pure G93 If Your Controller Natively Supports It</div>
+            <div class="doc-callout info">
+              <div class="doc-callout-title">📖 In-Depth Controller Setup Guides Available in Step 06</div>
               <p>
-                In <code class="mono">G93</code> Inverse-Time mode, the <code class="mono">F</code> word specifies how many times per minute a single micro-segment could be completed (<code class="mono">1 / minutes</code>), resulting in large numeric <code class="mono">F</code> values on short segments. <strong>Only select a pure <code class="mono">G93</code> dialect if your CNC controller natively supports and properly blends <code class="mono">G93</code> inverse-time motion.</strong> If your controller expects standard <code class="mono">G94</code> feedrates (or is running SimCNC 3.5), select <strong>SimCNC 3.5 (G94 + G93 Emulation)</strong> or <strong>Standard Controller (Native G94)</strong> instead.
+                Each CNC controller handles initial touch-off sensing (IHS), torch height control (THC) anti-dive locking, material charts, and rotary axes differently. For full pinout mappings, macro wiring, and practical shop tips for your exact controller, jump down to <a href="#step-6"><strong>Step 06 — Supported CNC Controllers &amp; Post-Processor Setup Guides</strong></a>.
+              </p>
+            </div>
+
+            <div class="doc-callout danger">
+              <div class="doc-callout-title">⚠ Critical: Why G93 Inverse-Time Is Mandatory for 4-Axis Rotary Cutting</div>
+              <p>
+                On a flat plate or fixed-radius round tube, a standard units-per-minute feedrate (<code class="mono">G94 F3000</code>) works fine. But when cutting square/rectangular HSS tubing, angle iron, or pipe bevels, the distance from the tube's center to the cutting point changes continuously as the chuck rotates. Standard controller "Rotary Radius Compensation" settings only work for a single fixed circular radius and fail on rectangular corners—causing the machine to violently surge or crawl. In <code class="mono">G93</code> Inverse-Time mode, RotaryCAM calculates the exact physical time (<code class="mono">Δt</code>) required for each micro-segment and writes <code class="mono">F = 1 / Δt</code> on every line, guaranteeing your plasma torch cuts at the exact surface speed you set in your cut chart, regardless of stock shape or corner radius.
               </p>
             </div>
 
@@ -699,6 +713,352 @@
               <img src="assets/machine-config-5-defaults.png" alt="Step 5: Zero-Bevel and Corner Loops tab and Save Profile button" loading="lazy" />
             </div>
           </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 6
+             ================================================================== -->
+        <article class="doc-step-card" id="step-6">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 06</span>
+            <h2 class="doc-step-title">Supported CNC Controllers &amp; Post-Processor Setup Guides</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Different CNC plasma controllers have very different rules for how they probe metal, fire the torch, freeze the torch height control (THC), and blend rotary motion. RotaryCAM includes tailored, zero-hand-edit post-processors for the 6 most common shop-floor controllers (unlocked across both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong> licenses).
+            </p>
+            <p>
+              Use the reference table below for a quick shop-floor comparison, then read the detailed setup guide for your specific controller:
+            </p>
+
+            <div class="table-wrap" style="margin: 1.5rem 0; overflow-x: auto;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Controller Dialect</th>
+                    <th>Ext</th>
+                    <th>IHS Touch-Off Probing</th>
+                    <th>Torch Fire / Extinguish</th>
+                    <th>THC Lock / Unlock</th>
+                    <th>Rotary Mode</th>
+                    <th>Dynamic Process Sync</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>LinuxCNC QTPlasmaC</strong></td>
+                    <td><code class="mono">.ngc</code></td>
+                    <td>Managed by <code class="mono">plasmac</code> (<code class="mono">M3 $0 S1</code>)</td>
+                    <td><code class="mono">M3 $0 S1</code> / <code class="mono">M5 $0</code></td>
+                    <td><code class="mono">M62 P2</code> (Lock) / <code class="mono">M63 P2</code> (Unlock)</td>
+                    <td><code class="mono">G93</code> Inverse-Time</td>
+                    <td>Inline <code class="mono">(o=0, ...)</code> or <code class="mono">M190 P&lt;mat&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Langmuir FireControl</strong></td>
+                    <td><code class="mono">.tap</code></td>
+                    <td>CAM loop: <code class="mono">G38.2</code> + <code class="mono">G38.4</code> + <code class="mono">0.5mm</code></td>
+                    <td><code class="mono">M3</code> / <code class="mono">M5</code> + <code class="mono">G4 P0.5</code></td>
+                    <td><code class="mono">H0</code> (Off) / <code class="mono">H1</code> (On)</td>
+                    <td><code class="mono">G94</code> Unwrapped <code class="mono">Y</code></td>
+                    <td>Header <code class="mono">(v1.6-sc)</code> &amp; EOF <code class="mono">(PS&lt;feed&gt;)</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mach4 (Warp9 ESS / TMC3in1)</strong></td>
+                    <td><code class="mono">.tap</code></td>
+                    <td><code class="mono">G31</code> + <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code></td>
+                    <td><code class="mono">M62 P&lt;torch&gt;</code> / <code class="mono">M63 P&lt;torch&gt;</code></td>
+                    <td><code class="mono">M63 P&lt;thc&gt;</code> (Lock) / <code class="mono">M62 P&lt;thc&gt;</code> (Unlock)</td>
+                    <td><code class="mono">G93</code> Inverse-Time</td>
+                    <td><code class="mono">m2020 (...)</code> + <code class="mono">G04 P0.1</code> Lua dwell</td>
+                  </tr>
+                  <tr>
+                    <td><strong>MASSO G3 + DTHC</strong></td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>Managed by <code class="mono">G200</code> + <code class="mono">M3</code> (or <code class="mono">G38.2</code>)</td>
+                    <td><code class="mono">M3</code> / <code class="mono">M5</code></td>
+                    <td><code class="mono">M666</code> (Off) / <code class="mono">M667 F&lt;zFeed&gt;</code> (On)</td>
+                    <td><code class="mono">G93</code> Inverse-Time</td>
+                    <td><code class="mono">G200 ... D&lt;ms&gt; V&lt;volts&gt;</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>ArtSoft Mach3</strong></td>
+                    <td><code class="mono">.tap</code></td>
+                    <td><code class="mono">G31</code> or <code class="mono">G28.1 Z</code> + switch offset</td>
+                    <td><code class="mono">M3</code> / <code class="mono">M5</code></td>
+                    <td><code class="mono">M11 P&lt;pin&gt;</code> (Lock) / <code class="mono">M10 P&lt;pin&gt;</code> (Unlock)</td>
+                    <td><code class="mono">G93</code> Inverse-Time</td>
+                    <td>Manual or Cut Chart Presets</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Centroid Acorn CNC12</strong></td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>Managed by <code class="mono">M61</code> macro cycle</td>
+                    <td><code class="mono">M61</code> (On) / <code class="mono">M62</code> (Off + Retract)</td>
+                    <td><code class="mono">M36</code> (Lock) / <code class="mono">M35</code> (Unlock)</td>
+                    <td><code class="mono">G93</code> Inverse-Time</td>
+                    <td><code class="mono">G64 ON</code> + <code class="mono">M65</code> Profile Manager</td>
+                  </tr>
+                  <tr>
+                    <td><strong>CSLab SimCNC (3.5 / 3.6)</strong></td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>Managed by SimCNC <code class="mono">m3.py</code> macro</td>
+                    <td><code class="mono">M3 S1</code> / <code class="mono">M63 P1</code> + <code class="mono">M5</code></td>
+                    <td><code class="mono">M63 P0</code> (Lock) / <code class="mono">M62 P0</code> (Unlock)</td>
+                    <td>Spoofed <code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td><code class="mono">#1111</code> Amps, <code class="mono">#1090</code> Volts, <code class="mono">#1091</code> Dwell</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Controller 1: LinuxCNC QTPlasmaC -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • LinuxCNC 2.9 / 2.10</div>
+              <h3 class="doc-section-heading">1. LinuxCNC QTPlasmaC Configuration</h3>
+            </div>
+            <p>
+              LinuxCNC's native <code class="mono">QTPlasmaC</code> module handles initial height sensing and torch voltage regulation through real-time HAL external offsets. RotaryCAM produces native <code class="mono">.ngc</code> programs tuned for QTPlasmaC tables:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Self-Contained Cut Chart Magic Comments (<code class="mono">o=0</code>):</strong> RotaryCAM writes a self-contained magic comment at the top of your program:
+                <pre><code class="language-gcode">(o=0, na=45A Mild Steel 3mm, ph=3.8, pd=0.25, ch=1.5, fr=2800, kw=1.5, th=1, ca=45, cv=115, pe=0.5, gp=75, cm=1)</code></pre>
+                When QTPlasmaC loads this file, its internal G-code filter automatically populates pierce height (<code class="mono">ph</code>), pierce delay (<code class="mono">pd</code>), cut height (<code class="mono">ch</code>), cut feedrate (<code class="mono">fr</code>), arc voltage (<code class="mono">cv</code>), and gas pressure (<code class="mono">gp</code>) directly into the operator interface. You never have to manually re-type cutting numbers at the machine console.
+              </li>
+              <li>
+                <strong>Central Material Table Mode (<code class="mono">M190</code>):</strong> If your shop prefers managing consumables inside QTPlasmaC's built-in material library, enable the <em>Use Controller Material Table</em> toggle in Machine Settings. RotaryCAM will emit <code class="mono">M190 P&lt;materialNumber&gt;</code> followed by <code class="mono">M66 P3 L3 Q1</code> to sync with your database.
+              </li>
+              <li>
+                <strong>Active-High Inhibit THC Lock Polarity (<code class="mono">M62 P2</code> to Lock / <code class="mono">M63 P2</code> to Unlock):</strong>
+                In LinuxCNC QTPlasmaC, digital output pin 2 (<code class="mono">motion.digital-out-02</code>) connects to <code class="mono">plasmac.thc-disable</code>. This is an <strong>active-high disable</strong> pin—the exact opposite of traditional relays! Turning pin 2 ON freezes the torch, while turning it OFF allows THC height regulation. RotaryCAM automatically handles this inverted polarity:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><code class="mono">M62 P2</code> — Synchronously <strong>locks/disables THC</strong> during corner deceleration, lead-ins, 60% small bolt holes, and before torch-off.</li>
+                  <li><code class="mono">M63 P2</code> — Synchronously <strong>unlocks/enables THC</strong> when the torch reaches steady cutting speed on straight runs.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Small-Hole True Hole Velocity Scaling (<code class="mono">M67 E3 Q60</code>):</strong> On bolt holes <code class="mono">&le; 25.4 mm</code> (<code class="mono">1"</code>), RotaryCAM emits <code class="mono">M67 E3 Q60</code> to drop feedrate to 60% and lock the THC, restoring full speed with <code class="mono">M67 E3 Q0</code> when entering the scrap lead-out.
+              </li>
+              <li>
+                <strong>Corner Collision Prevention on Square/Rectangular Tube (<code class="mono">#&lt;keep-z-motion&gt; = 1</code>):</strong>
+                By default, QTPlasmaC's G-code loader <em>strips out all Z coordinates</em> so <code class="mono">plasmac</code> can own torch height. On 4-axis square or rectangular tubing, stripping Z coordinates would cause your torch to slam directly into rotating tube corners! RotaryCAM detects when you are cutting non-round tubing or open structural profiles and automatically injects <code class="mono">#&lt;keep-z-motion&gt; = 1</code> in the header, forcing QTPlasmaC to preserve programmed Z corner climbing moves.
+              </li>
+              <li>
+                <strong>Multi-Tool Spindle Codes:</strong> RotaryCAM outputs native QTPlasmaC multi-tool codes: <code class="mono">M3 $0 S1</code> for plasma cutting, <code class="mono">M3 $1 S1</code> for pneumatic air-scribe marking (with X/Y offsets managed in HAL), and <code class="mono">M3 $2 S1</code> followed by a micro-move for stationary center-point dimples.
+              </li>
+            </ul>
+
+            <!-- Controller 2: Langmuir FireControl -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • CrossFire, CrossFire PRO &amp; CrossFire XR</div>
+              <h3 class="doc-section-heading">2. Langmuir Systems FireControl Setup</h3>
+            </div>
+            <p>
+              Langmuir Systems tables (CrossFire, PRO, and XR) run on proprietary GRBL-based motion control managed by the FireControl desktop software. RotaryCAM outputs fully compliant <code class="mono">.tap</code> programs that load directly into FireControl without parser warnings:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Parser Sentinels &amp; Comment Strictness:</strong> FireControl rejects standard G-code headers if parser sentinels are missing. Line 1 must begin with <code class="mono">(v1.6-sc)</code>, and the final line after <code class="mono">M30</code> must contain <code class="mono">(PS&lt;speed&gt;)</code> (e.g. <code class="mono">(PS2800)</code> in metric or <code class="mono">(PS110)</code> in imperial) to populate FireControl's program speed slider. Furthermore, <strong>all comments must use parentheses <code class="mono">(...)</code> only</strong>—semicolons (<code class="mono">;</code>), percent signs (<code class="mono">%</code>), and variable hashes (<code class="mono">#</code>) will cause FireControl to halt with syntax errors.
+              </li>
+              <li>
+                <strong>Automated IHS Touch-Off Loop:</strong> Because FireControl does not have an internal automatic canned touch-off cycle, RotaryCAM generates Langmuir's exact dual-speed IHS probing loop before every single pierce:
+                <pre><code class="language-gcode">H0
+G0 X25.000 Y10.000
+G92 Z0.0
+G38.2 Z-127.0 F2540.0   (Fast ohmic/switch touch probe down)
+G38.4 Z12.7 F508.0      (Slow retract until switch un-trips)
+G92 Z0.0
+G0 Z0.508               (Compensate for switch springback backlash)
+G92 Z0.0
+G0 Z3.800               (Retract to Pierce Height)
+M3                      (Torch Fire)
+G4 P0.400               (Stationary Pierce Delay in Seconds)
+G1 Z1.500 F1500.0       (Plunge to Cut Height)
+H1                      (THC Active)</code></pre>
+              </li>
+              <li>
+                <strong>THC Height Regulation (<code class="mono">H0</code> &amp; <code class="mono">H1</code>):</strong> FireControl turns THC on and off with standalone <code class="mono">H1</code> and <code class="mono">H0</code> command lines. RotaryCAM automatically places <code class="mono">H0</code> before every touch-off, during lead-ins, around small holes, during sharp direction changes, and before extinguishing the arc with <code class="mono">M5</code>.
+              </li>
+              <li>
+                <strong>Round-Tube Cutting via Y-Axis Motor Swap:</strong>
+                FireControl is fundamentally a 3-axis (<code class="mono">X, Y, Z</code>) controller with no native 4th rotary axis (<code class="mono">A</code>) or <code class="mono">G93</code> inverse-time support. To cut round tubing on a CrossFire table, fabricators physically unplug the table's <code class="mono">Y</code>-axis stepper cable and plug it into a rotary chuck drive calibrated so that <strong><code class="mono">1 mm</code> (or <code class="mono">1"</code>) of Y-axis motion equals <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of surface circumference on the pipe</strong> (<code class="mono">Y = R_outer &middot; A_rad</code>). When you select FireControl, RotaryCAM automatically wraps round pipe cuts into linear <code class="mono">Y</code> moves in standard <code class="mono">G94</code> feedrate mode.
+                <div class="doc-callout warning" style="margin-top: 0.75rem;">
+                  <div class="doc-callout-title">⚠ Round Tubing Only on FireControl Y-Swap</div>
+                  <p>
+                    Because a Y-swap setup replaces lateral torch motion with tube rotation, the torch cannot independently translate across the tube while the pipe rotates. Round pipe saddle fishmouths and holes cut cleanly, but <strong>square/rectangular HSS tubing, angle iron, C-channel, and off-crown beveling physically require 4 independent axes (<code class="mono">X, Y, Z, A</code>)</strong> and cannot be run on a 3-axis Y-swap setup. RotaryCAM will alert you if you attempt to load a non-round profile under the FireControl post.
+                  </p>
+                </div>
+              </li>
+            </ul>
+
+            <!-- Controller 3: Mach4 + Warp9 ESS / TMC3in1 -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • ArtSoft Mach4 &amp; Warp9 Ethernet SmoothStepper</div>
+              <h3 class="doc-section-heading">3. ArtSoft Mach4 + Warp9 ESS / WarpRunner Setup</h3>
+            </div>
+            <p>
+              Mach4 tables powered by the Warp9 Ethernet SmoothStepper (ESS) and TMC3in1 or WarpRunner breakout boards provide ultra-fast hardware torch height control and real-time synchronized I/O. RotaryCAM outputs clean <code class="mono">.tap</code> programs with two selectable hardware sub-modes:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Sub-Mode A — Warp9 TMC3in1 / WarpRunner:</strong>
+                Outputs native <code class="mono">m2020 (...)</code> configuration registers to communicate directly with Warp9's Lua plugin:
+                <pre><code class="language-gcode">m2020 (W9_HC_LOAD_DEFAULT_CONFIG_VALUES=1)
+m2020 (AD1_DELAY_ENABLED=1)
+m2020 (AD1_DELAY_VALUE=0.8)
+m2020 (AD2_M62_M63_ENABLED=1)
+m2020 (AD3_VELOCITY_ENABLED=1)
+m2020 (AD3_VELOCITY_PERCENT=85)
+m2020 (TARGET_TIP_VOLTS=115.0)
+G04 P0.100</code></pre>
+                <em>Shop Tip:</em> RotaryCAM always places a mandatory <code class="mono">G04 P0.1</code> dwell right after <code class="mono">m2020</code> register groups so Mach4's Lua macro queue has time to write the hardware registers before the ESS motion planner starts moving.
+              </li>
+              <li>
+                <strong>Sub-Mode B — Standard ESS / External Standalone THC:</strong> For tables using a Proma, PriceCNC, or external standalone THC, RotaryCAM emits clean <code class="mono">G31</code> probing with switch-offset compensation and standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63</code> pins without any <code class="mono">m2020</code> macros.
+              </li>
+              <li>
+                <strong>Synchronous Torch &amp; Anti-Dive 2 (<code class="mono">AD2</code>) Control:</strong> Traditional <code class="mono">M3/M5</code> commands in Mach4 pause the motion planner queue while Lua executes, leaving ugly dwell marks. With Warp9 synchronized I/O enabled, RotaryCAM emits motion-synchronized <code class="mono">M62 P&lt;torchPin&gt;</code> (torch ON) and <code class="mono">M63 P&lt;torchPin&gt;</code> (torch OFF), alongside <code class="mono">M63 P&lt;thcPin&gt;</code> (lock THC) and <code class="mono">M62 P&lt;thcPin&gt;</code> (unlock THC) under Anti-Dive Mode 2 for zero-hesitation cuts.
+              </li>
+              <li>
+                <strong>Rotary Feedrates &amp; Dwells:</strong> Full 4-axis <code class="mono">G93</code> inverse-time mode on all cutting moves. Dwell commands (<code class="mono">G04 P&lt;seconds&gt;</code>) are emitted in decimal seconds matching Mach4's default configuration.
+              </li>
+            </ul>
+
+            <!-- Controller 4: MASSO G3 -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • MASSO G3 &amp; MASSO Touch Plasma</div>
+              <h3 class="doc-section-heading">4. MASSO G3 + DTHC Configuration</h3>
+            </div>
+            <p>
+              MASSO G3 is a dedicated hardware CNC controller that uses internal canned plasma routines rather than custom PC macros. RotaryCAM produces native <code class="mono">.nc</code> files tailored to MASSO's firmware:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Mandatory Plasma Mode Header (<code class="mono">T112 M6</code>):</strong> MASSO strictly requires <code class="mono">T112 M6</code> in the file header to activate plasma features. Changing away from <code class="mono">T112</code> cancels plasma mode (e.g. MASSO's pneumatic air-scribe tool uses <code class="mono">T111 M6</code>).
+              </li>
+              <li>
+                <strong>Automated IHS Parameter Block (<code class="mono">G200</code>):</strong> On flat sheet and round pipe, RotaryCAM emits the complete MASSO plasma parameter block:
+                <pre><code class="language-gcode">T112 M6
+G200 F600 P3.8 D400 C1.5 V115 A0 O1 S0
+M3</code></pre>
+                <code class="mono">F</code> = touch-off feedrate, <code class="mono">P</code> = pierce height, <code class="mono">D</code> = pierce delay in <strong>milliseconds</strong> (<code class="mono">D400</code> = 0.4s), <code class="mono">C</code> = cut height, <code class="mono">V</code> = target arc volts (<code class="mono">V0</code> activates MASSO Auto-Voltage sampling mode), and <code class="mono">O1</code> selects Ohmic probing. Once set, calling <code class="mono">M3</code> causes MASSO to probe, pierce, and drop to cut height automatically.
+              </li>
+              <li>
+                <strong>Critical Shop Tip — Why Explicit <code class="mono">M666</code> / <code class="mono">M667</code> Are Required:</strong>
+                MASSO's official documentation notes that the <code class="mono">A</code> (anti-dive percentage) parameter inside <code class="mono">G200</code> is <em>not yet implemented in MASSO firmware</em>. If you rely solely on <code class="mono">G200</code>, MASSO will dive the torch into the metal when slowing down for small bolt holes or tight corners! RotaryCAM protects your torch by emitting explicit buffered <code class="mono">M666</code> (THC OFF) and <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) commands before every corner, small hole, and lead-out.
+              </li>
+              <li>
+                <strong>4-Axis Square/Rectangular Tube Override:</strong> Because native <code class="mono">G200</code> assumes MASSO owns the Z-axis while cutting, RotaryCAM automatically switches to bare <code class="mono">G200</code> with explicit <code class="mono">G38.2</code> touch-off on square and rectangular HSS tubing. This allows programmed 4D Z corner climbs to run smoothly without the controller overriding torch height.
+              </li>
+              <li>
+                <strong>Millisecond Dwells:</strong> MASSO is the only major controller that strictly interprets <code class="mono">G04 P</code> in <strong>milliseconds</strong> (<code class="mono">G04 P400</code> = 0.4s). RotaryCAM formats all MASSO dwell words in integer milliseconds.
+              </li>
+            </ul>
+
+            <!-- Controller 5: ArtSoft Mach3 -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • ArtSoft Mach3 Plasma &amp; 4-Axis Rotary</div>
+              <h3 class="doc-section-heading">5. ArtSoft Mach3 Setup</h3>
+            </div>
+            <p>
+              Tens of thousands of plasma tables across the world still run reliably on ArtSoft Mach3. RotaryCAM's Mach3 post (<code class="mono">.tap</code>) eliminates the common pitfalls that cause stuttering, dwell blowouts, and corner dives on legacy tables:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Constant Velocity Mode (<code class="mono">G64</code> without P words):</strong> Mach3 supports constant velocity blending via <code class="mono">G64</code>, but adding a tolerance word (such as <code class="mono">G64 P0.1</code>) causes Mach3 to throw a syntax error or misread coordinates. RotaryCAM emits clean <code class="mono">G64</code> with strictly non-nested parentheses comments.
+              </li>
+              <li>
+                <strong>Selectable Probing (<code class="mono">G31</code> Straight Probe vs. <code class="mono">G28.1</code> Floating Head):</strong>
+                Choose between fast straight ohmic touch-off (<code class="mono">G31 Z-100 F1000</code> + <code class="mono">G92 Z0</code>) or floating-head microswitch referencing (<code class="mono">G28.1 Z10</code>) with automatic switch-offset compensation entered in your Machine Settings.
+              </li>
+              <li>
+                <strong>Stop Blowout Divots with Fast Motion-Synced <code class="mono">M11 P#</code> / <code class="mono">M10 P#</code>:</strong>
+                In Mach3, calling standard <code class="mono">M3/M5</code> or custom VBScript macros (such as <code class="mono">M101/M102</code> or <code class="mono">M38/M39</code>) forces the trajectory planner to <strong>decelerate to a complete dead stop (<code class="mono">0 mm/min</code>)</strong> before toggling the pin. Whenever your THC locks on a corner or your torch turns off before a lead-out, an asynchronous macro burns a deep blowout hole in the tube!
+                RotaryCAM solves this by emitting Mach3's high-speed motion-synchronized commands:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><code class="mono">M11 P&lt;output#&gt;</code> — Switches the output ON at the exact microsecond the next axis move begins (instant THC lock with zero hesitation).</li>
+                  <li><code class="mono">M10 P&lt;output#&gt;</code> — Switches the output OFF at the exact microsecond the next axis move begins (instant THC unlock, and early arc extinguish on overburn lead-outs).</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Mandatory <code class="mono">G93</code> Inverse-Time:</strong> Mach3's built-in "Rotation Radius" compensation only works for a constant circular radius at Z=0. On rectangular HSS tubing where the lever arm changes continuously, Mach3 surges and stalls under <code class="mono">G94</code>. RotaryCAM's native <code class="mono">G93</code> inverse-time mode solves this completely, keeping surface cutting speed rock solid.
+              </li>
+            </ul>
+
+            <!-- Controller 6: Centroid Acorn -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • Centroid Acorn &amp; Acorn Six CNC12 v5.4+ Plasma</div>
+              <h3 class="doc-section-heading">6. Centroid Acorn CNC12 Setup</h3>
+            </div>
+            <p>
+              Centroid Acorn and Acorn Six running CNC12 v5.4+ Plasma utilize high-speed optical encoder feedback and dedicated canned macros for industrial reliability. RotaryCAM generates native <code class="mono">.nc</code> programs that drop straight into CNC12:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Plasma Smoothing &amp; Material Profiles (<code class="mono">G64 ON</code> &amp; <code class="mono">M65</code>):</strong> Centroid CNC12 uses the syntax <code class="mono">G64 ON</code> for trajectory smoothing. In the preamble, RotaryCAM calls <code class="mono">M65</code> to load the operator's active material profile from CNC12's Profile Manager, synchronizing pierce heights and cutting voltages.
+              </li>
+              <li>
+                <strong>Controller-Managed Canned Cycles (<code class="mono">M61</code> &amp; <code class="mono">M62</code>):</strong>
+                Instead of scattered probing and dwell lines, Centroid post-processors call Centroid's compiled macros:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><code class="mono">M61</code> (<code class="mono">mfunc61.mac</code>) — Automatically performs ohmic/floating touch-off, retracts to pierce height, fires the torch, verifies Arc OK, waits the pierce delay, plunges to cut height, and enables THC (<code class="mono">M35</code>).</li>
+                  <li><code class="mono">M62</code> (<code class="mono">mfunc62.mac</code>) — Automatically locks THC (<code class="mono">M36</code>), shuts off the plasma arc (<code class="mono">M5</code>), and retracts the Z-axis to Safe Height.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Rectangular Tube Dynamic Corner Safety:</strong> On 4-axis square and rectangular tubing where the Z-axis must climb and descend rotating tube corners, RotaryCAM calls <code class="mono">M61</code> to touch off and pierce, then immediately calls <code class="mono">M36</code> (Disable THC) so Centroid's fiber-optic THC does not fight programmed Z corner moves, followed by <code class="mono">M62</code> at the end of the cut.
+              </li>
+              <li>
+                <strong>Integrated Marking &amp; Scribe Macros:</strong> Centroid CNC12 includes dedicated marking macros: <code class="mono">M64</code> performs an automated low-power plasma center-point dimple cycle, while <code class="mono">M39</code> (extend &amp; apply offset) and <code class="mono">M40</code> (retract) control pneumatic air scribes.
+              </li>
+            </ul>
+
+            <!-- Scribe Section: EasyScribe vs Pneumatic -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Multi-Tool Marking • Part IDs, Bend Lines &amp; Weld Witness Ticks</div>
+              <h3 class="doc-section-heading">7. Scribing: Coaxial EasyScribe vs. Pneumatic Air-Scribe Setup</h3>
+            </div>
+            <p>
+              RotaryCAM supports both drag scribing and pneumatic impact scribing across all 6 controllers in <strong>Pro Shop ($399)</strong>, letting you engrave Part IDs, chassis bend lines, and weld fit-up witness marks directly on your parts before cutting:
+            </p>
+
+            <div class="doc-intro-grid" style="margin: 1.25rem 0;">
+              <div class="doc-intro-stat">
+                <span class="label">Coaxial EasyScribe (Drag)</span>
+                <span class="value">Installs in Plasma Torch Cup • All 6 Controllers • Auto M0 Swap Pause</span>
+              </div>
+              <div class="doc-intro-stat">
+                <span class="label">Pneumatic Air-Scribe (Offset)</span>
+                <span class="value">Independent Air Slide • Multi-Tool M-Codes • Zero Swap Pause</span>
+              </div>
+            </div>
+
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Coaxial Drag Scribing (<code class="mono">EasyScribe</code>):</strong>
+                The EasyScribe tool replaces the shield cup and nozzle directly inside your plasma torch body. It requires zero auxiliary air valves or wiring and works on <strong>every table and controller (including Langmuir FireControl)</strong>.
+                When scribing with EasyScribe:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li>The plasma arc is kept strictly <strong>OFF</strong> (<code class="mono">M3</code> is never fired).</li>
+                  <li>The machine touches off the stock surface, plunges into the spring preload depth (<code class="mono">Z_scribe</code>, typically <code class="mono">1.0–1.5 mm</code>), drags the diamond or carbide stylus across the part contour, and retracts to Safe Z.</li>
+                  <li>When scribing and cutting in the same job, RotaryCAM automatically injects an <code class="mono">M0</code> program pause with a message on your screen prompting you to swap between the EasyScribe tool and your plasma cutting consumables.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Pneumatic Offset Air-Scribe:</strong>
+                For high-production shops with an air-powered stylus mounted on a pneumatic slide alongside the plasma torch. RotaryCAM applies the physical <code class="mono">(X, Y, Z)</code> head offset automatically and drives the scribe using your controller's native multi-tool commands:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>LinuxCNC QTPlasmaC:</strong> <code class="mono">M3 $1 S1</code> (air on + slide drop) / <code class="mono">M5 $1</code> (retract)</li>
+                  <li><strong>MASSO G3:</strong> <code class="mono">T111 M6</code> (switch to Air Scribe) / <code class="mono">T112 M6</code> (switch back to Plasma)</li>
+                  <li><strong>Centroid Acorn:</strong> <code class="mono">M39</code> (extend &amp; offset) / <code class="mono">M40</code> (retract)</li>
+                  <li><strong>Mach3 &amp; Mach4:</strong> Auxiliary output M-code pair with automatic <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> work coordinate shift and <code class="mono">G52 X0 Y0</code> cancellation.</li>
+                </ul>
+                Because the air scribe is permanently mounted beside the torch, your machine marks all Part IDs, bend lines, and alignment ticks, then immediately switches to the plasma torch and cuts out the parts in one completely hands-off automated run.
+              </li>
+            </ul>
+          </div>
         </article>
 
 
