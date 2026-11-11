@@ -145,8 +145,10 @@
             <ul class="doc-bullet-list">
               <li><strong>Enable Acceleration &amp; Jerk Profiling:</strong> Models your machine's real motor acceleration in software so feedrate changes and THC anti-dive freeze points match what happens on the table.</li>
               <li><strong>Smooth Rotary Corner Motion (Square &amp; Rectangular Tube):</strong> Automatically smooths chuck rotation when rolling from flat faces into corner fillets, preventing sudden rotational jerks and motor stalls.</li>
-              <li><strong>Enable Kerf Width Compensation:</strong> Automatically offsets hole cuts (CW) and outside profiles (CCW) by half your torch's kerf width so parts fit tight right off the machine.</li>
-              <li><strong>Heat-Optimized vs. One-Direction Cut Ordering:</strong> Operators can choose between automatic thermal hedging (staggering internal holes and slots across the tube to prevent heat warping) or strict one-direction monotonic cutting from the free end toward the chuck.</li>
+              <li><strong>Enable Kerf Width Compensation &amp; Kerf-True Tabs:</strong> Offsets inside holes (CW) and outside cuts (CCW) by half your plasma kerf width so parts hit dimension right off the table, and adds a full kerf width to micro-joint tab gaps so thin-wall tabs never burn away.</li>
+              <li><strong>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling:</strong> Automatically slows enclosed bolt holes (<code class="mono">&le; 25.4 mm</code> / <code class="mono">1&Prime;</code>) on round pipe and square/rectangular tubing to <code class="mono">60%</code> cutting speed, stopping plasma arc-lag cone taper so bolts drop straight through without reaming.</li>
+              <li><strong>Configurable ERW Weld-Seam Pierce Avoidance:</strong> Set where your tube's internal ERW mill weld seam faces in the chuck on round pipe or square/rectangular HSS, and pierces automatically shift onto clean parent steel—preventing blowback spatter from thick internal weld flash.</li>
+              <li><strong>Heat-Optimized vs. One-Direction Cut Ordering:</strong> Choose between automatic heat staggering (alternating internal holes and slots along the tube to reduce heat bow) or one-direction cutting from the free end toward the chuck.</li>
             </ul>
           </div>
 
@@ -217,7 +219,7 @@
               Finally, open the <span class="ui-chip cyan">Zero-Bevel &amp; Corner Loops</span> tab to define the default geometric compensation values applied to new contours (which can still be overridden per contour during part inspection):
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Zero-Bevel Dual-Curve Compensation Defaults:</strong> Configure whether Zero-Bevel parameters are auto-estimated from saddle depth, along with the default <strong>Fade Angle (<code class="mono">90°</code>)</strong>, <strong>Intensity (<code class="mono">100%</code>)</strong>, and weld prep <strong>Side Gap (<code class="mono">mm</code>)</strong>.</li>
+              <li><strong>Zero-Bevel Pipe Saddle &amp; Square/Rect HSS Miter Defaults:</strong> Set default <strong>Fade Angle (<code class="mono">90°</code>)</strong>, <strong>Intensity (<code class="mono">100%</code>)</strong>, and weld prep <strong>Side Gap (<code class="mono">mm</code>)</strong> for dual-curve round pipe saddles and heel-only pullback (<code class="mono">t &middot; tan(&theta;)</code>) on square/rectangular HSS miters, plus default ERW weld-seam exclusion zones so pierces stay off internal mill flash.</li>
               <li><strong>Corner Looping (Sharp Direction Changes):</strong> Set the minimum/maximum corner angle range (<code class="mono">90°–180°</code>) and loop radius (<code class="mono">3 mm</code>) used when injecting rollout corner loops into scrap to keep sharp external corners crisp.</li>
               <li><strong>Manage &amp; Persist Profiles:</strong> Use the bottom-left toolbar (<span class="ui-chip">+ New</span>, <span class="ui-chip">Clone</span>, <span class="ui-chip">★ Active</span>) to create or switch profiles, then click the green <span class="ui-chip emerald">Save Profile</span> button in the top-right corner of the modal.</li>
             </ul>

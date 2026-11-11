@@ -812,7 +812,7 @@
           <div class="beta-feat-icon">✓</div>
           <div>
             <div class="beta-feat-title">Round, Square/Rect &amp; Flat G-Code + Zero-Bevel</div>
-            <div class="beta-feat-desc">Cut round pipe, square/rectangular HSS, and flat bar with Zero-Bevel saddle compensation, custom machines, and 552 Hypertherm cut charts.</div>
+            <div class="beta-feat-desc">Cut round pipe saddles, flush heel-pullback square/rect HSS miters, 60% small-hole bolt holes, and flat bar with 552 Hypertherm cut charts.</div>
           </div>
         </div>
         <div class="beta-feat-item">
@@ -826,14 +826,14 @@
           <div class="beta-feat-icon">✓</div>
           <div>
             <div class="beta-feat-title">Full 3D Preview of All Profiles &amp; Pro Tools</div>
-            <div class="beta-feat-desc">Load and inspect any 3D STEP part or assembly in the 3D Viewer—including Angle Iron, C-Channel, I-Beam, and Pro toolpath features.</div>
+            <div class="beta-feat-desc">Load and inspect any 3D STEP part in the 3D Viewer—including 4-axis pipe weld bevels, Angle Iron, C-Channel, I-Beam, and Pro toolpath features.</div>
           </div>
         </div>
         <div class="beta-feat-item" style="border-color: rgba(245, 158, 11, 0.35);">
           <div class="beta-feat-icon" style="color: var(--plasma-amber);">★</div>
           <div>
             <div class="beta-feat-title">Perpetual Maker &amp; Pro Shop Licenses</div>
-            <div class="beta-feat-desc">Remove the 30-day clock forever or unlock Open Profiles, unlimited nesting, tabbing &amp; auto-scribing: <a href="index.html#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">See Founding Pricing ($199 / $399) &rarr;</a></div>
+            <div class="beta-feat-desc">Own it forever or unlock 4-axis pipe weld bevels, Open Profiles, unlimited nesting, tabs &amp; scribing: <a href="index.html#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">See Founding Pricing ($199 / $399) &rarr;</a></div>
           </div>
         </div>
       </div>
@@ -962,6 +962,51 @@
   <!-- Chronological Release Entries -->
   <main class="changelog-section">
     <div class="timeline-wrap">
+
+      <!-- ================================================================
+           LATEST IMPROVEMENTS: v0.5.2+ (Upcoming)
+           ================================================================ -->
+      <article class="release-entry" id="v0.5.2-next">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">Latest Improvements</span>
+              <span class="release-version-pill">v0.5.2+ &bull; UPCOMING</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">True Rectangular HSS Zero-Bevel Miters &bull; 4-Axis Eccentric Pipe Weld Beveling &bull; 60% Small-Hole Bolt Speed &bull; Kerf-True Tabs &amp; ERW Seam Avoidance</span>
+          </div>
+          <p class="release-summary">
+            Pull square and rectangular HSS miters straight off the plasma table ready to weld with zero hand grinding, cut real V-groove weld prep on round pipe using your vertical 4-axis torch without buying a 5-axis bevel head, drop bolts straight through 60%-speed small holes without cone taper, and keep thin-wall tabs and pierces clean off ERW mill seams.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>True Geometric Rectangular HSS Zero-Bevel Miters &amp; Copes:</strong> When you cut an angled miter or cope on square or rectangular tubing with a vertical torch, only the obtuse inside heel wall overhangs and holds the joint open. Zero-Bevel now pulls back strictly that interfering heel wall (<code>t &middot; tan(&theta;)</code>) while keeping your side walls and acute toes flush&mdash;eliminating hand grinding on square and rectangular tube miters.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>4-Axis Round-Tube Eccentric Weld-Prep Beveling (<code>Pro Shop $399</code> &bull; Free 3D Preview on Beta &amp; Maker):</strong> Cut real V-groove weld prep on structural round pipe without a 5-axis tilting bevel head. Your vertical torch shifts laterally off-center in <code>Y</code>, drops <code>Z</code> along the pipe curve to maintain standoff, and counter-rotates <code>A</code> smoothly across all 4 saddle quadrants so the angled pipe wall cuts a clean V-bevel right onto the joint (<a href="index.html#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">inspect free in 3D on Beta &amp; Maker; export G-code on Pro Shop &rarr;</a>).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Rotary Small-Hole (<code>60%</code>) &ldquo;True Hole&rdquo; Bolt Speed Scaling:</strong> Enclosed bolt holes (<code>&le; 25.4 mm</code> / <code>1&Prime;</code>) on round pipe and square/rectangular tubes automatically slow down to <code>60%</code> surface cutting speed, stopping plasma arc-lag cone taper so your bolts drop straight through without reaming or redrilling.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Kerf-Compensated Micro-Joint Tabs &amp; Configurable ERW Weld-Seam Avoidance:</strong> Adds your full plasma kerf width to every tab gap so thin-wall micro-tabs never burn away before the torch shuts off, and lets you configure round or square/rectangular ERW weld-seam orientation so pierces automatically shift off thick internal mill weld flash.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
 
       <!-- ================================================================
            RELEASE: November 10, 2026 (v0.5.2)

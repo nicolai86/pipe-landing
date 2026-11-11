@@ -73,10 +73,10 @@
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#pricing",
-        "description": "Commercial perpetual offline license (rotarycam.lic) for 3 computers with 1 full year of updates included ($99/yr optional thereafter), Angle Iron/C-Channel/I-Beam 4-axis beamline cutting, unlimited multi-stick nesting with common-line sever cuts, unlimited 3D cut-and-bend unfolding, tabbing, part-ID scribing, and headless MCP automation."
+        "description": "Commercial perpetual offline license (rotarycam.lic) for 3 computers with 1 full year of updates included ($99/yr optional thereafter), 4-axis round-tube eccentric V-groove weld-prep beveling without a 5-axis bevel head, Angle Iron/C-Channel/I-Beam 4-axis beamline cutting, unlimited multi-stick nesting with common-line sever cuts, unlimited 3D cut-and-bend unfolding, kerf-compensated tabbing, part-ID scribing, and headless MCP automation."
       }
     ],
-    "description": "Dedicated 4-axis rotary CNC plasma CAM software. Transforms 3D CAD STEP assemblies directly into machine-ready G-code with automatic tube copes, zero-bevel saddle compensation, SimCNC 4D speed scaling, and full mill-stick nesting.",
+    "description": "Dedicated 4-axis rotary CNC plasma CAM software. Transforms 3D CAD STEP assemblies directly into machine-ready G-code with automatic tube copes, round and rectangular HSS zero-bevel miter compensation, 4-axis eccentric pipe weld-prep beveling, 60% small-hole bolt taper control, SimCNC 4D speed scaling, and full mill-stick nesting.",
     "url": "https://rotarycam.app",
     "author": {
       "@type": "Person",
@@ -91,7 +91,10 @@
       "Direct 3D CAD STEP Assembly Ingestion",
       "Zero 2D DXF Unrolling Required",
       "Round Pipe, Square/Rect HSS, Flat Bar, Angle Iron, C-Channel, and I-Beam Support",
-      "Zero-Gap Dual-Curve Saddle Joint Compensation",
+      "Round Pipe & Rectangular HSS Zero-Bevel Miter & Saddle Fitup Compensation",
+      "4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling (No 5-Axis Head Required)",
+      "Rotary Small-Hole (60%) Speed Scaling for Taper-Free Bolt Holes",
+      "Kerf-Compensated Micro-Joint Tabs & Configurable ERW Weld-Seam Pierce Avoidance",
       "SimCNC 4D Trajectory Feedrate Scaling",
       "Dynamic THC Corner Anti-Dive Locking (M62/M63)",
       "1D Mill Stick Nesting with Common-Line Sever Cuts & 180-Degree Interlocking",
@@ -1790,14 +1793,14 @@
       <!-- Feature 2 -->
       <div class="card">
         <div>
-          <div class="card-num mono">02 / PERFECT FITUP</div>
-          <h3>Zero-Gap Saddles & Fishmouths Ready to Weld</h3>
-          <p>When a straight torch cuts an angled pipe fishmouth, the inside wall can stick out and leave ugly gaps that need hours of grinding. RotaryCAM's dual-curve compensation cuts to the inside cylinder line—giving you tight, flush fitup right off the machine with zero grinding or gap wedges needed.</p>
+          <div class="card-num mono">02 / PERFECT FITUP &amp; 4-AXIS BEVEL PREP</div>
+          <h3>Zero-Gap Pipe Saddles, Flush HSS Miters &amp; 4-Axis Weld Bevels</h3>
+          <p>When a straight torch cuts an angled pipe saddle or square-tube miter, inside walls overhang and hold your joint open. You get dual-curve compensation on round pipe, heel-only pullback on square and rectangular HSS miters that keeps side walls and toes flush, plus 4-axis eccentric Y/Z/A torch shifting on Pro Shop to cut real V-groove weld prep on round pipe without a 5-axis bevel head.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Zero-Grind Fitup</span>
-          <span class="pill"><span class="pill-dot"></span>Flush Branch Welds</span>
-          <span class="pill"><span class="pill-dot"></span>True Inside-Wall Path</span>
+          <span class="pill"><span class="pill-dot"></span>Flush Square HSS Miters</span>
+          <span class="pill"><span class="pill-dot"></span>Zero-Grind Pipe Saddles</span>
+          <span class="pill"><span class="pill-dot"></span>4-Axis Pipe V-Bevel Prep</span>
         </div>
       </div>
 
@@ -1832,14 +1835,14 @@
       <!-- Feature 5 -->
       <div class="card">
         <div>
-          <div class="card-num mono">05 / ARC QUALITY</div>
-          <h3>Correct Swirl Direction, 3D Plunges & Zero Divots</h3>
-          <p>Plasma swirl gas creates a square cut on one side and a bevel on the other. RotaryCAM cuts clockwise on outside profiles and counter-clockwise inside holes so the clean, square edge stays on your finished part. 3D ramp lead-ins protect your nozzle shield from pierce spatter, and early arc shutoff eliminates ugly crater divots at the end of cuts.</p>
+          <div class="card-num mono">05 / ARC QUALITY &amp; TRUE BOLT HOLES</div>
+          <h3>Taper-Free Bolt Holes (60% Speed), Seam Avoidance &amp; Zero Divots</h3>
+          <p>Enclosed bolt holes up to 1&Prime; (25.4 mm) on round and square tube automatically slow down to 60% surface speed to stop arc-lag cone taper—so your bolts drop straight through without reaming. Swirl direction keeps the square edge on your part, ERW weld-seam avoidance shifts pierces off thick mill flash, 3D ramp lead-ins block spatter, and early arc shutoff prevents exit divots.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Square Cut Edges</span>
-          <span class="pill"><span class="pill-dot"></span>No Pierce Spatter on Nozzles</span>
-          <span class="pill"><span class="pill-dot"></span>Zero Crater Divots</span>
+          <span class="pill"><span class="pill-dot"></span>60% Small-Hole Bolt Fit</span>
+          <span class="pill"><span class="pill-dot"></span>ERW Weld-Seam Avoidance</span>
+          <span class="pill"><span class="pill-dot"></span>Kerf-True Micro-Tabs</span>
         </div>
       </div>
 
@@ -1964,11 +1967,11 @@
           Standard CNC controllers don't know how to handle 4-axis rotary plasma cutting. RotaryCAM solves the real-world shop problems before the G-code reaches your machine: steady surface speeds, corner THC freezing, clean bevel fitups, and nozzle-saving lead-ins.
         </p>
         <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem;" class="mono">
-          <li style="color: var(--cyan-arc);">✓ Constant torch travel speed on round pipe and square tube</li>
-          <li style="color: var(--cyan-arc);">✓ Smooth corner rotation so chuck motors never stall</li>
-          <li style="color: var(--cyan-arc);">✓ Automatic THC anti-dive freeze on square corners</li>
-          <li style="color: var(--cyan-arc);">✓ Early arc shutoff to eliminate ugly start/stop divots</li>
-          <li style="color: var(--cyan-arc);">✓ 3D ramp lead-ins that blow piercing slag away from nozzles</li>
+          <li style="color: var(--cyan-arc);">✓ Constant torch travel speed + 60% small-hole speed for straight bolt holes (&le; 1&Prime;)</li>
+          <li style="color: var(--cyan-arc);">✓ True heel-only zero-bevel pullback on square &amp; rectangular HSS miters</li>
+          <li style="color: var(--cyan-arc);">✓ 4-axis eccentric Y/Z/A weld-prep beveling on round pipe without a 5-axis head</li>
+          <li style="color: var(--cyan-arc);">✓ Smooth corner rotation &amp; automatic THC anti-dive freeze on square corners</li>
+          <li style="color: var(--cyan-arc);">✓ 3D ramp lead-ins, ERW weld-seam pierce avoidance &amp; zero-divot early arc shutoff</li>
         </ul>
       </div>
 
@@ -2115,10 +2118,10 @@
           </p>
 
           <ul class="pricing-list">
-            <li><span class="pricing-check">✓</span><span>Load &amp; inspect <strong>any</strong> 3D STEP part or assembly in the 3D Viewer (all profiles)</span></li>
+            <li><span class="pricing-check">✓</span><span>Load &amp; preview <strong>any</strong> 3D STEP part, open profile, or 4-axis pipe weld bevel in the 3D Viewer</span></li>
             <li><span class="pricing-check">✓</span><span>Machine-ready G-code for <strong>Round Pipe, Square/Rect HSS &amp; Flat Bar</strong></span></li>
-            <li><span class="pricing-check">✓</span><span><strong>Zero-Bevel</strong> inside-wall saddle &amp; miter compensation</span></li>
-            <li><span class="pricing-check">✓</span><span>Custom machine profiles &amp; <strong>552 Hypertherm</strong> cut charts</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Zero-Bevel</strong> pipe saddles &amp; true heel-pullback <strong>Square/Rect HSS miters</strong> + <strong>60% small-hole</strong> bolt speed</span></li>
+            <li><span class="pricing-check">✓</span><span>Custom machine profiles, <strong>ERW weld-seam avoidance</strong> &amp; <strong>552 Hypertherm</strong> cut charts</span></li>
             <li><span class="pricing-check">✓</span><span>Up to <strong>5 parts/stick</strong> (1D Pack Mode) &amp; <strong>5 bends/file</strong> (3D Cut-and-Bend)</span></li>
           </ul>
         </div>
@@ -2150,7 +2153,7 @@
             <li><span class="pricing-check">✓</span><span><strong>Perpetual Offline License</strong> (<code class="mono" style="color: var(--cyan-arc);">rotarycam.lic</code>) &mdash; removes the 30-day clock forever</span></li>
             <li><span class="pricing-check">✓</span><span><strong>1 Year of Updates Included</strong> (<span class="mono">$59/yr</span> optional thereafter)</span></li>
             <li><span class="pricing-check">✓</span><span><strong>2 Computers</strong> (Office CAD PC + Shop Table PC)</span></li>
-            <li><span class="pricing-check">✓</span><span>Everything in Public Beta: <strong>Round, Square/Rect HSS &amp; Flat Bar</strong>, <strong>Zero-Bevel</strong>, Custom Machines, <strong>5 parts/stick</strong> &amp; <strong>5 bends/file</strong></span></li>
+            <li><span class="pricing-check">✓</span><span>Everything in Public Beta: <strong>Round, Square/Rect HSS &amp; Flat Bar</strong>, <strong>Zero-Bevel</strong> pipe saddles &amp; HSS miters, <strong>60% small-hole</strong> bolt speed, <strong>5 parts/stick</strong>, <strong>5 bends/file</strong> &amp; full 3D preview of Pro tools</span></li>
             <li><span class="pricing-check">✓</span><span>Your shop or builder name stamped in the UI &amp; G-code header</span></li>
           </ul>
         </div>
@@ -2178,17 +2181,18 @@
             <span class="pricing-cadence">one-time &bull; own forever</span>
           </div>
           <p class="pricing-subnote">
-            Full structural steel, bundle nesting, tabbing, and part-ID stenciling for commercial fab shops running daily jobs.
+            Full structural steel, 4-axis pipe weld-prep beveling, bundle nesting, tabbing, and part-ID stenciling for commercial fab shops running daily jobs.
           </p>
 
           <ul class="pricing-list">
             <li><span class="pricing-check">✓</span><span><strong>Perpetual Offline License</strong> + <strong>1 Year of Updates Included</strong> (<span class="mono">$99/yr</span> optional thereafter)</span></li>
             <li><span class="pricing-check">✓</span><span><strong>3 Computers</strong> (Engineering Office + Foreman Laptop + Shop Table PC)</span></li>
             <li class="pricing-plus-divider">Everything in Maker, PLUS:</li>
+            <li><span class="pricing-check">✓</span><span><strong>4-Axis Round-Tube Eccentric Weld-Prep Beveling:</strong> Shifts <code class="mono">Y</code>, drops <code class="mono">Z</code> &amp; counter-rotates <code class="mono">A</code> across all 4 saddle quadrants to cut real V-groove weld prep on round pipe without a 5-axis bevel head</span></li>
             <li><span class="pricing-check">✓</span><span><strong>Open Structural Profiles:</strong> Angle Iron, C-Channel &amp; I-Beam 4-axis beamline cutting</span></li>
             <li><span class="pricing-check">✓</span><span><strong>Unlimited Multi-Stick Pack Nesting:</strong> 1-click <code class="mono">.zip</code> batch export, 180&deg; flip interlocking &amp; <strong>Common-Line Shared Sever Cuts</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>Unlimited 3D Cut-and-Bend Unfolding</strong> (no 5-bend cap)</span></li>
-            <li><span class="pricing-check">✓</span><span><strong>Tab Cutting &amp; Auto-Tab Pack Seams</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Kerf-Compensated Micro-Joint Tabs &amp; Auto-Tab Pack Seams</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>Auto-Scribe Part ID Stencils (<code class="mono">P1, P2...</code>), Weld Witness Marks &amp; DXF/SVG Sidecars</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>Full Headless AI / MCP Automation (<code class="mono">rotarycam-mcp</code>)</strong></span></li>
           </ul>
@@ -2258,7 +2262,7 @@
           <div>
             <div class="card-num mono" style="color: var(--cyan-arc);">TUTORIAL 02 • 8 STEPS</div>
             <h3 style="color: #fff;">UI Layout &amp; Cut Path Config</h3>
-            <p>Navigate multi-body STEP assemblies, inspect 3D cut contours, apply 80% Zero-Bevel Dual-Curve compensation on a pipe saddle joint, and verify in 4-axis 3D simulation.</p>
+            <p>Navigate multi-body STEP assemblies, apply Zero-Bevel on pipe saddles &amp; rectangular HSS miters, dial in 4-axis eccentric pipe weld bevels and kerf-compensated tabs, and verify in 3D simulation.</p>
           </div>
           <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--cyan-arc); font-weight: 700;">Read Tutorial 02 →</div>
         </div>
@@ -2718,7 +2722,7 @@
         <div class="lic-summary-box">
           <div>
             <div id="lic-summary-title" style="color: #fff; font-weight: 700; font-size: 0.96rem;">Pro Shop &mdash; Founding Fabricator Perpetual License</div>
-            <div id="lic-summary-desc" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.15rem;">3 Computers &bull; Open Profiles, Unlimited Nesting, Tabs &amp; Auto-Scribe &bull; 1 Yr Updates</div>
+            <div id="lic-summary-desc" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.15rem;">3 Computers &bull; 4-Axis Pipe Weld Bevels, Open Profiles, Unlimited Nesting, Tabs &amp; Auto-Scribe &bull; 1 Yr Updates</div>
           </div>
           <div style="text-align: right;">
             <span id="lic-summary-price" class="mono" style="font-size: 1.35rem; font-weight: 700; color: var(--plasma-amber);">$399</span>
@@ -2839,7 +2843,7 @@
           priceLabel: '$399',
           cadence: 'USD one-time',
           title: 'Pro Shop — Founding Fabricator Perpetual License',
-          desc: '3 Computers • Open Profiles, Unlimited Nesting, Tabs, Scribe & MCP • 1 Yr Updates',
+          desc: '3 Computers • 4-Axis Pipe Weld Bevels, Open Profiles, Unlimited Nesting, Tabs, Scribe & MCP • 1 Yr Updates',
           cta: 'Continue to Stripe Checkout — $399 →',
           stampTier: 'Pro Shop Perpetual',
           needsExisting: false
@@ -2851,7 +2855,7 @@
           priceLabel: '$200',
           cadence: 'USD one-time upgrade',
           title: 'Upgrade Maker → Pro Shop Perpetual License',
-          desc: 'Unlocks Open Profiles, Unlimited Nesting, Tabs, Scribe, MCP + 3rd Computer',
+          desc: 'Unlocks 4-Axis Pipe Weld Bevels, Open Profiles, Unlimited Nesting, Tabs, Scribe, MCP + 3rd Computer',
           cta: 'Continue to Upgrade Checkout — $200 →',
           stampTier: 'Pro Shop Perpetual',
           needsExisting: true

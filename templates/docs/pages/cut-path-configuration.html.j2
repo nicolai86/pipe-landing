@@ -158,10 +158,10 @@
               While each row provides quick inline dropdowns for Lead-In Strategy, Lead-Out Strategy, and Zero-Bevel toggle, clicking <span class="ui-chip">⚙ Config</span> in the right-hand <strong>ACTION</strong> column opens the full four-column engineering drawer for that specific contour:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Lead-In Configuration:</strong> Choose strategy (<code class="mono">Rotational Arc</code>, <code class="mono">Tangent Arc</code>, <code class="mono">Linear</code>), sweep length (<code class="mono">mm</code>), scrap clearance (<code class="mono">mm</code>), and optional <strong>3D Ramp Lead-In (Flying Pierce)</strong> to eliminate stationary pierce blowback.</li>
-              <li><strong>2. Lead-Out Configuration:</strong> Configure overburn extension (<code class="mono">mm</code>) and optional <strong>Zero-Overburn Early Torch-Out</strong> (synchronized <code class="mono">M63</code> torch-off before contour completion to prevent exit divots).</li>
-              <li><strong>3. Corner Loop &amp; Zero-Bevel:</strong> Enable rollout corner loops or configure <strong>Zero-Bevel Dual-Curve Compensation</strong> intensity, fade angle, and weld gap.</li>
-              <li><strong>4. Tabs Configuration:</strong> Leave uncut micro-bridges spaced around the contour to keep heavy slugs or parts attached during cutting.</li>
+              <li><strong>1. Lead-In &amp; ERW Weld-Seam Pierce Avoidance:</strong> Choose strategy (<code class="mono">Rotational Arc</code>, <code class="mono">Tangent Arc</code>, <code class="mono">Linear</code>), sweep length (<code class="mono">mm</code>), scrap clearance (<code class="mono">mm</code>), and optional <strong>3D Ramp Lead-In (Flying Pierce)</strong> to stop pierce spatter. Pierces also steer clear of your configured <strong>ERW mill weld seam</strong> on round pipe and square/rectangular tubing so you never pierce into thick internal weld flash.</li>
+              <li><strong>2. Lead-Out &amp; Rotary Small-Hole (<code class="mono">60%</code>) Speed:</strong> Set overburn extension (<code class="mono">mm</code>) and optional <strong>Zero-Overburn Early Torch-Out</strong> (synchronized <code class="mono">M63</code> torch-off before the end of the cut to prevent exit divots). Enclosed bolt holes (<code class="mono">&le; 25.4 mm</code> / <code class="mono">1&Prime;</code>) on round and square/rectangular tubes automatically drop to <code class="mono">60%</code> surface speed to eliminate plasma arc-lag cone taper so bolts drop straight through.</li>
+              <li><strong>3. Corner Loop, Zero-Bevel &amp; 4-Axis Pipe Weld Bevel:</strong> Add rollout corner loops, tune <strong>Zero-Bevel Compensation</strong> (dual-curve pipe saddles plus heel-only pullback on square/rectangular HSS miters), or turn on <strong>4-Axis Round-Tube Eccentric Weld-Prep Beveling</strong> (<code class="mono">Pro Shop</code>, with full 3D preview unlocked free on Beta &amp; Maker).</li>
+              <li><strong>4. Kerf-Compensated Micro-Joint Tabs:</strong> Leave uncut steel micro-bridges around a contour to hold heavy slugs or parts in place while cutting. Your full plasma kerf width is automatically added to every tab gap so the arc shuts off early enough that thin-wall tabs never burn through.</li>
             </ul>
           </div>
 
@@ -196,9 +196,22 @@
             </ul>
 
             <div class="doc-callout info">
-              <div class="doc-callout-title">🔬 How Zero-Bevel Dual-Curve Compensation Works</div>
+              <div class="doc-callout-title">🔬 How Zero-Bevel Works on Round Pipe Saddles &amp; Square/Rect HSS Miters</div>
               <p>
-                When cutting angled saddles or copes with a straight vertical torch, the cut face bevels naturally through the tube wall. If you cut only along the outside line, the inside wall of the tube sticks out too far at the flanks—leaving ugly gaps at the crown that take heavy welding or hand grinding to fill. RotaryCAM solves this by reading both the outside and inside wall curves directly from your 3D solid model. At every degree of rotation, it pulls the cut path back to the inner wall where needed, blending smoothly around the tube so your saddle drops onto the mating pipe with zero gap and zero hand grinding.
+                <strong>Round Pipe Saddles &amp; Copes:</strong> When a straight vertical torch cuts an angled pipe saddle along the outside CAD line alone, the inside wall sticks out at the flanks and holds the crown open. Reading both your outer and inner CAD wall curves pulls the cut back to the inner wall where needed so your saddle drops onto the main pipe with zero gap.
+              </p>
+              <p style="margin-bottom: 0;">
+                <strong>Square &amp; Rectangular HSS Miters &amp; Copes:</strong> On flat-walled square and rectangular tubing, an angled miter only binds on the obtuse inside heel wall. Instead of shrinking the whole cut, Zero-Bevel pulls back <strong>only that interfering heel wall</strong> (<code class="mono">t &middot; tan(&theta;)</code>) while keeping your side walls and acute toes flush—so square and rectangular tube miters fit up flat right off the table with zero hand grinding.
+              </p>
+            </div>
+
+            <div class="doc-callout info" style="margin-top: 1.25rem; border-left-color: var(--plasma-amber);">
+              <div class="doc-callout-title">🔥 4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling (No 5-Axis Head Needed)</div>
+              <p>
+                Need real V-groove weld penetration on structural round pipe without spending tens of thousands on a 5-axis tilting bevel head? Turn on <strong>Eccentric Weld-Prep Beveling</strong> on round pipe contours. Your vertical torch shifts laterally off-center in <code class="mono">Y</code>, drops <code class="mono">Z</code> down the curve of the pipe to hold arc standoff, and counter-rotates <code class="mono">A</code> smoothly across all four saddle quadrants—using the natural angle of the pipe wall under the offset torch to cut clean V-groove weld prep all the way around the joint.
+              </p>
+              <p style="margin-bottom: 0;">
+                <strong>Try It Free in 3D:</strong> Full 3D toolpath preview is unlocked on <strong>Public Beta</strong> and <strong>Maker</strong> so you can inspect the exact <code class="mono">Y / Z / A</code> bevel path on your own pipe parts first; production G-code export is included in <a href="../index.html#pricing" style="color: var(--amber-400); font-weight: 600;">Pro Shop ($399) &rarr;</a>
               </p>
             </div>
 
