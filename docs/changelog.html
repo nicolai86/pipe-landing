@@ -697,10 +697,25 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Release: Nov 10 (v0.5.3 • Latest) -->
+            <!-- Release: Nov 10 (v0.6.0 • Latest) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--emerald-cut); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--emerald-cut); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 10, 2026 (v0.5.3 &bull; Latest)</span>
+                <span class="mono" style="color: var(--emerald-cut); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 10, 2026 (v0.6.0 &bull; Latest)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">6 CNC Plasma Controller Posts, Smart 4-Axis Z Tracking, Inline Cut Presets or Console Material Tables, Scribe &amp; Spotting &amp; 3D Simulator</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>6 Drop-In CNC Plasma Controller Post-Processors (<code class="mono">Maker $199</code> &amp; <code class="mono">Pro Shop $399</code>):</strong> Export ready-to-cut Single-Part and Pack Mode G-code for LinuxCNC QTPlasmaC (<code class="mono">.ngc</code>), Langmuir FireControl (<code class="mono">.tap</code>, including CrossFire round-pipe Y-wrap rotary chucks), Mach4 + Warp9 ESS / TMC3in1 (<code class="mono">.tap</code>), MASSO G3 + DTHC (<code class="mono">.nc</code>), Mach3 (<code class="mono">.tap</code>), and Centroid Acorn CNC12 Plasma (<code class="mono">.nc</code>) with zero hand-editing.</li>
+                <li><strong>Smart 4-Axis Z Corner &amp; Web Protection:</strong> Keeps your controller's built-in touch-off and arc-voltage THC running on flat plate and round pipe, while RotaryCAM automatically coordinates 4-axis Z tracking when square/rectangular tube corners swing up toward your torch body or when stepping down into C-Channel and I-Beam webs.</li>
+                <li><strong>Inline Cut Presets or Your Console's Material Table:</strong> Feed pierce height, pierce delay, cut height, speed, and arc voltage straight from your RotaryCAM cut preset into the G-code header, or flip one toggle to command your CNC controller's saved tool library (<code class="mono">M190</code> for QTPlasmaC, <code class="mono">G200 V0</code> for FireControl, <code class="mono">M65</code> for Acorn).</li>
+                <li><strong>EasyScribe, Pneumatic Air-Scribe &amp; Center-Punch Spotting (<code class="mono">Pro Shop $399</code>):</strong> Drag-scribe heat numbers and weld witness marks right through your plasma torch cup with an EasyScribe across all 6 controllers (with an automatic <code class="mono">M0</code> pause to swap consumables before firing the arc), drive offset pneumatic air-scribes (<code class="mono">M3 $1 S1</code>, <code class="mono">T111 M6</code>, <code class="mono">M39</code>, <code class="mono">G52</code>), or dimple drill centers with sub-second plasma spotting.</li>
+                <li><strong>Multi-Controller 3D Cut Simulator &amp; Native File Downloads:</strong> Preview probe touch-offs, rapid traverses, multi-tool scribe passes, and unwrapped FireControl round-pipe cuts in full 3D right in your browser before walking out to your cutting table.</li>
+              </ul>
+            </div>
+
+            <!-- Release: Nov 10 (v0.5.3) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--plasma-amber); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 10, 2026 (v0.5.3)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">True Rectangular HSS Zero-Bevel Miters, 4-Axis Eccentric Pipe Weld Beveling, 60% Small-Hole Bolt Speed, Kerf-True Tabs &amp; ERW Seam Avoidance</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
