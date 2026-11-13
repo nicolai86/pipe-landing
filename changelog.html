@@ -1010,6 +1010,12 @@
                 <strong>Multi-Controller 3D Cut Simulator &amp; Native File Downloads:</strong> Preview probe touch-offs, rapid traverses, multi-tool scribe passes, and unwrapped FireControl round-pipe cuts in full 3D right in your browser before walking out to your cutting table. Single-part and pack exports automatically format in each controller's native extension (<code>.ngc</code>, <code>.tap</code>, <code>.nc</code>, <code>.gc</code>).
               </div>
             </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Clean Stationary Pierce, Dwell &amp; Straight-Down Cut-Height Plunge (Plus Smooth 3D Ramp Lead-Ins):</strong> Every controller that drives Z directly in G-code (<code>FireControl</code>, <code>Mach4</code>, <code>Mach3</code>, <code>grblHAL</code>, <code>UCCNC</code>, <code>EdingCNC</code>, <code>PlanetCNC</code>, dynamic-Z <code>MASSO G3</code>, and <code>Generic RS-274</code>) now strictly steps through touch-off, pierce height, arc fire, exact pierce delay, and a straight vertical drop to cut height before moving laterally&mdash;and skips that vertical drop automatically when you turn on 3D ramp lead-ins so your torch glides smoothly down to cut height without a bob or double dwell.
+              </div>
+            </li>
           </ul>
         </div>
       </article>
