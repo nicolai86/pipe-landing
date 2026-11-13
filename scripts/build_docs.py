@@ -56,12 +56,12 @@ TUTORIALS = [
         "meta_title": "01. Basic Machine Configuration — RotaryCAM Documentation",
         "meta_description": "Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in RotaryCAM.",
         "hero_title_html": 'Basic <span class="text-gradient-amber">Machine Configuration</span>',
-        "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 6 major controllers.',
+        "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 12 major controllers.',
         "steps_count": 6,
         "steps_label": "6 Steps",
         "meta_pills": [
             {"style": "cyan", "html": "<strong>Persistence:</strong> Multi-Profile Saved Across Restarts"},
-            {"style": "", "html": "<strong>Applies To:</strong> LinuxCNC QTPlasmaC • FireControl • Mach4 • MASSO G3 • Mach3 • Centroid Acorn • SimCNC"},
+            {"style": "", "html": "<strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC"},
         ],
         "toc": [
             {"id": "step-1", "badge": "01", "label": "Open Machine Profiles Modal"},
@@ -79,7 +79,7 @@ TUTORIALS = [
         "hub_desc": "Configure your 4-axis CNC plasma kinematics, controller dialect (G94 vs. G93 inverse-time), synchronous Torch Height Control (THC) locking, default zero-bevel &amp; corner-loop parameters, and drop-in controller post-processors.",
         "hub_topics": [
             "Velocity, acceleration, jerk &amp; Safe Z clearance limits",
-            "6 Controller Dialects: QTPlasmaC, FireControl, Mach4, MASSO G3, Mach3, Acorn",
+            "12 Controller Dialects: QTPlasmaC, FireControl, Mach4, MASSO, Mach3, Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, WinCNC",
             "Synchronous M62/M63 THC locking &amp; 60% small-hole bolt speed",
             "Coaxial EasyScribe &amp; pneumatic air-scribe multi-tool setup",
         ],
