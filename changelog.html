@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.6.0-BETA</span>
+        <span class="brand-tag">v0.6.1-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -964,6 +964,51 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 13, 2026 (v0.6.1)
+           ================================================================ -->
+      <article class="release-entry" id="v0.6.1">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 13, 2026</span>
+              <span class="release-version-pill">v0.6.1 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">6 Additional CNC Plasma Posts &bull; Clean Stationary Pierce, Dwell &amp; Straight-Down Cut-Height Plunge &bull; 3D Ramp Lead-Ins</span>
+          </div>
+          <p class="release-summary">
+            Expand your cutting table with 6 additional drop-in CNC plasma controller posts—grblHAL 32-bit, CNCdrive UCCNC, FlashCut Plasma, EdingCNC, PlanetCNC TNG, and ShopSabre WinCNC—complete with automated touch-off probing, corner anti-dive THC locking, and native rotary feeds. Plus, every direct-Z controller now executes an explicit stationary pierce, dwell, and straight vertical plunge to cut height before lateral motion, or glides down smoothly without pausing when 3D ramp lead-ins are turned on.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>6 Additional CNC Plasma Controller Post-Processors (<code>Maker $199</code> &amp; <code>Pro Shop $399</code>):</strong> Export ready-to-cut Single-Part and Pack Mode G-code for grblHAL 32-bit ($376 rotary + Plasma THC, <code>.nc</code>), CNCdrive UCCNC (<code>.nc</code>), FlashCut CNC Plasma (<code>.nc</code>/<code>.gc</code>), EdingCNC (<code>.nc</code>), PlanetCNC TNG (<code>.nc</code>), and ShopSabre WinCNC (<code>.tap</code> with square-bracket comments and M61/M62 macros) with zero post scripts or hand editing.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Clean Stationary Pierce, Dwell &amp; Straight-Down Cut-Height Plunge:</strong> Every controller that drives Z directly in G-code (<code>FireControl</code>, <code>Mach4</code>, <code>Mach3</code>, <code>grblHAL</code>, <code>UCCNC</code>, <code>EdingCNC</code>, <code>PlanetCNC</code>, dynamic-Z <code>MASSO G3</code>, and <code>Generic RS-274</code>) now strictly steps through surface touch-off, retract to pierce height, arc fire, exact stationary pierce delay (<code>G4</code>), and a straight vertical drop to cut height before moving laterally.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Smooth 3D Ramp Lead-Ins Without Double Dwell:</strong> When you enable 3D ramp lead-ins, RotaryCAM automatically skips the stationary cut-height drop—firing the arc at pierce height, completing the pierce dwell, and ramping smoothly down in Z along the lead-in line directly into the cut without a mid-air pause or surface divot.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <div class="change-content">
+                <strong>Expanded Multi-Controller Scribe Marking:</strong> EasyScribe consumables-swap pauses (<code>M0</code>) and offset pneumatic air-scribe passes (<code>M3 $1 S1</code>, <code>T111 M6</code>, <code>M39</code>, <code>M21/M20</code>, <code>G52</code>) now run seamlessly across all 12 supported CNC controllers.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 10, 2026 (v0.6.0)
            ================================================================ -->
       <article class="release-entry" id="v0.6.0">
@@ -972,18 +1017,18 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 10, 2026</span>
-              <span class="release-version-pill">v0.6.0 &bull; LATEST</span>
+              <span class="release-version-pill" style="background: rgba(245, 158, 11, 0.12); color: var(--plasma-amber); border-color: rgba(245, 158, 11, 0.3);">v0.6.0</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">12 CNC Plasma Controller Posts &bull; Smart 4-Axis Z Tracking &bull; Inline Cut Presets or Console Material Tables &bull; Scribe &amp; Spotting &bull; 3D Simulator</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">6 CNC Plasma Controller Posts &bull; Smart 4-Axis Z Tracking &bull; Inline Cut Presets or Console Material Tables &bull; Scribe &amp; Spotting &bull; 3D Simulator</span>
           </div>
           <p class="release-summary">
-            Drop ready-to-cut G-code straight onto LinuxCNC QTPlasmaC, Langmuir FireControl, Mach4, MASSO G3, Mach3, Centroid Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC TNG, or ShopSabre WinCNC without hand-editing a single line. Your table gets smart 4-axis Z corner and web tracking so the torch never crashes when square corners rotate up, instant switching between inline cut presets and your CNC console's saved material tables, full EasyScribe and pneumatic air-scribe marking with automatic swap pauses, and complete 3D cut preview for every controller dialect.
+            Drop ready-to-cut G-code straight onto QTPlasmaC, Langmuir FireControl, Mach4, MASSO G3, Mach3, or Centroid Acorn without hand-editing a single line. Your table gets smart 4-axis Z corner and web tracking so the torch never crashes when square corners rotate up, instant switching between inline cut presets and your CNC console's saved material tables, full EasyScribe and pneumatic air-scribe marking with automatic swap pauses, and complete 3D cut preview for every controller dialect.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>12 Drop-In CNC Plasma Controller Post-Processors (<code>Maker $199</code> &amp; <code>Pro Shop $399</code>):</strong> Export ready-to-cut Single-Part and Pack Mode G-code for LinuxCNC QTPlasmaC (<code>.ngc</code>), Langmuir FireControl (<code>.tap</code>, including CrossFire round-pipe Y-wrap rotary chucks), Mach4 + Warp9 ESS / TMC3in1 (<code>.tap</code>), MASSO G3 + DTHC (<code>.nc</code>), Mach3 (<code>.tap</code>), Centroid Acorn CNC12 Plasma (<code>.nc</code>), grblHAL 32-bit ($376 + Plasma THC, <code>.nc</code>), CNCdrive UCCNC (<code>.nc</code>), FlashCut CNC Plasma (<code>.nc</code>/<code>.gc</code>), EdingCNC (<code>.nc</code>), PlanetCNC TNG (<code>.nc</code>), and ShopSabre WinCNC (<code>.tap</code>) with zero hand-editing or custom post scripts.
+                <strong>6 Drop-In CNC Plasma Controller Post-Processors (<code>Maker $199</code> &amp; <code>Pro Shop $399</code>):</strong> Export ready-to-cut Single-Part and Pack Mode G-code for LinuxCNC QTPlasmaC (<code>.ngc</code>), Langmuir FireControl (<code>.tap</code>, including CrossFire round-pipe Y-wrap rotary chucks), Mach4 + Warp9 ESS / TMC3in1 (<code>.tap</code>), MASSO G3 + DTHC (<code>.nc</code>), Mach3 (<code>.tap</code>), and Centroid Acorn CNC12 Plasma (<code>.nc</code>) with zero hand-editing or custom post scripts.
               </div>
             </li>
             <li class="change-item">
@@ -1001,19 +1046,13 @@
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>EasyScribe, Pneumatic Air-Scribe &amp; Center-Punch Spotting (<code>Pro Shop $399</code>):</strong> Drag-scribe heat numbers and weld witness marks right through your plasma torch cup with an EasyScribe across all 12 controllers (with an automatic <code>M0</code> pause to swap consumables before firing the plasma arc), drive offset pneumatic air-scribes (<code>M3 $1 S1</code>, <code>T111 M6</code>, <code>M39</code>, <code>G52</code>), or dimple drill centers with sub-second plasma spotting.
+                <strong>EasyScribe, Pneumatic Air-Scribe &amp; Center-Punch Spotting (<code>Pro Shop $399</code>):</strong> Drag-scribe heat numbers and weld witness marks right through your plasma torch cup with an EasyScribe across all 6 controllers (with an automatic <code>M0</code> pause to swap consumables before firing the plasma arc), drive offset pneumatic air-scribes (<code>M3 $1 S1</code>, <code>T111 M6</code>, <code>M39</code>, <code>G52</code>), or dimple drill centers with sub-second plasma spotting.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
                 <strong>Multi-Controller 3D Cut Simulator &amp; Native File Downloads:</strong> Preview probe touch-offs, rapid traverses, multi-tool scribe passes, and unwrapped FireControl round-pipe cuts in full 3D right in your browser before walking out to your cutting table. Single-part and pack exports automatically format in each controller's native extension (<code>.ngc</code>, <code>.tap</code>, <code>.nc</code>, <code>.gc</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Clean Stationary Pierce, Dwell &amp; Straight-Down Cut-Height Plunge (Plus Smooth 3D Ramp Lead-Ins):</strong> Every controller that drives Z directly in G-code (<code>FireControl</code>, <code>Mach4</code>, <code>Mach3</code>, <code>grblHAL</code>, <code>UCCNC</code>, <code>EdingCNC</code>, <code>PlanetCNC</code>, dynamic-Z <code>MASSO G3</code>, and <code>Generic RS-274</code>) now strictly steps through touch-off, pierce height, arc fire, exact pierce delay, and a straight vertical drop to cut height before moving laterally&mdash;and skips that vertical drop automatically when you turn on 3D ramp lead-ins so your torch glides smoothly down to cut height without a bob or double dwell.
               </div>
             </li>
           </ul>
@@ -1772,7 +1811,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.6.0-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.6.1-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
