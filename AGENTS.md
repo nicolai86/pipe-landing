@@ -103,21 +103,24 @@ All `docs/*.html` pages (`docs/index.html` and every `docs/<slug>.html` tutorial
 
 ## 3. RotaryCAM Golden Rules of Copywriting & `pipe-copywriter` Subagent (MANDATORY)
 
-Every time documentation (`docs/`, `templates/docs/`), the build guide (`build-guide.html`), the hardware THC page (`hardware-thc.html`), the changelog (`changelog.html`), or the homepage (`index.html`) is updated or added, `pipe-landing` **MUST invoke the specialized `pipe-copywriter` subagent** to review and rewrite the content to match the **4 RotaryCAM Golden Rules of Copywriting**.
+Every time documentation (`docs/`, `templates/docs/`), the build guide (`build-guide.html`), the hardware THC page (`hardware-thc.html`), the changelog (`changelog.html`), or the homepage (`index.html`) is updated or added, `pipe-landing` **MUST invoke the specialized `pipe-copywriter` subagent** to review and rewrite the content to match the **5 RotaryCAM Golden Rules of Copywriting**.
 
-### The 4 Golden Rules:
+### The 5 Golden Rules:
 
 #### #1 Be simple & specific
-Write plain, direct, human language — no jargon, no buzzwords, no fluff. Swap vague words like "seamless" or "leverage" for concrete details that explain HOW something works and WHAT the outcome is.
+Write plain, direct, human language: no jargon, no buzzwords, no fluff. Swap vague words like "seamless" or "leverage" for concrete details that explain HOW something works and WHAT the outcome is.
 
 #### #2 Write like a human, NOT a corporation
-Sound like you're explaining something important to someone you respect — conversational, but not informal, confident, but not stiff. Avoid corporate voice. Write the way you'd talk.
+Sound like you're explaining something important to someone you respect: conversational, confident, and direct. Avoid corporate voice. Write the way you'd talk.
 
 #### #3 Focus on the User, not RotaryCam
 Put the reader first. Focus on what THEY can achieve, not how great RotaryCam is.
 
 #### #4 Get to the point, quick
-Lead with the bottom-line result or number, say it once, and stop talking. Cut throat-clearing intros, repeated claims, stacked parentheticals, and dense multi-sentence walls of text. Aim for ~30–45% fewer words without dropping a single concrete spec, part number, or shop-floor fact: keep feature cards to 1–2 short, punchy sentences and section intros to 1–2 crisp sentences.
+Lead with the bottom-line result or number, say it once, and stop talking. Cut throat-clearing intros, repeated claims, stacked parentheticals, and dense multi-sentence walls of text. Aim for ~30-45% fewer words without dropping a single concrete spec, part number, or shop-floor fact: keep feature cards to 1-2 short, punchy sentences and section intros to 1-2 crisp sentences.
+
+#### #5 NEVER use the em-dash (`—` / `&mdash;` / `&#8212;`)
+Never use the AI-slop em-dash (`—` or `&mdash;`) anywhere on the site (titles, meta tags, headings, body copy, tables, callouts, or docs). Break clauses into two short sentences with a period, or use a colon, comma, or parentheses where natural. Before finishing any edit, run `rg '—|&mdash;|&#8212;|&#x2014;'` across modified files and `docs/` to verify **0 matches**.
 
 ### Fabrication & Welder Voice Guidelines:
 - All copy MUST speak **fabrication language, not software engineering language**. Speak directly to fabricators, welders, chassis builders, and CNC plasma table operators.

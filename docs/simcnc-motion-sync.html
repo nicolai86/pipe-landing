@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>07. SimCNC Motion-Synchronized Torch On/Off & 3D Ramp Lead-Ins — RotaryCAM Documentation</title>
+  <title>07. SimCNC Motion-Synchronized Torch On/Off & 3D Ramp Lead-Ins | RotaryCAM Documentation</title>
   <meta name="description" content="Complete technical implementation guide to achieving motion-synchronized torch ignition/extinguish (M62/M63 P1), hardware THC locking (M62/M63 P0), direct CSMIO/IP-M Arc OK polling, and 3D Ramp Lead-Ins in CSLab SimCNC for RotaryCAM." />
 
   <!-- Fonts -->
@@ -532,10 +532,10 @@
         <div class="doc-intro-card">
           <h2>Why Motion-Synchronized Torch Control Is Required in SimCNC</h2>
           <p>
-            By default, CSLab SimCNC fires and extinguishes the plasma torch through asynchronous macro calls (<code class="mono">d.setSpindleState()</code> / <code class="mono">d.setThcState()</code>) coupled with velocity-zero stalls (<code class="mono">d.waitForZeroVelocity()</code>). While adequate for basic stationary pierces and stops, asynchronous relay switching forces the motion planner to decelerate to a complete halt before turning the torch off—making <strong>Zero-Overburn Early Torch-Out</strong> (killing the arc mid-motion on a lead-out or hole overburn sweep) and <strong>3D Ramp Lead-Ins (Flying Pierce)</strong> physically impossible without burning a divot into the tube wall.
+            By default, CSLab SimCNC fires and extinguishes the plasma torch through asynchronous macro calls (<code class="mono">d.setSpindleState()</code> / <code class="mono">d.setThcState()</code>) coupled with velocity-zero stalls (<code class="mono">d.waitForZeroVelocity()</code>). While adequate for basic stationary pierces and stops, asynchronous relay switching forces the motion planner to decelerate to a complete halt before turning the torch off. This makes <strong>Zero-Overburn Early Torch-Out</strong> (killing the arc mid-motion on a lead-out or hole overburn sweep) and <strong>3D Ramp Lead-Ins (Flying Pierce)</strong> physically impossible without burning a divot into the tube wall.
           </p>
           <p style="margin-top: 0.75rem;">
-            To achieve sub-millisecond, lookahead-synchronized plasma control in SimCNC—<strong>required for RotaryCAM's 3D Ramp Lead-In and Zero-Overburn Early Extinguish features</strong>—this guide implements three architectural upgrades across <code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, <code class="mono">m5.py</code>, and the <strong>RotaryCAM Post-Processor</strong>:
+            To achieve sub-millisecond, lookahead-synchronized plasma control in SimCNC (required for RotaryCAM's 3D Ramp Lead-In and Zero-Overburn Early Extinguish features), this guide implements three architectural upgrades across <code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, <code class="mono">m5.py</code>, and the <strong>RotaryCAM Post-Processor</strong>:
           </p>
 
           <ul class="doc-bullet-list" style="margin-top: 0.85rem;">
@@ -604,7 +604,7 @@
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot"></span> config.xml (Lines 2629–2643 &amp; 4327–4371) — Unassigned Spindle &amp; Software THC</span>
+                <span class="doc-code-title"><span class="dot"></span> config.xml (Lines 2629–2643 &amp; 4327–4371): Unassigned Spindle &amp; Software THC</span>
                 <span class="doc-code-lang">XML</span>
               </div>
               <pre><code>&lt;!-- Configuration → Settings → Spindle (config.xml:2629-2643) --&gt;
@@ -641,16 +641,16 @@
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong><code class="mono">ExtTrajSyncOut0</code> (<code class="mono">P0</code> — Hardware THC Lock/Enable):</strong> → CSMIO/IP Module <code class="mono">0</code>, Digital <code class="mono">OUTPUT</code>, Pin <code class="mono">4</code> (<code class="mono">config.xml:5047-5060</code>).
+                <strong><code class="mono">ExtTrajSyncOut0</code> (<code class="mono">P0</code>: Hardware THC Lock/Enable):</strong> → CSMIO/IP Module <code class="mono">0</code>, Digital <code class="mono">OUTPUT</code>, Pin <code class="mono">4</code> (<code class="mono">config.xml:5047-5060</code>).
               </li>
               <li>
-                <strong><code class="mono">ExtTrajSyncOut1</code> (<code class="mono">P1</code> — Plasma Torch Fire Relay):</strong> → CSMIO/IP Module <code class="mono">0</code>, Digital <code class="mono">OUTPUT</code>, Pin <code class="mono">0</code> (<code class="mono">config.xml:5061-5074</code>).
+                <strong><code class="mono">ExtTrajSyncOut1</code> (<code class="mono">P1</code>: Plasma Torch Fire Relay):</strong> → CSMIO/IP Module <code class="mono">0</code>, Digital <code class="mono">OUTPUT</code>, Pin <code class="mono">0</code> (<code class="mono">config.xml:5061-5074</code>).
               </li>
             </ul>
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot cyan"></span> config.xml (Lines 5046–5074) — &lt;axesManager&gt;&lt;ExternalTrajCtrl&gt;</span>
+                <span class="doc-code-title"><span class="dot cyan"></span> config.xml (Lines 5046–5074): &lt;axesManager&gt;&lt;ExternalTrajCtrl&gt;</span>
                 <span class="doc-code-lang">XML</span>
               </div>
               <pre><code>&lt;ExternalTrajCtrl&gt;
@@ -721,10 +721,10 @@
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot emerald"></span> ___CONF.py — Trajectory-Sync &amp; Direct Hardware Arc-OK Helpers</span>
+                <span class="doc-code-title"><span class="dot emerald"></span> ___CONF.py: Trajectory-Sync &amp; Direct Hardware Arc-OK Helpers</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
-              <pre><code># ___CONF.py — Shared Hardware Trajectory Sync &amp; Direct Arc-OK Helpers
+              <pre><code># ___CONF.py: Shared Hardware Trajectory Sync &amp; Direct Arc-OK Helpers
 THC_Sync_Pin = "P0"      # ExtTrajSyncOut0 -&gt; CSMIO/IP-M Digital Output 4 (Hardware THC Lock)
 Arc_Sync_Pin = "P1"      # ExtTrajSyncOut1 -&gt; CSMIO/IP-M Digital Output 0 (Plasma Torch Fire Relay)
 
@@ -824,14 +824,14 @@ def check_arc_ok(d):
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot"></span> m3.py — Synchronized Torch Ignition, 5ms Arc-OK Poll &amp; Stall-Free Exit</span>
+                <span class="doc-code-title"><span class="dot"></span> m3.py: Synchronized Torch Ignition, 5ms Arc-OK Poll &amp; Stall-Free Exit</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
               <pre><code>from ___CONF import *
 
 # 1. Pre-Fire Fault Check &amp; Synchronized Torch Fire (m3.py:500-519)
 if check_arc_ok(d):
-    emergency("Arc OK signal active before firing torch — check wiring!")
+    emergency("Arc OK signal active before firing torch; check wiring!")
 
 fire_torch_hardware(d)  # Executes M62 P1 + Z micro-wiggle to close Output 0 in &lt;1.5ms
 
@@ -868,18 +868,18 @@ while not check_arc_ok(d):
                 Read <code class="mono">arc_active = check_arc_ok(d)</code> at the very start of <code class="mono">M5</code>.
               </li>
               <li>
-                <strong>2. Branch 1 — Arc Still Active (Stationary Stop, <code class="mono">m5.py:54-63</code>):</strong>
+                <strong>2. Branch 1: Arc Still Active (Stationary Stop, <code class="mono">m5.py:54-63</code>):</strong>
                 If <code class="mono">arc_active</code> is <code class="mono">True</code> (e.g., open path cut, manual stop, or early extinguish disabled), call <code class="mono">extinguish_torch_hardware(d)</code> to execute <code class="mono">M63 P1</code> + <code class="mono">M63 P0</code> + Z micro-wiggle in a single atomic block, then poll <code class="mono">check_arc_ok(d)</code> for up to <code class="mono">0.5 s</code> until the arc is confirmed out.
               </li>
               <li>
-                <strong>3. Branch 2 — Arc Already Extinguished On-The-Fly (Fast No-Motion Cleanup, <code class="mono">m5.py:64-75</code>):</strong>
+                <strong>3. Branch 2: Arc Already Extinguished On-The-Fly (Fast No-Motion Cleanup, <code class="mono">m5.py:64-75</code>):</strong>
                 If the G-code already issued <code class="mono">M63 P1</code> during a lead-out or hole overburn move, the torch relay opened in hardware while moving and <code class="mono">arc_active</code> is already <code class="mono">False</code>. <code class="mono">m5.py</code> skips the Z micro-wiggle and eliminates the stock <code class="mono">d.waitForZeroVelocity(1)</code> stall (<code class="mono">m5.py:74-83</code>), issuing only <code class="mono">d.executeGCode("M63 P1")</code>, <code class="mono">d.executeGCode("M63 P0")</code>, and <code class="mono">d.setSpindleState(SpindleState.OFF)</code> before retracting immediately to the next cut.
               </li>
             </ul>
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot cyan"></span> m5.py (Lines 51–75) — Dual-Path Stationary vs. On-The-Fly Arc Extinguish</span>
+                <span class="doc-code-title"><span class="dot cyan"></span> m5.py (Lines 51–75): Dual-Path Stationary vs. On-The-Fly Arc Extinguish</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
               <pre><code>from ___CONF import *
@@ -925,13 +925,13 @@ d.setSpindleState(SpindleState.OFF)</code></pre>
                 <strong>2. THC Lock/Unlock (<code class="mono">P0</code>):</strong> Emits <code class="mono">M63 P0</code> before HSS tube corners, small holes, or lead-outs to lock the hardware THC in sync with motion, and <code class="mono">M62 P0</code> once steady cutting speed is reached.
               </li>
               <li>
-                <strong>3. On-The-Fly Arc Stop (<code class="mono">P1</code> — Zero-Overburn Early Torch-Out):</strong> Immediately before the lead-out or overburn <code class="mono">G1</code>/<code class="mono">G2</code>/<code class="mono">G3</code> block, the RotaryCAM Post-Processor emits <code class="mono">M63 P0</code> (lock THC so voltage decay cannot cause torch diving) and <code class="mono">M63 P1</code> (kill torch relay on the very first interpolation step of the lead-out/overburn move), followed by <code class="mono">M5</code> after the move completes.
+                <strong>3. On-The-Fly Arc Stop (<code class="mono">P1</code>: Zero-Overburn Early Torch-Out):</strong> Immediately before the lead-out or overburn <code class="mono">G1</code>/<code class="mono">G2</code>/<code class="mono">G3</code> block, the RotaryCAM Post-Processor emits <code class="mono">M63 P0</code> (lock THC so voltage decay cannot cause torch diving) and <code class="mono">M63 P1</code> (kill torch relay on the very first interpolation step of the lead-out/overburn move), followed by <code class="mono">M5</code> after the move completes.
               </li>
             </ul>
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot emerald"></span> RotaryCAM Post-Processor Output — Zero-Overburn Early Torch-Out Sequence</span>
+                <span class="doc-code-title"><span class="dot emerald"></span> RotaryCAM Post-Processor Output: Zero-Overburn Early Torch-Out Sequence</span>
                 <span class="doc-code-lang">G-CODE</span>
               </div>
               <pre><code>( --- ACTIVE CONTOUR CUTTING WITH HARDWARE THC UNLOCKED --- )
@@ -965,7 +965,7 @@ M5                              ( 3. Fast no-wiggle cleanup &amp; immediate Safe
             In SimCNC's stock <code class="mono">m3.py:190-205</code>, the entire pierce cycle is strictly vertical and stationary: the torch fires at <code class="mono">Pierce_height (#2)</code>, waits 100% of <code class="mono">Pierce_delay (#4)</code>, and plunges straight down into the molten puddle to <code class="mono">Cut_height (#3)</code> before lateral motion begins.
           </p>
           <p style="margin-top: 0.75rem;">
-            To perform a <strong>3D Ramp Lead-In</strong>—where the torch pierces at <code class="mono">Pierce_height</code> and then descends diagonally in <code class="mono">X + Y + Z (+ A)</code> down to <code class="mono">Cut_height</code> along the lead-in line or helical arc to deflect molten spatter away from the nozzle and shield—<code class="mono">m3.py</code> uses a three-parameter handshake with the G-code program emitted by the <strong>RotaryCAM Post-Processor</strong>:
+            To perform a <strong>3D Ramp Lead-In</strong>, where the torch pierces at <code class="mono">Pierce_height</code> and then descends diagonally in <code class="mono">X + Y + Z (+ A)</code> down to <code class="mono">Cut_height</code> along the lead-in line or helical arc to deflect molten spatter away from the nozzle and shield, <code class="mono">m3.py</code> uses a three-parameter handshake with the G-code program emitted by the <strong>RotaryCAM Post-Processor</strong>:
           </p>
           <ul class="doc-bullet-list" style="margin-top: 0.75rem;">
             <li>
@@ -996,7 +996,7 @@ M5                              ( 3. Fast no-wiggle cleanup &amp; immediate Safe
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot"></span> m3.py (Lines 145–183) — Handshake Parameter Numbers</span>
+                <span class="doc-code-title"><span class="dot"></span> m3.py (Lines 145–183): Handshake Parameter Numbers</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
               <pre><code>Ramp_lead_in_pn = 1113        # Set to 1.0 by RotaryCAM Post-Processor when 3D ramp lead-in is active
@@ -1025,7 +1025,7 @@ Material_thickness_pn = 1110  # Material thickness emitted by RotaryCAM Post-Pro
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot cyan"></span> m3.py (Lines 439–443) — Anchoring Program Z to Pierce_height (#2)</span>
+                <span class="doc-code-title"><span class="dot cyan"></span> m3.py (Lines 439–443): Anchoring Program Z to Pierce_height (#2)</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
               <pre><code>Pierce_height_position[Axis.Z.value] = touch_z + Pierce_height
@@ -1058,7 +1058,7 @@ d.setAxisProgPosition(Axis.Z, Pierce_height)</code></pre>
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot"></span> m3.py (Lines 544–573) — Reading #1113 &amp; #1110</span>
+                <span class="doc-code-title"><span class="dot"></span> m3.py (Lines 544–573): Reading #1113 &amp; #1110</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
               <pre><code>try:
@@ -1094,7 +1094,7 @@ except Exception:
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot emerald"></span> m3.py (Lines 576–602) — Two-Tier Pierce Dwell Logic</span>
+                <span class="doc-code-title"><span class="dot emerald"></span> m3.py (Lines 576–602): Two-Tier Pierce Dwell Logic</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
               <pre><code>if (Pierce_delay &gt; 0):
@@ -1147,7 +1147,7 @@ except Exception:
 
             <div class="doc-code-block">
               <div class="doc-code-bar">
-                <span class="doc-code-title"><span class="dot cyan"></span> m3.py (Lines 604–616) — Conditional 3D Ramp Handoff &amp; Flag Reset</span>
+                <span class="doc-code-title"><span class="dot cyan"></span> m3.py (Lines 604–616): Conditional 3D Ramp Handoff &amp; Flag Reset</span>
                 <span class="doc-code-lang">PYTHON</span>
               </div>
               <pre><code>if ramp_lead_in_enabled:
@@ -1192,7 +1192,7 @@ else:
                 <strong>2. Arm <code class="mono">m3.py</code> &amp; Lock Hardware THC:</strong>
                 <div class="doc-code-block">
                   <div class="doc-code-bar">
-                    <span class="doc-code-title"><span class="dot"></span> RotaryCAM Post-Processor — Arming #1113 &amp; #1110 Before M03</span>
+                    <span class="doc-code-title"><span class="dot"></span> RotaryCAM Post-Processor: Arming #1113 &amp; #1110 Before M03</span>
                     <span class="doc-code-lang">G-CODE</span>
                   </div>
                   <pre><code>#1113=1         ( Arm 3D ramp handoff in m3.py )
@@ -1205,7 +1205,7 @@ M63 P0          ( Keep hardware THC locked during 3D ramp so high arc V at #2 ca
                 <strong>3. Execute 3D Linear or Helical Lead-In to <code class="mono">Z#3</code>:</strong>
                 <div class="doc-code-block">
                   <div class="doc-code-bar">
-                    <span class="doc-code-title"><span class="dot emerald"></span> RotaryCAM Post-Processor — 3D Linear &amp; Helical Arc Ramp Moves to Z#3</span>
+                    <span class="doc-code-title"><span class="dot emerald"></span> RotaryCAM Post-Processor: 3D Linear &amp; Helical Arc Ramp Moves to Z#3</span>
                     <span class="doc-code-lang">G-CODE</span>
                   </div>
                   <pre><code>( Option A: 3D Linear Ramp Lead-In )

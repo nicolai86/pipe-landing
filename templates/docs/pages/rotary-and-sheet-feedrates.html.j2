@@ -70,7 +70,7 @@
                 Surface Distance (&Delta;s) = R &times; &Delta;A_radians = (OD / 2) &times; (&Delta;A_deg &times; &pi; / 180&deg;)
               </div>
               <p style="margin-bottom: 0;">
-                Consider a 90&deg; rotation: On a <strong>1" OD tube (25.4 mm)</strong>, 90&deg; of chuck rotation sweeps <strong>19.95 mm (0.785")</strong> of steel past the torch. On a <strong>4" OD tube (101.6 mm)</strong>, that exact same 90&deg; rotation sweeps <strong>79.80 mm (3.142")</strong>—four times further! If a controller runs a fixed chuck rotation speed, the torch crawls on small tubing and sprints dangerously fast on large pipe.
+                Consider a 90&deg; rotation: On a <strong>1" OD tube (25.4 mm)</strong>, 90&deg; of chuck rotation sweeps <strong>19.95 mm (0.785")</strong> of steel past the torch. On a <strong>4" OD tube (101.6 mm)</strong>, that exact same 90&deg; rotation sweeps <strong>79.80 mm (3.142")</strong>, four times further! If a controller runs a fixed chuck rotation speed, the torch crawls on small tubing and sprints dangerously fast on large pipe.
               </p>
             </div>
 
@@ -86,7 +86,7 @@
         <article class="doc-step-card" id="step-2">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 02</span>
-            <h2 class="doc-step-title"><code class="mono">G94</code> Units-Per-Minute — Flat Sheet &amp; 3-Axis <code class="mono">Y</code>-Wrapped Rotary</h2>
+            <h2 class="doc-step-title"><code class="mono">G94</code> Units-Per-Minute: Flat Sheet &amp; 3-Axis <code class="mono">Y</code>-Wrapped Rotary</h2>
           </div>
 
           <div class="doc-step-body">
@@ -220,18 +220,18 @@ M05 ; Torch off</code></pre>
         <article class="doc-step-card" id="step-3">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 03</span>
-            <h2 class="doc-step-title"><code class="mono">G93</code> Inverse-Time Rotary (<code class="mono">1 / Minutes</code>) — Why <code class="mono">G20</code> &amp; <code class="mono">G21</code> Have Identical <code class="mono">F</code> Values</h2>
+            <h2 class="doc-step-title"><code class="mono">G93</code> Inverse-Time Rotary (<code class="mono">1 / Minutes</code>): Why <code class="mono">G20</code> &amp; <code class="mono">G21</code> Have Identical <code class="mono">F</code> Values</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              When cutting 4-axis rotary tubes (round pipe saddles, square/rectangular tubing, angle iron, C-channel), almost all professional CNC plasma controllers—including <strong>LinuxCNC QTPlasmaC, Mach4, MASSO G3, Mach3, Centroid Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, ShopSabre WinCNC, and SimCNC 3.6+</strong> (which added native G93 inverse-time mode in beta in September 2026)—use <strong><code class="mono">G93</code> Inverse-Time Feedrate Mode</strong>.
+              When cutting 4-axis rotary tubes (round pipe saddles, square/rectangular tubing, angle iron, C-channel), almost all professional CNC plasma controllers (including <strong>LinuxCNC QTPlasmaC, Mach4, MASSO G3, Mach3, Centroid Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, ShopSabre WinCNC, and SimCNC 3.6+</strong>, which added native G93 inverse-time mode in beta in September 2026) use <strong><code class="mono">G93</code> Inverse-Time Feedrate Mode</strong>.
             </p>
 
             <div class="doc-callout tip" style="margin-top: 1.25rem;">
               <div class="doc-callout-title">💡 What About the Controller's Built-In "Rotation Radius" Setting?</div>
               <p>
-                Several controllers—including ArtSoft Mach3, Mach4, CNCdrive UCCNC, MASSO G3, and Centroid Acorn—provide a DRO setting where you can manually enter a workpiece rotation radius or diameter so the controller scales <code class="mono">G94</code> feedrates across round pipe. While convenient for basic round pipe parting, relying on a manual controller radius setting creates major shop hazards:
+                Several controllers (including ArtSoft Mach3, Mach4, CNCdrive UCCNC, MASSO G3, and Centroid Acorn) provide a DRO setting where you can manually enter a workpiece rotation radius or diameter so the controller scales <code class="mono">G94</code> feedrates across round pipe. While convenient for basic round pipe parting, relying on a manual controller radius setting creates major shop hazards:
               </p>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
                 <li><strong>Operator Error:</strong> If you forget to update the DRO setting when switching from a 2" tube to a 4" pipe, the torch burns at the wrong speed.</li>
@@ -308,7 +308,7 @@ M05 ; Torch off</code></pre>
                 Wrong F = 1000.0 &divide; 25.4 = F39.37 &emsp;&rarr;&emsp; Move Time &Delta;t = 60 / 39.37 = 1.524 seconds!
               </div>
               <p style="margin-bottom: 0;">
-                The move takes <strong>1.524 seconds instead of 0.060 seconds—25.4 times too slow!</strong> Your cutting speed drops from 100 IPM down to 3.94 IPM. The plasma arc stays stationary over the pipe wall, melts a massive blowout crater, ruins the nozzle shield, and destroys the workpiece.
+                The move takes <strong>1.524 seconds instead of 0.060 seconds (25.4 times too slow).</strong> Your cutting speed drops from 100 IPM down to 3.94 IPM. The plasma arc stays stationary over the pipe wall, melts a massive blowout crater, ruins the nozzle shield, and destroys the workpiece.
               </p>
             </div>
 
@@ -454,7 +454,7 @@ G01 X-99.014 A62.132 F3780.151 ; Chuck accelerates smoothly around saddle
 G01 X-94.771 A95.767 F3650.210 ; Saddle crotch
 M63 P1 ; Motion-sync digital output cuts arc 1.5mm early while torch moves (zero divot)
 G01 X-91.916 A117.747 F3820.440 ; Final segment severs kerf cleanly on residual plasma
-M05 ; Motion complete — full torch shutdown macro
+M05 ; Motion complete: full torch shutdown macro
 G00 Z25.000 ; Retract</code></pre>
             </div>
 
@@ -629,7 +629,7 @@ G00 Z25.000 ; Retract</code></pre>
                   <strong>Rule 3 (Probes &amp; Plunges Scale):</strong> Initial touch-off sensing (<code class="mono">G38.2</code> on grblHAL, <code class="mono">G31</code> on Mach3/Mach4/UCCNC, <code class="mono">G200</code> on MASSO) and vertical Z plunges run in <code class="mono">G94</code> linear mode before the arc strikes. Their feedrates <em>do</em> divide by 25.4 in Imperial (<code class="mono">1000 mm/min &rarr; 39.4 IPM</code>). On integrated controllers like LinuxCNC QtPlasmaC, probing, pierce height, and cut plunge are handled internally inside <code class="mono">M3 $0 S1</code>.
                 </li>
                 <li>
-                  <strong>Rule 4 (Pure A Rotations: G93 is ALWAYS Inverse Time, NEVER deg/min):</strong> When the chuck rotates without lateral motion (<code class="mono">&Delta;X = &Delta;Y = &Delta;Z = 0</code>), in <code class="mono">G93</code> mode <code class="mono">F</code> is still strictly inverse time (<code class="mono">1 / &Delta;t</code> in <code class="mono">min&sup1;</code>)—NEVER degrees per minute! Only <code class="mono">G94</code> (such as <code class="mono">SimCNC &lt; 3.6</code>) expresses pure-A spins in <code class="mono">deg/min</code>. For example, at <code class="mono">5729.6&deg;/min</code> (<code class="mono">2540 mm/min / 100 IPM</code> surface speed on 2" / 50.8 mm OD pipe), a 90&deg; pure-A spin runs at <code class="mono">F5729.6</code> (<code class="mono">deg/min</code>) in <code class="mono">G94</code> / <code class="mono">SimCNC &lt; 3.6</code>, whereas in <code class="mono">G93</code> it runs at <code class="mono">F63.66</code> (<code class="mono">&Delta;t = 0.01571 min = 0.942 s</code>, <code class="mono">1 / &Delta;t = 63.66 min&sup1;</code>). Both values remain 100% identical between <code class="mono">G20</code> and <code class="mono">G21</code>, but only <code class="mono">G94</code> is <code class="mono">deg/min</code>.
+                  <strong>Rule 4 (Pure A Rotations: G93 is ALWAYS Inverse Time, NEVER deg/min):</strong> When the chuck rotates without lateral motion (<code class="mono">&Delta;X = &Delta;Y = &Delta;Z = 0</code>), in <code class="mono">G93</code> mode <code class="mono">F</code> is still strictly inverse time (<code class="mono">1 / &Delta;t</code> in <code class="mono">min&sup1;</code>), NEVER degrees per minute! Only <code class="mono">G94</code> (such as <code class="mono">SimCNC &lt; 3.6</code>) expresses pure-A spins in <code class="mono">deg/min</code>. For example, at <code class="mono">5729.6&deg;/min</code> (<code class="mono">2540 mm/min / 100 IPM</code> surface speed on 2" / 50.8 mm OD pipe), a 90&deg; pure-A spin runs at <code class="mono">F5729.6</code> (<code class="mono">deg/min</code>) in <code class="mono">G94</code> / <code class="mono">SimCNC &lt; 3.6</code>, whereas in <code class="mono">G93</code> it runs at <code class="mono">F63.66</code> (<code class="mono">&Delta;t = 0.01571 min = 0.942 s</code>, <code class="mono">1 / &Delta;t = 63.66 min&sup1;</code>). Both values remain 100% identical between <code class="mono">G20</code> and <code class="mono">G21</code>, but only <code class="mono">G94</code> is <code class="mono">deg/min</code>.
                 </li>
                 <li>
                   <strong>Rule 5 (Keep Override at 100% on Rotary Cuts):</strong> In <code class="mono">G93</code> inverse-time mode, Feedrate Override (FRO) scales every block's duration uniformly (e.g., dialing FRO down to 50% cleanly doubles every block's cut time). However, you should leave FRO at 100% on rotary plasma cuts for two critical physical reasons: (1) Slowing down below target surface speed widens the kerf and raises arc voltage, causing voltage-based Torch Height Control (THC) to dive the torch tip directly into the pipe wall; (2) Pushing FRO above 100% can clip against your rotary A-axis maximum velocity limit on tight saddle crotches or square tube corner sweeps, bottlenecking motion and creating torch gouges.

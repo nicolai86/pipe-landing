@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>08. Plasma Cut Charts, Torch Settings & Feature Toggling — RotaryCAM Documentation</title>
+  <title>08. Plasma Cut Charts, Torch Settings & Feature Toggling | RotaryCAM Documentation</title>
   <meta name="description" content="Complete guide to RotaryCAM's 1,025 built-in plasma cut presets across 3 torch families (Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma), automatic wall-thickness matching, unit-aware CSV cut chart import and export, custom preset editing, and selective feature omission in 3D tube inspection." />
 
   <!-- Fonts -->
@@ -518,10 +518,10 @@
         <div class="doc-intro-card">
           <h2>1,025 Built-In Cut Charts Across 3 Torch Families, CSV Interchange &amp; Feature Toggling</h2>
           <p>
-            Dialing in the correct plasma torch feedrate, arc transfer voltage, pierce delay, and kerf width is the difference between dross-free, weld-ready tube joints and scrap metal. RotaryCAM eliminates trial-and-error by integrating <strong>1,025 built-in cut presets across 3 plasma torch families</strong> directly into the CAM environment—covering <strong>Hypertherm Powermax SYNC (<code class="mono">3.2 mm / 0.125"</code> standoff — 564 presets)</strong>, <strong>Hypertherm Duramax / Legacy 30XP–105 (<code class="mono">1.5 mm / 0.060"</code> standoff — 269 presets)</strong>, and <strong>Generic Air Plasma (<code class="mono">1.5 mm / 0.060"</code> standoff — 192 presets)</strong> tuned for Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster. Presets cover Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed processes in both Metric (<code class="mono">mm, mm/min, bar</code>) and Imperial (<code class="mono">GA / in, IPM, PSI</code>) units across Mild Steel, Stainless Steel, and Aluminum.
+            Dialing in the correct plasma torch feedrate, arc transfer voltage, pierce delay, and kerf width is the difference between dross-free, weld-ready tube joints and scrap metal. RotaryCAM eliminates trial-and-error by integrating <strong>1,025 built-in cut presets across 3 plasma torch families</strong> directly into the CAM environment. Presets cover <strong>Hypertherm Powermax SYNC (<code class="mono">3.2 mm / 0.125"</code> standoff, 564 presets)</strong>, <strong>Hypertherm Duramax / Legacy 30XP–105 (<code class="mono">1.5 mm / 0.060"</code> standoff, 269 presets)</strong>, and <strong>Generic Air Plasma (<code class="mono">1.5 mm / 0.060"</code> standoff, 192 presets)</strong> tuned for Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster. The library supports Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed processes in both Metric (<code class="mono">mm, mm/min, bar</code>) and Imperial (<code class="mono">GA / in, IPM, PSI</code>) units across Mild Steel, Stainless Steel, and Aluminum.
           </p>
           <p style="margin-top: 0.85rem;">
-            When you drop a 3D CAD STEP solid or flat-sheet DXF/SVG file onto the table, RotaryCAM detects your wall thickness or plate gauge and automatically pairs it with your active machine's torch family—loading optimal cut speed, arc voltage, pierce height, torch air pressure, and exact standoff height (<code class="mono">1.5 mm</code> vs <code class="mono">3.2 mm</code>) automatically. You can edit any parameter inline, add custom shop gauges, or use <strong>unit-aware CSV Import &amp; Export (<code class="mono">⬇ Export CSV</code> / <code class="mono">⬆ Import CSV</code>)</strong> to share tuned tables across machines with smart header detection and non-destructive upserts. Furthermore, when working on prototypes or custom fabrications where certain mounting holes or slots should be omitted without waiting for CAD revisions, RotaryCAM provides <strong>per-feature enable/disable toggles</strong> right in the single-part feature table—instantly updating the 3D toolpath, reducing the pierce count, and recompiling G-code on the fly while keeping structural sever cuts permanently locked.
+            When you drop a 3D CAD STEP solid or flat-sheet DXF/SVG file onto the table, RotaryCAM detects your wall thickness or plate gauge and automatically pairs it with your active machine's torch family: loading optimal cut speed, arc voltage, pierce height, torch air pressure, and exact standoff height (<code class="mono">1.5 mm</code> vs <code class="mono">3.2 mm</code>) automatically. You can edit any parameter inline, add custom shop gauges, or use <strong>unit-aware CSV Import &amp; Export (<code class="mono">⬇ Export CSV</code> / <code class="mono">⬆ Import CSV</code>)</strong> to share tuned tables across machines with smart header detection and non-destructive upserts. Furthermore, when working on prototypes or custom fabrications where certain mounting holes or slots should be omitted without waiting for CAD revisions, RotaryCAM provides <strong>per-feature enable/disable toggles</strong> right in the single-part feature table. Toggling an internal feature immediately updates the 3D toolpath, reduces the pierce count, and recompiles G-code on the fly while keeping structural sever cuts permanently locked.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -554,7 +554,7 @@
 
           <div class="doc-step-body">
             <p>
-              The Cut Charts Manager is accessible from anywhere in RotaryCAM—whether you are inspecting an entire 3D assembly, dialing in lead-ins on a single tube, or packing multi-part nests across raw stock sticks.
+              The Cut Charts Manager is accessible from anywhere in RotaryCAM, whether inspecting an entire 3D assembly, dialing in lead-ins on a single tube, or packing multi-part nests across raw stock sticks.
             </p>
             <ul class="doc-bullet-list">
               <li>Look at the top-right header bar in RotaryCAM, immediately next to the <code class="mono">ⓘ About</code> button.</li>
@@ -565,7 +565,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Clicking '🔥 Cut Charts' in the top-right header bar</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Clicking '🔥 Cut Charts' in the top-right header bar</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -585,30 +585,30 @@
 
           <div class="doc-step-body">
             <p>
-              RotaryCAM ships with a comprehensive library of <strong>1,025 factory cut presets</strong> categorized into 3 distinct plasma torch families—matching the exact physical standoff, arc voltage curve, and consumable geometry of your plasma power supply:
+              RotaryCAM ships with a comprehensive library of <strong>1,025 factory cut presets</strong> categorized into 3 distinct plasma torch families, matching the exact physical standoff, arc voltage curve, and consumable geometry of your plasma power supply:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Hypertherm Powermax SYNC (<code class="mono">3.2 mm / 0.125"</code> standoff — 564 presets):</strong> Built for Powermax 45/65/85/105 SYNC systems running single-piece cartridge consumables (<code class="mono">810500MU</code> Rev 4, <code class="mono">45A–105A</code>). Covers Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed processes in both Metric (<code class="mono">mm, mm/min, bar</code>) and Imperial (<code class="mono">GA / in, IPM, PSI</code>). Default preset family on SimCNC profiles.
+                <strong>Hypertherm Powermax SYNC (<code class="mono">3.2 mm / 0.125"</code> standoff, 564 presets):</strong> Built for Powermax 45/65/85/105 SYNC systems running single-piece cartridge consumables (<code class="mono">810500MU</code> Rev 4, <code class="mono">45A–105A</code>). Covers Standard Best Quality, Standard High Prod, FineCut High Speed, and FineCut Low Speed processes in both Metric (<code class="mono">mm, mm/min, bar</code>) and Imperial (<code class="mono">GA / in, IPM, PSI</code>). Default preset family on SimCNC profiles.
               </li>
               <li>
-                <strong>Hypertherm Duramax / Legacy 30XP–105 (<code class="mono">1.5 mm / 0.060"</code> standoff — 269 presets):</strong> Built for Powermax30 XP, 45 XP, 65, 85, and 105 torches running multi-piece mechanized shielded consumables (<code class="mono">30A, 45A, 65A, 85A, 105A</code> + <code class="mono">45A FineCut</code>, ~<code class="mono">114–138 V</code> arc voltage). Default on LinuxCNC QTPlasmaC, Mach4, MASSO G3, Mach3, Centroid Acorn, UCCNC, FlashCut, EdingCNC, PlanetCNC, and ShopSabre WinCNC.
+                <strong>Hypertherm Duramax / Legacy 30XP–105 (<code class="mono">1.5 mm / 0.060"</code> standoff, 269 presets):</strong> Built for Powermax30 XP, 45 XP, 65, 85, and 105 torches running multi-piece mechanized shielded consumables (<code class="mono">30A, 45A, 65A, 85A, 105A</code> + <code class="mono">45A FineCut</code>, ~<code class="mono">114–138 V</code> arc voltage). Default on LinuxCNC QTPlasmaC, Mach4, MASSO G3, Mach3, Centroid Acorn, UCCNC, FlashCut, EdingCNC, PlanetCNC, and ShopSabre WinCNC.
               </li>
               <li>
-                <strong>Generic Air Plasma (<code class="mono">1.5 mm / 0.060"</code> standoff — 192 presets):</strong> Conservative blowback / non-HF air-plasma charts (<code class="mono">30A, 45A, 60A, 80A</code>, ~<code class="mono">106–128 V</code>, <code class="mono">72 PSI / 5.0 bar</code>) tuned for popular shop torches including <strong>Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster</strong>. Default on Langmuir FireControl and grblHAL.
+                <strong>Generic Air Plasma (<code class="mono">1.5 mm / 0.060"</code> standoff, 192 presets):</strong> Conservative blowback / non-HF air-plasma charts (<code class="mono">30A, 45A, 60A, 80A</code>, ~<code class="mono">106–128 V</code>, <code class="mono">72 PSI / 5.0 bar</code>) tuned for popular shop torches including <strong>Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster</strong>. Default on Langmuir FireControl and grblHAL.
               </li>
               <li>
                 <strong>Material &amp; Dynamic Amperage Tiers:</strong> Filter by <code class="mono">Mild Steel</code>, <code class="mono">Stainless Steel</code>, or <code class="mono">Aluminum</code>. When you switch materials or torch families, the amperage dropdown dynamically scopes to your torch's true physical range (<code class="mono">[30, 45, 60, 80]</code> for Generic Air Plasma vs <code class="mono">[30, 45, 65, 85, 105]</code> for Duramax vs <code class="mono">[45, 65, 85, 105]</code> for SYNC).
               </li>
               <li>
-                <strong>Machine Standoff Binding:</strong> When you pick your torch family in your machine profile, RotaryCAM pairs that family's native cut height (<code class="mono">1.5 mm / 0.060"</code> vs <code class="mono">3.2 mm / 0.125"</code>) and arc voltage curve to your parts automatically—ensuring your torch never scrapes the tube or rides high in the air.
+                <strong>Machine Standoff Binding:</strong> When you pick your torch family in your machine profile, RotaryCAM pairs that family's native cut height (<code class="mono">1.5 mm / 0.060"</code> vs <code class="mono">3.2 mm / 0.125"</code>) and arc voltage curve to your parts automatically, ensuring your torch never scrapes the tube or rides high in the air.
               </li>
             </ul>
           </div>
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Browsing and filtering 1,025 factory cut charts across 3 plasma torch families</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2: Browsing and filtering 1,025 factory cut charts across 3 plasma torch families</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -631,7 +631,7 @@
               Every shop table behaves slightly differently depending on torch air quality, compressor line dryer performance, ground clamp placement, and table rigidity. RotaryCAM allows fabricators to fine-tune any cut preset or define custom shop profiles:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Inline Editing:</strong> Double-click or click into any cell in a cut chart row—such as <code class="mono">Cut Speed</code>, <code class="mono">Kerf Width</code>, <code class="mono">Arc Voltage</code>, or <code class="mono">Pierce Delay</code>. Adjust the value to match your torch setup and click the <span class="ui-chip cyan">Save</span> button on that row.</li>
+              <li><strong>Inline Editing:</strong> Double-click or click into any cell in a cut chart row, such as <code class="mono">Cut Speed</code>, <code class="mono">Kerf Width</code>, <code class="mono">Arc Voltage</code>, or <code class="mono">Pierce Delay</code>. Adjust the value to match your torch setup and click the <span class="ui-chip cyan">Save</span> button on that row.</li>
               <li><strong>Add Custom Presets:</strong> To store settings for non-standard wall thicknesses, specialized alloys (such as 4130 chromoly or Hardox), or proprietary consumables, click the <span class="ui-chip cyan">+ Add Preset</span> button in the top-right header of the modal.</li>
               <li><strong>Persistent Storage:</strong> Custom presets and edited values are stored locally in persistent storage, remaining available across browser refreshes and application restarts.</li>
             </ul>
@@ -639,7 +639,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Editing cut chart row parameters inline or creating custom shop presets</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3: Editing cut chart row parameters inline or creating custom shop presets</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -708,7 +708,7 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
             </p>
             <ul class="doc-bullet-list">
               <li>In the left sidebar under <strong>Cross-Section &amp; Dimensions</strong>, locate the <span class="ui-chip amber">3.56mm / 1/8"</span> wall thickness badge.</li>
-              <li>RotaryCAM automatically queries the cut chart database for your active machine's torch family and binds the matching preset to the cutting session—populating the <strong>Feedrate</strong> (<code class="mono">2850 mm/min</code>), <strong>Kerf Compensation</strong> (<code class="mono">1.25 mm</code>), <strong>Arc Voltage</strong> (<code class="mono">128 V</code>), and <strong>Pierce Delay</strong> (<code class="mono">0.4 s</code>).</li>
+              <li>RotaryCAM automatically queries the cut chart database for your active machine's torch family and binds the matching preset to the cutting session, populating the <strong>Feedrate</strong> (<code class="mono">2850 mm/min</code>), <strong>Kerf Compensation</strong> (<code class="mono">1.25 mm</code>), <strong>Arc Voltage</strong> (<code class="mono">128 V</code>), and <strong>Pierce Delay</strong> (<code class="mono">0.4 s</code>).</li>
               <li><strong>Built-In <code class="mono">1/8&Prime;</code> (<code class="mono">3.175 mm</code>) Structural Presets &amp; Automatic Gauge Interpolation:</strong> Standard <code class="mono">1/8&Prime;</code> (<code class="mono">3.175 mm</code>) Mild Steel and Stainless Steel structural tubing and plate have dedicated factory presets ready to go. Whenever your tube wall or plate thickness falls between standard sheet-metal gauge rows (for example, <code class="mono">3.0 mm</code> metric wall between <code class="mono">12 GA</code> and <code class="mono">1/8&Prime;</code>, or <code class="mono">5.0 mm</code> wall between <code class="mono">3/16&Prime;</code> and <code class="mono">1/4&Prime;</code>), RotaryCAM automatically interpolates the torch feedrate, arc voltage, and pierce delay between the nearest thinner and thicker charts so you get a clean, dross-free cut without doing hand math at the console.</li>
               <li><strong>Manual Override:</strong> Need to cut 1/8" wall tube at lower amperage (e.g. 45A FineCut instead of 65A standard)? Simply select an alternative preset from the dropdown menu, or click the reset icon to snap back to the auto-detected baseline.</li>
             </ul>
@@ -716,7 +716,7 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Automatic wall-thickness matching badge and cut parameters in the left sidebar</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5: Automatic wall-thickness matching badge and cut parameters in the left sidebar</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -741,15 +741,15 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
             <ul class="doc-bullet-list">
               <li>In Single Part Inspection, look at the feature table below the 3D viewport. Every detected feature is listed with its contour type, axial position, and geometry dimensions.</li>
               <li><strong>Feature Enable/Disable Checkboxes:</strong> Each internal feature (<code class="mono">HOLE</code>, <code class="mono">SLOT</code>, <code class="mono">CUTOUT</code>, <code class="mono">SCRIBE</code>) has an interactive checkbox in the left-hand column. Unchecking a box instantly omits that cut from production.</li>
-              <li><strong>Per-Feature Cut, Plasma Mark &amp; Scribe Mode (<code class="mono">⚡ Cut</code> / <code class="mono">🔥 Plasma Mark</code> / <code class="mono">✏️ Scribe</code>) &amp; Sidecar Markings (<code class="mono">.markings.json</code>):</strong> Switch any individual CAD feature—or the entire tube/sheet at once via <code class="mono">✏️ Scribe All</code> or the batch toolbar—between all 3 supported modes: <strong>⚡ Cut</strong> (<code class="mono">#1114=1</code>) for full plasma cutting, <strong>🔥 Plasma Mark</strong> (<code class="mono">#1114=2</code>) for low-amperage plasma scoring/etching (<code class="mono">15A</code> target or cartridge minimum floor, <code class="mono">0s</code> pierce delay, exact CAD line) without swapping out the cutting cartridge, and <strong>✏️ Scribe</strong> (<code class="mono">#1114=3</code>) for mechanical EasyScribe proofing (<code class="mono">-3 mm</code> spring compression, arc OFF, exact CAD line around HSS and HSS-O corners). You can also upload a <code class="mono">.markings.json</code> sidecar file alongside your <code class="mono">.step</code> model (or in a <code class="mono">.zip</code>) and set any layout mark to Scribe, Plasma Mark, or Cut. Mechanical scribes (<code class="mono">#1114=3</code>) run first, followed by plasma marks (<code class="mono">#1114=2</code>), before any plasma through-cuts (<code class="mono">#1114=1</code>).</li>
-              <li><strong>One-Click Auto-Scribe Piece IDs, Mating Connection Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Assembly Weld Witness Marks (Zero Sidecar Required):</strong> You don't need an external <code class="mono">.markings.json</code> file to label cut parts or mark weld joints. When you load a multi-part STEP assembly, your parts are automatically assigned short piece IDs (<code class="mono">P1</code>, <code class="mono">P2</code>, &hellip;, <code class="mono">P12</code>) matching your part list. Toggle on <strong>Auto-Scribe Part IDs</strong> to stencil single-stroke CNC stick-font text onto the longest clear flat face or round-tube top crest—steering clear of holes, miters, and sidecar artwork with clean <code class="mono">M5</code> &rarr; <code class="mono">G0</code> &rarr; <code class="mono">M3 S1</code> rapid hops between strokes via EasyScribe (<code class="mono">#1114=3</code>) or Plasma Mark (<code class="mono">#1114=2</code> at <code class="mono">#1111=15A</code>). In addition to marking each piece with its own ID (<code class="mono">P1</code>) and scribing weld witness footprints where branch tubes or flat brackets touch a main header tube or plate (<code class="mono">&le; 0.5 mm</code>), you get the <strong>mating piece ID scribed right at each end cut</strong> (for example, <code class="mono">P12</code> just inside <code class="mono">P1</code>'s coped/mitered end cut) and <strong>next to each receiving witness footprint</strong> (for example, <code class="mono">P1</code> beside the witness mark on <code class="mono">P12</code>)—turning the torch off and retracting cleanly to Safe Z between every layout dash so you know at a glance which piece connects to which joint on the welding table.</li>
+              <li><strong>Per-Feature Cut, Plasma Mark &amp; Scribe Mode (<code class="mono">⚡ Cut</code> / <code class="mono">🔥 Plasma Mark</code> / <code class="mono">✏️ Scribe</code>) &amp; Sidecar Markings (<code class="mono">.markings.json</code>):</strong> Switch any individual CAD feature (or the entire tube/sheet at once via <code class="mono">✏️ Scribe All</code> or the batch toolbar) between all 3 supported modes: <strong>⚡ Cut</strong> (<code class="mono">#1114=1</code>) for full plasma cutting, <strong>🔥 Plasma Mark</strong> (<code class="mono">#1114=2</code>) for low-amperage plasma scoring/etching (<code class="mono">15A</code> target or cartridge minimum floor, <code class="mono">0s</code> pierce delay, exact CAD line) without swapping out the cutting cartridge, and <strong>✏️ Scribe</strong> (<code class="mono">#1114=3</code>) for mechanical EasyScribe proofing (<code class="mono">-3 mm</code> spring compression, arc OFF, exact CAD line around HSS and HSS-O corners). You can also upload a <code class="mono">.markings.json</code> sidecar file alongside your <code class="mono">.step</code> model (or in a <code class="mono">.zip</code>) and set any layout mark to Scribe, Plasma Mark, or Cut. Mechanical scribes (<code class="mono">#1114=3</code>) run first, followed by plasma marks (<code class="mono">#1114=2</code>), before any plasma through-cuts (<code class="mono">#1114=1</code>).</li>
+              <li><strong>One-Click Auto-Scribe Piece IDs, Mating Connection Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Assembly Weld Witness Marks (Zero Sidecar Required):</strong> You don't need an external <code class="mono">.markings.json</code> file to label cut parts or mark weld joints. When you load a multi-part STEP assembly, your parts are automatically assigned short piece IDs (<code class="mono">P1</code>, <code class="mono">P2</code>, &hellip;, <code class="mono">P12</code>) matching your part list. Toggle on <strong>Auto-Scribe Part IDs</strong> to stencil single-stroke CNC stick-font text onto the longest clear flat face or round-tube top crest, steering clear of holes, miters, and sidecar artwork with clean <code class="mono">M5</code> &rarr; <code class="mono">G0</code> &rarr; <code class="mono">M3 S1</code> rapid hops between strokes via EasyScribe (<code class="mono">#1114=3</code>) or Plasma Mark (<code class="mono">#1114=2</code> at <code class="mono">#1111=15A</code>). In addition to marking each piece with its own ID (<code class="mono">P1</code>) and scribing weld witness footprints where branch tubes or flat brackets touch a main header tube or plate (<code class="mono">&le; 0.5 mm</code>), you get the <strong>mating piece ID scribed right at each end cut</strong> (for example, <code class="mono">P12</code> just inside <code class="mono">P1</code>'s coped/mitered end cut) and <strong>next to each receiving witness footprint</strong> (for example, <code class="mono">P1</code> beside the witness mark on <code class="mono">P12</code>). RotaryCAM turns the torch off and retracts cleanly to Safe Z between every layout dash so you know at a glance which piece connects to which joint on the welding table.</li>
               <li><strong>Permanent Sever Cut Lock:</strong> Notice that the tube severance cuts (<code class="mono">STARTCUT</code> and <code class="mono">ENDCUT</code>) have locked checkmarks with a lock badge. Sever cuts cannot be accidentally unchecked, guaranteeing that cut parts always drop cleanly from the raw tube stick.</li>
             </ul>
           </div>
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 6 — Feature table checkboxes for internal cutouts with locked cutoff cuts</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 6: Feature table checkboxes for internal cutouts with locked cutoff cuts</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -780,7 +780,7 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 7 — Omitted feature removed from 3D toolpath, pierce count reduced, and G-code updated</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 7: Omitted feature removed from 3D toolpath, pierce count reduced, and G-code updated</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">

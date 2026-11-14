@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>02. UI Layout & STEP File Cut Path Configuration — RotaryCAM Documentation</title>
+  <title>02. UI Layout & STEP File Cut Path Configuration | RotaryCAM Documentation</title>
   <meta name="description" content="Step-by-step visual guide to RotaryCAM's 3D CAD assembly inspector, per-contour lead-in/lead-out settings, Zero-Bevel Dual-Curve saddle compensation, and 4-axis 3D toolpath simulation." />
 
   <!-- Fonts -->
@@ -559,7 +559,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Clicking 'Saddle Joint (Zero-Bevel)' in the Quick CAD Fixtures panel</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Clicking 'Saddle Joint (Zero-Bevel)' in the Quick CAD Fixtures panel</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -589,7 +589,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Selecting parts interactively in the Entire Model Overview or Active CAD Solid bar</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2: Selecting parts interactively in the Entire Model Overview or Active CAD Solid bar</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -621,7 +621,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — 3D Part Preview showing color-coded Lead-In (Red), Cut Contour (Cyan), and Lead-Out (Green)</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3: 3D Part Preview showing color-coded Lead-In (Red), Cut Contour (Cyan), and Lead-Out (Green)</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -641,7 +641,7 @@
 
           <div class="doc-step-body">
             <p>
-              Beneath the 3D preview (and the expandable <strong>2D Unwrapped Stock Feature Map</strong>), the feature table lists every cutting feature detected on the active tube—categorized as <span class="ui-chip emerald">STARTCUT</span> (chuck-side end cut), <span class="ui-chip emerald">ENDCUT</span> (free-end saddle/miter cut), or <span class="ui-chip cyan">CUTOUT</span> (internal holes, slots, and Copes).
+              Beneath the 3D preview (and the expandable <strong>2D Unwrapped Stock Feature Map</strong>), the feature table lists every cutting feature detected on the active tube, categorized as <span class="ui-chip emerald">STARTCUT</span> (chuck-side end cut), <span class="ui-chip emerald">ENDCUT</span> (free-end saddle/miter cut), or <span class="ui-chip cyan">CUTOUT</span> (internal holes, slots, and Copes).
             </p>
             <ul class="doc-bullet-list">
               <li>Click the <span class="ui-chip">ENDCUT</span> row (<code class="mono">7E99200A-EBB2-4D59-9B57-AB5D515E73D3</code> at <code class="mono">X = 48.3 mm, A = 267.5°</code>) to highlight that specific saddle contour in the 3D viewport above.</li>
@@ -650,7 +650,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — Clicking the ENDCUT row to highlight the saddle joint contour in the 3D preview</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4: Clicking the ENDCUT row to highlight the saddle joint contour in the 3D preview</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -682,7 +682,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Expanding the per-contour Lead-In, Lead-Out, Corner Loop &amp; Zero-Bevel drawer</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5: Expanding the per-contour Lead-In, Lead-Out, Corner Loop &amp; Zero-Bevel drawer</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -702,7 +702,7 @@
 
           <div class="doc-step-body">
             <p>
-              On a 4-axis rotary plasma cutter, the torch is fixed perpendicular to the tube centerline (no 5-axis tilting head). When cutting a thick-walled pipe saddle or miter, the outer surface curve and inner wall curve have different axial heights at the saddle flanks—causing the inner wall to ride high and leave an open gap at the crown if cut strictly along the outer CAD curve.
+              On a 4-axis rotary plasma cutter, the torch is fixed perpendicular to the tube centerline (no 5-axis tilting head). When cutting a thick-walled pipe saddle or miter, the outer surface curve and inner wall curve have different axial heights at the saddle flanks. This causes the inner wall to ride high and leave an open gap at the crown if cut strictly along the outer CAD curve.
             </p>
             <ul class="doc-bullet-list">
               <li>In the <strong>Corner Loop &amp; Zero-Bevel</strong> card, check <span class="ui-chip">✓ Apply Zero-Bevel Compensation</span> and set <strong>Intensity (%)</strong> to <code class="mono">80%</code> (with <code class="mono">Cope / Fishmouth</code> enabled).</li>
@@ -716,14 +716,14 @@
                 <strong>Round Pipe Saddles &amp; Copes:</strong> When a straight vertical torch cuts an angled pipe saddle along the outside CAD line alone, the inside wall sticks out at the flanks and holds the crown open. Reading both your outer and inner CAD wall curves pulls the cut back to the inner wall where needed so your saddle drops onto the main pipe with zero gap.
               </p>
               <p style="margin-bottom: 0;">
-                <strong>Square &amp; Rectangular HSS Miters &amp; Copes:</strong> On flat-walled square and rectangular tubing, an angled miter only binds on the obtuse inside heel wall. Instead of shrinking the whole cut, Zero-Bevel pulls back <strong>only that interfering heel wall</strong> (<code class="mono">t &middot; tan(&theta;)</code>) while keeping your side walls and acute toes flush—so square and rectangular tube miters fit up flat right off the table with zero hand grinding.
+                <strong>Square &amp; Rectangular HSS Miters &amp; Copes:</strong> On flat-walled square and rectangular tubing, an angled miter only binds on the obtuse inside heel wall. Instead of shrinking the whole cut, Zero-Bevel pulls back <strong>only that interfering heel wall</strong> (<code class="mono">t &middot; tan(&theta;)</code>) while keeping your side walls and acute toes flush. Square and rectangular tube miters fit up flat right off the table with zero hand grinding.
               </p>
             </div>
 
             <div class="doc-callout info" style="margin-top: 1.25rem; border-left-color: var(--plasma-amber);">
               <div class="doc-callout-title">🔥 4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling (No 5-Axis Head Needed)</div>
               <p>
-                Need real V-groove weld penetration on structural round pipe without spending tens of thousands on a 5-axis tilting bevel head? Turn on <strong>Eccentric Weld-Prep Beveling</strong> on round pipe contours. Your vertical torch shifts laterally off-center in <code class="mono">Y</code>, drops <code class="mono">Z</code> down the curve of the pipe to hold arc standoff, and counter-rotates <code class="mono">A</code> smoothly across all four saddle quadrants—using the natural angle of the pipe wall under the offset torch to cut clean V-groove weld prep all the way around the joint.
+                Need real V-groove weld penetration on structural round pipe without spending tens of thousands on a 5-axis tilting bevel head? Turn on <strong>Eccentric Weld-Prep Beveling</strong> on round pipe contours. Your vertical torch shifts laterally off-center in <code class="mono">Y</code>, drops <code class="mono">Z</code> down the curve of the pipe to hold arc standoff, and counter-rotates <code class="mono">A</code> smoothly across all four saddle quadrants. It uses the natural angle of the pipe wall under the offset torch to cut clean V-groove weld prep all the way around the joint.
               </p>
               <p style="margin-bottom: 0;">
                 <strong>Try It Free in 3D:</strong> Full 3D toolpath preview is unlocked on <strong>Public Beta</strong> and <strong>Maker</strong> so you can inspect the exact <code class="mono">Y / Z / A</code> bevel path on your own pipe parts first; production G-code export is included in <a href="../index.html#pricing" style="color: var(--amber-400); font-weight: 600;">Pro Shop ($399) &rarr;</a>
@@ -739,7 +739,7 @@
                 RotaryCAM automatically detects bends along the 3D centerline and unfolds the curved tube onto straight mill stock with precision mitered pie-cut relief slots and an uncut living-hinge spine.
               </p>
               <p>
-                <strong>Dead-Straight HSS Cheek Cuts:</strong> For square and rectangular tubing, RotaryCAM cuts dead-straight cheek walls across flat tube faces with built-in inner-wall relief clearance. Thick steel walls won't pinch or bind early—simply fold the tube by hand to the exact design angle and weld the seam flush with zero grinder fitup.
+                <strong>Dead-Straight HSS Cheek Cuts:</strong> For square and rectangular tubing, RotaryCAM cuts dead-straight cheek walls across flat tube faces with built-in inner-wall relief clearance. Thick steel walls won't pinch or bind early. Simply fold the tube by hand to the exact design angle and weld the seam flush with zero grinder fitup.
               </p>
               <p style="margin-bottom: 0;">
                 <a href="bending.html" style="color: var(--amber-400); font-weight: 600;">Follow the complete walkthrough in Tutorial 04: Bending HSS &amp; HSS-O Sticks →</a>
@@ -749,7 +749,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 6 — Setting Zero-Bevel Intensity to 80%, saving the contour, and switching to 3D Cut Simulation</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 6: Setting Zero-Bevel Intensity to 80%, saving the contour, and switching to 3D Cut Simulation</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -779,7 +779,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 7 — Clicking Play in the 3D Cut Simulation with live 4-axis XYZA DRO</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 7: Clicking Play in the 3D Cut Simulation with live 4-axis XYZA DRO</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -799,7 +799,7 @@
 
           <div class="doc-step-body">
             <p>
-              When the simulation reaches <code class="mono">100%</code> (<span class="ui-chip emerald">FINISHED</span>), the full 3D toolpath trace—including rapid approaches, rotational arc lead-ins, kerf- and zero-bevel-compensated cut contours, and circular lead-outs—is rendered around the tube cylinder.
+              When the simulation reaches <code class="mono">100%</code> (<span class="ui-chip emerald">FINISHED</span>), the full 3D toolpath trace (rapid approaches, rotational arc lead-ins, kerf- and zero-bevel-compensated cut contours, and circular lead-outs) is rendered around the tube cylinder.
             </p>
             <ul class="doc-bullet-list">
               <li>Inspect the right-hand <strong>G-Code Post-Processor Terminal</strong> to review the generated header comments, stock setup, synchronous <code class="mono">M63/M62</code> THC locks, and coordinated <code class="mono">G1 X... Y... Z... A... F...</code> blocks.</li>
@@ -809,7 +809,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 8 — Simulation completed at 100% showing the verified 4-axis saddle cut</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 8: Simulation completed at 100% showing the verified 4-axis saddle cut</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary SEO Meta -->
-  <title>Smart Z-Axis Hardware THC (v2) — 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM</title>
-  <meta name="title" content="Smart Z-Axis Hardware THC (v2) — 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM" />
+  <title>Smart Z-Axis Hardware THC (v2): 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM</title>
+  <meta name="title" content="Smart Z-Axis Hardware THC (v2): 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM" />
   <meta name="description" content="Standalone 10,000 Hz hardware Torch Height Controller &amp; Z-axis Step/Dir motion interceptor (~$200 CAD target). Plugs inline between any 5V differential CNC controller and your existing Z drive: 2.0 ms ohmic tip-up escape, macro-free corner anti-dive, zero-clamp full-lifter-stroke warp tracking (&lt;0.002&Prime; lag on ClearPath servos), 4-axis rotary tube cam, and 20 KB black-box crash recorder." />
   <meta name="keywords" content="plasma torch height controller, standalone hardware THC, Step Dir THC interposer, CSMIO IP-M THC, SimCNC plasma THC, Mach3 Mach4 THC upgrade, LinuxCNC Mesa plasma THC, MASSO Acorn plasma THC, rotary tube plasma THC, ohmic anti-crash plasma" />
   <meta name="author" content="Raphael Randschau" />
@@ -1442,7 +1442,7 @@
             <h1>Stop Wrecking Consumables on Warped Plate. <span>Give Your Table 10,000 Hz Height Control.</span></h1>
 
             <p class="hero-lead">
-              Plug this standalone board inline on your Z Step/Dir cable and turn your controller&rsquo;s sluggish software THC off. The PCB runs a <strong>100 µs silicon height loop</strong> with <strong>zero software Z clamps</strong> and a <strong>2.0 ms ohmic collision trigger</strong>—tracking plate warps within <strong>0.002&Prime;</strong> with fast servos.
+              Plug this standalone board inline on your Z Step/Dir cable and turn your controller&rsquo;s sluggish software THC off. The PCB runs a <strong>100 µs silicon height loop</strong> with <strong>zero software Z clamps</strong> and a <strong>2.0 ms ohmic collision trigger</strong> to track plate warps within <strong>0.002&Prime;</strong> with fast servos.
             </p>
 
             <!-- Target Price Callout Strip -->
@@ -1552,7 +1552,7 @@
 
         <!-- Lifter & Motor Benchmark Caveat Banner -->
         <div class="thc-caveat-banner">
-          <strong>Lifter &amp; Motor Caveat (*):</strong> The PCB runs the 10,000 Hz loop, 2.0 ms ohmic trigger, and zero-clamp step injection in silicon—but physical travel depends on your Z lifter (a 2&Prime; lifter gives 2&Prime; max, not 5&Prime;) and mechanical response depends on your motors. All speed and tracking numbers (&lt; 0.002&Prime; lag, 295 IPM UP, 150 IPM retract) come from <strong>Teknic ClearPath (2311S)</strong> servos; steppers work out of the box up to their speed ceiling.
+          <strong>Lifter &amp; Motor Caveat (*):</strong> The PCB runs the 10,000 Hz loop, 2.0 ms ohmic trigger, and zero-clamp step injection in silicon, but physical travel depends on your Z lifter (a 2&Prime; lifter gives 2&Prime; max, not 5&Prime;) and mechanical response depends on your motors. All speed and tracking numbers (&lt; 0.002&Prime; lag, 295 IPM UP, 150 IPM retract) come from <strong>Teknic ClearPath (2311S)</strong> servos; steppers work out of the box up to their speed ceiling.
         </div>
       </div>
     </section>
@@ -1576,7 +1576,7 @@
               True Hardware Summing-Junction Interceptor
             </div>
             <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 580px;">
-              Intercepts Z Step/Dir inline while passing <code class="mono-inline">X/Y/A/B/C</code> straight through in PCB copper (<strong style="color:#fff;">0 ns latency</strong>). Zero CNC plugins, zero lost DRO steps.
+              Intercepts Z Step/Dir inline while passing <code class="mono-inline">X/Y/A/B/C</code> straight through in PCB copper (<strong style="color:#fff;">0 ns latency</strong>). Zero CNC plugins. During a cut, physical Z tracks plate warps independently of your CNC&rsquo;s Z DRO, then unwinds its step offset back to host Z at <code class="mono-inline">M5</code>.
             </p>
           </div>
           <div class="arch-eq-formula">
@@ -1597,33 +1597,33 @@
             <tbody>
               <tr>
                 <td class="row-label">Closed-Loop Latency</td>
-                <td><span class="bad-pill">15–40 ms buffer delay</span> — forces detuned gains to prevent torch bounce</td>
+                <td><span class="bad-pill">15–40 ms buffer delay</span>: forces detuned gains to prevent torch bounce</td>
                 <td>Fast internal loop, locked to proprietary drive box</td>
-                <td class="col-smart"><span class="good-pill">100 µs (10,000 Hz) deterministic</span> — 16&times; oversampled ADC finishes in 90.35 µs</td>
+                <td class="col-smart"><span class="good-pill">100 µs (10,000 Hz) deterministic</span>: 16&times; oversampled ADC finishes in 90.35 µs</td>
               </tr>
               <tr>
                 <td class="row-label">Warped Plate Range</td>
-                <td><span class="bad-pill">Clamped to &plusmn;0.040&Prime;–&plusmn;0.500&Prime;</span> — dives or faults when plate bows past limit</td>
+                <td><span class="bad-pill">Clamped to &plusmn;0.040&Prime;–&plusmn;0.500&Prime;</span>: dives or faults when plate bows past limit</td>
                 <td>Full stroke, but requires replacing your Z actuator</td>
-                <td class="col-smart"><span class="good-pill">Zero software Z clamps</span> — uses 100% of your lifter stroke (&lt; 0.002&Prime; lag on ClearPath 2311S*)</td>
+                <td class="col-smart"><span class="good-pill">Zero software Z clamps</span>: uses 100% of your lifter stroke (&lt; 0.002&Prime; lag on ClearPath 2311S*)</td>
               </tr>
               <tr>
                 <td class="row-label">Tipped-Up Part Slugs</td>
-                <td><span class="bad-pill">Blind during freezes</span> — crashes torch off breakaway on kerfs &amp; corners</td>
+                <td><span class="bad-pill">Blind during freezes</span>: crashes torch off breakaway on kerfs &amp; corners</td>
                 <td>Relies on mechanical breakaway after physical collision</td>
-                <td class="col-smart"><span class="good-pill">2.0 ms ohmic trigger</span> — overrides freezes, instantly lifts torch (+1.0 mm @ 150 IPM on ClearPath 2311S*) &amp; holds feed</td>
+                <td class="col-smart"><span class="good-pill">2.0 ms ohmic trigger</span>: overrides freezes, instantly lifts torch (+1.0 mm @ 150 IPM on ClearPath 2311S*) &amp; holds feed</td>
               </tr>
               <tr>
                 <td class="row-label">Corners &amp; Old G-Code</td>
                 <td><span class="bad-pill">Dives on slowdown</span> unless every file has perfect M62/M63 macros</td>
                 <td>Requires custom CNC velocity analog/serial integration</td>
-                <td class="col-smart"><span class="good-pill">Auto-learns cruise speed</span> — locks Z below 80% feed or 0.08–0.10 G decel</td>
+                <td class="col-smart"><span class="good-pill">Auto-learns cruise speed</span>: locks Z below 80% feed or 0.08–0.10 G decel</td>
               </tr>
               <tr>
                 <td class="row-label">Motors &amp; Retrofit Cost</td>
                 <td>$0–$300 plugin, but wrecks $45 consumables weekly</td>
-                <td><span class="bad-pill">$1,500–$3,500+ USD</span> — forces you to discard working mechanics</td>
-                <td class="col-smart"><span class="good-pill">~$200 CAD target</span> — drops inline with 4 plugs; keep your existing steppers or servos</td>
+                <td><span class="bad-pill">$1,500–$3,500+ USD</span>: forces you to discard working mechanics</td>
+                <td class="col-smart"><span class="good-pill">~$200 CAD target</span>: drops inline with 4 plugs; keep your existing steppers or servos</td>
               </tr>
             </tbody>
           </table>
@@ -1640,7 +1640,7 @@
           <span class="section-kicker">02 // Six-Layer Crash Protection</span>
           <h2>Built for warped steel, tipped-up slugs, and worn electrodes.</h2>
           <p>
-            Every protection layer runs inside the 10 kHz hardware loop in silicon—tested on live flat-sheet and 20-foot rotary tables.
+            Every protection layer runs inside the 10 kHz hardware loop in silicon. Tested on live flat-sheet and 20-foot rotary tables.
           </p>
         </div>
 
@@ -1662,7 +1662,7 @@
             <span class="crash-badge cyan">Zero Macros Needed</span>
             <h3>Macro-Free Corner, Hole &amp; Kerf Anti-Dive</h3>
             <p>
-              Reads live step pulses and locks downward Z automatically when speed drops below 80% of cruise or deceleration hits 0.08–0.10 G. No post-processor macros or M-codes needed—even on legacy G-code.
+              Reads live step pulses and locks downward Z automatically when speed drops below 80% of cruise or deceleration hits 0.08–0.10 G. No post-processor macros or M-codes needed, even on legacy G-code.
             </p>
             <div class="crash-stat-footer">
               Up to 295 IPM UP (ClearPath 2311S) / 75 IPM DOWN &bull; Auto-adapts to FRO
@@ -1672,9 +1672,9 @@
           <!-- Card 3 -->
           <article class="crash-card">
             <span class="crash-badge emerald">Zero Z Clamps</span>
-            <h3>Zero Software Clamps — Uses Your Full Lifter Stroke</h3>
+            <h3>Zero Software Clamps: Uses Your Full Lifter Stroke</h3>
             <p>
-              Unlike software THCs clamped to &plusmn;0.5&Prime;, this board unlocks 100% of your lifter&rsquo;s physical stroke with zero artificial limits. A 1 kHz Bessel filter and upward slope integrator track severe warps without oscillation or lost DRO steps.
+              Unlike software THCs clamped to &plusmn;0.5&Prime;, this board unlocks 100% of your lifter&rsquo;s physical stroke with zero artificial limits. A 1 kHz Bessel filter and upward slope integrator track severe warps smoothly, then unwind the injected Z step offset back to host Z at <code class="mono-inline">M5</code>.
             </p>
             <div class="crash-stat-footer">
               &lt; 0.002&Prime; lag (ClearPath 2311S) &bull; 3rd-order S-curve jerk limited
@@ -1729,7 +1729,7 @@
           <span class="section-kicker">03 // Compatibility &amp; 15-Minute Cabinet Retrofit</span>
           <h2>Works with your table, your motors, and your plasma cutter.</h2>
           <p>
-            All field wiring uses positive-latching <strong>Molex Mini-Fit Jr.</strong> connectors—no loose screw terminals shaking out under high-G rapids. Start with 4 plugs in 15 minutes, or wire all 6 axes for full anti-dive protection.
+            All field wiring uses positive-latching <strong>Molex Mini-Fit Jr.</strong> connectors: no loose screw terminals shaking out under high-G rapids. Start with 4 plugs in 15 minutes, or wire all 6 axes for full anti-dive protection.
           </p>
         </div>
 
@@ -1788,7 +1788,7 @@
             </div>
             <h3>Minimum 4-Plug Retrofit</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Fastest drop-in upgrade for legacy tables—runs auto-voltage lock and wire-free Arc-OK out of the box:
+              Fastest drop-in upgrade for legacy tables: runs auto-voltage lock and wire-free Arc-OK out of the box:
             </p>
             <ul class="tier-list">
               <li><span class="plug-bullet">01</span><span><strong>PWR:</strong> +24V DC cabinet power.</span></li>
@@ -1943,7 +1943,7 @@
           <div class="terminal-card" aria-label="smart-thc CLI terminal example">
             <div class="terminal-bar">
               <div class="terminal-dots"><span></span><span></span><span></span></div>
-              <span class="mono" style="font-size: 0.72rem; color: var(--text-muted);">smart-thc — WaveShare TCP Bridge (192.168.1.200:4196)</span>
+              <span class="mono" style="font-size: 0.72rem; color: var(--text-muted);">smart-thc | WaveShare TCP Bridge (192.168.1.200:4196)</span>
             </div>
             <div class="terminal-body"><span class="t-prompt">$</span> <span class="t-cmd">smart-thc read -host 192.168.1.200</span>
 <span class="t-pass">[PASS]</span> Block A: Magic="TH" FW=v2.0 State=IDLE Uptime=14280s Fault=0x00
@@ -1980,7 +1980,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
       <div class="container">
         <div class="section-head">
           <span class="section-kicker">06 // Verified Hardware v2 &amp; Firmware v2.0 Specifications</span>
-          <h2>Every component, timing number, and isolation barrier—no black-box mystery.</h2>
+          <h2>Every component, timing number, and isolation barrier. No black-box mystery.</h2>
           <p>
             Built and tested on real CSMIO/IP-M, Mach3, and 20-foot rotary tables. For schematic and PCB history, <a href="build-guide.html#thc" style="color: var(--plasma-amber); text-decoration: underline;">see Section 06 of the 6-Meter Build Guide ↗</a>.
           </p>
@@ -2075,7 +2075,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               Want a ~$200 CAD 10 kHz Hardware THC in your cabinet?
             </h2>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-              Enter your shop email below. We&rsquo;re sizing the first production batch now—we&rsquo;ll send board specs, wiring pinouts, and early ordering access when Batch 1 opens.
+              Enter your shop email below. We&rsquo;re sizing the first production batch now. We&rsquo;ll send board specs, wiring pinouts, and early ordering access when Batch 1 opens.
             </p>
           </div>
 
@@ -2331,18 +2331,22 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               let col = new THREE.Color(c[0], c[1], c[2]);
               let polygonOffset = false, poFactor = 0, poUnits = 0;
               let isTransparent = false, opacityVal = 1.0;
+              let depthWrite = true, sideVal = THREE.DoubleSide, renderOrder = 0;
 
               switch (matType) {
                 case 'soldermask':
-                  col = new THREE.Color(0.04, 0.44, 0.14);
-                  roughness = 0.38; metalness = 0.04;
-                  isTransparent = true; opacityVal = 0.90;
+                  col = new THREE.Color(0.03, 0.46, 0.12);
+                  roughness = 0.34; metalness = 0.04;
+                  isTransparent = true; opacityVal = 0.52;
+                  depthWrite = false; sideVal = THREE.FrontSide;
                   polygonOffset = true; poFactor = -1.0; poUnits = -1.0;
+                  renderOrder = 2;
                   break;
                 case 'copper':
-                  col = new THREE.Color(0.96, 0.68, 0.12);
-                  roughness = 0.22; metalness = 0.88;
-                  polygonOffset = true; poFactor = 2.0; poUnits = 2.0;
+                  col = new THREE.Color(0.98, 0.74, 0.18);
+                  roughness = 0.22; metalness = 0.85;
+                  polygonOffset = true; poFactor = 1.0; poUnits = 1.0;
+                  renderOrder = 1;
                   break;
                 case 'metal':
                   col = new THREE.Color(0.85, 0.88, 0.92);
@@ -2362,31 +2366,37 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
                   roughness = 0.15; metalness = 0.10;
                   break;
                 case 'fr4':
-                  col = new THREE.Color(0.48, 0.42, 0.28);
-                  roughness = 0.70; metalness = 0.02;
+                  col = new THREE.Color(0.36, 0.31, 0.18);
+                  roughness = 0.75; metalness = 0.02;
                   polygonOffset = true; poFactor = 4.0; poUnits = 4.0;
+                  renderOrder = 0;
                   break;
                 case 'silkscreen':
                   col = new THREE.Color(1.0, 1.0, 1.0);
                   roughness = 0.30; metalness = 0.0;
                   polygonOffset = true; poFactor = -4.0; poUnits = -4.0;
+                  renderOrder = 3;
                   break;
                 default:
                   roughness = 0.55; metalness = 0.15;
                   break;
               }
 
-              pcbGroup.add(new THREE.Mesh(geom, new THREE.MeshStandardMaterial({
+              const mat = new THREE.MeshStandardMaterial({
                 color: col,
                 roughness: roughness,
                 metalness: metalness,
                 transparent: isTransparent,
                 opacity: opacityVal,
-                side: THREE.DoubleSide,
+                depthWrite: depthWrite,
+                side: sideVal,
                 polygonOffset: polygonOffset,
                 polygonOffsetFactor: poFactor,
                 polygonOffsetUnits: poUnits
-              })));
+              });
+              const mesh = new THREE.Mesh(geom, mat);
+              mesh.renderOrder = renderOrder;
+              pcbGroup.add(mesh);
             }
 
             if (silkscreenUrl && data.board) {
@@ -2512,7 +2522,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
             form.style.display = 'none';
             if (confirmEl) {
               confirmEl.innerHTML =
-                '<strong>✓ You&rsquo;re on the Batch 1 list</strong> &mdash; we&rsquo;ll email <code class="mono-inline">' +
+                '<strong>✓ You&rsquo;re on the Batch 1 list</strong>. We&rsquo;ll email <code class="mono-inline">' +
                 escapeHtml(email) +
                 '</code> when ~$200 CAD hardware units open.';
               confirmEl.classList.add('visible');

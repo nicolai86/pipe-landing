@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Rotary CNC Plasma Cutter v1 — Complete 6-Meter 4-Axis Build Guide | RotaryCAM</title>
-  <meta name="title" content="Rotary CNC Plasma Cutter v1 — Complete 6-Meter 4-Axis Build Guide | RotaryCAM" />
+  <title>Rotary CNC Plasma Cutter v1: Complete 6-Meter 4-Axis Build Guide | RotaryCAM</title>
+  <meta name="title" content="Rotary CNC Plasma Cutter v1: Complete 6-Meter 4-Axis Build Guide | RotaryCAM" />
   <meta name="description" content="Complete technical documentation, bill of materials, and interactive 3D CAD model for a 6-meter 4-axis rotary CNC plasma cutter built with CSLab IP-M, Teknic ClearPath servos, and dual chucks." />
   <meta name="keywords" content="rotary plasma build guide, DIY 4-axis plasma cutter, rotary CNC plasma BOM, Teknic ClearPath plasma, CSLab IP-M rotary plasma, ZCT200 rotary table, XSU080318 slewing bearing, SimCNC rotary kinematics, pipe plasma machine build" />
   <meta name="author" content="Raphael Randschau" />
@@ -17,13 +17,13 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://rotarycam.app/build-guide.html" />
   <meta property="og:site_name" content="RotaryCAM" />
-  <meta property="og:title" content="Rotary CNC Plasma Cutter v1 — 6-Meter 4-Axis Build Guide" />
+  <meta property="og:title" content="Rotary CNC Plasma Cutter v1: 6-Meter 4-Axis Build Guide" />
   <meta property="og:description" content="Open-hardware engineering blueprint, complete BOM, and interactive 3D CAD assembly for a 20ft 4-axis rotary CNC plasma table." />
   <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rotary CNC Plasma Cutter v1 — 6-Meter 4-Axis Build Guide" />
+  <meta name="twitter:title" content="Rotary CNC Plasma Cutter v1: 6-Meter 4-Axis Build Guide" />
   <meta name="twitter:description" content="Complete 4-axis rotary CNC plasma build guide: CSLab IP-M, Teknic ClearPath servos, dual synchronized chucks, and interactive 3D model." />
   <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
 
@@ -1428,7 +1428,7 @@
           <span class="card-badge cyan mono">HARDWARE CONTROLLER</span>
           <h3>CSLab CSMIO/IP-M 4-Axis Controller</h3>
           <p>
-            The control cabinet runs on a <strong>CSLab CSMIO/IP-M Ethernet motion controller</strong>, generating 125 kHz step/direction signals over galvanic Ethernet—zero PC jitter, zero USB dropouts.
+            The control cabinet runs on a <strong>CSLab CSMIO/IP-M Ethernet motion controller</strong>, generating 125 kHz step/direction signals over galvanic Ethernet: zero PC jitter, zero USB dropouts.
           </p>
           <p>
             Hardware <strong>24V opto-isolated I/O</strong> shields the controller from high-voltage plasma pilot arc interference and HF start spikes.
@@ -1448,7 +1448,7 @@
               How RotaryCAM Solves This (G94 &amp; G93 Controllers)
             </div>
             <p style="margin-bottom: 0.6rem;">
-              <strong>G94 controllers (units/min):</strong> RotaryCAM embeds <strong>true 4D surface speed</strong> directly into G-code, recalculating feedrates dynamically per segment to keep torch surface speed flat across flats and corner radii—no hardware changes.
+              <strong>G94 controllers (units/min):</strong> RotaryCAM embeds <strong>true 4D surface speed</strong> directly into G-code, recalculating feedrates dynamically per segment to keep torch surface speed flat across flats and corner radii with no hardware changes.
             </p>
             <p>
               <strong>G93 controllers (inverse time):</strong> RotaryCAM outputs native G93 reciprocal-time blocks (supported on Mach4, LinuxCNC, and Masso), where each block specifies the exact time needed for constant surface speed.
@@ -1641,7 +1641,7 @@
             Standard bearings fail fast under falling plasma dross and sparks. The front headstock uses an <strong>XSU080318 crossed roller slewing ring</strong>.
           </p>
           <p>
-            Alternating cylindrical rollers handle massive simultaneous radial, axial, and moment loads—rotating heavy pipe with zero radial play and zero deflection under torch downward pressure.
+            Alternating cylindrical rollers handle massive simultaneous radial, axial, and moment loads. They rotate heavy pipe with zero radial play and zero deflection under torch downward pressure.
           </p>
           <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem;">
             <a href="https://www.aliexpress.com/item/1005006498334475.html" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--plasma-amber); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">↗ Sourced on AliExpress (XSU080318)</a>
@@ -1748,7 +1748,7 @@
           </div>
           <h3 style="font-size: 1.28rem; color: #fff; margin-bottom: 0.4rem;">Want this 10,000 Hz Hardware THC on your CNC plasma table?</h3>
           <p style="color: var(--text-muted); font-size: 0.91rem; line-height: 1.58; margin: 0;">
-            Hardware v2 packages the DSP core into a compact <strong>82.5 &times; 89.8 mm 4-layer isolated board</strong>: 15&times; Molex Mini-Fit Jr. connectors, <strong>2.0 ms ohmic tip-up escape</strong>, macro-free XY(A) corner freeze, 4-axis tube cam feedforward, passive Powermax SYNC snooping, and a 20 KB flight recorder—compatible with any 5V RS-422 Step/Dir controller and stepper or ClearPath Z axis.
+            Hardware v2 packages the DSP core into a compact <strong>82.5 &times; 89.8 mm 4-layer isolated board</strong>: 15&times; Molex Mini-Fit Jr. connectors, <strong>2.0 ms ohmic tip-up escape</strong>, macro-free XY(A) corner freeze, 4-axis tube cam feedforward, passive Powermax SYNC snooping, and a 20 KB flight recorder. It is compatible with any 5V RS-422 Step/Dir controller and stepper or ClearPath Z axis.
           </p>
         </div>
         <a href="hardware-thc.html" class="primary-btn" style="padding: 0.8rem 1.35rem; font-size: 0.9rem; white-space: nowrap; text-decoration: none;">
@@ -1804,7 +1804,7 @@
                 <strong>Predictive dV/dt Anti-Dive:</strong> Freezes Z in milliseconds when crossing voids or prior kerfs, preventing torch crashes.
               </p>
               <p>
-                <strong>Zero-Drift Unwinding:</strong> Tracks injected THC microsteps and unwinds to true CNC coordinates at cut end—zero DRO drift.
+                <strong>Post-Cut Offset Unwinding:</strong> Counts every THC microstep injected during the cut (while physical Z tracks independently of the CNC DRO) and unwinds that offset back to host Z at cut end.
               </p>
             </div>
             <div class="pcb-specs-grid">
@@ -1867,7 +1867,7 @@
               <span class="card-badge amber mono">MODE 1 • PRODUCTION DEFAULT</span>
               <span class="mono" style="font-size: 0.75rem; color: var(--plasma-amber);">Dual ADC Architecture</span>
             </div>
-            <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">1. HYBRID_SAV (Default — EWMV Plateau Lock + Cut-Chart Sanity Window)</h3>
+            <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">1. HYBRID_SAV (Default: EWMV Plateau Lock + Cut-Chart Sanity Window)</h3>
             <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 1rem;">
               Reads live arc voltage on ADC and the CNC's cut-chart preset on ADC2 (from simCNC / <code>m3.py</code>). Driven by a statistical EWMV plateau engine, it combines the speed of sample-voltage with cut-chart safety bounds:
             </p>
@@ -1875,7 +1875,7 @@
               <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
                 <div class="mono" style="color: var(--plasma-cyan); font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem;">Statistical EWMV Plateau Lock</div>
                 <p style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0;">
-                  <strong>12–78 ms (41.5 ms mean):</strong> Instead of a fixed 150–500 ms delay timer after pierce, HYBRID_SAV computes real-time arc voltage variance at 10 kHz. Once the column stabilizes (&sigma;&sup2; &le; threshold for 10.0 ms), it locks target voltage in as little as 12 ms—tracking within 0.13" (3.3 mm) of reaching full XY cut speed.
+                  <strong>12–78 ms (41.5 ms mean):</strong> Instead of a fixed 150–500 ms delay timer after pierce, HYBRID_SAV computes real-time arc voltage variance at 10 kHz. Once the column stabilizes (&sigma;&sup2; &le; threshold for 10.0 ms), it locks target voltage in as little as 12 ms, tracking within 0.13" (3.3 mm) of reaching full XY cut speed.
                 </p>
               </div>
               <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
@@ -1938,7 +1938,7 @@
                 Inside fine regulation (|error| &le; 1.5 V), baseline gain of 3.06 mm/s/V keeps the torch calm on flat plate; scales smoothly to 6.80 mm/s/V with an upward-only leaky integrator on steep slopes.
               </p>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Eliminates uphill lag (&lt; 0.4 V steady-state lag on a 1.12" ramp) and fast-drains in &lt; 3 ms (&tau; = 0.64 ms) at crests. Downward tracking uses pure proportional control—zero downward windup, zero diving into voids.
+                Eliminates uphill lag (&lt; 0.4 V steady-state lag on a 1.12" ramp) and fast-drains in &lt; 3 ms (&tau; = 0.64 ms) at crests. Downward tracking uses pure proportional control: zero downward windup, zero diving into voids.
               </p>
             </div>
 
@@ -1954,7 +1954,7 @@
               <span class="card-badge mono">POSITION INTEGRITY</span>
               <h3>3rd-Order S-Curve Profiler &amp; Baseline Return</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Enforces machine velocity, acceleration, and jerk limits in hardware on tracking and return. Unwinds injected THC steps at cut end so the CNC controller DRO never drifts.
+                Enforces machine velocity, acceleration, and jerk limits in hardware on tracking and return. While physical Z moves independently of the CNC DRO during active tracking, the board unwinds its injected step offset back to host Z at cut end.
               </p>
             </div>
           </div>
@@ -2045,11 +2045,11 @@
             <div style="font-size: 0.8rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.75rem;">
               <strong>Published Documentation References:</strong>
               <ul style="margin: 0.35rem 0 0 1.25rem; padding: 0;">
-                <li id="ref-1"><strong>[1] Hypertherm® ArcGlide® THC:</strong> <a href="https://www.hypertherm.com" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Manual (P/N 806450, Rev 5) ↗</a> — Accel Delay, Sample Arc Voltage (<code>SV1</code>), 600 IPM lifter mechanics, magnetic breakaway.</li>
-                <li id="ref-2"><strong>[2] Lincoln Electric® / Burny® INOVA THC:</strong> <a href="https://www.lincolnelectric.com" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Spec Sheet (BK4.15) &amp; Manual Rev K ↗</a> — DSP servo loop holding arc voltage within <strong>&plusmn;0.4 V</strong>, 0.001" height resolution.</li>
-                <li id="ref-3"><strong>[3] LinuxCNC™ QtPlasmaC:</strong> <a href="http://linuxcnc.org/docs/html/plasma/qtplasmac.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">QtPlasmaC Guide &amp; HAL Reference ↗</a> — 1 kHz <code>servo-thread</code>, Mesa THCAD, <code>Use Auto Volts</code>, <code>THC Delay</code>.</li>
-                <li id="ref-4"><strong>[4] CS-Lab® CSMIO/IP &amp; simCNC™:</strong> <a href="https://en.cs-lab.eu/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">CS-Lab Docs ↗</a> — 0–10 V Smart Analog THC, parameter 4090 target voltage, <code>THC voltage deadband</code>.</li>
-                <li id="ref-5"><strong>[5] Warp9TD® Ethernet SmoothStepper:</strong> <a href="https://warp9td.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Warp9TD Tech Notes ↗</a> — FIFO trajectory queue latency (15–40 ms) and real-time response limits.</li>
+                <li id="ref-1"><strong>[1] Hypertherm® ArcGlide® THC:</strong> <a href="https://www.hypertherm.com" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Manual (P/N 806450, Rev 5) ↗</a>: Accel Delay, Sample Arc Voltage (<code>SV1</code>), 600 IPM lifter mechanics, magnetic breakaway.</li>
+                <li id="ref-2"><strong>[2] Lincoln Electric® / Burny® INOVA THC:</strong> <a href="https://www.lincolnelectric.com" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Spec Sheet (BK4.15) &amp; Manual Rev K ↗</a>: DSP servo loop holding arc voltage within <strong>&plusmn;0.4 V</strong>, 0.001" height resolution.</li>
+                <li id="ref-3"><strong>[3] LinuxCNC™ QtPlasmaC:</strong> <a href="http://linuxcnc.org/docs/html/plasma/qtplasmac.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">QtPlasmaC Guide &amp; HAL Reference ↗</a>: 1 kHz <code>servo-thread</code>, Mesa THCAD, <code>Use Auto Volts</code>, <code>THC Delay</code>.</li>
+                <li id="ref-4"><strong>[4] CS-Lab® CSMIO/IP &amp; simCNC™:</strong> <a href="https://en.cs-lab.eu/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">CS-Lab Docs ↗</a>: 0–10 V Smart Analog THC, parameter 4090 target voltage, <code>THC voltage deadband</code>.</li>
+                <li id="ref-5"><strong>[5] Warp9TD® Ethernet SmoothStepper:</strong> <a href="https://warp9td.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Warp9TD Tech Notes ↗</a>: FIFO trajectory queue latency (15–40 ms) and real-time response limits.</li>
               </ul>
             </div>
 
@@ -2729,7 +2729,7 @@
             <strong>Direct order from JLCPCB CNC machining.</strong>
           </p>
           <p>
-            All custom 6061-T6 aluminum plates were uploaded to JLCPCB's online CNC portal—no manual milling needed.
+            All custom 6061-T6 aluminum plates were uploaded to JLCPCB's online CNC portal with no manual milling needed.
           </p>
           <p>
             Download the <a href="assets/V1.zip" download style="color: var(--plasma-amber); font-weight: 600;">JLCPCB Machining Package (V1.zip)</a> above for 1-click quoting (STEP files, drawings, and BOM counts). The <a href="https://www.aliexpress.com/item/1005008398317265.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">ZCT200 10:1 actuator ↗</a> and <a href="https://www.aliexpress.com/item/1005006498334475.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">XSU080318 slewing ring ↗</a> were ordered on AliExpress.
@@ -2848,7 +2848,7 @@
             The continuous 5" × 3" × 1/4" HSS spine delivers unbeatable rigidity and vibration damping. But mounting 6 meters of HGH25 linear rails (spaced every 60 mm) and Module 1.5 helical gear racks required hundreds of precision tapped holes. Even with magnetic drill guides and spiral-point machine taps, keeping centerlines straight across 20 feet of steel was exhausting.
           </p>
           <p style="margin-bottom: 0;">
-            <strong>What I’d do for v2 (or recommend to builders):</strong> Either build the spine from heavy <strong>80×160 mm structural aluminum extrusion</strong> (rails and racks bolt straight into T-slots with roll-in nuts—zero drilling or tapping), or send the raw steel beam to a machine shop with a long-bed gantry mill to CNC drill, thread-mill, and face reference surfaces in a single setup.
+            <strong>What I’d do for v2 (or recommend to builders):</strong> Either build the spine from heavy <strong>80×160 mm structural aluminum extrusion</strong> (rails and racks bolt straight into T-slots with roll-in nuts: zero drilling or tapping), or send the raw steel beam to a machine shop with a long-bed gantry mill to CNC drill, thread-mill, and face reference surfaces in a single setup.
           </p>
         </div>
       </div>
@@ -3667,25 +3667,30 @@
 
               let isTransparent = false;
               let opacityVal = 1.0;
+              let depthWrite = true, sideVal = THREE.DoubleSide, renderOrder = 0;
 
               switch (matType) {
                 case 'soldermask':
-                  col = new THREE.Color(0.04, 0.44, 0.14); // Authentic Fusion emerald green
-                  roughness = 0.38;
+                  col = new THREE.Color(0.03, 0.46, 0.12);
+                  roughness = 0.34;
                   metalness = 0.04;
                   isTransparent = true;
-                  opacityVal = 0.90; // Subtle translucency to reveal copper trace relief beneath
+                  opacityVal = 0.52;
+                  depthWrite = false;
+                  sideVal = THREE.FrontSide;
                   polygonOffset = true;
-                  poFactor = -1.0; // In FRONT of copper, covering the board
+                  poFactor = -1.0;
                   poUnits = -1.0;
+                  renderOrder = 2;
                   break;
                 case 'copper':
-                  col = new THREE.Color(0.96, 0.68, 0.12); // Lustrous metallic gold/amber copper
+                  col = new THREE.Color(0.98, 0.74, 0.18);
                   roughness = 0.22;
-                  metalness = 0.88;
+                  metalness = 0.85;
                   polygonOffset = true;
-                  poFactor = 2.0; // Sits BEHIND the green soldermask
-                  poUnits = 2.0;
+                  poFactor = 1.0;
+                  poUnits = 1.0;
+                  renderOrder = 1;
                   break;
                 case 'metal':
                   col = new THREE.Color(0.85, 0.88, 0.92); // Satin silver leads, pins, and solder
@@ -3711,20 +3716,22 @@
                   metalness = 0.10;
                   break;
                 case 'fr4':
-                  col = new THREE.Color(0.48, 0.42, 0.28); // Natural composite FR-4 substrate edge
-                  roughness = 0.70;
+                  col = new THREE.Color(0.36, 0.31, 0.18);
+                  roughness = 0.75;
                   metalness = 0.02;
                   polygonOffset = true;
-                  poFactor = 4.0; // At the very bottom
+                  poFactor = 4.0;
                   poUnits = 4.0;
+                  renderOrder = 0;
                   break;
                 case 'silkscreen':
                   col = new THREE.Color(1.0, 1.0, 1.0); // White component markings
                   roughness = 0.30;
                   metalness = 0.0;
                   polygonOffset = true;
-                  poFactor = -4.0; // Above soldermask
+                  poFactor = -4.0;
                   poUnits = -4.0;
+                  renderOrder = 3;
                   break;
                 default:
                   roughness = 0.55;
@@ -3738,13 +3745,15 @@
                 metalness: metalness,
                 transparent: isTransparent,
                 opacity: opacityVal,
-                side: THREE.DoubleSide,
+                depthWrite: depthWrite,
+                side: sideVal,
                 polygonOffset: polygonOffset,
                 polygonOffsetFactor: poFactor,
                 polygonOffsetUnits: poUnits
               });
 
               const mesh = new THREE.Mesh(geom, mat);
+              mesh.renderOrder = renderOrder;
               pcbGroup.add(mesh);
             }
 

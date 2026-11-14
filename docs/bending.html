@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>04. Bending HSS & HSS-O Sticks — RotaryCAM Documentation</title>
+  <title>04. Bending HSS & HSS-O Sticks | RotaryCAM Documentation</title>
   <meta name="description" content="Step-by-step guide to RotaryCAM's Cut-and-Bend unfolding workflow for square/rectangular HSS and round HSS-O sticks: load a bent tube STEP file, expand relief kerf cuts, customize cut counts and living-hinge spine width (Edge Left), preview the unfolded straight stick in 3D, and export G-code." />
 
   <!-- Fonts -->
@@ -514,7 +514,7 @@
         <div class="doc-intro-card">
           <h2>Cut-and-Bend Kerf Relief Unfolding for HSS &amp; Round Pipe</h2>
           <p>
-            Want to build roll cages, bumpers, or chassis hoops without an expensive mandrel bender? RotaryCAM's <strong>Cut-and-Bend</strong> lets you fold bent tubing by hand from straight stock. Drop your 3D bent tube model directly into RotaryCAM. It detects every bend along the tube centerline, unrolls the curved shape onto a straight stick of square HSS or round pipe, and cuts precision pie-slice relief wedges through three walls—leaving an uncut spine along the fourth wall to act as a solid hinge. After cutting, simply pull the bend shut by hand and weld the seams flush with zero grinder fitup.
+            Want to build roll cages, bumpers, or chassis hoops without an expensive mandrel bender? RotaryCAM's <strong>Cut-and-Bend</strong> lets you fold bent tubing by hand from straight stock. Drop your 3D bent tube model directly into RotaryCAM. It detects every bend along the tube centerline, unrolls the curved shape onto a straight stick of square HSS or round pipe, and cuts precision pie-slice relief wedges through three walls, leaving an uncut spine along the fourth wall to act as a solid hinge. After cutting, simply pull the bend shut by hand and weld the seams flush with zero grinder fitup.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -553,7 +553,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Selecting 'HSS Bending [CUT &amp; BEND]' from the left Quick CAD Fixtures panel</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Selecting 'HSS Bending [CUT &amp; BEND]' from the left Quick CAD Fixtures panel</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -577,13 +577,13 @@
             </p>
             <ul class="doc-bullet-list">
               <li>In the bottom feature table, each detected bend is grouped into an interactive collapsible row (<code class="mono">Bend #1</code>, <code class="mono">Bend #2</code>, <code class="mono">Bend #3</code>) showing its bend angle (<span class="ui-chip">BEND 32.5°</span>), bend radius (<code class="mono">R=145.0mm</code>), axial X span (<code class="mono">1384–1466 mm</code>), and spine orientation (<code class="mono">180.0° / Spine 0°</code>).</li>
-              <li>Locate <span class="ui-chip">Bend #1</span> (the first bend group) and click the <span class="ui-chip">▸ Cuts (3)</span> button on the right side of the row—right next to <code class="mono">⚙ Bend</code> and <code class="mono">Save</code>.</li>
+              <li>Locate <span class="ui-chip">Bend #1</span> (the first bend group) and click the <span class="ui-chip">▸ Cuts (3)</span> button on the right side of the row, right next to <code class="mono">⚙ Bend</code> and <code class="mono">Save</code>.</li>
             </ul>
           </div>
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Selecting Bend #1 (32.5°, R=145.0mm) and clicking '▸ Cuts (3)' next to Config</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2: Selecting Bend #1 (32.5°, R=145.0mm) and clicking '▸ Cuts (3)' next to Config</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -618,7 +618,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Viewing the expanded relief cuts (Cut 1/3..3/3) and inline Cuts / Edge Left controls</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3: Viewing the expanded relief cuts (Cut 1/3..3/3) and inline Cuts / Edge Left controls</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -638,7 +638,7 @@
 
           <div class="doc-step-body">
             <p>
-              For a smoother bend radius with smaller per-slot wedge angles—and a wider uncut spine bridge along the back face—let's update <code class="mono">Bend #1</code>:
+              For a smoother bend radius with smaller per-slot wedge angles, and a wider uncut spine bridge along the back face, let's update <code class="mono">Bend #1</code>:
             </p>
             <ul class="doc-bullet-list">
               <li>Change <strong><code class="mono">Cuts</code></strong> from <code class="mono">3</code> to <span class="ui-chip">5</span>.</li>
@@ -650,7 +650,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — Changing Cuts to 5 and Edge Left to 30.0 mm, saving, and clicking 3D Cut Simulation</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4: Changing Cuts to 5 and Edge Left to 30.0 mm, saving, and clicking 3D Cut Simulation</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -680,14 +680,14 @@
             <div class="doc-callout tip">
               <div class="doc-callout-title">✓ Works on Both Square/Rectangular HSS &amp; Round Pipe (HSS-O)</div>
               <p>
-                Whether your CAD model uses square/rectangular structural tubing (<code class="mono">HSS</code>) or round pipe (<code class="mono">HSS-O</code>), RotaryCAM's Cut-and-Bend engine projects the relief cut geometry around the tube walls—with corner relief on square tube and rotary unwrap on round pipe—so thick walls won't pinch or bind when folded shut.
+                Whether your CAD model uses square/rectangular structural tubing (<code class="mono">HSS</code>) or round pipe (<code class="mono">HSS-O</code>), RotaryCAM's Cut-and-Bend engine projects the relief cut geometry around the tube walls (with corner relief on square tube and rotary unwrap on round pipe) so thick walls won't pinch or bind when folded shut.
               </p>
             </div>
           </div>
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Inspecting the unfolded straight stick in 3D Cut Simulation and clicking '⬇ Download'</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5: Inspecting the unfolded straight stick in 3D Cut Simulation and clicking '⬇ Download'</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">

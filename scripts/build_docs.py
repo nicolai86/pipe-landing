@@ -53,7 +53,7 @@ TUTORIALS = [
         "sidebar_label": "Machine Configuration",
         "footer_label": "Machine Configuration",
         "breadcrumb_title": "Basic Machine Configuration",
-        "meta_title": "01. Basic Machine Configuration — RotaryCAM Documentation",
+        "meta_title": "01. Basic Machine Configuration | RotaryCAM Documentation",
         "meta_description": "Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in RotaryCAM.",
         "hero_title_html": 'Basic <span class="text-gradient-amber">Machine Configuration</span>',
         "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 12 major controllers.',
@@ -94,7 +94,7 @@ TUTORIALS = [
         "sidebar_label": "UI & Cut Path Config",
         "footer_label": "Cut Path Configuration",
         "breadcrumb_title": "UI Layout & STEP Cut Path Configuration",
-        "meta_title": "02. UI Layout & STEP File Cut Path Configuration — RotaryCAM Documentation",
+        "meta_title": "02. UI Layout & STEP File Cut Path Configuration | RotaryCAM Documentation",
         "meta_description": "Step-by-step visual guide to RotaryCAM's 3D CAD assembly inspector, per-contour lead-in/lead-out settings, Zero-Bevel Dual-Curve saddle compensation, and 4-axis 3D toolpath simulation.",
         "hero_title_html": 'UI Layout &amp; <span class="text-gradient-amber">STEP Cut Path Configuration</span>',
         "hero_subtitle_html": 'Learn how to load a multi-body STEP file, switch between solids in the 3D assembly overview, inspect and customize individual cut contours (<code class="mono">STARTCUT</code>, <code class="mono">ENDCUT</code>, <code class="mono">CUTOUT</code>), apply Zero-Bevel Dual-Curve saddle compensation, and verify the 4-axis toolpath in 3D simulation.',
@@ -137,7 +137,7 @@ TUTORIALS = [
         "sidebar_label": "Multi-Part Stick Nesting",
         "footer_label": "Multi-Part Nesting",
         "breadcrumb_title": "Multi-Part Stick Nesting",
-        "meta_title": "03. Multi-Part Stick Nesting — RotaryCAM Documentation",
+        "meta_title": "03. Multi-Part Stick Nesting | RotaryCAM Documentation",
         "meta_description": "Step-by-step guide to RotaryCAM's Multi-Part Pack Nesting: load a 37-part STEP assembly, filter by cross-section profile, pack 17 parts across multiple 6000 mm sticks at 99.8% efficiency, and export per-stick G-code.",
         "hero_title_html": 'Multi-Part <span class="text-gradient-amber">Stick Nesting</span>',
         "hero_subtitle_html": 'How to load a complex multi-body STEP weldment, group tubes by cross-section profile, automatically pack 17 parts across multiple <code class="mono">6000 mm</code> raw stock sticks at <code class="mono">99.8%</code> material utilization, and export per-stick G-code programs.',
@@ -178,7 +178,7 @@ TUTORIALS = [
         "sidebar_label": "Bending HSS & HSS-O",
         "footer_label": "Bending HSS & HSS-O",
         "breadcrumb_title": "Bending HSS & HSS-O Sticks",
-        "meta_title": "04. Bending HSS & HSS-O Sticks — RotaryCAM Documentation",
+        "meta_title": "04. Bending HSS & HSS-O Sticks | RotaryCAM Documentation",
         "meta_description": "Step-by-step guide to RotaryCAM's Cut-and-Bend unfolding workflow for square/rectangular HSS and round HSS-O sticks: load a bent tube STEP file, expand relief kerf cuts, customize cut counts and living-hinge spine width (Edge Left), preview the unfolded straight stick in 3D, and export G-code.",
         "hero_title_html": 'Bending <span class="text-gradient-amber">HSS &amp; HSS-O Sticks</span>',
         "hero_subtitle_html": 'How to load a 3D bent tube STEP model, automatically unfold its centerline into a straight stick with kerf-bending relief cuts, customize the number of relief cuts (<code class="mono">3 → 5</code>) and the uncut spine bridge width (<code class="mono">Edge Left: 30 mm</code>), preview the unfolded straight stick in 3D simulation, and download shop-ready G-code.',
@@ -218,10 +218,10 @@ TUTORIALS = [
         "sidebar_label": "Build Info & Changelog",
         "footer_label": "Build Info & Changelog",
         "breadcrumb_title": "Build Information & Changelog",
-        "meta_title": "05. Build Information & Changelog — RotaryCAM Documentation",
+        "meta_title": "05. Build Information & Changelog | RotaryCAM Documentation",
         "meta_description": "How to access RotaryCAM's built-in About modal, verify your version and Git commit hash, locate saved machine profiles and cut charts across macOS, Windows, and Linux, review release notes, and copy diagnostics.",
         "hero_title_html": 'Build Information &amp; <span class="text-gradient-amber">Changelog</span>',
-        "hero_subtitle_html": 'How to verify your running RotaryCAM version, Git commit hash, UTC build timestamp, platform architecture, and release changelog directly inside the application—and copy one-click diagnostics when reporting shop-floor feedback.',
+        "hero_subtitle_html": 'How to verify your running RotaryCAM version, Git commit hash, UTC build timestamp, platform architecture, and release changelog directly inside the application, and copy one-click diagnostics when reporting shop-floor feedback.',
         "steps_count": 3,
         "steps_label": "3 Steps • Diagnostics & Storage",
         "meta_pills": [
@@ -257,7 +257,7 @@ TUTORIALS = [
         "sidebar_label": "Fusion 360 & AI Autodetect",
         "footer_label": "Fusion 360 & AI Autodetect",
         "breadcrumb_title": "Fusion 360 & AI Profile Autodetection",
-        "meta_title": "06. Modeling in Fusion 360 for AI Profile Autodetection — RotaryCAM Documentation",
+        "meta_title": "06. Modeling in Fusion 360 for AI Profile Autodetection | RotaryCAM Documentation",
         "meta_description": "Step-by-step guide to modeling tube and pipe assemblies in Autodesk Fusion 360 using the Structural Member (SM) plugin so RotaryCAM automatically detects tube profiles, sizes, and wall thicknesses straight out of CAD.",
         "hero_title_html": 'Fusion 360 &amp; <span class="text-gradient-amber">AI Profile Autodetection</span>',
         "hero_subtitle_html": 'How to model tube and pipe structures in <strong>Autodesk Fusion 360</strong> using the <strong>Structural Member (<code class="mono">SM</code>)</strong> plugin so that RotaryCAM automatically recognizes every tube profile, wall thickness, and bend centerline straight out of CAD.',
@@ -300,7 +300,7 @@ TUTORIALS = [
         "sidebar_label": "SimCNC Motion-Sync & 3D Ramp",
         "footer_label": "SimCNC Motion-Sync & Ramp",
         "breadcrumb_title": "SimCNC Motion-Synchronized Torch & 3D Ramp Lead-Ins",
-        "meta_title": "07. SimCNC Motion-Synchronized Torch On/Off & 3D Ramp Lead-Ins — RotaryCAM Documentation",
+        "meta_title": "07. SimCNC Motion-Synchronized Torch On/Off & 3D Ramp Lead-Ins | RotaryCAM Documentation",
         "meta_description": "Complete technical implementation guide to achieving motion-synchronized torch ignition/extinguish (M62/M63 P1), hardware THC locking (M62/M63 P0), direct CSMIO/IP-M Arc OK polling, and 3D Ramp Lead-Ins in CSLab SimCNC for RotaryCAM.",
         "hero_title_html": 'SimCNC Motion-Synchronized <span class="text-gradient-amber">Torch On/Off &amp; 3D Ramp Lead-Ins</span>',
         "hero_subtitle_html": 'How to configure CSLab SimCNC (<code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, <code class="mono">m5.py</code>) and the <strong>RotaryCAM Post-Processor</strong> for sub-millisecond <code class="mono">M62/M63</code> trajectory-synchronized torch switching, direct CSMIO/IP-M <code class="mono">Arc OK</code> polling, <strong>Zero-Overburn Early Torch-Out</strong>, and <strong>3D Ramp Lead-Ins</strong>.',
@@ -342,7 +342,7 @@ TUTORIALS = [
               </div>
             </div>""",
         "hub_title": "SimCNC Motion-Sync Torch &amp; 3D Ramp Lead-Ins",
-        "hub_desc": "Configure SimCNC's `ExternalTrajCtrl` (`M62/M63 P0/P1`), direct CSMIO/IP-M `Arc OK` polling, and `___CONF.py` / `m3.py` / `m5.py` macros—required for RotaryCAM's 3D Ramp Lead-In and Zero-Overburn Early Extinguish features.",
+        "hub_desc": "Configure SimCNC's `ExternalTrajCtrl` (`M62/M63 P0/P1`), direct CSMIO/IP-M `Arc OK` polling, and `___CONF.py` / `m3.py` / `m5.py` macros. These are required for RotaryCAM's 3D Ramp Lead-In and Zero-Overburn Early Extinguish features.",
         "hub_topics": [
             "Reassigning Torch Fire (`P1`) &amp; THC Lock (`P0`) to `ExtTrajSyncOut`",
             "Solving SimCNC's stationary `M62/M63` constraint via `<1.5 ms` Z micro-wiggle",
@@ -360,7 +360,7 @@ TUTORIALS = [
         "sidebar_label": "Cut Charts & Feature Toggles",
         "footer_label": "Cut Charts & Feature Toggles",
         "breadcrumb_title": "Plasma Cut Charts & Feature Toggling",
-        "meta_title": "08. Plasma Cut Charts, Torch Settings & Feature Toggling — RotaryCAM Documentation",
+        "meta_title": "08. Plasma Cut Charts, Torch Settings & Feature Toggling | RotaryCAM Documentation",
         "meta_description": "Complete guide to RotaryCAM's 1,025 built-in plasma cut presets across 3 torch families (Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma), automatic wall-thickness matching, unit-aware CSV cut chart import and export, custom preset editing, and selective feature omission in 3D tube inspection.",
         "hero_title_html": 'Plasma Cut Charts, Torch Settings &amp; <span class="text-gradient-amber">Feature Toggling</span>',
         "hero_subtitle_html": 'How to utilize RotaryCAM&rsquo;s 1,025 built-in cut presets across 3 plasma torch families (Hypertherm SYNC 3.2&nbsp;mm, Hypertherm Duramax 1.5&nbsp;mm, and Generic Air Plasma 1.5&nbsp;mm), import and export shop cut charts via unit-aware CSV, match cut parameters automatically to detected STEP wall thickness, create and edit custom shop presets, and selectively toggle holes, slots, or cutouts without touching CAD.',
@@ -402,7 +402,7 @@ TUTORIALS = [
         "sidebar_label": "Offline MCP & AI Automation",
         "footer_label": "Offline MCP & AI Automation",
         "breadcrumb_title": "Offline Model Context Protocol (MCP) & AI Automation",
-        "meta_title": "09. Offline Model Context Protocol (MCP) & AI Automation — RotaryCAM Documentation",
+        "meta_title": "09. Offline Model Context Protocol (MCP) & AI Automation | RotaryCAM Documentation",
         "meta_description": "Step-by-step guide to RotaryCAM's 100% offline Model Context Protocol (MCP) server: connect Claude Desktop, Cursor, or LM Studio, run first-principles drive math, analyze STEP CAD files, apply zero-bevel copes, and emit production G-code air-gapped.",
         "hero_title_html": 'Offline Model Context Protocol (MCP) &amp; <span class="text-gradient-amber">AI Automation</span>',
         "hero_subtitle_html": 'How to connect local AI coding assistants (Claude Desktop, Cursor, LM Studio) to RotaryCAM&rsquo;s 100% offline MCP stdio server (<code class="mono">rotarycam-mcp</code>), calculate drive kinematics with first-principles physics, inspect STEP CAD solids, apply dual-curve zero-bevel compensation, and emit shop-ready G-code without sending a single byte to the cloud.',
@@ -456,7 +456,7 @@ TUTORIALS = [
         "sidebar_label": "DXF/SVG & Imperial Units",
         "footer_label": "DXF/SVG Flat-Sheet CAM",
         "breadcrumb_title": "Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial G20 G-Code",
-        "meta_title": "10. Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial Units — RotaryCAM Documentation",
+        "meta_title": "10. Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial Units | RotaryCAM Documentation",
         "meta_description": "Step-by-step visual guide to importing multi-file DXF/SVG flat-sheet parts, setting sheet thickness, fixing drawing scale with magnetic 2-point snapping, nesting 2D plates, and emitting native G20 Imperial or G21 Metric G-code in RotaryCAM.",
         "hero_title_html": 'Multi-File DXF &amp; SVG <span class="text-gradient-amber">Flat-Sheet CAM &amp; Imperial Units</span>',
         "hero_subtitle_html": 'How to drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> bracket drawings onto your plasma table (or launch the built-in <code class="mono">Flat Sheet DXF Kit</code>), confirm sheet thickness to unlock cut charts, fix unknown drawing scale with magnetic 2-point snapping, nest kits onto sheets with recursive cutout nesting &amp; 2D common-line cutting, and export native <code class="mono">G20</code> (Imperial) or <code class="mono">G21</code> (Metric) G-code.',
@@ -497,7 +497,7 @@ TUTORIALS = [
         "sidebar_label": "G94, G93 & G20/G21 Feeds",
         "footer_label": "Rotary & Sheet Feedrates",
         "breadcrumb_title": "Understanding G94, G93 Inverse-Time & G20/G21 Feedrates",
-        "meta_title": "11. Understanding G94, G93 Inverse-Time & G20/G21 Feedrates — RotaryCAM Documentation",
+        "meta_title": "11. Understanding G94, G93 Inverse-Time & G20/G21 Feedrates | RotaryCAM Documentation",
         "meta_description": "Practical fabricator guide to CNC plasma feedrates: G94 distance-per-minute on flat plate and 3-axis Y-wrap, G93 inverse-time on 4-axis rotary tubes, SimCNC 4D vector scaling, and why G93 F stays identical in G20 Imperial and G21 Metric.",
         "hero_title_html": 'Understanding <span class="text-gradient-amber">G94, G93 Inverse-Time &amp; G20/G21 Feedrates</span>',
         "hero_subtitle_html": 'Why flat-sheet <code class="mono">F</code> numbers drop by <code class="mono">25.4&times;</code> when switching from <code class="mono">mm</code> to <code class="mono">inches</code>, why rotary <code class="mono">G93</code> <code class="mono">F</code> numbers stay 100% identical, how SimCNC 4D trajectory spoofing works, and how to verify G-code before striking an arc.',
@@ -576,7 +576,7 @@ def build_all_docs():
     # 1. Render docs/index.html
     index_page = {
         "slug": "index",
-        "meta_title": "Documentation & Workflows — RotaryCAM | 4-Axis Rotary CNC Plasma CAM",
+        "meta_title": "Documentation & Workflows: RotaryCAM | 4-Axis Rotary CNC Plasma CAM",
         "meta_description": "Step-by-step visual documentation and shop tutorials for RotaryCAM: 4-axis machine setup, 3D STEP cut-path inspection, zero-bevel saddle compensation, multi-stick nesting, HSS & round pipe Cut-and-Bend unfolding, Fusion 360 modeling, and SimCNC motion-sync torch control.",
         "has_lightbox": False,
     }
@@ -642,10 +642,41 @@ def verify_links_and_assets():
         for src_file, attr, val, target in missing:
             print(f"[ERROR] Broken {attr}=\"{val}\" in {src_file} -> {target}", file=sys.stderr)
         sys.exit(1)
-    print(f"[verify] Verified {checked} internal href/src references across {len(html_files)} HTML files — 0 broken links!")
+    print(f"[verify] Verified {checked} internal href/src references across {len(html_files)} HTML files: 0 broken links!")
+
+
+def verify_zero_em_dashes():
+    html_files = [
+        ROOT_DIR / "index.html",
+        ROOT_DIR / "build-guide.html",
+        ROOT_DIR / "changelog.html",
+        ROOT_DIR / "hardware-thc.html",
+        DOCS_OUT_DIR / "index.html",
+    ] + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
+
+    # Copywriting Rule #5: strictly ban em-dashes
+    em_dash_pattern = re.compile(rf"([{chr(8212)}]|&{'md' + 'ash'};|&{'#82' + '12'};|&{'#x20' + '14'};)")
+    violations = []
+    checked_files = 0
+    for f in html_files:
+        if not f.exists():
+            continue
+        checked_files += 1
+        text = f.read_text(encoding="utf-8")
+        for line_no, line in enumerate(text.splitlines(), start=1):
+            m = em_dash_pattern.search(line)
+            if m:
+                violations.append((f.relative_to(ROOT_DIR), line_no, m.group(1), line.strip()))
+
+    if violations:
+        for rel_path, line_no, sym, line in violations:
+            print(f"[ERROR] Copywriting Rule #5 violation (em-dash '{sym}') in {rel_path}:{line_no}: {line[:100]}", file=sys.stderr)
+        sys.exit(1)
+    print(f"[verify] Copywriting Rule #5 verified: 0 em-dashes across {checked_files} HTML files!")
 
 
 if __name__ == "__main__":
     build_all_docs()
     if "--verify" in sys.argv:
         verify_links_and_assets()
+        verify_zero_em_dashes()

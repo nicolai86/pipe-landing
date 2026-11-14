@@ -44,7 +44,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Opening Machine Profiles &amp; Kinematics from the left sidebar or top bar</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Opening Machine Profiles &amp; Kinematics from the left sidebar or top bar</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -69,7 +69,7 @@
             <ul class="doc-bullet-list">
               <li><strong>Rotary Drive Ratio &amp; Direction:</strong> Specify your chuck reduction ratio (e.g., <code class="mono">10:1 Rotary</code>) and whether <code class="mono">+A</code> rotation follows right-hand or inverted conventions.</li>
               <li><strong>Linear Axes (<code class="mono">X / Y / Z</code>) Limits:</strong> Set the true maximum rapid velocity (<code class="mono">mm/min</code>), maximum acceleration (<code class="mono">mm/s²</code>), and S-curve jerk (<code class="mono">mm/s³</code>) your drives can sustain without losing steps or faulting.</li>
-              <li><strong>Rotary Chuck (<code class="mono">A-Axis</code>) Limits:</strong> Set the maximum rotational speed (<code class="mono">deg/min</code>, e.g., <code class="mono">36000°/min</code> = 100 RPM), angular acceleration (<code class="mono">deg/s²</code>), and angular jerk (<code class="mono">deg/s³</code>). During rectangular tube corner transitions, chuck rotation is almost always the physical bottleneck—RotaryCAM uses these limits to smooth out corner speeds so your steppers or servos never lose steps.</li>
+              <li><strong>Rotary Chuck (<code class="mono">A-Axis</code>) Limits:</strong> Set the maximum rotational speed (<code class="mono">deg/min</code>, e.g., <code class="mono">36000°/min</code> = 100 RPM), angular acceleration (<code class="mono">deg/s²</code>), and angular jerk (<code class="mono">deg/s³</code>). During rectangular tube corner transitions, chuck rotation is almost always the physical bottleneck. RotaryCAM uses these limits to smooth out corner speeds so your steppers or servos never lose steps.</li>
               <li><strong>Safe Z Clearance Height:</strong> Defines the safe retract envelope (e.g., <code class="mono">25 mm</code>) above the rotating tube's maximum diagonal radius so rapid moves never clip a spinning square/rectangular corner.</li>
               <li><strong>Chuck Jaw Dead Zone (<code class="mono">65 mm</code>), Min Chuck Grip (<code class="mono">80 mm</code>) &amp; Roller &ldquo;No-Cut&rdquo; Zones:</strong> Enter your chuck jaw keep-out distance (<code class="mono">chuckJawDeadZoneMm</code>, default <code class="mono">65 mm</code>), minimum chuck clamping grip length (<code class="mono">minChuckGripLengthMm</code>, default <code class="mono">80 mm</code>), and any steady-rest or roller keep-out bands. RotaryCAM displays a translucent red no-cut zone and 3D chuck jaws in the CAD viewer and 3D simulator, subtracts the dead zone from raw stick capacity during 1D tube nesting, shows the exact <strong>Min Stock to Load</strong> (<code class="mono">L_cut + L_dead</code>), and warns you before G-code runs if a cut reaches into the chuck jaws.</li>
             </ul>
@@ -104,7 +104,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Configuring linear &amp; rotary velocity, acceleration, jerk, and Safe Z limits</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2: Configuring linear &amp; rotary velocity, acceleration, jerk, and Safe Z limits</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -127,34 +127,34 @@
               Switch to the <span class="ui-chip cyan">Controller &amp; Compensation</span> tab to select your CNC plasma controller post-processor. RotaryCAM includes drop-in, zero-hand-edit post-processors for all major industrial, prosumer, and DIY plasma controllers across both <strong>Maker ($199)</strong> and <strong>Pro Shop ($399)</strong> licenses:
             </p>
             <ul class="doc-bullet-list">
-              <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span> — Native LinuxCNC 2.9/2.10 plasma post with self-contained <code class="mono">(o=0, ...)</code> process parameter comments or <code class="mono">M190</code> material table lookup, <code class="mono">M3 $0 S1</code> plasma spindle codes, active-high <code class="mono">M62 P2</code> THC lock / <code class="mono">M63 P2</code> unlock on pin 2, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
-              <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span> — Optimized for CrossFire, CrossFire PRO, and CrossFire XR tables. Emits mandatory <code class="mono">(v1.6-sc)</code> line 1 sentinels, <code class="mono">(PS&lt;feed&gt;)</code> footers, paren-only comments, automatic <code class="mono">G38.2</code>/<code class="mono">G38.4</code> IHS touch-off loops, <code class="mono">H0</code>/<code class="mono">H1</code> THC toggles, and unwrapped <code class="mono">Y</code>-axis rotary chuck cutting in <code class="mono">G94</code>.</li>
-              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span> — Dedicated post for Mach4 tables running the Warp9 Ethernet SmoothStepper with external or standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> touch-off probing with switch-offset compensation, standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary inverse-time feeds.</li>
-              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span> — Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
-              <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span> — Native <code class="mono">T112 M6</code> plasma mode, automated <code class="mono">G200</code> parameter blocks with millisecond pierce delays (<code class="mono">D&lt;ms&gt;</code>), explicit buffered <code class="mono">M666</code> (THC OFF) / <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) corner anti-dive protection, and <code class="mono">G93</code> rotary motion.</li>
-              <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span> — Clean <code class="mono">G64</code> constant velocity (without syntax-breaking <code class="mono">P</code> words), <code class="mono">G31</code> straight probe or <code class="mono">G28.1</code> floating-head reference with switch-offset compensation, high-speed motion-synced <code class="mono">M11 P#</code> (THC hold) / <code class="mono">M10 P#</code> (THC release) to stop blowout divots, and mandatory <code class="mono">G93</code> rotary inverse-time feedrates.</li>
-              <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span> — Automated controller-managed cycle macros including <code class="mono">G64 ON</code> plasma smoothing, <code class="mono">M65</code> material profile loading, <code class="mono">M61</code> touch-off + pierce cycle, <code class="mono">M62</code> torch-off + retract cycle, <code class="mono">M36</code>/<code class="mono">M35</code> THC lock/unlock, and native <code class="mono">G93</code> rotary feeds.</li>
-              <li><span class="ui-chip">grblHAL (32-bit Plasma + Rotary) (.nc)</span> — Built for 32-bit grblHAL controllers ($376 rotary + Plasma THC plugin) with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> arc control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, motion-synchronized <code class="mono">M63 P0</code> (THC lock) / <code class="mono">M62 P0</code> (THC unlock) anti-dive protection, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
-              <li><span class="ui-chip">CNCdrive UCCNC (.nc)</span> — Native UCCNC post supporting UC100/UC300ETH/AXBB-E with <code class="mono">G31</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M206</code> (THC OFF) / <code class="mono">M205</code> (THC ON) corner locking, <code class="mono">G52</code> pneumatic scribe offsets, and <code class="mono">G93</code> rotary motion.</li>
-              <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span> — Engineered for the FlashCut Fabrication Head with automated IHS (<code class="mono">M50</code> plasma ON / <code class="mono">M51</code> plasma OFF), <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G602</code> (Suspend THC) / <code class="mono">G603</code> (Resume THC) corner protection, and <code class="mono">G93</code> rotary tube feeds.</li>
-              <li><span class="ui-chip">EdingCNC Plasma (.nc)</span> — Clean EdingCNC post for CNC720/CNC760 with <code class="mono">G38.2</code> surface touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M21</code> (THC OFF) / <code class="mono">M20</code> (THC ON) anti-dive locking, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
-              <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span> — Dedicated post for PlanetCNC Mk3 and TNG software with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M54 P0</code> (THC OFF) / <code class="mono">M54 P1</code> (THC ON) corner locking, and <code class="mono">G93</code> rotary feeds.</li>
-              <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span> — Built for ShopSabre plasma tables and SideKick rotary attachments, emitting strict WinCNC <code class="mono">[square bracket]</code> comments (zero parentheses or semicolons), <code class="mono">M61</code>/<code class="mono">M62</code> controller-owned IHS &amp; torch macros, <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G93</code> rotary feeds, and <code class="mono">M66</code> program end.</li>
-              <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6 (.nc)</span> — 4-axis Euclidean trajectory feedrate spoofing for SimCNC 3.5 or pure ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code>) for SimCNC 3.6, coupled with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
-              <li><span class="ui-chip">Generic RS-274 (.nc)</span> — Standard ISO 6983 G-code with decimal seconds dwells (<code class="mono">G4 P&lt;sec&gt;</code>) and configurable M-codes for open-source and industrial controllers.</li>
+              <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span>: Native LinuxCNC 2.9/2.10 plasma post with self-contained <code class="mono">(o=0, ...)</code> process parameter comments or <code class="mono">M190</code> material table lookup, <code class="mono">M3 $0 S1</code> plasma spindle codes, active-high <code class="mono">M62 P2</code> THC lock / <code class="mono">M63 P2</code> unlock on pin 2, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
+              <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span>: Optimized for CrossFire, CrossFire PRO, and CrossFire XR tables. Emits mandatory <code class="mono">(v1.6-sc)</code> line 1 sentinels, <code class="mono">(PS&lt;feed&gt;)</code> footers, paren-only comments, automatic <code class="mono">G38.2</code>/<code class="mono">G38.4</code> IHS touch-off loops, <code class="mono">H0</code>/<code class="mono">H1</code> THC toggles, and unwrapped <code class="mono">Y</code>-axis rotary chuck cutting in <code class="mono">G94</code>.</li>
+              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span>: Dedicated post for Mach4 tables running the Warp9 Ethernet SmoothStepper with external or standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> touch-off probing with switch-offset compensation, standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary inverse-time feeds.</li>
+              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span>: Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
+              <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span>: Native <code class="mono">T112 M6</code> plasma mode, automated <code class="mono">G200</code> parameter blocks with millisecond pierce delays (<code class="mono">D&lt;ms&gt;</code>), explicit buffered <code class="mono">M666</code> (THC OFF) / <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) corner anti-dive protection, and <code class="mono">G93</code> rotary motion.</li>
+              <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span>: Clean <code class="mono">G64</code> constant velocity (without syntax-breaking <code class="mono">P</code> words), <code class="mono">G31</code> straight probe or <code class="mono">G28.1</code> floating-head reference with switch-offset compensation, high-speed motion-synced <code class="mono">M11 P#</code> (THC hold) / <code class="mono">M10 P#</code> (THC release) to stop blowout divots, and mandatory <code class="mono">G93</code> rotary inverse-time feedrates.</li>
+              <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span>: Automated controller-managed cycle macros including <code class="mono">G64 ON</code> plasma smoothing, <code class="mono">M65</code> material profile loading, <code class="mono">M61</code> touch-off + pierce cycle, <code class="mono">M62</code> torch-off + retract cycle, <code class="mono">M36</code>/<code class="mono">M35</code> THC lock/unlock, and native <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">grblHAL (32-bit Plasma + Rotary) (.nc)</span>: Built for 32-bit grblHAL controllers ($376 rotary + Plasma THC plugin) with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> arc control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, motion-synchronized <code class="mono">M63 P0</code> (THC lock) / <code class="mono">M62 P0</code> (THC unlock) anti-dive protection, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
+              <li><span class="ui-chip">CNCdrive UCCNC (.nc)</span>: Native UCCNC post supporting UC100/UC300ETH/AXBB-E with <code class="mono">G31</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M206</code> (THC OFF) / <code class="mono">M205</code> (THC ON) corner locking, <code class="mono">G52</code> pneumatic scribe offsets, and <code class="mono">G93</code> rotary motion.</li>
+              <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span>: Engineered for the FlashCut Fabrication Head with automated IHS (<code class="mono">M50</code> plasma ON / <code class="mono">M51</code> plasma OFF), <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G602</code> (Suspend THC) / <code class="mono">G603</code> (Resume THC) corner protection, and <code class="mono">G93</code> rotary tube feeds.</li>
+              <li><span class="ui-chip">EdingCNC Plasma (.nc)</span>: Clean EdingCNC post for CNC720/CNC760 with <code class="mono">G38.2</code> surface touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M21</code> (THC OFF) / <code class="mono">M20</code> (THC ON) anti-dive locking, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
+              <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Dedicated post for PlanetCNC Mk3 and TNG software with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M54 P0</code> (THC OFF) / <code class="mono">M54 P1</code> (THC ON) corner locking, and <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre plasma tables and SideKick rotary attachments, emitting strict WinCNC <code class="mono">[square bracket]</code> comments (zero parentheses or semicolons), <code class="mono">M61</code>/<code class="mono">M62</code> controller-owned IHS &amp; torch macros, <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G93</code> rotary feeds, and <code class="mono">M66</code> program end.</li>
+              <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6 (.nc)</span>: 4-axis Euclidean trajectory feedrate spoofing for SimCNC 3.5 or pure ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code>) for SimCNC 3.6, coupled with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
+              <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Standard ISO 6983 G-code with decimal seconds dwells (<code class="mono">G4 P&lt;sec&gt;</code>) and configurable M-codes for open-source and industrial controllers.</li>
             </ul>
 
             <div class="doc-callout info">
               <div class="doc-callout-title">📖 In-Depth Controller Setup Guides Available in Step 06</div>
               <p>
-                Each CNC controller handles initial touch-off sensing (IHS), torch height control (THC) anti-dive locking, material charts, and rotary axes differently. For full pinout mappings, macro wiring, and practical shop tips for your exact controller, jump down to <a href="#step-6"><strong>Step 06 — Supported CNC Controllers &amp; Post-Processor Setup Guides</strong></a>.
+                Each CNC controller handles initial touch-off sensing (IHS), torch height control (THC) anti-dive locking, material charts, and rotary axes differently. For full pinout mappings, macro wiring, and practical shop tips for your exact controller, jump down to <a href="#step-6"><strong>Step 06: Supported CNC Controllers &amp; Post-Processor Setup Guides</strong></a>.
               </p>
             </div>
 
             <div class="doc-callout danger">
               <div class="doc-callout-title">⚠ Critical: Why G93 Inverse-Time Is Mandatory for 4-Axis Rotary Cutting</div>
               <p>
-                On a flat plate or fixed-radius round tube, a standard units-per-minute feedrate (<code class="mono">G94 F3000</code>) works fine. But when cutting square/rectangular HSS tubing, angle iron, or pipe bevels, the distance from the tube's center to the cutting point changes continuously as the chuck rotates. Standard controller "Rotary Radius Compensation" settings only work for a single fixed circular radius and fail on rectangular corners—causing the machine to violently surge or crawl. In <code class="mono">G93</code> Inverse-Time mode, RotaryCAM calculates the exact physical time (<code class="mono">Δt</code>) required for each micro-segment and writes <code class="mono">F = 1 / Δt</code> on every line, guaranteeing your plasma torch cuts at the exact surface speed you set in your cut chart, regardless of stock shape or corner radius.
+                On a flat plate or fixed-radius round tube, a standard units-per-minute feedrate (<code class="mono">G94 F3000</code>) works fine. But when cutting square/rectangular HSS tubing, angle iron, or pipe bevels, the distance from the tube's center to the cutting point changes continuously as the chuck rotates. Standard controller "Rotary Radius Compensation" settings only work for a single fixed circular radius and fail on rectangular corners. This causes the machine to violently surge or crawl. In <code class="mono">G93</code> Inverse-Time mode, RotaryCAM calculates the exact physical time (<code class="mono">Δt</code>) required for each micro-segment and writes <code class="mono">F = 1 / Δt</code> on every line, guaranteeing your plasma torch cuts at the exact surface speed you set in your cut chart, regardless of stock shape or corner radius.
               </p>
             </div>
 
@@ -166,14 +166,14 @@
               <li><strong>Smooth Rotary Corner Motion (Square &amp; Rectangular Tube):</strong> Automatically smooths chuck rotation when rolling from flat faces into corner fillets, preventing sudden rotational jerks and motor stalls.</li>
               <li><strong>Enable Kerf Width Compensation &amp; Kerf-True Tabs:</strong> Offsets inside holes (CW) and outside cuts (CCW) by half your plasma kerf width so parts hit dimension right off the table, and adds a full kerf width to micro-joint tab gaps so thin-wall tabs never burn away.</li>
               <li><strong>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling:</strong> Automatically slows enclosed bolt holes (<code class="mono">&le; 25.4 mm</code> / <code class="mono">1&Prime;</code>) on round pipe and square/rectangular tubing to <code class="mono">60%</code> cutting speed, stopping plasma arc-lag cone taper so bolts drop straight through without reaming.</li>
-              <li><strong>Configurable ERW Weld-Seam Pierce Avoidance:</strong> Set where your tube's internal ERW mill weld seam faces in the chuck on round pipe or square/rectangular HSS, and pierces automatically shift onto clean parent steel—preventing blowback spatter from thick internal weld flash.</li>
+              <li><strong>Configurable ERW Weld-Seam Pierce Avoidance:</strong> Set where your tube's internal ERW mill weld seam faces in the chuck on round pipe or square/rectangular HSS, and pierces automatically shift onto clean parent steel, preventing blowback spatter from thick internal weld flash.</li>
               <li><strong>Heat-Optimized vs. One-Direction Cut Ordering:</strong> Choose between automatic heat staggering (alternating internal holes and slots along the tube to reduce heat bow) or one-direction cutting from the free end toward the chuck.</li>
             </ul>
           </div>
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Choosing Controller Dialect (G94+G93 Emulation vs. Native G93 vs. G94) &amp; Compensation</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3: Choosing Controller Dialect (G94+G93 Emulation vs. Native G93 vs. G94) &amp; Compensation</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -208,7 +208,7 @@
                 </ul>
                 Setting your torch family binds the correct standoff height (<code class="mono">1.5 mm</code> vs <code class="mono">3.2 mm</code>), arc voltage, and pierce delay automatically whenever a 3D tube or flat sheet is loaded.
               </li>
-              <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Choose how RotaryCAM signals your THC to freeze and unfreeze in G-code—such as synchronous digital output macros (<code class="mono">M63 P0</code> to lock / <code class="mono">M62 P0</code> to unlock without motion planner pauses) or controller-specific M-codes.</li>
+              <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Choose how RotaryCAM signals your THC to freeze and unfreeze in G-code, such as synchronous digital output macros (<code class="mono">M63 P0</code> to lock / <code class="mono">M62 P0</code> to unlock without motion planner pauses) or controller-specific M-codes.</li>
               <li><strong>Dynamic Corner Lock Threshold (<code class="mono">%</code>):</strong> Automatically locks Z-axis height regulation whenever actual surface velocity drops below the configured percentage (e.g., <code class="mono">80%</code>) of target cutting speed, and unlocks it once full surface speed resumes.</li>
               <li><strong>Lead-In / Lead-Out THC Lock:</strong> Keeps THC locked during pierce, ramp lead-in, and overburn lead-out phases where the plasma arc is stabilizing or crossing an existing kerf.</li>
             </ul>
@@ -223,7 +223,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — Configuring THC Lock/Unlock G-code emission and velocity thresholds</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4: Configuring THC Lock/Unlock G-code emission and velocity thresholds</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -254,7 +254,7 @@
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Setting Zero-Bevel &amp; Corner Loop defaults, cloning/activating profiles, and clicking Save Profile</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5: Setting Zero-Bevel &amp; Corner Loop defaults, cloning/activating profiles, and clicking Save Profile</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -389,10 +389,10 @@
               </li>
               <li>
                 <strong>Active-High Inhibit THC Lock Polarity (<code class="mono">M62 P2</code> to Lock / <code class="mono">M63 P2</code> to Unlock):</strong>
-                In LinuxCNC QTPlasmaC, digital output pin 2 (<code class="mono">motion.digital-out-02</code>) connects to <code class="mono">plasmac.thc-disable</code>. This is an <strong>active-high disable</strong> pin—the exact opposite of traditional relays! Turning pin 2 ON freezes the torch, while turning it OFF allows THC height regulation. RotaryCAM automatically handles this inverted polarity:
+                In LinuxCNC QTPlasmaC, digital output pin 2 (<code class="mono">motion.digital-out-02</code>) connects to <code class="mono">plasmac.thc-disable</code>. This is an <strong>active-high disable</strong> pin: the exact opposite of traditional relays! Turning pin 2 ON freezes the torch, while turning it OFF allows THC height regulation. RotaryCAM automatically handles this inverted polarity:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M62 P2</code> — Synchronously <strong>locks/disables THC</strong> during corner deceleration, lead-ins, 60% small bolt holes, and before torch-off.</li>
-                  <li><code class="mono">M63 P2</code> — Synchronously <strong>unlocks/enables THC</strong> when the torch reaches steady cutting speed on straight runs.</li>
+                  <li><code class="mono">M62 P2</code>: Synchronously <strong>locks/disables THC</strong> during corner deceleration, lead-ins, 60% small bolt holes, and before torch-off.</li>
+                  <li><code class="mono">M63 P2</code>: Synchronously <strong>unlocks/enables THC</strong> when the torch reaches steady cutting speed on straight runs.</li>
                 </ul>
               </li>
               <li>
@@ -417,7 +417,7 @@
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Parser Sentinels &amp; Comment Strictness:</strong> FireControl rejects standard G-code headers if parser sentinels are missing. Line 1 must begin with <code class="mono">(v1.6-sc)</code>, and the final line after <code class="mono">M30</code> must contain <code class="mono">(PS&lt;speed&gt;)</code> (e.g. <code class="mono">(PS2800)</code> in metric or <code class="mono">(PS110)</code> in imperial) to populate FireControl's program speed slider. Furthermore, <strong>all comments must use parentheses <code class="mono">(...)</code> only</strong>—semicolons (<code class="mono">;</code>), percent signs (<code class="mono">%</code>), and variable hashes (<code class="mono">#</code>) will cause FireControl to halt with syntax errors.
+                <strong>Parser Sentinels &amp; Comment Strictness:</strong> FireControl rejects standard G-code headers if parser sentinels are missing. Line 1 must begin with <code class="mono">(v1.6-sc)</code>, and the final line after <code class="mono">M30</code> must contain <code class="mono">(PS&lt;speed&gt;)</code> (e.g. <code class="mono">(PS2800)</code> in metric or <code class="mono">(PS110)</code> in imperial) to populate FireControl's program speed slider. Furthermore, <strong>all comments must use parentheses <code class="mono">(...)</code> only</strong>. Semicolons (<code class="mono">;</code>), percent signs (<code class="mono">%</code>), and variable hashes (<code class="mono">#</code>) will cause FireControl to halt with syntax errors.
               </li>
               <li>
                 <strong>Automated IHS Touch-Off Loop:</strong> Because FireControl does not have an internal automatic canned touch-off cycle, RotaryCAM generates Langmuir's exact dual-speed IHS probing loop before every single pierce:
@@ -460,7 +460,7 @@ H1                      (THC Active)</code></pre>
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Profile A — ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner):</strong>
+                <strong>Profile A: ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner):</strong>
                 Outputs native <code class="mono">m2020 (...)</code> configuration registers to communicate directly with Warp9's Lua plugin:
                 <pre><code class="language-gcode">m2020 (W9_HC_LOAD_DEFAULT_CONFIG_VALUES=1)
 m2020 (AD1_DELAY_ENABLED=1)
@@ -473,7 +473,7 @@ G04 P0.100</code></pre>
                 <em>Shop Tip:</em> RotaryCAM always places a mandatory <code class="mono">G04 P0.1</code> dwell right after <code class="mono">m2020</code> register groups so Mach4's Lua macro queue has time to write the hardware registers before the ESS motion planner starts moving.
               </li>
               <li>
-                <strong>Profile B — ArtSoft Mach4 (Warp9 ESS):</strong> For tables using a Proma 150, PriceCNC, or external standalone THC, RotaryCAM emits clean <code class="mono">G31</code> probing with switch-offset compensation and standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> pins without any <code class="mono">m2020</code> macros.
+                <strong>Profile B: ArtSoft Mach4 (Warp9 ESS):</strong> For tables using a Proma 150, PriceCNC, or external standalone THC, RotaryCAM emits clean <code class="mono">G31</code> probing with switch-offset compensation and standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> pins without any <code class="mono">m2020</code> macros.
               </li>
               <li>
                 <strong>Synchronous Torch &amp; Anti-Dive 2 (<code class="mono">AD2</code>) Control:</strong> Traditional <code class="mono">M3/M5</code> commands in Mach4 pause the motion planner queue while Lua executes, leaving ugly dwell marks. With Warp9 synchronized I/O enabled, RotaryCAM emits motion-synchronized <code class="mono">M62 P3</code> (torch ON) and <code class="mono">M63 P3</code> (torch OFF) on TMC3in1/WarpRunner (or <code class="mono">M62/M63 P2</code> on ESS), alongside <code class="mono">M63 P2</code> (lock THC) and <code class="mono">M62 P2</code> (unlock THC) under Anti-Dive Mode 2 for zero-hesitation cuts.
@@ -503,7 +503,7 @@ M3</code></pre>
                 <code class="mono">F</code> = touch-off feedrate, <code class="mono">P</code> = pierce height, <code class="mono">D</code> = pierce delay in <strong>milliseconds</strong> (<code class="mono">D400</code> = 0.4s), <code class="mono">C</code> = cut height, <code class="mono">V</code> = target arc volts (<code class="mono">V0</code> activates MASSO Auto-Voltage sampling mode), and <code class="mono">O1</code> selects Ohmic probing. Once set, calling <code class="mono">M3</code> causes MASSO to probe, pierce, and drop to cut height automatically.
               </li>
               <li>
-                <strong>Critical Shop Tip — Why Explicit <code class="mono">M666</code> / <code class="mono">M667</code> Are Required:</strong>
+                <strong>Critical Shop Tip: Why Explicit <code class="mono">M666</code> / <code class="mono">M667</code> Are Required:</strong>
                 MASSO's official documentation notes that the <code class="mono">A</code> (anti-dive percentage) parameter inside <code class="mono">G200</code> is <em>not yet implemented in MASSO firmware</em>. If you rely solely on <code class="mono">G200</code>, MASSO will dive the torch into the metal when slowing down for small bolt holes or tight corners! RotaryCAM protects your torch by emitting explicit buffered <code class="mono">M666</code> (THC OFF) and <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) commands before every corner, small hole, and lead-out.
               </li>
               <li>
@@ -535,8 +535,8 @@ M3</code></pre>
                 In Mach3, calling standard <code class="mono">M3/M5</code> or custom VBScript macros (such as <code class="mono">M101/M102</code> or <code class="mono">M38/M39</code>) forces the trajectory planner to <strong>decelerate to a complete dead stop (<code class="mono">0 mm/min</code>)</strong> before toggling the pin. Whenever your THC locks on a corner or your torch turns off before a lead-out, an asynchronous macro burns a deep blowout hole in the tube!
                 RotaryCAM solves this by emitting Mach3's high-speed motion-synchronized commands:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M11 P&lt;output#&gt;</code> — Switches the output ON at the exact microsecond the next axis move begins (instant THC lock with zero hesitation).</li>
-                  <li><code class="mono">M10 P&lt;output#&gt;</code> — Switches the output OFF at the exact microsecond the next axis move begins (instant THC unlock, and early arc extinguish on overburn lead-outs).</li>
+                  <li><code class="mono">M11 P&lt;output#&gt;</code>: Switches the output ON at the exact microsecond the next axis move begins (instant THC lock with zero hesitation).</li>
+                  <li><code class="mono">M10 P&lt;output#&gt;</code>: Switches the output OFF at the exact microsecond the next axis move begins (instant THC unlock, and early arc extinguish on overburn lead-outs).</li>
                 </ul>
               </li>
               <li>
@@ -560,8 +560,8 @@ M3</code></pre>
                 <strong>Controller-Managed Canned Cycles (<code class="mono">M61</code> &amp; <code class="mono">M62</code>):</strong>
                 Instead of scattered probing and dwell lines, Centroid post-processors call Centroid's compiled macros:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M61</code> (<code class="mono">mfunc61.mac</code>) — Automatically performs ohmic/floating touch-off, retracts to pierce height, fires the torch, verifies Arc OK, waits the pierce delay, plunges to cut height, and enables THC (<code class="mono">M35</code>).</li>
-                  <li><code class="mono">M62</code> (<code class="mono">mfunc62.mac</code>) — Automatically locks THC (<code class="mono">M36</code>), shuts off the plasma arc (<code class="mono">M5</code>), and retracts the Z-axis to Safe Height.</li>
+                  <li><code class="mono">M61</code> (<code class="mono">mfunc61.mac</code>): Automatically performs ohmic/floating touch-off, retracts to pierce height, fires the torch, verifies Arc OK, waits the pierce delay, plunges to cut height, and enables THC (<code class="mono">M35</code>).</li>
+                  <li><code class="mono">M62</code> (<code class="mono">mfunc62.mac</code>): Automatically locks THC (<code class="mono">M36</code>), shuts off the plasma arc (<code class="mono">M5</code>), and retracts the Z-axis to Safe Height.</li>
                 </ul>
               </li>
               <li>
@@ -591,8 +591,8 @@ M3</code></pre>
                 <strong>Motion-Synchronized THC Anti-Dive Corner Lock (<code class="mono">M63 P0</code> / <code class="mono">M62 P0</code>):</strong>
                 grblHAL's Plasma THC plugin uses digital output pin 0 for hardware THC lock. RotaryCAM uses motion-synchronized commands to avoid hesitation:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M63 P0</code> — Synchronously <strong>locks/inhibits THC</strong> when decelerating into tube corners, sharp direction reversals, and 60% small bolt holes to prevent the torch from diving into the cut.</li>
-                  <li><code class="mono">M62 P0</code> — Synchronously <strong>unlocks/enables THC</strong> when the torch reaches steady cutting speed on flat runs.</li>
+                  <li><code class="mono">M63 P0</code>: Synchronously <strong>locks/inhibits THC</strong> when decelerating into tube corners, sharp direction reversals, and 60% small bolt holes to prevent the torch from diving into the cut.</li>
+                  <li><code class="mono">M62 P0</code>: Synchronously <strong>unlocks/enables THC</strong> when the torch reaches steady cutting speed on flat runs.</li>
                 </ul>
               </li>
               <li>
@@ -619,8 +619,8 @@ M3</code></pre>
                 <strong>Native THC Anti-Dive Corner Locking (<code class="mono">M206</code> / <code class="mono">M205</code>):</strong>
                 UCCNC provides dedicated internal macro commands for controlling THC height regulation directly from G-code without pausing motion:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M206</code> — <strong>Freezes/disables THC</strong> during corner deceleration, lead-ins, and small-radius cutouts.</li>
-                  <li><code class="mono">M205</code> — <strong>Resumes/enables THC</strong> height regulation once full cutting speed is achieved on straight runs.</li>
+                  <li><code class="mono">M206</code>: <strong>Freezes/disables THC</strong> during corner deceleration, lead-ins, and small-radius cutouts.</li>
+                  <li><code class="mono">M205</code>: <strong>Resumes/enables THC</strong> height regulation once full cutting speed is achieved on straight runs.</li>
                 </ul>
               </li>
               <li>
@@ -644,8 +644,8 @@ M3</code></pre>
                 <strong>Automated IHS &amp; Plasma Torch Control (<code class="mono">M50</code> / <code class="mono">M51</code>):</strong>
                 FlashCut utilizes controller-managed cycles to streamline operation:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M50</code> — Initiates the Fabrication Head's automated touch-off sequence, retracts to pierce height, fires the torch, confirms Arc OK, and plunges to programmed cut height.</li>
-                  <li><code class="mono">M51</code> — Shuts off the plasma arc and automatically retracts the torch to safe clearance height.</li>
+                  <li><code class="mono">M50</code>: Initiates the Fabrication Head's automated touch-off sequence, retracts to pierce height, fires the torch, confirms Arc OK, and plunges to programmed cut height.</li>
+                  <li><code class="mono">M51</code>: Shuts off the plasma arc and automatically retracts the torch to safe clearance height.</li>
                 </ul>
               </li>
               <li>
@@ -655,8 +655,8 @@ M3</code></pre>
                 <strong>Native THC Anti-Dive Protection (<code class="mono">G602</code> / <code class="mono">G603</code>):</strong>
                 Prevents torch diving during speed reductions:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">G602</code> — <strong>Suspends THC</strong> height regulation around sharp corners, tube transitions, and bolt holes.</li>
-                  <li><code class="mono">G603</code> — <strong>Resumes THC</strong> voltage tracking on straight runs.</li>
+                  <li><code class="mono">G602</code>: <strong>Suspends THC</strong> height regulation around sharp corners, tube transitions, and bolt holes.</li>
+                  <li><code class="mono">G603</code>: <strong>Resumes THC</strong> voltage tracking on straight runs.</li>
                 </ul>
               </li>
               <li>
@@ -683,8 +683,8 @@ M3</code></pre>
                 <strong>Native THC Anti-Dive Locking (<code class="mono">M21</code> / <code class="mono">M20</code>):</strong>
                 EdingCNC manages torch height regulation through native M-codes:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M21</code> — <strong>Inhibits/disables THC</strong> during corner deceleration, lead-ins, and small-hole cutting to keep the torch at programmed cut height.</li>
-                  <li><code class="mono">M20</code> — <strong>Enables THC</strong> when full surface speed is reached on flat runs.</li>
+                  <li><code class="mono">M21</code>: <strong>Inhibits/disables THC</strong> during corner deceleration, lead-ins, and small-hole cutting to keep the torch at programmed cut height.</li>
+                  <li><code class="mono">M20</code>: <strong>Enables THC</strong> when full surface speed is reached on flat runs.</li>
                 </ul>
               </li>
               <li>
@@ -711,8 +711,8 @@ M3</code></pre>
                 <strong>Native THC Anti-Dive Corner Lock (<code class="mono">M54 P0</code> / <code class="mono">M54 P1</code>):</strong>
                 PlanetCNC TNG controls THC tracking states via <code class="mono">M54</code> commands:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M54 P0</code> — <strong>Freezes THC</strong> before entering corner slowdowns, lead-ins, and small bolt holes.</li>
-                  <li><code class="mono">M54 P1</code> — <strong>Unfreezes THC</strong> once the torch reaches steady cutting speed.</li>
+                  <li><code class="mono">M54 P0</code>: <strong>Freezes THC</strong> before entering corner slowdowns, lead-ins, and small bolt holes.</li>
+                  <li><code class="mono">M54 P1</code>: <strong>Unfreezes THC</strong> once the torch reaches steady cutting speed.</li>
                 </ul>
               </li>
               <li>
@@ -736,8 +736,8 @@ M3</code></pre>
                 <strong>Controller-Owned Touch-Off &amp; Torch Cycles (<code class="mono">M61</code> / <code class="mono">M62</code>):</strong>
                 ShopSabre WinCNC tables use internal macros to manage the pierce cycle:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M61</code> — Executes the automated ohmic/switch touch-off, lifts to pierce height, fires the torch, confirms arc transfer, and plunges to cut height.</li>
-                  <li><code class="mono">M62</code> — Extinguishes the plasma arc, disables THC, and retracts Z to clearance height.</li>
+                  <li><code class="mono">M61</code>: Executes the automated ohmic/switch touch-off, lifts to pierce height, fires the torch, confirms arc transfer, and plunges to cut height.</li>
+                  <li><code class="mono">M62</code>: Extinguishes the plasma arc, disables THC, and retracts Z to clearance height.</li>
                 </ul>
               </li>
               <li>
