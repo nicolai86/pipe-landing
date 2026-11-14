@@ -7,7 +7,7 @@
   <!-- Primary SEO Meta -->
   <title>Smart Z-Axis Hardware THC (v2) — 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM</title>
   <meta name="title" content="Smart Z-Axis Hardware THC (v2) — 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM" />
-  <meta name="description" content="Standalone 10,000 Hz hardware Torch Height Controller &amp; Z-axis Step/Dir motion interceptor (~$200 CAD target). Plugs inline between any 5V differential CNC controller and your existing Z stepper or ClearPath servo drive: 2.0 ms ohmic tip-up escape, macro-free corner anti-dive, 5+ inch warped-plate tracking, 4-axis rotary tube cam, and 20 KB black-box crash recorder." />
+  <meta name="description" content="Standalone 10,000 Hz hardware Torch Height Controller &amp; Z-axis Step/Dir motion interceptor (~$200 CAD target). Plugs inline between any 5V differential CNC controller and your existing Z drive: 2.0 ms ohmic tip-up escape, macro-free corner anti-dive, zero-clamp full-lifter-stroke warp tracking (&lt;0.002&Prime; lag on ClearPath servos), 4-axis rotary tube cam, and 20 KB black-box crash recorder." />
   <meta name="keywords" content="plasma torch height controller, standalone hardware THC, Step Dir THC interposer, CSMIO IP-M THC, SimCNC plasma THC, Mach3 Mach4 THC upgrade, LinuxCNC Mesa plasma THC, MASSO Acorn plasma THC, rotary tube plasma THC, ohmic anti-crash plasma" />
   <meta name="author" content="Raphael Randschau" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -27,7 +27,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://rotarycam.app/hardware-thc.html" />
   <meta name="twitter:title" content="10,000 Hz Hardware Torch Height Controller &amp; Z-Axis Interceptor (~$200 CAD)" />
-  <meta name="twitter:description" content="Drops inline between any 5V RS-422 Step/Dir CNC controller and your existing Z stepper or ClearPath servo. 2.0 ms ohmic tip-up escape, full Z-screw travel on 5+ inch warped plate, ~$200 CAD target." />
+  <meta name="twitter:description" content="Drops inline between any 5V RS-422 Step/Dir CNC controller and your existing Z drive. 2.0 ms ohmic tip-up escape, zero-clamp full-lifter-stroke warp tracking (&lt;0.002&Prime; lag on ClearPath servos), ~$200 CAD target." />
   <meta name="twitter:image" content="https://rotarycam.app/assets/z-axis-thc-preview.png" />
 
   <!-- Favicon -->
@@ -755,6 +755,33 @@
       line-height: 1.35;
     }
 
+    /* Lifter & Motor Benchmark Caveat Banner */
+    .thc-caveat-banner {
+      margin-top: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-left: 3px solid var(--plasma-amber);
+      border-radius: var(--radius);
+      padding: 0.9rem 1.15rem;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .thc-caveat-banner strong {
+      color: #fff;
+    }
+
+    .thc-caveat-banner code {
+      background: var(--code-bg);
+      border: 1px solid var(--surface-border);
+      padding: 0.12rem 0.35rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82em;
+      color: var(--plasma-amber);
+    }
+
     /* Section Scaffolding */
     .thc-section {
       padding: 4.5rem 0;
@@ -1415,7 +1442,7 @@
             <h1>Stop Wrecking Consumables on Warped Plate. <span>Give Your Table 10,000 Hz Height Control.</span></h1>
 
             <p class="hero-lead">
-              Plug this standalone board inline between <strong>any 5V differential Step/Dir CNC controller</strong> and your existing stepper or ClearPath servo Z drive—then turn your controller&rsquo;s sluggish software THC <strong>OFF</strong>. Your torch tracks <strong>5+&Prime; warped plate within 0.002&Prime;</strong> and snaps clear of tipped-up slugs in <strong>2.0 ms</strong>.
+              Plug this standalone board inline between <strong>any 5V differential Step/Dir CNC controller</strong> and your Z drive—then turn your controller&rsquo;s sluggish software THC <strong>OFF</strong>. The PCB runs a <strong>100 µs silicon height loop</strong> with <strong>zero software Z clamps</strong> and a <strong>2.0 ms ohmic collision trigger</strong>—unlocking 100% of your Z lifter&rsquo;s travel and tracking warps within <strong>0.002&Prime;</strong> with fast servos.
             </p>
 
             <!-- Target Price Callout Strip -->
@@ -1504,17 +1531,22 @@
             <div class="telemetry-lbl">Deterministic Hardware Z Step/Dir Loop in STM32G431 Silicon</div>
           </div>
           <div class="telemetry-metric cyan">
-            <div class="telemetry-val">2.0 ms <span>Escape</span></div>
-            <div class="telemetry-lbl">Active In-Cut Ohmic Tip-Up Retract (Overrides Corner Freezes)</div>
+            <div class="telemetry-val">2.0 ms <span>Trigger</span></div>
+            <div class="telemetry-lbl">In-Cut Ohmic Tip-Up Detection in Silicon (Overrides Corner Freezes)</div>
           </div>
           <div class="telemetry-metric emerald">
-            <div class="telemetry-val">&lt; 0.002&Prime; <span>(&lt; 0.3 V)</span></div>
-            <div class="telemetry-lbl">Uphill Tracking Lag Across 5+&Prime; Warped Plate (Zero Z Clamps)</div>
+            <div class="telemetry-val">&lt; 0.002&Prime; <span>(&lt; 0.3 V)*</span></div>
+            <div class="telemetry-lbl">Uphill Tracking Lag Across Full Lifter Stroke (5+&Prime; Tested on ClearPath 2311S)</div>
           </div>
           <div class="telemetry-metric">
             <div class="telemetry-val">~$200 CAD <span>Target</span></div>
-            <div class="telemetry-lbl">Keep Your Existing Z Stepper/Servo, Lifter &amp; CNC Controller</div>
+            <div class="telemetry-lbl">Works With Steppers; Pair With ClearPath Servos for Peak Response</div>
           </div>
+        </div>
+
+        <!-- Lifter & Motor Benchmark Caveat Banner -->
+        <div class="thc-caveat-banner">
+          <strong>Lifter &amp; Motor Caveat (*):</strong> The PCB runs the <strong>10,000 Hz (100 µs) loop</strong>, <strong>2.0 ms ohmic detection</strong>, and <strong>zero-clamp step injection</strong> in silicon on every setup—but physical travel and mechanical response depend on your Z hardware. <strong>Travel depends on your lifter</strong> (e.g., you can&rsquo;t track a 5&Prime; uphill warp if your lifter only has 2&Prime; of stroke; the PCB simply removes artificial software clamps), and <strong>retract/tracking response times depend on your motors</strong>. All published speed and tracking numbers (&lt; 0.002&Prime; lag, 295 IPM UP, 150 IPM ohmic lift) come from <strong>Teknic ClearPath (CPM-SDSK-2311S)</strong> servos.
         </div>
       </div>
     </section>
@@ -1567,13 +1599,13 @@
                 <td class="row-label">Warped Plate Range</td>
                 <td><span class="bad-pill">Clamped to &plusmn;0.040&Prime;–&plusmn;0.500&Prime;</span> — slams into bowed sheet outside window</td>
                 <td>Full lifter stroke, requires replacing your Z actuator</td>
-                <td class="col-smart"><span class="good-pill">Full physical Z lead-screw travel</span> — tracks 5+&Prime; warps across 8&prime;–20&prime; beds (&lt; 0.002&Prime; lag)</td>
+                <td class="col-smart"><span class="good-pill">Zero software Z clamps</span> — uses 100% of your lifter&rsquo;s physical stroke (5+&Prime; warps @ &lt; 0.002&Prime; lag tested on 5+&Prime; lifter + ClearPath 2311S)</td>
               </tr>
               <tr>
                 <td class="row-label">Tipped-Up Part Slugs</td>
                 <td><span class="bad-pill">Blind while frozen</span> — snaps torch off breakaway in corners &amp; kerfs</td>
                 <td>Usually relies on mechanical breakaway after impact</td>
-                <td class="col-smart"><span class="good-pill">2.0 ms active Ohmic escape</span> — overrides freezes, lifts +1.0 mm at 150 IPM + Feedhold</td>
+                <td class="col-smart"><span class="good-pill">2.0 ms silicon Ohmic trigger</span> — overrides freezes &amp; commands instant retract (+1.0 mm @ 150 IPM on ClearPath 2311S) + Feedhold</td>
               </tr>
               <tr>
                 <td class="row-label">Corners &amp; Old G-Code</td>
@@ -1609,10 +1641,10 @@
         <div class="crash-grid">
           <!-- Card 1 -->
           <article class="crash-card">
-            <span class="crash-badge">2.0 ms Response</span>
+            <span class="crash-badge">2.0 ms Silicon Trigger</span>
             <h3>Active In-Cut Ohmic Collision Escape</h3>
             <p>
-              Voltage-only THCs are completely blind when crossing a kerf next to a tipped-up slug or while locked in a corner. A single parallel wire tee off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) filters 50 ms pierce blowback and water-table splash, <strong>overrides all corner and macro freezes</strong>, snaps Z UP at <strong>150 IPM</strong> plus a <strong>+0.040&Prime; (1.0 mm)</strong> air gap, holds downward Z for 250 ms while the gantry clears the obstacle, and trips CNC Feedhold if shorted &ge; 150 ms.
+              Voltage-only THCs are completely blind when crossing a kerf next to a tipped-up slug or while locked in a corner. A single parallel wire tee off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) filters 50 ms pierce blowback and water-table splash, <strong>overrides all corner and macro freezes</strong>, and triggers an immediate retract in silicon in <strong>2.0 ms</strong> up to your Z motor&rsquo;s limit (<strong>150 IPM</strong> + <strong>+0.040&Prime; / 1.0 mm</strong> air gap measured on ClearPath 2311S servos), holding downward Z for 250 ms while the gantry clears the obstacle, and tripping CNC Feedhold if shorted &ge; 150 ms.
             </p>
             <div class="crash-stat-footer">
               0.001&Prime; travel @ 30 IPM &bull; +0.500&Prime; (12.7 mm) lift cap
@@ -1627,19 +1659,19 @@
               Reads live 6-axis step speed and locks downward Z automatically whenever deceleration hits <strong>0.08–0.10 G</strong> or speed drops <strong>&lt; 80% of cruise</strong>—even on legacy G-code without <code class="mono-inline">M62/M63</code>—waiting 20–25 ms above 88% cruise for the corner puddle to settle. Paired with a motion-compensated <strong>667 V/s</strong> (<code class="mono-inline">+2.0 V / 3.0 ms</code>) kerf/crater hold up to 600 ms and asymmetric speed limits: full rapid UP, capped <strong>75 IPM DOWN</strong>.
             </p>
             <div class="crash-stat-footer">
-              295 IPM UP / 75 IPM DOWN &bull; Auto-adapts to FRO in 1.2–1.5 s
+              Up to 295 IPM UP (ClearPath 2311S) / 75 IPM DOWN &bull; Auto-adapts to FRO
             </div>
           </article>
 
           <!-- Card 3 -->
           <article class="crash-card">
             <span class="crash-badge emerald">Zero Z Clamps</span>
-            <h3>Full Z-Screw Travel Across 5+&Prime; Warped Plate</h3>
+            <h3>Zero Software Clamps — Uses Your Full Lifter Stroke</h3>
             <p>
-              Tracks across the entire physical stroke of your Z lead screw with zero &plusmn;0.5&Prime; software clamps. Combines a 4th-order <strong>1 kHz Bessel filter</strong> (~0.33 ms flat group delay, zero ringing), adaptive gain scheduling (<code class="mono-inline">Kp 90 &rarr; 200</code>), and an upward-only slope integrator (100&times; crest fast-bleed, <strong>strictly zero 22 GA thin-sheet downward windup</strong>). At every <code class="mono-inline">M5</code>, virtual steps unwind cleanly back to 0 with zero Z DRO drift.
+              The PCB adds zero &plusmn;0.5&Prime; software clamps, letting your torch use every millimeter of your lifter&rsquo;s physical stroke—whether you have 2&Prime; of travel on a compact lifter or 5+&Prime; on a long-stroke axis. Combines a 4th-order <strong>1 kHz Bessel filter</strong> (~0.33 ms flat group delay, zero ringing), adaptive gain scheduling (<code class="mono-inline">Kp 90 &rarr; 200</code>), and an upward-only slope integrator holding <strong>&lt; 0.3 V (&lt; 0.002&Prime;)</strong> uphill tracking lag on ClearPath 2311S servos, while 3rd-order S-curve jerk limiting keeps open-loop steppers from stalling. At every <code class="mono-inline">M5</code>, virtual steps unwind cleanly back to 0 with zero Z DRO drift.
             </p>
             <div class="crash-stat-footer">
-              &lt; 0.3 V (&lt; 0.002&Prime;) uphill lag &bull; 3rd-order S-curve jerk limited
+              &lt; 0.002&Prime; lag (ClearPath 2311S) &bull; 3rd-order S-curve jerk limited
             </div>
           </article>
 
@@ -1717,12 +1749,12 @@
             <div class="compat-pills">
               <span class="compat-pill">Open-Loop Steppers</span>
               <span class="compat-pill">Leadshine DM556E</span>
-              <span class="compat-pill">Teknic ClearPath-SD</span>
+              <span class="compat-pill">Teknic ClearPath 2311S (Benchmarked)</span>
               <span class="compat-pill">Imperial (INCH)</span>
               <span class="compat-pill">Metric (MM)</span>
             </div>
             <p class="compat-note">
-              Supports integer or fractional <code class="mono-inline">steps/unit</code> (e.g. 2,050, 10,160, 500, 169.765) and auto-learns polarity, speed, accel &amp; jerk from a 4-move G-code macro.
+              Open-loop steppers work out of the box within their speed and torque ceiling (protected from stalling by 3rd-order S-curve jerk limiting), while pairing the PCB with <strong>Teknic ClearPath (2311S)</strong> servos unlocks full 295 IPM slew and &lt; 0.002&Prime; tracking response. Supports integer or fractional <code class="mono-inline">steps/unit</code> (e.g. 2,050, 10,160, 500, 169.765) and auto-learns polarity, speed, accel &amp; jerk.
             </p>
           </div>
 
@@ -2004,11 +2036,11 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               </div>
               <div class="spec-row">
                 <div class="spec-key">Gain &amp; Slope Tracking</div>
-                <div class="spec-val">Multi-zone Kp 90 &rarr; 200 UP / 140 DOWN; upward-only slope integrator (&lt;0.002&Prime; lag, 100&times; crest bleed, 0 downward windup)</div>
+                <div class="spec-val">Multi-zone Kp 90 &rarr; 200 UP / 140 DOWN; upward-only slope integrator (&lt;0.002&Prime; lag measured on ClearPath 2311S; motor-dependent, 100&times; crest bleed, 0 downward windup)</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">S-Curve &amp; Speed Caps</div>
-                <div class="spec-val">3rd-order S-curve accel/jerk profiler; asymmetric speed limits (up to 295 IPM / 120 mm/s UP; dive-immune 75 IPM / 28 mm/s DOWN)</div>
+                <div class="spec-val">3rd-order S-curve accel/jerk profiler; asymmetric speed limits (up to 295 IPM / 120 mm/s UP on ClearPath 2311S; motor-dependent, dive-immune 75 IPM / 28 mm/s DOWN)</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Ohmic &amp; Anti-Dive</div>
