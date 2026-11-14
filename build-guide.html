@@ -104,25 +104,59 @@
       width: 100%;
     }
 
+    .site-header-bar {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 clamp(0.85rem, 1.5vw, 1.5rem);
+      gap: clamp(0.6rem, 1vw, 1.25rem);
+    }
+
+    .nav-back-link {
+      color: var(--plasma-amber) !important;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+      font-size: clamp(0.78rem, 0.8vw, 0.82rem);
+      line-height: 1.2;
+      padding: 0.35rem clamp(0.75rem, 1vw, 1.15rem) 0.35rem 0;
+      border-right: 1px solid var(--surface-border);
+      transition: color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .nav-back-link:hover {
+      color: #fff !important;
+    }
+
     nav {
-      max-width: 1240px;
+      flex: 1;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 0.9rem 2rem;
+      padding: 0.85rem 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
+      gap: clamp(0.5rem, 0.8vw, 1.25rem);
+      min-width: 0;
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 1.2rem;
+      gap: 0.5rem;
+      font-size: clamp(1.08rem, 1.12vw, 1.2rem);
       font-weight: 700;
       color: #fff;
       text-decoration: none;
       font-family: 'Space Grotesk', sans-serif;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1.2;
     }
 
     .brand-tag {
@@ -130,36 +164,45 @@
       background: rgba(245, 158, 11, 0.15);
       color: var(--plasma-amber);
       border: 1px solid rgba(245, 158, 11, 0.3);
-      padding: 2px 7px;
+      padding: 2px 6px;
       border-radius: 4px;
       letter-spacing: 0.5px;
+      white-space: nowrap;
+      line-height: 1.2;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: clamp(0.35rem, 0.6vw, 0.85rem);
+      flex-shrink: 1;
+      min-width: 0;
     }
 
     .nav-links a {
       position: relative;
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: clamp(0.7rem, 0.74vw, 0.82rem);
+      line-height: 1.2;
+      white-space: nowrap;
       transition: color 0.15s ease;
       padding: 0.25rem 0;
+      flex-shrink: 0;
     }
 
     .nav-links a:hover {
       color: #fff;
     }
 
-    .nav-links a.active:not(.nav-back-link) {
+    .nav-links a.active {
       color: #fff;
       font-weight: 600;
     }
 
-    .nav-links a.active:not(.nav-back-link)::after {
+    .nav-links a.active::after {
       content: '';
       position: absolute;
       bottom: -4px;
@@ -171,24 +214,18 @@
       box-shadow: 0 0 8px var(--plasma-glow);
     }
 
-    .nav-back-link {
-      color: var(--plasma-amber) !important;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
     .nav-cta {
       background: var(--surface);
       border: 1px solid var(--surface-border);
       color: var(--text);
-      padding: 0.45rem 0.9rem;
+      padding: 0.38rem clamp(0.65rem, 0.8vw, 0.85rem);
       border-radius: var(--radius);
-      font-size: 0.85rem;
+      font-size: clamp(0.78rem, 0.8vw, 0.82rem);
+      line-height: 1.2;
       text-decoration: none;
       transition: all 0.2s ease;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .nav-cta:hover {
@@ -1157,6 +1194,12 @@
       border-top: 1px solid var(--surface-border);
     }
 
+    @media (max-width: 1260px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
     @media (max-width: 900px) {
       .specs-strip, .grid-2, .grid-3 {
         grid-template-columns: 1fr;
@@ -1188,6 +1231,14 @@
     }
 
     @media (max-width: 600px) {
+      .site-header-bar {
+        padding: 0 1rem;
+        gap: 0.75rem;
+      }
+      .nav-back-link {
+        padding-right: 0.75rem;
+        font-size: 0.78rem;
+      }
       .video-grid {
         grid-template-columns: 1fr;
       }
@@ -1198,28 +1249,30 @@
 
   <!-- Sticky Header -->
   <header class="site-header">
-    <nav>
-      <a href="index.html" class="brand">
-        <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.0-BETA</span>
-      </a>
-      <div class="nav-links">
-        <a href="index.html" class="nav-back-link">← Back to RotaryCAM</a>
-        <a href="#viewport-section">3D Model</a>
-        <a href="#architecture">Architecture</a>
-        <a href="#controller">SimCNC</a>
-        <a href="#servos">Servos</a>
-        <a href="#chucks">Dual Chucks</a>
-        <a href="#linear-motion">Linear Motion</a>
-        <a href="#thc">THC &amp; Safety</a>
-        <a href="#brackets">JLCPCB Parts</a>
-        <a href="#videos">Videos</a>
-        <a href="#bom">BOM</a>
-        <a href="#faq">FAQ</a>
-        <a href="#learnings">v2 Learnings</a>
-      </div>
-      <a href="changelog.html#downloads" class="nav-cta">Download Beta</a>
-    </nav>
+    <div class="site-header-bar">
+      <a href="index.html" class="nav-back-link">← Back to RotaryCAM</a>
+      <nav>
+        <a href="index.html" class="brand">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.7.0-BETA</span>
+        </a>
+        <div class="nav-links">
+          <a href="#viewport-section">3D Model</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#controller">SimCNC</a>
+          <a href="#servos">Servos</a>
+          <a href="#chucks">Dual Chucks</a>
+          <a href="#linear-motion">Linear Motion</a>
+          <a href="#thc">THC &amp; Safety</a>
+          <a href="#brackets">JLCPCB Parts</a>
+          <a href="#videos">Videos</a>
+          <a href="#bom">BOM</a>
+          <a href="#faq">FAQ</a>
+          <a href="#learnings">v2 Learnings</a>
+        </div>
+        <a href="changelog.html#downloads" class="nav-cta">Download Beta</a>
+      </nav>
+    </div>
   </header>
 
   <div class="container">
