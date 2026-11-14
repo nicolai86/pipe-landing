@@ -859,15 +859,14 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-macOS-latest.zip" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-macOS-latest.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
-              Download for macOS (.zip)
+              Download for macOS (.dmg)
             </a>
             <div class="download-note">
-              <strong>Terminal note:</strong> If macOS Gatekeeper blocks opening, run:
-              <br><code>xattr -cr /Applications/RotaryCAM.app</code>
+              <strong>macOS note:</strong> Open the <code>.dmg</code>, drag <code>RotaryCAM.app</code> to Applications, and launch.
             </div>
           </div>
         </div>
@@ -942,7 +941,7 @@
             <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="var(--plasma-amber)">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
             </svg>
-            Fallback Offline License Token (Pre-bundled in all .zip files)
+            Fallback Offline License Token (Pre-bundled in zips &bull; Paste on macOS)
           </div>
           <button type="button" class="copy-btn" id="copy-license-btn" onclick="copyLicenseToken()">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -953,7 +952,7 @@
         </div>
         <div class="license-box" id="license-token-text">eyJ1c2VySWQiOiJ1c3JfcHVibGljX2JldGEiLCJlbWFpbCI6ImJldGFAcm90YXJ5Y2FtLmFwcCIsIm5hbWUiOiJQdWJsaWMgQmV0YSBXb3Jrc3RhdGlvbiIsInRpZXIiOiJiZXRhIiwiaXNzdWVkQXQiOiIyMDI2LTEwLTIzVDE5OjA5OjEyWiIsImV4cGlyZXNBdCI6IjIwMjYtMTEtMjJUMTk6MDk6MTJaIiwicGVybWlzc2lvbnMiOnsibWF4VXBsb2Fkc1BlcldpbmRvdyI6bnVsbCwidXBsb2FkV2luZG93U2Vjb25kcyI6bnVsbCwibWF4TmVzdGluZ09iamVjdHMiOjEwLCJhbGxvd0N1c3RvbU1hY2hpbmVzIjp0cnVlLCJhbGxvd0ZlYXR1cmVPdmVycmlkZXMiOnRydWUsImFsbG93UGFja01vZGUiOnRydWUsImFsbG93WmVyb0JldmVsIjp0cnVlLCJhbGxvd0c5M0ludmVyc2VUaW1lIjp0cnVlLCJhbGxvd1R1YmVCZW5kaW5nIjp0cnVlLCJtYXhCZW5kc1BlckZpbGUiOjEwLCJtYXhCZW5kc1BlcldpbmRvdyI6MTAsImFsbG93VGFicyI6ZmFsc2V9fQ.mXcCAURae4ysuM2bbLPpn3Kmmf6z22ZZ2bpD-81RdZEEXFi4OFgiFW0YF63PBnx-5wF17ZjWx_o_kYGhHGT6AQ</div>
         <div class="license-helper">
-          Every zip archive comes with this 30-day Public Beta <code class="mono" style="color: #fff;">rotarycam.lic</code> pre-installed in the root folder. Want to drop the 30-day clock forever or unlock Open Profiles, unlimited nesting, and tabbing? Grab a perpetual offline <a href="index.html#pricing" style="color: var(--plasma-amber); text-decoration: none; font-weight: 600;">Maker ($199) or Pro Shop ($399) license &rarr;</a> and drop in your permanent <code class="mono" style="color: #fff;">rotarycam.lic</code> file the exact same air-gapped way.
+          Windows and Linux archives include this 30-day Public Beta <code class="mono" style="color: #fff;">rotarycam.lic</code> right in the root folder. On macOS, paste the token above directly into the <code class="mono" style="color: #fff;">/login</code> screen, or drop <code class="mono" style="color: #fff;">rotarycam.lic</code> into <code class="mono" style="color: #fff;">~/Library/Application Support/RotaryCAM/rotarycam.lic</code>. Want to drop the 30-day clock forever or unlock Open Profiles, unlimited nesting, and tabbing? Grab a perpetual offline <a href="index.html#pricing" style="color: var(--plasma-amber); text-decoration: none; font-weight: 600;">Maker ($199) or Pro Shop ($399) license &rarr;</a> and drop in your permanent <code class="mono" style="color: #fff;">rotarycam.lic</code> file the exact same air-gapped way.
         </div>
       </div>
     </div>
