@@ -1,0 +1,2532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO Meta -->
+  <title>Smart Z-Axis Hardware THC (v2) — 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM</title>
+  <meta name="title" content="Smart Z-Axis Hardware THC (v2) — 10,000 Hz Step/Dir Plasma Height Controller (~$200 CAD) | RotaryCAM" />
+  <meta name="description" content="Standalone 10,000 Hz hardware Torch Height Controller &amp; Z-axis Step/Dir motion interceptor (~$200 CAD target). Plugs inline between any 5V differential CNC controller and your existing Z stepper or ClearPath servo drive: 2.0 ms ohmic tip-up escape, macro-free corner anti-dive, 5+ inch warped-plate tracking, 4-axis rotary tube cam, and 20 KB black-box crash recorder." />
+  <meta name="keywords" content="plasma torch height controller, standalone hardware THC, Step Dir THC interposer, CSMIO IP-M THC, SimCNC plasma THC, Mach3 Mach4 THC upgrade, LinuxCNC Mesa plasma THC, MASSO Acorn plasma THC, rotary tube plasma THC, ohmic anti-crash plasma" />
+  <meta name="author" content="Raphael Randschau" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://rotarycam.app/hardware-thc.html" />
+  <meta name="theme-color" content="#0d0f12" />
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="product" />
+  <meta property="og:url" content="https://rotarycam.app/hardware-thc.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="10,000 Hz Hardware Torch Height Controller &amp; Z-Axis Interceptor (~$200 CAD)" />
+  <meta property="og:description" content="Stop wrecking consumables on warped plate and tipped-up slugs. Plug inline between your existing CNC controller and Z drive in 15 minutes: 100 µs hardware Z loop, 2.0 ms ohmic collision escape, macro-free corner freeze, and 4-axis rotary tube cam." />
+  <meta property="og:image" content="https://rotarycam.app/assets/z-axis-thc-preview.png" />
+  <meta property="og:image:alt" content="RotaryCAM 10 kHz Hardware Z-Axis Torch Height Controller PCB" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://rotarycam.app/hardware-thc.html" />
+  <meta name="twitter:title" content="10,000 Hz Hardware Torch Height Controller &amp; Z-Axis Interceptor (~$200 CAD)" />
+  <meta name="twitter:description" content="Drops inline between any 5V RS-422 Step/Dir CNC controller and your existing Z stepper or ClearPath servo. 2.0 ms ohmic tip-up escape, full Z-screw travel on 5+ inch warped plate, ~$200 CAD target." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/z-axis-thc-preview.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%2314171d' stroke='%23f59e0b' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='16' r='4' fill='%23f59e0b'/></svg>" />
+
+  <!-- Schema.org Product Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "RotaryCAM Smart Z-Axis Hardware THC & Motion Interceptor (Hardware v2)",
+    "description": "Standalone 10,000 Hz (100 µs) RS-422 differential Step/Dir Z-axis plasma Torch Height Controller with 2.0 ms active in-cut ohmic collision escape, 0 ns copper 6-axis pass-through, macro-free XY(A) corner freeze, 4-axis rotary tube cam feedforward, passive Hypertherm SYNC bus snooping, and 20 KB 10 kHz flight recorder.",
+    "brand": {
+      "@type": "Brand",
+      "name": "RotaryCAM"
+    },
+    "image": "https://rotarycam.app/assets/z-axis-thc-preview.png",
+    "offers": {
+      "@type": "Offer",
+      "price": "200",
+      "priceCurrency": "CAD",
+      "availability": "https://schema.org/PreOrder",
+      "url": "https://rotarycam.app/hardware-thc.html#notify"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Three.js Import Map for Interactive 3D PCB Model -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three.module.js",
+      "three/addons/": "./vendor/"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0d0f12;
+      --surface: #14171d;
+      --surface-border: #232833;
+      --surface-hover: #1c212b;
+      --plasma-amber: #f59e0b;
+      --plasma-glow: rgba(245, 158, 11, 0.22);
+      --cyan-arc: #06b6d4;
+      --emerald-cut: #10b981;
+      --danger-red: #ef4444;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --code-bg: #090b0e;
+      --radius: 8px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 84px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.62;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+    }
+
+    code.mono-inline {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.84em;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: #f8fafc;
+    }
+
+    /* Single-Line Sticky Header (matches build-guide.html) */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(13, 15, 18, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+      width: 100%;
+    }
+
+    .site-header-bar {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0 clamp(0.85rem, 1.5vw, 1.5rem);
+      gap: clamp(0.6rem, 1vw, 1.25rem);
+    }
+
+    .nav-back-link {
+      color: var(--plasma-amber) !important;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-decoration: none;
+      font-size: clamp(0.78rem, 0.8vw, 0.82rem);
+      line-height: 1.2;
+      padding: 0.35rem clamp(0.75rem, 1vw, 1.15rem) 0.35rem 0;
+      border-right: 1px solid var(--surface-border);
+      transition: color 0.15s ease;
+    }
+
+    .nav-back-link:hover {
+      color: #fff !important;
+    }
+
+    nav {
+      flex: 1;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0.85rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Space Grotesk', sans-serif;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+
+    .brand-tag {
+      font-size: 0.7rem;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--plasma-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      line-height: 1.2;
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-weight: 600;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.75rem, 1.2vw, 1.45rem);
+      min-width: 0;
+    }
+
+    .nav-links a {
+      position: relative;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.83rem;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition: color 0.15s ease;
+      padding: 0.25rem 0;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-links a.active {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--plasma-amber);
+      border-radius: 2px;
+      box-shadow: 0 0 8px var(--plasma-glow);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--plasma-amber);
+      color: #000;
+      padding: 0.46rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 0 18px var(--plasma-glow);
+    }
+
+    .nav-cta:hover {
+      background: #fbbf24;
+      transform: translateY(-1px);
+    }
+
+    /* Layout Container */
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Hero Section */
+    .thc-hero {
+      padding: 3.4rem 0 2.5rem;
+      border-bottom: 1px solid var(--surface-border);
+      background:
+        radial-gradient(ellipse 60% 50% at 75% 32%, rgba(245, 158, 11, 0.08), transparent 70%),
+        radial-gradient(ellipse 50% 45% at 20% 20%, rgba(6, 182, 212, 0.06), transparent 70%);
+    }
+
+    .thc-hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr 1fr;
+      gap: 2.75rem;
+      align-items: stretch;
+    }
+
+    .eyebrow-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.32);
+      color: var(--plasma-amber);
+      font-size: 0.72rem;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      margin-bottom: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald-cut);
+      box-shadow: 0 0 8px var(--emerald-cut);
+    }
+
+    .thc-hero h1 {
+      font-size: clamp(2.05rem, 3.35vw, 2.95rem);
+      letter-spacing: -0.022em;
+      margin-bottom: 1.1rem;
+      line-height: 1.14;
+    }
+
+    .thc-hero h1 span {
+      background: linear-gradient(135deg, #ffffff 25%, var(--plasma-amber) 95%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: 1.04rem;
+      color: var(--text-muted);
+      margin-bottom: 1.35rem;
+      line-height: 1.62;
+    }
+
+    .hero-lead strong {
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    /* Target Price Callout Strip */
+    .price-strip {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(16, 185, 129, 0.08));
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 10px;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .price-tag-big {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--plasma-amber);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      white-space: nowrap;
+    }
+
+    .price-tag-big small {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #fde68a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .price-strip-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .price-strip-points {
+      font-size: 0.84rem;
+      color: #e2e8f0;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Notify Signup Card */
+    .notify-box {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 1.15rem 1.25rem;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+    }
+
+    .notify-box-label {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: #f8fafc;
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .notify-box-sub {
+      font-size: 0.74rem;
+      color: var(--emerald-cut);
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-weight: 600;
+    }
+
+    .notify-form-row {
+      display: flex;
+      gap: 0.65rem;
+      align-items: stretch;
+    }
+
+    .notify-input {
+      flex: 1;
+      min-width: 0;
+      background: var(--code-bg);
+      border: 1px solid #2d3444;
+      border-radius: var(--radius);
+      padding: 0.75rem 0.95rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.94rem;
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .notify-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .notify-input:focus {
+      border-color: var(--plasma-amber);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.16);
+    }
+
+    .notify-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--plasma-amber);
+      color: #090b0e;
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.75rem 1.3rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.94rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 6px 20px rgba(245, 158, 11, 0.28);
+    }
+
+    .notify-btn:hover:not(:disabled) {
+      background: #fbbf24;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 26px rgba(245, 158, 11, 0.4);
+    }
+
+    .notify-btn:disabled {
+      opacity: 0.72;
+      cursor: wait;
+    }
+
+    .notify-confirm {
+      display: none;
+      background: rgba(16, 185, 129, 0.11);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #d1fae5;
+      border-radius: var(--radius);
+      padding: 0.85rem 1rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .notify-confirm.visible {
+      display: block;
+    }
+
+    .notify-confirm strong {
+      color: #34d399;
+    }
+
+    .notify-footnote {
+      margin-top: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .notify-footnote a {
+      color: var(--text-muted);
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.4);
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .notify-footnote a:hover {
+      color: var(--plasma-amber);
+      border-color: var(--plasma-amber);
+    }
+
+    /* Right Column Interactive 3D Hardware Card */
+    .hero-pcb-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55);
+    }
+
+    .pcb-viewport-box {
+      position: relative;
+      background: radial-gradient(circle at 50% 50%, #131822 0%, #080a0d 100%);
+      flex: 1;
+      min-height: 390px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pcb-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+      cursor: grab;
+      flex: 1;
+    }
+
+    .pcb-canvas:active {
+      cursor: grabbing;
+    }
+
+    .pcb-viewport-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(13, 15, 18, 0.86);
+      border: 1px solid var(--surface-border);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 0.32rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.71rem;
+      color: var(--text-muted);
+      pointer-events: none;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .pcb-viewport-badge .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald-cut);
+      box-shadow: 0 0 8px var(--emerald-cut);
+    }
+
+    .pcb-cover-overlay {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      z-index: 10;
+      cursor: pointer;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .pcb-cover-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .pcb-cover-scrim {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(13, 15, 18, 0.32) 0%, rgba(13, 15, 18, 0.78) 100%);
+      transition: background 0.3s ease;
+    }
+
+    .pcb-cover-overlay:hover .pcb-cover-scrim {
+      background: radial-gradient(circle at center, rgba(13, 15, 18, 0.15) 0%, rgba(13, 15, 18, 0.62) 100%);
+    }
+
+    .pcb-explore-btn {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.72rem 1.45rem;
+      background: rgba(20, 23, 29, 0.92);
+      color: #fff;
+      border: 1px solid var(--plasma-amber);
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65), 0 0 16px rgba(245, 158, 11, 0.25);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pcb-cover-overlay:hover .pcb-explore-btn {
+      transform: translateY(-2px) scale(1.03);
+      background: var(--plasma-amber);
+      color: #000;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7), 0 0 24px rgba(245, 158, 11, 0.5);
+    }
+
+    .pcb-cover-hint {
+      position: relative;
+      z-index: 2;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.82);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    .pcb-loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: #090b0e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      z-index: 12;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+
+    .pcb-loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 34px;
+      height: 34px;
+      border: 3px solid rgba(245, 158, 11, 0.2);
+      border-top-color: var(--plasma-amber);
+      border-radius: 50%;
+      animation: thcSpin 0.85s linear infinite;
+    }
+
+    @keyframes thcSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .pcb-caption-bar {
+      padding: 0.8rem 1rem;
+      background: rgba(9, 11, 14, 0.92);
+      border-top: 1px solid var(--surface-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .pcb-caption-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--cyan-arc);
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* 4-Metric Hero Telemetry Strip */
+    .telemetry-strip {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .telemetry-metric {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .telemetry-metric::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--plasma-amber);
+    }
+
+    .telemetry-metric.cyan::before { background: var(--cyan-arc); }
+    .telemetry-metric.emerald::before { background: var(--emerald-cut); }
+
+    .telemetry-val {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.38rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 0.25rem;
+    }
+
+    .telemetry-val span {
+      color: var(--plasma-amber);
+    }
+
+    .telemetry-metric.cyan .telemetry-val span { color: var(--cyan-arc); }
+    .telemetry-metric.emerald .telemetry-val span { color: var(--emerald-cut); }
+
+    .telemetry-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Section Scaffolding */
+    .thc-section {
+      padding: 4.5rem 0;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .thc-section.alt-bg {
+      background: rgba(9, 11, 14, 0.6);
+    }
+
+    .section-head {
+      max-width: 820px;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--plasma-amber);
+      margin-bottom: 0.55rem;
+    }
+
+    .section-head h2 {
+      font-size: clamp(1.75rem, 2.7vw, 2.3rem);
+      margin-bottom: 0.8rem;
+      letter-spacing: -0.015em;
+    }
+
+    .section-head p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    /* Section 01: Comparison Table + Signal Equation Box */
+    .arch-equation-banner {
+      background: linear-gradient(135deg, rgba(20, 23, 29, 0.98), rgba(14, 18, 25, 0.98));
+      border: 1px solid rgba(6, 182, 212, 0.32);
+      border-left: 4px solid var(--cyan-arc);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .arch-eq-formula {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: clamp(0.88rem, 1.15vw, 1.05rem);
+      color: #fff;
+      background: #06080b;
+      border: 1px solid var(--surface-border);
+      padding: 0.65rem 1rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .arch-eq-formula .amber { color: var(--plasma-amber); font-weight: 700; }
+    .arch-eq-formula .cyan { color: var(--cyan-arc); font-weight: 700; }
+    .arch-eq-formula .emerald { color: var(--emerald-cut); font-weight: 700; }
+
+    .compare-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      font-size: 0.89rem;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 0.95rem 1.15rem;
+      text-align: left;
+      border-bottom: 1px solid var(--surface-border);
+      vertical-align: top;
+    }
+
+    .compare-table thead th {
+      background: #0b0d11;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .compare-table thead th.col-smart {
+      color: var(--plasma-amber);
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .compare-table tbody td.col-smart {
+      background: rgba(245, 158, 11, 0.045);
+      border-left: 1px solid rgba(245, 158, 11, 0.22);
+      color: #f8fafc;
+      font-weight: 500;
+    }
+
+    .compare-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .compare-table .row-label {
+      color: #fff;
+      font-weight: 600;
+      width: 21%;
+    }
+
+    .bad-pill {
+      color: #fca5a5;
+    }
+
+    .good-pill {
+      color: #6ee7b7;
+      font-weight: 600;
+    }
+
+    /* Section 02: 6 Crash Protection Cards */
+    .crash-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.35rem;
+    }
+
+    .crash-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .crash-card:hover {
+      border-color: rgba(245, 158, 11, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .crash-badge {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      gap: 0.4rem;
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.71rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(245, 158, 11, 0.13);
+      color: var(--plasma-amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .crash-badge.cyan {
+      background: rgba(6, 182, 212, 0.12);
+      color: var(--cyan-arc);
+      border-color: rgba(6, 182, 212, 0.3);
+    }
+
+    .crash-badge.emerald {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--emerald-cut);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .crash-card h3 {
+      font-size: 1.15rem;
+      line-height: 1.3;
+    }
+
+    .crash-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .crash-stat-footer {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.74rem;
+      color: #cbd5e1;
+    }
+
+    /* Section 03: Compatibility Matrix + 3 Progressive Wiring Tiers */
+    .compat-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .compat-group {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 1.25rem 1.35rem;
+    }
+
+    .compat-group-title {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--cyan-arc);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .compat-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .compat-pill {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--surface-border);
+      color: #e2e8f0;
+      padding: 0.3rem 0.6rem;
+      border-radius: 5px;
+    }
+
+    .compat-note {
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.35rem;
+    }
+
+    .tier-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .tier-card.recommended {
+      border-color: rgba(245, 158, 11, 0.5);
+      box-shadow: 0 0 28px rgba(245, 158, 11, 0.08);
+    }
+
+    .tier-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .tier-step {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--plasma-amber);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .tier-time {
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.71rem;
+      color: var(--emerald-cut);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .tier-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      font-size: 0.87rem;
+      color: var(--text-muted);
+    }
+
+    .tier-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      line-height: 1.5;
+    }
+
+    .tier-list li .plug-bullet {
+      color: var(--plasma-amber);
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Section 04: Rotary Cam Split */
+    .rotary-split {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 2.25rem;
+      align-items: start;
+    }
+
+    .rotary-scan-card {
+      background: var(--code-bg);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .rotary-feature-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+
+    .rotary-feat-item {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 1.05rem 1.2rem;
+    }
+
+    .rotary-feat-item h4 {
+      font-size: 1rem;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rotary-feat-item p {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Section 05: Flight Recorder & smart-thc CLI */
+    .cli-split {
+      display: grid;
+      grid-template-columns: 0.95fr 1.15fr;
+      gap: 2.25rem;
+      align-items: stretch;
+    }
+
+    .terminal-card {
+      background: #06080b;
+      border: 1px solid #252b38;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.65);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .terminal-bar {
+      background: #11151d;
+      border-bottom: 1px solid #232833;
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .terminal-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #334155;
+    }
+
+    .terminal-dots span:nth-child(1) { background: #ef4444; }
+    .terminal-dots span:nth-child(2) { background: #f59e0b; }
+    .terminal-dots span:nth-child(3) { background: #10b981; }
+
+    .terminal-body {
+      padding: 1.25rem 1.35rem;
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.76rem;
+      line-height: 1.68;
+      color: #cbd5e1;
+      overflow-x: auto;
+      white-space: pre;
+      flex: 1;
+    }
+
+    .t-cmd { color: #f8fafc; font-weight: 700; }
+    .t-prompt { color: var(--plasma-amber); font-weight: 700; }
+    .t-pass { color: var(--emerald-cut); font-weight: 700; }
+    .t-cyan { color: var(--cyan-arc); }
+    .t-dim { color: #64748b; }
+    .t-amber { color: #fbbf24; }
+
+    /* Section 06: Spec Sheet + Bottom CTA */
+    .specs-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .spec-table-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .spec-table-head {
+      background: #0b0d11;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--surface-border);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.98rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .spec-dl {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-row {
+      display: grid;
+      grid-template-columns: 0.85fr 1.25fr;
+      gap: 1rem;
+      padding: 0.78rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.85rem;
+    }
+
+    .spec-row:last-child {
+      border-bottom: none;
+    }
+
+    .spec-key {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .spec-val {
+      color: #f1f5f9;
+      font-family: 'JetBrains Mono', 'SF Mono', Menlo, Monaco, Consolas, monospace;
+      font-size: 0.79rem;
+      line-height: 1.5;
+    }
+
+    /* Bottom Notify Banner */
+    .bottom-cta-card {
+      background: linear-gradient(145deg, rgba(20, 23, 29, 0.98), rgba(26, 31, 41, 0.98));
+      border: 1px solid rgba(245, 158, 11, 0.42);
+      border-radius: 14px;
+      padding: 2.4rem 2.5rem;
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.55), 0 0 32px rgba(245, 158, 11, 0.09);
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 2.25rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bottom-cta-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--plasma-amber), var(--cyan-arc), var(--emerald-cut));
+    }
+
+    /* Footer */
+    footer {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 3rem 2rem 3.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .footer-brand {
+      color: #f1f5f9;
+      font-weight: 600;
+    }
+
+    .footer-sub {
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.15s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--plasma-amber);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1080px) {
+      .crash-grid,
+      .compat-matrix,
+      .tiers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .telemetry-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 960px) {
+      .nav-links {
+        display: none;
+      }
+      .thc-hero-grid,
+      .rotary-split,
+      .cli-split,
+      .specs-grid-2,
+      .bottom-cta-card {
+        grid-template-columns: 1fr;
+      }
+      .pcb-viewport-box {
+        min-height: 350px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        padding: 0 1.25rem;
+      }
+      .crash-grid,
+      .compat-matrix,
+      .tiers-grid,
+      .telemetry-strip {
+        grid-template-columns: 1fr;
+      }
+      .notify-form-row {
+        flex-direction: column;
+      }
+      .notify-btn {
+        width: 100%;
+      }
+      .price-strip-divider {
+        display: none;
+      }
+      .bottom-cta-card {
+        padding: 1.65rem 1.35rem;
+      }
+      .spec-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden CORS-Free Sink for Google Form Submissions -->
+  <iframe name="thc-google-form-sink" id="thc-google-form-sink" style="display:none;" title="Form submission target"></iframe>
+
+  <!-- Single-Line Sticky Navigation -->
+  <header class="site-header">
+    <div class="site-header-bar">
+      <a href="index.html" class="nav-back-link">← Back to RotaryCAM</a>
+      <nav aria-label="Hardware THC Navigation">
+        <a href="#" class="brand">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.7.0-BETA</span>
+        </a>
+        <div class="nav-links">
+          <a href="#why-hardware">Why Hardware</a>
+          <a href="#protection">Crash Protection</a>
+          <a href="#compatibility">Compatibility &amp; Wiring</a>
+          <a href="#rotary">Rotary Cam</a>
+          <a href="#telemetry">Flight Recorder</a>
+          <a href="#specs">Specs</a>
+        </div>
+        <a href="#notify" class="nav-cta">Notify for Updates</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- =====================================================================
+         HERO SPLIT + 4-METRIC TELEMETRY STRIP
+         ===================================================================== -->
+    <section class="thc-hero">
+      <div class="container">
+        <div class="thc-hero-grid">
+          <!-- Left Column: Shop-Owner Value Prop + Target Price + Google Form -->
+          <div>
+            <div class="eyebrow-pill mono">
+              <span class="eyebrow-dot"></span>
+              <span>HARDWARE V2 PREVIEW &bull; 10 kHz STEP/DIR INTERCEPTOR</span>
+            </div>
+
+            <h1>Stop Wrecking Consumables on Warped Plate. <span>Give Your Table 10,000 Hz Height Control.</span></h1>
+
+            <p class="hero-lead">
+              Plug this standalone board inline between <strong>any 5V differential Step/Dir CNC controller</strong> and your existing stepper or ClearPath servo Z drive—then turn your controller&rsquo;s sluggish software THC <strong>OFF</strong>. Your torch tracks <strong>5+&Prime; warped plate within 0.002&Prime;</strong> and snaps clear of tipped-up slugs in <strong>2.0 ms</strong>.
+            </p>
+
+            <!-- Target Price Callout Strip -->
+            <div class="price-strip">
+              <div class="price-tag-big">
+                ~$200 CAD <small>Target Price</small>
+              </div>
+              <div class="price-strip-divider" aria-hidden="true"></div>
+              <div class="price-strip-points">
+                Standalone Hardware &bull; $0 Subscriptions &bull; Keep Your Existing Motors &amp; CNC
+              </div>
+            </div>
+
+            <!-- Inline Google Form Signup (#notify) -->
+            <div class="notify-box" id="notify">
+              <div class="notify-box-label">
+                <span>Get notified when Batch 1 hardware units open</span>
+                <span class="notify-box-sub">ZERO SPAM &bull; NO DEPOSIT</span>
+              </div>
+
+              <form
+                class="thc-notify-form"
+                action="https://docs.google.com/forms/d/e/1FAIpQLSfSI9nmV7WYNE5Qo7ZzDtdDGB9R0cyWh76_MTTL9J-ZgyYl0w/formResponse"
+                method="POST"
+                target="thc-google-form-sink"
+              >
+                <input type="hidden" name="fvv" value="1" />
+                <input type="hidden" name="pageHistory" value="0" />
+                <div class="notify-form-row">
+                  <input
+                    type="email"
+                    name="entry.936476633"
+                    class="notify-input"
+                    required
+                    placeholder="you@yourshop.com"
+                    aria-label="Email address"
+                    autocomplete="email"
+                  />
+                  <button type="submit" class="notify-btn">Notify for Updates</button>
+                </div>
+              </form>
+
+              <div class="notify-confirm" role="status" aria-live="polite"></div>
+
+              <div class="notify-footnote">
+                <span>Gauging Batch 1 shop demand for standalone assembled boards (~$200 CAD).</span>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSI9nmV7WYNE5Qo7ZzDtdDGB9R0cyWh76_MTTL9J-ZgyYl0w/viewform" target="_blank" rel="noopener noreferrer">Prefer Google Forms? Open form directly ↗</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Three.js 3D PCB Showcase -->
+          <div class="hero-pcb-card">
+            <div class="pcb-viewport-box" id="thc-viewport">
+              <div class="pcb-viewport-badge mono">
+                <span class="status-dot"></span>
+                <span>Interactive 3D PCB • Drag to Orbit • Scroll to Zoom</span>
+              </div>
+              <div class="pcb-cover-overlay" id="thc-cover" style="background-image: url('assets/z-axis-thc-preview.png');">
+                <div class="pcb-cover-scrim"></div>
+                <button class="pcb-explore-btn" type="button" aria-label="Click to explore interactive 3D THC PCB model">
+                  <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                  </svg>
+                  <span>Click to Explore 3D Board</span>
+                </button>
+                <div class="pcb-cover-hint mono">170 MHz STM32G431 • Galvanically Isolated 24V • RS-422</div>
+              </div>
+              <div class="pcb-loading-overlay hidden" id="thc-loading">
+                <div class="spinner"></div>
+                <div class="mono" style="font-size: 0.8rem; color: var(--text-dim);">Loading 3D Board Model…</div>
+              </div>
+              <canvas id="thc-canvas" class="pcb-canvas"></canvas>
+            </div>
+            <div class="pcb-caption-bar">
+              <span class="pcb-caption-pill">● REV 1 PROTOTYPE RENDER SHOWN</span>
+              <span>Hardware v2: <strong style="color:#fff;">82.5 &times; 89.8 mm</strong> 4-Layer Isolated PCB with <strong style="color:#fff;">15&times; Latching Molex Mini-Fit Jr.</strong> Connectors</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4-Metric Hero Telemetry Strip -->
+        <div class="telemetry-strip">
+          <div class="telemetry-metric">
+            <div class="telemetry-val">10,000 Hz <span>(100 µs)</span></div>
+            <div class="telemetry-lbl">Deterministic Hardware Z Step/Dir Loop in STM32G431 Silicon</div>
+          </div>
+          <div class="telemetry-metric cyan">
+            <div class="telemetry-val">2.0 ms <span>Escape</span></div>
+            <div class="telemetry-lbl">Active In-Cut Ohmic Tip-Up Retract (Overrides Corner Freezes)</div>
+          </div>
+          <div class="telemetry-metric emerald">
+            <div class="telemetry-val">&lt; 0.002&Prime; <span>(&lt; 0.3 V)</span></div>
+            <div class="telemetry-lbl">Uphill Tracking Lag Across 5+&Prime; Warped Plate (Zero Z Clamps)</div>
+          </div>
+          <div class="telemetry-metric">
+            <div class="telemetry-val">~$200 CAD <span>Target</span></div>
+            <div class="telemetry-lbl">Keep Your Existing Z Stepper/Servo, Lifter &amp; CNC Controller</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 01: WHY SOFTWARE THCS DIVE (AND WHY HARDWARE FIXES IT)
+         ===================================================================== -->
+    <section id="why-hardware" class="thc-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">01 // Why Software THCs Dive</span>
+          <h2>Your Z motor isn&rsquo;t too slow. Your CNC controller&rsquo;s motion buffer is in the way.</h2>
+          <p>
+            Most PC and Ethernet motion controllers route arc voltage through a <strong>15–40 ms trajectory lookahead buffer</strong>. Because the height loop is always reacting late, you have to turn loop gains down 4–5&times; just to stop the torch from bouncing—guaranteeing sluggish climbs up warped sheet and violent dives into corners and kerfs.
+          </p>
+        </div>
+
+        <div class="arch-equation-banner">
+          <div>
+            <div class="mono" style="font-size: 0.74rem; color: var(--cyan-arc); font-weight: 700; text-transform: uppercase; margin-bottom: 0.25rem;">
+              True Hardware Summing-Junction Interceptor
+            </div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 580px;">
+              Sits directly inline on the Z Step/Dir cable while passing <code class="mono-inline">X/Y/A/B/C</code> straight through in PCB copper (<strong style="color:#fff;">0 ns added latency</strong>). Zero CNC plugins, zero lost DRO steps.
+            </p>
+          </div>
+          <div class="arch-eq-formula">
+            <span class="emerald">Target Z</span> = <span class="cyan">Host CNC Steps</span> + <span class="amber">THC Virtual Steps</span> <span style="color:#64748b;">@ 100 µs</span>
+          </div>
+        </div>
+
+        <div class="compare-table-wrap">
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Shop-Floor Reality</th>
+                <th>PC / Ethernet Software THC</th>
+                <th>Proprietary Lifter Kits ($1,500–$3,500+)</th>
+                <th class="col-smart">Smart Z-Axis Hardware v2 (~$200 CAD)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="row-label">Closed-Loop Latency</td>
+                <td><span class="bad-pill">15–40 ms buffer delay</span> — forces detuned gains to prevent oscillation</td>
+                <td>Fast internal loop, locked to vendor&rsquo;s closed drive box</td>
+                <td class="col-smart"><span class="good-pill">100 µs (10,000 Hz) deterministic</span> — synchronized 16&times; oversampled ADC finishes in 90.35 µs</td>
+              </tr>
+              <tr>
+                <td class="row-label">Warped Plate Range</td>
+                <td><span class="bad-pill">Clamped to &plusmn;0.040&Prime;–&plusmn;0.500&Prime;</span> — slams into bowed sheet outside window</td>
+                <td>Full lifter stroke, requires replacing your Z actuator</td>
+                <td class="col-smart"><span class="good-pill">Full physical Z lead-screw travel</span> — tracks 5+&Prime; warps across 8&prime;–20&prime; beds (&lt; 0.002&Prime; lag)</td>
+              </tr>
+              <tr>
+                <td class="row-label">Tipped-Up Part Slugs</td>
+                <td><span class="bad-pill">Blind while frozen</span> — snaps torch off breakaway in corners &amp; kerfs</td>
+                <td>Usually relies on mechanical breakaway after impact</td>
+                <td class="col-smart"><span class="good-pill">2.0 ms active Ohmic escape</span> — overrides freezes, lifts +1.0 mm at 150 IPM + Feedhold</td>
+              </tr>
+              <tr>
+                <td class="row-label">Corners &amp; Old G-Code</td>
+                <td><span class="bad-pill">Dives on slowdown</span> unless every post-processor has perfect M62/M63</td>
+                <td>Requires custom CNC velocity analog/serial integration</td>
+                <td class="col-smart"><span class="good-pill">Self-learns XY(A) cruise speed</span> — auto-locks below 80% speed or 0.08–0.10 G decel</td>
+              </tr>
+              <tr>
+                <td class="row-label">Motors &amp; Retrofit Cost</td>
+                <td>$0–$300 plugin, costs you wrecked $45 consumables weekly</td>
+                <td><span class="bad-pill">$1,500–$3,500+ USD</span> — rip out working Z mechanics &amp; cables</td>
+                <td class="col-smart"><span class="good-pill">~$200 CAD target</span> — keeps your existing stepper or ClearPath servo &amp; 4 plugs to start</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 02: 6 REAL SHOP-FLOOR TORCH CRASHES ELIMINATED
+         ===================================================================== -->
+    <section id="protection" class="thc-section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">02 // Six-Layer Crash Protection</span>
+          <h2>Built for warped steel, tipped-up slugs, and worn electrodes.</h2>
+          <p>
+            Every protection layer below runs inside the 10 kHz hardware interrupt on Hardware v2—verified on live flat-sheet and 20-foot 4-axis rotary tables.
+          </p>
+        </div>
+
+        <div class="crash-grid">
+          <!-- Card 1 -->
+          <article class="crash-card">
+            <span class="crash-badge">2.0 ms Response</span>
+            <h3>Active In-Cut Ohmic Collision Escape</h3>
+            <p>
+              Voltage-only THCs are completely blind when crossing a kerf next to a tipped-up slug or while locked in a corner. A single parallel wire tee off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) filters 50 ms pierce blowback and water-table splash, <strong>overrides all corner and macro freezes</strong>, snaps Z UP at <strong>150 IPM</strong> plus a <strong>+0.040&Prime; (1.0 mm)</strong> air gap, holds downward Z for 250 ms while the gantry clears the obstacle, and trips CNC Feedhold if shorted &ge; 150 ms.
+            </p>
+            <div class="crash-stat-footer">
+              0.001&Prime; travel @ 30 IPM &bull; +0.500&Prime; (12.7 mm) lift cap
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="crash-card">
+            <span class="crash-badge cyan">Zero Macros Needed</span>
+            <h3>Macro-Free Corner, Hole &amp; Kerf Anti-Dive</h3>
+            <p>
+              Reads live 6-axis step speed and locks downward Z automatically whenever deceleration hits <strong>0.08–0.10 G</strong> or speed drops <strong>&lt; 80% of cruise</strong>—even on legacy G-code without <code class="mono-inline">M62/M63</code>—waiting 20–25 ms above 88% cruise for the corner puddle to settle. Paired with a motion-compensated <strong>667 V/s</strong> (<code class="mono-inline">+2.0 V / 3.0 ms</code>) kerf/crater hold up to 600 ms and asymmetric speed limits: full rapid UP, capped <strong>75 IPM DOWN</strong>.
+            </p>
+            <div class="crash-stat-footer">
+              295 IPM UP / 75 IPM DOWN &bull; Auto-adapts to FRO in 1.2–1.5 s
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="crash-card">
+            <span class="crash-badge emerald">Zero Z Clamps</span>
+            <h3>Full Z-Screw Travel Across 5+&Prime; Warped Plate</h3>
+            <p>
+              Tracks across the entire physical stroke of your Z lead screw with zero &plusmn;0.5&Prime; software clamps. Combines a 4th-order <strong>1 kHz Bessel filter</strong> (~0.33 ms flat group delay, zero ringing), adaptive gain scheduling (<code class="mono-inline">Kp 90 &rarr; 200</code>), and an upward-only slope integrator (100&times; crest fast-bleed, <strong>strictly zero 22 GA thin-sheet downward windup</strong>). At every <code class="mono-inline">M5</code>, virtual steps unwind cleanly back to 0 with zero Z DRO drift.
+            </p>
+            <div class="crash-stat-footer">
+              &lt; 0.3 V (&lt; 0.002&Prime;) uphill lag &bull; 3rd-order S-curve jerk limited
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="crash-card">
+            <span class="crash-badge">&le; 20 ms Lock</span>
+            <h3>HYBRID_SAV Auto-Voltage &amp; Sprung-Sheet Lock</h3>
+            <p>
+              Samples steady-state arc voltage in <strong>&le; 20 ms</strong> inside an asymmetric <strong>[-7.0 V, +15.0 V]</strong> cut-chart window—automatically absorbing electrode hafnium wear and slat resistance, while clamping bowed thin-sheet high pierces (&gt; +15 V) right back to cut-chart voltage so the torch pulls down to true cut height instead of freezing high. Also supports wire-free <code class="mono-inline">PURE_SAV</code>, <code class="mono-inline">PRESET</code>, and wire-free <code class="mono-inline">VOLTAGE</code> Arc-OK.
+            </p>
+            <div class="crash-stat-footer">
+              65 V ON / 50 V OFF hysteresis &bull; &gt; 220 V inverter bleed-down latch
+            </div>
+          </article>
+
+          <!-- Card 5 -->
+          <article class="crash-card">
+            <span class="crash-badge cyan">0 Bus Collisions</span>
+            <h3>Passive Hypertherm Powermax SYNC Snooping</h3>
+            <p>
+              Shares your existing 2-wire RS-485 cable (<code class="mono-inline">19200 8E1</code>) with a Powermax65/85/105 SYNC (<code class="mono-inline">Slave 0x01</code>) and passively captures live cutting amps, gas PSI, cut/gouge/FlushCut mode, and 12-bit fault codes with <strong>zero added bus traffic</strong>. Driven by a Texas Instruments <code class="mono-inline">THVD1406</code> hardware auto-direction transceiver—making it physically impossible for an MCU reset to lock up the bus.
+            </p>
+            <div class="crash-stat-footer">
+              Auto 8E1 / 7E1 / 8N1 framing &bull; THVD1406 zero-GPIO direction
+            </div>
+          </article>
+
+          <!-- Card 6 -->
+          <article class="crash-card">
+            <span class="crash-badge emerald">3,750 Vrms Isolation</span>
+            <h3>Dual Cross-Checked 24V Watchdog &amp; Isolation</h3>
+            <p>
+              Powered from standard <strong>+24V cabinet DC</strong> with a resettable PTC fuse, Murata <code class="mono-inline">NME</code> galvanic DC-DC converter, split ferrite-filtered <code class="mono-inline">3V3A</code> analog ADC reference, and <strong>3,750 Vrms</strong> Toshiba <code class="mono-inline">TLP291-4</code> optocouplers. Cross-checked <code class="mono-inline">10 kHz</code> ISR and <code class="mono-inline">SysTick</code> heartbeats drop the isolated E-Stop watchdog (<code class="mono-inline">J2-3</code>) within <strong>50 ms</strong> on any fault, backed by automatic 8 MHz &rarr; 16 MHz HSI clock failover.
+            </p>
+            <div class="crash-stat-footer">
+              BAT54S Schottky clamped inputs &bull; 4 onboard diagnostic LEDs
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 03: COMPATIBILITY & 3 PROGRESSIVE WIRING TIERS
+         ===================================================================== -->
+    <section id="compatibility" class="thc-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">03 // Compatibility &amp; 15-Minute Cabinet Retrofit</span>
+          <h2>Works with your table, your motors, and your plasma cutter.</h2>
+          <p>
+            All field connections use positive-latching <strong>Molex Mini-Fit Jr.</strong> plugs (zero loose screw terminals shaking out under high-G gantry rapids). Start with 4 plugs in 15 minutes and add full 6-axis tap or Ethernet diagnostics whenever you want.
+          </p>
+        </div>
+
+        <!-- 3-Group Compatibility Matrix -->
+        <div class="compat-matrix">
+          <div class="compat-group">
+            <div class="compat-group-title">CNC Controllers (5V RS-422 Step/Dir)</div>
+            <div class="compat-pills">
+              <span class="compat-pill">CSMIO/IP-M &amp; IP-S</span>
+              <span class="compat-pill">CS-Lab simCNC</span>
+              <span class="compat-pill">Mach3 / Mach4 + ESS</span>
+              <span class="compat-pill">LinuxCNC / Mesa</span>
+              <span class="compat-pill">MASSO G3</span>
+              <span class="compat-pill">Centroid Acorn</span>
+            </div>
+            <p class="compat-note">
+              120 &Omega; terminated inputs &amp; 5V 33 &Omega; source-terminated RS-422 outputs. Silicon hardware timers count at 170 MHz (&gt; 20 MHz pulse capability, zero missed steps).
+            </p>
+          </div>
+
+          <div class="compat-group">
+            <div class="compat-group-title">Z Lifters, Motors &amp; Units</div>
+            <div class="compat-pills">
+              <span class="compat-pill">Open-Loop Steppers</span>
+              <span class="compat-pill">Leadshine DM556E</span>
+              <span class="compat-pill">Teknic ClearPath-SD</span>
+              <span class="compat-pill">Imperial (INCH)</span>
+              <span class="compat-pill">Metric (MM)</span>
+            </div>
+            <p class="compat-note">
+              Supports integer or fractional <code class="mono-inline">steps/unit</code> (e.g. 2,050, 10,160, 500, 169.765) and auto-learns polarity, speed, accel &amp; jerk from a 4-move G-code macro.
+            </p>
+          </div>
+
+          <div class="compat-group">
+            <div class="compat-group-title">Plasma Power Sources</div>
+            <div class="compat-pills">
+              <span class="compat-pill">Any 0–10 V Arc Divider</span>
+              <span class="compat-pill">Hypertherm SYNC</span>
+              <span class="compat-pill">Hypertherm Duramax</span>
+              <span class="compat-pill">50:1 CPC + Iso Card</span>
+              <span class="compat-pill">Wire-Free Arc-OK</span>
+            </div>
+            <p class="compat-note">
+              Reads up to ~253 V full-scale (verified at 87.2:1 &amp; 91.3:1 ratios). Single test-cut calibration stores exact divider gain (&plusmn;50% range) to Flash Page 63.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3 Progressive Wiring Tiers -->
+        <div class="tiers-grid">
+          <div class="tier-card">
+            <div class="tier-header">
+              <span class="tier-step">Tier 1 // Standalone</span>
+              <span class="tier-time">~15 Min • 4 Plugs</span>
+            </div>
+            <h3>Minimum 4-Plug Retrofit</h3>
+            <p style="font-size: 0.87rem; color: var(--text-muted);">
+              Fastest drop-in upgrade for legacy Mach3 or stepper tables—runs <code class="mono-inline">PURE_SAV</code> auto-voltage lock and wire-free <code class="mono-inline">VOLTAGE</code> Arc-OK immediately:
+            </p>
+            <ul class="tier-list">
+              <li><span class="plug-bullet">01</span><span><strong>PWR:</strong> +24V DC &amp; DGND cabinet power.</span></li>
+              <li><span class="plug-bullet">02</span><span><strong>Z-AXIS-IN / OUT:</strong> Unplug Z Step/Dir from CNC and route inline.</span></li>
+              <li><span class="plug-bullet">03</span><span><strong>J2 Pin 4:</strong> 0–10 V divided arc voltage from plasma divider.</span></li>
+              <li><span class="plug-bullet">04</span><span><strong>J2 Pin 2:</strong> Single 24V CNC output (<code class="mono-inline">24V_THC_ENA</code>) to enable/freeze.</span></li>
+            </ul>
+          </div>
+
+          <div class="tier-card recommended">
+            <div class="tier-header">
+              <span class="tier-step">Tier 2 // Recommended</span>
+              <span class="tier-time">Full Anti-Crash</span>
+            </div>
+            <h3>Full 6-Axis + Ohmic Escape</h3>
+            <p style="font-size: 0.87rem; color: var(--text-muted);">
+              Unlocks macro-free corner freeze, 4-axis rotary tube cam, sprung-sheet sanity bounds, and mid-cut tip-up collision escape:
+            </p>
+            <ul class="tier-list">
+              <li><span class="plug-bullet">+</span><span><strong>X/Y/A/B/C-IN &rarr; OUT:</strong> Pure copper RS-422 pass-through (0 ns lag) for live 6-axis speed &amp; rotary cam.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>J3 Pin 2 (Ohmic Tee):</strong> Parallel wire off existing 24V ohmic sensor—enables 2.0 ms in-cut escape &amp; single-pass 30–40 IPM touch-off (saves 1.2–1.5 s/pierce).</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>J2 Pin 5:</strong> 0–10 V target voltage for <code class="mono-inline">HYBRID_SAV</code> [-7 V, +15 V] window.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>J3-4 &amp; J2-3:</strong> 150 ms stuck-short CNC Feedhold + 50 ms E-Stop Watchdog.</span></li>
+            </ul>
+          </div>
+
+          <div class="tier-card">
+            <div class="tier-header">
+              <span class="tier-step">Tier 3 // Optional</span>
+              <span class="tier-time">2-Wire RS-485 / TCP</span>
+            </div>
+            <h3>Networked Telemetry &amp; Updates</h3>
+            <p style="font-size: 0.87rem; color: var(--text-muted);">
+              Wire the 4-pin <code class="mono-inline">RS485</code> header to your CNC PC or a WaveShare RS-485-to-Ethernet TCP bridge—never open the cabinet again:
+            </p>
+            <ul class="tier-list">
+              <li><span class="plug-bullet">+</span><span><strong>1-Command Health Audit:</strong> Live voltages, 6-axis Hz, and round-trip register self-test.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Hypertherm SYNC Snoop:</strong> Live amps, gas PSI &amp; fault codes on the shared 2-wire bus.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>20 KB Crash Oscilloscope:</strong> Download 46-column CSV &amp; ASCII plots after any fault.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>1–2 Min Field Flash:</strong> Power-loss-safe firmware updates over Ethernet/RS-485.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 04: BUILT-IN 4-AXIS ROTARY TUBE CAM ENGINE (XYZA)
+         ===================================================================== -->
+    <section id="rotary" class="thc-section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">04 // 4-Axis Rotary Tube Cam Engine (XYZA)</span>
+          <h2>Follows spinning square &amp; rectangular HSS corners before voltage error even develops.</h2>
+          <p>
+            Spinning a bowed 20-foot tube in a 4-jaw chuck makes flat faces rise and corners whip past the torch faster than any voltage-only THC can react. Hardware v2 solves the exact tube geometry and chuck runout directly on the MCU.
+          </p>
+        </div>
+
+        <div class="rotary-split">
+          <div class="rotary-scan-card">
+            <div class="mono" style="font-size: 0.74rem; color: var(--plasma-amber); font-weight: 700; text-transform: uppercase; margin-bottom: 0.65rem;">
+              On-MCU Multi-Angle Touch-Off Solver (RS-485-Free or Modbus)
+            </div>
+            <h3 style="font-size: 1.28rem; margin-bottom: 0.75rem;">Solves Round Pipe, Square Tube &amp; Rectangular HSS in Seconds</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.1rem;">
+              Latches sub-step <code class="mono-inline">(A, Y, Z)</code> coordinates via 0.2 ms ohmic strobe at up to 16 angles (<code class="mono-inline">0&deg;, 30&deg;, 45&deg;, 90&deg;, 180&deg;, 270&deg;, 360&deg;</code>, plus optional lateral <code class="mono-inline">&Delta;Y</code> chord touch for round pipe) and computes closed-form geometry in silicon:
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;" class="mono">
+              <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
+                <div style="font-size: 0.7rem; color: var(--cyan-arc);">360&deg; SLIP CHECK</div>
+                <div style="font-size: 0.88rem; color: #fff; font-weight: 700; margin-top: 0.2rem;">|z(360&deg;) - z(0&deg;)| &le; 0.25 mm</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Catches chuck jaw slip</div>
+              </div>
+              <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
+                <div style="font-size: 0.7rem; color: var(--plasma-amber);">RUNOUT &amp; BOW VECTOR</div>
+                <div style="font-size: 0.88rem; color: #fff; font-weight: 700; margin-top: 0.2rem;">2D Eccentricity (e_z, e_y)</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">From 0&deg;/180&deg; &amp; 90&deg;/270&deg; faces</div>
+              </div>
+              <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
+                <div style="font-size: 0.7rem; color: var(--emerald-cut);">PROFILE CLASSIFIER</div>
+                <div style="font-size: 0.88rem; color: #fff; font-weight: 700; margin-top: 0.2rem;">30&deg; Secant Rise (&ge; 0.25 mm)</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Round vs. Square vs. Rect HSS</div>
+              </div>
+              <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
+                <div style="font-size: 0.7rem; color: #f8fafc;">SOLVED DIMENSIONS</div>
+                <div style="font-size: 0.88rem; color: #fff; font-weight: 700; margin-top: 0.2rem;">H &times; W, Z_center &amp; R_c</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Outer corner radius included</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rotary-feature-list">
+            <div class="rotary-feat-item">
+              <h4><span class="mono" style="color: var(--plasma-amber);">01</span> Analytical Cam + Runout Velocity Feedforward</h4>
+              <p>Differentiates the solved tube wall + bow profile against live A-axis angular speed so Z lifts and drops smoothly around rotating HSS corners before arc voltage error even forms.</p>
+            </div>
+            <div class="rotary-feat-item">
+              <h4><span class="mono" style="color: var(--cyan-arc);">02</span> True Tangential Surface Speed (<code class="mono-inline">v_surface(&theta;)</code>)</h4>
+              <p>Computes instantaneous radius <code class="mono-inline">r(&theta;)</code> at 10 kHz and feeds true torch surface speed into the automatic corner-slowdown detector.</p>
+            </div>
+            <div class="rotary-feat-item">
+              <h4><span class="mono" style="color: var(--emerald-cut);">03</span> Corner-Window vs. Kerf Discrimination</h4>
+              <p>Accounts for expected geometric voltage rise on receding HSS corners so corner rolls never false-trigger kerf anti-dive—while keeping flat faces hair-trigger sensitive to slots and bolt holes.</p>
+            </div>
+            <div class="rotary-feat-item">
+              <h4><span class="mono" style="color: var(--plasma-amber);">04</span> Hard +0.50 mm Physical Wall Floor Guard</h4>
+              <p>Enforces a continuous mechanical collision floor <strong>+0.50 mm</strong> above the rotating, runout-compensated tube surface—physically blocking nozzle-to-wall crashes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 05: 20 KB FLIGHT RECORDER & SMART-THC CLI
+         ===================================================================== -->
+    <section id="telemetry" class="thc-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">05 // 20 KB Black-Box Flight Recorder &amp; smart-thc CLI</span>
+          <h2>Replace shop-floor guesswork with a 10,000 Hz digital oscilloscope.</h2>
+          <p>
+            Whenever a cut ends or a fault trips, the board freezes <strong>1,024 synchronized 20-byte frames (20 KB)</strong> in SRAM—complete with exact 32-bit <code class="mono-inline">X/Y/Z_host/Z_thc/A</code> coordinate anchors so you can replay the exact trajectory in seconds.
+          </p>
+        </div>
+
+        <div class="cli-split">
+          <div style="display: flex; flex-direction: column; gap: 1.1rem;">
+            <div class="crash-card">
+              <span class="crash-badge cyan">Zero-Dependency Go Binary</span>
+              <h3>Cross-Platform <code class="mono-inline">smart-thc</code> Tooling</h3>
+              <p>
+                Single static binary for <strong>macOS</strong> (Apple Silicon &amp; Intel), <strong>Linux</strong> (<code class="mono-inline">amd64</code>, <code class="mono-inline">arm64</code>, Raspberry Pi <code class="mono-inline">armv7</code>), and <strong>Windows</strong> (<code class="mono-inline">.exe</code>). Connects over USB-RS485 or a shared WaveShare RS-485-to-Ethernet TCP bridge.
+              </p>
+              <ul class="tier-list" style="margin-top: 0.35rem;">
+                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc read [-watch]</code>: 5-stage hardware audit, live 6-axis step Hz, and snooped Hypertherm SYNC amps/PSI.</span></li>
+                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc dump -ascii-plot</code>: Terminal arc waveform + <strong>46-column timestamped CSV</strong> with kerf/corner/ohmic ms breakdown.</span></li>
+                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc jog up|down &lt;dist&gt;</code>: Unit-aware (<code class="mono-inline">mm</code>/<code class="mono-inline">in</code>) bench jogging with live cutting interlocks.</span></li>
+              </ul>
+            </div>
+
+            <div class="crash-card">
+              <span class="crash-badge emerald">Unbrickable Page-0 Bootstub</span>
+              <h3>Power-Loss-Safe Field Firmware Updates</h3>
+              <p>
+                <code class="mono-inline">smart-thc flash</code> updates firmware over RS-485/Ethernet in <strong>1–2 minutes</strong> with zero SWD probe. Page 0 (<code class="mono-inline">Bootstub</code>) and Pages 62–63 (saved kinematics &amp; voltage divider calibration) are hardware write-protected, Flash ECC NMI traps guard against mid-write blackouts, and the <code class="mono-inline">CRC-32</code> header commits atomically last.
+              </p>
+            </div>
+          </div>
+
+          <div class="terminal-card" aria-label="smart-thc CLI terminal example">
+            <div class="terminal-bar">
+              <div class="terminal-dots"><span></span><span></span><span></span></div>
+              <span class="mono" style="font-size: 0.72rem; color: var(--text-muted);">smart-thc — WaveShare TCP Bridge (192.168.1.200:4196)</span>
+            </div>
+            <div class="terminal-body"><span class="t-prompt">$</span> <span class="t-cmd">smart-thc read -host 192.168.1.200</span>
+<span class="t-pass">[PASS]</span> Block A: Magic="TH" FW=v2.0 State=IDLE Uptime=14280s Fault=0x00
+       V_arc=0.2V  V_preset=124.0V  Divider=87.2:1  OhmicEscapes=2 (0 faults)
+<span class="t-pass">[PASS]</span> Block B: 6-Axis Counters Ready (Z=500.0 spu MM, Y=169.765 spu, A=64000/rev)
+<span class="t-pass">[PASS]</span> Round-Trip Setpoint Self-Test (0x4080 -> 128.5V -> Restore)
+<span class="t-pass">[PASS]</span> Hypertherm SYNC Snoop (Slave 0x01): 65.0A | 78.5 PSI | Mode=Cut | Err=0
+
+<span class="t-prompt">$</span> <span class="t-cmd">smart-thc dump -ascii-plot</span>
+Downloading 1,024 frames (20,480 B @ 10.0 kHz) [████████████████████] 100%
+Trigger: <span class="t-amber">CUT_END (ENA_DROP)</span>  Window: 102.4 ms  Unit: MM
+Arc Voltage : Min 121.8 V | Mean <span class="t-cyan">123.4 V</span> | Max 126.9 V (Target 123.3 V)
+Z Speed     : Max UP 94.2 mm/s (222 IPM) | Max DOWN -18.4 mm/s (-43 IPM)
+Protections : CornerFreeze=18.2ms | KerfAntiDive=6.5ms | OhmicEscape=0.0ms
+
+ 127V ┤                   ╭──╮  <span class="t-amber">← Kerf crossing frozen (667 V/s dV/dt)</span>
+ 125V ┤                 ╭─╯  ╰─╮
+ 123V ┼─┬───────────────╯      ╰──────────────────────────┬── Target 123.3V
+ 121V ┤ ╰──╯                                              ╰─
+Saved 46-column CSV -> <span class="t-cyan">telemetry_20261114_154210.csv</span>
+
+<span class="t-prompt">$</span> <span class="t-cmd">smart-thc flash yuna-rotary-v1.elf -y</span>
+Preflight OK: THAP CRC32=0x94A21C08 (Pages 1..44; Pages 0, 62-63 untouched)
+Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITTED &amp; LIVE (v2.0)</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 06: VERIFIED HARDWARE V2 SPEC SHEET + BOTTOM NOTIFY CARD
+         ===================================================================== -->
+    <section id="specs" class="thc-section alt-bg" style="border-bottom: none;">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-kicker">06 // Verified Hardware v2 &amp; Firmware v2.0 Specifications</span>
+          <h2>Every component, timing number, and isolation barrier—no black-box mystery.</h2>
+          <p>
+            Hardware v2 (<code class="mono-inline">z-axis-v2</code>) and Firmware v2.0 are built and tested on real CSMIO/IP-M + simCNC, Mach3 stepper, and 20-foot ClearPath rotary plasma tables. Want to inspect our Rev 1 open-hardware engineering history? <a href="build-guide.html#thc" style="color: var(--plasma-amber); text-decoration: underline;">See Section 06 of the 6-Meter Build Guide ↗</a>.
+          </p>
+        </div>
+
+        <div class="specs-grid-2">
+          <!-- Hardware Column -->
+          <div class="spec-table-card">
+            <div class="spec-table-head">
+              <span>Hardware v2 Electrical &amp; Mechanical</span>
+              <span class="mono" style="font-size: 0.72rem; color: var(--plasma-amber);">PCB v2.0</span>
+            </div>
+            <div class="spec-dl">
+              <div class="spec-row">
+                <div class="spec-key">Compute &amp; Clock</div>
+                <div class="spec-val">STM32G431CBT6 (170 MHz Cortex-M4F + FPU, 128 KB ECC Flash, 32 KB SRAM); 8 MHz Murata resonator + auto 16 MHz HSI failover</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">PCB &amp; Connectors</div>
+                <div class="spec-val">82.53 &times; 89.84 mm (3.25&Prime; &times; 3.54&Prime;) 4-layer EMI-shielded stackup; 15&times; latching Molex Mini-Fit Jr. headers + 2-pin shield tie</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Power &amp; Isolation</div>
+                <div class="spec-val">+24V DC input (Bel PTC fuse) &rarr; Murata NME galvanic DC-DC &rarr; +5V RS-422 &rarr; Torex 3.3V LDO + ferrite-isolated 3V3A analog Vref</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">6-Axis Step/Dir I/O</div>
+                <div class="spec-val">3&times; TI AM26LV32E receivers (120 &Omega; term, &gt;20 MHz silicon timers) + 3&times; TI AM26C31 5V drivers (33 &Omega; source-term); 5.0 µs Z pulse, &ge;15 µs dir setup</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Dual Analog Inputs</div>
+                <div class="spec-val">0–10 V Arc &amp; Target (10 k&Omega;/4.7 k&Omega; 1% 25 ppm/°C, 10 nF C0G 5 kHz filter, BAT54S clamped); TIM6-synced 16&times; oversampled 14-bit+ ENOB (90.35 µs)</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Isolated 24V I/O</div>
+                <div class="spec-val">5&times; 24V inputs + 3&times; 24V open-collector outputs via 2&times; Toshiba TLP291-4 optocouplers (3,750 Vrms rating)</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Multi-Drop RS-485</div>
+                <div class="spec-val">TI THVD1406 hardware auto-direction transceiver, 120 &Omega; termination + 680 &Omega; fail-safe bias (19200 bps, auto 8E1/7E1/8N1)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Firmware Column -->
+          <div class="spec-table-card">
+            <div class="spec-table-head">
+              <span>Firmware v2.0 Control &amp; Safety Engine</span>
+              <span class="mono" style="font-size: 0.72rem; color: var(--cyan-arc);">10,000 Hz ISR</span>
+            </div>
+            <div class="spec-dl">
+              <div class="spec-row">
+                <div class="spec-key">Control Loop &amp; Filter</div>
+                <div class="spec-val">10,000 Hz (100 µs) deterministic TIM6 loop; 4th-order 1 kHz Bessel biquad (~0.33 ms flat group delay); &plusmn;0.75 V deadband</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Tracking Modes</div>
+                <div class="spec-val">HYBRID_SAV (&le;20 ms EWMV lock, [-7 V, +15 V] sanity window), wire-free PURE_SAV ([55..200 V]), and direct PRESET</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Gain &amp; Slope Tracking</div>
+                <div class="spec-val">Multi-zone Kp 90 &rarr; 200 UP / 140 DOWN; upward-only slope integrator (&lt;0.002&Prime; lag, 100&times; crest bleed, 0 downward windup)</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">S-Curve &amp; Speed Caps</div>
+                <div class="spec-val">3rd-order S-curve accel/jerk profiler; asymmetric speed limits (up to 295 IPM / 120 mm/s UP; dive-immune 75 IPM / 28 mm/s DOWN)</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Ohmic &amp; Anti-Dive</div>
+                <div class="spec-val">2.0 ms in-cut ohmic retract (+1.0 mm gap, 150 ms Feedhold); 667 V/s motion-decoupled dV/dt hold (up to 600 ms); &lt;80% XY(A) corner freeze</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Rotary Cam (XYZA)</div>
+                <div class="spec-val">16-angle 0.2 ms touch solver for Round, Square &amp; Rect HSS; runout (e_z, e_y), R_c cam feedforward + 0.50 mm surface floor guard</div>
+              </div>
+              <div class="spec-row">
+                <div class="spec-key">Recorder &amp; Bootstub</div>
+                <div class="spec-val">20 KB (1,024-frame) SRAM crash recorder + 32-bit anchors; 2 KB Page-0 CRC-32 bootloader (Pages 0, 62, 63 write-protected)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom ~$200 CAD Notify for Updates Card -->
+        <div class="bottom-cta-card" id="notify-bottom">
+          <div>
+            <div class="eyebrow-pill mono" style="margin-bottom: 0.85rem;">
+              <span class="eyebrow-dot"></span>
+              <span>BATCH 1 INTEREST LIST &bull; ~$200 CAD TARGET</span>
+            </div>
+            <h2 style="font-size: clamp(1.55rem, 2.5vw, 2.05rem); margin-bottom: 0.65rem;">
+              Want a ~$200 CAD 10 kHz Hardware THC in your cabinet?
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
+              Drop your shop email below. We&rsquo;re sizing the first assembled production batch of Hardware v2 boards now—you&rsquo;ll get direct specs, wiring pinouts, and first dibs when Batch 1 opens.
+            </p>
+          </div>
+
+          <div class="notify-box" style="background: rgba(9, 11, 14, 0.88);">
+            <div class="notify-box-label">
+              <span>Reserve Batch 1 notification</span>
+              <span class="notify-box-sub">~$200 CAD TARGET</span>
+            </div>
+
+            <form
+              class="thc-notify-form"
+              action="https://docs.google.com/forms/d/e/1FAIpQLSfSI9nmV7WYNE5Qo7ZzDtdDGB9R0cyWh76_MTTL9J-ZgyYl0w/formResponse"
+              method="POST"
+              target="thc-google-form-sink"
+            >
+              <input type="hidden" name="fvv" value="1" />
+              <input type="hidden" name="pageHistory" value="0" />
+              <div class="notify-form-row">
+                <input
+                  type="email"
+                  name="entry.936476633"
+                  class="notify-input"
+                  required
+                  placeholder="you@yourshop.com"
+                  aria-label="Email address for Batch 1 Hardware THC updates"
+                  autocomplete="email"
+                />
+                <button type="submit" class="notify-btn">Notify for Updates</button>
+              </div>
+            </form>
+
+            <div class="notify-confirm" role="status" aria-live="polite"></div>
+
+            <div class="notify-footnote">
+              <span>15-minute 4-plug standalone install or full 6-axis + RS-485.</span>
+              <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSI9nmV7WYNE5Qo7ZzDtdDGB9R0cyWh76_MTTL9J-ZgyYl0w/viewform" target="_blank" rel="noopener noreferrer">Prefer Google Forms? Open form directly ↗</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-brand mono">rotarycam.app &copy; 2026 Raphael Randschau</div>
+      <div class="footer-sub">10,000 Hz Hardware Z-Axis THC &amp; 4-Axis Rotary / Flat-Sheet CNC Plasma CAM</div>
+    </div>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">← RotaryCAM Home</a>
+      <a href="index.html#pricing" class="footer-link" style="color: var(--emerald-cut);">CAM Pricing &amp; Offline Keys</a>
+      <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
+      <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">6-Meter Machine Build Guide ↗</a>
+      <a href="changelog.html" class="footer-link">Changelog &amp; Downloads</a>
+      <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
+    </div>
+  </footer>
+
+  <!-- Interactive Three.js 3D PCB Viewer (Click-to-Explore) -->
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from './vendor/OrbitControls.js';
+
+    function disposeMaterial(mat) {
+      if (!mat) return;
+      if (Array.isArray(mat)) {
+        mat.forEach(disposeMaterial);
+        return;
+      }
+      for (const key of Object.keys(mat)) {
+        const val = mat[key];
+        if (val && typeof val === 'object' && val.isTexture) {
+          try { val.dispose(); } catch (_) {}
+        }
+      }
+      try { mat.dispose(); } catch (_) {}
+    }
+
+    function disposeHierarchy(root) {
+      if (!root) return;
+      root.traverse((obj) => {
+        if (obj.geometry) { try { obj.geometry.dispose(); } catch (_) {} }
+        if (obj.material) { disposeMaterial(obj.material); }
+      });
+      while (root.children && root.children.length > 0) {
+        root.remove(root.children[0]);
+      }
+    }
+
+    function disposeRenderer(rnd) {
+      if (!rnd) return;
+      try {
+        const gl = rnd.getContext();
+        if (gl) {
+          const loseExt = gl.getExtension('WEBGL_lose_context');
+          if (loseExt) loseExt.loseContext();
+        }
+      } catch (_) {}
+      try { rnd.forceContextLoss(); } catch (_) {}
+      try { rnd.dispose(); } catch (_) {}
+    }
+
+    function createSafeRenderer(targetCanvas) {
+      if (!targetCanvas) return null;
+      try {
+        return new THREE.WebGLRenderer({
+          canvas: targetCanvas,
+          antialias: true,
+          alpha: true,
+          powerPreference: 'default',
+          failIfMajorPerformanceCaveat: false
+        });
+      } catch (_) {
+        try {
+          return new THREE.WebGLRenderer({
+            canvas: targetCanvas,
+            antialias: false,
+            alpha: true,
+            powerPreference: 'low-power',
+            failIfMajorPerformanceCaveat: false
+          });
+        } catch (__) {
+          return null;
+        }
+      }
+    }
+
+    function initPcbViewer(canvasId, loadingId, coverId, meshUrl, silkscreenUrl) {
+      let pcbCanvas = document.getElementById(canvasId);
+      const pcbLoading = document.getElementById(loadingId);
+      const pcbCover = document.getElementById(coverId);
+      if (!pcbCanvas) return;
+
+      const pcbParent = pcbCanvas.parentElement;
+      let initialized = false;
+      let pcbRenderer = null;
+      let pcbScene = null;
+      let pcbCamera = null;
+      let pcbControls = null;
+      let pcbGroup = null;
+      let pcbAnimId = null;
+      let ro = null;
+      let io = null;
+      let isVisible = true;
+
+      function teardown() {
+        if (!initialized) return;
+        if (pcbAnimId) { cancelAnimationFrame(pcbAnimId); pcbAnimId = null; }
+        if (ro) { try { ro.disconnect(); } catch (_) {} ro = null; }
+        if (io) { try { io.disconnect(); } catch (_) {} io = null; }
+        if (pcbControls) { try { pcbControls.dispose(); } catch (_) {} pcbControls = null; }
+        if (pcbGroup) { disposeHierarchy(pcbGroup); pcbGroup = null; }
+        if (pcbScene) { disposeHierarchy(pcbScene); pcbScene = null; }
+        if (pcbRenderer) { disposeRenderer(pcbRenderer); pcbRenderer = null; }
+        pcbCamera = null;
+        initialized = false;
+        if (pcbCover) pcbCover.classList.remove('hidden');
+        if (pcbLoading) pcbLoading.classList.add('hidden');
+      }
+
+      window.addEventListener('pagehide', teardown);
+      window.addEventListener('beforeunload', teardown);
+
+      function startViewer() {
+        if (initialized) return;
+        initialized = true;
+        if (pcbCover) pcbCover.classList.add('hidden');
+        if (pcbLoading) pcbLoading.classList.remove('hidden');
+
+        const width = pcbParent.clientWidth || 480;
+        const height = pcbParent.clientHeight || 400;
+        pcbRenderer = createSafeRenderer(pcbCanvas);
+        if (!pcbRenderer) {
+          if (pcbLoading) {
+            pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem; text-align: center; padding: 1rem;">WebGL context unavailable in this browser.</div>';
+          }
+          initialized = false;
+          return;
+        }
+
+        pcbCanvas = pcbRenderer.domElement;
+        pcbCanvas.addEventListener('webglcontextlost', (e) => {
+          e.preventDefault();
+          teardown();
+        }, { once: true });
+
+        pcbRenderer.setSize(width, height);
+        pcbRenderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        pcbRenderer.toneMapping = THREE.ACESFilmicToneMapping;
+        pcbRenderer.toneMappingExposure = 1.3;
+
+        pcbScene = new THREE.Scene();
+        pcbCamera = new THREE.PerspectiveCamera(38, width / height, 1, 5000);
+        pcbCamera.position.set(-110, 95, 120);
+
+        pcbScene.add(new THREE.HemisphereLight(0xffffff, 0x181c24, 1.4));
+        const key = new THREE.DirectionalLight(0xffffff, 1.8);
+        key.position.set(160, 260, 200);
+        pcbScene.add(key);
+        const fill = new THREE.DirectionalLight(0xa5b4fc, 1.0);
+        fill.position.set(-220, 140, -160);
+        pcbScene.add(fill);
+        const rim = new THREE.DirectionalLight(0xfef08a, 0.7);
+        rim.position.set(0, 220, -220);
+        pcbScene.add(rim);
+        const headLight = new THREE.DirectionalLight(0xffffff, 0.75);
+        headLight.position.set(0, 0, 1);
+        pcbCamera.add(headLight);
+        pcbScene.add(pcbCamera);
+
+        pcbControls = new OrbitControls(pcbCamera, pcbCanvas);
+        pcbControls.enableDamping = true;
+        pcbControls.dampingFactor = 0.08;
+        pcbControls.rotateSpeed = 0.8;
+        pcbControls.zoomSpeed = 1.2;
+        pcbControls.panSpeed = 0.8;
+        pcbControls.target.set(0, 0, 0);
+        pcbControls.autoRotate = true;
+        pcbControls.autoRotateSpeed = 0.9;
+        pcbControls.addEventListener('start', () => {
+          if (pcbControls) pcbControls.autoRotate = false;
+        });
+
+        pcbGroup = new THREE.Group();
+        pcbScene.add(pcbGroup);
+
+        (async function loadMesh() {
+          try {
+            const resp = await fetch(meshUrl);
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            const stream = resp.body.pipeThrough(new DecompressionStream('gzip'));
+            const text = await new Response(stream).text();
+            if (!initialized || !pcbGroup) return;
+            const data = JSON.parse(text);
+
+            for (const m of data.meshes) {
+              if (!initialized || !pcbGroup) return;
+              const geom = new THREE.BufferGeometry();
+              geom.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3));
+              if (m.normals && m.normals.length === m.positions.length) {
+                geom.setAttribute('normal', new THREE.Float32BufferAttribute(m.normals, 3));
+              } else {
+                geom.computeVertexNormals();
+              }
+              if (m.indices && m.indices.length > 0) {
+                geom.setIndex(m.indices);
+              }
+
+              const c = m.color || [0.12, 0.12, 0.14];
+              const matType = m.material || 'default';
+              let roughness = 0.55, metalness = 0.10;
+              let col = new THREE.Color(c[0], c[1], c[2]);
+              let polygonOffset = false, poFactor = 0, poUnits = 0;
+              let isTransparent = false, opacityVal = 1.0;
+
+              switch (matType) {
+                case 'soldermask':
+                  col = new THREE.Color(0.04, 0.44, 0.14);
+                  roughness = 0.38; metalness = 0.04;
+                  isTransparent = true; opacityVal = 0.90;
+                  polygonOffset = true; poFactor = -1.0; poUnits = -1.0;
+                  break;
+                case 'copper':
+                  col = new THREE.Color(0.96, 0.68, 0.12);
+                  roughness = 0.22; metalness = 0.88;
+                  polygonOffset = true; poFactor = 2.0; poUnits = 2.0;
+                  break;
+                case 'metal':
+                  col = new THREE.Color(0.85, 0.88, 0.92);
+                  roughness = 0.18; metalness = 0.95;
+                  polygonOffset = true; poFactor = -3.0; poUnits = -3.0;
+                  break;
+                case 'plastic':
+                  col = new THREE.Color(0.08, 0.08, 0.09);
+                  roughness = 0.78; metalness = 0.03;
+                  break;
+                case 'ceramic':
+                  col = new THREE.Color(0.68, 0.54, 0.44);
+                  roughness = 0.60; metalness = 0.08;
+                  break;
+                case 'led':
+                  col = new THREE.Color(0.12, 0.38, 0.95);
+                  roughness = 0.15; metalness = 0.10;
+                  break;
+                case 'fr4':
+                  col = new THREE.Color(0.48, 0.42, 0.28);
+                  roughness = 0.70; metalness = 0.02;
+                  polygonOffset = true; poFactor = 4.0; poUnits = 4.0;
+                  break;
+                case 'silkscreen':
+                  col = new THREE.Color(1.0, 1.0, 1.0);
+                  roughness = 0.30; metalness = 0.0;
+                  polygonOffset = true; poFactor = -4.0; poUnits = -4.0;
+                  break;
+                default:
+                  roughness = 0.55; metalness = 0.15;
+                  break;
+              }
+
+              pcbGroup.add(new THREE.Mesh(geom, new THREE.MeshStandardMaterial({
+                color: col,
+                roughness: roughness,
+                metalness: metalness,
+                transparent: isTransparent,
+                opacity: opacityVal,
+                side: THREE.DoubleSide,
+                polygonOffset: polygonOffset,
+                polygonOffsetFactor: poFactor,
+                polygonOffsetUnits: poUnits
+              })));
+            }
+
+            if (silkscreenUrl && data.board) {
+              const b = data.board;
+              new THREE.TextureLoader().load(silkscreenUrl, (tex) => {
+                if (!initialized || !pcbGroup) { try { tex.dispose(); } catch (_) {} return; }
+                tex.colorSpace = THREE.SRGBColorSpace;
+                const decalMesh = new THREE.Mesh(
+                  new THREE.PlaneGeometry(b.width, b.height),
+                  new THREE.MeshBasicMaterial({
+                    map: tex, transparent: true, opacity: 0.96, depthWrite: false,
+                    side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: -5.0, polygonOffsetUnits: -5.0
+                  })
+                );
+                decalMesh.position.set((b.min_x + b.max_x) / 2.0, b.top_z + 0.08, -(b.min_y + b.max_y) / 2.0);
+                decalMesh.rotation.x = -Math.PI / 2;
+                pcbGroup.add(decalMesh);
+              });
+            }
+
+            if (!initialized || !pcbControls || !pcbCamera) return;
+            const bounds = data.bounds || { x: 80, y: 20, z: 80 };
+            const maxDim = Math.max(bounds.x, bounds.y, bounds.z);
+            pcbCamera.position.set(-maxDim * 1.15, maxDim * 1.05, maxDim * 1.25);
+            pcbCamera.lookAt(0, 0, 0);
+            pcbControls.target.set(0, 0, 0);
+            pcbControls.minDistance = maxDim * 0.35;
+            pcbControls.maxDistance = maxDim * 4.5;
+            pcbControls.update();
+
+            if (pcbLoading) pcbLoading.classList.add('hidden');
+          } catch (err) {
+            console.error('Failed to load PCB model:', err);
+            if (pcbLoading && initialized) {
+              pcbLoading.innerHTML = '<div class="mono" style="color: #ef4444; font-size: 0.8rem;">Failed to load 3D model</div>';
+            }
+          }
+        })();
+
+        function animate() {
+          pcbAnimId = requestAnimationFrame(animate);
+          if (isVisible && pcbRenderer && pcbScene && pcbCamera && pcbControls) {
+            pcbControls.update();
+            pcbRenderer.render(pcbScene, pcbCamera);
+          }
+        }
+        animate();
+
+        ro = new ResizeObserver(() => {
+          if (!pcbRenderer || !pcbCamera) return;
+          const w = pcbParent.clientWidth;
+          const h = pcbParent.clientHeight;
+          if (w > 0 && h > 0) {
+            pcbCamera.aspect = w / h;
+            pcbCamera.updateProjectionMatrix();
+            pcbRenderer.setSize(w, h);
+          }
+        });
+        ro.observe(pcbParent);
+
+        io = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => { isVisible = entry.isIntersecting; });
+        }, { rootMargin: '100px 0px', threshold: 0.01 });
+        io.observe(pcbCanvas);
+      }
+
+      if (pcbCover) pcbCover.addEventListener('click', startViewer);
+    }
+
+    initPcbViewer(
+      'thc-canvas',
+      'thc-loading',
+      'thc-cover',
+      'assets/z-axis-thc-mesh.json.gz?v=20261018-layers',
+      'assets/z-axis-thc-silkscreen.svg?v=20261018-layers'
+    );
+  </script>
+
+  <!-- Google Form Submission UX + Scroll-Spy -->
+  <script>
+    (function () {
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      const sink = document.getElementById('thc-google-form-sink');
+      let pendingCallback = null;
+
+      if (sink) {
+        sink.addEventListener('load', function () {
+          if (typeof pendingCallback === 'function') {
+            const cb = pendingCallback;
+            pendingCallback = null;
+            cb();
+          }
+        });
+      }
+
+      document.querySelectorAll('.thc-notify-form').forEach(function (form) {
+        form.addEventListener('submit', function (e) {
+          const emailInput = form.querySelector('input[name="entry.936476633"]');
+          const btn = form.querySelector('button[type="submit"]');
+          const box = form.closest('.notify-box');
+          const confirmEl = box ? box.querySelector('.notify-confirm') : null;
+          const email = (emailInput ? emailInput.value : '').trim();
+
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            e.preventDefault();
+            if (emailInput) emailInput.focus();
+            return;
+          }
+
+          // Allow the native POST into hidden iframe to dispatch with all form fields enabled,
+          // then lock UI on the next microtask and show emerald confirmation once sent.
+          let completed = false;
+          function showConfirmed() {
+            if (completed) return;
+            completed = true;
+            form.style.display = 'none';
+            if (confirmEl) {
+              confirmEl.innerHTML =
+                '<strong>✓ You&rsquo;re on the Batch 1 list</strong> &mdash; we&rsquo;ll email <code class="mono-inline">' +
+                escapeHtml(email) +
+                '</code> when ~$200 CAD hardware units open.';
+              confirmEl.classList.add('visible');
+            }
+          }
+
+          pendingCallback = showConfirmed;
+          setTimeout(function () {
+            if (btn) {
+              btn.disabled = true;
+              btn.textContent = 'Sending…';
+            }
+          }, 0);
+          setTimeout(showConfirmed, 650);
+        });
+      });
+
+      // Scroll-spy for section links
+      const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+      const sections = Array.from(navLinks).map(function (link) {
+        return document.getElementById(link.getAttribute('href').slice(1));
+      }).filter(Boolean);
+
+      function updateActiveNav() {
+        const scrollPos = window.scrollY + 130;
+        let currentId = '';
+        for (let i = sections.length - 1; i >= 0; i--) {
+          if (sections[i].offsetTop <= scrollPos) {
+            currentId = sections[i].id;
+            break;
+          }
+        }
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 80 && sections.length > 0) {
+          currentId = sections[sections.length - 1].id;
+        }
+        navLinks.forEach(function (link) {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveNav, { passive: true });
+      window.addEventListener('resize', updateActiveNav, { passive: true });
+      updateActiveNav();
+    })();
+  </script>
+
+  <script src="version.js"></script>
+  <script>
+    (function () {
+      var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.0-BETA';
+      document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
+    })();
+  </script>
+</body>
+</html>
