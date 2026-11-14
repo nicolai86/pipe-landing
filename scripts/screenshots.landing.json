@@ -44,7 +44,7 @@
     {
       "id": "desktop-app",
       "description": "Full desktop application workspace view with dual 3D CAD/CAM viewports",
-      "path": "/?showcase=1&modal=cut-charts&chart_source=all",
+      "path": "/process/${fixtures.headache_rack.processId}?showcase=1&tab=part&solid=solid_31&compile=1",
       "out": "../assets/desktop-app.png"
     },
     {
@@ -70,6 +70,12 @@
       "description": "CNC Machine Kinematics editor modal showing axis jerk, acceleration, and TCP settings",
       "path": "/?showcase=1&modal=machines&machine_id=mach_simcnc_default&machine_tab=thc",
       "out": "../assets/machine-kinematics.png"
+    },
+    {
+      "id": "cut-charts-modal",
+      "description": "Built-in Hypertherm and generic plasma cut charts modal with 1,025 cut presets",
+      "path": "/?showcase=1&modal=cut-charts&chart_source=all",
+      "out": "../assets/cut-charts-modal.png"
     }
   ]
 }
