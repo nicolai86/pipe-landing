@@ -20,15 +20,15 @@
   <meta property="og:site_name" content="RotaryCAM" />
   <meta property="og:title" content="10,000 Hz Hardware Torch Height Controller &amp; Z-Axis Interceptor (~$200 CAD)" />
   <meta property="og:description" content="Stop wrecking consumables on warped plate and tipped-up slugs. Plug inline between your existing CNC controller and Z drive in 15 minutes: 100 µs hardware Z loop, 2.0 ms ohmic collision escape, macro-free corner freeze, and 4-axis rotary tube cam." />
-  <meta property="og:image" content="https://rotarycam.app/assets/z-axis-thc-preview.png" />
-  <meta property="og:image:alt" content="RotaryCAM 10 kHz Hardware Z-Axis Torch Height Controller PCB" />
+  <meta property="og:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
+  <meta property="og:image:alt" content="RotaryCAM Hardware v2 10 kHz Z-Axis Torch Height Controller PCB" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://rotarycam.app/hardware-thc.html" />
   <meta name="twitter:title" content="10,000 Hz Hardware Torch Height Controller &amp; Z-Axis Interceptor (~$200 CAD)" />
   <meta name="twitter:description" content="Drops inline between any 5V RS-422 Step/Dir CNC controller and your existing Z drive. 2.0 ms ohmic tip-up escape, zero-clamp full-lifter-stroke warp tracking (&lt;0.002&Prime; lag on ClearPath servos), ~$200 CAD target." />
-  <meta name="twitter:image" content="https://rotarycam.app/assets/z-axis-thc-preview.png" />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%2314171d' stroke='%23f59e0b' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='16' r='4' fill='%23f59e0b'/></svg>" />
@@ -44,7 +44,7 @@
       "@type": "Brand",
       "name": "RotaryCAM"
     },
-    "image": "https://rotarycam.app/assets/z-axis-thc-preview.png",
+    "image": "https://rotarycam.app/assets/z-axis-thc-v2-preview.png",
     "offers": {
       "@type": "Offer",
       "price": "200",
@@ -1442,7 +1442,7 @@
             <h1>Stop Wrecking Consumables on Warped Plate. <span>Give Your Table 10,000 Hz Height Control.</span></h1>
 
             <p class="hero-lead">
-              Plug this standalone board inline between <strong>any 5V differential Step/Dir CNC controller</strong> and your Z drive—then turn your controller&rsquo;s sluggish software THC <strong>OFF</strong>. The PCB runs a <strong>100 µs silicon height loop</strong> with <strong>zero software Z clamps</strong> and a <strong>2.0 ms ohmic collision trigger</strong>—unlocking 100% of your Z lifter&rsquo;s travel and tracking warps within <strong>0.002&Prime;</strong> with fast servos.
+              Plug this standalone board inline on your Z Step/Dir cable and turn your controller&rsquo;s sluggish software THC off. The PCB runs a <strong>100 µs silicon height loop</strong> with <strong>zero software Z clamps</strong> and a <strong>2.0 ms ohmic collision trigger</strong>—tracking plate warps within <strong>0.002&Prime;</strong> with fast servos.
             </p>
 
             <!-- Target Price Callout Strip -->
@@ -1501,7 +1501,7 @@
                 <span class="status-dot"></span>
                 <span>Interactive 3D PCB • Drag to Orbit • Scroll to Zoom</span>
               </div>
-              <div class="pcb-cover-overlay" id="thc-cover" style="background-image: url('assets/z-axis-thc-preview.png');">
+              <div class="pcb-cover-overlay" id="thc-cover" style="background-image: url('assets/z-axis-thc-v2-preview.png');">
                 <div class="pcb-cover-scrim"></div>
                 <button class="pcb-explore-btn" type="button" aria-label="Click to explore interactive 3D THC PCB model">
                   <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1518,8 +1518,14 @@
               <canvas id="thc-canvas" class="pcb-canvas"></canvas>
             </div>
             <div class="pcb-caption-bar">
-              <span class="pcb-caption-pill">● REV 1 PROTOTYPE RENDER SHOWN</span>
-              <span>Hardware v2: <strong style="color:#fff;">82.5 &times; 89.8 mm</strong> 4-Layer Isolated PCB with <strong style="color:#fff;">15&times; Latching Molex Mini-Fit Jr.</strong> Connectors</span>
+              <div style="display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap;">
+                <span class="pcb-caption-pill" style="color: var(--emerald-cut); background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.35);">● HARDWARE V2 CAD</span>
+                <span><strong style="color:#fff;">82.5 &times; 89.8 mm</strong> 4-Layer PCB &bull; <strong style="color:#fff;">15&times; Molex Mini-Fit Jr.</strong></span>
+              </div>
+              <a href="assets/z-axis-thc-v2.step.gz" download class="mono" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.34rem 0.72rem; border-radius: 6px; background: rgba(245, 158, 11, 0.14); border: 1px solid rgba(245, 158, 11, 0.42); color: var(--plasma-amber); font-size: 0.74rem; font-weight: 700; text-decoration: none; white-space: nowrap;">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                Download 3D STEP (6.2 MB GZ)
+              </a>
             </div>
           </div>
         </div>
@@ -1528,15 +1534,15 @@
         <div class="telemetry-strip">
           <div class="telemetry-metric">
             <div class="telemetry-val">10,000 Hz <span>(100 µs)</span></div>
-            <div class="telemetry-lbl">Deterministic Hardware Z Step/Dir Loop in STM32G431 Silicon</div>
+            <div class="telemetry-lbl">Deterministic Z Step/Dir Loop in STM32G431 Silicon</div>
           </div>
           <div class="telemetry-metric cyan">
             <div class="telemetry-val">2.0 ms <span>Trigger</span></div>
-            <div class="telemetry-lbl">In-Cut Ohmic Tip-Up Detection in Silicon (Overrides Corner Freezes)</div>
+            <div class="telemetry-lbl">In-Cut Ohmic Collision Trigger (Overrides Corner Freezes)</div>
           </div>
           <div class="telemetry-metric emerald">
             <div class="telemetry-val">&lt; 0.002&Prime; <span>(&lt; 0.3 V)*</span></div>
-            <div class="telemetry-lbl">Uphill Tracking Lag Across Full Lifter Stroke (5+&Prime; Tested on ClearPath 2311S)</div>
+            <div class="telemetry-lbl">Uphill Tracking Lag Across Full Lifter Stroke (Tested on ClearPath 2311S)</div>
           </div>
           <div class="telemetry-metric">
             <div class="telemetry-val">~$200 CAD <span>Target</span></div>
@@ -1546,7 +1552,7 @@
 
         <!-- Lifter & Motor Benchmark Caveat Banner -->
         <div class="thc-caveat-banner">
-          <strong>Lifter &amp; Motor Caveat (*):</strong> The PCB runs the <strong>10,000 Hz (100 µs) loop</strong>, <strong>2.0 ms ohmic detection</strong>, and <strong>zero-clamp step injection</strong> in silicon on every setup—but physical travel and mechanical response depend on your Z hardware. <strong>Travel depends on your lifter</strong> (e.g., you can&rsquo;t track a 5&Prime; uphill warp if your lifter only has 2&Prime; of stroke; the PCB simply removes artificial software clamps), and <strong>retract/tracking response times depend on your motors</strong>. All published speed and tracking numbers (&lt; 0.002&Prime; lag, 295 IPM UP, 150 IPM ohmic lift) come from <strong>Teknic ClearPath (CPM-SDSK-2311S)</strong> servos.
+          <strong>Lifter &amp; Motor Caveat (*):</strong> The PCB runs the 10,000 Hz loop, 2.0 ms ohmic trigger, and zero-clamp step injection in silicon—but physical travel depends on your Z lifter (a 2&Prime; lifter gives 2&Prime; max, not 5&Prime;) and mechanical response depends on your motors. All speed and tracking numbers (&lt; 0.002&Prime; lag, 295 IPM UP, 150 IPM retract) come from <strong>Teknic ClearPath (2311S)</strong> servos; steppers work out of the box up to their speed ceiling.
         </div>
       </div>
     </section>
@@ -1560,7 +1566,7 @@
           <span class="section-kicker">01 // Why Software THCs Dive</span>
           <h2>Your Z motor isn&rsquo;t too slow. Your CNC controller&rsquo;s motion buffer is in the way.</h2>
           <p>
-            Most PC and Ethernet motion controllers route arc voltage through a <strong>15–40 ms trajectory lookahead buffer</strong>. Because the height loop is always reacting late, you have to turn loop gains down 4–5&times; just to stop the torch from bouncing—guaranteeing sluggish climbs up warped sheet and violent dives into corners and kerfs.
+            Most PC and Ethernet CNCs route arc voltage through a 15–40 ms trajectory buffer. By the time software reacts, the torch has already dived into a corner or crashed into bowed plate.
           </p>
         </div>
 
@@ -1570,7 +1576,7 @@
               True Hardware Summing-Junction Interceptor
             </div>
             <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 580px;">
-              Sits directly inline on the Z Step/Dir cable while passing <code class="mono-inline">X/Y/A/B/C</code> straight through in PCB copper (<strong style="color:#fff;">0 ns added latency</strong>). Zero CNC plugins, zero lost DRO steps.
+              Intercepts Z Step/Dir inline while passing <code class="mono-inline">X/Y/A/B/C</code> straight through in PCB copper (<strong style="color:#fff;">0 ns latency</strong>). Zero CNC plugins, zero lost DRO steps.
             </p>
           </div>
           <div class="arch-eq-formula">
@@ -1591,33 +1597,33 @@
             <tbody>
               <tr>
                 <td class="row-label">Closed-Loop Latency</td>
-                <td><span class="bad-pill">15–40 ms buffer delay</span> — forces detuned gains to prevent oscillation</td>
-                <td>Fast internal loop, locked to vendor&rsquo;s closed drive box</td>
-                <td class="col-smart"><span class="good-pill">100 µs (10,000 Hz) deterministic</span> — synchronized 16&times; oversampled ADC finishes in 90.35 µs</td>
+                <td><span class="bad-pill">15–40 ms buffer delay</span> — forces detuned gains to prevent torch bounce</td>
+                <td>Fast internal loop, locked to proprietary drive box</td>
+                <td class="col-smart"><span class="good-pill">100 µs (10,000 Hz) deterministic</span> — 16&times; oversampled ADC finishes in 90.35 µs</td>
               </tr>
               <tr>
                 <td class="row-label">Warped Plate Range</td>
-                <td><span class="bad-pill">Clamped to &plusmn;0.040&Prime;–&plusmn;0.500&Prime;</span> — slams into bowed sheet outside window</td>
-                <td>Full lifter stroke, requires replacing your Z actuator</td>
-                <td class="col-smart"><span class="good-pill">Zero software Z clamps</span> — uses 100% of your lifter&rsquo;s physical stroke (5+&Prime; warps @ &lt; 0.002&Prime; lag tested on 5+&Prime; lifter + ClearPath 2311S)</td>
+                <td><span class="bad-pill">Clamped to &plusmn;0.040&Prime;–&plusmn;0.500&Prime;</span> — dives or faults when plate bows past limit</td>
+                <td>Full stroke, but requires replacing your Z actuator</td>
+                <td class="col-smart"><span class="good-pill">Zero software Z clamps</span> — uses 100% of your lifter stroke (&lt; 0.002&Prime; lag on ClearPath 2311S*)</td>
               </tr>
               <tr>
                 <td class="row-label">Tipped-Up Part Slugs</td>
-                <td><span class="bad-pill">Blind while frozen</span> — snaps torch off breakaway in corners &amp; kerfs</td>
-                <td>Usually relies on mechanical breakaway after impact</td>
-                <td class="col-smart"><span class="good-pill">2.0 ms silicon Ohmic trigger</span> — overrides freezes &amp; commands instant retract (+1.0 mm @ 150 IPM on ClearPath 2311S) + Feedhold</td>
+                <td><span class="bad-pill">Blind during freezes</span> — crashes torch off breakaway on kerfs &amp; corners</td>
+                <td>Relies on mechanical breakaway after physical collision</td>
+                <td class="col-smart"><span class="good-pill">2.0 ms ohmic trigger</span> — overrides freezes, instantly lifts torch (+1.0 mm @ 150 IPM on ClearPath 2311S*) &amp; holds feed</td>
               </tr>
               <tr>
                 <td class="row-label">Corners &amp; Old G-Code</td>
-                <td><span class="bad-pill">Dives on slowdown</span> unless every post-processor has perfect M62/M63</td>
+                <td><span class="bad-pill">Dives on slowdown</span> unless every file has perfect M62/M63 macros</td>
                 <td>Requires custom CNC velocity analog/serial integration</td>
-                <td class="col-smart"><span class="good-pill">Self-learns XY(A) cruise speed</span> — auto-locks below 80% speed or 0.08–0.10 G decel</td>
+                <td class="col-smart"><span class="good-pill">Auto-learns cruise speed</span> — locks Z below 80% feed or 0.08–0.10 G decel</td>
               </tr>
               <tr>
                 <td class="row-label">Motors &amp; Retrofit Cost</td>
-                <td>$0–$300 plugin, costs you wrecked $45 consumables weekly</td>
-                <td><span class="bad-pill">$1,500–$3,500+ USD</span> — rip out working Z mechanics &amp; cables</td>
-                <td class="col-smart"><span class="good-pill">~$200 CAD target</span> — keeps your existing stepper or ClearPath servo &amp; 4 plugs to start</td>
+                <td>$0–$300 plugin, but wrecks $45 consumables weekly</td>
+                <td><span class="bad-pill">$1,500–$3,500+ USD</span> — forces you to discard working mechanics</td>
+                <td class="col-smart"><span class="good-pill">~$200 CAD target</span> — drops inline with 4 plugs; keep your existing steppers or servos</td>
               </tr>
             </tbody>
           </table>
@@ -1634,7 +1640,7 @@
           <span class="section-kicker">02 // Six-Layer Crash Protection</span>
           <h2>Built for warped steel, tipped-up slugs, and worn electrodes.</h2>
           <p>
-            Every protection layer below runs inside the 10 kHz hardware interrupt on Hardware v2—verified on live flat-sheet and 20-foot 4-axis rotary tables.
+            Every protection layer runs inside the 10 kHz hardware loop in silicon—tested on live flat-sheet and 20-foot rotary tables.
           </p>
         </div>
 
@@ -1644,7 +1650,7 @@
             <span class="crash-badge">2.0 ms Silicon Trigger</span>
             <h3>Active In-Cut Ohmic Collision Escape</h3>
             <p>
-              Voltage-only THCs are completely blind when crossing a kerf next to a tipped-up slug or while locked in a corner. A single parallel wire tee off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) filters 50 ms pierce blowback and water-table splash, <strong>overrides all corner and macro freezes</strong>, and triggers an immediate retract in silicon in <strong>2.0 ms</strong> up to your Z motor&rsquo;s limit (<strong>150 IPM</strong> + <strong>+0.040&Prime; / 1.0 mm</strong> air gap measured on ClearPath 2311S servos), holding downward Z for 250 ms while the gantry clears the obstacle, and tripping CNC Feedhold if shorted &ge; 150 ms.
+              Voltage THCs go blind during corner freezes and kerf crossings. A single wire tee off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) overrides all freezes and commands an instant retract in silicon within 2.0 ms when a tipped slug touches the shield.
             </p>
             <div class="crash-stat-footer">
               0.001&Prime; travel @ 30 IPM &bull; +0.500&Prime; (12.7 mm) lift cap
@@ -1656,7 +1662,7 @@
             <span class="crash-badge cyan">Zero Macros Needed</span>
             <h3>Macro-Free Corner, Hole &amp; Kerf Anti-Dive</h3>
             <p>
-              Reads live 6-axis step speed and locks downward Z automatically whenever deceleration hits <strong>0.08–0.10 G</strong> or speed drops <strong>&lt; 80% of cruise</strong>—even on legacy G-code without <code class="mono-inline">M62/M63</code>—waiting 20–25 ms above 88% cruise for the corner puddle to settle. Paired with a motion-compensated <strong>667 V/s</strong> (<code class="mono-inline">+2.0 V / 3.0 ms</code>) kerf/crater hold up to 600 ms and asymmetric speed limits: full rapid UP, capped <strong>75 IPM DOWN</strong>.
+              Reads live step pulses and locks downward Z automatically when speed drops below 80% of cruise or deceleration hits 0.08–0.10 G. No post-processor macros or M-codes needed—even on legacy G-code.
             </p>
             <div class="crash-stat-footer">
               Up to 295 IPM UP (ClearPath 2311S) / 75 IPM DOWN &bull; Auto-adapts to FRO
@@ -1668,7 +1674,7 @@
             <span class="crash-badge emerald">Zero Z Clamps</span>
             <h3>Zero Software Clamps — Uses Your Full Lifter Stroke</h3>
             <p>
-              The PCB adds zero &plusmn;0.5&Prime; software clamps, letting your torch use every millimeter of your lifter&rsquo;s physical stroke—whether you have 2&Prime; of travel on a compact lifter or 5+&Prime; on a long-stroke axis. Combines a 4th-order <strong>1 kHz Bessel filter</strong> (~0.33 ms flat group delay, zero ringing), adaptive gain scheduling (<code class="mono-inline">Kp 90 &rarr; 200</code>), and an upward-only slope integrator holding <strong>&lt; 0.3 V (&lt; 0.002&Prime;)</strong> uphill tracking lag on ClearPath 2311S servos, while 3rd-order S-curve jerk limiting keeps open-loop steppers from stalling. At every <code class="mono-inline">M5</code>, virtual steps unwind cleanly back to 0 with zero Z DRO drift.
+              Unlike software THCs clamped to &plusmn;0.5&Prime;, this board unlocks 100% of your lifter&rsquo;s physical stroke with zero artificial limits. A 1 kHz Bessel filter and upward slope integrator track severe warps without oscillation or lost DRO steps.
             </p>
             <div class="crash-stat-footer">
               &lt; 0.002&Prime; lag (ClearPath 2311S) &bull; 3rd-order S-curve jerk limited
@@ -1680,7 +1686,7 @@
             <span class="crash-badge">&le; 20 ms Lock</span>
             <h3>HYBRID_SAV Auto-Voltage &amp; Sprung-Sheet Lock</h3>
             <p>
-              Samples steady-state arc voltage in <strong>&le; 20 ms</strong> inside an asymmetric <strong>[-7.0 V, +15.0 V]</strong> cut-chart window—automatically absorbing electrode hafnium wear and slat resistance, while clamping bowed thin-sheet high pierces (&gt; +15 V) right back to cut-chart voltage so the torch pulls down to true cut height instead of freezing high. Also supports wire-free <code class="mono-inline">PURE_SAV</code>, <code class="mono-inline">PRESET</code>, and wire-free <code class="mono-inline">VOLTAGE</code> Arc-OK.
+              Samples live arc voltage in &le; 20 ms inside a [-7 V, +15 V] window to absorb electrode wear and dirty slats automatically. Bowed sheet pierces clamp back to cut-chart voltage so the torch cuts at true height.
             </p>
             <div class="crash-stat-footer">
               65 V ON / 50 V OFF hysteresis &bull; &gt; 220 V inverter bleed-down latch
@@ -1692,7 +1698,7 @@
             <span class="crash-badge cyan">0 Bus Collisions</span>
             <h3>Passive Hypertherm Powermax SYNC Snooping</h3>
             <p>
-              Shares your existing 2-wire RS-485 cable (<code class="mono-inline">19200 8E1</code>) with a Powermax65/85/105 SYNC (<code class="mono-inline">Slave 0x01</code>) and passively captures live cutting amps, gas PSI, cut/gouge/FlushCut mode, and 12-bit fault codes with <strong>zero added bus traffic</strong>. Driven by a Texas Instruments <code class="mono-inline">THVD1406</code> hardware auto-direction transceiver—making it physically impossible for an MCU reset to lock up the bus.
+              Passively monitors your Powermax SYNC&rsquo;s 2-wire RS-485 bus to capture live amperage, air pressure, and fault codes with zero added bus traffic. A hardware auto-direction transceiver prevents bus lockups on MCU reset.
             </p>
             <div class="crash-stat-footer">
               Auto 8E1 / 7E1 / 8N1 framing &bull; THVD1406 zero-GPIO direction
@@ -1704,7 +1710,7 @@
             <span class="crash-badge emerald">3,750 Vrms Isolation</span>
             <h3>Dual Cross-Checked 24V Watchdog &amp; Isolation</h3>
             <p>
-              Powered from standard <strong>+24V cabinet DC</strong> with a resettable PTC fuse, Murata <code class="mono-inline">NME</code> galvanic DC-DC converter, split ferrite-filtered <code class="mono-inline">3V3A</code> analog ADC reference, and <strong>3,750 Vrms</strong> Toshiba <code class="mono-inline">TLP291-4</code> optocouplers. Cross-checked <code class="mono-inline">10 kHz</code> ISR and <code class="mono-inline">SysTick</code> heartbeats drop the isolated E-Stop watchdog (<code class="mono-inline">J2-3</code>) within <strong>50 ms</strong> on any fault, backed by automatic 8 MHz &rarr; 16 MHz HSI clock failover.
+              Galvanically isolated with 3,750 Vrms optocouplers and an isolated DC-DC converter to protect your CNC from plasma HF noise. Dual hardware watchdogs drop the isolated E-stop line within 50 ms if any fault occurs.
             </p>
             <div class="crash-stat-footer">
               BAT54S Schottky clamped inputs &bull; 4 onboard diagnostic LEDs
@@ -1723,7 +1729,7 @@
           <span class="section-kicker">03 // Compatibility &amp; 15-Minute Cabinet Retrofit</span>
           <h2>Works with your table, your motors, and your plasma cutter.</h2>
           <p>
-            All field connections use positive-latching <strong>Molex Mini-Fit Jr.</strong> plugs (zero loose screw terminals shaking out under high-G gantry rapids). Start with 4 plugs in 15 minutes and add full 6-axis tap or Ethernet diagnostics whenever you want.
+            All field wiring uses positive-latching <strong>Molex Mini-Fit Jr.</strong> connectors—no loose screw terminals shaking out under high-G rapids. Start with 4 plugs in 15 minutes, or wire all 6 axes for full anti-dive protection.
           </p>
         </div>
 
@@ -1740,7 +1746,7 @@
               <span class="compat-pill">Centroid Acorn</span>
             </div>
             <p class="compat-note">
-              120 &Omega; terminated inputs &amp; 5V 33 &Omega; source-terminated RS-422 outputs. Silicon hardware timers count at 170 MHz (&gt; 20 MHz pulse capability, zero missed steps).
+              120 &Omega; terminated RS-422 inputs and 5V outputs with 170 MHz hardware timers (&gt; 20 MHz pulse rate, zero lost steps).
             </p>
           </div>
 
@@ -1754,7 +1760,7 @@
               <span class="compat-pill">Metric (MM)</span>
             </div>
             <p class="compat-note">
-              Open-loop steppers work out of the box within their speed and torque ceiling (protected from stalling by 3rd-order S-curve jerk limiting), while pairing the PCB with <strong>Teknic ClearPath (2311S)</strong> servos unlocks full 295 IPM slew and &lt; 0.002&Prime; tracking response. Supports integer or fractional <code class="mono-inline">steps/unit</code> (e.g. 2,050, 10,160, 500, 169.765) and auto-learns polarity, speed, accel &amp; jerk.
+              Steppers work out of the box with S-curve jerk limiting; ClearPath (2311S) servos unlock full 295 IPM speed and &lt; 0.002&Prime; tracking. Supports any integer or fractional steps/unit with auto-learned kinematics.
             </p>
           </div>
 
@@ -1768,7 +1774,7 @@
               <span class="compat-pill">Wire-Free Arc-OK</span>
             </div>
             <p class="compat-note">
-              Reads up to ~253 V full-scale (verified at 87.2:1 &amp; 91.3:1 ratios). Single test-cut calibration stores exact divider gain (&plusmn;50% range) to Flash Page 63.
+              Reads up to ~253 V full-scale (50:1 CPC or internal dividers). A single test cut calibrates exact divider gain into flash.
             </p>
           </div>
         </div>
@@ -1782,13 +1788,13 @@
             </div>
             <h3>Minimum 4-Plug Retrofit</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Fastest drop-in upgrade for legacy Mach3 or stepper tables—runs <code class="mono-inline">PURE_SAV</code> auto-voltage lock and wire-free <code class="mono-inline">VOLTAGE</code> Arc-OK immediately:
+              Fastest drop-in upgrade for legacy tables—runs auto-voltage lock and wire-free Arc-OK out of the box:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">01</span><span><strong>PWR:</strong> +24V DC &amp; DGND cabinet power.</span></li>
-              <li><span class="plug-bullet">02</span><span><strong>Z-AXIS-IN / OUT:</strong> Unplug Z Step/Dir from CNC and route inline.</span></li>
-              <li><span class="plug-bullet">03</span><span><strong>J2 Pin 4:</strong> 0–10 V divided arc voltage from plasma divider.</span></li>
-              <li><span class="plug-bullet">04</span><span><strong>J2 Pin 2:</strong> Single 24V CNC output (<code class="mono-inline">24V_THC_ENA</code>) to enable/freeze.</span></li>
+              <li><span class="plug-bullet">01</span><span><strong>PWR:</strong> +24V DC cabinet power.</span></li>
+              <li><span class="plug-bullet">02</span><span><strong>Z Step/Dir:</strong> Unplug Z from your CNC and route inline.</span></li>
+              <li><span class="plug-bullet">03</span><span><strong>J2 Pin 4:</strong> 0–10 V divided arc voltage from plasma.</span></li>
+              <li><span class="plug-bullet">04</span><span><strong>J2 Pin 2:</strong> 24V CNC output (<code class="mono-inline">THC_ENA</code>) to enable/freeze.</span></li>
             </ul>
           </div>
 
@@ -1799,13 +1805,13 @@
             </div>
             <h3>Full 6-Axis + Ohmic Escape</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Unlocks macro-free corner freeze, 4-axis rotary tube cam, sprung-sheet sanity bounds, and mid-cut tip-up collision escape:
+              Unlocks macro-free corner anti-dive, 4-axis rotary tube tracking, and mid-cut ohmic collision escape:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">+</span><span><strong>X/Y/A/B/C-IN &rarr; OUT:</strong> Pure copper RS-422 pass-through (0 ns lag) for live 6-axis speed &amp; rotary cam.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>J3 Pin 2 (Ohmic Tee):</strong> Parallel wire off existing 24V ohmic sensor—enables 2.0 ms in-cut escape &amp; single-pass 30–40 IPM touch-off (saves 1.2–1.5 s/pierce).</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>J2 Pin 5:</strong> 0–10 V target voltage for <code class="mono-inline">HYBRID_SAV</code> [-7 V, +15 V] window.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>J3-4 &amp; J2-3:</strong> 150 ms stuck-short CNC Feedhold + 50 ms E-Stop Watchdog.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>X/Y/A/B/C:</strong> Copper RS-422 pass-through (0 ns delay) for live speed feedforward.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>J3 Pin 2 (Ohmic Tee):</strong> Parallel tap off your 24V shield for 2.0 ms collision escape.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>J2 Pin 5:</strong> 0–10 V target voltage for [-7 V, +15 V] window.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>J3-4 &amp; J2-3:</strong> Isolated 150 ms Feedhold + 50 ms E-stop watchdog.</span></li>
             </ul>
           </div>
 
@@ -1816,13 +1822,13 @@
             </div>
             <h3>Networked Telemetry &amp; Updates</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Wire the 4-pin <code class="mono-inline">RS485</code> header to your CNC PC or a WaveShare RS-485-to-Ethernet TCP bridge—never open the cabinet again:
+              Connect the RS-485 port to your PC or an Ethernet TCP bridge for remote diagnostics and updates:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">+</span><span><strong>1-Command Health Audit:</strong> Live voltages, 6-axis Hz, and round-trip register self-test.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>Hypertherm SYNC Snoop:</strong> Live amps, gas PSI &amp; fault codes on the shared 2-wire bus.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>20 KB Crash Oscilloscope:</strong> Download 46-column CSV &amp; ASCII plots after any fault.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>1–2 Min Field Flash:</strong> Power-loss-safe firmware updates over Ethernet/RS-485.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Live Health Audit:</strong> Monitor voltages, 6-axis step rates, and setpoint registers.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Hypertherm SYNC Snoop:</strong> Stream live cutting amps, air pressure, and error codes.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>20 KB Crash Oscilloscope:</strong> Export 46-column CSV and terminal plots after any cut.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Field Firmware Updates:</strong> Update firmware over the wire in under 2 minutes.</span></li>
             </ul>
           </div>
         </div>
@@ -1838,7 +1844,7 @@
           <span class="section-kicker">04 // 4-Axis Rotary Tube Cam Engine (XYZA)</span>
           <h2>Follows spinning square &amp; rectangular HSS corners before voltage error even develops.</h2>
           <p>
-            Spinning a bowed 20-foot tube in a 4-jaw chuck makes flat faces rise and corners whip past the torch faster than any voltage-only THC can react. Hardware v2 solves the exact tube geometry and chuck runout directly on the MCU.
+            Spinning a bowed tube whips corners past the torch faster than voltage can react. The board solves tube geometry and runout in silicon, moving Z before voltage error even forms.
           </p>
         </div>
 
@@ -1849,7 +1855,7 @@
             </div>
             <h3 style="font-size: 1.28rem; margin-bottom: 0.75rem;">Solves Round Pipe, Square Tube &amp; Rectangular HSS in Seconds</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.1rem;">
-              Latches sub-step <code class="mono-inline">(A, Y, Z)</code> coordinates via 0.2 ms ohmic strobe at up to 16 angles (<code class="mono-inline">0&deg;, 30&deg;, 45&deg;, 90&deg;, 180&deg;, 270&deg;, 360&deg;</code>, plus optional lateral <code class="mono-inline">&Delta;Y</code> chord touch for round pipe) and computes closed-form geometry in silicon:
+              Latches coordinates via 0.2 ms ohmic touch at up to 16 angles, solving tube geometry and chuck runout in closed form:
             </p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;" class="mono">
               <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
@@ -1877,20 +1883,20 @@
 
           <div class="rotary-feature-list">
             <div class="rotary-feat-item">
-              <h4><span class="mono" style="color: var(--plasma-amber);">01</span> Analytical Cam + Runout Velocity Feedforward</h4>
-              <p>Differentiates the solved tube wall + bow profile against live A-axis angular speed so Z lifts and drops smoothly around rotating HSS corners before arc voltage error even forms.</p>
+              <h4><span class="mono" style="color: var(--plasma-amber);">01</span> Analytical Cam + Runout Feedforward</h4>
+              <p>Differentiates tube wall and bow curves against live A-axis rotation, moving Z proactively around HSS corners.</p>
             </div>
             <div class="rotary-feat-item">
               <h4><span class="mono" style="color: var(--cyan-arc);">02</span> True Tangential Surface Speed (<code class="mono-inline">v_surface(&theta;)</code>)</h4>
-              <p>Computes instantaneous radius <code class="mono-inline">r(&theta;)</code> at 10 kHz and feeds true torch surface speed into the automatic corner-slowdown detector.</p>
+              <p>Computes instantaneous surface speed at 10 kHz to feed the corner anti-dive lock.</p>
             </div>
             <div class="rotary-feat-item">
               <h4><span class="mono" style="color: var(--emerald-cut);">03</span> Corner-Window vs. Kerf Discrimination</h4>
-              <p>Accounts for expected geometric voltage rise on receding HSS corners so corner rolls never false-trigger kerf anti-dive—while keeping flat faces hair-trigger sensitive to slots and bolt holes.</p>
+              <p>Filters out expected geometric voltage spikes on corner rolls while keeping flat faces sensitive to kerfs and cutouts.</p>
             </div>
             <div class="rotary-feat-item">
               <h4><span class="mono" style="color: var(--plasma-amber);">04</span> Hard +0.50 mm Physical Wall Floor Guard</h4>
-              <p>Enforces a continuous mechanical collision floor <strong>+0.50 mm</strong> above the rotating, runout-compensated tube surface—physically blocking nozzle-to-wall crashes.</p>
+              <p>Maintains a hard floor +0.50 mm above the runout-compensated tube surface, preventing nozzle gouging.</p>
             </div>
           </div>
         </div>
@@ -1906,7 +1912,7 @@
           <span class="section-kicker">05 // 20 KB Black-Box Flight Recorder &amp; smart-thc CLI</span>
           <h2>Replace shop-floor guesswork with a 10,000 Hz digital oscilloscope.</h2>
           <p>
-            Whenever a cut ends or a fault trips, the board freezes <strong>1,024 synchronized 20-byte frames (20 KB)</strong> in SRAM—complete with exact 32-bit <code class="mono-inline">X/Y/Z_host/Z_thc/A</code> coordinate anchors so you can replay the exact trajectory in seconds.
+            When a cut ends or a fault trips, the board freezes 1,024 synchronized frames (20 KB) in SRAM with 32-bit machine coordinates so you can inspect the exact cut trajectory.
           </p>
         </div>
 
@@ -1916,12 +1922,12 @@
               <span class="crash-badge cyan">Zero-Dependency Go Binary</span>
               <h3>Cross-Platform <code class="mono-inline">smart-thc</code> Tooling</h3>
               <p>
-                Single static binary for <strong>macOS</strong> (Apple Silicon &amp; Intel), <strong>Linux</strong> (<code class="mono-inline">amd64</code>, <code class="mono-inline">arm64</code>, Raspberry Pi <code class="mono-inline">armv7</code>), and <strong>Windows</strong> (<code class="mono-inline">.exe</code>). Connects over USB-RS485 or a shared WaveShare RS-485-to-Ethernet TCP bridge.
+                Single static binary for macOS, Linux, and Windows. Connects over USB-RS485 or an Ethernet TCP bridge.
               </p>
               <ul class="tier-list" style="margin-top: 0.35rem;">
-                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc read [-watch]</code>: 5-stage hardware audit, live 6-axis step Hz, and snooped Hypertherm SYNC amps/PSI.</span></li>
-                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc dump -ascii-plot</code>: Terminal arc waveform + <strong>46-column timestamped CSV</strong> with kerf/corner/ohmic ms breakdown.</span></li>
-                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc jog up|down &lt;dist&gt;</code>: Unit-aware (<code class="mono-inline">mm</code>/<code class="mono-inline">in</code>) bench jogging with live cutting interlocks.</span></li>
+                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc read [-watch]</code>: Live hardware audit, 6-axis step rates, and snooped Hypertherm SYNC telemetry.</span></li>
+                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc dump -ascii-plot</code>: ASCII arc waveform and 46-column timestamped CSV with protection timing.</span></li>
+                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc jog up|down &lt;dist&gt;</code>: Direct bench jogging in inches or mm with safety interlocks.</span></li>
               </ul>
             </div>
 
@@ -1929,7 +1935,7 @@
               <span class="crash-badge emerald">Unbrickable Page-0 Bootstub</span>
               <h3>Power-Loss-Safe Field Firmware Updates</h3>
               <p>
-                <code class="mono-inline">smart-thc flash</code> updates firmware over RS-485/Ethernet in <strong>1–2 minutes</strong> with zero SWD probe. Page 0 (<code class="mono-inline">Bootstub</code>) and Pages 62–63 (saved kinematics &amp; voltage divider calibration) are hardware write-protected, Flash ECC NMI traps guard against mid-write blackouts, and the <code class="mono-inline">CRC-32</code> header commits atomically last.
+                <code class="mono-inline">smart-thc flash</code> updates firmware over RS-485/Ethernet in under 2 minutes. Bootloader and calibration pages are hardware write-protected against mid-write power loss, with atomic CRC-32 verification.
               </p>
             </div>
           </div>
@@ -1976,7 +1982,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
           <span class="section-kicker">06 // Verified Hardware v2 &amp; Firmware v2.0 Specifications</span>
           <h2>Every component, timing number, and isolation barrier—no black-box mystery.</h2>
           <p>
-            Hardware v2 (<code class="mono-inline">z-axis-v2</code>) and Firmware v2.0 are built and tested on real CSMIO/IP-M + simCNC, Mach3 stepper, and 20-foot ClearPath rotary plasma tables. Want to inspect our Rev 1 open-hardware engineering history? <a href="build-guide.html#thc" style="color: var(--plasma-amber); text-decoration: underline;">See Section 06 of the 6-Meter Build Guide ↗</a>.
+            Built and tested on real CSMIO/IP-M, Mach3, and 20-foot rotary tables. For schematic and PCB history, <a href="build-guide.html#thc" style="color: var(--plasma-amber); text-decoration: underline;">see Section 06 of the 6-Meter Build Guide ↗</a>.
           </p>
         </div>
 
@@ -1990,31 +1996,31 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
             <div class="spec-dl">
               <div class="spec-row">
                 <div class="spec-key">Compute &amp; Clock</div>
-                <div class="spec-val">STM32G431CBT6 (170 MHz Cortex-M4F + FPU, 128 KB ECC Flash, 32 KB SRAM); 8 MHz Murata resonator + auto 16 MHz HSI failover</div>
+                <div class="spec-val">STM32G431CBT6 (170 MHz Cortex-M4F + FPU, 128 KB ECC Flash, 32 KB SRAM); 8 MHz resonator + auto 16 MHz HSI failover</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">PCB &amp; Connectors</div>
-                <div class="spec-val">82.53 &times; 89.84 mm (3.25&Prime; &times; 3.54&Prime;) 4-layer EMI-shielded stackup; 15&times; latching Molex Mini-Fit Jr. headers + 2-pin shield tie</div>
+                <div class="spec-val">82.5 &times; 89.8 mm (3.25&Prime; &times; 3.54&Prime;) 4-layer EMI-shielded board; 15&times; latching Molex Mini-Fit Jr. headers + shield tie</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Power &amp; Isolation</div>
-                <div class="spec-val">+24V DC input (Bel PTC fuse) &rarr; Murata NME galvanic DC-DC &rarr; +5V RS-422 &rarr; Torex 3.3V LDO + ferrite-isolated 3V3A analog Vref</div>
+                <div class="spec-val">+24V DC input (PTC fused) &rarr; Murata NME galvanic DC-DC &rarr; +5V RS-422 &rarr; Torex 3.3V LDO + isolated analog Vref</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">6-Axis Step/Dir I/O</div>
-                <div class="spec-val">3&times; TI AM26LV32E receivers (120 &Omega; term, &gt;20 MHz silicon timers) + 3&times; TI AM26C31 5V drivers (33 &Omega; source-term); 5.0 µs Z pulse, &ge;15 µs dir setup</div>
+                <div class="spec-val">3&times; TI AM26LV32E receivers (120 &Omega; term) + 3&times; TI AM26C31 5V drivers; 5.0 µs Z pulse, &ge;15 µs dir setup</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Dual Analog Inputs</div>
-                <div class="spec-val">0–10 V Arc &amp; Target (10 k&Omega;/4.7 k&Omega; 1% 25 ppm/°C, 10 nF C0G 5 kHz filter, BAT54S clamped); TIM6-synced 16&times; oversampled 14-bit+ ENOB (90.35 µs)</div>
+                <div class="spec-val">0–10 V Arc &amp; Target (1% 25 ppm/°C, 10 nF filter, BAT54S clamped); TIM6-synced 16&times; oversampled ADC (90.35 µs)</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Isolated 24V I/O</div>
-                <div class="spec-val">5&times; 24V inputs + 3&times; 24V open-collector outputs via 2&times; Toshiba TLP291-4 optocouplers (3,750 Vrms rating)</div>
+                <div class="spec-val">5&times; 24V inputs + 3&times; 24V open-collector outputs via 2&times; Toshiba TLP291-4 optocouplers (3,750 Vrms)</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Multi-Drop RS-485</div>
-                <div class="spec-val">TI THVD1406 hardware auto-direction transceiver, 120 &Omega; termination + 680 &Omega; fail-safe bias (19200 bps, auto 8E1/7E1/8N1)</div>
+                <div class="spec-val">TI THVD1406 hardware auto-direction transceiver, 120 &Omega; term + 680 &Omega; fail-safe bias (19,200 bps, auto 8E1/7E1/8N1)</div>
               </div>
             </div>
           </div>
@@ -2028,31 +2034,31 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
             <div class="spec-dl">
               <div class="spec-row">
                 <div class="spec-key">Control Loop &amp; Filter</div>
-                <div class="spec-val">10,000 Hz (100 µs) deterministic TIM6 loop; 4th-order 1 kHz Bessel biquad (~0.33 ms flat group delay); &plusmn;0.75 V deadband</div>
+                <div class="spec-val">10,000 Hz (100 µs) deterministic TIM6 loop; 4th-order 1 kHz Bessel filter (~0.33 ms delay); &plusmn;0.75 V deadband</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Tracking Modes</div>
-                <div class="spec-val">HYBRID_SAV (&le;20 ms EWMV lock, [-7 V, +15 V] sanity window), wire-free PURE_SAV ([55..200 V]), and direct PRESET</div>
+                <div class="spec-val">HYBRID_SAV (&le;20 ms lock, [-7 V, +15 V] window), wire-free PURE_SAV, and direct PRESET</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Gain &amp; Slope Tracking</div>
-                <div class="spec-val">Multi-zone Kp 90 &rarr; 200 UP / 140 DOWN; upward-only slope integrator (&lt;0.002&Prime; lag measured on ClearPath 2311S; motor-dependent, 100&times; crest bleed, 0 downward windup)</div>
+                <div class="spec-val">Adaptive Kp 90 &rarr; 200 UP / 140 DOWN; upward-only slope integrator (&lt;0.002&Prime; lag on ClearPath 2311S*)</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">S-Curve &amp; Speed Caps</div>
-                <div class="spec-val">3rd-order S-curve accel/jerk profiler; asymmetric speed limits (up to 295 IPM / 120 mm/s UP on ClearPath 2311S; motor-dependent, dive-immune 75 IPM / 28 mm/s DOWN)</div>
+                <div class="spec-val">3rd-order S-curve profiler; up to 295 IPM UP (ClearPath 2311S*), dive-immune 75 IPM DOWN</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Ohmic &amp; Anti-Dive</div>
-                <div class="spec-val">2.0 ms in-cut ohmic retract (+1.0 mm gap, 150 ms Feedhold); 667 V/s motion-decoupled dV/dt hold (up to 600 ms); &lt;80% XY(A) corner freeze</div>
+                <div class="spec-val">2.0 ms ohmic retract (+1.0 mm lift, 150 ms Feedhold); 667 V/s kerf hold; &lt;80% speed corner lock</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Rotary Cam (XYZA)</div>
-                <div class="spec-val">16-angle 0.2 ms touch solver for Round, Square &amp; Rect HSS; runout (e_z, e_y), R_c cam feedforward + 0.50 mm surface floor guard</div>
+                <div class="spec-val">16-angle touch solver for Round, Square &amp; Rect HSS; runout feedforward + 0.50 mm collision floor</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Recorder &amp; Bootstub</div>
-                <div class="spec-val">20 KB (1,024-frame) SRAM crash recorder + 32-bit anchors; 2 KB Page-0 CRC-32 bootloader (Pages 0, 62, 63 write-protected)</div>
+                <div class="spec-val">20 KB (1,024-frame) SRAM crash recorder; 2 KB Page-0 CRC-32 bootloader (Pages 0, 62, 63 write-protected)</div>
               </div>
             </div>
           </div>
@@ -2069,7 +2075,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               Want a ~$200 CAD 10 kHz Hardware THC in your cabinet?
             </h2>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-              Drop your shop email below. We&rsquo;re sizing the first assembled production batch of Hardware v2 boards now—you&rsquo;ll get direct specs, wiring pinouts, and first dibs when Batch 1 opens.
+              Enter your shop email below. We&rsquo;re sizing the first production batch now—we&rsquo;ll send board specs, wiring pinouts, and early ordering access when Batch 1 opens.
             </p>
           </div>
 
@@ -2454,8 +2460,8 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
       'thc-canvas',
       'thc-loading',
       'thc-cover',
-      'assets/z-axis-thc-mesh.json.gz?v=20261018-layers',
-      'assets/z-axis-thc-silkscreen.svg?v=20261018-layers'
+      'assets/z-axis-thc-v2-mesh.json.gz?v=20261114-v2',
+      null
     );
   </script>
 

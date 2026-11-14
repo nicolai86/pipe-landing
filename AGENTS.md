@@ -1,6 +1,6 @@
 # Pipe Landing & Documentation Agent Guide (`pipe-landing`)
 
-This repository (`pipe-landing/`) powers `rotarycam.app` — the main landing page (`index.html`), the open-hardware machine build guide (`build-guide.html`), and the visual operator documentation hub (`docs/*.html`).
+This repository (`pipe-landing/`) powers `rotarycam.app` — the main landing page (`index.html`), the hardware THC sales page (`hardware-thc.html`), the open-hardware machine build guide (`build-guide.html`), the changelog (`changelog.html`), and the visual operator documentation hub (`docs/*.html`).
 
 Every documentation tutorial and screenshot added or updated in `docs/` **MUST** follow the exact visual, cropping, annotation, and layout specification below so that all iterations look 100% identical.
 
@@ -103,9 +103,9 @@ All `docs/*.html` pages (`docs/index.html` and every `docs/<slug>.html` tutorial
 
 ## 3. RotaryCAM Golden Rules of Copywriting & `pipe-copywriter` Subagent (MANDATORY)
 
-Every time documentation (`docs/`, `templates/docs/`), the build guide (`build-guide.html`), or the homepage (`index.html`) is updated or added, `pipe-landing` **MUST invoke the specialized `pipe-copywriter` subagent** to review and rewrite the content to match the RotaryCAM Golden Rules of Copywriting.
+Every time documentation (`docs/`, `templates/docs/`), the build guide (`build-guide.html`), the hardware THC page (`hardware-thc.html`), the changelog (`changelog.html`), or the homepage (`index.html`) is updated or added, `pipe-landing` **MUST invoke the specialized `pipe-copywriter` subagent** to review and rewrite the content to match the **4 RotaryCAM Golden Rules of Copywriting**.
 
-### The 3 Golden Rules:
+### The 4 Golden Rules:
 
 #### #1 Be simple & specific
 Write plain, direct, human language — no jargon, no buzzwords, no fluff. Swap vague words like "seamless" or "leverage" for concrete details that explain HOW something works and WHAT the outcome is.
@@ -114,7 +114,10 @@ Write plain, direct, human language — no jargon, no buzzwords, no fluff. Swap 
 Sound like you're explaining something important to someone you respect — conversational, but not informal, confident, but not stiff. Avoid corporate voice. Write the way you'd talk.
 
 #### #3 Focus on the User, not RotaryCam
-Put the reader first. Focus on what THEY can achieve, not how great RotaryCam is. Make every word earn its place — if it doesn't add value, cut it.
+Put the reader first. Focus on what THEY can achieve, not how great RotaryCam is.
+
+#### #4 Get to the point, quick
+Lead with the bottom-line result or number, say it once, and stop talking. Cut throat-clearing intros, repeated claims, stacked parentheticals, and dense multi-sentence walls of text. Aim for ~30–45% fewer words without dropping a single concrete spec, part number, or shop-floor fact: keep feature cards to 1–2 short, punchy sentences and section intros to 1–2 crisp sentences.
 
 ### Fabrication & Welder Voice Guidelines:
 - All copy MUST speak **fabrication language, not software engineering language**. Speak directly to fabricators, welders, chassis builders, and CNC plasma table operators.
@@ -130,3 +133,20 @@ Put the reader first. Focus on what THEY can achieve, not how great RotaryCam is
   - "Swirl gas direction ensures the clean square edge stays on your part, not the scrap"
   - "100% offline standalone software right at the machine next to the plasma table with zero internet or cloud dependency"
 - Preserve all existing HTML elements, Jinja2 template blocks, styling, anchor IDs, and script dependencies.
+
+---
+
+## 4. 3D PCB STEP-to-WebGL Conversion Pipeline (`scripts/convert_pcb_step.py`)
+
+Whenever adding or updating an interactive 3D PCB viewer on `build-guide.html` or `hardware-thc.html`, convert the exported Fusion 360 / Eagle / KiCad `.step` assembly (and optional `.brd` XML for 2D silkscreen text decals) using [`scripts/convert_pcb_step.py`](./scripts/convert_pcb_step.py):
+
+```bash
+/opt/homebrew/Caskroom/miniconda/base/envs/fovnet_ml/bin/python scripts/convert_pcb_step.py \
+    --step /path/to/board.step \
+    --out-mesh assets/<slug>-mesh.json.gz \
+    --out-step-gz assets/<slug>.step.gz \
+    [--brd /path/to/board.brd --out-silkscreen assets/<slug>-silkscreen.svg]
+```
+
+- Automatically preserves XCAF sRGB colors, groups faces into the exact PBR material buckets expected by `initPcbViewer()` (`fr4`, `copper`, `soldermask`, `silkscreen`, `metal`, `plastic`, `ceramic`, `led`, `default`), centers the assembly, rotates CAD Z-up into Three.js Y-up (`Rx(-90°)`), and emits `bounds` + `board` decal metadata.
+- Pair with a static isometric preview PNG (`assets/<slug>-preview.png`) in `#thc-cover` so the page renders instantaneously and loads the WebGL mesh only when the user clicks **"Click to Explore"**.
