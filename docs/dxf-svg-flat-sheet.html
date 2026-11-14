@@ -362,7 +362,7 @@
 
         <h1 class="docs-title">10. Multi-File DXF &amp; SVG <span class="text-gradient-amber">Flat-Sheet CAM &amp; Imperial Units</span></h1>
         <p class="docs-subtitle">
-          How to drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> bracket drawings onto your plasma table, confirm sheet thickness to unlock cut charts, fix unknown drawing scale with magnetic 2-point snapping (or <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code>), nest full fabrication kits onto <code class="mono">48 &times; 96 in</code> sheets, and export native <code class="mono">G20</code> (Imperial) or <code class="mono">G21</code> (Metric) G-code.
+          How to drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> bracket drawings onto your plasma table (or launch the built-in <code class="mono">Flat Sheet DXF Kit</code>), confirm sheet thickness to unlock cut charts, fix unknown drawing scale with magnetic 2-point snapping, nest kits onto sheets with recursive cutout nesting &amp; 2D common-line cutting, and export native <code class="mono">G20</code> (Imperial) or <code class="mono">G21</code> (Metric) G-code.
         </p>
 
         <div class="docs-meta-bar">
@@ -512,6 +512,14 @@
           </div>
         </div>
 
+        <!-- Built-In Quick Sample Callout -->
+        <div class="doc-callout tip" style="margin-top: 1.5rem; margin-bottom: 2rem;">
+          <div class="doc-callout-title">💡 Try It Right Now: Built-In Flat Sheet DXF Kit</div>
+          <p>
+            You don't need to hunt for CAD files to test 2D flat-sheet CAM. Click <strong>Flat Sheet DXF Kit</strong> under <strong>Quick CAD Fixtures</strong> in the left sidebar (or grab individual test parts directly from <code class="mono">examples/dxf-svg/</code> in the repository). It immediately loads a 5-file plate kit showcasing 3-level recursive nested cutouts, 2D common-line shared edges, angled gusset rotation interlocking, bend-relief slits, and scribe marks on your table in one click.
+          </p>
+        </div>
+
         <!-- ==================================================================
              STEP 1
              ================================================================== -->
@@ -634,6 +642,8 @@
               <li>Set required quantities for each part in your kit (for example: 8 corner gussets, 16 shock tabs, and 6 winch mounting plates—30 pieces total).</li>
               <li>Enter your raw plate dimensions (e.g. <code class="mono">96 &times; 48 in</code> or <code class="mono">2500 &times; 1250 mm</code>) and torch kerf / part spacing (e.g. <code class="mono">0.250 in</code> / <code class="mono">6.35 mm</code>).</li>
               <li>Click <span class="ui-chip cyan">Nest Sheet</span>. RotaryCAM nests all 30 parts tightly across the sheet, keeping parts aligned with plate margins.</li>
+              <li><strong>Recursive Cutout-in-Cutout Nesting:</strong> Small brackets, tabs, or spacers automatically pack inside the open dropouts of larger flanges or frames—even three levels deep. Toolpaths sequence strictly from the inside out: innermost cutouts cut first, then intermediate nested parts, and finally the outer perimeter. That guarantees no nested piece tips into the water table or drops through the slats before the torch reaches it.</li>
+              <li><strong>2D Common-Line Cutting:</strong> Check <span class="ui-chip">Common-line cutting</span> to snap matching straight edges of neighboring parts together with zero gap. The torch cuts the shared seam in a single kerf-compensated pass, cutting pierces in half, saving cut time, and reducing skeleton scrap to near zero.</li>
               <li>Toolpaths automatically sequence interior bolt holes and slots first before cutting the outer perimeter, preventing parts from shifting on the slats while holes are being pierced.</li>
               <li>Open slit lines and internal scribe marks remain kerf-free and cut along their true centerlines.</li>
             </ul>
