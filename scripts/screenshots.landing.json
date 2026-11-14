@@ -1,0 +1,75 @@
+{
+  "name": "landing",
+  "description": "High-fidelity RotaryCAM marketing assets and landing page showcase screenshots",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "scale": 2,
+  "fixtures": {
+    "headache_rack": {
+      "sample": "headache-rack.step",
+      "one_shot": true,
+      "settings": {
+        "machine_id": "mach_simcnc_default",
+        "units": "mm",
+        "auto_scribe_part_labels": "on",
+        "enable_assembly_witness_marks": "on"
+      },
+      "pack": {
+        "enable_common_line_sever": "on",
+        "auto_scribe_part_labels": "on"
+      }
+    },
+    "flat_sheet_kit": {
+      "sample": "flat-sheet-showcase.zip",
+      "one_shot": true,
+      "settings": {
+        "wall_thickness": 4.7625,
+        "machine_id": "mach_firecontrol_default",
+        "units": "in"
+      },
+      "pack": {
+        "enable_common_line_sever": "on"
+      }
+    }
+  },
+  "shots": [
+    {
+      "id": "cad-inspection",
+      "description": "Single Part CAD Inspection with 3D B-Rep topology overlays and feature list",
+      "path": "/process/${fixtures.headache_rack.processId}?showcase=1&tab=part&solid=solid_15&compile=1",
+      "out": "../assets/cad-inspection.png"
+    },
+    {
+      "id": "desktop-app",
+      "description": "Full desktop application workspace view with dual 3D CAD/CAM viewports",
+      "path": "/?showcase=1&modal=cut-charts&chart_source=all",
+      "out": "../assets/desktop-app.png"
+    },
+    {
+      "id": "pack-nesting",
+      "description": "Multi-part stick nesting optimizer with common-line cut ordering",
+      "path": "/process/${fixtures.headache_rack.processId}?showcase=1&tab=pack&compile=1",
+      "out": "../assets/pack-nesting.png"
+    },
+    {
+      "id": "dxf-svg-flat-sheet",
+      "description": "2D flat sheet nesting viewer showing full sheet utilization and vector toolpaths",
+      "path": "/process/${fixtures.flat_sheet_kit.processId}?showcase=1&tab=pack&compile=1&flat_zoom=fit",
+      "out": "../assets/dxf-svg-flat-sheet.png"
+    },
+    {
+      "id": "cut-simulation",
+      "description": "3D Plasma cut simulation with live torch kinematics and DRO coordinate readout",
+      "path": "/process/${fixtures.headache_rack.processId}?showcase=1&tab=sim&solid=solid_15&compile=1&sim_cut_pct=52",
+      "out": "../assets/cut-simulation.png"
+    },
+    {
+      "id": "machine-kinematics",
+      "description": "CNC Machine Kinematics editor modal showing axis jerk, acceleration, and TCP settings",
+      "path": "/?showcase=1&modal=machines&machine_id=mach_simcnc_default&machine_tab=thc",
+      "out": "../assets/machine-kinematics.png"
+    }
+  ]
+}
