@@ -1519,7 +1519,7 @@
       </div>
       <h1>Raw 3D CAD Assemblies In. <span>Clean 4-Axis Plasma G-Code Out.</span></h1>
       <p>
-        Stop wasting hours flattening 3D tubing into distorted 2D DXFs in CAD. Drop your finished 3D CAD frame, roll cage, or truss straight into RotaryCAM. It detects your pipe, tube, cope, and hole cuts automatically, calculates zero-gap saddle joints that fit tight with no grinder work, and outputs machine-ready G-code for your 4-axis rotary plasma table.
+        Stop wasting hours flattening 3D tubing into distorted 2D DXFs in CAD. Drop your finished 3D CAD frame, roll cage, or truss straight into RotaryCAM—or drop multi-file 2D DXF &amp; SVG flat-sheet bracket kits directly onto your table. It detects your pipe, tube, cope, and hole cuts automatically, calculates zero-gap saddle joints that fit tight with no grinder work, nests plates and sticks, and outputs machine-ready G-code for your CNC plasma table.
       </p>
       <p style="margin-top: 0.85rem; color: var(--text-dim); font-size: 0.95rem; line-height: 1.55;">
         Want to accelerate your workflow even further? With built-in <strong>Model Context Protocol (MCP)</strong> support, you can automate tube inspection, zero-beveling, and multi-stick nesting directly from <strong>Claude Desktop</strong>, <strong>Cursor</strong>, or your local offline AI assistant—100% air-gapped at the machine.
@@ -1602,7 +1602,7 @@
   <section id="showcase" class="section-wrap">
     <div class="section-header">
       <h2>See RotaryCAM in Action</h2>
-      <p>From full 3D CAD chassis frames to nested mill sticks and clean torch paths ready to cut.</p>
+      <p>From full 3D CAD chassis frames and 2D flat-sheet DXF / SVG kits to nested sticks and clean torch paths ready to cut.</p>
     </div>
 
     <!-- Showcase Item 1: Standalone Desktop App -->
@@ -1662,6 +1662,31 @@
       </div>
       <div class="showcase-img-container">
         <img src="assets/pack-nesting.png" alt="Multi-Part Pack Nesting in RotaryCAM" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Showcase Item: Flat-Sheet DXF & SVG Kits -->
+    <div class="showcase-card">
+      <div class="showcase-header">
+        <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">FLAT-SHEET DXF / SVG &amp; IMPERIAL G20</span>
+        <h3>Flat-Sheet DXF &amp; SVG Kits — Magnetic 2-Point Scaling, 2D Sheet Nesting &amp; Imperial G20 G-Code</h3>
+        <p>
+          Cut gussets, shock tabs, and base plates alongside your tube weldments without switching CAM tools. Drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> files at once—disconnected multi-part SVGs automatically split into separate cut pieces with individual quantities. Click any <code class="mono">16ga</code>–<code class="mono">1/2"</code> (<code class="mono">1.5</code>–<code class="mono">12 mm</code>) gauge pill to satisfy the safety gate and auto-match your cut chart. Rescale mystery drawings with magnetic 2-point reference snapping (or <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code>), nest the entire 30-piece kit onto a <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) sheet with interior-first hole ordering, and switch any machine profile between Imperial (<code class="mono">in / G20</code>, <code class="mono">IPM</code>, <code class="mono">PSI</code>) and Metric (<code class="mono">mm / G21</code>, <code class="mono">mm/min</code>, <code class="mono">bar</code>) with one click.
+        </p>
+        <div class="pill-list mono">
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Multi-File .DXF &amp; .SVG</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>2-Point Snap Scaling</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>48&times;96 in Sheet Nesting</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Imperial G20 &amp; Metric G21</span>
+        </div>
+        <div style="margin-top: 1.25rem;">
+          <a href="docs/dxf-svg-flat-sheet.html" class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.88rem; text-decoration: none;">
+            Read the 5-Step Flat-Sheet Tutorial &rarr;
+          </a>
+        </div>
+      </div>
+      <div class="showcase-img-container">
+        <img src="assets/dxf-svg-flat-sheet.png" alt="Multi-File DXF and SVG Flat-Sheet Nesting with Imperial G20 G-Code in RotaryCAM" loading="lazy">
       </div>
     </div>
 
@@ -1925,7 +1950,7 @@
             <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Round Pipe &amp; Tubing:</strong> 1/8" pipe up to 16" heavy casing</li>
             <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Square &amp; Rectangular Tubing (HSS):</strong> 1/2" up to 16"+ with corner radius tracking</li>
             <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Angle Iron, C-Channel &amp; I-Beam:</strong> 4-axis beamline cutting on legs &amp; recessed webs</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Sheet &amp; Plate:</strong> Cut brackets, tabs, and gussets on the same table</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Sheet &amp; Plate (DXF/SVG):</strong> Multi-file 2D nesting, 2-point magnetic scale &amp; native G20/G21</li>
           </ul>
         </div>
         <div class="pill-list mono" style="margin-top: 1.5rem;">
@@ -2230,7 +2255,7 @@
       <div style="max-width: 720px;">
         <div class="badge"><span class="mono">OPERATOR DOCUMENTATION &amp; TUTORIALS</span></div>
         <h2>Step-by-Step Visual CAM Workflows</h2>
-        <p>Follow annotated walkthroughs covering 4-axis machine setup, G94/G93 controller dialects, synchronous THC corner locking, per-contour Zero-Bevel compensation, multi-stick tube nesting, and cut-and-bend tube unfolding.</p>
+        <p>Follow annotated walkthroughs covering 4-axis machine setup, G94/G93 controller dialects, synchronous THC corner locking, per-contour Zero-Bevel compensation, multi-stick tube nesting, flat-sheet DXF/SVG nesting, native Imperial/Metric units, and cut-and-bend tube unfolding.</p>
       </div>
       <a href="docs/index.html" class="secondary-btn" style="border-color: rgba(6, 182, 212, 0.45); color: var(--cyan-arc);">
         Open Full Documentation Hub →
@@ -2385,6 +2410,21 @@
             <p>Connect Claude Desktop, Cursor, or LM Studio to RotaryCAM's 100% offline MCP server. Run drive math, inspect STEP CAD solids, apply zero-bevel copes, and emit production G-code air-gapped.</p>
           </div>
           <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 09 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 10 Card -->
+      <a href="docs/dxf-svg-flat-sheet.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <img src="docs/assets/dxf-svg-4-sheet-nesting.png" alt="Tutorial 10: Multi-File DXF and SVG Flat-Sheet CAM and Imperial G20 G-Code" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--cyan-arc);">TUTORIAL 10 • 5 STEPS</div>
+            <h3 style="color: #fff;">Multi-File DXF &amp; SVG Flat-Sheet CAM</h3>
+            <p>Drop multi-file 2D plate kits, confirm sheet thickness to unlock cut charts, fix unknown drawing scale with magnetic 2-point snapping, nest plates, and export native G20/G21 G-code.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--cyan-arc); font-weight: 700;">Read Tutorial 10 →</div>
         </div>
       </a>
     </div>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10. Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial Units — RotaryCAM Documentation</title>
+  <meta name="description" content="Step-by-step visual guide to importing multi-file DXF/SVG flat-sheet parts, setting sheet thickness, fixing drawing scale with magnetic 2-point snapping, nesting 2D plates, and emitting native G20 Imperial or G21 Metric G-code in RotaryCAM." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="docs.css?v=20261023" />
+  <style>
+    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
+    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
+    
+    .site-header-left { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .site-header .brand { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+    .site-header .brand-tag { font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .site-header .nav-back-link { color: #94a3b8 !important; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.15s ease; white-space: nowrap; }
+    .site-header .nav-back-link:hover { color: #f59e0b !important; }
+    .site-header .nav-divider { width: 1px; height: 16px; background: #232833; }
+
+    .site-header .nav-links { display: flex; align-items: center; gap: 1.35rem; flex-shrink: 0; }
+    .site-header .nav-links > a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.82rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.35rem 0; font-weight: 500; }
+    .site-header .nav-links > a:hover { color: #fff; }
+    .site-header .nav-links > a.active { color: #fff; font-weight: 600; }
+    .site-header .nav-links > a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+
+    /* Interactive Tutorials Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { background: transparent; border: none; color: #94a3b8; font-size: 0.82rem; font-family: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.35rem 0; transition: color 0.15s ease; }
+    .nav-dropdown-trigger:hover, .nav-dropdown:hover .nav-dropdown-trigger, .nav-dropdown-trigger.active { color: #fff; }
+    .nav-dropdown-trigger.active { font-weight: 600; }
+    .nav-dropdown-trigger .dropdown-caret { transition: transform 0.2s ease; opacity: 0.7; }
+    .nav-dropdown:hover .dropdown-caret, .nav-dropdown:focus-within .dropdown-caret { transform: rotate(180deg); opacity: 1; color: #f59e0b; }
+    .nav-active-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 1px 5px; border-radius: 4px; font-weight: 700; line-height: 1.2; }
+    .nav-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #232833; padding: 1px 5px; border-radius: 4px; font-weight: 600; line-height: 1.2; }
+
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 0.65rem); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(18, 22, 29, 0.98); border: 1px solid #232833; border-radius: 10px; box-shadow: 0 16px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); padding: 0.75rem; width: 560px; max-width: calc(100vw - 2rem); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; z-index: 1050; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: none; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .nav-dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.55rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.45rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+    .nav-dropdown-count { color: #f59e0b; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.5rem; max-height: 380px; }
+    .nav-dropdown-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.45rem 0.6rem; border-radius: 6px; text-decoration: none; color: #cbd5e1; transition: background 0.15s ease, color 0.15s ease; position: relative; }
+    .nav-dropdown-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .nav-dropdown-item.active { background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-dropdown-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #64748b; background: rgba(255,255,255,0.04); padding: 2px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+    .nav-dropdown-item.active .nav-dropdown-num { color: #f59e0b; background: rgba(245, 158, 11, 0.18); }
+    .nav-dropdown-content { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+    .nav-dropdown-title { font-size: 0.78rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-dropdown-sub { font-size: 0.66rem; color: #64748b; line-height: 1.2; }
+    .nav-dropdown-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink: 0; }
+
+    /* Right Section */
+    .site-header-right { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; font-weight: 500; }
+    .site-header .nav-cta:hover { border-color: #f59e0b; color: #fff; }
+    
+    .nav-mobile-toggle { display: none; background: #14171d; border: 1px solid #232833; color: #94a3b8; border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; padding: 0; }
+    .nav-mobile-toggle:hover { color: #fff; border-color: #f59e0b; }
+
+    /* Mobile Drawer */
+    .docs-mobile-drawer { display: none; position: fixed; inset: 0; top: 57px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 999; padding: 1.5rem; overflow-y: auto; flex-direction: column; gap: 1.25rem; }
+    .docs-mobile-drawer.open { display: flex; }
+    .docs-mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .docs-mobile-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .docs-mobile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 8px; text-decoration: none; color: #cbd5e1; background: rgba(255,255,255,0.02); border: 1px solid #232833; font-size: 0.88rem; }
+    .docs-mobile-link:hover, .docs-mobile-link.active { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+
+    @media (max-width: 960px) {
+      .site-header .nav-links { display: none; }
+      .site-header .nav-divider { display: none; }
+      .nav-mobile-toggle { display: inline-flex; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <header class="site-header" id="navbar">
+    <nav aria-label="Documentation Navigation">
+      <div class="site-header-left">
+        <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.0.0-dev-BETA</span>
+        </a>
+        <div class="nav-divider" aria-hidden="true"></div>
+        <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
+      </div>
+
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+
+        <!-- Tutorials Dropdown -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger active" aria-expanded="false" aria-haspopup="true">
+            <span>Tutorials</span>
+            
+            <span class="nav-active-badge">10</span>
+            
+            <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-header">
+              <span>All Workflows &amp; Tutorials</span>
+              <span class="nav-dropdown-count">10 Guides</span>
+            </div>
+            <div class="nav-dropdown-grid">
+              
+              <a href="machine-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">01</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Machine Configuration</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-path-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">02</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">UI & Cut Path Config</span>
+                  <span class="nav-dropdown-sub">8 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="nesting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">03</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Multi-Part Stick Nesting</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="bending.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">04</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Bending HSS & HSS-O</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="changelog.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">05</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Build Info & Changelog</span>
+                  <span class="nav-dropdown-sub">3 Steps • Diagnostics & Storage</span>
+                </span>
+                
+              </a>
+              
+              <a href="ai-autodetection.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">06</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Fusion 360 & AI Autodetect</span>
+                  <span class="nav-dropdown-sub">8 Steps • 11 Screenshots</span>
+                </span>
+                
+              </a>
+              
+              <a href="simcnc-motion-sync.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">07</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">SimCNC Motion-Sync & 3D Ramp</span>
+                  <span class="nav-dropdown-sub">12 Steps • Technical Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-charts-and-features.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">08</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
+                  <span class="nav-dropdown-sub">6 Steps • Visual Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="mcp-offline-workflows.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">09</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Offline MCP & AI Automation</span>
+                  <span class="nav-dropdown-sub">8 Steps • Integration Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="dxf-svg-flat-sheet.html" class="nav-dropdown-item active" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+                <span class="nav-dropdown-dot" title="Current Guide"></span>
+                
+              </a>
+              
+            </div>
+          </div>
+        </div>
+
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../build-guide.html">Machine Blueprint</a>
+        <a href="../changelog.html">Changelog</a>
+      </div>
+
+      <div class="site-header-right">
+        <a href="../index.html#download" class="nav-cta">Download Beta</a>
+        <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
+    <div class="docs-mobile-section-title">Navigation</div>
+    <div class="docs-mobile-list">
+      <a href="../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="../index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
+      <a href="index.html" class="docs-mobile-link">Documentation Hub Overview</a>
+      <a href="../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
+      <a href="../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
+    </div>
+
+    <div class="docs-mobile-section-title" style="margin-top: 1rem;">Tutorials &amp; Guides</div>
+    <div class="docs-mobile-list">
+      
+      <a href="machine-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">01</span>
+        <span>Machine Configuration</span>
+      </a>
+      
+      <a href="cut-path-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">02</span>
+        <span>UI & Cut Path Config</span>
+      </a>
+      
+      <a href="nesting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">03</span>
+        <span>Multi-Part Stick Nesting</span>
+      </a>
+      
+      <a href="bending.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">04</span>
+        <span>Bending HSS & HSS-O</span>
+      </a>
+      
+      <a href="changelog.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">05</span>
+        <span>Build Info & Changelog</span>
+      </a>
+      
+      <a href="ai-autodetection.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">06</span>
+        <span>Fusion 360 & AI Autodetect</span>
+      </a>
+      
+      <a href="simcnc-motion-sync.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">07</span>
+        <span>SimCNC Motion-Sync & 3D Ramp</span>
+      </a>
+      
+      <a href="cut-charts-and-features.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">08</span>
+        <span>Cut Charts & Feature Toggles</span>
+      </a>
+      
+      <a href="mcp-offline-workflows.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">09</span>
+        <span>Offline MCP & AI Automation</span>
+      </a>
+      
+      <a href="dxf-svg-flat-sheet.html" class="docs-mobile-link active">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="../index.html#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Mobile drawer toggle
+      const toggle = document.getElementById('navMobileToggle');
+      const drawer = document.getElementById('docsMobileDrawer');
+      if (toggle && drawer) {
+        toggle.addEventListener('click', function () {
+          const isOpen = drawer.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        drawer.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            drawer.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Desktop/tablet dropdown toggle on click
+      const ddTrigger = document.querySelector('.nav-dropdown-trigger');
+      const dd = document.querySelector('.nav-dropdown');
+      if (ddTrigger && dd) {
+        ddTrigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = dd.classList.toggle('open');
+          ddTrigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function (e) {
+          if (!dd.contains(e.target)) {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
+
+  <main>
+
+    <!-- ======================================================================
+         TUTORIAL HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <a href="index.html">Documentation</a>
+          <span class="sep">/</span>
+          <span class="current">10. Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial G20 G-Code</span>
+        </div>
+
+        <h1 class="docs-title">10. Multi-File DXF &amp; SVG <span class="text-gradient-amber">Flat-Sheet CAM &amp; Imperial Units</span></h1>
+        <p class="docs-subtitle">
+          How to drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> bracket drawings onto your plasma table, confirm sheet thickness to unlock cut charts, fix unknown drawing scale with magnetic 2-point snapping (or <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code>), nest full fabrication kits onto <code class="mono">48 &times; 96 in</code> sheets, and export native <code class="mono">G20</code> (Imperial) or <code class="mono">G21</code> (Metric) G-code.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 10 OF 10</strong> • 5 Steps</span>
+          
+          <span class="docs-meta-pill cyan"><strong>File Formats:</strong> .DXF (R12–2018) • .SVG • .ZIP Archives • .STEP 3D</span>
+          
+          <span class="docs-meta-pill"><strong>Units &amp; Controllers:</strong> Native Imperial (in / G20) &amp; Metric (mm / G21) • FireControl, WinCNC, Mach4, LinuxCNC</span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN DOCUMENTATION SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Tutorial Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Tutorials &amp; Guides</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="index.html">
+                <span class="docs-nav-num">HUB</span>
+                <span>Documentation Overview</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="machine-configuration.html">
+                <span class="docs-nav-num">01</span>
+                <span>Machine Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="cut-path-configuration.html">
+                <span class="docs-nav-num">02</span>
+                <span>UI & Cut Path Config</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="nesting.html">
+                <span class="docs-nav-num">03</span>
+                <span>Multi-Part Stick Nesting</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="bending.html">
+                <span class="docs-nav-num">04</span>
+                <span>Bending HSS & HSS-O</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="changelog.html">
+                <span class="docs-nav-num">05</span>
+                <span>Build Info & Changelog</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="ai-autodetection.html">
+                <span class="docs-nav-num">06</span>
+                <span>Fusion 360 & AI Autodetect</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="simcnc-motion-sync.html">
+                <span class="docs-nav-num">07</span>
+                <span>SimCNC Motion-Sync & 3D Ramp</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="cut-charts-and-features.html">
+                <span class="docs-nav-num">08</span>
+                <span>Cut Charts & Feature Toggles</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="mcp-offline-workflows.html">
+                <span class="docs-nav-num">09</span>
+                <span>Offline MCP & AI Automation</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="dxf-svg-flat-sheet.html" class="active">
+                <span class="docs-nav-num">10</span>
+                <span>DXF/SVG & Imperial Units</span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            
+            <li><a href="#step-1"><span class="docs-toc-step">01</span> Set Units &amp; Drop Multi-File DXF/SVG</a></li>
+            
+            <li><a href="#step-2"><span class="docs-toc-step">02</span> Confirm Sheet Thickness Gate</a></li>
+            
+            <li><a href="#step-3"><span class="docs-toc-step">03</span> Magnetic 2-Point Scale Part</a></li>
+            
+            <li><a href="#step-4"><span class="docs-toc-step">04</span> Nest Kit on 48&times;96 in Sheet</a></li>
+            
+            <li><a href="#step-5"><span class="docs-toc-step">05</span> Imperial 3D Sim &amp; G20 Export</a></li>
+            
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Tutorial Column -->
+      <div class="docs-main">
+
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Cutting Chassis Brackets, Shock Tabs &amp; Base Plates Alongside Tubing</h2>
+          <p>
+            When you build roll cages, bumpers, suspension links, or heavy equipment attachments, you cut flat steel right alongside your tubing. You need gusset plates, shock mounting tabs, winch trays, and weld-on end caps. Switching back and forth between 3D tube CAM and separate 2D plate nesting software wastes time, doubles your software license costs, and forces you to re-enter cut charts for every toolpath.
+          </p>
+          <p style="margin-top: 0.75rem;">
+            RotaryCAM lets you drop 2D <code class="mono">.dxf</code> and <code class="mono">.svg</code> drawings straight onto your table alongside your 3D STEP files. Drop in single drawings or full <code class="mono">.zip</code> fabrication kits. Multi-part SVGs with disconnected outlines automatically split into individual pieces with their own quantity counters. DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code> labels and open scribe lines carry straight over to your torch or pneumatic scribe. You can fix mystery-scale drawings with magnetic 2-point snapping, nest 30-piece kits onto standard <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) sheets, and export native <code class="mono">G20</code> (Imperial 4-decimal inch) or <code class="mono">G21</code> (Metric) G-code tailored to your controller.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Drawing Input</span>
+              <span class="value">Multi-File DXF, SVG &amp; ZIP</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Scale Correction</span>
+              <span class="value">Magnetic 2-Point Snap + &times;25.4</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Machine Dialect</span>
+              <span class="value">Native G20 (in) &amp; G21 (mm)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Set Machine Units (<code class="mono">in / G20</code> or <code class="mono">mm / G21</code>) &amp; Drop Multiple <code class="mono">.DXF</code>, <code class="mono">.SVG</code>, or <code class="mono">.ZIP</code> Files</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Start by verifying your machine's default unit system. In the top-right application header, click <span class="ui-chip">⚙ Machines</span> or inspect your active machine profile in the left panel. Controllers like Langmuir FireControl and ShopSabre WinCNC run in Imperial (<code class="mono">in / G20</code>) out of the box, with feedrates in IPM and air pressure in PSI. European tables like LinuxCNC, EdingCNC, or SimCNC typically run in Metric (<code class="mono">mm / G21</code>, mm/min, bar). You can switch any profile between Imperial and Metric with one click—no need to rebuild or duplicate your controller settings.
+            </p>
+            <p style="margin-top: 0.75rem;">
+              Next, drag your 2D vector files straight into the dropzone:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Drag and drop multiple <code class="mono">.dxf</code> files, <code class="mono">.svg</code> vector cutouts, or a compressed <code class="mono">.zip</code> bundle at once.</li>
+              <li>Multi-part SVGs (such as a single drawing containing 8 shock tabs) automatically split into separate parts (<code class="mono">shock_tabs_1</code>, <code class="mono">shock_tabs_2</code>, etc.) with independent quantity counters.</li>
+              <li>DXF <code class="mono">TEXT</code>, <code class="mono">MTEXT</code>, and open scribe lines automatically map to marking toolpaths without manual layer tracing.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Setting Machine Units (in / G20 vs mm / G21) and dropping multi-file DXF, SVG, or ZIP parts into the workspace</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-1-upload.png" alt="Step 1: Multi-file DXF and SVG dropzone with Langmuir FireControl in / G20 machine units toggle" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Confirm Sheet Gauge or Plate Thickness to Unlock Cut Charts &amp; G-Code</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Unlike 3D STEP models that contain real wall geometry, 2D DXF and SVG drawings are completely flat—they carry zero Z-height or sheet thickness data. Running thin-sheet 16ga cut settings on 1/2" steel plate ruins your torch nozzle; running 1/2" pierce delays on 16ga blows huge holes in your sheet.
+            </p>
+            <p style="margin-top: 0.75rem;">
+              To prevent shop-floor mistakes, RotaryCAM holds G-code generation behind an amber safety gate:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>The status pill displays <span class="ui-chip amber">Status: Awaiting Thickness</span>.</li>
+              <li>Click any standard gauge pill: Imperial users click <span class="ui-chip">16ga</span>, <span class="ui-chip">14ga</span>, <span class="ui-chip">11ga</span>, <span class="ui-chip">1/8"</span>, <span class="ui-chip">3/16"</span>, <span class="ui-chip">1/4"</span>, <span class="ui-chip">3/8"</span>, or <span class="ui-chip">1/2"</span>; Metric tables click <span class="ui-chip">1.5 mm</span>, <span class="ui-chip">3.0 mm</span>, <span class="ui-chip">6.0 mm</span>, etc.</li>
+              <li>Once selected, the safety indicator flips to emerald <span class="ui-chip emerald">Status: Ready</span>, instantly locking in your cut chart's cutting amperage, torch height, pierce delay, and kerf width.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Selecting 3/16" plate thickness to satisfy the safety gate and load matching Hypertherm cut chart parameters</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-2-thickness-gate.png" alt="Step 2: Sheet thickness selection pills from 16ga to 1/2 inch with Awaiting Thickness safety gate" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Rescale Mystery-Unit Drawings with Magnetic 2-Point Snapping (or <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Every fabricator has downloaded a customer bracket or open-source gusset drawing that loads at the wrong scale. Someone drew a 4.5" suspension tab in millimeters without setting a unit header, making it 25.4 times too small, or exported millimeters into an inch workspace, making it 25.4 times too big.
+            </p>
+            <p style="margin-top: 0.75rem;">
+              Instead of opening CAD, measuring coordinates, and re-exporting, fix the drawing directly on your table:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click the <span class="ui-chip">Scale Part</span> button above the part preview.</li>
+              <li>Move your cursor over any two known reference points—bolt hole centers, slot ends, tab widths, or overall bounding corners. The cursor snaps magnetically to exact CAD vertices (<code class="mono">P1 Snap</code> and <code class="mono">P2 Snap</code>).</li>
+              <li>RotaryCAM reads the exact measured distance between the two points (e.g., <code class="mono">Measured: 3.0000 in</code>).</li>
+              <li>Type your true known size into the <code class="mono">Target</code> field (e.g., <code class="mono">4.5000 in</code>) and click <span class="ui-chip">Apply Scale</span>.</li>
+              <li>If you already know it is an inch-to-metric unit mismatch, click the quick <span class="ui-chip">&times;25.4</span> or <span class="ui-chip">&divide;25.4</span> button for an instant 1-click scale fix.</li>
+              <li>The <code class="mono">Apply to all parts in session</code> toggle stays unchecked by default. When you drop in a folder of drawings from different suppliers, scaling one mystery part won't accidentally distort the rest of your kit.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Magnetic 2-point reference scaling with P1/P2 snapping, target dimension input, and unit flip buttons</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-3-scale-part.png" alt="Step 3: Magnetic 2-point Scale Part popover with P1/P2 snap, measured vs target dimension, and 25.4 flip buttons" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Nest Your Multi-Part Fabrication Kit onto a <code class="mono">96 &times; 48 in</code> (<code class="mono">2500 &times; 1250 mm</code>) Sheet</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              With your parts sized and cut charts matched, switch to the 2D Sheet Nesting workspace to arrange your parts for cutting:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Set required quantities for each part in your kit (for example: 8 corner gussets, 16 shock tabs, and 6 winch mounting plates—30 pieces total).</li>
+              <li>Enter your raw plate dimensions (e.g. <code class="mono">96 &times; 48 in</code> or <code class="mono">2500 &times; 1250 mm</code>) and torch kerf / part spacing (e.g. <code class="mono">0.250 in</code> / <code class="mono">6.35 mm</code>).</li>
+              <li>Click <span class="ui-chip cyan">Nest Sheet</span>. RotaryCAM nests all 30 parts tightly across the sheet, keeping parts aligned with plate margins.</li>
+              <li>Toolpaths automatically sequence interior bolt holes and slots first before cutting the outer perimeter, preventing parts from shifting on the slats while holes are being pierced.</li>
+              <li>Open slit lines and internal scribe marks remain kerf-free and cut along their true centerlines.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — 2D XY Sheet Nesting of 30 gussets, shock tabs, and winch plates on a 96 &times; 48 in plate with 0.25 in spacing</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-4-sheet-nesting.png" alt="Step 4: 2D XY sheet nesting of 30 parts on a 96 by 48 inch sheet with Imperial spacing and live G-code" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Verify Torch Motion in 3D with Live Imperial/Metric DRO &amp; Export Native <code class="mono">G20</code>/<code class="mono">G21</code> G-Code</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Before firing your plasma torch, verify the complete cut sequence in the 3D cut simulator:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip emerald">▶ Play</span> to simulate torch travel across the nested plate.</li>
+              <li>Check the live Digital Readout (DRO) tracking torch position in inches (<code class="mono">X: 10.8969 in</code>, <code class="mono">Y: 27.1469 in</code>, <code class="mono">Z: 0.0600 in</code>), cutting feedrate in inches per minute (<code class="mono">138 IPM</code>), and total travel distance (<code class="mono">Cut Dist: 3135.2 in</code>).</li>
+              <li>The amber <code class="mono">⚡ ARC ON</code> indicator confirms when the torch fires, verifying that rapids occur at safe Z heights above plate tip-ups.</li>
+              <li>The synchronized G-code viewer scrolls line-for-line with torch motion, showing native 4-decimal inch commands (<code class="mono">G1 X10.8969 Y27.1469 F138.0</code>) with explicit <code class="mono">G20</code> Imperial header for Langmuir FireControl or ShopSabre WinCNC.</li>
+              <li>Click <span class="ui-chip cyan">Download G-Code</span> to export ready-to-run <code class="mono">.tap</code> or <code class="mono">.nc</code> files directly to your machine console or USB drive.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Simulating 3D torch travel with live Imperial DRO (138 IPM, 3135.2 in cut distance) and synchronized G20 G-code</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-5-imperial-sim.png" alt="Step 5: Live 3D cut simulation with Imperial DRO 138 IPM, Cut Dist 3135.2 in, and synced G20 G-code" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+
+        <!-- Pagination -->
+        <nav class="docs-pagination" aria-label="Tutorial Pagination">
+          
+          <a href="mcp-offline-workflows.html" class="docs-page-link prev">
+            <span class="docs-page-dir">← Previous Tutorial (09 of 10)</span>
+            <span class="docs-page-title">Offline MCP & AI Automation</span>
+            <span class="docs-page-desc">Connect local AI assistants, run drive math, analyze CAD & emit production G-code</span>
+          </a>
+          
+          
+          <a href="index.html" class="docs-page-link next">
+            <span class="docs-page-dir">Back to Documentation Hub →</span>
+            <span class="docs-page-title">All Tutorials &amp; Guides</span>
+            <span class="docs-page-desc">Return to the RotaryCAM Documentation Overview</span>
+          </a>
+          
+        </nav>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Lightbox Modal -->
+  <div class="docs-lightbox" id="docsLightbox" role="dialog" aria-modal="true" aria-label="Screenshot Preview">
+    <img class="docs-lightbox-img" id="docsLightboxImg" src="" alt="" />
+    <div class="docs-lightbox-bar">
+      <span id="docsLightboxCaption"></span>
+      <button class="docs-lightbox-close" id="docsLightboxClose" type="button">ESC / Click to Close</button>
+    </div>
+  </div>
+
+
+  <!-- ========================================================================
+       FOOTER (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="index.html">Documentation Overview</a>
+          
+          <a href="machine-configuration.html">01. Machine Configuration</a>
+          
+          <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
+          
+          <a href="nesting.html">03. Multi-Part Nesting</a>
+          
+          <a href="bending.html">04. Bending HSS & HSS-O</a>
+          
+          <a href="changelog.html">05. Build Info & Changelog</a>
+          
+          <a href="ai-autodetection.html">06. Fusion 360 & AI Autodetect</a>
+          
+          <a href="simcnc-motion-sync.html">07. SimCNC Motion-Sync & Ramp</a>
+          
+          <a href="cut-charts-and-features.html">08. Cut Charts & Feature Toggles</a>
+          
+          <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
+          
+          <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../index.html#showcase">Showcase</a>
+          <a href="../index.html#features">Capabilities</a>
+          <a href="../index.html#kinematics">4-Axis Kinematics</a>
+          <a href="../build-guide.html">Build Your Own Table</a>
+          <a href="../changelog.html">Release Changelog &amp; Downloads</a>
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
+    </div>
+  </footer>
+
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById('docsLightbox');
+      const lightboxImg = document.getElementById('docsLightboxImg');
+      const lightboxCaption = document.getElementById('docsLightboxCaption');
+      const lightboxClose = document.getElementById('docsLightboxClose');
+
+      document.querySelectorAll('.doc-figure').forEach((fig) => {
+        const img = fig.querySelector('img');
+        const cap = fig.querySelector('.doc-figure-caption');
+        const open = () => {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightbox.classList.add('open');
+        };
+        fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);
+        const zoomBtn = fig.querySelector('.doc-figure-zoom');
+        if (zoomBtn) zoomBtn.addEventListener('click', open);
+      });
+
+      const close = () => lightbox.classList.remove('open');
+      lightbox.addEventListener('click', (e) => {
+        if (e.target !== lightboxImg) close();
+      });
+      lightboxClose.addEventListener('click', close);
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+    })();
+  </script>
+
+</body>
+</html>

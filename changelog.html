@@ -964,6 +964,57 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 14, 2026 (Unreleased / Next Highlights)
+           ================================================================ -->
+      <article class="release-entry" id="unreleased-flat-sheet">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 14, 2026</span>
+              <span class="release-version-pill">NEXT &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-File DXF &amp; SVG Flat-Sheet Kits &bull; Magnetic 2-Point Scaling &bull; 2D Sheet Nesting &bull; Imperial (in / G20) &amp; Metric (mm / G21)</span>
+          </div>
+          <p class="release-summary">
+            Cut chassis gussets, shock tabs, and winch mount plates alongside your tube weldments without switching CAM tools. Drop multiple 2D <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> files at once with automatic multi-part splitting, confirm plate thickness to unlock matching cut charts, fix unknown drawing scale with magnetic 2-point snapping, nest 30-piece kits onto standard <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) sheets, and toggle your machine profile between native Imperial (<code class="mono">in / G20</code>, <code class="mono">IPM</code>) and Metric (<code class="mono">mm / G21</code>) in one click.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Multi-File DXF, SVG &amp; ZIP Flat-Sheet Ingestion:</strong> Drag and drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or zipped plate kits directly into your workspace. Multi-part SVGs containing disconnected outlines automatically split into separate parts (<code class="mono">shock_tabs_1</code>, <code class="mono">shock_tabs_2</code>) with individual quantity counters, while DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code> labels and open scribe lines carry straight over to marking toolpaths.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Highlighted Sheet Thickness &amp; Plate Gauge Safety Gate:</strong> Because 2D drawings carry zero Z-height, RotaryCAM holds G-code generation behind an amber <code class="mono">Status: Awaiting Thickness</code> safety gate. Click any standard gauge pill (<code class="mono">16ga</code>–<code class="mono">1/2"</code> Imperial or <code class="mono">1.5</code>–<code class="mono">12 mm</code> Metric) to unlock your Hypertherm cut chart parameters (amperage, cut speed, pierce delay, and kerf width).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Magnetic 2-Point Reference Scaling &amp; Instant Unit Flip:</strong> Click any two magnetic snap points on a mystery drawing (bolt hole centers, slot ends, tab widths) to measure its true span, then type the target dimension to rescale it instantly—or click <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code> for 1-click inch/metric correction with scoped per-part application.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>2D XY Sheet Nesting &amp; Interior-First Cut Sequencing:</strong> Nest full fabrication kits onto standard <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) plates with configurable part spacing. Toolpaths automatically sequence interior bolt holes and slots first before dropping the outer perimeter, preserving plate stability.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Machine-Driven Imperial (<code class="mono">in / G20</code>) &amp; Metric (<code class="mono">mm / G21</code>) Units:</strong> Toggle any machine profile between Imperial and Metric in one click. Langmuir FireControl and ShopSabre WinCNC default to native <code class="mono">G20</code> 4-decimal inch G-code with IPM feedrates, while European tables run in native <code class="mono">G21</code> metric.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 13, 2026 (v0.6.1)
            ================================================================ -->
       <article class="release-entry" id="v0.6.1">
@@ -972,7 +1023,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 13, 2026</span>
-              <span class="release-version-pill">v0.6.1 &bull; LATEST</span>
+              <span class="release-version-pill">v0.6.1</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">6 Additional CNC Plasma Posts &bull; Clean Stationary Pierce, Dwell &amp; Straight-Down Cut-Height Plunge &bull; 3D Ramp Lead-Ins</span>
           </div>

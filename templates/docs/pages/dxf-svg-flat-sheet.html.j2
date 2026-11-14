@@ -1,0 +1,199 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Cutting Chassis Brackets, Shock Tabs &amp; Base Plates Alongside Tubing</h2>
+          <p>
+            When you build roll cages, bumpers, suspension links, or heavy equipment attachments, you cut flat steel right alongside your tubing. You need gusset plates, shock mounting tabs, winch trays, and weld-on end caps. Switching back and forth between 3D tube CAM and separate 2D plate nesting software wastes time, doubles your software license costs, and forces you to re-enter cut charts for every toolpath.
+          </p>
+          <p style="margin-top: 0.75rem;">
+            RotaryCAM lets you drop 2D <code class="mono">.dxf</code> and <code class="mono">.svg</code> drawings straight onto your table alongside your 3D STEP files. Drop in single drawings or full <code class="mono">.zip</code> fabrication kits. Multi-part SVGs with disconnected outlines automatically split into individual pieces with their own quantity counters. DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code> labels and open scribe lines carry straight over to your torch or pneumatic scribe. You can fix mystery-scale drawings with magnetic 2-point snapping, nest 30-piece kits onto standard <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) sheets, and export native <code class="mono">G20</code> (Imperial 4-decimal inch) or <code class="mono">G21</code> (Metric) G-code tailored to your controller.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Drawing Input</span>
+              <span class="value">Multi-File DXF, SVG &amp; ZIP</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Scale Correction</span>
+              <span class="value">Magnetic 2-Point Snap + &times;25.4</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Machine Dialect</span>
+              <span class="value">Native G20 (in) &amp; G21 (mm)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Set Machine Units (<code class="mono">in / G20</code> or <code class="mono">mm / G21</code>) &amp; Drop Multiple <code class="mono">.DXF</code>, <code class="mono">.SVG</code>, or <code class="mono">.ZIP</code> Files</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Start by verifying your machine's default unit system. In the top-right application header, click <span class="ui-chip">⚙ Machines</span> or inspect your active machine profile in the left panel. Controllers like Langmuir FireControl and ShopSabre WinCNC run in Imperial (<code class="mono">in / G20</code>) out of the box, with feedrates in IPM and air pressure in PSI. European tables like LinuxCNC, EdingCNC, or SimCNC typically run in Metric (<code class="mono">mm / G21</code>, mm/min, bar). You can switch any profile between Imperial and Metric with one click—no need to rebuild or duplicate your controller settings.
+            </p>
+            <p style="margin-top: 0.75rem;">
+              Next, drag your 2D vector files straight into the dropzone:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Drag and drop multiple <code class="mono">.dxf</code> files, <code class="mono">.svg</code> vector cutouts, or a compressed <code class="mono">.zip</code> bundle at once.</li>
+              <li>Multi-part SVGs (such as a single drawing containing 8 shock tabs) automatically split into separate parts (<code class="mono">shock_tabs_1</code>, <code class="mono">shock_tabs_2</code>, etc.) with independent quantity counters.</li>
+              <li>DXF <code class="mono">TEXT</code>, <code class="mono">MTEXT</code>, and open scribe lines automatically map to marking toolpaths without manual layer tracing.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1 — Setting Machine Units (in / G20 vs mm / G21) and dropping multi-file DXF, SVG, or ZIP parts into the workspace</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-1-upload.png" alt="Step 1: Multi-file DXF and SVG dropzone with Langmuir FireControl in / G20 machine units toggle" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Confirm Sheet Gauge or Plate Thickness to Unlock Cut Charts &amp; G-Code</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Unlike 3D STEP models that contain real wall geometry, 2D DXF and SVG drawings are completely flat—they carry zero Z-height or sheet thickness data. Running thin-sheet 16ga cut settings on 1/2" steel plate ruins your torch nozzle; running 1/2" pierce delays on 16ga blows huge holes in your sheet.
+            </p>
+            <p style="margin-top: 0.75rem;">
+              To prevent shop-floor mistakes, RotaryCAM holds G-code generation behind an amber safety gate:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>The status pill displays <span class="ui-chip amber">Status: Awaiting Thickness</span>.</li>
+              <li>Click any standard gauge pill: Imperial users click <span class="ui-chip">16ga</span>, <span class="ui-chip">14ga</span>, <span class="ui-chip">11ga</span>, <span class="ui-chip">1/8"</span>, <span class="ui-chip">3/16"</span>, <span class="ui-chip">1/4"</span>, <span class="ui-chip">3/8"</span>, or <span class="ui-chip">1/2"</span>; Metric tables click <span class="ui-chip">1.5 mm</span>, <span class="ui-chip">3.0 mm</span>, <span class="ui-chip">6.0 mm</span>, etc.</li>
+              <li>Once selected, the safety indicator flips to emerald <span class="ui-chip emerald">Status: Ready</span>, instantly locking in your cut chart's cutting amperage, torch height, pierce delay, and kerf width.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2 — Selecting 3/16" plate thickness to satisfy the safety gate and load matching Hypertherm cut chart parameters</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-2-thickness-gate.png" alt="Step 2: Sheet thickness selection pills from 16ga to 1/2 inch with Awaiting Thickness safety gate" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Rescale Mystery-Unit Drawings with Magnetic 2-Point Snapping (or <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Every fabricator has downloaded a customer bracket or open-source gusset drawing that loads at the wrong scale. Someone drew a 4.5" suspension tab in millimeters without setting a unit header, making it 25.4 times too small, or exported millimeters into an inch workspace, making it 25.4 times too big.
+            </p>
+            <p style="margin-top: 0.75rem;">
+              Instead of opening CAD, measuring coordinates, and re-exporting, fix the drawing directly on your table:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click the <span class="ui-chip">Scale Part</span> button above the part preview.</li>
+              <li>Move your cursor over any two known reference points—bolt hole centers, slot ends, tab widths, or overall bounding corners. The cursor snaps magnetically to exact CAD vertices (<code class="mono">P1 Snap</code> and <code class="mono">P2 Snap</code>).</li>
+              <li>RotaryCAM reads the exact measured distance between the two points (e.g., <code class="mono">Measured: 3.0000 in</code>).</li>
+              <li>Type your true known size into the <code class="mono">Target</code> field (e.g., <code class="mono">4.5000 in</code>) and click <span class="ui-chip">Apply Scale</span>.</li>
+              <li>If you already know it is an inch-to-metric unit mismatch, click the quick <span class="ui-chip">&times;25.4</span> or <span class="ui-chip">&divide;25.4</span> button for an instant 1-click scale fix.</li>
+              <li>The <code class="mono">Apply to all parts in session</code> toggle stays unchecked by default. When you drop in a folder of drawings from different suppliers, scaling one mystery part won't accidentally distort the rest of your kit.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3 — Magnetic 2-point reference scaling with P1/P2 snapping, target dimension input, and unit flip buttons</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-3-scale-part.png" alt="Step 3: Magnetic 2-point Scale Part popover with P1/P2 snap, measured vs target dimension, and 25.4 flip buttons" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Nest Your Multi-Part Fabrication Kit onto a <code class="mono">96 &times; 48 in</code> (<code class="mono">2500 &times; 1250 mm</code>) Sheet</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              With your parts sized and cut charts matched, switch to the 2D Sheet Nesting workspace to arrange your parts for cutting:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Set required quantities for each part in your kit (for example: 8 corner gussets, 16 shock tabs, and 6 winch mounting plates—30 pieces total).</li>
+              <li>Enter your raw plate dimensions (e.g. <code class="mono">96 &times; 48 in</code> or <code class="mono">2500 &times; 1250 mm</code>) and torch kerf / part spacing (e.g. <code class="mono">0.250 in</code> / <code class="mono">6.35 mm</code>).</li>
+              <li>Click <span class="ui-chip cyan">Nest Sheet</span>. RotaryCAM nests all 30 parts tightly across the sheet, keeping parts aligned with plate margins.</li>
+              <li>Toolpaths automatically sequence interior bolt holes and slots first before cutting the outer perimeter, preventing parts from shifting on the slats while holes are being pierced.</li>
+              <li>Open slit lines and internal scribe marks remain kerf-free and cut along their true centerlines.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4 — 2D XY Sheet Nesting of 30 gussets, shock tabs, and winch plates on a 96 &times; 48 in plate with 0.25 in spacing</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-4-sheet-nesting.png" alt="Step 4: 2D XY sheet nesting of 30 parts on a 96 by 48 inch sheet with Imperial spacing and live G-code" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Verify Torch Motion in 3D with Live Imperial/Metric DRO &amp; Export Native <code class="mono">G20</code>/<code class="mono">G21</code> G-Code</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Before firing your plasma torch, verify the complete cut sequence in the 3D cut simulator:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip emerald">▶ Play</span> to simulate torch travel across the nested plate.</li>
+              <li>Check the live Digital Readout (DRO) tracking torch position in inches (<code class="mono">X: 10.8969 in</code>, <code class="mono">Y: 27.1469 in</code>, <code class="mono">Z: 0.0600 in</code>), cutting feedrate in inches per minute (<code class="mono">138 IPM</code>), and total travel distance (<code class="mono">Cut Dist: 3135.2 in</code>).</li>
+              <li>The amber <code class="mono">⚡ ARC ON</code> indicator confirms when the torch fires, verifying that rapids occur at safe Z heights above plate tip-ups.</li>
+              <li>The synchronized G-code viewer scrolls line-for-line with torch motion, showing native 4-decimal inch commands (<code class="mono">G1 X10.8969 Y27.1469 F138.0</code>) with explicit <code class="mono">G20</code> Imperial header for Langmuir FireControl or ShopSabre WinCNC.</li>
+              <li>Click <span class="ui-chip cyan">Download G-Code</span> to export ready-to-run <code class="mono">.tap</code> or <code class="mono">.nc</code> files directly to your machine console or USB drive.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5 — Simulating 3D torch travel with live Imperial DRO (138 IPM, 3135.2 in cut distance) and synchronized G20 G-code</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/dxf-svg-5-imperial-sim.png" alt="Step 5: Live 3D cut simulation with Imperial DRO 138 IPM, Cut Dist 3135.2 in, and synced G20 G-code" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+{% endblock %}

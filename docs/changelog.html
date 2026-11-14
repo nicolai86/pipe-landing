@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.6.1-BETA</span>
+          <span class="brand-tag">v0.0.0-dev-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -113,7 +113,7 @@
           <div class="nav-dropdown-menu" role="menu">
             <div class="nav-dropdown-header">
               <span>All Workflows &amp; Tutorials</span>
-              <span class="nav-dropdown-count">9 Guides</span>
+              <span class="nav-dropdown-count">10 Guides</span>
             </div>
             <div class="nav-dropdown-grid">
               
@@ -200,6 +200,15 @@
                 
               </a>
               
+              <a href="dxf-svg-flat-sheet.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
             </div>
           </div>
         </div>
@@ -279,6 +288,11 @@
         <span>Offline MCP & AI Automation</span>
       </a>
       
+      <a href="dxf-svg-flat-sheet.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
     </div>
 
     <div style="margin-top: 1rem;">
@@ -352,7 +366,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>TUTORIAL 05 OF 09</strong> • 3 Steps • Diagnostics & Storage</span>
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 05 OF 10</strong> • 3 Steps • Diagnostics & Storage</span>
           
           <span class="docs-meta-pill cyan"><strong>Location:</strong> Top-Right Header Bar (<code class="mono">ⓘ About</code>)</span>
           
@@ -439,6 +453,13 @@
               <a href="mcp-offline-workflows.html">
                 <span class="docs-nav-num">09</span>
                 <span>Offline MCP & AI Automation</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="dxf-svg-flat-sheet.html">
+                <span class="docs-nav-num">10</span>
+                <span>DXF/SVG & Imperial Units</span>
               </a>
             </li>
             
@@ -529,8 +550,8 @@
               The <strong>About RotaryCAM</strong> modal opens over the workspace and is divided into three sections:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.6.1</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
-              <li><strong>2. What Changed — Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities—such as <em>12 Drop-In CNC Plasma Controller Post-Processors</em>, <em>Clean Stationary Pierce Plunge &amp; 3D Ramp Lead-Ins</em>, <em>True Geometric Rectangular HSS Zero-Bevel Miters &amp; Copes</em>, <em>4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling</em>, <em>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling</em>, <em>Kerf-Compensated Micro-Joint Tabs &amp; Configurable ERW Weld-Seam Avoidance</em>, <em>I-Beam &amp; C-Channel 4-Axis Beamline Emulation with Dynamic Knee-Clearance Rotation</em>, <em>Stationary Center-Point Dimple &amp; Peck Marking (<code class="mono">Contour</code> vs <code class="mono">Center Point</code>)</em>, <em>Automatic Piece Labeling, Mating Joint Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Multi-Stroke Assembly Weld Witness Marks</em>, <em>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets</em>, <em>Chuck Jaw &amp; Slew-Ring &ldquo;No-Cut&rdquo; Dead Zones &amp; Minimum Stick Load Length</em>, <em>Interlocking Miter &amp; Cope Stick Nesting (180&deg; Flip + A-Axis Roll)</em>, <em>Single-Cut Common-Line Severing</em>, <em>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code class="mono">.markings.json</code>)</em>, <em>Batch Feature Selection &amp; Overrides</em>, <em>2D XY Sheet Nesting (VectorNester 2.0)</em>, and <em>100% Offline MCP Stdio Server</em>.</li>
+              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.0.0-dev</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
+              <li><strong>2. What Changed — Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities—such as <em>Multi-File DXF &amp; SVG Flat-Sheet Ingestion, Magnetic 2-Point Scaling, 2D Sheet Nesting &amp; Imperial G20 Units</em>, <em>12 Drop-In CNC Plasma Controller Post-Processors</em>, <em>Clean Stationary Pierce Plunge &amp; 3D Ramp Lead-Ins</em>, <em>True Geometric Rectangular HSS Zero-Bevel Miters &amp; Copes</em>, <em>4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling</em>, <em>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling</em>, <em>Kerf-Compensated Micro-Joint Tabs &amp; Configurable ERW Weld-Seam Avoidance</em>, <em>I-Beam &amp; C-Channel 4-Axis Beamline Emulation with Dynamic Knee-Clearance Rotation</em>, <em>Stationary Center-Point Dimple &amp; Peck Marking (<code class="mono">Contour</code> vs <code class="mono">Center Point</code>)</em>, <em>Automatic Piece Labeling, Mating Joint Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Multi-Stroke Assembly Weld Witness Marks</em>, <em>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets</em>, <em>Chuck Jaw &amp; Slew-Ring &ldquo;No-Cut&rdquo; Dead Zones &amp; Minimum Stick Load Length</em>, <em>Interlocking Miter &amp; Cope Stick Nesting (180&deg; Flip + A-Axis Roll)</em>, <em>Single-Cut Common-Line Severing</em>, <em>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code class="mono">.markings.json</code>)</em>, <em>Batch Feature Selection &amp; Overrides</em>, <em>2D XY Sheet Nesting (VectorNester 2.0)</em>, and <em>100% Offline MCP Stdio Server</em>.</li>
               <li><strong>3. Copy Diagnostics (Bottom-Right):</strong> Click <span class="ui-chip emerald">📋 Copy Diagnostics</span> to copy a formatted snapshot of your build metadata and environment to the clipboard when reporting an issue or requesting support.</li>
             </ul>
           </div>
@@ -697,10 +718,25 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Release: Nov 13 (v0.6.1 • Latest) -->
+            <!-- Release: Nov 14 (v0.6.2 / Unreleased • Latest) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 14, 2026 (Unreleased / Next &bull; Latest)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">Multi-File DXF/SVG Flat Sheets, Highlighted Thickness Gate, Magnetic 2-Point Scaling, 2D Sheet Nesting &amp; Imperial G20 / Metric G21 Units</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Multi-File DXF, SVG &amp; ZIP Flat-Sheet Ingestion:</strong> Drag and drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or zipped plate kits directly into your workspace. Multi-part SVGs containing disconnected outlines automatically split into individual numbered parts (<code class="mono">shock_tabs_1</code>, <code class="mono">shock_tabs_2</code>) with independent quantity counters.</li>
+                <li><strong>Highlighted Sheet Thickness &amp; Plate Gauge Safety Gate:</strong> Because 2D drawings carry zero Z-height, RotaryCAM blocks G-code generation behind an amber <code class="mono">Status: Awaiting Thickness</code> safety gate until plate gauge (<code class="mono">16ga</code>–<code class="mono">1/2"</code> Imperial or <code class="mono">1.5</code>–<code class="mono">12 mm</code> Metric) is confirmed, auto-matching Hypertherm cut chart parameters.</li>
+                <li><strong>Magnetic 2-Point Reference Scaling &amp; Instant Unit Flip:</strong> Click any two magnetic snap points on a mystery drawing to measure its true span and rescale it to your known dimension, or click <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code> for 1-click inch/metric correction with per-part or session-wide scoping.</li>
+                <li><strong>2D XY Sheet Nesting &amp; Interior-First Cut Sequencing:</strong> Nest full fabrication kits onto standard <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) plates with configurable part spacing, interior-first hole ordering, and kerf-free open slit line preservation.</li>
+                <li><strong>Machine-Driven Imperial (<code class="mono">in / G20</code>) &amp; Metric (<code class="mono">mm / G21</code>) Units:</strong> Toggle any machine profile between Imperial and Metric in one click. Langmuir FireControl and ShopSabre WinCNC default to native <code class="mono">G20</code> 4-decimal inch G-code with IPM feedrates, while European tables run in native <code class="mono">G21</code> metric.</li>
+              </ul>
+            </div>
+
+            <!-- Release: Nov 13 (v0.6.1) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--emerald-cut); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--emerald-cut); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 13, 2026 (v0.6.1 &bull; Latest)</span>
+                <span class="mono" style="color: var(--emerald-cut); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 13, 2026 (v0.6.1)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">6 Additional CNC Plasma Posts (grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC TNG, ShopSabre WinCNC), Clean Stationary Pierce Plunge &amp; 3D Ramp Lead-Ins</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
@@ -950,14 +986,14 @@
         <nav class="docs-pagination" aria-label="Tutorial Pagination">
           
           <a href="bending.html" class="docs-page-link prev">
-            <span class="docs-page-dir">← Previous Tutorial (04 of 09)</span>
+            <span class="docs-page-dir">← Previous Tutorial (04 of 10)</span>
             <span class="docs-page-title">Bending HSS & HSS-O Sticks</span>
             <span class="docs-page-desc">Unfold 3D bent tubes into straight-stick kerf relief cut patterns</span>
           </a>
           
           
           <a href="ai-autodetection.html" class="docs-page-link next">
-            <span class="docs-page-dir">Next Tutorial (06 of 09) →</span>
+            <span class="docs-page-dir">Next Tutorial (06 of 10) →</span>
             <span class="docs-page-title">06. Fusion 360 & AI Profile Autodetection</span>
             <span class="docs-page-desc">Model with Structural Member (SM) so RotaryCAM auto-detects tube profiles out of the box</span>
           </a>
@@ -1020,6 +1056,8 @@
           
           <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
           
+          <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
         </div>
         <div class="footer-col">
           <h4>Product</h4>
@@ -1039,7 +1077,7 @@
 
     <div class="container footer-bottom">
       <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
-      <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
     </div>
   </footer>
 

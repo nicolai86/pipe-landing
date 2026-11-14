@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.6.1-BETA</span>
+          <span class="brand-tag">v0.0.0-dev-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -103,7 +103,7 @@
           <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
             <span>Tutorials</span>
             
-            <span class="nav-count-badge">09</span>
+            <span class="nav-count-badge">10</span>
             
             <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -113,7 +113,7 @@
           <div class="nav-dropdown-menu" role="menu">
             <div class="nav-dropdown-header">
               <span>All Workflows &amp; Tutorials</span>
-              <span class="nav-dropdown-count">9 Guides</span>
+              <span class="nav-dropdown-count">10 Guides</span>
             </div>
             <div class="nav-dropdown-grid">
               
@@ -198,6 +198,15 @@
                 
               </a>
               
+              <a href="dxf-svg-flat-sheet.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
             </div>
           </div>
         </div>
@@ -277,6 +286,11 @@
         <span>Offline MCP & AI Automation</span>
       </a>
       
+      <a href="dxf-svg-flat-sheet.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
     </div>
 
     <div style="margin-top: 1rem;">
@@ -344,13 +358,13 @@
 
         <h1 class="docs-title">Operator Guides &amp; <span class="text-gradient-amber">CAM Workflows</span></h1>
         <p class="docs-subtitle">
-          Follow our step-by-step visual walkthroughs and technical references to configure your 4-axis rotary plasma kinematics, tune per-contour lead-ins and zero-bevel compensation, pack multi-tube STEP assemblies onto raw stock sticks, unfold bent HSS &amp; HSS-O sticks with kerf relief cuts, inspect release changelogs, model Fusion 360 Structural Member assemblies for AI profile autodetection, and set up motion-synchronized <code class="mono">M62/M63</code> torch control &amp; 3D ramp lead-ins in SimCNC.
+          Follow our step-by-step visual walkthroughs and technical references to configure your 4-axis rotary plasma kinematics, tune per-contour lead-ins and zero-bevel compensation, pack multi-tube STEP assemblies onto raw sticks, import multi-file DXF &amp; SVG flat-sheet kits with magnetic 2-point scaling and 2D sheet nesting, export native Imperial (<code class="mono">in / G20</code>) or Metric (<code class="mono">mm / G21</code>) G-code, unfold bent HSS &amp; round sticks with kerf relief cuts, inspect release changelogs, model Fusion 360 Structural Member assemblies for AI profile autodetection, and set up motion-synchronized <code class="mono">M62/M63</code> torch control in SimCNC.
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>9 Core Workflows</strong> • 62 Documented Steps</span>
-          <span class="docs-meta-pill cyan"><strong>Controllers:</strong> Any 4-Axis CNC (G93 / G94) • SimCNC, Mach4, LinuxCNC</span>
-          <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) Single, Bent &amp; Multi-Body Assemblies</span>
+          <span class="docs-meta-pill amber"><strong>10 Core Workflows</strong> • 67 Documented Steps</span>
+          <span class="docs-meta-pill cyan"><strong>Controllers:</strong> Any 4-Axis CNC (G93 / G94) • Native G20 (in) &amp; G21 (mm) • FireControl, WinCNC, Mach4, LinuxCNC</span>
+          <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) 3D Assemblies &amp; DXF / SVG Flat-Sheet Kits</span>
         </div>
       </div>
     </section>
@@ -662,6 +676,39 @@
           </div>
         </a>
         
+        <!-- Guide 10: Multi-File DXF/SVG Flat-Sheet CAM &amp; Imperial Units -->
+        <a href="dxf-svg-flat-sheet.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            
+            <img src="assets/dxf-svg-4-sheet-nesting.png" alt="RotaryCAM 2D Sheet Nesting of 30 Parts on a 96x48 in Sheet with Imperial G20 G-Code" loading="lazy" />
+            
+            <span class="docs-hub-badge">TUTORIAL 10 • 5 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Multi-File DXF/SVG Flat-Sheet CAM &amp; Imperial Units</h2>
+            <p class="docs-hub-desc">
+              Drop multiple `.dxf`, `.svg`, or `.zip` files at once, set sheet thickness to unlock cut charts, fix drawing scale with magnetic 2-point snapping, nest 30-piece bracket kits onto `48 × 96 in` (`1250 × 2500 mm`) sheets, and export native `G20` Imperial or `G21` Metric G-code.
+            </p>
+            <ul class="docs-hub-topics">
+              
+              <li>Multi-file `.dxf`, `.svg`, and `.zip` dropzone with auto-splitting multi-part SVGs</li>
+              
+              <li>Sheet Thickness gate with `16ga`–`1/2"` Imperial &amp; `1.5`–`12 mm` Metric presets</li>
+              
+              <li>Magnetic 2-Point Reference Scaling with snap points &amp; `&times;25.4` / `&divide;25.4` flip</li>
+              
+              <li>2D XY Sheet Nesting on `48 &times; 96 in` sheets with interior-first cut order</li>
+              
+              <li>Native `G20` 4-decimal inch or `G21` metric G-code for FireControl &amp; WinCNC</li>
+              
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 10</span>
+              <span>5 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+        
       </div>
 
       <!-- Quick Reference Callout -->
@@ -680,8 +727,8 @@
             <span class="value"><a href="cut-path-configuration.html" style="color: var(--cyan-400);">02. Cut Paths</a> &amp; <a href="bending.html" style="color: var(--cyan-400);">04. Bending →</a></span>
           </div>
           <div class="doc-intro-stat">
-            <span class="label">Step 3 • CAD &amp; Multi-Stick Nesting</span>
-            <span class="value"><a href="ai-autodetection.html" style="color: var(--emerald-400);">06. AI CAD</a> &amp; <a href="nesting.html" style="color: var(--emerald-400);">03. Nesting →</a></span>
+            <span class="label">Step 3 • CAD, Sticks &amp; Flat Sheets</span>
+            <span class="value"><a href="nesting.html" style="color: var(--emerald-400);">03. Nesting</a> &amp; <a href="dxf-svg-flat-sheet.html" style="color: var(--emerald-400);">10. DXF/SVG Flat Sheets →</a></span>
           </div>
         </div>
       </div>
@@ -731,6 +778,8 @@
           
           <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
           
+          <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
         </div>
         <div class="footer-col">
           <h4>Product</h4>
@@ -750,7 +799,7 @@
 
     <div class="container footer-bottom">
       <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
-      <span class="mono">G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
     </div>
   </footer>
 

@@ -41,7 +41,7 @@ DOCS_OUT_DIR = ROOT_DIR / "docs"
 CSS_VERSION = "20261023"
 VERSION = version.resolve_version()
 BETA_LABEL = version.beta_label(VERSION)
-FOOTER_TECH_STRIP = "G93 + G94 • ADLS • ZERO-BEVEL • CUT-AND-BEND • 1D STICK NESTING"
+FOOTER_TECH_STRIP = "G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING"
 
 # Central single-source-of-truth registry of all documentation tutorials
 TUTORIALS = [
@@ -446,6 +446,47 @@ TUTORIALS = [
         ],
         "hub_cta_right": "8-Step Technical Reference",
         "has_lightbox": False,
+    },
+    {
+        "num": 10,
+        "slug": "dxf-svg-flat-sheet",
+        "filename": "dxf-svg-flat-sheet.html",
+        "nav_short": "DXF / SVG",
+        "sidebar_label": "DXF/SVG & Imperial Units",
+        "footer_label": "DXF/SVG Flat-Sheet CAM",
+        "breadcrumb_title": "Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial G20 G-Code",
+        "meta_title": "10. Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial Units — RotaryCAM Documentation",
+        "meta_description": "Step-by-step visual guide to importing multi-file DXF/SVG flat-sheet parts, setting sheet thickness, fixing drawing scale with magnetic 2-point snapping, nesting 2D plates, and emitting native G20 Imperial or G21 Metric G-code in RotaryCAM.",
+        "hero_title_html": 'Multi-File DXF &amp; SVG <span class="text-gradient-amber">Flat-Sheet CAM &amp; Imperial Units</span>',
+        "hero_subtitle_html": 'How to drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> bracket drawings onto your plasma table, confirm sheet thickness to unlock cut charts, fix unknown drawing scale with magnetic 2-point snapping (or <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code>), nest full fabrication kits onto <code class="mono">48 &times; 96 in</code> sheets, and export native <code class="mono">G20</code> (Imperial) or <code class="mono">G21</code> (Metric) G-code.',
+        "steps_count": 5,
+        "steps_label": "5 Steps",
+        "meta_pills": [
+            {"style": "cyan", "html": "<strong>File Formats:</strong> .DXF (R12–2018) • .SVG • .ZIP Archives • .STEP 3D"},
+            {"style": "", "html": "<strong>Units &amp; Controllers:</strong> Native Imperial (in / G20) &amp; Metric (mm / G21) • FireControl, WinCNC, Mach4, LinuxCNC"},
+        ],
+        "toc": [
+            {"id": "step-1", "badge": "01", "label": "Set Units &amp; Drop Multi-File DXF/SVG"},
+            {"id": "step-2", "badge": "02", "label": "Confirm Sheet Thickness Gate"},
+            {"id": "step-3", "badge": "03", "label": "Magnetic 2-Point Scale Part"},
+            {"id": "step-4", "badge": "04", "label": "Nest Kit on 48&times;96 in Sheet"},
+            {"id": "step-5", "badge": "05", "label": "Imperial 3D Sim &amp; G20 Export"},
+        ],
+        "pagination_title": "Multi-File DXF & SVG Flat-Sheet CAM",
+        "pagination_desc": "Import multi-file 2D drawings, 2-point reference scale, nest plates & export G20/G21 G-code",
+        "hub_thumb": "assets/dxf-svg-4-sheet-nesting.png",
+        "hub_thumb_alt": "RotaryCAM 2D Sheet Nesting of 30 Parts on a 96x48 in Sheet with Imperial G20 G-Code",
+        "hub_title": "Multi-File DXF/SVG Flat-Sheet CAM &amp; Imperial Units",
+        "hub_desc": "Drop multiple `.dxf`, `.svg`, or `.zip` files at once, set sheet thickness to unlock cut charts, fix drawing scale with magnetic 2-point snapping, nest 30-piece bracket kits onto `48 × 96 in` (`1250 × 2500 mm`) sheets, and export native `G20` Imperial or `G21` Metric G-code.",
+        "hub_topics": [
+            "Multi-file `.dxf`, `.svg`, and `.zip` dropzone with auto-splitting multi-part SVGs",
+            "Sheet Thickness gate with `16ga`–`1/2\"` Imperial &amp; `1.5`–`12 mm` Metric presets",
+            "Magnetic 2-Point Reference Scaling with snap points &amp; `&times;25.4` / `&divide;25.4` flip",
+            "2D XY Sheet Nesting on `48 &times; 96 in` sheets with interior-first cut order",
+            "Native `G20` 4-decimal inch or `G21` metric G-code for FireControl &amp; WinCNC",
+        ],
+        "hub_cta_right": "5 Annotated Screenshots",
+        "has_lightbox": True,
     },
 ]
 
