@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.0.0-dev-BETA</span>
+          <span class="brand-tag">v0.7.0-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -113,7 +113,7 @@
           <div class="nav-dropdown-menu" role="menu">
             <div class="nav-dropdown-header">
               <span>All Workflows &amp; Tutorials</span>
-              <span class="nav-dropdown-count">10 Guides</span>
+              <span class="nav-dropdown-count">11 Guides</span>
             </div>
             <div class="nav-dropdown-grid">
               
@@ -186,7 +186,7 @@
                 <span class="nav-dropdown-num">08</span>
                 <span class="nav-dropdown-content">
                   <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
-                  <span class="nav-dropdown-sub">6 Steps • Visual Guide</span>
+                  <span class="nav-dropdown-sub">7 Steps • Visual Guide</span>
                 </span>
                 
               </a>
@@ -205,6 +205,15 @@
                 <span class="nav-dropdown-content">
                   <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
                   <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="rotary-and-sheet-feedrates.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">11</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">G94, G93 & G20/G21 Feeds</span>
+                  <span class="nav-dropdown-sub">5 Sections</span>
                 </span>
                 
               </a>
@@ -293,6 +302,11 @@
         <span>DXF/SVG & Imperial Units</span>
       </a>
       
+      <a href="rotary-and-sheet-feedrates.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">11</span>
+        <span>G94, G93 & G20/G21 Feeds</span>
+      </a>
+      
     </div>
 
     <div style="margin-top: 1rem;">
@@ -366,7 +380,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>TUTORIAL 01 OF 10</strong> • 6 Steps</span>
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 01 OF 11</strong> • 6 Steps</span>
           
           <span class="docs-meta-pill cyan"><strong>Persistence:</strong> Multi-Profile Saved Across Restarts</span>
           
@@ -460,6 +474,13 @@
               <a href="dxf-svg-flat-sheet.html">
                 <span class="docs-nav-num">10</span>
                 <span>DXF/SVG & Imperial Units</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="rotary-and-sheet-feedrates.html">
+                <span class="docs-nav-num">11</span>
+                <span>G94, G93 & G20/G21 Feeds</span>
               </a>
             </li>
             
@@ -617,7 +638,8 @@
             <ul class="doc-bullet-list">
               <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span> — Native LinuxCNC 2.9/2.10 plasma post with self-contained <code class="mono">(o=0, ...)</code> process parameter comments or <code class="mono">M190</code> material table lookup, <code class="mono">M3 $0 S1</code> plasma spindle codes, active-high <code class="mono">M62 P2</code> THC lock / <code class="mono">M63 P2</code> unlock on pin 2, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span> — Optimized for CrossFire, CrossFire PRO, and CrossFire XR tables. Emits mandatory <code class="mono">(v1.6-sc)</code> line 1 sentinels, <code class="mono">(PS&lt;feed&gt;)</code> footers, paren-only comments, automatic <code class="mono">G38.2</code>/<code class="mono">G38.4</code> IHS touch-off loops, <code class="mono">H0</code>/<code class="mono">H1</code> THC toggles, and unwrapped <code class="mono">Y</code>-axis rotary chuck cutting in <code class="mono">G94</code>.</li>
-              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS / TMC3in1) (.tap)</span> — Selectable dual hardware modes for Warp9 TMC3in1 / WarpRunner (emitting <code class="mono">m2020 (...)</code> registers with mandatory <code class="mono">G04 P0.1</code> Lua dwells and motion-synced <code class="mono">M62/M63 P#</code> torch/THC control) or Standard ESS / external THC (<code class="mono">G31</code> probe + switch offset + <code class="mono">G92 Z</code> + <code class="mono">M3/M5</code>) with full <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span> — Dedicated post for Mach4 tables running the Warp9 Ethernet SmoothStepper with external or standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> touch-off probing with switch-offset compensation, standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary inverse-time feeds.</li>
+              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span> — Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
               <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span> — Native <code class="mono">T112 M6</code> plasma mode, automated <code class="mono">G200</code> parameter blocks with millisecond pierce delays (<code class="mono">D&lt;ms&gt;</code>), explicit buffered <code class="mono">M666</code> (THC OFF) / <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) corner anti-dive protection, and <code class="mono">G93</code> rotary motion.</li>
               <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span> — Clean <code class="mono">G64</code> constant velocity (without syntax-breaking <code class="mono">P</code> words), <code class="mono">G31</code> straight probe or <code class="mono">G28.1</code> floating-head reference with switch-offset compensation, high-speed motion-synced <code class="mono">M11 P#</code> (THC hold) / <code class="mono">M10 P#</code> (THC release) to stop blowout divots, and mandatory <code class="mono">G93</code> rotary inverse-time feedrates.</li>
               <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span> — Automated controller-managed cycle macros including <code class="mono">G64 ON</code> plasma smoothing, <code class="mono">M65</code> material profile loading, <code class="mono">M61</code> touch-off + pierce cycle, <code class="mono">M62</code> torch-off + retract cycle, <code class="mono">M36</code>/<code class="mono">M35</code> THC lock/unlock, and native <code class="mono">G93</code> rotary feeds.</li>
@@ -687,6 +709,14 @@
             </p>
 
             <ul class="doc-bullet-list">
+              <li><strong>Plasma Torch / Cut Chart Family:</strong> Select your power supply's torch family once on each machine profile:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem; margin-bottom: 0.35rem;">
+                  <li><strong>Hypertherm SYNC (<code class="mono">3.2 mm / 0.125"</code> cut height):</strong> Powermax 45/65/85/105 SYNC single-piece cartridge platform (<code class="mono">810500MU</code> Rev 4, <code class="mono">45A–105A</code>).</li>
+                  <li><strong>Hypertherm Duramax / Legacy 30XP–105 (<code class="mono">1.5 mm / 0.060"</code> cut height):</strong> Powermax 30XP through 105 torches running multi-piece mechanized shielded consumables (<code class="mono">30A–105A</code> + <code class="mono">45A FineCut</code>).</li>
+                  <li><strong>Generic Air Plasma (<code class="mono">1.5 mm / 0.060"</code> cut height):</strong> Conservative blowback torches (<code class="mono">30A, 45A, 60A, 80A</code>, ~<code class="mono">106–128 V</code>, <code class="mono">72 PSI</code>) for Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster.</li>
+                </ul>
+                Setting your torch family binds the correct standoff height (<code class="mono">1.5 mm</code> vs <code class="mono">3.2 mm</code>), arc voltage, and pierce delay automatically whenever a 3D tube or flat sheet is loaded.
+              </li>
               <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Choose how RotaryCAM signals your THC to freeze and unfreeze in G-code—such as synchronous digital output macros (<code class="mono">M63 P0</code> to lock / <code class="mono">M62 P0</code> to unlock without motion planner pauses) or controller-specific M-codes.</li>
               <li><strong>Dynamic Corner Lock Threshold (<code class="mono">%</code>):</strong> Automatically locks Z-axis height regulation whenever actual surface velocity drops below the configured percentage (e.g., <code class="mono">80%</code>) of target cutting speed, and unlocks it once full surface speed resumes.</li>
               <li><strong>Lead-In / Lead-Out THC Lock:</strong> Keeps THC locked during pierce, ramp lead-in, and overburn lead-out phases where the plasma arc is stabilizing or crossing an existing kerf.</li>
@@ -792,11 +822,20 @@
                     <td>Header <code class="mono">(v1.6-sc)</code> &amp; EOF <code class="mono">(PS&lt;feed&gt;)</code></td>
                   </tr>
                   <tr>
-                    <td><strong>Mach4 (Warp9 ESS / TMC3in1)</strong></td>
+                    <td><strong>Mach4 (Warp9 ESS)</strong></td>
+                    <td><code class="mono">.tap</code></td>
+                    <td><code class="mono">G31</code> probe + switch offset + <code class="mono">G92 Z</code></td>
+                    <td><code class="mono">M3</code> / <code class="mono">M5</code> (or <code class="mono">M62/M63 P2</code>)</td>
+                    <td><code class="mono">M63 P2</code> (Lock) / <code class="mono">M62 P2</code> (Unlock)</td>
+                    <td><code class="mono">G93</code> Inverse-Time</td>
+                    <td>External THC / Proma / PriceCNC</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mach4 (Warp9 TMC3in1 / WarpRunner)</strong></td>
                     <td><code class="mono">.tap</code></td>
                     <td><code class="mono">G31</code> + <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code></td>
-                    <td><code class="mono">M62 P&lt;torch&gt;</code> / <code class="mono">M63 P&lt;torch&gt;</code></td>
-                    <td><code class="mono">M63 P&lt;thc&gt;</code> (Lock) / <code class="mono">M62 P&lt;thc&gt;</code> (Unlock)</td>
+                    <td><code class="mono">M62 P3</code> / <code class="mono">M63 P3</code></td>
+                    <td><code class="mono">M63 P2</code> (Lock) / <code class="mono">M62 P2</code> (Unlock)</td>
                     <td><code class="mono">G93</code> Inverse-Time</td>
                     <td><code class="mono">m2020 (...)</code> + <code class="mono">G04 P0.1</code> Lua dwell</td>
                   </tr>
@@ -926,11 +965,11 @@ H1                      (THC Active)</code></pre>
               <h3 class="doc-section-heading">3. ArtSoft Mach4 + Warp9 ESS / WarpRunner Setup</h3>
             </div>
             <p>
-              Mach4 tables powered by the Warp9 Ethernet SmoothStepper (ESS) and TMC3in1 or WarpRunner breakout boards provide ultra-fast hardware torch height control and real-time synchronized I/O. RotaryCAM outputs clean <code class="mono">.tap</code> programs with two selectable hardware sub-modes:
+              Mach4 tables powered by the Warp9 Ethernet SmoothStepper (ESS) and TMC3in1 or WarpRunner breakout boards provide ultra-fast hardware torch height control and real-time synchronized I/O. RotaryCAM provides two dedicated built-in machine profiles:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Sub-Mode A — Warp9 TMC3in1 / WarpRunner:</strong>
+                <strong>Profile A — ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner):</strong>
                 Outputs native <code class="mono">m2020 (...)</code> configuration registers to communicate directly with Warp9's Lua plugin:
                 <pre><code class="language-gcode">m2020 (W9_HC_LOAD_DEFAULT_CONFIG_VALUES=1)
 m2020 (AD1_DELAY_ENABLED=1)
@@ -943,10 +982,10 @@ G04 P0.100</code></pre>
                 <em>Shop Tip:</em> RotaryCAM always places a mandatory <code class="mono">G04 P0.1</code> dwell right after <code class="mono">m2020</code> register groups so Mach4's Lua macro queue has time to write the hardware registers before the ESS motion planner starts moving.
               </li>
               <li>
-                <strong>Sub-Mode B — Standard ESS / External Standalone THC:</strong> For tables using a Proma, PriceCNC, or external standalone THC, RotaryCAM emits clean <code class="mono">G31</code> probing with switch-offset compensation and standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63</code> pins without any <code class="mono">m2020</code> macros.
+                <strong>Profile B — ArtSoft Mach4 (Warp9 ESS):</strong> For tables using a Proma 150, PriceCNC, or external standalone THC, RotaryCAM emits clean <code class="mono">G31</code> probing with switch-offset compensation and standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> pins without any <code class="mono">m2020</code> macros.
               </li>
               <li>
-                <strong>Synchronous Torch &amp; Anti-Dive 2 (<code class="mono">AD2</code>) Control:</strong> Traditional <code class="mono">M3/M5</code> commands in Mach4 pause the motion planner queue while Lua executes, leaving ugly dwell marks. With Warp9 synchronized I/O enabled, RotaryCAM emits motion-synchronized <code class="mono">M62 P&lt;torchPin&gt;</code> (torch ON) and <code class="mono">M63 P&lt;torchPin&gt;</code> (torch OFF), alongside <code class="mono">M63 P&lt;thcPin&gt;</code> (lock THC) and <code class="mono">M62 P&lt;thcPin&gt;</code> (unlock THC) under Anti-Dive Mode 2 for zero-hesitation cuts.
+                <strong>Synchronous Torch &amp; Anti-Dive 2 (<code class="mono">AD2</code>) Control:</strong> Traditional <code class="mono">M3/M5</code> commands in Mach4 pause the motion planner queue while Lua executes, leaving ugly dwell marks. With Warp9 synchronized I/O enabled, RotaryCAM emits motion-synchronized <code class="mono">M62 P3</code> (torch ON) and <code class="mono">M63 P3</code> (torch OFF) on TMC3in1/WarpRunner (or <code class="mono">M62/M63 P2</code> on ESS), alongside <code class="mono">M63 P2</code> (lock THC) and <code class="mono">M62 P2</code> (unlock THC) under Anti-Dive Mode 2 for zero-hesitation cuts.
               </li>
               <li>
                 <strong>Rotary Feedrates &amp; Dwells:</strong> Full 4-axis <code class="mono">G93</code> inverse-time mode on all cutting moves. Dwell commands (<code class="mono">G04 P&lt;seconds&gt;</code>) are emitted in decimal seconds matching Mach4's default configuration.
@@ -1274,12 +1313,12 @@ M3</code></pre>
           <a href="index.html" class="docs-page-link prev">
             <span class="docs-page-dir">← Back to Hub</span>
             <span class="docs-page-title">Documentation Overview</span>
-            <span class="docs-page-desc">All 10 RotaryCAM visual &amp; technical workflows</span>
+            <span class="docs-page-desc">All 11 RotaryCAM visual &amp; technical workflows</span>
           </a>
           
           
           <a href="cut-path-configuration.html" class="docs-page-link next">
-            <span class="docs-page-dir">Next Tutorial (02 of 10) →</span>
+            <span class="docs-page-dir">Next Tutorial (02 of 11) →</span>
             <span class="docs-page-title">02. UI Layout & STEP Cut Path Configuration</span>
             <span class="docs-page-desc">Inspect 3D parts, configure per-contour Zero-Bevel & run 3D simulation</span>
           </a>
@@ -1343,6 +1382,8 @@ M3</code></pre>
           <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
           
           <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+          <a href="rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
           
         </div>
         <div class="footer-col">

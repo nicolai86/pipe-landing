@@ -1,0 +1,641 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>How Your CNC Controller Governs Plasma Torch Speed Across Plate &amp; Tubing</h2>
+          <p>
+            On a flat-sheet plasma table, calculating feedrates is straightforward: your torch moves along <code class="mono">X</code> and <code class="mono">Y</code> at a fixed speed (say, <code class="mono">2540 mm/min</code> or <code class="mono">100 IPM</code>). Your CNC controller simply measures the physical distance traveled divided by time.
+          </p>
+          <p style="margin-top: 0.75rem;">
+            When you mount a rotary chuck to cut round pipe, square tubing, or structural channel, standard CNC rules break down. The machine coordinates linear axes (<code class="mono">X, Y, Z</code>) in millimeters or inches with a rotary chuck axis (<code class="mono">A</code>) in angular degrees. If a G-code line commands <code class="mono">G1 A90 F2540</code>, what does <code class="mono">F2540</code> mean? 2540 degrees per minute? 2540 millimeters per minute at the surface of a 1" tube? Or 2540 mm/min on a 6" pipe?
+          </p>
+          <p style="margin-top: 0.75rem;">
+            Different CNC plasma controllers solve this in completely different ways: standard <code class="mono">G94</code> Units-Per-Minute, <code class="mono">G93</code> Inverse-Time (used on 4-axis rotary cutting across almost all controllers, including <code class="mono">SimCNC 3.6+</code> beta), or 4D Euclidean trajectory interpolation (<code class="mono">SimCNC &lt; 3.6</code>). While several controllers (Mach3, Mach4, UCCNC, MASSO, Centroid Acorn) allow entering a manual rotation radius on round pipe to scale G94 feedrates, that fails the moment you cut rectangular HSS, angle iron, or complex saddles where the radius from the rotation center to the cutting surface varies continuously. This guide explains what happens to your feedrates when flipping between Metric (<code class="mono">G21</code>) and Imperial (<code class="mono">G20</code>), why rotary <code class="mono">G93</code> feedrates stay 100% identical between inches and millimeters, and how to verify your G-code so you never blow out a pipe wall or stall a torch.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Kinematics Modes</span>
+              <span class="value">G94 Distance/Min • G93 Inverse-Time • SimCNC &lt; 3.6 4D Vector (G93 in 3.6+)</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Unit System</span>
+              <span class="value">G21 (mm / mm/min) &bull; G20 (in / IPM)</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Controller Dialects</span>
+              <span class="value">All 13 Major CNC Plasma Posts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Summary Callout -->
+        <div class="doc-callout tip" style="margin-top: 1.5rem; margin-bottom: 2rem;">
+          <div class="doc-callout-title">💡 Shop Rule of Thumb: Distance-Based vs. Time-Based Feeds</div>
+          <p>
+            When switching your machine profile from Metric (<code class="mono">G21</code>) to Imperial (<code class="mono">G20</code>):
+            <strong>Flat-sheet <code class="mono">G94</code> feedrates divide by 25.4</strong> (<code class="mono">F2540.0 &rarr; F100.0</code>) because <code class="mono">F</code> represents distance per minute.
+            <strong>4-axis rotary <code class="mono">G93</code> feedrates stay identical</strong> (<code class="mono">F1000.0 &rarr; F1000.0</code>) because <code class="mono">F</code> represents inverse time (<code class="mono">1 / &Delta;t</code>). The 25.4 unit factor cancels out because both cut speed and move distance divide by 25.4.
+          </p>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Why Torch Surface Speed Controls Cut Quality (and Why Rotary Axes Complicate It)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Plasma cutting relies on a delicate balance of heat and velocity: an electric arc ionizes compressed air or oxygen at over 20,000&deg;C to melt steel, while a high-pressure gas jet blows molten dross out the bottom of the kerf. If your torch travel speed across the steel surface drifts by even 15–20%, cut quality degrades immediately:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Cutting Too Slow:</strong> When the torch lingers too long over one spot, excessive heat soaks into the base metal. The kerf widens, the top edge rounds over, and heavy "low-speed dross" welds itself to the bottom of the cut, requiring an angle grinder or chipping hammer to clean. On thin-wall pipe (&le; 1/8" or 3 mm), moving too slow blows molten holes through the wall and spatters slag onto the inside of the opposite pipe wall.
+              </li>
+              <li>
+                <strong>Cutting Too Fast:</strong> When the torch travels faster than the plasma arc can penetrate, the arc column trails backward behind the nozzle tip (arc lag). This produces severe cut-edge bevel angle (often 10&deg;–20&deg; off square), high-speed glassy dross, and incomplete penetration where bottom webs fail to sever.
+              </li>
+            </ul>
+
+            <div class="doc-callout danger" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">⚠ The Rotary Kinematics Mismatch: Millimeters vs. Degrees</div>
+              <p>
+                Linear axes (<code class="mono">X, Y, Z</code>) measure physical distance: millimeters (<code class="mono">mm</code>) or inches (<code class="mono">in</code>). But a rotary chuck (<code class="mono">A</code>) measures angle: degrees (<code class="mono">&deg;</code>). The physical distance the steel moves under the torch nozzle depends directly on the tube's outer radius (<code class="mono">R = OD / 2</code>):
+              </p>
+              <div style="background: rgba(0, 0, 0, 0.5); padding: 0.85rem 1.15rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.75rem 0; font-family: var(--font-mono); font-size: 0.86rem; color: var(--amber-400);">
+                Surface Distance (&Delta;s) = R &times; &Delta;A_radians = (OD / 2) &times; (&Delta;A_deg &times; &pi; / 180&deg;)
+              </div>
+              <p style="margin-bottom: 0;">
+                Consider a 90&deg; rotation: On a <strong>1" OD tube (25.4 mm)</strong>, 90&deg; of chuck rotation sweeps <strong>19.95 mm (0.785")</strong> of steel past the torch. On a <strong>4" OD tube (101.6 mm)</strong>, that exact same 90&deg; rotation sweeps <strong>79.80 mm (3.142")</strong>—four times further! If a controller runs a fixed chuck rotation speed, the torch crawls on small tubing and sprints dangerously fast on large pipe.
+              </p>
+            </div>
+
+            <p style="margin-top: 1.25rem;">
+              When cutting rectangular HSS tubing or angled pipe saddles, the challenge is even greater: the distance from the tube's rotation center to the cutting surface changes continuously on every millimeter of motion. At the center of a flat face, the radius is small; at the corner fillet, the radius spikes outward. To maintain constant surface speed, the controller must adjust axis speeds continuously.
+            </p>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title"><code class="mono">G94</code> Units-Per-Minute — Flat Sheet &amp; 3-Axis <code class="mono">Y</code>-Wrapped Rotary</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Standard 2D CNC plasma tables, mills, and routers operate in <code class="mono">G94</code> Units-Per-Minute mode. In <code class="mono">G94</code>, the <code class="mono">F</code> word dictates linear cutting speed:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Metric Mode (<code class="mono">G21</code>):</strong> <code class="mono">F</code> means <strong>millimeters per minute (mm/min)</strong>.</li>
+              <li><strong>Imperial Mode (<code class="mono">G20</code>):</strong> <code class="mono">F</code> means <strong>inches per minute (IPM)</strong>.</li>
+              <li><strong>The Conversion:</strong> Because 1 inch is exactly 25.4 mm:
+                <div style="background: rgba(0, 0, 0, 0.5); padding: 0.65rem 1rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.85rem; color: var(--cyan-400);">
+                  IPM = (mm/min) &divide; 25.4 &emsp;&hArr;&emsp; mm/min = IPM &times; 25.4
+                </div>
+              </li>
+            </ul>
+
+            <p style="margin-top: 1rem;">
+              Here are standard shop feedrate equivalents across common cutting gauges:
+            </p>
+            <div style="overflow-x: auto; margin: 0.5rem 0 1.25rem;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left; background: rgba(15, 20, 28, 0.6); border: 1px solid var(--border-subtle); border-radius: 8px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.04);">
+                    <th style="padding: 0.65rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted);">Gauge / Thickness</th>
+                    <th style="padding: 0.65rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted);">Metric (G21) Speed</th>
+                    <th style="padding: 0.65rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted);">Imperial (G20) Speed</th>
+                    <th style="padding: 0.65rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted);">Conversion Math</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.7rem 0.95rem;">16ga (0.060" / 1.5 mm) Mild Steel (45A)</td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--cyan-400);">F6350.0 mm/min</code></td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--amber-400);">F250.0 IPM</code></td>
+                    <td style="padding: 0.7rem 0.95rem; color: var(--text-muted);">6350 &divide; 25.4 = 250.0</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.7rem 0.95rem;">11ga (0.120" / 3.0 mm) Mild Steel (45A)</td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--cyan-400);">F3810.0 mm/min</code></td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--amber-400);">F150.0 IPM</code></td>
+                    <td style="padding: 0.7rem 0.95rem; color: var(--text-muted);">3810 &divide; 25.4 = 150.0</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.7rem 0.95rem;">3/16" (0.188" / 4.75 mm) Mild Steel (45A)</td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--cyan-400);">F2540.0 mm/min</code></td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--amber-400);">F100.0 IPM</code></td>
+                    <td style="padding: 0.7rem 0.95rem; color: var(--text-muted);">2540 &divide; 25.4 = 100.0</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0.7rem 0.95rem;">1/4" (0.250" / 6.35 mm) Mild Steel (45A)</td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--cyan-400);">F1524.0 mm/min</code></td>
+                    <td style="padding: 0.7rem 0.95rem;"><code class="mono" style="color: var(--amber-400);">F60.0 IPM</code></td>
+                    <td style="padding: 0.7rem 0.95rem; color: var(--text-muted);">1524 &divide; 25.4 = 60.0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Side by Side G-code Comparison -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 1rem; margin-top: 1rem;">
+              <div class="doc-code-block">
+                <div class="doc-code-bar">
+                  <span class="doc-code-title"><span class="dot cyan"></span> G21 Metric Flat Plate (RS-274 / grblHAL)</span>
+                  <span class="doc-code-lang">G-CODE</span>
+                </div>
+                <pre><code>G21 ; Millimeters
+G90 ; Absolute positioning
+G94 ; Units/min feedrate mode
+G00 X50.000 Y50.000
+G38.2 Z-20.0 F1000.0 ; Touch-off probe
+G92 Z0
+G00 Z3.800 ; Pierce height
+M03 S1 ; Torch fire
+G04 P0.6 ; Pierce delay
+G01 Z1.500 F1500.0 ; Drop to cut height
+G01 X150.000 F2540.0 ; Cut at 2540 mm/min
+G01 Y150.000 F2540.0
+M05 ; Torch off</code></pre>
+              </div>
+
+              <div class="doc-code-block">
+                <div class="doc-code-bar">
+                  <span class="doc-code-title"><span class="dot"></span> G20 Imperial Flat Plate (RS-274 / grblHAL)</span>
+                  <span class="doc-code-lang">G-CODE</span>
+                </div>
+                <pre><code>G20 ; Inches (4-decimal)
+G90 ; Absolute positioning
+G94 ; Units/min feedrate mode
+G00 X1.9685 Y1.9685
+G38.2 Z-0.7874 F39.4 ; Touch-off probe (&divide;25.4)
+G92 Z0
+G00 Z0.1500 ; Pierce height
+M03 S1 ; Torch fire
+G04 P0.6 ; Pierce delay
+G01 Z0.0600 F59.1 ; Drop to cut height (&divide;25.4)
+G01 X5.9055 F100.0 ; Cut at 100 IPM (2540/25.4)
+G01 Y5.9055 F100.0
+M05 ; Torch off</code></pre>
+              </div>
+            </div>
+
+            <div class="doc-callout info" style="margin-top: 1.5rem;">
+              <div class="doc-callout-title">⚙ The 3-Axis Rotary Wrap &amp; The Chuck vs. Roller Calibration Trap (Langmuir FireControl)</div>
+              <p>
+                How do 3-axis tables like the <strong>Langmuir CrossFire PRO / XR</strong> (running FireControl) cut round pipe in <code class="mono">G94</code>? FireControl does not have a native 4th rotary axis driver. Instead, the operator unplugs one linear axis motor cable and plugs in the rotary attachment. (Because CrossFire PRO and XR use <strong>dual Y1/Y2 gantry motors</strong>, many shops swap the single-motor <strong>X-axis</strong> instead of Y).
+              </p>
+              <p style="margin-top: 0.5rem;">
+                RotaryCAM unrolls the round pipe circumference into a flat 2D sheet: <code class="mono">Y = &pi; &times; OD &times; (A / 360&deg;)</code>. Because the controller thinks it is moving along linear distance, standard <code class="mono">G94</code> feedrates apply: <code class="mono">F2540.0 mm/min</code> in <code class="mono">G21</code> drops to <code class="mono">F100.0 IPM</code> in <code class="mono">G20</code>. However, beware of the <strong>rotary chuck calibration trap</strong>:
+              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li>
+                  <strong>Surface-Drive Friction Rollers (No Recalibration Needed):</strong> If your rotary uses friction drive rollers where the outer pipe surface rests directly on driven wheels, 1 mm of roller linear travel rolls 1 mm of pipe surface travel regardless of pipe diameter. Unrolling works across any tube OD without touching your machine's steps/unit calibration!
+                </li>
+                <li>
+                  <strong>Rotary Chucks (Steps/Unit Trap):</strong> If your rotary uses a chuck (geared or direct stepper drive), 360&deg; of chuck rotation always requires a fixed linear command travel (<code class="mono">Y_cal</code>). Commanding <code class="mono">&pi; &times; OD</code> on any pipe diameter other than your calibrated OD will over- or under-rotate the chuck unless you recalculate and update GRBL steps/mm in FireControl for every tube size!
+                </li>
+                <li>
+                  <strong>FireControl G-Code Syntax:</strong> FireControl does not use generic <code class="mono">M03 S1</code>. It uses <code class="mono">H1</code> / <code class="mono">H0</code> for Torch Height Control (THC) lock/unlock, a two-stage <code class="mono">G38.2</code> / <code class="mono">G38.4</code> Initial Height Sensing (IHS) touch-off loop, and standard <code class="mono">M3</code> / <code class="mono">M5</code>.
+                </li>
+              </ul>
+              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                <em>Note:</em> 3-axis linear unrolling <strong>only works on constant-diameter round pipe</strong>. It cannot cut rectangular HSS tubing, angle iron, or channel, where unrolled corners cause the surface speed to surge and stall violently.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title"><code class="mono">G93</code> Inverse-Time Rotary (<code class="mono">1 / Minutes</code>) — Why <code class="mono">G20</code> &amp; <code class="mono">G21</code> Have Identical <code class="mono">F</code> Values</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When cutting 4-axis rotary tubes (round pipe saddles, square/rectangular tubing, angle iron, C-channel), almost all professional CNC plasma controllers—including <strong>LinuxCNC QTPlasmaC, Mach4, MASSO G3, Mach3, Centroid Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, ShopSabre WinCNC, and SimCNC 3.6+</strong> (which added native G93 inverse-time mode in beta in September 2026)—use <strong><code class="mono">G93</code> Inverse-Time Feedrate Mode</strong>.
+            </p>
+
+            <div class="doc-callout tip" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">💡 What About the Controller's Built-In "Rotation Radius" Setting?</div>
+              <p>
+                Several controllers—including ArtSoft Mach3, Mach4, CNCdrive UCCNC, MASSO G3, and Centroid Acorn—provide a DRO setting where you can manually enter a workpiece rotation radius or diameter so the controller scales <code class="mono">G94</code> feedrates across round pipe. While convenient for basic round pipe parting, relying on a manual controller radius setting creates major shop hazards:
+              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
+                <li><strong>Operator Error:</strong> If you forget to update the DRO setting when switching from a 2" tube to a 4" pipe, the torch burns at the wrong speed.</li>
+                <li><strong>Fails on Rectangular HSS &amp; Structural Shapes:</strong> On square/rectangular tubing, angle iron, and C-channel, the distance from the chuck centerline to the torch nozzle changes continuously (from a small radius at face centers to a large radius at corner fillets). A static radius setting cannot maintain constant surface speed.</li>
+                <li><strong>Multi-Axis Vectors:</strong> On saddle fishmouths and branch joints, linear X/Y feed vectors combine with rotary A feed vectors in constantly shifting proportions.</li>
+              </ul>
+              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                CAM-generated <code class="mono">G93</code> Inverse-Time eliminates these headaches: RotaryCAM computes the exact physical 3D surface speed along the true CAD model for every single segment. You get perfect surface speed across any shape or tube size without touching a radius DRO.
+              </p>
+            </div>
+
+            <h3 style="font-size: 1.15rem; color: #fff; margin: 1.5rem 0 0.5rem;">What Does an Inverse-Time Feedrate (<code class="mono">G93 F</code>) Actually Mean?</h3>
+            <p>
+              In <code class="mono">G93</code>, the <code class="mono">F</code> word does <em>not</em> mean distance per minute. It specifies the <strong>inverse of the time in minutes</strong> required to complete the move:
+            </p>
+            <div style="background: rgba(0, 0, 0, 0.5); padding: 0.85rem 1.15rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.75rem 0; font-family: var(--font-mono); font-size: 0.88rem; color: var(--amber-400);">
+              F = 1 / &Delta;t_minutes = 60 / &Delta;t_seconds &emsp;&hArr;&emsp; &Delta;t_seconds = 60 / F
+            </div>
+            <ul class="doc-bullet-list">
+              <li>If a G-code line has <code class="mono">F1000.0</code>, the move completes in <code class="mono">60 / 1000 = 0.060 seconds</code>.</li>
+              <li>If a G-code line has <code class="mono">F500.0</code>, the move completes in <code class="mono">60 / 500 = 0.120 seconds</code>.</li>
+              <li>If a G-code line has <code class="mono">F2000.0</code>, the move completes in <code class="mono">60 / 2000 = 0.030 seconds</code>.</li>
+            </ul>
+
+            <h3 style="font-size: 1.15rem; color: #fff; margin: 1.5rem 0 0.5rem;">The Step-by-Step Proof: Why <code class="mono">F_G20</code> Equals <code class="mono">F_G21</code></h3>
+            <p>
+              How does CAM software calculate <code class="mono">F</code> in <code class="mono">G93</code>? It divides your desired plasma surface cut speed by the true physical length of the segment along the tube surface:
+            </p>
+            <div style="background: rgba(0, 0, 0, 0.5); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.86rem; color: var(--cyan-400);">
+              F = (Surface Cutting Speed) / (Surface Move Distance)
+            </div>
+
+            <p style="margin-top: 0.85rem;">
+              Let's walk through an actual rotary motion segment on 2" (50.8 mm OD, radius <code class="mono">R = 25.4 mm</code>) tubing using an exact 3-4-5 surface triangle:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Target Cut Speed:</strong> <code class="mono">2540.0 mm/min</code> = <code class="mono">100.0 IPM</code> (3/16" Mild Steel at 45A).</li>
+              <li><strong>Move Segment:</strong> Linear <code class="mono">&Delta;X = 1.524 mm</code> (<code class="mono">0.0600"</code>) combined with chuck rotation <code class="mono">&Delta;A = 4.584&deg;</code>.</li>
+              <li><strong>Surface Arc Distance:</strong> On 2" OD pipe, <code class="mono">&Delta;s_arc = 25.4 mm &times; (4.5837&deg; &times; &pi; / 180&deg;) = 2.032 mm</code> (<code class="mono">0.0800"</code>).</li>
+              <li><strong>True 2D Surface Hypotenuse:</strong> <code class="mono">&Delta;s = &radic;(1.524&sup2; + 2.032&sup2;) = 2.540 mm</code> (in inches: <code class="mono">&radic;(0.0600&sup2; + 0.0800&sup2;) = 0.1000"</code>).</li>
+            </ul>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 1rem; margin-top: 0.85rem;">
+              <div style="background: rgba(6, 182, 212, 0.06); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: 8px; padding: 1.15rem;">
+                <div class="mono" style="font-size: 0.75rem; color: var(--cyan-400); font-weight: 700; margin-bottom: 0.5rem;">METRIC CALCULATION (G21)</div>
+                <p style="font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.7; margin: 0; color: #cbd5e1;">
+                  Speed = 2540.0 mm/min<br />
+                  Surface Distance = 2.540 mm<br />
+                  &Delta;t = 2.540 / 2540.0 = 0.001 min (0.060s)<br />
+                  <strong>F = 1 / 0.001 min = 1000.0</strong>
+                </p>
+              </div>
+
+              <div style="background: rgba(245, 158, 11, 0.06); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 8px; padding: 1.15rem;">
+                <div class="mono" style="font-size: 0.75rem; color: var(--amber-400); font-weight: 700; margin-bottom: 0.5rem;">IMPERIAL CALCULATION (G20)</div>
+                <p style="font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.7; margin: 0; color: #cbd5e1;">
+                  Speed = 100.0 in/min (2540 &divide; 25.4)<br />
+                  Surface Distance = 0.1000 in (2.540 &divide; 25.4)<br />
+                  &Delta;t = 0.1000 / 100.0 = 0.001 min (0.060s)<br />
+                  <strong>F = 1 / 0.001 min = 1000.0</strong>
+                </p>
+              </div>
+            </div>
+
+            <div class="doc-callout danger" style="margin-top: 1.35rem;">
+              <div class="doc-callout-title">🛑 Why Dividing a G93 F Word by 25.4 Destroys Your Pipe</div>
+              <p>
+                Notice what happened: Both the speed (<code class="mono">2540 / 25.4 = 100</code>) and the distance (<code class="mono">2.54 / 25.4 = 0.100</code>) were divided by 25.4. <strong>The 25.4 unit factor cancels out completely!</strong>
+              </p>
+              <p style="margin-top: 0.5rem;">
+                If a CAM post-processor mistakenly divided a <code class="mono">G93</code> <code class="mono">F</code> word by 25.4 when exporting Imperial G-code:
+              </p>
+              <div style="background: rgba(0, 0, 0, 0.5); padding: 0.65rem 1rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.84rem; color: #f43f5e;">
+                Wrong F = 1000.0 &divide; 25.4 = F39.37 &emsp;&rarr;&emsp; Move Time &Delta;t = 60 / 39.37 = 1.524 seconds!
+              </div>
+              <p style="margin-bottom: 0;">
+                The move takes <strong>1.524 seconds instead of 0.060 seconds—25.4 times too slow!</strong> Your cutting speed drops from 100 IPM down to 3.94 IPM. The plasma arc stays stationary over the pipe wall, melts a massive blowout crater, ruins the nozzle shield, and destroys the workpiece.
+              </p>
+            </div>
+
+            <!-- G94 vs G93 Hybrid Explanation -->
+            <h3 style="font-size: 1.15rem; color: #fff; margin: 1.75rem 0 0.5rem;">The Hybrid Reality: G94 Probing vs. G93 Rotary Cutting</h3>
+            <p>
+              Inside a single 4-axis rotary G-code file, both <code class="mono">G94</code> and <code class="mono">G93</code> exist together, and different controllers handle surface touch-off differently:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Initial Height Sensing (IHS) &amp; Plunges Run in <code class="mono">G94</code>:</strong> Before the arc fires, surface touch-off probing (<code class="mono">G38.2</code> on grblHAL / bare LinuxCNC, <code class="mono">G31</code> on ArtSoft Mach3 / Mach4 / UCCNC) and vertical plunges to pierce/cut height move pure linear Z distance. They run in <code class="mono">G94</code> distance-per-minute mode. In <code class="mono">G21</code>, the probe moves at <code class="mono">F1000.0 mm/min</code>; in <code class="mono">G20</code>, the probe moves at <code class="mono">F39.4 IPM</code> (<code class="mono">1000 &divide; 25.4</code>).
+              </li>
+              <li>
+                <strong>Integrated Touch-Off Loops (LinuxCNC QtPlasmaC &amp; MASSO G3):</strong> 
+                <strong>LinuxCNC QtPlasmaC</strong> executes ohmic/float touch-off, pierce height, pierce delay, and cut-height plunge <strong>internally inside <code class="mono">M3 $0 S1</code></strong> (ended with <code class="mono">M5 $0</code>). Emitting manual <code class="mono">G38.2</code> + <code class="mono">G92 Z0</code> blocks conflicts with QtPlasmaC's real-time HAL state machine! Similarly, <strong>MASSO G3 + DTHC</strong> handles probing and pierce timing automatically inside <code class="mono">M3</code> via its <code class="mono">G200</code> plasma cycle.
+              </li>
+              <li>
+                <strong>Contour Cutting Runs in <code class="mono">G93</code>:</strong> As soon as the torch fires and lateral/rotary cutting begins, the program switches to <code class="mono">G93</code>. Every contour line carries an inverse-time <code class="mono">F</code> word that paces the move to the millisecond.
+              </li>
+            </ul>
+
+            <!-- Side by Side G-code Comparison -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 1rem; margin-top: 1rem;">
+              <div class="doc-code-block">
+                <div class="doc-code-bar">
+                  <span class="doc-code-title"><span class="dot cyan"></span> G21 Metric 4-Axis Rotary (grblHAL 4-Axis Rotary)</span>
+                  <span class="doc-code-lang">G-CODE</span>
+                </div>
+                <pre><code>G21 ; Millimeters
+G90 ; Absolute positioning
+G94 ; Start in G94 for touch-off probe
+G00 X50.000 A0.000
+G38.2 Z-25.0 F1000.0 ; Probe at 1000 mm/min (grblHAL)
+G92 Z0
+G00 Z3.800 ; Retract to pierce height
+M03 S1 ; Torch fire
+G04 P0.6 ; Pierce delay
+G01 Z1.500 F1500.0 ; Plunge at 1500 mm/min
+G93 ; SWITCH TO G93 INVERSE-TIME FOR ROTARY
+G01 X51.524 A4.584 F1000.0 ; 0.060s move (2540 mm/min surface speed)
+G01 X53.048 A9.167 F1000.0 ; 0.060s move (2540 mm/min surface speed)
+M05 ; Torch off
+G94 ; Return to G94 for safe retract
+G00 Z25.000</code></pre>
+              </div>
+
+              <div class="doc-code-block">
+                <div class="doc-code-bar">
+                  <span class="doc-code-title"><span class="dot"></span> G20 Imperial 4-Axis Rotary (grblHAL 4-Axis Rotary)</span>
+                  <span class="doc-code-lang">G-CODE</span>
+                </div>
+                <pre><code>G20 ; Inches (4-decimal)
+G90 ; Absolute positioning
+G94 ; Start in G94 for touch-off probe
+G00 X1.9685 A0.000
+G38.2 Z-0.9843 F39.4 ; Probe at 39.4 IPM (&divide;25.4)
+G92 Z0
+G00 Z0.1500 ; Retract to pierce height
+M03 S1 ; Torch fire
+G04 P0.6 ; Pierce delay
+G01 Z0.0600 F59.1 ; Plunge at 59.1 IPM (&divide;25.4)
+G93 ; SWITCH TO G93 INVERSE-TIME FOR ROTARY
+G01 X2.0285 A4.584 F1000.0 ; IDENTICAL F! (0.060s move = 100.0 IPM)
+G01 X2.0885 A9.167 F1000.0 ; IDENTICAL F! (0.060s move = 100.0 IPM)
+M05 ; Torch off
+G94 ; Return to G94 for safe retract
+G00 Z0.9843</code></pre>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">SimCNC &lt; 3.6 4D Trajectory Spoofing (<code class="mono">SimCNC Rotary</code>) vs. <code class="mono">SimCNC 3.6+</code> (<code class="mono">G93</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              CSLab SimCNC (running CSMIO/IP-M and IP-S controllers) provides hardware trajectory generation and sub-millisecond motion-synchronized digital pins (<code class="mono">M62/M63</code>). However, how SimCNC executes rotary motion depends on your software version:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>SimCNC &lt; 3.6 (e.g. Stable 3.5):</strong> Does not support native <code class="mono">G93</code> inverse-time mode. In standard <code class="mono">G94</code> mode, SimCNC's motion planner calculates trajectory displacement across all active axes as a <strong>4D Euclidean vector</strong>:
+                <div style="background: rgba(0, 0, 0, 0.5); padding: 0.85rem 1.15rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.75rem 0; font-family: var(--font-mono); font-size: 0.88rem; color: var(--emerald-400);">
+                  L_4D = &radic;(&Delta;X&sup2; + &Delta;Y&sup2; + &Delta;Z&sup2; + &Delta;A&sup2;)
+                </div>
+                where <code class="mono">X, Y, Z</code> are in linear units (millimeters or inches) and <code class="mono">A</code> is in angular degrees (<code class="mono">&deg;</code>). RotaryCAM automatically calculates the spoofed <code class="mono">F</code> word for every line.
+              </li>
+              <li>
+                <strong>SimCNC 3.6+ (Beta released September 2026):</strong> CSLab added native <code class="mono">G93</code> inverse-time support! RotaryCAM supports this directly via the <code class="mono">SimCNC 3.6 beta</code> machine profile, emitting clean <code class="mono">G93</code> inverse-time blocks (identical to Step 03) without requiring 4D vector spoofing.
+              </li>
+            </ul>
+
+            <h3 style="font-size: 1.15rem; color: #fff; margin: 1.25rem 0 0.5rem;">How RotaryCAM "Spoofs" SimCNC's 4D Feedrate (SimCNC &lt; 3.6)</h3>
+            <p>
+              Because SimCNC does not know the physical tube radius in its trajectory planner, a standard linear <code class="mono">F</code> word would cause rotary cuts to crawl or race. RotaryCAM's kinematics engine solves this by calculating the true required move duration <code class="mono">&Delta;t</code> from physical surface speed, then reverse-engineering the exact spoofed <code class="mono">F</code> number that forces SimCNC's 4D vector equation to complete the move at the correct time:
+            </p>
+            <div style="background: rgba(0, 0, 0, 0.5); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.86rem; color: var(--amber-400);">
+              F_spoofed = L_4D / &Delta;t = &radic;(&Delta;X&sup2; + &Delta;Y&sup2; + &Delta;Z&sup2; + &Delta;A&sup2;) / &Delta;t
+            </div>
+
+            <h3 style="font-size: 1.15rem; color: #fff; margin: 1.5rem 0 0.5rem;">What Happens in <code class="mono">G21</code> vs. <code class="mono">G20</code> Under SimCNC 4D?</h3>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Pure Rotary Chuck Spins (&Delta;X = &Delta;Y = &Delta;Z = 0):</strong>
+                When only the chuck rotates, <code class="mono">L_4D = |&Delta;A|</code> degrees. In <code class="mono">G94</code> / SimCNC &lt; 3.6, the feedrate represents degrees per minute:
+                <div style="background: rgba(0, 0, 0, 0.5); padding: 0.5rem 0.85rem; border-radius: 4px; margin: 0.35rem 0; font-family: var(--font-mono); font-size: 0.82rem; color: var(--cyan-400);">
+                  F_pure_A = (&Delta;A / &Delta;t) = (Surface Speed / (&pi; &times; OD)) &times; 360&deg;
+                </div>
+                Because angular rotational speed in degrees/minute (and chuck RPM) for a given surface speed is determined strictly by the tube OD, <strong>pure-A rotary moves keep the exact same F value in both G21 and G20!</strong>
+              </li>
+              <li>
+                <strong>Combined X+A Diagonal Moves (Fishmouths &amp; Miters):</strong>
+                In <code class="mono">G20</code>, <code class="mono">&Delta;X</code> is in inches (<code class="mono">&Delta;X_mm &divide; 25.4</code>), while <code class="mono">&Delta;A</code> remains in degrees. The 4D hypotenuse changes ratio between inches and degrees, and RotaryCAM scales <code class="mono">F_spoofed</code> on every line so the physical surface cutting speed across the tube wall remains completely constant at your dialed-in cut-chart IPM.
+              </li>
+            </ul>
+
+            <div class="doc-code-block" style="margin-top: 1.25rem;">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot emerald"></span> SimCNC 4D Rotary G-Code Example (rot-test-saddle1.step)</span>
+                <span class="doc-code-lang">G-CODE</span>
+              </div>
+              <pre><code>(--- SimCNC 4D Feedrate Scaling: 27mm OD Pipe Saddle ---)
+G21 ; Metric mode (X in mm, A in degrees)
+G90 ; Absolute positioning
+G94 ; Standard G94 with per-line 4D trajectory spoofing (SimCNC < 3.6)
+G00 Z25.000 ; Safe Z clearance
+G00 X-104.043 Y0.000
+G01 A51.702 F1500.0 ; Chuck index (pure A in deg/min)
+M03 S1 ; Ohmic touch-off, pierce height & arc fire
+M63 P0 ; Lock THC during lead-in
+; 4D interpolated feedrates maintain constant 1000 mm/min surface cut speed:
+G01 X-103.794 A52.214 F2059.043 ; Spoofed F blends mm and deg
+G01 X-103.410 A52.952 F1974.067
+M62 P0 ; Unlock THC for main contour cut
+G01 X-99.343 A58.857 F1513.375
+G01 X-99.014 A62.132 F3780.151 ; Chuck accelerates smoothly around saddle
+G01 X-94.771 A95.767 F3650.210 ; Saddle crotch
+M63 P1 ; Motion-sync digital output cuts arc 1.5mm early while torch moves (zero divot)
+G01 X-91.916 A117.747 F3820.440 ; Final segment severs kerf cleanly on residual plasma
+M05 ; Motion complete — full torch shutdown macro
+G00 Z25.000 ; Retract</code></pre>
+            </div>
+
+            <div class="doc-callout warning" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">⚠️ The SimCNC M05 Deceleration Trap (Why M63 Px is Required for Zero-Divot Cuts)</div>
+              <p>
+                In SimCNC, calling standard <code class="mono">M05</code> triggers a Python macro (<code class="mono">m5.py</code>). SimCNC's trajectory planner is <strong>not motion-synchronized with standard M-codes</strong>: it forces the motion planner to decelerate axes to a complete standstill before executing <code class="mono">m5.py</code>.
+              </p>
+              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                Stopping the torch while the plasma arc is burning gouges an ugly blowout divot right into the cut edge! To achieve a true zero-divot cut, RotaryCAM triggers a motion-synchronized hardware pin (<code class="mono">M63 Px</code>) roughly 1.5–2.0 mm before the end of the toolpath. The plasma arc extinguishes instantly while the torch continues moving at full programmed cutting speed, allowing residual plasma gas to sever the kerf. Standard <code class="mono">M05</code> is then called only after motion has come to a stop.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Quick Shop-Floor Cheat Sheet (<code class="mono">G21</code> vs. <code class="mono">G20</code> Across All 13 Controllers)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Different CNC plasma controllers require different feedrate conventions. Use the reference table below to see how each supported controller handles flat plate vs. rotary tubing when switching between Metric (<code class="mono">mm / G21</code>) and Imperial (<code class="mono">in / G20</code>):
+            </p>
+
+            <div style="overflow-x: auto; margin: 1rem 0 1.5rem;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; background: rgba(15, 20, 28, 0.6); border: 1px solid var(--border-subtle); border-radius: 8px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.04);">
+                    <th style="padding: 0.65rem 0.85rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted);">Controller Post</th>
+                    <th style="padding: 0.65rem 0.85rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted);">Stock Type</th>
+                    <th style="padding: 0.65rem 0.85rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted);">Feed Mode</th>
+                    <th style="padding: 0.65rem 0.85rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted);">Flat Cut F</th>
+                    <th style="padding: 0.65rem 0.85rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted);">Rotary Cut F</th>
+                    <th style="padding: 0.65rem 0.85rem; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted);">Probe / Plunge F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>LinuxCNC QTPlasmaC</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Internal (<code class="mono">M3 $0 S1</code>)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Langmuir FireControl</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate &amp; Surface-Roller Wrap (or Chuck with recalibrated steps)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (Y/X-Wrap)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G38.2/G38.4 IHS, H1/H0 THC)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>ArtSoft Mach4 (Warp9 ESS)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G31 / G94)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>MASSO G3 + DTHC</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> in G200 (auto M3)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>ArtSoft Mach3</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G31 / G94)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Centroid Acorn CNC12</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Controller macro</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>grblHAL (32-bit Plasma)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G38.2 / G94)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>CNCdrive UCCNC</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G31 / G94)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>FlashCut CNC Plasma</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G94)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>EdingCNC Plasma</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G94)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>PlanetCNC TNG Plasma</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G94)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>ShopSabre WinCNC Plasma</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Controller macro</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0.65rem 0.85rem;"><strong>CSLab SimCNC Rotary (&lt; 3.6 / 3.6+)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;">&lt; 3.6: Spoofed <code class="mono">G94</code> / 3.6+: <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--emerald-400);">&lt; 3.6: 4D Scaled</strong> / <strong style="color: var(--amber-400);">3.6+: Identical F</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Managed by <code class="mono">m3.py</code> (M63 sync arc off)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="doc-callout tip" style="margin-top: 1rem; margin-bottom: 1.25rem;">
+              <div class="doc-callout-title">💡 Controller Probing Notes: MASSO G3 + DTHC &amp; LinuxCNC QtPlasmaC</div>
+              <p>
+                <strong>MASSO G3 + DTHC:</strong> MASSO uses <code class="mono">T112 M6</code> followed by <code class="mono">G200 F... P... D... C... V...</code>, where <code class="mono">M3</code> automatically executes torch touch-off probing, pierce delay, and plunge to cut height without requiring manual <code class="mono">G38.2 Z</code> + <code class="mono">G92 Z0</code> blocks in standard cutting. (Manual probing is only used in legacy external-THC or custom dynamic-4D-Z setups). Note that the plunge/cut feedrate parameter <code class="mono">F</code> inside <code class="mono">G200</code> still divides by 25.4 when running in Imperial <code class="mono">G20</code>.
+              </p>
+              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                <strong>LinuxCNC QtPlasmaC:</strong> Initial height sensing (IHS), pierce delay, and cut plunge are executed internally inside the real-time HAL component via <code class="mono">M3 $0 S1</code> (and extinguished with <code class="mono">M5 $0</code>). Emitting manual <code class="mono">G38.2</code> probing commands in G-code would collide with QtPlasmaC's internal Z state machine.
+              </p>
+            </div>
+
+            <!-- 5 Golden Shop Rules -->
+            <div class="doc-callout info">
+              <div class="doc-callout-title">📋 5 Shop Rules to Remember at the Machine Console</div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
+                <li>
+                  <strong>Rule 1 (Flat Sheet = Distance):</strong> On 2D plate and 3-axis Y-wrapped round pipe, feedrates are <code class="mono">G94</code> distance-per-minute. When flipping from metric to inches, <code class="mono">F</code> divides by 25.4 (<code class="mono">2540 mm/min &rarr; 100 IPM</code>).
+                </li>
+                <li>
+                  <strong>Rule 2 (4-Axis Rotary = Inverse Time):</strong> On 4-axis rotary tubes, cutting feedrates are <code class="mono">G93</code> inverse-time (<code class="mono">1 / &Delta;t</code>). Because both cutting speed and move distance divide by 25.4, the unit factor cancels out: <code class="mono">F1000.0</code> is identical in Metric and Imperial. Never divide a <code class="mono">G93</code> <code class="mono">F</code> word by 25.4.
+                </li>
+                <li>
+                  <strong>Rule 3 (Probes &amp; Plunges Scale):</strong> Initial touch-off sensing (<code class="mono">G38.2</code> on grblHAL, <code class="mono">G31</code> on Mach3/Mach4/UCCNC, <code class="mono">G200</code> on MASSO) and vertical Z plunges run in <code class="mono">G94</code> linear mode before the arc strikes. Their feedrates <em>do</em> divide by 25.4 in Imperial (<code class="mono">1000 mm/min &rarr; 39.4 IPM</code>). On integrated controllers like LinuxCNC QtPlasmaC, probing, pierce height, and cut plunge are handled internally inside <code class="mono">M3 $0 S1</code>.
+                </li>
+                <li>
+                  <strong>Rule 4 (Pure A Rotations: G93 is ALWAYS Inverse Time, NEVER deg/min):</strong> When the chuck rotates without lateral motion (<code class="mono">&Delta;X = &Delta;Y = &Delta;Z = 0</code>), in <code class="mono">G93</code> mode <code class="mono">F</code> is still strictly inverse time (<code class="mono">1 / &Delta;t</code> in <code class="mono">min&sup1;</code>)—NEVER degrees per minute! Only <code class="mono">G94</code> (such as <code class="mono">SimCNC &lt; 3.6</code>) expresses pure-A spins in <code class="mono">deg/min</code>. For example, at <code class="mono">5729.6&deg;/min</code> (<code class="mono">2540 mm/min / 100 IPM</code> surface speed on 2" / 50.8 mm OD pipe), a 90&deg; pure-A spin runs at <code class="mono">F5729.6</code> (<code class="mono">deg/min</code>) in <code class="mono">G94</code> / <code class="mono">SimCNC &lt; 3.6</code>, whereas in <code class="mono">G93</code> it runs at <code class="mono">F63.66</code> (<code class="mono">&Delta;t = 0.01571 min = 0.942 s</code>, <code class="mono">1 / &Delta;t = 63.66 min&sup1;</code>). Both values remain 100% identical between <code class="mono">G20</code> and <code class="mono">G21</code>, but only <code class="mono">G94</code> is <code class="mono">deg/min</code>.
+                </li>
+                <li>
+                  <strong>Rule 5 (Keep Override at 100% on Rotary Cuts):</strong> In <code class="mono">G93</code> inverse-time mode, Feedrate Override (FRO) scales every block's duration uniformly (e.g., dialing FRO down to 50% cleanly doubles every block's cut time). However, you should leave FRO at 100% on rotary plasma cuts for two critical physical reasons: (1) Slowing down below target surface speed widens the kerf and raises arc voltage, causing voltage-based Torch Height Control (THC) to dive the torch tip directly into the pipe wall; (2) Pushing FRO above 100% can clip against your rotary A-axis maximum velocity limit on tight saddle crotches or square tube corner sweeps, bottlenecking motion and creating torch gouges.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+{% endblock %}

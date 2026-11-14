@@ -37,22 +37,30 @@ def resolve_version(remote=MAIN_REMOTE):
             text=True,
             stderr=subprocess.DEVNULL,
         )
+        candidates = []
+        for line in out.splitlines():
+            fields = line.split()
+            if len(fields) != 2:
+                continue
+            m = TAG_RE.match(fields[1].replace("^{}", ""))
+            if m:
+                maj, min_, pat = m.group(1), m.group(2), m.group(3) or "0"
+                candidates.append((int(maj), int(min_), int(pat)))
+        if candidates:
+            return ".".join(map(str, max(candidates)))
     except Exception:
-        return FALLBACK
+        pass
 
-    candidates = []
-    for line in out.splitlines():
-        fields = line.split()
-        if len(fields) != 2:
-            continue
-        m = TAG_RE.match(fields[1].replace("^{}", ""))
-        if m:
-            maj, min_, pat = m.group(1), m.group(2), m.group(3) or "0"
-            candidates.append((int(maj), int(min_), int(pat)))
+    vjs = ROOT / "version.js"
+    if vjs.exists():
+        try:
+            m = re.search(r'ROTARYCAM_VERSION\s*=\s*"([^"]+)"', vjs.read_text(encoding="utf-8"))
+            if m and m.group(1) != FALLBACK:
+                return m.group(1)
+        except Exception:
+            pass
 
-    if not candidates:
-        return FALLBACK
-    return ".".join(map(str, max(candidates)))
+    return FALLBACK
 
 
 def beta_label(version):

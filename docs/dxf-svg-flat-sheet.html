@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.0.0-dev-BETA</span>
+          <span class="brand-tag">v0.7.0-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -113,7 +113,7 @@
           <div class="nav-dropdown-menu" role="menu">
             <div class="nav-dropdown-header">
               <span>All Workflows &amp; Tutorials</span>
-              <span class="nav-dropdown-count">10 Guides</span>
+              <span class="nav-dropdown-count">11 Guides</span>
             </div>
             <div class="nav-dropdown-grid">
               
@@ -184,7 +184,7 @@
                 <span class="nav-dropdown-num">08</span>
                 <span class="nav-dropdown-content">
                   <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
-                  <span class="nav-dropdown-sub">6 Steps • Visual Guide</span>
+                  <span class="nav-dropdown-sub">7 Steps • Visual Guide</span>
                 </span>
                 
               </a>
@@ -206,6 +206,15 @@
                 </span>
                 
                 <span class="nav-dropdown-dot" title="Current Guide"></span>
+                
+              </a>
+              
+              <a href="rotary-and-sheet-feedrates.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">11</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">G94, G93 & G20/G21 Feeds</span>
+                  <span class="nav-dropdown-sub">5 Sections</span>
+                </span>
                 
               </a>
               
@@ -293,6 +302,11 @@
         <span>DXF/SVG & Imperial Units</span>
       </a>
       
+      <a href="rotary-and-sheet-feedrates.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">11</span>
+        <span>G94, G93 & G20/G21 Feeds</span>
+      </a>
+      
     </div>
 
     <div style="margin-top: 1rem;">
@@ -366,7 +380,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>TUTORIAL 10 OF 10</strong> • 5 Steps</span>
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 10 OF 11</strong> • 5 Steps</span>
           
           <span class="docs-meta-pill cyan"><strong>File Formats:</strong> .DXF (R12–2018) • .SVG • .ZIP Archives • .STEP 3D</span>
           
@@ -460,6 +474,13 @@
               <a href="dxf-svg-flat-sheet.html" class="active">
                 <span class="docs-nav-num">10</span>
                 <span>DXF/SVG & Imperial Units</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="rotary-and-sheet-feedrates.html">
+                <span class="docs-nav-num">11</span>
+                <span>G94, G93 & G20/G21 Feeds</span>
               </a>
             </li>
             
@@ -677,7 +698,7 @@
               <li>Click <span class="ui-chip emerald">▶ Play</span> to simulate torch travel across the nested plate.</li>
               <li>Check the live Digital Readout (DRO) tracking torch position in inches (<code class="mono">X: 10.8969 in</code>, <code class="mono">Y: 27.1469 in</code>, <code class="mono">Z: 0.0600 in</code>), cutting feedrate in inches per minute (<code class="mono">138 IPM</code>), and total travel distance (<code class="mono">Cut Dist: 3135.2 in</code>).</li>
               <li>The amber <code class="mono">⚡ ARC ON</code> indicator confirms when the torch fires, verifying that rapids occur at safe Z heights above plate tip-ups.</li>
-              <li>The synchronized G-code viewer scrolls line-for-line with torch motion, showing native 4-decimal inch commands (<code class="mono">G1 X10.8969 Y27.1469 F138.0</code>) with explicit <code class="mono">G20</code> Imperial header for Langmuir FireControl or ShopSabre WinCNC.</li>
+              <li>The synchronized G-code viewer scrolls line-for-line with torch motion, showing native 4-decimal inch commands (<code class="mono">G1 X10.8969 Y27.1469 F138.0</code>) with explicit <code class="mono">G20</code> Imperial header for Langmuir FireControl or ShopSabre WinCNC. (For an in-depth breakdown of how <code class="mono">G94</code> and rotary <code class="mono">G93</code> feedrates scale between inches and millimeters, see <a href="rotary-and-sheet-feedrates.html" style="color: var(--amber-400);">Tutorial 11: Understanding G94, G93 &amp; G20/G21 Feedrates</a>).</li>
               <li>Click <span class="ui-chip cyan">Download G-Code</span> to export ready-to-run <code class="mono">.tap</code> or <code class="mono">.nc</code> files directly to your machine console or USB drive.</li>
             </ul>
           </div>
@@ -698,16 +719,16 @@
         <nav class="docs-pagination" aria-label="Tutorial Pagination">
           
           <a href="mcp-offline-workflows.html" class="docs-page-link prev">
-            <span class="docs-page-dir">← Previous Tutorial (09 of 10)</span>
+            <span class="docs-page-dir">← Previous Tutorial (09 of 11)</span>
             <span class="docs-page-title">Offline MCP & AI Automation</span>
             <span class="docs-page-desc">Connect local AI assistants, run drive math, analyze CAD & emit production G-code</span>
           </a>
           
           
-          <a href="index.html" class="docs-page-link next">
-            <span class="docs-page-dir">Back to Documentation Hub →</span>
-            <span class="docs-page-title">All Tutorials &amp; Guides</span>
-            <span class="docs-page-desc">Return to the RotaryCAM Documentation Overview</span>
+          <a href="rotary-and-sheet-feedrates.html" class="docs-page-link next">
+            <span class="docs-page-dir">Next Tutorial (11 of 11) →</span>
+            <span class="docs-page-title">11. Understanding G94, G93 & G20/G21 Feedrates</span>
+            <span class="docs-page-desc">Master G94 distance/min, G93 inverse-time math, SimCNC 4D vector scaling, and Imperial/Metric units</span>
           </a>
           
         </nav>
@@ -769,6 +790,8 @@
           <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
           
           <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+          <a href="rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
           
         </div>
         <div class="footer-col">

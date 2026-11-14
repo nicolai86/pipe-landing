@@ -55,7 +55,7 @@
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#download",
-        "description": "Free 30-day offline evaluation with full 3D STEP assembly inspection, Round/Square/Flat G-code, Zero-Bevel saddle compensation, 552 Hypertherm cut charts, and up to 5 parts/stick & 5 bends/file."
+        "description": "Free 30-day offline evaluation with full 3D STEP assembly inspection, Round/Square/Flat G-code, Zero-Bevel saddle compensation, 1,025 cut charts across 3 torch families + CSV interchange, and up to 5 parts/stick & 5 bends/file."
       },
       {
         "@type": "Offer",
@@ -1490,7 +1490,7 @@
     <nav>
       <a href="#" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.6.1-BETA</span>
+        <span class="brand-tag">v0.7.0-BETA</span>
       </a>
       <div class="nav-links">
         <a href="#showcase">Showcase</a>
@@ -1906,14 +1906,15 @@
       <!-- Feature 8 -->
       <div class="card">
         <div>
-          <div class="card-num mono">08 / HYPERTHERM CUT CHARTS</div>
-          <h3>552 Built-In Cut Charts &amp; Wall Matching</h3>
-          <p>Stop hunting through paper manuals. RotaryCAM includes 552 factory Hypertherm Powermax 45/65/85/105 SYNC Rev 4 presets across Mild Steel, Stainless, and Aluminum. When you drop a STEP file, it detects your tube's wall thickness and auto-loads cut speed, arc voltage, pierce delay, and kerf width.</p>
+          <div class="card-num mono">08 / CUT CHARTS &amp; CSV INTERCHANGE</div>
+          <h3>1,025 Built-In Cut Charts &amp; CSV Interchange</h3>
+          <p>Stop hunting through paper manuals or mistyping torch feedrates. RotaryCAM includes 1,025 factory cut presets across 3 torch families—Hypertherm SYNC (3.2 mm standoff), Hypertherm Duramax (1.5 mm standoff), and Generic Air Plasma (Razorweld, PrimeWeld, Everlast, Cutmaster). Select your torch family per machine profile, drop a STEP or DXF/SVG file, and RotaryCAM automatically pairs cut speed, arc voltage, pierce delay, and kerf width. Export and import shop CSV spreadsheets with smart unit detection and non-destructive upsert.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>552 Factory Presets</span>
+          <span class="pill"><span class="pill-dot"></span>1,025 Factory Presets</span>
+          <span class="pill"><span class="pill-dot"></span>3 Torch Families</span>
+          <span class="pill"><span class="pill-dot"></span>Unit-Aware CSV Interchange</span>
           <span class="pill"><span class="pill-dot"></span>Auto Wall Thickness Match</span>
-          <span class="pill"><span class="pill-dot"></span>Smart Cartridge Select</span>
         </div>
       </div>
 
@@ -2030,11 +2031,66 @@
         G01 X-98.618 A65.938 F3904.416<br>
         G01 X-97.714 A73.675 F3768.406<br>
         G01 X-94.771 A95.767 F3650.210 <span class="code-comment">; Saddle crotch (flush branch weld)</span><br>
-        G01 X-91.916 A117.747 F3820.440 <span class="code-comment">; Saddle flank</span><br>
-        M05 <span class="code-comment">; Extinguish arc 1.8mm early: residual arc severs kerf</span><br>
+        M63 P1 <span class="code-comment">; Motion-sync pin cuts arc 1.5mm early while torch moves (zero divot)</span><br>
+        G01 X-91.916 A117.747 F3820.440 <span class="code-comment">; Saddle flank severs kerf on residual plasma</span><br>
+        M05 <span class="code-comment">; Motion complete — torch shutdown macro</span><br>
         G00 Z25.000 <span class="code-comment">; Rapid retract to safe height</span>
       </div>
     </div>
+
+    <!-- Shop Note Aside: G21 (mm) vs G20 (inch) Feedrates -->
+    <aside style="max-width: 1200px; margin: 2.25rem auto 0; background: var(--surface); border: 1px solid var(--surface-border); border-left: 3px solid var(--plasma-amber); border-radius: var(--radius); padding: 1.75rem 2rem; box-shadow: 0 16px 36px rgba(0,0,0,0.4);">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.85rem;">
+        <span class="badge" style="background: rgba(245, 158, 11, 0.12); color: var(--plasma-amber); border: 1px solid rgba(245, 158, 11, 0.3); font-size: 0.72rem; letter-spacing: 0.08em;"><span class="mono">SHOP NOTE &bull; G21 (MM) VS G20 (INCH) FEEDRATES</span></span>
+        <a href="docs/rotary-and-sheet-feedrates.html" style="color: var(--cyan-arc); text-decoration: none; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.35rem; transition: color 0.15s ease;">
+          Read the Full Feedrate Guide (G94 vs G93 vs SimCNC 4D) &rarr;
+        </a>
+      </div>
+      <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: #fff; font-family: 'Space Grotesk', sans-serif;">
+        Why does flat-sheet F change in Inches (G20), while rotary G93 F stays identical?
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.6; margin-bottom: 1.25rem; max-width: 1040px;">
+        When you flip your machine profile between Metric (<code class="mono">G21</code>) and Imperial (<code class="mono">G20</code>), your CNC controller interprets feedrate numbers differently depending on whether your torch is cutting flat plate or spinning a chuck. Here is what happens under the hood so you always trust your console DRO:
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+        <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; padding: 1.15rem;">
+          <div class="mono" style="font-size: 0.75rem; color: var(--cyan-arc); font-weight: 700; text-transform: uppercase; margin-bottom: 0.45rem;">
+            1. Flat Sheet &amp; 3-Axis Surface-Roller Wrap (G94)
+          </div>
+          <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.35rem; color: #f1f5f9;">
+            Distance Per Minute (<code class="mono">&divide; 25.4</code>)
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.84rem; line-height: 1.55; margin: 0;">
+            <code class="mono">F</code> is <code class="mono">mm/min</code> in <code class="mono">G21</code> and <code class="mono">in/min</code> (<code class="mono">IPM</code>) in <code class="mono">G20</code>. Switching units divides the feedrate by 25.4: <code class="mono">F2540.0</code> drops to <code class="mono">F100.0</code>. On surface-driven friction rollers, linear travel matches tube surface travel across all diameters without changing GRBL steps/unit; rotary chuck wraps require recalibration per OD.
+          </p>
+        </div>
+
+        <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; padding: 1.15rem;">
+          <div class="mono" style="font-size: 0.75rem; color: var(--plasma-amber); font-weight: 700; text-transform: uppercase; margin-bottom: 0.45rem;">
+            2. 4-Axis Rotary (G93 Inverse Time)
+          </div>
+          <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.35rem; color: #f1f5f9;">
+            1 / Minutes (<code class="mono">F</code> Stays 100% Identical)
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.84rem; line-height: 1.55; margin: 0;">
+            <code class="mono">F</code> means <em>finish this move in <code class="mono">60 / F</code> seconds</em> (<code class="mono">F = speed &divide; distance</code>). Both speed and move distance divide by 25.4, so the 25.4 cancels out (<code class="mono">2540 &divide; 2.54 = F1000</code> and <code class="mono">100 &divide; 0.100 = F1000</code> &mdash; both take 0.06s). Dividing a <code class="mono">G93</code> <code class="mono">F</code> word by 25.4 would crawl <strong>25.4&times; too slow</strong> and blow out the pipe wall.
+          </p>
+        </div>
+
+        <div style="background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 8px; padding: 1.15rem;">
+          <div class="mono" style="font-size: 0.75rem; color: var(--emerald-cut); font-weight: 700; text-transform: uppercase; margin-bottom: 0.45rem;">
+            3. SimCNC Rotary (&lt; 3.6 4D Vector / 3.6+ G93)
+          </div>
+          <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.35rem; color: #f1f5f9;">
+            Linear Inches + Rotary Degrees
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.84rem; line-height: 1.55; margin: 0;">
+            In <code class="mono">SimCNC &lt; 3.6</code>, linear <code class="mono">X/Y/Z</code> convert to inches while chuck <code class="mono">A</code> stays in degrees, scaling along the 4D vector length <code class="mono">&radic;(dX&sup2;+dY&sup2;+dZ&sup2;+dA&sup2;)</code> (pure rotary <code class="mono">A</code>-spins in <code class="mono">G94</code> keep identical <code class="mono">deg/min</code> <code class="mono">F</code> in both units). In <code class="mono">SimCNC 3.6+</code>, native <code class="mono">G93</code> inverse-time is supported directly.
+          </p>
+        </div>
+      </div>
+    </aside>
   </section>
 
   <!-- 3D Interactive Simulation Section -->
@@ -2148,7 +2204,7 @@
             <li><span class="pricing-check">✓</span><span>Load &amp; preview <strong>any</strong> 3D STEP part, open profile, or 4-axis pipe weld bevel in the 3D Viewer</span></li>
             <li><span class="pricing-check">✓</span><span>Machine-ready G-code for <strong>Round Pipe, Square/Rect HSS &amp; Flat Bar</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>Zero-Bevel</strong> pipe saddles &amp; true heel-pullback <strong>Square/Rect HSS miters</strong> + <strong>60% small-hole</strong> bolt speed</span></li>
-            <li><span class="pricing-check">✓</span><span>Custom machine profiles, <strong>ERW weld-seam avoidance</strong> &amp; <strong>552 Hypertherm</strong> cut charts</span></li>
+            <li><span class="pricing-check">✓</span><span>Custom machine profiles, <strong>ERW weld-seam avoidance</strong> &amp; <strong>1,025 cut charts</strong> (Hypertherm SYNC, Duramax &amp; Air Plasma) + <strong>CSV Import/Export</strong></span></li>
             <li><span class="pricing-check">✓</span><span>Up to <strong>5 parts/stick</strong> (1D Pack Mode) &amp; <strong>5 bends/file</strong> (3D Cut-and-Bend)</span></li>
           </ul>
         </div>
@@ -2386,9 +2442,9 @@
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
-            <div class="card-num mono" style="color: var(--cyan-arc);">TUTORIAL 08 • 6 STEPS</div>
+            <div class="card-num mono" style="color: var(--cyan-arc);">TUTORIAL 08 • 7 STEPS</div>
             <h3 style="color: #fff;">Plasma Cut Charts &amp; Feature Toggling</h3>
-            <p>Access 145 built-in Hypertherm presets, automatically pair cut parameters to STEP wall thickness, and selectively omit holes or slots without CAD rework.</p>
+            <p>Access 1,025 built-in cut presets across 3 torch families (Hypertherm SYNC, Duramax &amp; Generic Air Plasma), import/export shop CSVs, automatically pair cut parameters to STEP wall thickness, and selectively omit holes or slots without CAD rework.</p>
           </div>
           <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--cyan-arc); font-weight: 700;">Read Tutorial 08 →</div>
         </div>
@@ -2539,7 +2595,7 @@
           IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </p>
         <p>
-          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono" id="disclaimer-version">v0.6.1-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
+          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono" id="disclaimer-version">v0.7.0-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
         </p>
 
         <!-- Trademark & Compatibility Notice -->
@@ -3314,7 +3370,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.6.1-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.0-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
