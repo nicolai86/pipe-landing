@@ -79,9 +79,11 @@ TUTORIALS = [
         "hub_desc": "Configure your 4-axis CNC plasma kinematics, controller dialect (G94 vs. G93 inverse-time), synchronous Torch Height Control (THC) locking, default zero-bevel &amp; corner-loop parameters, and drop-in controller post-processors.",
         "hub_topics": [
             "Velocity, acceleration, jerk &amp; Safe Z clearance limits",
+            "Rotary axis orientation (Along X vs. Y) &amp; 4 chuck travel modes",
+            "Flat sheet orientation (0° vs. 90° CCW) &amp; 6 work zero origins",
             "12 Controller Dialects: QTPlasmaC, FireControl, Mach4, MASSO, Mach3, Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, WinCNC",
             "Synchronous M62/M63 THC locking &amp; 60% small-hole bolt speed",
-            "Coaxial EasyScribe &amp; pneumatic air-scribe multi-tool setup",
+            "Hardware motor polarity (Invert X/Y/A) &amp; air-scribe setup",
         ],
         "hub_cta_right": "5 Annotated Screenshots",
         "has_lightbox": True,

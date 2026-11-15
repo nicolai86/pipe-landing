@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.7.0-BETA</span>
+          <span class="brand-tag">v0.7.1-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -246,7 +246,7 @@
       <a href="../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
       <a href="../index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
       <a href="index.html" class="docs-mobile-link">Documentation Hub Overview</a>
-      <a href="../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC (~$200 CAD)</a>
+      <a href="../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
       <a href="../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
       <a href="../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
     </div>
@@ -573,7 +573,7 @@
               The <strong>About RotaryCAM</strong> modal opens over the workspace and is divided into three sections:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.7.0</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
+              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.7.1</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
               <li><strong>2. What Changed: Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities, such as <em>Recursive Part-in-Cutout Nesting &amp; 2D Flat-Sheet Common-Line Cutting</em>, <em>Dynamic Anti-Dive THC Locking on 2D Flat Sheet</em>, <em>Built-In One-Click Flat Sheet DXF Kit</em>, <em>Multi-File DXF &amp; SVG Flat-Sheet Ingestion, Magnetic 2-Point Scaling, 2D Sheet Nesting &amp; Imperial G20 Units</em>, <em>12 Drop-In CNC Plasma Controller Post-Processors</em>, <em>Clean Stationary Pierce Plunge &amp; 3D Ramp Lead-Ins</em>, <em>True Geometric Rectangular HSS Zero-Bevel Miters &amp; Copes</em>, <em>4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling</em>, <em>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling</em>, <em>Kerf-Compensated Micro-Joint Tabs &amp; Configurable ERW Weld-Seam Avoidance</em>, <em>I-Beam &amp; C-Channel 4-Axis Beamline Emulation with Dynamic Knee-Clearance Rotation</em>, <em>Stationary Center-Point Dimple &amp; Peck Marking (<code class="mono">Contour</code> vs <code class="mono">Center Point</code>)</em>, <em>Automatic Piece Labeling, Mating Joint Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Multi-Stroke Assembly Weld Witness Marks</em>, <em>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets</em>, <em>Chuck Jaw &amp; Slew-Ring &ldquo;No-Cut&rdquo; Dead Zones &amp; Minimum Stick Load Length</em>, <em>Interlocking Miter &amp; Cope Stick Nesting (180&deg; Flip + A-Axis Roll)</em>, <em>Single-Cut Common-Line Severing</em>, <em>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code class="mono">.markings.json</code>)</em>, <em>Batch Feature Selection &amp; Overrides</em>, <em>2D XY Sheet Nesting (VectorNester 2.0)</em>, and <em>100% Offline MCP Stdio Server</em>.</li>
               <li><strong>3. Copy Diagnostics (Bottom-Right):</strong> Click <span class="ui-chip emerald">📋 Copy Diagnostics</span> to copy a formatted snapshot of your build metadata and environment to the clipboard when reporting an issue or requesting support.</li>
             </ul>
@@ -741,10 +741,29 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Release: Nov 14 (v0.7.0 • Latest) -->
+            <!-- Release: Nov 15 (v0.7.1 • Latest) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 14, 2026 (v0.7.0 &bull; Latest)</span>
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 15, 2026 (v0.7.1 &bull; Latest)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">Rotary Y-Axis Support &bull; 4 Chuck Travel Modes &bull; Flat 6 Datum Origins &bull; 90&deg; CCW Rotation &bull; Motor Polarity Inversion &bull; Hardware THC v2 Wiring Guide</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Gantry-Parallel Rotary Y-Axis (<code class="mono">Tube Along X</code> vs. <code class="mono">Tube Along Y</code>):</strong> Native support for CNC plasma tables where the rotary chuck sits parallel to the Y gantry rail (FlashCut CNC, ShopSabre, Mach3/4, LinuxCNC, MASSO, Acorn, UCCNC, and SimCNC). Selecting <strong>Tube Along Y</strong> applies a true right-handed +90&deg; coordinate rotation (<code class="mono">L &rarr; Y, T &rarr; -X</code>). Longitudinal cuts move on Y, cross-torch bevel or HSS lateral moves shift on X, and acceleration/velocity limits automatically track the physical motor moving the torch. Because this is a true spatial rotation, asymmetric fishmouths and angled saddles are <strong>never mirrored</strong>. Automatic 3-axis linear wrap also adapts circumference mapping (<code class="mono">X_WRAP</code> when tube is along Y, <code class="mono">Y_WRAP</code> when tube is along X).</li>
+                <li><strong>4 Rotary Chuck &amp; Torch Travel Modes:</strong> Select how your chuck and gantry move on the shop floor:
+                (1) <em>Workpiece Moves (-L &rarr; 0)</em> for moving-tube feeders like SimCNC Rotary where the chuck pushes stock beneath a stationary-length torch;
+                (2) <em>Torch Moves: Chuck at 0 &rarr; Free End at +L</em> for standard stationary rotary attachments cutting outward from the chuck;
+                (3) <em>Torch Moves: Free End at +L &rarr; Chuck at 0</em> for cutting from the overhanging tip back toward the chuck so severed drops fall cleanly without sagging long sticks; and
+                (4) <em>Torch Moves: Free End at 0 &rarr; Chuck at -L</em> where the operator zeroes <code class="mono">X0</code> (or <code class="mono">Y0</code>) right at the free tip and cuts in negative travel without measuring total stick length beforehand. Both Single-Part and 1D Pack Mode automatically sequence cuts from free end to chuck.</li>
+                <li><strong>Flat Sheet Orientation (0&deg; vs. 90&deg; CCW) &amp; 6 Work Zero Datum Origins:</strong> Rigid right-handed 90&deg; CCW plate rotation (<code class="mono">X' = -Y, Y' = X</code>) guarantees asymmetric brackets, off-center holes, and etched part labels are never mirrored. Choose from 6 selectable <code class="mono">X0, Y0</code> sheet origins: <strong>Bottom-Left</strong> (default on all controllers), <strong>Top-Left</strong>, <strong>Bottom-Right</strong>, <strong>Top-Right</strong>, <strong>Center</strong> (ideal for remnant plates zeroed with a punch mark), and <strong>Moving Sheet (-X &rarr; 0)</strong> for automated plate feeders.</li>
+                <li><strong>Hardware Motor Polarity Overrides &amp; 3D Cut Simulator Parity:</strong> Independent <code class="mono">Invert X</code>, <code class="mono">Invert Y</code>, and <code class="mono">Invert Rotary A</code> motor wiring toggles. When an axis runs backward, RotaryCAM automatically flips physical coordinates, <code class="mono">G52</code> pneumatic scribe offsets, and circular arc direction (<code class="mono">G2</code> &harr; <code class="mono">G3</code>) across <code class="mono">G17/G18/G19</code> planes so lead-ins stay on the scrap side. The integrated 3D Cut Simulator fully supports inverted unrolling with live session status badges.</li>
+                <li><strong>Hardware THC v2 Cabinet Wiring Guide &amp; Pure vs. Hybrid SAV:</strong> Updated documentation and interactive reference on <a href="../hardware-thc.html" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">Hardware THC ($199 CAD) &rarr;</a> detailing inline RS-422 differential Step/Dir interception, 2.0 ms ohmic tip-up escape, and the comparison between zero-config <strong>Pure SAV</strong> (set physical cut height and lock to live arc) and <strong>Hybrid SAV</strong> (clamping abnormal pierce spikes on thin, heat-bowed sheet metal).</li>
+              </ul>
+            </div>
+
+            <!-- Release: Nov 14 (v0.7.0) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 14, 2026 (v0.7.0)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">1,025 Cut Presets (3 Torch Families) &bull; CSV Import/Export &bull; Multi-File DXF, SVG &amp; ZIP Flat Sheets &bull; Recursive Cutout Nesting &bull; 2D Common-Line Cuts &bull; Dedicated Mach4 ESS vs TMC3in1 &bull; 16-Post Grammar Linter &bull; Dynamic Anti-Dive THC</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
@@ -1096,7 +1115,7 @@
           <a href="../index.html#showcase">Showcase</a>
           <a href="../index.html#features">Capabilities</a>
           <a href="../index.html#kinematics">4-Axis Kinematics</a>
-          <a href="../hardware-thc.html">10 kHz Hardware THC (~$200 CAD)</a>
+          <a href="../hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
           <a href="../build-guide.html">Build Your Own Table</a>
           <a href="../changelog.html">Release Changelog &amp; Downloads</a>
         </div>

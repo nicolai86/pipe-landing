@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.7.0-BETA</span>
+          <span class="brand-tag">v0.7.1-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -246,7 +246,7 @@
       <a href="../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
       <a href="../index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
       <a href="index.html" class="docs-mobile-link">Documentation Hub Overview</a>
-      <a href="../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC (~$200 CAD)</a>
+      <a href="../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
       <a href="../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
       <a href="../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
     </div>
@@ -585,24 +585,126 @@
               <li><strong>Chuck Jaw Dead Zone (<code class="mono">65 mm</code>), Min Chuck Grip (<code class="mono">80 mm</code>) &amp; Roller &ldquo;No-Cut&rdquo; Zones:</strong> Enter your chuck jaw keep-out distance (<code class="mono">chuckJawDeadZoneMm</code>, default <code class="mono">65 mm</code>), minimum chuck clamping grip length (<code class="mono">minChuckGripLengthMm</code>, default <code class="mono">80 mm</code>), and any steady-rest or roller keep-out bands. RotaryCAM displays a translucent red no-cut zone and 3D chuck jaws in the CAD viewer and 3D simulator, subtracts the dead zone from raw stick capacity during 1D tube nesting, shows the exact <strong>Min Stock to Load</strong> (<code class="mono">L_cut + L_dead</code>), and warns you before G-code runs if a cut reaches into the chuck jaws.</li>
             </ul>
 
-            <div class="doc-callout info" style="margin-top: 1.5rem;">
-              <div class="doc-callout-title">⚙ Configurable X-Axis Travel &amp; Start Direction (Workpiece Moves vs. Torch Moves)</div>
+            <!-- ==========================================================
+                 Coordinate System, Axis Orientation & Motor Polarity
+                 ========================================================== -->
+            <div id="axis-orientation" style="margin-top: 2rem;">
+              <h3 style="color: #fff; font-size: 1.25rem; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;">
+                <span class="ui-chip cyan" style="font-size: 0.75rem;">NEW IN v0.7.1</span>
+                Coordinate System, Axis Orientation &amp; Motor Polarity
+              </h3>
               <p>
-                Plasma rotary tables move in one of two physical ways depending on whether your chuck pushes the pipe or your torch gantry rolls along the bed. Configure your machine's exact kinematic direction in the <strong>Axis Kinematics &amp; Limits</strong> tab:
+                Plasma tables come in different shop layouts. Some rotary chucks sit along the long X rail; others mount parallel to the Y gantry rail. Flat sheet jobs might be loaded with the long edge along X or Y, zeroed at any corner or plate center. RotaryCAM gives you full native control over rotary alignment, 4 travel modes, 6 flat sheet work origins, and motor DIR polarity so G-code runs true on your table without manual coordinate edits or flipping motor wiring.
               </p>
-              <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+
+              <!-- Rotary Tube Axis (Along X vs Along Y) -->
+              <h4 style="color: var(--plasma-amber); font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.45rem;">
+                1. Rotary Tube Axis: Along X (Default) vs. Along Y (Gantry-Parallel)
+              </h4>
+              <p>
+                Select which linear axis runs down the length of your tube:
+              </p>
+              <ul class="doc-bullet-list">
                 <li>
-                  <strong>Workpiece Moves on X (SimCNC Rotary Chuck Default):</strong>
-                  For rotary tables where the chuck carriage pushes and pulls the tube along the bed beneath a stationary-X plasma torch. RotaryCAM zeroes at the far right-hand free end of the stock using <code class="mono">G92 X-Length</code> (e.g. <code class="mono">G92 X-6000.00 Y0 Z0 A0</code>). The machine cuts each finished tube from the free end first and feeds backward toward <code class="mono">X0</code> at the chuck face, so finished parts drop cleanly onto the scrap table while the remaining tube stays rigidly chucked.
+                  <strong>Tube Along X (Standard Rotary Table):</strong> The rotary chuck spins around the machine's X-axis. Tube length runs along X, lateral cross-torch travel moves on Y, and rotary rotation spins A. This is the default setup on standalone pipe cutters and front-mounted rotary attachments.
                 </li>
                 <li>
-                  <strong>Torch Moves on X (<code class="mono">0</code> to <code class="mono">max(X)</code>):</strong>
-                  For rotary attachments mounted inside a standard cutting table where the stock stays parked in the chuck and the torch gantry rolls down the tube. RotaryCAM sets your stock datum at <code class="mono">G92 X0 Y0 Z0 A0</code> and cuts forward from <code class="mono">X = 0</code> toward <code class="mono">+max(X)</code> along the bed.
+                  <strong>Tube Along Y (Gantry-Parallel / Outboard Rotary Trough):</strong> For dual-purpose 4x8 or 5x10 tables (such as FlashCut CNC, ShopSabre, or custom water tables with an outboard pipe trough) where the rotary attachment sits along the long Y rail. Selecting <strong>Tube Along Y</strong> applies a true right-handed +90&deg; coordinate rotation (<code class="mono">L &rarr; Y, T &rarr; -X</code>). Longitudinal cuts move on Y, cross-torch lateral shifts (such as off-center HSS corner climbs or bevel passes) move on X, and velocity/accel limits automatically pull from the physical axis moving the torch. Because this is a true 3D spatial rotation rather than a coordinate mirror, asymmetric fishmouths, angled saddle branches, and hole offsets are <strong>never mirrored</strong>.
+                </li>
+                <li>
+                  <strong>3-Axis Linear Wrap (RotaryAxisMapping):</strong> For controllers without a native 4th rotary axis (such as Langmuir FireControl or 3-axis Mach3), RotaryCAM automatically wraps circumference onto physical linear travel. When the tube is along X, circumference wraps onto Y (<code class="mono">G92 Y0</code>). When the tube is along Y, circumference wraps onto X (<code class="mono">G92 X0</code>).
                 </li>
               </ul>
-              <p style="margin-bottom: 0;">
-                Selecting the matching travel direction ensures your G-code programs never trip machine limit switches, cut in reverse, or drop stock out of the chuck prematurely.
+
+              <!-- 4 Rotary Chuck & Torch Travel Modes Table -->
+              <h4 style="color: var(--plasma-amber); font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.45rem;">
+                2. Four Rotary Chuck &amp; Torch Travel Modes
+              </h4>
+              <p>
+                Plasma rotary tables move in different physical ways depending on whether your chuck pushes the pipe or your torch gantry rolls along the bed. RotaryCAM supports all 4 travel modes with automatic G92 work offset emission:
               </p>
+
+              <div class="table-wrap" style="margin: 1rem 0; overflow-x: auto;">
+                <table class="doc-table">
+                  <thead>
+                    <tr>
+                      <th style="min-width: 170px;">Travel Mode</th>
+                      <th style="min-width: 180px;">Table Kinematics</th>
+                      <th style="min-width: 150px;">Work Datum &amp; G92</th>
+                      <th>Shop Floor Workflow &amp; Best Use Case</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Workpiece Moves<br><code class="mono">(-L &rarr; 0)</code></strong></td>
+                      <td>Moving-tube feeder table where the chuck pushes raw stock under a stationary-length torch (e.g. SimCNC Rotary).</td>
+                      <td><code class="mono">G92 X-Length</code><br>(or <code class="mono">Y-Length</code>)</td>
+                      <td>Zeroes at the far free end of the tube. Cuts finished parts from the free end backward toward the chuck (<code class="mono">0</code>), so parts drop cleanly onto the scrap tray while the remaining stick stays rigidly clamped.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Torch Moves:<br>Chuck at 0 &rarr; Free End at +L</strong></td>
+                      <td>Standard stationary rotary attachment where the chuck stays parked at zero and the torch gantry travels outward down the bed.</td>
+                      <td><code class="mono">G92 X0</code><br>(at chuck face)</td>
+                      <td>Traditional CNC mill/lathe convention. The chuck face is your permanent physical datum (<code class="mono">0</code>), and the torch cuts outward toward the free end (<code class="mono">+L</code>). Best for short tubes fully supported over the water table.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Torch Moves:<br>Free End at +L &rarr; Chuck at 0</strong></td>
+                      <td>Stationary rotary attachment where zero is set at the chuck face, but cut sequencing starts at the far free end.</td>
+                      <td><code class="mono">G92 X0</code><br>(at chuck face)</td>
+                      <td>Prevents long sticks from sagging. Cuts start at the overhanging free tip (<code class="mono">+L</code>) and step backward toward the chuck (<code class="mono">0</code>). Each drop falls clear without unbalancing the remaining raw stock.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Torch Moves:<br>Free End at 0 &rarr; Chuck at -L</strong></td>
+                      <td>Stationary rotary table where the operator zeroes the torch right at the physical tip of the loaded tube.</td>
+                      <td><code class="mono">G92 X0</code><br>(at free tip)</td>
+                      <td>Fastest shop-floor setup. Jog the torch to the overhanging edge of the loaded tube, zero <code class="mono">X0</code> (or <code class="mono">Y0</code>), and hit cycle start. Cuts move in negative coordinates (<code class="mono">-X</code> or <code class="mono">-Y</code>) back toward the chuck without measuring raw stick length.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Flat Sheet Orientation & 6 Work Zero Origins -->
+              <h4 style="color: var(--plasma-amber); font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.45rem;">
+                3. Flat Sheet Orientation (0&deg; vs. 90&deg; CCW) &amp; 6 Work Zero Origins
+              </h4>
+              <p>
+                When cutting 2D plate parts from DXF or SVG files, align parts with your table slats and choose where the operator zeroes the torch:
+              </p>
+              <ul class="doc-bullet-list">
+                <li>
+                  <strong>Sheet Orientation (0&deg; vs. 90&deg; CCW):</strong> Select <strong>0&deg; (Part Length along +X)</strong> to lay long parts along the X rail, or <strong>90&deg; CCW (Part Length along +Y)</strong> to orient parts along the Y gantry rail. This is a rigid Cartesian rotation (<code class="mono">X' = -Y, Y' = X</code>), guaranteeing asymmetric brackets, offset holes, and engraved text markings are <strong>never mirrored</strong>.
+                </li>
+                <li>
+                  <strong>6 Work Zero (X0, Y0) Origins:</strong>
+                  <ul class="doc-bullet-list" style="margin-top: 0.35rem; margin-bottom: 0.35rem;">
+                    <li><strong>Bottom-Left (<code class="mono">[0, +X] x [0, +Y]</code>):</strong> Industry default on standard 2D plasma tables where the operator stands at the front-left corner.</li>
+                    <li><strong>Top-Left (<code class="mono">[0, +X] x [-Y, 0]</code>):</strong> Zeroes at the rear-left corner with forward-moving Y travel.</li>
+                    <li><strong>Bottom-Right (<code class="mono">[-X, 0] x [0, +Y]</code>):</strong> Zeroes at the front-right corner for right-hand loading tables.</li>
+                    <li><strong>Top-Right (<code class="mono">[-X, 0] x [-Y, 0]</code>):</strong> Zeroes at the rear-right corner with negative X and Y travel.</li>
+                    <li><strong>Center (<code class="mono">[-X/2, +X/2] x [-Y/2, +Y/2]</code>):</strong> Places <code class="mono">X0, Y0</code> dead center of the sheet bounding box. Ideal for cutting small drops, circular flanges, or nesting inside remnant plates zeroed with a center punch mark.</li>
+                    <li><strong>Moving Sheet (<code class="mono">-X &rarr; 0</code>):</strong> For automated pinch-roller or plate-feeder machines that push steel forward beneath a stationary cutting bridge.</li>
+                  </ul>
+                </li>
+              </ul>
+
+              <!-- Hardware Motor Polarity -->
+              <h4 style="color: var(--plasma-amber); font-size: 1.05rem; margin-top: 1.5rem; margin-bottom: 0.45rem;">
+                4. Hardware Motor Polarity (Invert X, Invert Y, Invert Rotary A)
+              </h4>
+              <div class="doc-callout info" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                <div class="doc-callout-title">💡 The Polarity Rule of Thumb</div>
+                <p>
+                  Always set your <strong>Fixture &amp; Datum</strong> (Tube Axis, Travel Mode, and Sheet Origin) first so the 3D viewport matches how raw stock physically sits on your slats or chuck. <strong>Only</strong> toggle <code class="mono">Invert X</code>, <code class="mono">Invert Y</code>, or <code class="mono">Invert Rotary A</code> if a motor's DIR wire is reversed or your chuck rotates backward.
+                </p>
+              </div>
+              <p>
+                When an axis inversion checkbox is enabled, RotaryCAM does not simply negate coordinate values in post. It handles the complete mathematical transformation:
+              </p>
+              <ul class="doc-bullet-list">
+                <li>Negates the physical axis coordinates in all G0 rapid and G1 cutting blocks.</li>
+                <li>Inverts directional tool offsets, including <code class="mono">G52</code> pneumatic air-scribe and center-punch fixture offsets.</li>
+                <li>Automatically flips circular arc direction (<code class="mono">G2</code> clockwise &harr; <code class="mono">G3</code> counter-clockwise) across active planes (<code class="mono">G17, G18, G19</code>). This ensures lead-in arcs and kerf offsets stay on the scrap side and never gouge into finished part walls.</li>
+              </ul>
             </div>
 
             <div class="doc-callout tip">
@@ -1393,7 +1495,7 @@ M3</code></pre>
           <a href="../index.html#showcase">Showcase</a>
           <a href="../index.html#features">Capabilities</a>
           <a href="../index.html#kinematics">4-Axis Kinematics</a>
-          <a href="../hardware-thc.html">10 kHz Hardware THC (~$200 CAD)</a>
+          <a href="../hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
           <a href="../build-guide.html">Build Your Own Table</a>
           <a href="../changelog.html">Release Changelog &amp; Downloads</a>
         </div>

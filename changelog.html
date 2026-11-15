@@ -758,7 +758,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.0-BETA</span>
+        <span class="brand-tag">v0.7.1-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -964,6 +964,61 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 15, 2026 (v0.7.1)
+           ================================================================ -->
+      <article class="release-entry" id="v0.7.1">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 15, 2026</span>
+              <span class="release-version-pill">v0.7.1 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Rotary Y-Axis Support &bull; 4 Chuck Travel Modes &bull; Flat 6 Datum Origins &bull; 90&deg; CCW Rotation &bull; Motor Polarity Inversion &bull; Hardware THC v2 Wiring Guide</span>
+          </div>
+          <p class="release-summary">
+            Configure RotaryCAM to match your machine table layout. Support rotary attachments aligned parallel to your gantry Y rail with true right-handed rotation (never mirrored), pick from 4 physical chuck and torch travel modes (including touching off at the free tube tip without measuring stick length), orient 2D flat sheets with 90&deg; CCW rotation and 6 selectable work zero origins, invert motor directions with automatic arc-sense flipping, and explore the updated Hardware v2 Z-axis THC cabinet wiring guide with Pure vs. Hybrid SAV auto-voltage selection.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Gantry-Parallel Rotary Y-Axis (<code class="mono">Tube Along X</code> vs. <code class="mono">Tube Along Y</code>):</strong> Native support for CNC plasma tables where the rotary chuck sits parallel to the Y gantry rail (FlashCut CNC, ShopSabre, Mach3/4, LinuxCNC, MASSO, Acorn, UCCNC, and SimCNC). Selecting <strong>Tube Along Y</strong> applies a true right-handed +90&deg; coordinate rotation (<code class="mono">L &rarr; Y, T &rarr; -X</code>). Longitudinal cuts move on Y, cross-torch bevel or HSS lateral moves shift on X, and acceleration/velocity limits automatically track the physical motor moving the torch. Because this is a true spatial rotation, asymmetric fishmouths and angled saddles are <strong>never mirrored</strong>. Automatic 3-axis linear wrap also adapts circumference mapping (<code class="mono">X_WRAP</code> when tube is along Y, <code class="mono">Y_WRAP</code> when tube is along X).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>4 Rotary Chuck &amp; Torch Travel Modes:</strong> Select how your chuck and gantry move on the shop floor:
+                (1) <em>Workpiece Moves (-L &rarr; 0)</em> for moving-tube feeders like SimCNC Rotary where the chuck pushes stock beneath a stationary-length torch;
+                (2) <em>Torch Moves: Chuck at 0 &rarr; Free End at +L</em> for standard stationary rotary attachments cutting outward from the chuck;
+                (3) <em>Torch Moves: Free End at +L &rarr; Chuck at 0</em> for cutting from the overhanging tip back toward the chuck so severed drops fall cleanly without sagging long sticks; and
+                (4) <em>Torch Moves: Free End at 0 &rarr; Chuck at -L</em> where the operator zeroes <code class="mono">X0</code> (or <code class="mono">Y0</code>) right at the free tip and cuts in negative travel without measuring total stick length beforehand. Both Single-Part and 1D Pack Mode automatically sequence cuts from free end to chuck.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Flat Sheet Orientation (0&deg; vs. 90&deg; CCW) &amp; 6 Work Zero Datum Origins:</strong> Rigid right-handed 90&deg; CCW plate rotation (<code class="mono">X' = -Y, Y' = X</code>) guarantees asymmetric brackets, off-center holes, and etched part labels are never mirrored. Choose from 6 selectable <code class="mono">X0, Y0</code> sheet origins: <strong>Bottom-Left</strong> (default on all controllers), <strong>Top-Left</strong>, <strong>Bottom-Right</strong>, <strong>Top-Right</strong>, <strong>Center</strong> (ideal for remnant plates zeroed with a punch mark), and <strong>Moving Sheet (-X &rarr; 0)</strong> for automated plate feeders.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Hardware Motor Polarity Overrides &amp; 3D Cut Simulator Parity:</strong> Independent <code class="mono">Invert X</code>, <code class="mono">Invert Y</code>, and <code class="mono">Invert Rotary A</code> motor wiring toggles. When an axis runs backward, RotaryCAM automatically flips physical coordinates, <code class="mono">G52</code> pneumatic scribe offsets, and circular arc direction (<code class="mono">G2</code> &harr; <code class="mono">G3</code>) across <code class="mono">G17/G18/G19</code> planes so lead-ins stay on the scrap side. The integrated 3D Cut Simulator fully supports inverted unrolling with live session status badges.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Hardware THC v2 Cabinet Wiring Guide &amp; Pure vs. Hybrid SAV:</strong> Updated documentation and interactive reference on <a href="hardware-thc.html" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">Hardware THC ($199 CAD) &rarr;</a> detailing inline RS-422 differential Step/Dir interception, 2.0 ms ohmic tip-up escape, and the comparison between zero-config <strong>Pure SAV</strong> (set physical cut height and lock to live arc) and <strong>Hybrid SAV</strong> (clamping abnormal pierce spikes on thin, heat-bowed sheet metal).
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 14, 2026 (v0.7.0)
            ================================================================ -->
       <article class="release-entry" id="v0.7.0">
@@ -972,7 +1027,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 14, 2026</span>
-              <span class="release-version-pill">v0.7.0 &bull; LATEST</span>
+              <span class="release-version-pill">v0.7.0</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">1,025 Cut Presets (3 Torch Families) &bull; CSV Import/Export &bull; Multi-File DXF, SVG &amp; ZIP Flat Sheets &bull; Recursive Cutout Nesting &bull; 2D Common-Line Cuts &bull; Dedicated Mach4 ESS vs TMC3in1 &bull; 16-Post Grammar Linter &bull; Dynamic Anti-Dive THC</span>
           </div>
@@ -1855,7 +1910,7 @@
       <a href="index.html" class="footer-link">Home</a>
       <a href="index.html#pricing" class="footer-link" style="color: var(--emerald-cut);">Pricing &amp; Offline Keys</a>
       <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
-      <a href="hardware-thc.html" class="footer-link" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC (~$200 CAD) ↗</a>
+      <a href="hardware-thc.html" class="footer-link" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC ($199 CAD) ↗</a>
       <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">Build Your Own Table ↗</a>
       <a href="changelog.html" class="footer-link" style="color: #fff;">Changelog</a>
       <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
@@ -1905,7 +1960,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.0-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.1-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }

@@ -1495,7 +1495,7 @@
     <nav>
       <a href="#" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.0-BETA</span>
+        <span class="brand-tag">v0.7.1-BETA</span>
       </a>
       <div class="nav-links">
         <a href="#showcase">Showcase</a>
@@ -1595,7 +1595,7 @@
           <div class="term-dot" style="background: #eab308;"></div>
           <div class="term-dot" style="background: #22c55e;"></div>
         </div>
-        <span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">RotaryCAM v0.7.0: 3D Tube &amp; Flat-Sheet Plasma CAM</span>
+        <span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">RotaryCAM v0.7.1: 3D Tube &amp; Flat-Sheet Plasma CAM</span>
       </div>
       <img src="assets/cad-inspection.png" 
            alt="RotaryCAM Web Application Interface" 
@@ -2111,7 +2111,7 @@
     <aside style="max-width: 1200px; margin: 1.5rem auto 0; background: linear-gradient(135deg, rgba(20, 23, 29, 0.98), rgba(14, 18, 25, 0.98)); border: 1px solid rgba(245, 158, 11, 0.38); border-left: 4px solid var(--plasma-amber); border-radius: var(--radius); padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between; gap: 1.75rem; flex-wrap: wrap; box-shadow: 0 16px 36px rgba(0,0,0,0.42);">
       <div style="flex: 1; min-width: 280px;">
         <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; margin-bottom: 0.45rem;">
-          <span class="badge" style="margin-bottom: 0; background: rgba(245, 158, 11, 0.14); color: var(--plasma-amber); border: 1px solid rgba(245, 158, 11, 0.35); font-size: 0.72rem;"><span class="mono">HARDWARE V2 PREVIEW &bull; ~$200 CAD TARGET</span></span>
+          <span class="badge" style="margin-bottom: 0; background: rgba(245, 158, 11, 0.14); color: var(--plasma-amber); border: 1px solid rgba(245, 158, 11, 0.35); font-size: 0.72rem;"><span class="mono">HARDWARE V2 PREVIEW &bull; $199 CAD TARGET</span></span>
           <span class="mono" style="font-size: 0.74rem; color: var(--emerald-cut); font-weight: 600;">10,000 Hz Z Loop &bull; 2.0 ms Ohmic Tip-Up Escape &bull; 4-Plug Install</span>
         </div>
         <h3 style="font-size: 1.28rem; color: #fff; margin-bottom: 0.35rem; font-family: 'Space Grotesk', sans-serif;">
@@ -2122,7 +2122,7 @@
         </p>
       </div>
       <a href="hardware-thc.html" class="primary-btn" style="padding: 0.78rem 1.3rem; font-size: 0.88rem; white-space: nowrap; text-decoration: none;">
-        Explore Hardware THC (~$200 CAD) &rarr;
+        Explore Hardware THC ($199 CAD) &rarr;
       </a>
     </aside>
   </section>
@@ -2584,7 +2584,7 @@
     <div class="footer-links">
       <a href="#pricing" class="footer-link" style="color: var(--emerald-cut);">Pricing &amp; Offline Keys</a>
       <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
-      <a href="hardware-thc.html" class="footer-link" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC (~$200 CAD) ↗</a>
+      <a href="hardware-thc.html" class="footer-link" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC ($199 CAD) ↗</a>
       <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">Build Your Own Table (Open Hardware) ↗</a>
       <a href="changelog.html" class="footer-link" style="color: #fff;">Changelog &amp; Downloads ↗</a>
       <a href="#impressum" id="open-impressum-btn" class="footer-link">Legal Notice &amp; Safety (Impressum)</a>
@@ -2656,7 +2656,7 @@
           IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </p>
         <p>
-          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono" id="disclaimer-version">v0.7.0-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
+          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono" id="disclaimer-version">v0.7.1-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
         </p>
 
         <!-- Trademark & Compatibility Notice -->
@@ -3437,7 +3437,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.0-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.1-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
