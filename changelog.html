@@ -501,6 +501,231 @@
       line-height: 1.4;
     }
 
+    /* Jump Navigation Bar */
+    .changelog-jump-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.75rem;
+    }
+
+    .jump-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .jump-pill:hover {
+      color: #fff;
+      border-color: rgba(245, 158, 11, 0.4);
+      background: var(--surface-hover);
+    }
+
+    .jump-pill.highlight {
+      color: var(--cyan-arc);
+      border-color: rgba(6, 182, 212, 0.35);
+      background: rgba(6, 182, 212, 0.08);
+    }
+
+    .jump-pill.highlight:hover {
+      color: #fff;
+      border-color: var(--cyan-arc);
+      background: rgba(6, 182, 212, 0.15);
+    }
+
+    /* Roadmap Section */
+    .roadmap-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 4.5rem;
+    }
+
+    .roadmap-header {
+      margin-bottom: 2rem;
+    }
+
+    .roadmap-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      color: var(--cyan-arc);
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.85rem;
+    }
+
+    .roadmap-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan-arc);
+      box-shadow: 0 0 6px var(--cyan-arc);
+    }
+
+    .roadmap-header h2 {
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.02em;
+    }
+
+    .roadmap-header h2 span {
+      background: linear-gradient(135deg, #fff 40%, var(--cyan-arc));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .roadmap-lead {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 860px;
+      line-height: 1.6;
+    }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .roadmap-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .roadmap-card:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .roadmap-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--plasma-amber), var(--cyan-arc));
+      opacity: 0.7;
+    }
+
+    .roadmap-card.horizon::before {
+      background: linear-gradient(90deg, var(--cyan-arc), var(--emerald-cut));
+    }
+
+    .roadmap-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .roadmap-milestone-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--plasma-amber);
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    .roadmap-card.horizon .roadmap-milestone-tag {
+      color: var(--emerald-cut);
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .roadmap-status-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .roadmap-card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+
+    .roadmap-features {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      flex-grow: 1;
+    }
+
+    .roadmap-feat-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+    }
+
+    .roadmap-feat-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      color: var(--cyan-arc);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .roadmap-feat-body h3 {
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.25rem;
+      line-height: 1.35;
+    }
+
+    .roadmap-feat-body p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
     /* Changelog Entries Timeline */
     .changelog-section {
       max-width: 1200px;
@@ -727,6 +952,9 @@
       .download-grid {
         grid-template-columns: 1fr;
       }
+      .roadmap-grid {
+        grid-template-columns: 1fr;
+      }
       .nav-links {
         display: none;
       }
@@ -768,6 +996,7 @@
         <a href="hardware-thc.html" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC</a>
         <a href="build-guide.html">Build Your Own Table</a>
         <a href="changelog.html" class="active">Changelog</a>
+        <a href="#roadmap">Roadmap</a>
       </div>
       <a href="#downloads" class="nav-cta">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -791,6 +1020,28 @@
     <p class="lead">
       Direct downloads for cutting station PCs and CAD workstations. RotaryCAM processes raw STEP assemblies into production 4-axis rotary plasma G-code directly on your machine with zero cloud connectivity. Every installer includes zero-bevel saddle compensation, 1D mill-stick nesting, and offline MCP automation.
     </p>
+
+    <!-- Quick Jump Bar -->
+    <div class="changelog-jump-bar">
+      <a href="#downloads" class="jump-pill">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+        </svg>
+        Beta Downloads
+      </a>
+      <a href="#roadmap" class="jump-pill highlight">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+        </svg>
+        Public Roadmap
+      </a>
+      <a href="#v0.7.1" class="jump-pill">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Release History (v0.7.1)
+      </a>
+    </div>
 
     <!-- Public Beta Announcement & License Card -->
     <div class="beta-card" id="downloads">
@@ -958,6 +1209,132 @@
       </div>
     </div>
   </div>
+
+  <!-- ================================================================
+       ROADMAP: Public Engineering Roadmap & Future Milestones
+       ================================================================ -->
+  <section class="roadmap-section" id="roadmap">
+    <div class="roadmap-header">
+      <div class="roadmap-badge mono">
+        <span class="roadmap-badge-dot"></span>
+        DEVELOPMENT HORIZON &bull; UNSCHEDULED
+      </div>
+      <h2>Public Roadmap &amp; <span>Future Milestones</span></h2>
+      <p class="roadmap-lead">
+        Major capabilities currently in active engineering. Milestones are sequence-ordered by shop priority without delivery dates or calendar commitments. Every item remains unscheduled and subject to real-world cutting feedback.
+      </p>
+    </div>
+
+    <div class="roadmap-grid">
+      <!-- Milestone: v0.8 -->
+      <div class="roadmap-card">
+        <div class="roadmap-card-header">
+          <div>
+            <span class="roadmap-milestone-tag">v0.8</span>
+            <div class="roadmap-card-title">Torch Safety &amp; 2D Tube-Wrap</div>
+          </div>
+          <span class="roadmap-status-pill">Next Milestone</span>
+        </div>
+        <div class="roadmap-features">
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">01</div>
+            <div class="roadmap-feat-body">
+              <h3>Kerf-Crossing &amp; Void Spatial THC Auto-Lock</h3>
+              <p>Automatically locks torch height control before crossing existing cut kerfs, bolt holes, or pierce craters to stop torch dives over open air.</p>
+            </div>
+          </div>
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">02</div>
+            <div class="roadmap-feat-body">
+              <h3>2D DXF/SVG Rotary Tube-Wrap &amp; Interactive Canvas Controls</h3>
+              <p>Wrap 2D decorative art, cutouts, and text onto round pipe or rectangular HSS. Click and drag pierces, holding tabs, and nested parts directly on the visual canvas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestone: v0.9 -->
+      <div class="roadmap-card">
+        <div class="roadmap-card-header">
+          <div>
+            <span class="roadmap-milestone-tag">v0.9</span>
+            <div class="roadmap-card-title">Parametric Shapes &amp; Bender Prep</div>
+          </div>
+          <span class="roadmap-status-pill">Planned</span>
+        </div>
+        <div class="roadmap-features">
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">01</div>
+            <div class="roadmap-feat-body">
+              <h3>Walk-Up "No-CAD" Parametric Shape &amp; Joint Wizard</h3>
+              <p>Generate standard baseplates, gussets, flanges, brackets, and 3D tube saddles or miters at the machine console without launching external CAD.</p>
+            </div>
+          </div>
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">02</div>
+            <div class="roadmap-feat-body">
+              <h3>Mandrel / Rotary-Draw Bender Prep</h3>
+              <p>Unroll 3D bent tubes into straight pre-cut sticks with etched bend-tangent witness marks, calibrated shop die CLR tracking, and printable LRA operator cards.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestone: v1.0 GA -->
+      <div class="roadmap-card">
+        <div class="roadmap-card-header">
+          <div>
+            <span class="roadmap-milestone-tag">v1.0 GA</span>
+            <div class="roadmap-card-title">Commercial Shop &amp; Custom Posts</div>
+          </div>
+          <span class="roadmap-status-pill">Production Target</span>
+        </div>
+        <div class="roadmap-features">
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">01</div>
+            <div class="roadmap-feat-body">
+              <h3>Commercial Shop Business Suite</h3>
+              <p>Export complete multi-profile assemblies in one zip file, import CSV bills of materials, track remnant drops, and print clean shop travelers with job cost estimates.</p>
+            </div>
+          </div>
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">02</div>
+            <div class="roadmap-feat-body">
+              <h3>20 Built-In Controller Profiles &amp; Custom Post Editor</h3>
+              <p>Factory support for 20 CNC controllers including CommandCNC, Torchmate VMD, MyPlasm, and Industrial EIA, plus a built-in editor for custom .rcpost.json post-processors.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Milestone: Post-1.0 Horizon -->
+      <div class="roadmap-card horizon">
+        <div class="roadmap-card-header">
+          <div>
+            <span class="roadmap-milestone-tag">Post-1.0</span>
+            <div class="roadmap-card-title">Structural &amp; Assembly Joinery</div>
+          </div>
+          <span class="roadmap-status-pill">Future Horizon</span>
+        </div>
+        <div class="roadmap-features">
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">01</div>
+            <div class="roadmap-feat-body">
+              <h3>Auto Tab-and-Slot Weldment Joinery</h3>
+              <p>Cut interlocking self-fixturing tabs and kerf-cleared slots into mating tubes and plates so multi-part assemblies snap together without layout fixtures.</p>
+            </div>
+          </div>
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">02</div>
+            <div class="roadmap-feat-body">
+              <h3>Native DSTV (.nc1) Structural Import &amp; Bowed-Stick Probing</h3>
+              <p>Import Tekla, SDS2, and Advance Steel DSTV files directly, and probe warped or twisted mill sticks with multi-station touch-offs to compensate toolpaths in real time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Chronological Release Entries -->
   <main class="changelog-section">
@@ -1913,6 +2290,7 @@
       <a href="hardware-thc.html" class="footer-link" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC ($199 CAD) ↗</a>
       <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">Build Your Own Table ↗</a>
       <a href="changelog.html" class="footer-link" style="color: #fff;">Changelog</a>
+      <a href="#roadmap" class="footer-link">Roadmap</a>
       <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
     </div>
   </footer>
