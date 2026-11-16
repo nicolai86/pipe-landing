@@ -986,7 +986,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.2-BETA</span>
+        <span class="brand-tag">v0.7.3-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -1035,11 +1035,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.7.2" class="jump-pill">
+      <a href="#v0.7.3" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.7.2)
+        Release History (v0.7.3)
       </a>
     </div>
 
@@ -1341,6 +1341,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 16, 2026 (v0.7.3)
+           ================================================================ -->
+      <article class="release-entry" id="v0.7.3">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 16, 2026</span>
+              <span class="release-version-pill">v0.7.3 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">FlashCut FabHead Cut2D &bull; Single-EXE Windows Bundle &bull; Clearer Torch &amp; THC Machine Settings</span>
+          </div>
+          <p class="release-summary">
+            Cut cleanly on FlashCut CNC tables with native Fabrication Head support that stops premature torch firing during touch-off probing. Windows workstations now download a single, self-contained RotaryCAM.exe bundle with automatic background process cleanup, and Machine Settings now hides controller-specific pins so configuring your torch and THC signals is simple.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>FlashCut FabHead Cut2D Post-Processor &amp; 3D Simulator Parity:</strong> Emits <code class="mono">#fabhead.mode = Cut</code> and <code class="mono">M106 Hplasma1</code> with <code class="mono">G602</code>/<code class="mono">G603</code> THC suspend and resume commands, <code class="mono">G93</code> inverse-time rotary feedrates, and <code class="mono">G605</code> surface touch-off before <code class="mono">M50</code> firing on center-spots. Eliminates pre-probe torch firing on FlashCut Fabrication Head tables, with full flame and kerf visualization in the 3D Cut Simulator.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Single-EXE Windows Bundle &amp; Process Cleanup:</strong> Packages the entire Windows desktop app into a single <code class="mono">RotaryCAM.exe</code> inside <code class="mono">RotaryCam-Windows-latest.zip</code>. Features single-instance tray enforcement, Windows Job Object child process cleanup, ephemeral port isolation against stale background servers, and backend <code class="mono">/health</code> telemetry in one-click diagnostics zips.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Clearer Torch Firing &amp; THC Hold Machine Controls:</strong> Replaces confusing duplicate pin dropdowns with plain-language <strong>Torch Firing Mode (Arc On / Off)</strong> and <strong>THC Hold / Lock Signal (Height Control)</strong> controls. Automatically hides SimCNC-only variables (<code class="mono">#4061</code>, <code class="mono">M62/M63</code> output pins, and unwind dwells) when configuring third-party controllers, displaying each controller's native Arc and THC protocol summary directly.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 16, 2026 (v0.7.2)
            ================================================================ -->
       <article class="release-entry" id="v0.7.2">
@@ -1349,7 +1388,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 16, 2026</span>
-              <span class="release-version-pill">v0.7.2 &bull; LATEST</span>
+              <span class="release-version-pill">v0.7.2</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Automatic Machine Profile Saving &bull; Reliable Cloned Machine Edits &bull; Script Cache-Busting &bull; One-Click Diagnostics Zip Bundle</span>
           </div>
@@ -2377,7 +2416,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.2-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.3-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
