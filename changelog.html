@@ -986,7 +986,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.1-BETA</span>
+        <span class="brand-tag">v0.7.2-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -1035,11 +1035,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.7.1" class="jump-pill">
+      <a href="#v0.7.2" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.7.1)
+        Release History (v0.7.2)
       </a>
     </div>
 
@@ -1341,6 +1341,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 16, 2026 (v0.7.2)
+           ================================================================ -->
+      <article class="release-entry" id="v0.7.2">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 16, 2026</span>
+              <span class="release-version-pill">v0.7.2 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Automatic Machine Profile Saving &bull; Reliable Cloned Machine Edits &bull; Script Cache-Busting &bull; One-Click Diagnostics Zip Bundle</span>
+          </div>
+          <p class="release-summary">
+            Keep your custom machine setups locked in permanently across browser restarts. RotaryCAM now automatically saves every machine profile edit, fixes cloned and custom machines misidentified as stock templates so they never reject edits or revert on unit toggles, adds automated asset cache-busting so updates load immediately without stale cached scripts, and adds a one-click Download Diagnostics zip bundle in the About dialog to bundle logs, UI error telemetry, and machine configs for instant troubleshooting.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Automatic Machine Profile Saving &amp; Custom Machine Fix:</strong> Every change you make to axis travels, motor polarity, rotary alignment, post-processor dialects, or feedrate limits now saves automatically the instant you edit it. Resolves a critical bug where cloned and custom machine profiles were misidentified as stock built-in templates, causing edits to be rejected or reverting settings back to defaults when toggling units. Your custom shop setups and cloned machines now stay permanently locked in.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Automatic Browser Script Cache-Busting:</strong> Frontend scripts and static assets now include deterministic build hashes. When you update RotaryCAM, your browser downloads the new scripts immediately without serving stale cached code or requiring a manual hard refresh (<code class="mono">Ctrl+F5</code> or <code class="mono">Cmd+Shift+R</code>).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>One-Click Download Diagnostics Zip in About Modal:</strong> Export a complete troubleshooting package straight from the <strong>About RotaryCAM</strong> dialog with one click. The generated <code class="mono">.zip</code> bundle includes backend server logs, browser console telemetry, active model information, viewport dimensions, and current machine configurations for instant troubleshooting without digging through application directories.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 15, 2026 (v0.7.1)
            ================================================================ -->
       <article class="release-entry" id="v0.7.1">
@@ -1349,7 +1388,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 15, 2026</span>
-              <span class="release-version-pill">v0.7.1 &bull; LATEST</span>
+              <span class="release-version-pill">v0.7.1</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Rotary Y-Axis Support &bull; 4 Chuck Travel Modes &bull; Flat 6 Datum Origins &bull; 90&deg; CCW Rotation &bull; Motor Polarity Inversion &bull; Hardware THC v2 Wiring Guide</span>
           </div>
@@ -2338,7 +2377,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.1-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.2-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }

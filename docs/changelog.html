@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.7.1-BETA</span>
+          <span class="brand-tag">v0.7.2-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -573,9 +573,9 @@
               The <strong>About RotaryCAM</strong> modal opens over the workspace and is divided into three sections:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.7.1</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
+              <li><strong>1. Build Metadata Table (Top):</strong> Displays the active <strong>Version</strong> (<code class="mono">v0.7.2</code>), exact <strong>Git Commit</strong> hash, <strong>Build Date (UTC)</strong>, <strong>CI Build Run ID</strong>, host <strong>Platform</strong> (<code class="mono">darwin/arm64</code>), <strong>Build Mode</strong>, and current <strong>License Status</strong>.</li>
               <li><strong>2. What Changed: Recent Highlights (Center):</strong> A scrollable, date-stamped engineering changelog detailing newly shipped capabilities, such as <em>Recursive Part-in-Cutout Nesting &amp; 2D Flat-Sheet Common-Line Cutting</em>, <em>Dynamic Anti-Dive THC Locking on 2D Flat Sheet</em>, <em>Built-In One-Click Flat Sheet DXF Kit</em>, <em>Multi-File DXF &amp; SVG Flat-Sheet Ingestion, Magnetic 2-Point Scaling, 2D Sheet Nesting &amp; Imperial G20 Units</em>, <em>12 Drop-In CNC Plasma Controller Post-Processors</em>, <em>Clean Stationary Pierce Plunge &amp; 3D Ramp Lead-Ins</em>, <em>True Geometric Rectangular HSS Zero-Bevel Miters &amp; Copes</em>, <em>4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling</em>, <em>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling</em>, <em>Kerf-Compensated Micro-Joint Tabs &amp; Configurable ERW Weld-Seam Avoidance</em>, <em>I-Beam &amp; C-Channel 4-Axis Beamline Emulation with Dynamic Knee-Clearance Rotation</em>, <em>Stationary Center-Point Dimple &amp; Peck Marking (<code class="mono">Contour</code> vs <code class="mono">Center Point</code>)</em>, <em>Automatic Piece Labeling, Mating Joint Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Multi-Stroke Assembly Weld Witness Marks</em>, <em>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets</em>, <em>Chuck Jaw &amp; Slew-Ring &ldquo;No-Cut&rdquo; Dead Zones &amp; Minimum Stick Load Length</em>, <em>Interlocking Miter &amp; Cope Stick Nesting (180&deg; Flip + A-Axis Roll)</em>, <em>Single-Cut Common-Line Severing</em>, <em>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code class="mono">.markings.json</code>)</em>, <em>Batch Feature Selection &amp; Overrides</em>, <em>2D XY Sheet Nesting (VectorNester 2.0)</em>, and <em>100% Offline MCP Stdio Server</em>.</li>
-              <li><strong>3. Copy Diagnostics (Bottom-Right):</strong> Click <span class="ui-chip emerald">📋 Copy Diagnostics</span> to copy a formatted snapshot of your build metadata and environment to the clipboard when reporting an issue or requesting support.</li>
+              <li><strong>3. Download Diagnostics (Bottom-Right):</strong> Click <span class="ui-chip emerald">📦 Download Diagnostics</span> to download a complete <code class="mono">rotarycam-diagnostics.zip</code> bundle containing backend server logs, browser console telemetry, active model information, and current machine configurations when reporting an issue or requesting support.</li>
             </ul>
           </div>
 
@@ -741,10 +741,23 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Release: Nov 15 (v0.7.1 • Latest) -->
+            <!-- Release: Nov 16, 2026 (v0.7.2 • Latest) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 15, 2026 (v0.7.1 &bull; Latest)</span>
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 16, 2026 (v0.7.2 &bull; Latest)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">Automatic Machine Profile Saving &bull; Reliable Cloned Machine Edits &bull; Script Cache-Busting &bull; One-Click Diagnostics Zip Bundle</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Automatic Machine Profile Saving &amp; Custom Machine Fix:</strong> Every change you make to axis travels, motor polarity, rotary alignment, post-processor dialects, or feedrate limits now saves automatically the instant you edit it. Resolves a critical bug where cloned and custom machine profiles were misidentified as stock built-in templates, causing edits to be rejected or reverting settings back to defaults when toggling units. Your custom shop setups and cloned machines now stay permanently locked in.</li>
+                <li><strong>Automatic Browser Script Cache-Busting:</strong> Frontend scripts and static assets now include deterministic build hashes. When you update RotaryCAM, your browser downloads the new scripts immediately without serving stale cached code or requiring a manual hard refresh (<code class="mono">Ctrl+F5</code> or <code class="mono">Cmd+Shift+R</code>).</li>
+                <li><strong>One-Click Download Diagnostics Zip in About Modal:</strong> Export a complete troubleshooting package straight from the <strong>About RotaryCAM</strong> dialog with one click. The generated <code class="mono">.zip</code> bundle includes backend server logs, browser console telemetry, active model information, viewport dimensions, and current machine configurations for instant troubleshooting without digging through application directories.</li>
+              </ul>
+            </div>
+
+            <!-- Release: Nov 15, 2026 (v0.7.1) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 15, 2026 (v0.7.1)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Rotary Y-Axis Support &bull; 4 Chuck Travel Modes &bull; Flat 6 Datum Origins &bull; 90&deg; CCW Rotation &bull; Motor Polarity Inversion &bull; Hardware THC v2 Wiring Guide</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
