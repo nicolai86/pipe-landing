@@ -986,7 +986,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.3-BETA</span>
+        <span class="brand-tag">v0.7.4-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -1035,11 +1035,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.7.3" class="jump-pill">
+      <a href="#v0.7.4" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.7.3)
+        Release History (v0.7.4)
       </a>
     </div>
 
@@ -1341,6 +1341,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 16, 2026 (v0.7.4)
+           ================================================================ -->
+      <article class="release-entry" id="v0.7.4">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 16, 2026</span>
+              <span class="release-version-pill">v0.7.4 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Saved User Preferences &amp; &#8942; Defaults &bull; Recent Models Landing View &bull; Post-Processor Readiness Labels</span>
+          </div>
+          <p class="release-summary">
+            Stop re-typing your shop defaults on every new part. Save your preferred lead-ins, kerf, nesting, and Round Wall Bevel mode once from any setting's <code class="mono">&#8942;</code> menu, jump straight back into your last 10 models from the opening screen, and see Verified vs. Beta controller status at a glance.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Saved User Preferences &amp; Fusion 360-Style <code class="mono">&#8942;</code> Default Controls:</strong> Lock in persistent shop defaults across Global CAM Settings, Pack Nesting, and Per-Feature Cut Settings. Click the <code class="mono">&#8942;</code> menu beside any field to <strong>Make Current Value Default</strong>, <strong>Reset to Saved User Default</strong>, or <strong>Clear Default</strong>, or manage everything in the <strong>Preferences</strong> modal. Precedence follows <code class="mono">Explicit &gt; User Preferences &gt; Active Machine &gt; Factory/Cut-Chart</code>, including Round Wall Bevel defaults (<code class="mono">Zero-Bevel</code>, <code class="mono">Eccentric</code>, and <code class="mono">Square 0&deg;</code>), plus <code class="mono">get_user_preferences</code> and <code class="mono">update_user_preferences</code> MCP tools and <code class="mono">user_preferences.json</code> in diagnostics zips.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Recent Models Landing View:</strong> Opening RotaryCAM without an active part replaces the idle 3D viewport with your last 10 processed models sorted by most recent access. Each card displays the filename, profile badge, part count, and timestamp for 1-click reopening.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Post-Processor Readiness Labels (<code class="mono">2 Verified &middot; 14 Beta</code>):</strong> Updated controller compatibility status so shop-tested posts for <strong>CSLab SimCNC</strong> and <strong>FlashCut CNC</strong> display as <strong>Verified</strong> alongside 14 <strong>Beta</strong> post-processors.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 16, 2026 (v0.7.3)
            ================================================================ -->
       <article class="release-entry" id="v0.7.3">
@@ -1349,7 +1388,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 16, 2026</span>
-              <span class="release-version-pill">v0.7.3 &bull; LATEST</span>
+              <span class="release-version-pill">v0.7.3</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">FlashCut FabHead Cut2D &bull; Single-EXE Windows Bundle &bull; Clearer Torch &amp; THC Machine Settings</span>
           </div>
@@ -2416,7 +2455,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.3-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.4-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }

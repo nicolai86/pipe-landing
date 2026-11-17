@@ -234,10 +234,23 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Release: Nov 16, 2026 (v0.7.3 • Latest) -->
+            <!-- Release: Nov 16, 2026 (v0.7.4 • Latest) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 16, 2026 (v0.7.3 &bull; Latest)</span>
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 16, 2026 (v0.7.4 &bull; Latest)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">Saved User Preferences &amp; &#8942; Defaults &bull; Recent Models Landing View &bull; Post-Processor Readiness Labels</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Saved User Preferences &amp; Fusion 360-Style <code class="mono">&#8942;</code> Default Controls:</strong> Lock in persistent shop defaults across Global CAM Settings, Pack Nesting, and Per-Feature Cut Settings. Use the <code class="mono">&#8942;</code> menu beside any field to <strong>Make Current Value Default</strong>, <strong>Reset to Saved User Default</strong>, or <strong>Clear Default</strong>, or manage all defaults in the <strong>Preferences</strong> modal. Precedence follows <code class="mono">Explicit &gt; User Preferences &gt; Active Machine &gt; Factory/Cut-Chart</code>, including Round Wall Bevel defaults (<code class="mono">Zero-Bevel</code>, <code class="mono">Eccentric</code>, and <code class="mono">Square 0&deg;</code>), plus <code class="mono">get_user_preferences</code> and <code class="mono">update_user_preferences</code> MCP tools and <code class="mono">user_preferences.json</code> in diagnostics zips.</li>
+                <li><strong>Recent Models Landing View:</strong> Opening RotaryCAM without an active part replaces the idle 3D viewport with your last 10 processed models sorted by most recent access, showing filename, profile badge, part count, and timestamp for 1-click reopening.</li>
+                <li><strong>Post-Processor Readiness Labels (<code class="mono">2 Verified &middot; 14 Beta</code>):</strong> Updated controller compatibility summary so shop-tested posts for <strong>CSLab SimCNC</strong> and <strong>FlashCut CNC</strong> display as <strong>Verified</strong> alongside 14 <strong>Beta</strong> post-processors.</li>
+              </ul>
+            </div>
+
+            <!-- Release: Nov 16, 2026 (v0.7.3) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 16, 2026 (v0.7.3)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">FlashCut FabHead Cut2D &bull; Single-EXE Windows Bundle &bull; Clearer Torch &amp; THC Machine Settings</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
