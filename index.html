@@ -1637,13 +1637,13 @@
         <span class="badge mono" style="color: var(--plasma-amber); margin-bottom: 0.75rem;">AUTOMATIC TUBE RECOGNITION</span>
         <h3>Complete 3D Assembly Inspection: Instant Layout &amp; Part Navigation</h3>
         <p>
-          Drop multi-part STEP assemblies straight in, like this 37-part truck rack loaded in 9 seconds. RotaryCAM recognizes square and rectangular tubing (<code class="mono">38.1 &times; 38.1 &times; 3.18 mm</code>), assigns piece IDs (<code class="mono">P1&ndash;P37</code>), and classifies miters, saddle copes, and bolt holes with scrap lead-ins. Switch any cut between Cut, Mark, Scribe, and Drill-Dimple in one click, and click any tube to inspect its toolpath.
+          Drop multi-part STEP assemblies straight in, like this 37-part truck rack loaded in 9 seconds. RotaryCAM recognizes square and rectangular tubing (<code class="mono">38.1 &times; 38.1 &times; 3.18 mm</code>), assigns piece IDs (<code class="mono">P1&ndash;P37</code>), and sets stock-aware defaults for lead-ins, corner loops, holding tabs, and zero-bevel cuts. Click the 3D model or 2D contour map to move pierces, drag holding tabs, or switch any cut between Cut, Mark, Scribe, and Drill-Dimple in one click.
         </p>
         <div class="pill-list mono">
           <span class="pill"><span class="pill-dot"></span>37-Part Frame in ~9s</span>
-          <span class="pill"><span class="pill-dot"></span>Auto Piece IDs (P1&ndash;P37)</span>
+          <span class="pill"><span class="pill-dot"></span>Click-to-Move Pierces &amp; Tabs</span>
           <span class="pill"><span class="pill-dot"></span>Cut / Mark / Scribe / Dimple</span>
-          <span class="pill"><span class="pill-dot"></span>1-Click Part Inspection</span>
+          <span class="pill"><span class="pill-dot"></span>Stock-Aware CAM Defaults</span>
         </div>
       </div>
       <div class="showcase-img-container">
@@ -1657,14 +1657,14 @@
         <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">STICK NESTING &amp; ZERO SCRAP DROP</span>
         <h3>Stick Nesting: Interlock Miters, Common-Line Severs &amp; Chuck Collision Guard</h3>
         <p>
-          Pack parts end-to-end along standard 20ft, 24ft, or 6m mill sticks with under 1% scrap drop. RotaryCAM tests 180° end flips and roll rotations so miters and copes interlock tightly, and merges matching cuts with <strong>single-cut common-line severing</strong>. Chuck jaw dead zones display the exact <strong>Min Stock to Load</strong> to prevent crashes, while auto-scribed piece IDs and mating marks (<code class="mono">P1 &harr; P12</code>) keep parts organized on the welding table.
+          Pack parts end-to-end along standard 20ft, 24ft, or 6m mill sticks with under 1% scrap drop. RotaryCAM tests 180° end flips and roll rotations so miters and copes interlock tightly, and lets you reorder pieces, flip 180°, nudge phase angle <code class="mono">&Delta;A</code>, and adjust per-part gaps right on the stick strip. Chuck jaw dead zones display the exact <strong>Min Stock to Load</strong>, while auto-scribed piece IDs and mating marks (<code class="mono">P1 &harr; P12</code>) keep parts organized on the welding table.
         </p>
         <div class="pill-list mono">
           <span class="pill pill-cyan"><span class="pill-dot"></span>180° Flip &amp; Roll Interlocking</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Interactive Stick Strip &amp; &Delta;A Nudge</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>Single-Cut Common Line</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>Chuck Dead Zone &amp; Min Load Badge</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>Auto-Scribe IDs &amp; Mating Marks</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>1-Click Track Inspection</span>
         </div>
       </div>
       <div class="showcase-img-container">
@@ -1678,14 +1678,14 @@
         <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">FLAT-SHEET DXF / SVG &amp; IMPERIAL G20</span>
         <h3>Flat-Sheet DXF &amp; SVG Kits: Recursive Nesting, Common-Line Cuts &amp; Imperial G20</h3>
         <p>
-          Cut gussets, tabs, and base plates alongside your tubing without switching CAM programs. Drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> files straight onto <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) plates with <strong>recursive part-in-cutout nesting</strong> that packs smaller tabs inside scrap cutouts from the inside out. Share edges with <strong>2D common-line cutting</strong>, fix scaling with 2-point snap measurement, select gauges from <code class="mono">16ga</code> to <code class="mono">1/2&Prime;</code>, and post native Imperial (<code class="mono">G20 / IPM</code>) or Metric (<code class="mono">G21</code>) G-code.
+          Cut gussets, tabs, and base plates alongside your tubing without switching CAM programs. Drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> files straight onto <code class="mono">48 &times; 96 in</code> (<code class="mono">1250 &times; 2500 mm</code>) plates, drag, rotate (<code class="mono">15&deg;</code> snap or free), and flip nested parts with live collision halos, or link parts cleanly with flared <strong>Daisy-Chain bridges</strong>. Pack small tabs inside scrap cutouts from the inside out, share edges with <strong>2D common-line cutting</strong>, fix scaling with 2-point snaps, and post native <code class="mono">G20</code> or <code class="mono">G21</code> G-code.
         </p>
         <div class="pill-list mono">
           <span class="pill pill-cyan"><span class="pill-dot"></span>Multi-File .DXF &amp; .SVG</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Drag, Rotate &amp; Collision Halos</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Flared Daisy-Chain Bridges</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>Recursive Cutout Nesting</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>2D Common-Line Cuts</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>Cursor Zoom &amp; Pan HUD</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>16ga–1/2" Thickness Gate</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>2-Point Snap Scaling</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>Imperial G20 &amp; Metric G21</span>
         </div>

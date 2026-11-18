@@ -1239,15 +1239,15 @@
           <div class="roadmap-feat-item">
             <div class="roadmap-feat-num">01</div>
             <div class="roadmap-feat-body">
-              <h3>Kerf-Crossing &amp; Void Spatial THC Auto-Lock</h3>
+              <h3>Kerf-Crossing &amp; Void Spatial THC Auto-Lock <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Shipped in v0.8-A)</span></h3>
               <p>Automatically locks torch height control before crossing existing cut kerfs, bolt holes, or pierce craters to stop torch dives over open air.</p>
             </div>
           </div>
           <div class="roadmap-feat-item">
             <div class="roadmap-feat-num">02</div>
             <div class="roadmap-feat-body">
-              <h3>2D DXF/SVG Rotary Tube-Wrap &amp; Interactive Canvas Controls</h3>
-              <p>Wrap 2D decorative art, cutouts, and text onto round pipe or rectangular HSS. Click and drag pierces, holding tabs, and nested parts directly on the visual canvas.</p>
+              <h3>2D DXF/SVG Rotary Tube-Wrap <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Canvas Controls Shipped in v0.8-C)</span></h3>
+              <p>Wrap 2D decorative art, cutouts, and text onto round pipe or rectangular HSS. Interactive canvas pierce, holding-tab, 2D sheet, and 1D stick controls are now live in <code class="mono">v0.8-C</code>.</p>
             </div>
           </div>
         </div>
@@ -1341,6 +1341,51 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 18, 2026 (v0.8-C)
+           ================================================================ -->
+      <article class="release-entry" id="v0.8-c">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 18, 2026</span>
+              <span class="release-version-pill">v0.8-C &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Interactive Canvas Controls &bull; 2D Nest Drag/Rotate/Flip &bull; 1D Stick Strip Controls &bull; Smart CAM Auto-Defaults &amp; Flared Daisy-Chain</span>
+          </div>
+          <p class="release-summary">
+            Click directly on your 3D model, 2D unwrapped contours, 2D plate nest, or 1D tube stick to adjust pierces, holding tabs, part positions, and stick order before cutting. Stock-aware CAM defaults fill in safe starting settings when no override is entered, and flared Daisy-Chain bridges jump from part to part cleanly without retracing half-contours.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Interactive Pierce &amp; Holding Tab Controls (<code class="mono">v0.8-C</code>):</strong> Click on the 3D WebGL model or 2D unwrapped contour overlay to move pierce start locations (<strong>Move Pierce</strong>, <code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>), or click, drag, and delete custom holding tab positions (<strong>Edit Tabs</strong>, <code class="mono">Pro Shop</code>). Lead-in and lead-out paths recompute automatically across both Single-File and Pack Mode cuts.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>2D Sheet Interactive Nest Manipulation &amp; Collision Halos (<code class="mono">v0.8-C</code>):</strong> Drag nested parts smoothly in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, flip parts horizontally or vertically, see live part-spacing and sheet-edge collision halos, and click <strong>Reset Auto-Nest</strong> (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>1D Rotary Stick Strip Controls (<code class="mono">v0.8-C</code>):</strong> Reorder nested tube pieces along the stick, flip <code class="mono">180&deg;</code> end-for-end, nudge phase angle <code class="mono">&Delta;A</code>, and adjust per-part gaps directly inside the Pack panel.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Smart CAM Auto-Defaults &amp; Flared Daisy-Chain Bridges:</strong> Stock-aware physics defaults set lead-in/out, corner loops, holding tabs, zero-bevel, and chain/bridge widths automatically when no explicit override is set. Flared, vertex-pinched Daisy-Chain bridges eliminate half-shape contour retracing, and the flat-mode UI enforces mutual exclusion between Chain/Bridge and Common-Line cutting.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 17, 2026 (v0.7.5)
            ================================================================ -->
       <article class="release-entry" id="v0.7.5">
@@ -1349,7 +1394,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 17, 2026</span>
-              <span class="release-version-pill">v0.7.5 &bull; LATEST</span>
+              <span class="release-version-pill">v0.7.5</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">FlashCut .xml Setup Import &bull; 3D Ramp &amp; Tube Cut Cycle &bull; Round Planar Miter Fix</span>
           </div>
