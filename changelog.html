@@ -986,7 +986,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.5-BETA</span>
+        <span class="brand-tag">v0.8.0-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -1035,11 +1035,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.7.5" class="jump-pill">
+      <a href="#v0.8.0" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.7.5)
+        Release History (v0.8.0)
       </a>
     </div>
 
@@ -1111,7 +1111,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.7.5/RotaryCam-macOS-v0.7.5.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.0/RotaryCam-macOS-v0.8.0.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1142,7 +1142,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.7.5/RotaryCam-Windows-v0.7.5.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.0/RotaryCam-Windows-v0.8.0.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1173,7 +1173,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.7.5/RotaryCam-Linux-v0.7.5.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.0/RotaryCam-Linux-v0.8.0.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1230,24 +1230,24 @@
       <div class="roadmap-card">
         <div class="roadmap-card-header">
           <div>
-            <span class="roadmap-milestone-tag">v0.8</span>
-            <div class="roadmap-card-title">Torch Safety &amp; 2D Tube-Wrap</div>
+            <span class="roadmap-milestone-tag">v0.8.0</span>
+            <div class="roadmap-card-title">Torch Safety &amp; Canvas Controls</div>
           </div>
-          <span class="roadmap-status-pill">Next Milestone</span>
+          <span class="roadmap-status-pill" style="color: var(--emerald-cut); border-color: rgba(16, 185, 129, 0.35);">Shipped in v0.8.0</span>
         </div>
         <div class="roadmap-features">
           <div class="roadmap-feat-item">
             <div class="roadmap-feat-num">01</div>
             <div class="roadmap-feat-body">
-              <h3>Kerf-Crossing &amp; Void Spatial THC Auto-Lock <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Shipped in v0.8-A)</span></h3>
+              <h3>Kerf-Crossing &amp; Void Spatial THC Auto-Lock <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Shipped in v0.8.0)</span></h3>
               <p>Automatically locks torch height control before crossing existing cut kerfs, bolt holes, or pierce craters to stop torch dives over open air.</p>
             </div>
           </div>
           <div class="roadmap-feat-item">
             <div class="roadmap-feat-num">02</div>
             <div class="roadmap-feat-body">
-              <h3>2D DXF/SVG Rotary Tube-Wrap <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Canvas Controls Shipped in v0.8-C)</span></h3>
-              <p>Wrap 2D decorative art, cutouts, and text onto round pipe or rectangular HSS. Interactive canvas pierce, holding-tab, 2D sheet, and 1D stick controls are now live in <code class="mono">v0.8-C</code>.</p>
+              <h3>Interactive Canvas &amp; Sheet Cut Tools <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Shipped in v0.8.0)</span></h3>
+              <p>Move pierce points, drag holding tabs, manipulate 2D sheet nests and 1D tube sticks live on screen, plus remnant guillotine crops and serpentine scrap-margin chains.</p>
             </div>
           </div>
         </div>
@@ -1341,44 +1341,56 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
-           RELEASE: November 18, 2026 (v0.8-C)
+           RELEASE: November 18, 2026 (v0.8.0)
            ================================================================ -->
-      <article class="release-entry" id="v0.8-c">
+      <article class="release-entry" id="v0.8.0">
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 18, 2026</span>
-              <span class="release-version-pill">v0.8-C &bull; LATEST</span>
+              <span class="release-version-pill">v0.8.0 &bull; LATEST</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Interactive Canvas Controls &bull; 2D Nest Drag/Rotate/Flip &bull; 1D Stick Strip Controls &bull; Smart CAM Auto-Defaults &amp; Flared Daisy-Chain</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Spatial Void THC Auto-Lock &bull; Interactive Canvas &amp; Nesting Controls &bull; Open-Path Kerf &amp; Edge-Start &bull; Remnant Crop &bull; Serpentine Chains &bull; FlashCut 9+/8.x Mode 2</span>
           </div>
           <p class="release-summary">
-            Click directly on your 3D model, 2D unwrapped contours, 2D plate nest, or 1D tube stick to adjust pierces, holding tabs, part positions, and stick order before cutting. Stock-aware CAM defaults fill in safe starting settings when no override is entered, and flared Daisy-Chain bridges jump from part to part cleanly without retracing half-contours.
+            Move pierces, holding tabs, 2D sheet parts, and 1D tube sticks right on the canvas before cutting. Automatic void tracking locks THC before crossing prior cuts, remnant guillotine crops square off usable sheet drops, serpentine scrap-margin chains save pierces, and FlashCut 9+ / 8.x Mode 2 keeps lift-axis Z sync tight.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Interactive Pierce &amp; Holding Tab Controls (<code class="mono">v0.8-C</code>):</strong> Click on the 3D WebGL model or 2D unwrapped contour overlay to move pierce start locations (<strong>Move Pierce</strong>, <code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>), or click, drag, and delete custom holding tab positions (<strong>Edit Tabs</strong>, <code class="mono">Pro Shop</code>). Lead-in and lead-out paths recompute automatically across both Single-File and Pack Mode cuts.
+                <strong>Interactive Pierce, Holding Tab, 2D Sheet &amp; 1D Stick Controls (<code class="mono">v0.8-C</code>):</strong> Click the 3D model or 2D contour overlay to move pierce points (<strong>Move Pierce</strong>, <code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>) or drag and delete holding tabs (<strong>Edit Tabs</strong>, <code class="mono">Pro Shop</code>). On 2D sheets, drag parts in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, flip H/V with live collision halos, and click <strong>Reset Auto-Nest</strong> (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>). On 1D sticks, reorder parts, flip <code class="mono">180&deg;</code> end-for-end, nudge phase angle <code class="mono">&Delta;A</code>, and adjust gaps directly in the Pack panel.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>2D Sheet Interactive Nest Manipulation &amp; Collision Halos (<code class="mono">v0.8-C</code>):</strong> Drag nested parts smoothly in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, flip parts horizontally or vertically, see live part-spacing and sheet-edge collision halos, and click <strong>Reset Auto-Nest</strong> (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>).
+                <strong>Spatial Void THC Auto-Lock (<code class="mono">v0.8-A</code>):</strong> <code class="mono">SpatialVoidIndex</code> tracks every cut kerf slot and pierce crater on your sheet and locks THC automatically within <code class="mono">0.5 &times; kerfWidth + 4.0 mm</code> so the torch never dives across earlier cuts.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>1D Rotary Stick Strip Controls (<code class="mono">v0.8-C</code>):</strong> Reorder nested tube pieces along the stick, flip <code class="mono">180&deg;</code> end-for-end, nudge phase angle <code class="mono">&Delta;A</code>, and adjust per-part gaps directly inside the Pack panel.
+                <strong>Open-Path Left/Right/Center Kerf &amp; Thick-Plate Edge-Start Piercing:</strong> Choose <code class="mono">Center</code>, <code class="mono">Left</code>, or <code class="mono">Right</code> kerf compensation on unclosed slits, trims, and bend reliefs (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>). For heavy plate (<code class="mono">&ge; 12 mm</code> / <code class="mono">1/2&Prime;</code>), <strong>Edge-Start</strong> probes IHS on steel, retracts, shifts off-edge into open air (<code class="mono">4.0 mm</code> default overhang) to fire the arc, and holds THC locked for <code class="mono">6.0 mm</code> onto solid steel.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Smart CAM Auto-Defaults &amp; Flared Daisy-Chain Bridges:</strong> Stock-aware physics defaults set lead-in/out, corner loops, holding tabs, zero-bevel, and chain/bridge widths automatically when no explicit override is set. Flared, vertex-pinched Daisy-Chain bridges eliminate half-shape contour retracing, and the flat-mode UI enforces mutual exclusion between Chain/Bridge and Common-Line cutting.
+                <strong>Remnant Guillotine Crop &amp; Serpentine Scrap-Margin Chains (<code class="mono">v0.8-B</code>):</strong> Square off unused sheet drops with <code class="mono">Best Single Cut</code>, <code class="mono">L-Cut (X &amp; Y)</code>, <code class="mono">Vertical (X)</code>, or <code class="mono">Horizontal (Y)</code> and preview dashed <code class="mono">CROP</code> lines and the <code class="mono">Usable Remnant</code> box in the 2D Pack SVG (<code class="mono">Pro Shop</code>). Link adjacent nested outer profiles with serpentine scrap-margin <strong>Daisy-Chain (Single Pierce)</strong> or <strong>Micro-Bridge (Connected)</strong> paths using flared, vertex-pinched bridges that eliminate half-contour retracing.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Smart <code class="mono">CAMAutoDefaults</code> &amp; Flat Corner Loops:</strong> Stock-aware defaults populate lead-in/out lengths, corner loops (<code class="mono">corner_loop_radius_mm</code>, default <code class="mono">3.0 mm</code>), holding tabs, zero-bevel settings, and bridge widths automatically when no override is set. Added a one-click <strong>C-Channel [BEAMLINE]</strong> (<code class="mono">c-channel1.step</code>) Quick CAD example in the sidebar.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>FlashCut 9+ / 8.x Mode 2 Explicit Lift-Axis (<code class="mono">G631</code> / <code class="mono">G630</code>):</strong> Full Mode 2 Explicit Dynamic-Z cycle (<code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; Z Ramp &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code>) across FlashCut 9+ and 8.x keeps touch-off, arc-transfer hold, pierce-to-cut Z ramp, THC lock, and safe retract synchronized without <code class="mono">G601</code>/<code class="mono">G600</code>.
               </div>
             </li>
           </ul>
@@ -2539,11 +2551,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.5-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.0-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.7.5').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.8.0').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',
