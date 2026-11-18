@@ -716,6 +716,58 @@
           </figure>
         </article>
 
+        <!-- ==================================================================
+             FLAT-PLATE PRO CUTTING PRIMITIVES
+             ================================================================== -->
+        <article class="doc-step-card" id="flat-plate-primitives">
+          <div class="doc-step-header">
+            <span class="doc-step-badge" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan-400); border-color: rgba(6, 182, 212, 0.35);">PRO PRIMITIVES</span>
+            <h2 class="doc-step-title">Flat-Plate Cutting Primitives: Open-Path Kerf, Edge-Start, Chain/Bridge, Corner Loops &amp; Void THC Lock</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Beyond basic closed contours, RotaryCAM includes five flat-plate cutting primitives built for thick steel, open trim lines, tight nests, and clean drop recovery.
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Open-Path Left / Right / Center Kerf (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Pick <span class="ui-chip">Center (On-Line)</span>, <span class="ui-chip">Left</span>, or <span class="ui-chip">Right</span> kerf compensation on unclosed single-stroke slit lines, edge trims, and bend relief cuts. Offset side stays locked to the original CAD stroke direction so trimmed plate edges hold exact finished dimensions.</li>
+              <li><strong>Thick-Plate Edge-Start Piercing (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> When cutting plate <code class="mono">&ge; 12 mm</code> (<code class="mono">1/2&Prime;</code>), switch the contour lead-in strategy to <span class="ui-chip">Edge-Start (Thick Plate)</span> (configurable <code class="mono">edge_overhang_mm</code>, default <code class="mono">4.0 mm</code>). RotaryCAM probes IHS on solid steel at the first contour point, retracts to pierce height, moves off the plate edge into open air to fire the arc without slag blowback, and keeps THC locked until the torch travels <code class="mono">6.0 mm</code> onto solid steel.</li>
+              <li><strong>Chain / Bridge Cutting (<code class="mono">Pro Shop</code>):</strong> In Pack Mode, pick <span class="ui-chip">Daisy-Chain (Single Pierce)</span> to link nearby outer contours into one continuous arc pass, or <span class="ui-chip">Micro-Bridge (Connected)</span> to keep parts tied to the skeleton with narrow uncut tabs (<code class="mono">bridge_width_mm</code>, default <code class="mono">3.0 mm</code>) up to <code class="mono">max_link_dist_mm</code> (default <code class="mono">25.0 mm</code>). Interior bolt holes always cut before chained outer perimeters, and links that cross obstacles are skipped automatically.</li>
+              <li><strong>Spatial Void THC Auto-Lock (<code class="mono">v0.8-A</code>):</strong> <code class="mono">SpatialVoidIndex</code> tracks every previously cut kerf slot and pierce crater on your sheet. Whenever a later cut or remnant crop approaches within <code class="mono">0.5 &times; kerfWidth + 4.0 mm</code> of an existing void, THC locks automatically so the torch never dives into open air.</li>
+              <li><strong>Flat Corner Loop Injection &amp; Radius Control:</strong> Enable Corner Loops on <code class="mono">.flat</code> sheet profiles to loop sharp exterior corners instead of decelerating to zero speed. Adjust <code class="mono">corner_loop_radius_mm</code> (default <code class="mono">3.0 mm</code>) in per-feature settings to match your plate thickness and kerf.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             TUTORIAL: REMNANT SKELETON GUILLOTINE CROP CUT
+             ================================================================== -->
+        <article class="doc-step-card" id="tutorial-remnant-crop">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Tutorial</span>
+            <h2 class="doc-step-title">Tutorial: Cropping &amp; Saving a Clean Sheet Remnant (<code class="mono">Pro Shop</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Instead of dragging a jagged skeleton off your water table or torching freehand by eye, let RotaryCAM slice a straight guillotine line behind your nested parts so the unused steel drops off as a square, measurable remnant.
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Step 1. Nest Parts in Pack Mode &amp; Open Flat-Sheet Controls:</strong> Drop your <code class="mono">.dxf</code> or <code class="mono">.svg</code> parts, confirm sheet thickness, switch to the <strong>Pack Mode</strong> tab, set quantities and raw sheet size, and scroll to the flat-sheet controls bar directly under the 2D Pack Part Preview.</li>
+              <li><strong>Step 2. Choose a Guillotine Crop Cut Mode &amp; Clearance Margin:</strong> Open the <span class="ui-chip">Guillotine Crop Cut</span> dropdown and pick <code class="mono">Best Single Cut (Max Remnant)</code>, <code class="mono">L-Cut (Both X &amp; Y)</code>, <code class="mono">Vertical (X)</code>, or <code class="mono">Horizontal (Y)</code>. Set the <code class="mono">Margin</code> input (default <code class="mono">5.0 mm</code> on top of kerf, giving <code class="mono">kerf + 5.0 mm</code> clearance from the nearest nested part).</li>
+              <li><strong>Step 3. Inspect the Crop Line &amp; Usable Remnant in the 2D SVG Preview:</strong> Before compiling G-code, look at the 2D Pack Part Preview SVG. Verify the dashed <code class="mono">CROP</code> cut line(s), the circular off-sheet entry marker, and the highlighted <code class="mono">Usable Remnant</code> rectangle showing exact remaining width and height dimensions.</li>
+              <li><strong>Step 4. Run the Program Safely:</strong> Click <span class="ui-chip emerald">⚡ Compile Pack G-Code</span> and run the file at your table. All interior holes and nested parts finish cutting first. Once the last part is done, RotaryCAM executes the guillotine crop pass from off-sheet edge-start entry with <code class="mono">SpatialVoidIndex</code> kerf-crossing THC protection, leaving a clean rectangular drop ready to rack and reuse.</li>
+            </ul>
+
+            <div class="doc-callout tip" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">✓ Tip: Best Single Cut vs. L-Cut (Both X &amp; Y)</div>
+              <p style="margin-bottom: 0;">
+                Use <code class="mono">Best Single Cut (Max Remnant)</code> when parts span most of one sheet axis and one straight shear cut yields the largest rectangle. Pick <code class="mono">L-Cut (Both X &amp; Y)</code> when parts cluster in the bottom-left corner so you reclaim both a full-length strip and an end drop in two clean passes.
+              </p>
+            </div>
+          </div>
+        </article>
+
 
         <!-- Pagination -->
         <nav class="docs-pagination" aria-label="Tutorial Pagination">
