@@ -1533,7 +1533,7 @@
 
       <div class="cta-group" id="download">
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-macOS-latest.dmg" class="primary-btn" id="hero-download-btn">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.7.5/RotaryCam-macOS-v0.7.5.dmg" class="primary-btn" id="hero-download-btn">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
@@ -1562,13 +1562,13 @@
         <!-- Platform Selector Chips -->
         <div class="platform-chips">
           <span style="font-size: 0.76rem; color: var(--text-dim); margin-right: 0.25rem;">Platform builds:</span>
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-macOS-latest.dmg" class="platform-chip active" id="chip-macos" onclick="selectPlatform('macos', event)">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.7.5/RotaryCam-macOS-v0.7.5.dmg" class="platform-chip active" id="chip-macos" onclick="selectPlatform('macos', event)">
             🍎 macOS (arm64)
           </a>
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-Windows-latest.zip" class="platform-chip" id="chip-windows" onclick="selectPlatform('windows', event)">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.7.5/RotaryCam-Windows-v0.7.5.zip" class="platform-chip" id="chip-windows" onclick="selectPlatform('windows', event)">
             🪟 Windows (x64)
           </a>
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-Linux-latest.zip" class="platform-chip" id="chip-linux" onclick="selectPlatform('linux', event)">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.7.5/RotaryCam-Linux-v0.7.5.zip" class="platform-chip" id="chip-linux" onclick="selectPlatform('linux', event)">
             🐧 Linux (x64)
           </a>
           <a href="changelog.html#downloads" class="platform-chip" style="color: var(--plasma-amber); border-color: rgba(245, 158, 11, 0.35);">
@@ -2795,11 +2795,17 @@
       updateActiveNav();
 
       // 3. OS Detection & Platform Switching
+      const releaseVer = (window.ROTARYCAM_VERSION || '0.7.5').replace(/^v/, '');
+      const releaseBase = `https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v${releaseVer}`;
       const downloadUrls = {
-        macos: 'https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-macOS-latest.dmg',
-        windows: 'https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-Windows-latest.zip',
-        linux: 'https://rotarycam-app.s3.us-east-2.amazonaws.com/RotaryCam-Linux-latest.zip'
+        macos: `${releaseBase}/RotaryCam-macOS-v${releaseVer}.dmg`,
+        windows: `${releaseBase}/RotaryCam-Windows-v${releaseVer}.zip`,
+        linux: `${releaseBase}/RotaryCam-Linux-v${releaseVer}.zip`
       };
+      ['macos', 'windows', 'linux'].forEach(c => {
+        const chip = document.getElementById('chip-' + c);
+        if (chip) chip.href = downloadUrls[c];
+      });
 
       function updateHeroPlatform(os) {
         const btn = document.getElementById('hero-download-btn');
