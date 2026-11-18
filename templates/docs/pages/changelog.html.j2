@@ -273,7 +273,7 @@
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
                 <li><strong>FlashCut <code class="mono">.xml</code> Setup Import (Machines Modal):</strong> Upload your FlashCut controller <code class="mono">.xml</code> file directly in the <strong>Machines</strong> modal to auto-extract <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID, <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code> check, and rotary axis orientation.</li>
-                <li><strong>FlashCut 3D Ramp Lead-Ins &amp; Square/Angle Tube Cycle:</strong> Explicit <code class="mono">G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G601 &rarr; G600 &rarr; M51</code> support for 3D Ramp Lead-Ins and square or angle tubes, keeping touch-off, arc transfer, pierce-to-cut Z plunge, and THC switching synchronized.</li>
+                <li><strong>FlashCut Explicit Dynamic-Z for 3D Ramp Lead-Ins &amp; Square/Angle Tubes (Mode 2):</strong> Outputs <code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code> (no <code class="mono">G601</code>/<code class="mono">G600</code>) for 3D Ramp Lead-Ins and HSS square or angle tubes, keeping touch-off, arc transfer, Z ramp, THC suspend/resume, and retract synchronized.</li>
                 <li><strong>Round-Tube Planar Miter Common-Line Sever Fix:</strong> Fixes planar miter common-line sever cuts on round tubing so nested mating miters sever cleanly in one pass.</li>
               </ul>
             </div>

@@ -1399,7 +1399,7 @@
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">FlashCut .xml Setup Import &bull; 3D Ramp &amp; Tube Cut Cycle &bull; Round Planar Miter Fix</span>
           </div>
           <p class="release-summary">
-            Drop your FlashCut .xml setup file into the Machines modal to pull your arc-transfer input, plasma head ID, touch-off zeroing check, and rotary orientation in one click. Square and angle tubes plus 3D Ramp Lead-Ins now run the full FlashCut G605-to-M51 cycle, and round-tube planar miter common-line severs cut clean in one pass.
+            Drop your FlashCut .xml setup file into the Machines modal to pull your arc-transfer input, plasma head ID, touch-off zeroing check, and rotary orientation in one click. Square and angle tubes plus 3D Ramp Lead-Ins now run the full FlashCut Mode 2 Explicit Dynamic-Z cycle (G631 to G630, no G601/G600), and round-tube planar miter common-line severs cut clean in one pass.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -1411,7 +1411,7 @@
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>FlashCut 3D Ramp Lead-Ins &amp; Square/Angle Tube Cycle:</strong> Outputs the full explicit <code class="mono">G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G601 &rarr; G600 &rarr; M51</code> sequence for 3D Ramp Lead-Ins and square or angle-iron tubes, keeping touch-off, arc-transfer hold, pierce-to-cut Z ramp, and THC switching synced across faces and corners.
+                <strong>FlashCut Explicit Dynamic-Z for 3D Ramp Lead-Ins &amp; Square/Angle Tubes (Mode 2):</strong> Outputs the explicit <code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code> sequence without <code class="mono">G601</code>/<code class="mono">G600</code> for 3D Ramp Lead-Ins and HSS square or angle-iron tubes, keeping touch-off, arc-transfer hold, pierce-to-cut Z ramp, THC suspend/resume, and safe Z retract synced across faces and corners.
               </div>
             </li>
             <li class="change-item">
