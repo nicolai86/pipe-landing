@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.7.4-BETA</span>
+          <span class="brand-tag">v0.7.5-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -749,7 +749,7 @@
               <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span>: Automated controller-managed cycle macros including <code class="mono">G64 ON</code> plasma smoothing, <code class="mono">M65</code> material profile loading, <code class="mono">M61</code> touch-off + pierce cycle, <code class="mono">M62</code> torch-off + retract cycle, <code class="mono">M36</code>/<code class="mono">M35</code> THC lock/unlock, and native <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">grblHAL (32-bit Plasma + Rotary) (.nc)</span>: Built for 32-bit grblHAL controllers ($376 rotary + Plasma THC plugin) with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> arc control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, motion-synchronized <code class="mono">M63 P0</code> (THC lock) / <code class="mono">M62 P0</code> (THC unlock) anti-dive protection, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">CNCdrive UCCNC (.nc)</span>: Native UCCNC post supporting UC100/UC300ETH/AXBB-E with <code class="mono">G31</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M206</code> (THC OFF) / <code class="mono">M205</code> (THC ON) corner locking, <code class="mono">G52</code> pneumatic scribe offsets, and <code class="mono">G93</code> rotary motion.</li>
-              <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span>: Engineered for the FlashCut Fabrication Head with automated IHS (<code class="mono">M50</code> plasma ON / <code class="mono">M51</code> plasma OFF), <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G602</code> (Suspend THC) / <code class="mono">G603</code> (Resume THC) corner protection, and <code class="mono">G93</code> rotary tube feeds.</li>
+              <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span>: Engineered for the FlashCut Fabrication Head with one-click <code class="mono">.xml</code> setup import, <code class="mono">G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G601 &rarr; G600 &rarr; M51</code> cut cycles for 3D Ramp Lead-Ins and square/angle tubes, <code class="mono">G04 X&lt;sec&gt;</code> delays, <code class="mono">G602</code>/<code class="mono">G603</code> THC suspend/resume, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">EdingCNC Plasma (.nc)</span>: Clean EdingCNC post for CNC720/CNC760 with <code class="mono">G38.2</code> surface touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M21</code> (THC OFF) / <code class="mono">M20</code> (THC ON) anti-dive locking, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Dedicated post for PlanetCNC Mk3 and TNG software with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M54 P0</code> (THC OFF) / <code class="mono">M54 P1</code> (THC ON) corner locking, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre plasma tables and SideKick rotary attachments, emitting strict WinCNC <code class="mono">[square bracket]</code> comments (zero parentheses or semicolons), <code class="mono">M61</code>/<code class="mono">M62</code> controller-owned IHS &amp; torch macros, <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G93</code> rotary feeds, and <code class="mono">M66</code> program end.</li>
@@ -1250,25 +1250,29 @@ M3</code></pre>
               <h3 class="doc-section-heading">9. FlashCut CNC Plasma Setup</h3>
             </div>
             <p>
-              FlashCut CNC plasma systems featuring the FlashCut Fabrication Head integrate automatic initial height sensing, torch ignition, and optical voltage THC into dedicated controller cycles. RotaryCAM outputs compliant <code class="mono">.nc</code> / <code class="mono">.gc</code> files built for FlashCut:
+              FlashCut CNC plasma systems with the Fabrication Head handle touch-off sensing, torch ignition, and optical voltage THC inside controller cycles. RotaryCAM exports compliant <code class="mono">.nc</code> / <code class="mono">.gc</code> files for your FlashCut table:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Automated IHS &amp; Plasma Torch Control (<code class="mono">M50</code> / <code class="mono">M51</code>):</strong>
-                FlashCut utilizes controller-managed cycles to streamline operation:
+                <strong>One-Click <code class="mono">.xml</code> Setup Import (Machines Modal):</strong>
+                Upload your FlashCut controller <code class="mono">.xml</code> setup file directly inside the <strong>Machines</strong> modal. RotaryCAM automatically extracts your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID (such as <code class="mono">Hplasma1</code>), verifies <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code>, and sets your rotary axis orientation (<code class="mono">Tube Along X</code> vs. <code class="mono">Tube Along Y</code>).
+              </li>
+              <li>
+                <strong>Explicit 3D Ramp &amp; Square/Angle Tube Cycle (<code class="mono">G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G601 &rarr; G600 &rarr; M51</code>):</strong>
+                For 3D Ramp Lead-Ins and square or angle-iron tubes, RotaryCAM outputs the full explicit FlashCut sequence:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M50</code>: Initiates the Fabrication Head's automated touch-off sequence, retracts to pierce height, fires the torch, confirms Arc OK, and plunges to programmed cut height.</li>
-                  <li><code class="mono">M51</code>: Shuts off the plasma arc and automatically retracts the torch to safe clearance height.</li>
+                  <li><code class="mono">G605</code> probes the tube surface, <code class="mono">M50</code> ignites the torch, and <code class="mono">M101 I&lt;n&gt;</code> waits for arc-transfer confirmation.</li>
+                  <li>The torch executes the <code class="mono">3D Ramp / +CutHeight Z</code> plunge, activates/switches THC with <code class="mono">G601</code> / <code class="mono">G600</code>, and shuts off and retracts cleanly with <code class="mono">M51</code>.</li>
                 </ul>
               </li>
               <li>
-                <strong>FlashCut Dwell Syntax (<code class="mono">G04 X&lt;sec&gt;</code>):</strong> FlashCut uses the <code class="mono">X</code> word rather than <code class="mono">P</code> to specify dwell durations. RotaryCAM outputs pierce delays as <code class="mono">G04 X&lt;sec&gt;</code> in seconds.
+                <strong>FlashCut Dwell Syntax (<code class="mono">G04 X&lt;sec&gt;</code>):</strong> FlashCut uses the <code class="mono">X</code> word rather than <code class="mono">P</code> for dwell times. RotaryCAM outputs pierce delays as <code class="mono">G04 X&lt;sec&gt;</code> in seconds.
               </li>
               <li>
                 <strong>Native THC Anti-Dive Protection (<code class="mono">G602</code> / <code class="mono">G603</code>):</strong>
-                Prevents torch diving during speed reductions:
+                Prevents torch diving during speed drops:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">G602</code>: <strong>Suspends THC</strong> height regulation around sharp corners, tube transitions, and bolt holes.</li>
+                  <li><code class="mono">G602</code>: <strong>Suspends THC</strong> height tracking around sharp corners, tube transitions, and small bolt holes.</li>
                   <li><code class="mono">G603</code>: <strong>Resumes THC</strong> voltage tracking on straight runs.</li>
                 </ul>
               </li>

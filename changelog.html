@@ -986,7 +986,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.7.4-BETA</span>
+        <span class="brand-tag">v0.7.5-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -1035,11 +1035,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.7.4" class="jump-pill">
+      <a href="#v0.7.5" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.7.4)
+        Release History (v0.7.5)
       </a>
     </div>
 
@@ -1341,6 +1341,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 17, 2026 (v0.7.5)
+           ================================================================ -->
+      <article class="release-entry" id="v0.7.5">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 17, 2026</span>
+              <span class="release-version-pill">v0.7.5 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">FlashCut .xml Setup Import &bull; 3D Ramp &amp; Tube Cut Cycle &bull; Round Planar Miter Fix</span>
+          </div>
+          <p class="release-summary">
+            Drop your FlashCut .xml setup file into the Machines modal to pull your arc-transfer input, plasma head ID, touch-off zeroing check, and rotary orientation in one click. Square and angle tubes plus 3D Ramp Lead-Ins now run the full FlashCut G605-to-M51 cycle, and round-tube planar miter common-line severs cut clean in one pass.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>FlashCut <code class="mono">.xml</code> Setup Import in Machines Modal:</strong> Upload your FlashCut controller <code class="mono">.xml</code> configuration directly inside <strong>Machines</strong>. RotaryCAM automatically extracts your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID, <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code> safety check, and rotary axis orientation (<code class="mono">Tube Along X</code> vs. <code class="mono">Tube Along Y</code>).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>FlashCut 3D Ramp Lead-Ins &amp; Square/Angle Tube Cycle:</strong> Outputs the full explicit <code class="mono">G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G601 &rarr; G600 &rarr; M51</code> sequence for 3D Ramp Lead-Ins and square or angle-iron tubes, keeping touch-off, arc-transfer hold, pierce-to-cut Z ramp, and THC switching synced across faces and corners.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Round-Tube Planar Miter Common-Line Sever Fix:</strong> Fixes planar miter common-line sever paths on round pipe so nested mating miter cuts sever cleanly in a single pass with zero stray offset or double-cut passes.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 16, 2026 (v0.7.4)
            ================================================================ -->
       <article class="release-entry" id="v0.7.4">
@@ -1349,7 +1388,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 16, 2026</span>
-              <span class="release-version-pill">v0.7.4 &bull; LATEST</span>
+              <span class="release-version-pill">v0.7.4</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Saved User Preferences &amp; &#8942; Defaults &bull; Recent Models Landing View &bull; Post-Processor Readiness Labels</span>
           </div>
@@ -2455,7 +2494,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.4-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.7.5-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }

@@ -234,10 +234,23 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Release: Nov 16, 2026 (v0.7.4 • Latest) -->
+            <!-- Release: Nov 17, 2026 (v0.7.5 • Latest) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 16, 2026 (v0.7.4 &bull; Latest)</span>
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 17, 2026 (v0.7.5 &bull; Latest)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">FlashCut .xml Setup Import &bull; 3D Ramp &amp; Tube Cut Cycle &bull; Round Planar Miter Fix</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>FlashCut <code class="mono">.xml</code> Setup Import (Machines Modal):</strong> Upload your FlashCut controller <code class="mono">.xml</code> file directly in the <strong>Machines</strong> modal to auto-extract <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID, <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code> check, and rotary axis orientation.</li>
+                <li><strong>FlashCut 3D Ramp Lead-Ins &amp; Square/Angle Tube Cycle:</strong> Explicit <code class="mono">G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G601 &rarr; G600 &rarr; M51</code> support for 3D Ramp Lead-Ins and square or angle tubes, keeping touch-off, arc transfer, pierce-to-cut Z plunge, and THC switching synchronized.</li>
+                <li><strong>Round-Tube Planar Miter Common-Line Sever Fix:</strong> Fixes planar miter common-line sever cuts on round tubing so nested mating miters sever cleanly in one pass.</li>
+              </ul>
+            </div>
+
+            <!-- Release: Nov 16, 2026 (v0.7.4) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 16, 2026 (v0.7.4)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Saved User Preferences &amp; &#8942; Defaults &bull; Recent Models Landing View &bull; Post-Processor Readiness Labels</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
