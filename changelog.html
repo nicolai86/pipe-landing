@@ -631,6 +631,10 @@
       opacity: 0.7;
     }
 
+    .roadmap-card.horizon {
+      grid-column: 1 / -1;
+    }
+
     .roadmap-card.horizon::before {
       background: linear-gradient(90deg, var(--cyan-arc), var(--emerald-cut));
     }
@@ -1226,33 +1230,6 @@
     </div>
 
     <div class="roadmap-grid">
-      <!-- Milestone: v0.8 -->
-      <div class="roadmap-card">
-        <div class="roadmap-card-header">
-          <div>
-            <span class="roadmap-milestone-tag">v0.8.0</span>
-            <div class="roadmap-card-title">Torch Safety &amp; Canvas Controls</div>
-          </div>
-          <span class="roadmap-status-pill" style="color: var(--emerald-cut); border-color: rgba(16, 185, 129, 0.35);">Shipped in v0.8.0</span>
-        </div>
-        <div class="roadmap-features">
-          <div class="roadmap-feat-item">
-            <div class="roadmap-feat-num">01</div>
-            <div class="roadmap-feat-body">
-              <h3>Kerf-Crossing &amp; Void Spatial THC Auto-Lock <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Shipped in v0.8.0)</span></h3>
-              <p>Automatically locks torch height control before crossing existing cut kerfs, bolt holes, or pierce craters to stop torch dives over open air.</p>
-            </div>
-          </div>
-          <div class="roadmap-feat-item">
-            <div class="roadmap-feat-num">02</div>
-            <div class="roadmap-feat-body">
-              <h3>Interactive Canvas &amp; Sheet Cut Tools <span class="mono" style="color: var(--emerald-cut); font-size: 0.72rem;">(Shipped in v0.8.0)</span></h3>
-              <p>Move pierce points, drag holding tabs, manipulate 2D sheet nests and 1D tube sticks live on screen, plus remnant guillotine crops and serpentine scrap-margin chains.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Milestone: v0.9 -->
       <div class="roadmap-card">
         <div class="roadmap-card-header">
