@@ -1,0 +1,149 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Dial In Pierces, Holding Tabs &amp; Nest Layouts Directly on the Canvas</h2>
+          <p>
+            Auto-nesting and default pierce placement cover most jobs, but real sheet metal and tube work often needs a quick shop-floor tweak. Move a pierce away from a tight flange, pin a small bracket with a holding tab, rotate a gusset around plate rust, or flip a tube end-for-end without going back to CAD.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Contour Tweaks</span>
+              <span class="value">Move Pierce &amp; Edit Tabs</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">2D Sheet Nest</span>
+              <span class="value">&Delta;X/&Delta;Y Drag, 15&deg; Rotate &amp; Halos</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">1D Stick Strip</span>
+              <span class="value">Reorder, 180&deg; Flip &amp; &Delta;A Roll</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Interactive <code class="mono">Move Pierce</code> on 3D &amp; 2D Contours (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Keep pierce craters inside the scrap slug or away from critical bolt-hole walls with live canvas placement:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip cyan">Move Pierce</span> in the toolbar above the 3D preview (next to <span class="ui-chip">Inspect</span> and <span class="ui-chip">Edit Tabs</span>).</li>
+              <li>Click or drag anywhere along a contour in the 3D viewport or the 2D unwrapped map / contour editor to slide the green and red lead-in markers into scrap.</li>
+              <li>Lead-in and lead-out geometry recompute automatically for both Single-File G-code and Pack Mode. Click <span class="ui-chip">Reset Auto Pierce</span> to revert, or <span class="ui-chip">Done</span> when finished.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Move Pierce mode active with interactive 2D contour editor, 3D marker preview, and Reset Auto Pierce</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/v08-move-pierce.png" alt="Step 1: Interactive Move Pierce mode showing contour drag editor and live 3D pierce preview" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Custom Micro-Joint Holding Tabs via <code class="mono">Edit Tabs</code> (<code class="mono">Pro Shop</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Stop small cutouts and thin brackets from tipping on the slats or falling into the rotary chuck before the cut finishes:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip cyan">Edit Tabs</span> above the 3D preview (or click <span class="ui-chip">Edit Tabs on Canvas</span> inside any feature's config drawer).</li>
+              <li>Click directly on a contour edge to drop a micro-joint holding tab, or drag existing tabs along the edge to clear weld seams and machined faces.</li>
+              <li>Use <code class="mono">Shift-Click</code> or click the tab's <code class="mono">&times;</code> handle to remove a tab. RotaryCAM leaves the kerf-compensated bridge uncut so parts stay anchored until you snap them free.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 2: Edit Tabs mode with contour click-to-add, edge drag, Shift-Click removal, and compiled G-code</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/v08-edit-tabs.png" alt="Step 2: Edit Tabs holding tab placement mode with live contour editor and G-code panel" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Live 2D Sheet Nest Drag, <code class="mono">15&deg;</code> Rotate, Flip &amp; Collision Halos</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Fine-tune flat-plate layouts right inside <span class="ui-chip">Stock Nesting</span> without guessing coordinates:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Switch the 2D sheet canvas tool to <span class="ui-chip cyan">Select / Move</span> and drag any nested part in <code class="mono">(&Delta;X, &Delta;Y)</code> across the plate.</li>
+              <li>Rotate parts in crisp <code class="mono">15&deg;</code> steps or free angles, and flip parts horizontally (<code class="mono">X</code>) or vertically (<code class="mono">Y</code>) to interlock gussets or avoid plate dings.</li>
+              <li>Watch real-time green/red part-spacing and sheet-edge collision halos before posting G-code. Click <span class="ui-chip">Reset Auto-Nest</span> anytime to restore the solver layout (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>).</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 3: Selecting a nested plate part in Select / Move mode to offset X/Y, rotate, flip horizontally or vertically, or reset auto-nest</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/v08-2d-sheet-interact.png" alt="Step 3: 2D sheet interactive Select / Move transform HUD with X/Y coordinates, 15-degree rotation, flip controls, and Reset Auto-Nest" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">1D Rotary Stick Strip Reorder, <code class="mono">180&deg;</code> Flip &amp; <code class="mono">&Delta;A</code> Roll</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Dial in multi-part tube packing along each raw stick in rotary Pack Mode:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Reorder nested tubes along the 1D stick strip to group short drops near the tailstock or keep heavy sections near the chuck.</li>
+              <li>Flip individual parts <code class="mono">180&deg;</code> end-for-end and nudge rotary phase angle <code class="mono">&Delta;A</code> to orient copes and miters for cleaner torch access.</li>
+              <li>Adjust inter-part gap spacing per stick while keeping compatible <code class="mono">Common-Line</code> sever cuts intact.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4: 1D rotary Stock Nesting strip controls for reordering, 180-degree flips, phase roll, and gap tuning</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <img src="assets/v08-1d-stick-controls.png" alt="Step 4: Stock Nesting 1D rotary stick controls with strip reorder, 180 flip, and delta A roll" loading="lazy" />
+            </div>
+          </figure>
+        </article>
+{% endblock %}

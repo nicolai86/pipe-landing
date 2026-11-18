@@ -103,7 +103,7 @@
           <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
             <span>Tutorials</span>
             
-            <span class="nav-count-badge">11</span>
+            <span class="nav-count-badge">13</span>
             
             <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -113,7 +113,7 @@
           <div class="nav-dropdown-menu" role="menu">
             <div class="nav-dropdown-header">
               <span>All Workflows &amp; Tutorials</span>
-              <span class="nav-dropdown-count">11 Guides</span>
+              <span class="nav-dropdown-count">13 Guides</span>
             </div>
             <div class="nav-dropdown-grid">
               
@@ -216,6 +216,24 @@
                 
               </a>
               
+              <a href="interactive-canvas-controls.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">12</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Interactive Canvas Controls</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="flat-plate-pro-cutting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">13</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Flat Pro Primitives</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
             </div>
           </div>
         </div>
@@ -307,6 +325,16 @@
         <span>G94, G93 & G20/G21 Feeds</span>
       </a>
       
+      <a href="interactive-canvas-controls.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">12</span>
+        <span>Interactive Canvas Controls</span>
+      </a>
+      
+      <a href="flat-plate-pro-cutting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">13</span>
+        <span>Flat Pro Primitives</span>
+      </a>
+      
     </div>
 
     <div style="margin-top: 1rem;">
@@ -378,7 +406,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>11 Core Workflows</strong> • 73 Documented Steps</span>
+          <span class="docs-meta-pill amber"><strong>13 Core Workflows</strong> • 81 Documented Steps</span>
           <span class="docs-meta-pill cyan"><strong>Controllers:</strong> Any 4-Axis CNC (G93 / G94) • Native G20 (in) &amp; G21 (mm) • FireControl, WinCNC, Mach4, LinuxCNC</span>
           <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) 3D Assemblies &amp; DXF / SVG Flat-Sheet Kits</span>
         </div>
@@ -762,6 +790,68 @@
           </div>
         </a>
         
+        <!-- Guide 12: Interactive Canvas Controls &amp; Nest Tweaking -->
+        <a href="interactive-canvas-controls.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            
+            <img src="assets/v08-move-pierce.png" alt="RotaryCAM Interactive Move Pierce on 3D and 2D Contours" loading="lazy" />
+            
+            <span class="docs-hub-badge">TUTORIAL 12 • 4 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Interactive Canvas Controls &amp; Nest Tweaking</h2>
+            <p class="docs-hub-desc">
+              Move pierce points onto scrap, place custom micro-joint holding tabs, drag and rotate 2D sheet parts with collision halos, and reorder, flip, or roll nested tubes on 1D sticks.
+            </p>
+            <ul class="docs-hub-topics">
+              
+              <li>Interactive Move Pierce on 3D viewport &amp; 2D contour map (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>)</li>
+              
+              <li>Custom micro-joint holding tabs via Edit Tabs (<code class="mono">Pro Shop</code>)</li>
+              
+              <li>2D sheet drag (<code class="mono">&Delta;X, &Delta;Y</code>), <code class="mono">15&deg;</code> rotate, flip X/Y &amp; collision halos</li>
+              
+              <li>1D rotary stick reorder, <code class="mono">180&deg;</code> flip, <code class="mono">&Delta;A</code> roll &amp; gap tuning</li>
+              
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 12</span>
+              <span>4 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+        
+        <!-- Guide 13: Flat-Plate Pro Cutting Primitives &amp; Torch Crash Protection -->
+        <a href="flat-plate-pro-cutting.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            
+            <img src="assets/v08-flat-pro-pack.png" alt="RotaryCAM Flat-Sheet Pack Mode with Guillotine Crop Cut, Usable Remnant, and Chain/Bridge Cutting" loading="lazy" />
+            
+            <span class="docs-hub-badge">TUTORIAL 13 • 4 STEPS</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Flat-Plate Pro Cutting Primitives &amp; Torch Crash Protection</h2>
+            <p class="docs-hub-desc">
+              Stop torch dives across cut voids, offset open DXF/SVG slits Left/Right/Center, pierce thick plate off the edge, crop clean sheet remnants, and link parts with Daisy-Chain or Micro-Bridge passes.
+            </p>
+            <ul class="docs-hub-topics">
+              
+              <li>Spatial Void THC Auto-Lock within <code class="mono">0.5 &times; kerfWidth + 4.0 mm</code> (<code class="mono">v0.8-A</code>)</li>
+              
+              <li>Open-Path <code class="mono">Center / Left / Right</code> kerf &amp; <code class="mono">Edge-Start (Thick Plate)</code> lead-in</li>
+              
+              <li>Guillotine Crop Cuts (<code class="mono">Best Single</code>, <code class="mono">L-Cut</code>, <code class="mono">X</code>, <code class="mono">Y</code>) &amp; <code class="mono">Usable Remnant</code></li>
+              
+              <li>Serpentine <code class="mono">Daisy-Chain</code> &amp; <code class="mono">Micro-Bridge</code> cutting (<code class="mono">Pro Shop</code>)</li>
+              
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 13</span>
+              <span>2 Annotated Screenshots →</span>
+            </div>
+          </div>
+        </a>
+        
       </div>
 
       <!-- Quick Reference Callout -->
@@ -834,6 +924,10 @@
           <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
           
           <a href="rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
+          
+          <a href="interactive-canvas-controls.html">12. Interactive Canvas Controls</a>
+          
+          <a href="flat-plate-pro-cutting.html">13. Flat Pro Primitives</a>
           
         </div>
         <div class="footer-col">
