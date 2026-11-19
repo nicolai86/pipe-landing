@@ -89,7 +89,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.8.0-BETA</span>
+          <span class="brand-tag">v0.8.1-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -786,7 +786,7 @@
               <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span>: Hardened for FireControl <code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code> on CrossFire, PRO, and XR tables. Emits <code class="mono">(v1.6-sc)</code> and <code class="mono">(PS&lt;feed&gt;)</code> sentinels, strict GRBL-safe <code class="mono">(...)</code> comments, separated <code class="mono">0.020"</code> IHS backlash vs. thin-sheet springback, <code class="mono">0.55 s</code> 3D ramp ignition dwell, inverter settle controls, <code class="mono">X-WRAP</code>/<code class="mono">Y-WRAP</code> round-tube wrapping, and optional fixed-calibration chuck <code class="mono">Travel / Rev</code> scaling.</li>
               <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span>: Dedicated post for Mach4 tables running the Warp9 Ethernet SmoothStepper with external or standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> touch-off probing with switch-offset compensation, standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span>: Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
-              <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span>: Native <code class="mono">T112 M6</code> plasma mode, automated <code class="mono">G200</code> parameter blocks with millisecond pierce delays (<code class="mono">D&lt;ms&gt;</code>), explicit buffered <code class="mono">M666</code> (THC OFF) / <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) corner anti-dive protection, and <code class="mono">G93</code> rotary motion.</li>
+              <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span>: Native <code class="mono">T112 M6</code> plasma mode, 3-mode THC selector (<strong>MASSO DTHC</strong> <code class="mono">G200</code> Auto-IHS, <strong>External Up/Down THC</strong> Bare <code class="mono">G200</code> + <code class="mono">G38.2</code>, or <strong>Fixed Height / No THC</strong>), <code class="mono">O0/O1</code> probing, <code class="mono">S0/S1</code> slag-stop, explicit <code class="mono">M667 F&lt;thcFeed&gt;</code> / <code class="mono">M666</code> anti-dive, Bare <code class="mono">G200</code> / Hybrid <code class="mono">C=P</code> 3D ramps, Template C 4D HSS, <code class="mono">G53 G0 Z0</code> / <code class="mono">G92.1</code> hygiene, <code class="mono">G91</code>/<code class="mono">G28 A0</code>/<code class="mono">G90</code> unwinds, <code class="mono">M30 L&lt;count&gt;</code> bar-advance looping, and <code class="mono">G93</code> rotary motion.</li>
               <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span>: Hardened for Mach3 <code class="mono">R3.043.062</code> with a 4-topology THC selector (<code class="mono">M11Px/M10Px</code> pins 1-6, CandCNC <code class="mono">DTHC DCC</code> <code class="mono">S900/S10/S20</code>, ESS Proma 150 / TMC3in1 <code class="mono">M102/M101</code>, and ESS Proma Compact THC SD <code class="mono">M7/M9</code>), <code class="mono">G31</code> ESS probe vs. <code class="mono">G28.1</code> floating-head, <code class="mono">G54</code>-baked scribe offsets (zero <code class="mono">G52/G92</code> conflict), <code class="mono">%</code> framing with <code class="mono">M30\n%\n</code>, immediate <code class="mono">G94</code> restore after <code class="mono">M5</code>, and <code class="mono">G93</code> inverse-time rotary feeds.</li>
               <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span>: Automated controller-managed cycle macros including <code class="mono">G64 ON</code> plasma smoothing, <code class="mono">M65</code> material profile loading, <code class="mono">M61</code> touch-off + pierce cycle, <code class="mono">M62</code> torch-off + retract cycle, <code class="mono">M36</code>/<code class="mono">M35</code> THC lock/unlock, and native <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">grblHAL (32-bit Plasma + Rotary) (.nc)</span>: Built for 32-bit grblHAL controllers ($376 rotary + Plasma THC plugin) with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> arc control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, motion-synchronized <code class="mono">M63 P0</code> (THC lock) / <code class="mono">M62 P0</code> (THC unlock) anti-dive protection, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
@@ -1153,28 +1153,44 @@ G04 P0.100</code></pre>
               <h3 class="doc-section-heading">4. MASSO G3 + DTHC Configuration</h3>
             </div>
             <p>
-              MASSO G3 is a dedicated hardware CNC controller that uses internal canned plasma routines rather than custom PC macros. RotaryCAM produces native <code class="mono">.nc</code> files tailored to MASSO's firmware:
+              MASSO G3 is a standalone hardware controller that runs canned plasma routines instead of PC macros. RotaryCAM outputs hardened <code class="mono">.nc</code> programs built around MASSO firmware rules:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Mandatory Plasma Mode Header (<code class="mono">T112 M6</code>):</strong> MASSO strictly requires <code class="mono">T112 M6</code> in the file header to activate plasma features. Changing away from <code class="mono">T112</code> cancels plasma mode (e.g. MASSO's pneumatic air-scribe tool uses <code class="mono">T111 M6</code>).
+                <strong>3 THC Hardware Modes (Machine Settings):</strong>
+                Pick the mode that matches your Z-axis and voltage hardware:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong><code class="mono">MASSO DTHC (G200 Auto-IHS)</code>:</strong> Uses full <code class="mono">G200</code> parameter blocks so MASSO handles touch-off, pierce height, cut height, and DTHC arc-voltage tracking on flat sheet and round pipe.</li>
+                  <li><strong><code class="mono">External Up/Down THC (Bare G200 + G38.2)</code>:</strong> Cancels canned auto-IHS by emitting a bare <code class="mono">G200</code> line, probes with explicit <code class="mono">G38.2</code>, and drives pierce-to-cut Z moves directly for standalone Up/Down THCs.</li>
+                  <li><strong><code class="mono">Fixed Height / No THC</code>:</strong> Uses bare <code class="mono">G200</code> + <code class="mono">G38.2</code> probing with <code class="mono">M666</code> locked height (never emitting <code class="mono">M667</code>) so the torch holds your programmed Z cut height.</li>
+                </ul>
               </li>
               <li>
-                <strong>Automated IHS Parameter Block (<code class="mono">G200</code>):</strong> On flat sheet and round pipe, RotaryCAM emits the complete MASSO plasma parameter block:
+                <strong><code class="mono">G200</code> Probing (<code class="mono">O0/O1</code>), Slag-Stop (<code class="mono">S0/S1</code>) &amp; Millisecond Dwells:</strong>
                 <pre><code class="language-gcode">T112 M6
 G200 F600 P3.8 D400 C1.5 V115 A0 O1 S0
 M3</code></pre>
-                <code class="mono">F</code> = touch-off feedrate, <code class="mono">P</code> = pierce height, <code class="mono">D</code> = pierce delay in <strong>milliseconds</strong> (<code class="mono">D400</code> = 0.4s), <code class="mono">C</code> = cut height, <code class="mono">V</code> = target arc volts (<code class="mono">V0</code> activates MASSO Auto-Voltage sampling mode), and <code class="mono">O1</code> selects Ohmic probing. Once set, calling <code class="mono">M3</code> causes MASSO to probe, pierce, and drop to cut height automatically.
+                <code class="mono">O0</code> selects a Touch Switch (floating head), while <code class="mono">O1</code> selects Plasma Ohmic probing. <code class="mono">S0</code> runs Continuous cutting, while <code class="mono">S1</code> enables Slag-Stop pauses between cuts. MASSO reads both <code class="mono">D</code> in <code class="mono">G200</code> and <code class="mono">G04 P</code> strictly in <strong>integer milliseconds</strong> (<code class="mono">D400</code> or <code class="mono">G04 P400</code> = 0.4 s).
               </li>
               <li>
-                <strong>Critical Shop Tip: Why Explicit <code class="mono">M666</code> / <code class="mono">M667</code> Are Required:</strong>
-                MASSO's official documentation notes that the <code class="mono">A</code> (anti-dive percentage) parameter inside <code class="mono">G200</code> is <em>not yet implemented in MASSO firmware</em>. If you rely solely on <code class="mono">G200</code>, MASSO will dive the torch into the metal when slowing down for small bolt holes or tight corners! RotaryCAM protects your torch by emitting explicit buffered <code class="mono">M666</code> (THC OFF) and <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) commands before every corner, small hole, and lead-out.
+                <strong>Mandatory <code class="mono">M667 F&lt;thcFeed&gt;</code> &amp; <code class="mono">M666</code> Anti-Dive:</strong>
+                MASSO firmware does not implement the <code class="mono">A</code> anti-dive percentage inside <code class="mono">G200</code>. To keep the torch from diving in small bolt holes, corners, and lead-outs, RotaryCAM emits explicit buffered <code class="mono">M666</code> (THC OFF) and <code class="mono">M667 F&lt;thcFeed&gt;</code> (THC ON). The <code class="mono">F</code> word on <code class="mono">M667</code> is <strong>always included</strong> (<code class="mono">75-600 mm/min</code> in <code class="mono">G21</code>, or <code class="mono">3-24 IPM</code> scaled by <code class="mono">1/25.4</code> in <code class="mono">G20</code>); omitting <code class="mono">F</code> breaks THC Z tracking on MASSO.
               </li>
               <li>
-                <strong>4-Axis Square/Rectangular Tube Override:</strong> Because native <code class="mono">G200</code> assumes MASSO owns the Z-axis while cutting, RotaryCAM automatically switches to bare <code class="mono">G200</code> with explicit <code class="mono">G38.2</code> touch-off on square and rectangular HSS tubing. This allows programmed 4D Z corner climbs to run smoothly without the controller overriding torch height.
+                <strong>3D Ramp Lead-Ins (Option B2 vs. Opt-In Hybrid B1) &amp; Template C 4D HSS:</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Option B2 (Bare <code class="mono">G200</code> 3D Ramps, Default):</strong> Drops canned <code class="mono">G200</code> parameters and runs explicit <code class="mono">G38.2</code>, <code class="mono">M3</code>, <code class="mono">G04 P&lt;ms&gt;</code>, and a smooth diagonal XYZ ramp from pierce height to cut height without MASSO overriding Z.</li>
+                  <li><strong>Opt-In Option B1 (Hybrid <code class="mono">C=P</code>):</strong> Sets <code class="mono">G200</code> cut height equal to pierce height (<code class="mono">C=P</code>) so MASSO runs auto-IHS and ignites at pierce height before RotaryCAM ramps down to cut height. Requires an explicit target voltage (<code class="mono">V &gt; 0</code>, never <code class="mono">V0</code> auto-sampling).</li>
+                  <li><strong>Template C (Continuous 4D HSS Tubes):</strong> Square and rectangular tubes use <code class="mono">Bare G200</code> + <code class="mono">G38.2</code> + <code class="mono">G92 Z</code> surface zeroing + <code class="mono">G92.1</code> cleanup + <code class="mono">M666</code> so 4D Z corner climbs track the rotating tube face cleanly.</li>
+                </ul>
               </li>
               <li>
-                <strong>Millisecond Dwells:</strong> MASSO is the only major controller that strictly interprets <code class="mono">G04 P</code> in <strong>milliseconds</strong> (<code class="mono">G04 P400</code> = 0.4s). RotaryCAM formats all MASSO dwell words in integer milliseconds.
+                <strong>Safe Retracts, Offset Hygiene, Rotary Unwind &amp; Bar-Advance Looping:</strong>
+                Programs retract to machine top with <code class="mono">G53 G0 Z0</code>, clear temporary Z offsets with <code class="mono">G92.1</code> (never <code class="mono">G92 A0</code>, keeping rotary phase intact), and emit rotary unwinds as three separate lines (<code class="mono">G91</code> / <code class="mono">G28 A0</code> / <code class="mono">G90</code>). For chuck-fed production runs, enable <code class="mono">M30 L&lt;count&gt;</code> bar-advance looping at program end.
+              </li>
+              <li>
+                <strong>MASSO F1-Setup Checklist:</strong>
+                Always keep <code class="mono">T112 M6</code> at the top of plasma files (changing tools cancels plasma mode; pneumatic air scribe uses <code class="mono">T111 M6</code>), zero out any multi-head X/Y/Z tool offsets on <code class="mono">T112</code> in F1 Setup, and avoid <code class="mono">v5.100b BETA Phase 1</code> firmware.
               </li>
             </ul>
 
