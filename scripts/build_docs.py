@@ -57,8 +57,8 @@ TUTORIALS = [
         "meta_description": "Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in RotaryCAM.",
         "hero_title_html": 'Basic <span class="text-gradient-amber">Machine Configuration</span>',
         "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 12 major controllers.',
-        "steps_count": 6,
-        "steps_label": "6 Steps",
+        "steps_count": 7,
+        "steps_label": "7 Steps",
         "meta_pills": [
             {"style": "cyan", "html": "<strong>Persistence:</strong> Multi-Profile Saved Across Restarts"},
             {"style": "", "html": "<strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC"},
@@ -70,6 +70,7 @@ TUTORIALS = [
             {"id": "step-4", "badge": "04", "label": "THC Lock/Unlock &amp; Hardware"},
             {"id": "step-5", "badge": "05", "label": "Zero-Bevel Defaults &amp; Saving"},
             {"id": "step-6", "badge": "06", "label": "Supported CNC Controllers Setup"},
+            {"id": "import-warnings-faq", "badge": "07", "label": "XML Import Warnings FAQ"},
         ],
         "pagination_title": "Basic Machine Configuration",
         "pagination_desc": "Configure axis limits, G94/G93 dialects & synchronous THC locks",
