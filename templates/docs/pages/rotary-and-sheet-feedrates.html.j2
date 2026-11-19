@@ -602,7 +602,7 @@ G00 Z25.000 ; Retract</code></pre>
                     <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (<code class="mono">G93</code> + <code class="mono">L28.1</code>)</td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">M61</code> / <code class="mono">L38</code> + <code class="mono">L38.1</code> (<code class="mono">G4 X</code>)</td>
                   </tr>
-                  <tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
                     <td style="padding: 0.65rem 0.85rem;"><strong>CSLab SimCNC Rotary (&lt; 3.6 / 3.6+)</strong></td>
                     <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
                     <td style="padding: 0.65rem 0.85rem;">&lt; 3.6: Spoofed <code class="mono">G94</code> / 3.6+: <code class="mono">G93</code></td>
@@ -610,12 +610,20 @@ G00 Z25.000 ; Retract</code></pre>
                     <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--emerald-400);">&lt; 3.6: 4D Scaled</strong> / <strong style="color: var(--amber-400);">3.6+: Identical F</strong></td>
                     <td style="padding: 0.65rem 0.85rem;">Managed by <code class="mono">m3.py</code> (M63 sync arc off)</td>
                   </tr>
+                  <tr>
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Generic RS-274 (<code class="mono">generic_g94</code>)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> (<code class="mono">dL_xyz/dt</code> + pure-<code class="mono">A</code> <code class="mono">deg/min</code> or <code class="mono">rad/min</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM, zero <code class="mono">A</code> words)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">F_G94 = dL_xyz / dt</code>; pure-<code class="mono">A</code> <code class="mono">deg/min</code> or <code class="mono">rad/min</code> (<code class="mono">&le; 2.5&deg;</code>, <code class="mono">G92 A</code> unwind)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Pre-zeroed <code class="mono">Z0</code> default + split 3D ramp <code class="mono">M03</code></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
 
             <div class="doc-callout tip" style="margin-top: 1rem; margin-bottom: 1.25rem;">
-              <div class="doc-callout-title">💡 Controller Probing Notes: MASSO G3 + DTHC &amp; LinuxCNC QtPlasmaC</div>
+              <div class="doc-callout-title">💡 Controller Probing Notes: MASSO G3, LinuxCNC QtPlasmaC, WinCNC &amp; Generic RS-274</div>
               <p>
                 <strong>MASSO G3 + DTHC:</strong> MASSO uses <code class="mono">T112 M6</code> followed by <code class="mono">G200 F... P... D... C... V...</code>, where <code class="mono">M3</code> automatically executes torch touch-off probing, pierce delay, and plunge to cut height without requiring manual <code class="mono">G38.2 Z</code> + <code class="mono">G92 Z0</code> blocks in standard cutting. (Manual probing is only used in legacy external-THC or custom dynamic-4D-Z setups). Note that the plunge/cut feedrate parameter <code class="mono">F</code> inside <code class="mono">G200</code> still divides by 25.4 when running in Imperial <code class="mono">G20</code>.
               </p>
@@ -624,6 +632,9 @@ G00 Z25.000 ; Retract</code></pre>
               </p>
               <p style="margin-top: 0.5rem; margin-bottom: 0;">
                 <strong>ShopSabre WinCNC (<code class="mono">v3.1.06d+</code> via <code class="mono">Help &rarr; About</code>):</strong> WinCNC reads <code class="mono">G21</code> as <em>centimeters</em>, so RotaryCAM strictly emits <code class="mono">G22</code> for metric millimeters and <code class="mono">G20</code> for inches (never <code class="mono">G21</code>). Match your SideKick rotary axis letter (<code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>) to <code class="mono">WINCNC.INI</code>. Programs emit <code class="mono">M65</code> init, optional <code class="mono">G9 S10</code>, <code class="mono">G94</code> before rapids and <code class="mono">M62</code>, <code class="mono">L28.1</code> 0-360 rotary wraps, Pack-only <code class="mono">L92</code> before <code class="mono">M66</code> (preserving single-part <code class="mono">G92</code> restore), <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L37.2 D1/D0</code> continuous THC (<code class="mono">D1</code> = Disabled, <code class="mono">D0</code> = Enabled) vs. legacy <code class="mono">L37/L36</code>, decoupled <code class="mono">L38.1</code> (<code class="mono">THC=... M1</code> vs. <code class="mono">M0</code>), <code class="mono">M61</code> vs. <code class="mono">L38</code> cycles, and <code class="mono">G54</code>-baked pneumatic scribe XY offsets.
+              </p>
+              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                <strong>Portable RS-274 (<code class="mono">generic_g94</code>):</strong> Assumes a pre-zeroed top-surface <code class="mono">Z0</code> datum by default and uses a strict core subset (<code class="mono">G00/G01/G02/G03/G04/G17/G20-G21/G40/G90/G92/G94</code>, <code class="mono">M03/M05/M30</code>) with uppercase <code class="mono">(COMMENT)</code> blocks (&le; 80 chars) and zero <code class="mono">;</code>, <code class="mono">%</code>, <code class="mono">G49</code>, <code class="mono">G92.1</code>, or <code class="mono">G10 L20</code>. THC defaults to <code class="mono">None</code> (printing a header THC-lock warning on 3D ramps and 4D Z motion) with optional <code class="mono">M62/M63</code> or custom M-codes, configurable <code class="mono">G04</code> dwells (<code class="mono">P0.500</code>, <code class="mono">P500</code>, <code class="mono">X0.500</code>, or off; clamped &ge; 10 ms with forced decimal), <code class="mono">&lt; 0.005 mm</code> linear snap, split 3D ramp <code class="mono">M03</code> ignition, swing-envelope Safe Z before <code class="mono">A</code> rapids, and Dry-Run mode. Not compatible with Burny, Dynatorch, or FlashCut Stingray.
               </p>
             </div>
 

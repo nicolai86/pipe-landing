@@ -243,7 +243,7 @@
               <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Dedicated post for PlanetCNC Mk3 and TNG software with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M54 P0</code> (THC OFF) / <code class="mono">M54 P1</code> (THC ON) corner locking, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre plasma tables and SideKick rotary attachments (<code class="mono">v3.1.06d+</code> or legacy), emitting <code class="mono">G22</code> mm / <code class="mono">G20</code> in (never <code class="mono">G21</code>), strict <code class="mono">[square bracket]</code> comments, configurable <code class="mono">A</code>/<code class="mono">W</code>/<code class="mono">B</code> SideKick axis letter matching <code class="mono">WINCNC.INI</code>, <code class="mono">L37.2 D1/D0</code> continuous THC (or legacy <code class="mono">L37/L36</code>), decoupled <code class="mono">L38.1</code> cut parameters (<code class="mono">THC=... M1/M0</code>), <code class="mono">M61</code> / <code class="mono">L38</code> cycles, <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L28.1</code>/<code class="mono">L92</code> rotary/work wraps, <code class="mono">G54</code>-baked scribe offsets, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6+ (.nc)</span>: One-click <code class="mono">config.xml</code> setup import, 4D trajectory feedrate spoofing for SimCNC 3.5, or hardened <code class="mono">G93</code> inverse-time (<code class="mono">F = 1 / Δt</code>, <code class="mono">G69</code> + metric <code class="mono">G64 P0.3/P0.4</code>, micro-segment coalescing, <code class="mono">0.002 mm</code> axial feathering, <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs, <code class="mono">G92 A</code> phase-preserving unwinds, and <code class="mono">#1999</code>/<code class="mono">#4061</code> guards) for SimCNC 3.6+, with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
-              <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Standard ISO 6983 G-code with decimal seconds dwells (<code class="mono">G4 P&lt;sec&gt;</code>) and configurable M-codes for open-source and industrial controllers.</li>
+              <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Hardened portable <code class="mono">generic_g94</code> subset (<code class="mono">G00/G01/G02/G03/G04/G17/G20-G21/G40/G90/G92/G94</code>, <code class="mono">M03/M05/M30</code>) with uppercase <code class="mono">(COMMENT)</code> lines (&le; 80 chars), zero <code class="mono">;</code>/<code class="mono">%</code>/<code class="mono">G49</code>/<code class="mono">G92.1</code>/<code class="mono">G10 L20</code>, pre-zeroed <code class="mono">Z0</code> default, THC <code class="mono">None</code> default (or <code class="mono">M62/M63</code> / custom M-codes), configurable <code class="mono">G04</code> dwells, <code class="mono">F_G94 = dL_xyz / dt</code>, swing-envelope Safe Z, <code class="mono">G92 A</code> modulo unwinds, and Dry-Run mode. Not compatible with Burny, Dynatorch, or FlashCut Stingray.</li>
             </ul>
 
             <div class="doc-callout info">
@@ -483,6 +483,15 @@
                     <td><code class="mono">M63 P0</code> (Lock) / <code class="mono">M62 P0</code> (Unlock)</td>
                     <td>3.5: Spoofed <code class="mono">G94</code> / 3.6+: Hardened <code class="mono">G93</code></td>
                     <td><code class="mono">#1111</code> Amps, <code class="mono">#1090</code> Volts, <code class="mono">#1091</code> Dwell, <code class="mono">#4061</code> THC</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Generic RS-274 (<code class="mono">generic_g94</code>)</strong></td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>Pre-zeroed top-surface <code class="mono">Z0</code> default</td>
+                    <td><code class="mono">M03</code> / <code class="mono">M05</code> (split 3D ramp; Dry-Run option)</td>
+                    <td><code class="mono">None</code> default (header warning on 3D/4D Z) or <code class="mono">M62/M63</code> / custom M-codes</td>
+                    <td><code class="mono">G94</code> (<code class="mono">dL_xyz/dt</code>; pure-<code class="mono">A</code> <code class="mono">deg/min</code> or <code class="mono">rad/min</code>; <code class="mono">&le; 2.5&deg;</code>)</td>
+                    <td>Configurable <code class="mono">G04</code> (<code class="mono">P0.500</code> / <code class="mono">P500</code> / <code class="mono">X0.500</code> / off), <code class="mono">G92 A</code> unwind</td>
                   </tr>
                 </tbody>
               </table>
@@ -994,10 +1003,49 @@ M3</code></pre>
               </li>
             </ul>
 
+            <!-- Controller 14: Portable RS-274 (generic_g94) -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • Portable ISO 6983 RS-274 (<code class="mono">generic_g94</code>)</div>
+              <h3 class="doc-section-heading">14. Portable RS-274 (<code class="mono">generic_g94</code>) Setup</h3>
+            </div>
+            <p>
+              Use the hardened <code class="mono">Generic RS-274</code> post when driving open-source, retrofit, or industrial <code class="mono">G94</code> controllers that do not use a vendor-specific macro language. Output stays inside a strict, clean ISO 6983 core so stock interpreters load files with zero syntax errors:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Strict Portable Subset &amp; Comment Hygiene:</strong> Emits only <code class="mono">G00</code>, <code class="mono">G01</code>, <code class="mono">G02</code>, <code class="mono">G03</code>, <code class="mono">G04</code>, <code class="mono">G17</code>, <code class="mono">G20</code>/<code class="mono">G21</code>, <code class="mono">G40</code>, <code class="mono">G90</code>, <code class="mono">G92</code>, <code class="mono">G94</code>, <code class="mono">M03</code>, <code class="mono">M05</code>, and <code class="mono">M30</code>. All comments are uppercase <code class="mono">(COMMENT)</code> blocks capped at <code class="mono">&le; 80</code> characters, with zero <code class="mono">;</code> semicolons, zero <code class="mono">%</code> framing, zero <code class="mono">G49</code>, and zero <code class="mono">G92.1</code> or <code class="mono">G10 L20</code> work-offset rewrites.
+              </li>
+              <li>
+                <strong>THC Mode (<code class="mono">None</code> Default vs. <code class="mono">M62/M63</code> or Custom M-Codes) &amp; Dry-Run Mode:</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong><code class="mono">None</code> Default + Header Warning:</strong> Defaults to zero THC M-codes and prints an explicit header THC-lock warning on 3D ramps and 4D Z motion so you remember to disable external voltage THC on non-flat cuts.</li>
+                  <li><strong>Optional THC Outputs:</strong> Enable <code class="mono">M62/M63</code> or custom THC lock/unlock M-codes in Machine Settings if your hardware THC accepts digital hold signals.</li>
+                  <li><strong>Dry-Run Mode:</strong> Toggle <strong>Dry-Run</strong> to verify clearances, chuck rotations, and lead-ins on the table with plasma <code class="mono">M03</code> ignition suppressed.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Pre-Zeroed <code class="mono">Z0</code>, Configurable <code class="mono">G04</code> Dwells &amp; Split 3D Ramp Ignition:</strong> Assumes a pre-zeroed top-surface <code class="mono">Z0</code> datum by default so no controller-specific probe macro is required. Configure pierce dwells as <code class="mono">G04 P0.500</code>, <code class="mono">G04 P500</code>, <code class="mono">G04 X0.500</code>, or suppressed (clamped to <code class="mono">&ge; 10 ms</code> with a forced decimal point on decimal formats). On 3D ramp entries, <code class="mono">M03</code> ignition and pierce dwell split cleanly before the angled ramp descent begins.
+              </li>
+              <li>
+                <strong>Combined Cartesian <code class="mono">G94</code> Feeds, Swing-Envelope Safe Z &amp; Rotary Hygiene:</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Cartesian <code class="mono">G94</code> + Pure-Rotary Units:</strong> Mixed moves output <code class="mono">F_G94 = dL_xyz / dt</code>, while pure-<code class="mono">A</code> rotations output your choice of <code class="mono">deg/min</code> or <code class="mono">rad/min</code>.</li>
+                  <li><strong>Safe Z &amp; <code class="mono">&le; 2.5&deg;</code> Discretization:</strong> Snaps linear jitter below <code class="mono">0.005 mm</code>, retracts above the tube swing envelope before <code class="mono">A</code> rapids, and discretizes rotary contours at <code class="mono">&le; 2.5&deg;</code> steps.</li>
+                  <li><strong>2D Suppression &amp; Modulo Unwind:</strong> Suppresses all <code class="mono">A</code> words on 2D flat sheet and wraps rotary coordinates cleanly using 360-degree <code class="mono">G92 A</code> modulo unwinds.</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="doc-callout warning" style="margin-top: 0.75rem;">
+              <div class="doc-callout-title">⚠ Incompatible Controllers: Burny, Dynatorch &amp; FlashCut Stingray</div>
+              <p>
+                Portable RS-274 (<code class="mono">generic_g94</code>) is <strong>NOT compatible with Burny, Dynatorch, or FlashCut Stingray</strong> controllers, which rely on proprietary dialects, word ordering, or non-standard ESSI/torch protocols.
+              </p>
+            </div>
+
             <!-- Scribe Section: EasyScribe vs Pneumatic -->
             <div class="doc-section-divider" style="margin-top: 2.5rem;">
               <div class="doc-section-kicker">Multi-Tool Marking • Part IDs, Bend Lines &amp; Weld Witness Ticks</div>
-              <h3 class="doc-section-heading">14. Scribing: Coaxial EasyScribe vs. Pneumatic Air-Scribe Setup</h3>
+              <h3 class="doc-section-heading">15. Scribing: Coaxial EasyScribe vs. Pneumatic Air-Scribe Setup</h3>
             </div>
             <p>
               RotaryCAM supports both drag scribing and pneumatic impact scribing across all 12 controllers in <strong>Pro Shop ($399)</strong>, letting you engrave Part IDs, chassis bend lines, and weld fit-up witness marks directly on your parts before cutting:
