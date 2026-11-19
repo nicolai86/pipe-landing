@@ -238,8 +238,11 @@ M05 ; Torch off</code></pre>
                 <li><strong>Fails on Rectangular HSS &amp; Structural Shapes:</strong> On square/rectangular tubing, angle iron, and C-channel, the distance from the chuck centerline to the torch nozzle changes continuously (from a small radius at face centers to a large radius at corner fillets). A static radius setting cannot maintain constant surface speed.</li>
                 <li><strong>Multi-Axis Vectors:</strong> On saddle fishmouths and branch joints, linear X/Y feed vectors combine with rotary A feed vectors in constantly shifting proportions.</li>
               </ul>
-              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+              <p style="margin-top: 0.5rem;">
                 CAM-generated <code class="mono">G93</code> Inverse-Time eliminates these headaches: RotaryCAM computes the exact physical 3D surface speed along the true CAD model for every single segment. You get perfect surface speed across any shape or tube size without touching a radius DRO.
+              </p>
+              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                <strong>ArtSoft Mach3 (<code class="mono">R3.043.062</code>) Rotary Check:</strong> Under <code class="mono">G93</code> inverse-time cutting, keep <strong>Use Radius for Feedrate UNCHECKED</strong>, <strong>G04 Dwell in ms UNCHECKED</strong>, <strong>LookAhead = 200</strong>, <strong>CV Feedrate OFF</strong>, and run a licensed Mach3 install (Demo caps at 500 lines). If you ever run a <code class="mono">G94</code> round-pipe job using Mach3's radius DRO, set Rotation Radius to <code class="mono">+0.0001</code> (never <code class="mono">0</code>). RotaryCAM restores <code class="mono">G94</code> immediately after every <code class="mono">M5</code> and coaxial scribe stroke, and filters sub-<code class="mono">0.002 mm</code> (<code class="mono">0.0001 in</code>) linear noise in <code class="mono">G93</code>.
               </p>
             </div>
 
@@ -530,12 +533,12 @@ G00 Z25.000 ; Retract</code></pre>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> in G200 (auto M3)</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
-                    <td style="padding: 0.65rem 0.85rem;"><strong>ArtSoft Mach3</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong>ArtSoft Mach3 (<code class="mono">R3.043.062</code>)</strong></td>
                     <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
-                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code> (<code class="mono">Use Radius</code> OFF)</td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
-                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
-                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G31 / G94)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (<code class="mono">G93</code> + immediate <code class="mono">G94</code> after <code class="mono">M5</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (<code class="mono">G31</code> ESS <code class="mono">100-127 mm</code> / <code class="mono">G28.1</code> LPT)</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
                     <td style="padding: 0.65rem 0.85rem;"><strong>Centroid Acorn CNC12</strong></td>
