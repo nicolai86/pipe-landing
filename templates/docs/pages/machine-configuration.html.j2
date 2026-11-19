@@ -599,33 +599,46 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
             <!-- Controller 3: Mach4 + Warp9 ESS / TMC3in1 -->
             <div class="doc-section-divider" style="margin-top: 2.5rem;">
               <div class="doc-section-kicker">Controller Setup • ArtSoft Mach4 &amp; Warp9 Ethernet SmoothStepper</div>
-              <h3 class="doc-section-heading">3. ArtSoft Mach4 + Warp9 ESS / WarpRunner Setup</h3>
+              <h3 class="doc-section-heading">3. ArtSoft Mach4 + Warp9 ESS / TMC3in1 Setup</h3>
             </div>
             <p>
-              Mach4 tables powered by the Warp9 Ethernet SmoothStepper (ESS) and TMC3in1 or WarpRunner breakout boards provide ultra-fast hardware torch height control and real-time synchronized I/O. RotaryCAM provides two dedicated built-in machine profiles:
+              Mach4 tables running a Warp9 Ethernet SmoothStepper (ESS) or Warp9 TMC3in1 / WarpRunner THC board require strict modal separation, clean probing sync, and matched I/O pins. RotaryCAM hardens <code class="mono">mach4_ess</code> output across Standard ESS and TMC3in1 builds:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Profile A: ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner):</strong>
-                Outputs native <code class="mono">m2020 (...)</code> configuration registers to communicate directly with Warp9's Lua plugin:
-                <pre><code class="language-gcode">m2020 (W9_HC_LOAD_DEFAULT_CONFIG_VALUES=1)
-m2020 (AD1_DELAY_ENABLED=1)
-m2020 (AD1_DELAY_VALUE=0.8)
-m2020 (AD2_M62_M63_ENABLED=1)
-m2020 (AD3_VELOCITY_ENABLED=1)
-m2020 (AD3_VELOCITY_PERCENT=85)
-m2020 (TARGET_TIP_VOLTS=115.0)
-G04 P0.100</code></pre>
-                <em>Shop Tip:</em> RotaryCAM always places a mandatory <code class="mono">G04 P0.1</code> dwell right after <code class="mono">m2020</code> register groups so Mach4's Lua macro queue has time to write the hardware registers before the ESS motion planner starts moving.
+                <strong>Preamble, <code class="mono">G94</code>/<code class="mono">G93</code> Lifecycle &amp; Program Framing:</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Separate <code class="mono">G90</code> &amp; <code class="mono">G91.1</code> Lines:</strong> Emits <code class="mono">G00 G90 G17 G54 G40 G49 G80</code> followed by <code class="mono">G91.1</code> on its own line so Mach4 never rejects combined distance and arc-center modes on a single block.</li>
+                  <li><strong><code class="mono">G94</code> Startup to <code class="mono">G93</code> Rotary Strokes:</strong> Starts in <code class="mono">G94</code> for positioning, rapids, and probing, switches to <code class="mono">G93</code> inverse-time strictly during rotary cut strokes, and restores <code class="mono">G94</code> for retracts and touch-offs.</li>
+                  <li><strong>Modulo-360 Wrap Resets &amp; Clean EOF:</strong> Emits modulo-360 <code class="mono">G92 A0.000</code> mid-pack resets without <code class="mono">G92.1</code> so active offsets stay intact, then closes at EOF with <code class="mono">G92.1</code>, <code class="mono">M30</code>, and a trailing <code class="mono">%</code> plus newline.</li>
+                </ul>
               </li>
               <li>
-                <strong>Profile B: ArtSoft Mach4 (Warp9 ESS):</strong> For tables using a Proma 150, PriceCNC, or external standalone THC, RotaryCAM emits clean <code class="mono">G31</code> probing with switch-offset compensation and standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> pins without any <code class="mono">m2020</code> macros.
+                <strong><code class="mono">G31.0</code>-<code class="mono">G31.3</code> Touch-Off, Incremental Backoff &amp; Skip-After-Probe (<code class="mono">refDistance</code>):</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong><code class="mono">G31.0</code>-<code class="mono">G31.3</code> + Relative Backoff:</strong> Probes on the selected <code class="mono">G31.0</code> through <code class="mono">G31.3</code> channel and backs off incrementally (<code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>).</li>
+                  <li><strong>TMC3in1 Lua Z-Zero Sync:</strong> On Warp9 TMC3in1, emits <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code> + <code class="mono">G04 P0.100</code> after both plasma and EasyScribe probes so the height controller registers the new Z zero before motion resumes.</li>
+                  <li><strong>Skip-After-Probe (<code class="mono">refDistance</code>):</strong> Skips redundant touch-offs across closely spaced features inside your configured <code class="mono">refDistance</code> threshold.</li>
+                </ul>
               </li>
               <li>
-                <strong>Synchronous Torch &amp; Anti-Dive 2 (<code class="mono">AD2</code>) Control:</strong> Traditional <code class="mono">M3/M5</code> commands in Mach4 pause the motion planner queue while Lua executes, leaving ugly dwell marks. With Warp9 synchronized I/O enabled, RotaryCAM emits motion-synchronized <code class="mono">M62 P3</code> (torch ON) and <code class="mono">M63 P3</code> (torch OFF) on TMC3in1/WarpRunner (or <code class="mono">M62/M63 P2</code> on ESS), alongside <code class="mono">M63 P2</code> (lock THC) and <code class="mono">M62 P2</code> (unlock THC) under Anti-Dive Mode 2 for zero-hesitation cuts.
+                <strong>Standard ESS Pathways (Pathway A Synced vs. Pathway B <code class="mono">m3</code>/<code class="mono">m5</code> OB1 Fallback):</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Pathway A (Motion-Synced ESS):</strong> Fires and shuts off the torch with <code class="mono">M62 P3</code> / <code class="mono">M63 P3</code> plus an <code class="mono">M65 P3</code> fail-safe shutoff, and toggles external THC (Proma 150, PriceCNC, or standalone) with <code class="mono">M62 P2</code> / <code class="mono">M63 P2</code> without emitting <code class="mono">m2020</code> macros.</li>
+                  <li><strong>Pathway B (<code class="mono">m3</code>/<code class="mono">m5</code> OB1 Fallback):</strong> Uses standard <code class="mono">m3</code> / <code class="mono">m5</code> torch control for OB1-wired tables that do not use synced <code class="mono">M62/M63</code> pins.</li>
+                </ul>
               </li>
               <li>
-                <strong>Rotary Feedrates &amp; Dwells:</strong> Full 4-axis <code class="mono">G93</code> inverse-time mode on all cutting moves. Dwell commands (<code class="mono">G04 P&lt;seconds&gt;</code>) are emitted in decimal seconds matching Mach4's default configuration.
+                <strong>Warp9 TMC3in1 / WarpRunner Output #4 THC, 3-Step Pierce Drop &amp; <code class="mono">W9_HC</code> <code class="mono">m2020</code> Setup:</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Output #4 Active-Low THC (<code class="mono">M63 P4</code> Lock / <code class="mono">M62 P4</code> Unlock):</strong> Moves TMC3in1 THC lock/unlock to Output #4 active-low (<code class="mono">M63 P4</code> Lock, <code class="mono">M62 P4</code> Unlock), fixing the legacy <code class="mono">P2</code> output conflict.</li>
+                  <li><strong>3-Step Pierce Drop:</strong> Drops from pierce to cut height with a 3-step sequence (<code class="mono">&ge; 2</code> steps + <code class="mono">G04 P0.0011</code> + <code class="mono">G01 Z&lt;pierce&gt;</code>) for predictable plunge timing.</li>
+                  <li><strong>Full <code class="mono">W9_HC</code> <code class="mono">m2020</code> Parameters &amp; Rotary <code class="mono">AD3</code> Disable:</strong> Pushes full <code class="mono">W9_HC</code> parameters (<code class="mono">AD1</code> delay, voltage and deadband bands, ATV buffer, HC Z min/max limits, <code class="mono">ESS_DELAY_AFTER_ARC_OKAY</code>, <code class="mono">AD2_M62_M63_ENABLED=1</code>, <code class="mono">AD3_VELOCITY_ENABLED</code>, and <code class="mono">TARGET_TIP_VOLTS</code>) followed by <code class="mono">G04 P0.100</code> Lua sync. Forces <code class="mono">AD3_VELOCITY_ENABLED=0</code> on rotary cuts so <code class="mono">G93</code> speed swings never trip false velocity anti-dive.</li>
+                  <li><strong>Continuous 4D Dynamic-Z Lock &amp; Post-Ramp Unlock:</strong> Keeps THC locked continuously across 4D dynamic-Z tube cuts to prevent <code class="mono">HC Z Delta</code> desync, and unlocks THC only after 3D ramp lead-ins finish.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Macro Hygiene &amp; Dwell Units:</strong> Filters out banned black-listed Mach4 macros and emits all <code class="mono">G04 P&lt;sec&gt;</code> dwells in decimal seconds.
               </li>
             </ul>
 
