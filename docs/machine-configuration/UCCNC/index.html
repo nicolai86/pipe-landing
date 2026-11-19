@@ -605,27 +605,27 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G90 G91.1 G17 G40 G49 G64</code>
-                  <span class="cut-stage-code-desc">Startup (+ optional G20/G21 & M205/M207/M209/M211)</span>
+                  <span class="cut-stage-code-desc">Startup (+ optional G20/G21 &amp; M205/M207/M209/M211)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<feed></code>
+                  <code class="cut-stage-code">G94 F&lt;feed&gt;</code>
                   <span class="cut-stage-code-desc">Linear positioning feed</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Rapid at Safe Z to pierce</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Header prints Checkbox 212 dwell unit, hardware board, and Z accel >= 500 mm/s2 check.</p>
+              <p class="cut-stage-note">Header prints Checkbox 212 dwell unit, hardware board, and Z accel &gt;= 500 mm/s2 check.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="2">
@@ -636,12 +636,12 @@
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G31 Z<tgt> F<probe></code>
+                  <code class="cut-stage-code">G31 Z&lt;tgt&gt; F&lt;probe&gt;</code>
                   <span class="cut-stage-code-desc">Default Integrated G31 touch probe</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 Z<Zm - offset></code>
+                  <code class="cut-stage-code">G92 Z&lt;Zm - offset&gt;</code>
                   <span class="cut-stage-code-desc">Direct single-line switch offset</span>
                 </div>
                 
@@ -651,18 +651,18 @@
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Direct G92 Z<Zm - offset> avoids extra post-trip bounce on floating heads.</p>
+              <p class="cut-stage-note">Direct G92 Z&lt;Zm - offset&gt; avoids extra post-trip bounce on floating heads.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceH&gt;</code>
                   <span class="cut-stage-code-desc">Move to pierce height</span>
                 </div>
                 
@@ -672,23 +672,23 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M3 / G04 P<sec|ms></code>
-                  <span class="cut-stage-code-desc">Fire torch + dwell (>= 0.2s on UC100)</span>
+                  <code class="cut-stage-code">M3 / G04 P&lt;sec|ms&gt;</code>
+                  <span class="cut-stage-code-desc">Fire torch + dwell (&gt;= 0.2s on UC100)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Plunge to cut height (non-ramp)</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">M206 is never emitted before M3 so UCCNC's ArcOK wait gate completes cleanly.</p>
+              <p class="cut-stage-note">M206 is never emitted before M3 so UCCNC&#39;s ArcOK wait gate completes cleanly.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -703,7 +703,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">0.200 mm -> M206</code>
+                  <code class="cut-stage-code">0.200 mm -&gt; M206</code>
                   <span class="cut-stage-code-desc">3D/4D check move then bilateral THC lock</span>
                 </div>
                 
@@ -714,7 +714,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -729,7 +729,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<feed></code>
+                  <code class="cut-stage-code">G94 F&lt;feed&gt;</code>
                   <span class="cut-stage-code-desc">Restore G94 feedrate</span>
                 </div>
                 
@@ -745,27 +745,27 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z clearance</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 A<360*k> / G92 A0</code>
+                  <code class="cut-stage-code">G0 A&lt;360*k&gt; / G92 A0</code>
                   <span class="cut-stage-code-desc">Modulo unwind between pack pieces</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G92.1 / M30</code>
-                  <span class="cut-stage-code-desc">Clear temporary offsets & end program</span>
+                  <span class="cut-stage-code-desc">Clear temporary offsets &amp; end program</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Pneumatic air scribe uses G52 X<dx> Y<dy> offsets cleared with G52 X0 Y0 before plasma.</p>
+              <p class="cut-stage-note">Pneumatic air scribe uses G52 X&lt;dx&gt; Y&lt;dy&gt; offsets cleared with G52 X0 Y0 before plasma.</p>
             </div>
             
           </div>

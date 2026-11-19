@@ -605,12 +605,12 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M106 Hplasma<id></code>
+                  <code class="cut-stage-code">M106 Hplasma&lt;id&gt;</code>
                   <span class="cut-stage-code-desc">Select active Fabrication Head</span>
                 </div>
                 
@@ -620,12 +620,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Rapid (Safe Z omitted in Mode 1)</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Mode 1 lets FabHead manage SafeHeight; Mode 2 emits explicit G0 Z<safeZ> clearance.</p>
+              <p class="cut-stage-note">Mode 1 lets FabHead manage SafeHeight; Mode 2 emits explicit G0 Z&lt;safeZ&gt; clearance.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="2">
@@ -642,7 +642,7 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G605 (Mode 2 Dynamic Z)</code>
-                  <span class="cut-stage-code-desc">Explicit probe & surface Z=0 reset</span>
+                  <span class="cut-stage-code-desc">Explicit probe &amp; surface Z=0 reset</span>
                 </div>
                 
               </div>
@@ -652,7 +652,7 @@
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -662,17 +662,17 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M101 I<arcIn></code>
+                  <code class="cut-stage-code">M101 I&lt;arcIn&gt;</code>
                   <span class="cut-stage-code-desc">Wait for Arc Transfer input</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G04 X<sec></code>
+                  <code class="cut-stage-code">G04 X&lt;sec&gt;</code>
                   <span class="cut-stage-code-desc">Pierce dwell in X-word seconds</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Mode 2 plunge (or 3D ramp with G602)</span>
                 </div>
                 
@@ -683,7 +683,7 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -709,7 +709,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -730,12 +730,12 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ> (Mode 2)</code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt; (Mode 2)</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z above HSS corners</span>
                 </div>
                 
@@ -746,7 +746,7 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G94 / G630 / M30</code>
-                  <span class="cut-stage-code-desc">Restore G94, exit Dynamic-Z & end</span>
+                  <span class="cut-stage-code-desc">Restore G94, exit Dynamic-Z &amp; end</span>
                 </div>
                 
               </div>

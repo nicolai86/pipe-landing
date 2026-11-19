@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -620,7 +620,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Rapid (zero Z words on Regime A 2D)</span>
                 </div>
                 
@@ -637,7 +637,7 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M61 (Regime A 2D)</code>
-                  <span class="cut-stage-code-desc">CNC12 M61 owns touch-off & pierce</span>
+                  <span class="cut-stage-code-desc">CNC12 M61 owns touch-off &amp; pierce</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -646,7 +646,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 Z<datum + offset></code>
+                  <code class="cut-stage-code">G92 Z&lt;datum + offset&gt;</code>
                   <span class="cut-stage-code-desc">Zero Z at surface or centerline</span>
                 </div>
                 
@@ -657,12 +657,12 @@
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceH&gt;</code>
                   <span class="cut-stage-code-desc">Regime B moves to pierce height</span>
                 </div>
                 
@@ -672,12 +672,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M3 / G4 P<sec></code>
+                  <code class="cut-stage-code">M3 / G4 P&lt;sec&gt;</code>
                   <span class="cut-stage-code-desc">Fire torch + dwell [0.01, 327.67] s</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Regime B plunge to cut height</span>
                 </div>
                 
@@ -688,7 +688,7 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -714,7 +714,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -724,7 +724,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<feed></code>
+                  <code class="cut-stage-code">G94 F&lt;feed&gt;</code>
                   <span class="cut-stage-code-desc">Regime B restores G94 BEFORE M5</span>
                 </div>
                 
@@ -740,23 +740,23 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Regime B retract (omitted on Regime A)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 A<360*k> / G92 A0</code>
+                  <code class="cut-stage-code">G0 A&lt;360*k&gt; / G92 A0</code>
                   <span class="cut-stage-code-desc">Exact 360 deg rotary unwind</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G64 OFF / M30</code>
-                  <span class="cut-stage-code-desc">Disable plasma smoothing & end program</span>
+                  <span class="cut-stage-code-desc">Disable plasma smoothing &amp; end program</span>
                 </div>
                 
               </div>

@@ -814,8 +814,28 @@ def verify_zero_em_dashes():
     print(f"[verify] Copywriting Rule #5 verified: 0 em-dashes across {checked_files} HTML files!")
 
 
+def verify_cut_cycle_dom():
+    code_re = re.compile(r'<code class="cut-stage-code">(.*?)</code>', re.S)
+    col_re = re.compile(r'<div class="cut-stage-col" data-phase="([1-6])">')
+    checked = 0
+    for f in controller_subpage_paths():
+        text = f.read_text(encoding="utf-8")
+        checked += 1
+        phases = col_re.findall(text)
+        if phases != ["1", "2", "3", "4", "5", "6"]:
+            print(f"[ERROR] Expected phases 1..6 in {f.relative_to(ROOT_DIR)}, got {phases}", file=sys.stderr)
+            sys.exit(1)
+        for m in code_re.finditer(text):
+            inner = m.group(1)
+            if "<" in inner or ">" in inner:
+                print(f"[ERROR] Unescaped '<' or '>' inside .cut-stage-code in {f.relative_to(ROOT_DIR)}: {inner}", file=sys.stderr)
+                sys.exit(1)
+    print(f"[verify] Verified 6-phase cut-cycle DOM & escaped G-code placeholders across {checked} controller pages!")
+
+
 if __name__ == "__main__":
     build_all_docs()
     if "--verify" in sys.argv:
         verify_links_and_assets()
         verify_zero_em_dashes()
+        verify_cut_cycle_dom()

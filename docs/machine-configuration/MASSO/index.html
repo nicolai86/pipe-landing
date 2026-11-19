@@ -605,13 +605,13 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G53 G0 Z0 / T112 M6</code>
-                  <span class="cut-stage-code-desc">Home Z & select MASSO Plasma Tool 112</span>
+                  <span class="cut-stage-code-desc">Home Z &amp; select MASSO Plasma Tool 112</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -620,7 +620,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Rapid at Safe Z (omitted before #1 in G200 Auto-IHS)</span>
                 </div>
                 
@@ -641,12 +641,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G38.2 Z<tgt> F<p></code>
+                  <code class="cut-stage-code">G38.2 Z&lt;tgt&gt; F&lt;p&gt;</code>
                   <span class="cut-stage-code-desc">Bare G200 (4D HSS / Ext THC / Option B2 ramps)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 Z0 / G0 Z<off> / G92 Z</code>
+                  <code class="cut-stage-code">G92 Z0 / G0 Z&lt;off&gt; / G92 Z</code>
                   <span class="cut-stage-code-desc">Switch offset compensation</span>
                 </div>
                 
@@ -657,23 +657,23 @@
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceH&gt;</code>
                   <span class="cut-stage-code-desc">Bare G200 lifts to pierce height</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M3</code>
-                  <span class="cut-stage-code-desc">Fire torch (G200 runs P, D<ms>, C internally)</span>
+                  <span class="cut-stage-code-desc">Fire torch (G200 runs P, D&lt;ms&gt;, C internally)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G04 P<ms></code>
-                  <span class="cut-stage-code-desc">Bare G200 integer ms dwell (>= 400ms on ramps)</span>
+                  <code class="cut-stage-code">G04 P&lt;ms&gt;</code>
+                  <span class="cut-stage-code-desc">Bare G200 integer ms dwell (&gt;= 400ms on ramps)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -682,7 +682,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Plunge to cut height (non-ramp)</span>
                 </div>
                 
@@ -693,7 +693,7 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -703,7 +703,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M667 F<thcFeed></code>
+                  <code class="cut-stage-code">M667 F&lt;thcFeed&gt;</code>
                   <span class="cut-stage-code-desc">DTHC ON (F word ALWAYS included: 75-600 mm/min)</span>
                 </div>
                 
@@ -713,13 +713,13 @@
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Omitting F on M667 breaks THC Z tracking on MASSO; RotaryCAM always emits M667 F<zFeed>.</p>
+              <p class="cut-stage-note">Omitting F on M667 breaks THC Z tracking on MASSO; RotaryCAM always emits M667 F&lt;zFeed&gt;.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -745,13 +745,13 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ> / G92.1</code>
-                  <span class="cut-stage-code-desc">Retract & clear temporary Z offset</span>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt; / G92.1</code>
+                  <span class="cut-stage-code-desc">Retract &amp; clear temporary Z offset</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -765,7 +765,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M30 / M30 L<count></code>
+                  <code class="cut-stage-code">M30 / M30 L&lt;count&gt;</code>
                   <span class="cut-stage-code-desc">End or chuck-fed bar-advance loop</span>
                 </div>
                 

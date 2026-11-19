@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -615,12 +615,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
-                  <span class="cut-stage-code-desc">Omits Z & A on 2D flat; omits stationary A with lookahead</span>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
+                  <span class="cut-stage-code-desc">Omits Z &amp; A on 2D flat; omits stationary A with lookahead</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Rotary/3D clearance (omitted on pure 2D)</span>
                 </div>
                 
@@ -636,33 +636,33 @@
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G91 / G38.2 Z-<d> F<f></code>
+                  <code class="cut-stage-code">G91 / G38.2 Z-&lt;d&gt; F&lt;f&gt;</code>
                   <span class="cut-stage-code-desc">3D/Rotary explicit touch probe</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G90 / G1 Z#5063 F<f></code>
+                  <code class="cut-stage-code">G90 / G1 Z#5063 F&lt;f&gt;</code>
                   <span class="cut-stage-code-desc">Settle onto exact tripped Z</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G10 L20 P0 Z<datum></code>
+                  <code class="cut-stage-code">G10 L20 P0 Z&lt;datum&gt;</code>
                   <span class="cut-stage-code-desc">Zero Z minus float switch offset</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Pure 2D skips G38.2 because M3 $0 S1 runs QTPlasmaC's internal ohmic/float probe.</p>
+              <p class="cut-stage-note">Pure 2D skips G38.2 because M3 $0 S1 runs QTPlasmaC&#39;s internal ohmic/float probe.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceH&gt;</code>
                   <span class="cut-stage-code-desc">3D/Rotary move to pierce height</span>
                 </div>
                 
@@ -673,7 +673,7 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M67 E3 Q60</code>
-                  <span class="cut-stage-code-desc">60% feed on holes <= 25.4 mm</span>
+                  <span class="cut-stage-code-desc">60% feed on holes &lt;= 25.4 mm</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -682,7 +682,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 G1 Z<cutH> F<p></code>
+                  <code class="cut-stage-code">G94 G1 Z&lt;cutH&gt; F&lt;p&gt;</code>
                   <span class="cut-stage-code-desc">Non-ramp plunge to cut height</span>
                 </div>
                 
@@ -693,17 +693,17 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G94 / G93</code>
-                  <span class="cut-stage-code-desc">G94 on 2D & HSS flats; G93 when A moves</span>
+                  <span class="cut-stage-code-desc">G94 on 2D &amp; HSS flats; G93 when A moves</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">F#<_hal[plasmac.cut-feed-rate]></code>
+                  <code class="cut-stage-code">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>
                   <span class="cut-stage-code-desc">2D flat reads live QTPlasmaC cut speed</span>
                 </div>
                 
@@ -724,7 +724,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -755,7 +755,7 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -765,18 +765,18 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract (omitted on pure 2D flat)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 A<360*k> / G92 A0</code>
+                  <code class="cut-stage-code">G0 A&lt;360*k&gt; / G92 A0</code>
                   <span class="cut-stage-code-desc">Pack/EOF unwind to nearest rev</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M190 P-1 / M52 P0 / M30</code>
-                  <span class="cut-stage-code-desc">Restore material & end program</span>
+                  <span class="cut-stage-code-desc">Restore material &amp; end program</span>
                 </div>
                 
               </div>

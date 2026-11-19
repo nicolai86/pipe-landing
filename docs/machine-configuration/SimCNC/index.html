@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -615,17 +615,17 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> (Flat)</code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; (Flat)</code>
                   <span class="cut-stage-code-desc">Flat rapid (#1123/#1124 plate Z reuse)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G93 -> G1 X Y A F<1/t> -> G94</code>
+                  <code class="cut-stage-code">G93 -&gt; G1 X Y A F&lt;1/t&gt; -&gt; G94</code>
                   <span class="cut-stage-code-desc">3.6+ coordinated rotary pre-pierce</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">3.5 uses G0 XY + G1 A F<rotFeed>; 3.6+ uses G93 coordinated pre-pierce then restores G94.</p>
+              <p class="cut-stage-note">3.5 uses G0 XY + G1 A F&lt;rotFeed&gt;; 3.6+ uses G93 coordinated pre-pierce then restores G94.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="2">
@@ -641,18 +641,18 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">#1110=<t> #1111=<A> #1112=<psi></code>
-                  <span class="cut-stage-code-desc">Thickness, amps & gas pressure</span>
+                  <code class="cut-stage-code">#1110=&lt;t&gt; #1111=&lt;A&gt; #1112=&lt;psi&gt;</code>
+                  <span class="cut-stage-code-desc">Thickness, amps &amp; gas pressure</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">#1090=<V> #1091=<pd> #1092=<F></code>
-                  <span class="cut-stage-code-desc">Arc voltage, pierce dwell & feed</span>
+                  <code class="cut-stage-code">#1090=&lt;V&gt; #1091=&lt;pd&gt; #1092=&lt;F&gt;</code>
+                  <span class="cut-stage-code-desc">Arc voltage, pierce dwell &amp; feed</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">#1113=<0|1> #1114=<mode></code>
-                  <span class="cut-stage-code-desc">3D ramp flag & process mode</span>
+                  <code class="cut-stage-code">#1113=&lt;0|1&gt; #1114=&lt;mode&gt;</code>
+                  <span class="cut-stage-code-desc">3D ramp flag &amp; process mode</span>
                 </div>
                 
               </div>
@@ -662,7 +662,7 @@
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -688,12 +688,12 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G93 F<.4f> (3.6+) | G94 (3.5)</code>
+                  <code class="cut-stage-code">G93 F&lt;.4f&gt; (3.6+) | G94 (3.5)</code>
                   <span class="cut-stage-code-desc">4-dec G93 (0.0001 floor) + 0.002mm feather</span>
                 </div>
                 
@@ -713,19 +713,19 @@
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Coalesces <0.05 mm / 0.02 deg micro-moves and inserts 0.002 mm feathering on axis switches.</p>
+              <p class="cut-stage-note">Coalesces &lt;0.05 mm / 0.02 deg micro-moves and inserts 0.002 mm feathering on axis switches.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<feed></code>
-                  <span class="cut-stage-code-desc">Finalize feathering & restore G94</span>
+                  <code class="cut-stage-code">G94 F&lt;feed&gt;</code>
+                  <span class="cut-stage-code-desc">Finalize feathering &amp; restore G94</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -739,7 +739,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M63 P<pin> / [G4 P<ms>]</code>
+                  <code class="cut-stage-code">M63 P&lt;pin&gt; / [G4 P&lt;ms&gt;]</code>
                   <span class="cut-stage-code-desc">Disable THC + optional STM32 unwind dwell</span>
                 </div>
                 
@@ -750,23 +750,23 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z clearance</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">#4061 = #50 / M<unlock></code>
-                  <span class="cut-stage-code-desc">Reset THC & dynamic #1111/#1112/#1090</span>
+                  <code class="cut-stage-code">#4061 = #50 / M&lt;unlock&gt;</code>
+                  <span class="cut-stage-code-desc">Reset THC &amp; dynamic #1111/#1112/#1090</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M112 / G1 Y0 / M30 / %</code>
-                  <span class="cut-stage-code-desc">EOF A-axis homing macro, recenter & end</span>
+                  <span class="cut-stage-code-desc">EOF A-axis homing macro, recenter &amp; end</span>
                 </div>
                 
               </div>

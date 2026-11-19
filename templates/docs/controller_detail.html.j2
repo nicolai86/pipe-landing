@@ -211,17 +211,17 @@
             <div class="cut-stage-col" data-phase="{{ stage.num }}">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">0{{ stage.num }}</span>
-                <span class="cut-stage-title">{{ stage.title }}</span>
+                <span class="cut-stage-title">{{ stage.title | e }}</span>
               </div>
               <div class="cut-stage-codes">
                 {% for item in stage.codes %}
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">{{ item.code }}</code>
-                  <span class="cut-stage-code-desc">{{ item.desc }}</span>
+                  <code class="cut-stage-code">{{ item.code | e }}</code>
+                  <span class="cut-stage-code-desc">{{ item.desc | e }}</span>
                 </div>
                 {% endfor %}
               </div>
-              <p class="cut-stage-note">{{ stage.note | safe }}</p>
+              <p class="cut-stage-note">{{ stage.note | e }}</p>
             </div>
             {% endfor %}
           </div>

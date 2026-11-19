@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -615,17 +615,17 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt;</code>
                   <span class="cut-stage-code-desc">Round pipe unwrapped to X-WRAP or Y-WRAP</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Caps speeds at 300 IPM XY and 150 IPM Z; filters < 0.025 mm (< 0.001") micro-moves.</p>
+              <p class="cut-stage-note">Caps speeds at 300 IPM XY and 150 IPM Z; filters &lt; 0.025 mm (&lt; 0.001&#34;) micro-moves.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="2">
@@ -637,11 +637,11 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">H0 / G92 Z0</code>
-                  <span class="cut-stage-code-desc">Lock THC & zero before probe</span>
+                  <span class="cut-stage-code-desc">Lock THC &amp; zero before probe</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G38.2 Z-<d> F<probe></code>
+                  <code class="cut-stage-code">G38.2 Z-&lt;d&gt; F&lt;probe&gt;</code>
                   <span class="cut-stage-code-desc">Fast touch-off probe down</span>
                 </div>
                 
@@ -651,8 +651,8 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<0.508 + springback></code>
-                  <span class="cut-stage-code-desc">0.020" backlash (+ thin sheet springback)</span>
+                  <code class="cut-stage-code">G0 Z&lt;0.508 + springback&gt;</code>
+                  <span class="cut-stage-code-desc">0.020&#34; backlash (+ thin sheet springback)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -661,18 +661,18 @@
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Springback auto-zeroes on pipe, tubing, and plate >= 3/16" (4.7625 mm) so SMARTV reads true height.</p>
+              <p class="cut-stage-note">Springback auto-zeroes on pipe, tubing, and plate &gt;= 3/16&#34; (4.7625 mm) so SMARTV reads true height.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceH&gt;</code>
                   <span class="cut-stage-code-desc">Lift to pierce height</span>
                 </div>
                 
@@ -682,12 +682,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G4 P<sec></code>
-                  <span class="cut-stage-code-desc">Pierce + Arc Transfer + Loop 1 extra (>= 0.55s on 3D ramps)</span>
+                  <code class="cut-stage-code">G4 P&lt;sec&gt;</code>
+                  <span class="cut-stage-code-desc">Pierce + Arc Transfer + Loop 1 extra (&gt;= 0.55s on 3D ramps)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Plunge to cut height (or 3D ramp)</span>
                 </div>
                 
@@ -697,18 +697,18 @@
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Mandatory >= 0.55s dwell on 3D ramps prevents 'Torch Moving Before Cutting Voltage Sensed' faults.</p>
+              <p class="cut-stage-note">Mandatory &gt;= 0.55s dwell on 3D ramps prevents &#39;Torch Moving Before Cutting Voltage Sensed&#39; faults.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 / G2 / G3 X Y F<feed></code>
+                  <code class="cut-stage-code">G1 / G2 / G3 X Y F&lt;feed&gt;</code>
                   <span class="cut-stage-code-desc">G94 cut motion (Z omitted unless dynamic)</span>
                 </div>
                 
@@ -719,7 +719,7 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">H0</code>
-                  <span class="cut-stage-code-desc">Disable THC in corners & small holes</span>
+                  <span class="cut-stage-code-desc">Disable THC in corners &amp; small holes</span>
                 </div>
                 
               </div>
@@ -729,7 +729,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -744,7 +744,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G4 P<postCutSec></code>
+                  <code class="cut-stage-code">G4 P&lt;postCutSec&gt;</code>
                   <span class="cut-stage-code-desc">Optional inverter post-flow settle dwell</span>
                 </div>
                 
@@ -755,27 +755,27 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z clearance</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">H0 / M30</code>
-                  <span class="cut-stage-code-desc">Disable THC & end program</span>
+                  <span class="cut-stage-code-desc">Disable THC &amp; end program</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">(PS<unscaled_feed>)</code>
+                  <code class="cut-stage-code">(PS&lt;unscaled_feed&gt;)</code>
                   <span class="cut-stage-code-desc">Strictly final line for speed slider</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">No A-axis unwind needed; (PS<feed>) keeps unscaled surface speed for FireControl's UI.</p>
+              <p class="cut-stage-note">No A-axis unwind needed; (PS&lt;feed&gt;) keeps unscaled surface speed for FireControl&#39;s UI.</p>
             </div>
             
           </div>

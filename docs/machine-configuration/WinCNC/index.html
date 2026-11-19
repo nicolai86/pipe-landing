@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -615,12 +615,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">L38.1 T<V> F<f> Z<p> R<c> C<a></code>
+                  <code class="cut-stage-code">L38.1 T&lt;V&gt; F&lt;f&gt; Z&lt;p&gt; R&lt;c&gt; C&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Optional v3.1.06d+ cut-parameter block</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> <A|W|B><ang></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; &lt;A|W|B&gt;&lt;ang&gt;</code>
                   <span class="cut-stage-code-desc">Rapid using WINCNC.INI rotary letter</span>
                 </div>
                 
@@ -637,11 +637,11 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M61 (Pattern 1)</code>
-                  <span class="cut-stage-code-desc">WinCNC touch-off & pierce (+ G92 Z on 4D)</span>
+                  <span class="cut-stage-code-desc">WinCNC touch-off &amp; pierce (+ G92 Z on 4D)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G31 Z<tgt> F<probe> (Pattern 2)</code>
+                  <code class="cut-stage-code">G31 Z&lt;tgt&gt; F&lt;probe&gt; (Pattern 2)</code>
                   <span class="cut-stage-code-desc">Explicit G31 + G92 Z surface datum</span>
                 </div>
                 
@@ -652,7 +652,7 @@
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -667,12 +667,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G04 X<sec></code>
+                  <code class="cut-stage-code">G04 X&lt;sec&gt;</code>
                   <span class="cut-stage-code-desc">X-word sec dwell (P1 ramp/forced or P2)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Pattern 2 plunge to cut height</span>
                 </div>
                 
@@ -683,7 +683,7 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -709,7 +709,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -720,7 +720,7 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M62</code>
-                  <span class="cut-stage-code-desc">WinCNC torch off & Z retract</span>
+                  <span class="cut-stage-code-desc">WinCNC torch off &amp; Z retract</span>
                 </div>
                 
               </div>
@@ -730,17 +730,17 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z clearance</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">L28.1 / G92 <A|W|B>0.000</code>
+                  <code class="cut-stage-code">L28.1 / G92 &lt;A|W|B&gt;0.000</code>
                   <span class="cut-stage-code-desc">Modulo 0-360 rotary wrap reset</span>
                 </div>
                 

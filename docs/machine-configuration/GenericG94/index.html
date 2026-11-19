@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -615,12 +615,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract above swing envelope before A rapid</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Suppresses A words on 2D flat sheet</span>
                 </div>
                 
@@ -652,17 +652,17 @@
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceZ&gt;</code>
                   <span class="cut-stage-code-desc">Move to pierce height</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M63 P<n> | M<lock> (opt)</code>
+                  <code class="cut-stage-code">M63 P&lt;n&gt; | M&lt;lock&gt; (opt)</code>
                   <span class="cut-stage-code-desc">Optional THC lock (None by default)</span>
                 </div>
                 
@@ -673,11 +673,11 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G04 P0.500 | P500 | X0.500</code>
-                  <span class="cut-stage-code-desc">Configurable dwell (>= 10 ms) or off</span>
+                  <span class="cut-stage-code-desc">Configurable dwell (&gt;= 10 ms) or off</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutZ> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutZ&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Plunge (3D ramp splits after M03+dwell)</span>
                 </div>
                 
@@ -688,22 +688,22 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<dL_xyz/dt></code>
-                  <span class="cut-stage-code-desc">Cartesian XYZ speed (<= 2.5 deg rotary steps)</span>
+                  <code class="cut-stage-code">G94 F&lt;dL_xyz/dt&gt;</code>
+                  <span class="cut-stage-code-desc">Cartesian XYZ speed (&lt;= 2.5 deg rotary steps)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 A<a> F<deg/rad></code>
+                  <code class="cut-stage-code">G1 A&lt;a&gt; F&lt;deg/rad&gt;</code>
                   <span class="cut-stage-code-desc">Pure-A feed in deg/min or rad/min</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M62/M63 or M<lock/unlock></code>
+                  <code class="cut-stage-code">M62/M63 or M&lt;lock/unlock&gt;</code>
                   <span class="cut-stage-code-desc">Optional digital/custom THC modulation</span>
                 </div>
                 
@@ -714,12 +714,12 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M63 P<n> | M<lock> (opt)</code>
+                  <code class="cut-stage-code">M63 P&lt;n&gt; | M&lt;lock&gt; (opt)</code>
                   <span class="cut-stage-code-desc">Optional THC lock before torch off</span>
                 </div>
                 
@@ -735,23 +735,23 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z clearance</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 A<mod_360></code>
+                  <code class="cut-stage-code">G92 A&lt;mod_360&gt;</code>
                   <span class="cut-stage-code-desc">Modulo-360 unwind (no G92.1)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">G1 Y0|X0 / M30</code>
-                  <span class="cut-stage-code-desc">Optional homing macro, recenter & end</span>
+                  <span class="cut-stage-code-desc">Optional homing macro, recenter &amp; end</span>
                 </div>
                 
               </div>

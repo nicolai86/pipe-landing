@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -620,7 +620,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Rapid at Safe Z (or Y-wrap linear)</span>
                 </div>
                 
@@ -636,33 +636,33 @@
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<feed></code>
+                  <code class="cut-stage-code">G94 F&lt;feed&gt;</code>
                   <span class="cut-stage-code-desc">Ensure G94 before probing</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G38.2 Z<tgt> F<probe></code>
+                  <code class="cut-stage-code">G38.2 Z&lt;tgt&gt; F&lt;probe&gt;</code>
                   <span class="cut-stage-code-desc">Touch-off probe down</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 Z0 / G0 Z<off> / G92 Z</code>
+                  <code class="cut-stage-code">G92 Z0 / G0 Z&lt;off&gt; / G92 Z</code>
                   <span class="cut-stage-code-desc">Switch offset compensation</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">M190 P-1 keeps Plugin_plasma pierce_height=0 so CAM owns all Z probing & heights.</p>
+              <p class="cut-stage-note">M190 P-1 keeps Plugin_plasma pierce_height=0 so CAM owns all Z probing &amp; heights.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceH&gt;</code>
                   <span class="cut-stage-code-desc">Move to pierce height</span>
                 </div>
                 
@@ -677,12 +677,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M3 / G4 P<sec></code>
+                  <code class="cut-stage-code">M3 / G4 P&lt;sec&gt;</code>
                   <span class="cut-stage-code-desc">Fire torch + float-second dwell</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Plunge to cut height (non-ramp)</span>
                 </div>
                 
@@ -693,7 +693,7 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -709,7 +709,7 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M64 P2 (3D/4D)</code>
-                  <span class="cut-stage-code-desc">Continuous hold on ramps & 4D HSS</span>
+                  <span class="cut-stage-code-desc">Continuous hold on ramps &amp; 4D HSS</span>
                 </div>
                 
               </div>
@@ -719,7 +719,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -739,7 +739,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<feed></code>
+                  <code class="cut-stage-code">G94 F&lt;feed&gt;</code>
                   <span class="cut-stage-code-desc">Immediate G94 restore after G93</span>
                 </div>
                 
@@ -750,27 +750,27 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 A<mod_360></code>
+                  <code class="cut-stage-code">G92 A&lt;mod_360&gt;</code>
                   <span class="cut-stage-code-desc">Modulo-360 reset (zero G92.1)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M65 P2 / M30</code>
-                  <span class="cut-stage-code-desc">Enable THC port & end program</span>
+                  <span class="cut-stage-code-desc">Enable THC port &amp; end program</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Lines <= 80 chars; strips ?, !, ~ real-time command characters from comments.</p>
+              <p class="cut-stage-note">Lines &lt;= 80 chars; strips ?, !, ~ real-time command characters from comments.</p>
             </div>
             
           </div>

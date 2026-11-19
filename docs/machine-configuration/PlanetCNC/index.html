@@ -605,7 +605,7 @@
             <div class="cut-stage-col" data-phase="1">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">01</span>
-                <span class="cut-stage-title">Rapid & Rotate</span>
+                <span class="cut-stage-title">Rapid &amp; Rotate</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -616,16 +616,16 @@
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M54 P0 / M55-M57 P0</code>
-                  <span class="cut-stage-code-desc">THC OFF & cancel Transform/Warp/Swap</span>
+                  <span class="cut-stage-code-desc">THC OFF &amp; cancel Transform/Warp/Swap</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <code class="cut-stage-code">G0 X&lt;x&gt; Y&lt;y&gt; A&lt;a&gt;</code>
                   <span class="cut-stage-code-desc">Rapid at Safe Z in G94</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">General notes emit as ; comments so none of TNG's 38 parenthetical keywords fire accidentally.</p>
+              <p class="cut-stage-note">General notes emit as ; comments so none of TNG&#39;s 38 parenthetical keywords fire accidentally.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="2">
@@ -636,17 +636,17 @@
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G38.2 Z<tgt> F<probe></code>
+                  <code class="cut-stage-code">G38.2 Z&lt;tgt&gt; F&lt;probe&gt;</code>
                   <span class="cut-stage-code-desc">Fast touch (+ optional slow 2-stage latch)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G91 G01 Z<off> F<p> / G90</code>
+                  <code class="cut-stage-code">G91 G01 Z&lt;off&gt; F&lt;p&gt; / G90</code>
                   <span class="cut-stage-code-desc">Clears AL Axis-Lock without losing pos</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 Z<datum></code>
+                  <code class="cut-stage-code">G92 Z&lt;datum&gt;</code>
                   <span class="cut-stage-code-desc">Surface or HSS centerline Z=0</span>
                 </div>
                 
@@ -657,27 +657,27 @@
             <div class="cut-stage-col" data-phase="3">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">03</span>
-                <span class="cut-stage-title">Pierce & Dwell</span>
+                <span class="cut-stage-title">Pierce &amp; Dwell</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <code class="cut-stage-code">G0 Z&lt;pierceH&gt;</code>
                   <span class="cut-stage-code-desc">Move to pierce height</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M54 P0 ; Lock THC</code>
-                  <span class="cut-stage-code-desc">Hold THC off for pierce & lead-in</span>
+                  <span class="cut-stage-code-desc">Hold THC off for pierce &amp; lead-in</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M3 / G04 P<sec></code>
+                  <code class="cut-stage-code">M3 / G04 P&lt;sec&gt;</code>
                   <span class="cut-stage-code-desc">Fire torch + decimal-second dwell</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <code class="cut-stage-code">G1 Z&lt;cutH&gt; F&lt;plunge&gt;</code>
                   <span class="cut-stage-code-desc">Plunge to cut height (non-ramp)</span>
                 </div>
                 
@@ -688,7 +688,7 @@
             <div class="cut-stage-col" data-phase="4">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">04</span>
-                <span class="cut-stage-title">Cut & THC Control</span>
+                <span class="cut-stage-title">Cut &amp; THC Control</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -698,7 +698,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">M54 P1 Q<spd> R1</code>
+                  <code class="cut-stage-code">M54 P1 Q&lt;spd&gt; R1</code>
                   <span class="cut-stage-code-desc">2D/Y-Wrap speed-gated lookahead THC</span>
                 </div>
                 
@@ -719,7 +719,7 @@
             <div class="cut-stage-col" data-phase="5">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">05</span>
-                <span class="cut-stage-title">Torch Off & Unlock</span>
+                <span class="cut-stage-title">Torch Off &amp; Unlock</span>
               </div>
               <div class="cut-stage-codes">
                 
@@ -734,7 +734,7 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G94 F<feed></code>
+                  <code class="cut-stage-code">G94 F&lt;feed&gt;</code>
                   <span class="cut-stage-code-desc">Restore G94 before Safe Z retract</span>
                 </div>
                 
@@ -745,27 +745,27 @@
             <div class="cut-stage-col" data-phase="6">
               <div class="cut-stage-col-head">
                 <span class="cut-stage-num">06</span>
-                <span class="cut-stage-title">Safe Retract & Unwind</span>
+                <span class="cut-stage-title">Safe Retract &amp; Unwind</span>
               </div>
               <div class="cut-stage-codes">
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 Z<safeZ></code>
+                  <code class="cut-stage-code">G0 Z&lt;safeZ&gt;</code>
                   <span class="cut-stage-code-desc">Retract to Safe Z clearance</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 A<mod_360></code>
+                  <code class="cut-stage-code">G92 A&lt;mod_360&gt;</code>
                   <span class="cut-stage-code-desc">Modulo-360 reset (zero G92.1)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
                   <code class="cut-stage-code">M54 P0 / M02 or M30</code>
-                  <span class="cut-stage-code-desc">THC OFF & selectable M02/M30 end</span>
+                  <span class="cut-stage-code-desc">THC OFF &amp; selectable M02/M30 end</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Optional (status, ...) lines report piece progress in TNG's status bar.</p>
+              <p class="cut-stage-note">Optional (status, ...) lines report piece progress in TNG&#39;s status bar.</p>
             </div>
             
           </div>
