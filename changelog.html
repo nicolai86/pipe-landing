@@ -1318,6 +1318,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: Upcoming (v0.8.2)
+           ================================================================ -->
+      <article class="release-entry" id="v0.8.2-upcoming">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">Upcoming</span>
+              <span class="release-version-pill">v0.8.2 (Upcoming)</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; CNCdrive UCCNC XYZA Hardening</span>
+          </div>
+          <p class="release-summary">
+            One-click ArtSoft Mach3 (.xml) and CSLab SimCNC 3.6 (config.xml) profile import in the Machines modal, direct mailto:contact@rotarycam.app Machine Verification email drafts, and CNCdrive UCCNC XYZA post-processor hardening (UC100, UC300ETH, UC400ETH, AXBB-E).
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>One-Click Mach3 (<code class="mono">.xml</code>) &amp; SimCNC 3.6 (<code class="mono">config.xml</code>) Setup Import:</strong> Upload your ArtSoft Mach3 <code class="mono">.xml</code> or CSLab SimCNC 3.6 <code class="mono">config.xml</code> profile directly in the Machines modal (alongside FlashCut <code class="mono">.xml</code>). Auto-fills units, XYZA velocity/acceleration/jerk limits, and rotary angular limits, and surfaces Plasma, Spindle, and slaved-axis safety warnings.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Direct Machine Verification Email Draft (<code class="mono">mailto:contact@rotarycam.app</code>):</strong> Machine Verification submissions now launch a pre-filled <code class="mono">mailto:contact@rotarycam.app</code> email draft with <strong>Open Email Draft</strong> and <strong>Copy Report</strong> buttons so beta cut feedback reaches RotaryCAM directly.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>CNCdrive UCCNC (<code class="mono">.nc</code>) XYZA Post-Processor Hardening:</strong> Choose between Integrated <code class="mono">G31</code> + <code class="mono">G92 Z&lt;Zm - SwitchOffset&gt;</code> touch-off, <code class="mono">Neuron Lite</code> (XY-only external Z), or legacy <code class="mono">M31</code> macro (flat/concentric round only). Emits ArcOK-safe <code class="mono">M205-M212</code> THC handshakes (<code class="mono">M205/M207/M209/M211</code> before <code class="mono">M3</code>, <code class="mono">M211/M212</code> anti-dive modulation on flat/round, and a <code class="mono">0.200 mm</code> check move before <code class="mono">M206</code> lock on 3D ramps and 4D profiles). Adds motion board selection (<code class="mono">UC100</code> <code class="mono">0.2 s / 200 ms</code> dwell floor vs. <code class="mono">UC300ETH/UC400ETH/AXBB-E</code>), <code class="mono">Checkbox 212</code> seconds/ms <code class="mono">G04 P</code> switching, optional <code class="mono">G20/G21</code> suppression (<code class="mono">Steps/unit</code>), and <code class="mono">Z accel &ge; 500 mm/s&sup2;</code> enforcement.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 18, 2026 (v0.8.1)
            ================================================================ -->
       <article class="release-entry" id="v0.8.1">
