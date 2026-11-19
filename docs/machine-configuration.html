@@ -783,7 +783,7 @@
             </p>
             <ul class="doc-bullet-list">
               <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span>: Native LinuxCNC 2.9/2.10 plasma post with self-contained <code class="mono">(o=0, ...)</code> process parameter comments or <code class="mono">M190</code> material table lookup, <code class="mono">M3 $0 S1</code> plasma spindle codes, active-high <code class="mono">M62 P2</code> THC lock / <code class="mono">M63 P2</code> unlock on pin 2, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
-              <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span>: Optimized for CrossFire, CrossFire PRO, and CrossFire XR tables. Emits mandatory <code class="mono">(v1.6-sc)</code> line 1 sentinels, <code class="mono">(PS&lt;feed&gt;)</code> footers, paren-only comments, automatic <code class="mono">G38.2</code>/<code class="mono">G38.4</code> IHS touch-off loops, <code class="mono">H0</code>/<code class="mono">H1</code> THC toggles, and unwrapped <code class="mono">Y</code>-axis rotary chuck cutting in <code class="mono">G94</code>.</li>
+              <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span>: Hardened for FireControl <code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code> on CrossFire, PRO, and XR tables. Emits <code class="mono">(v1.6-sc)</code> and <code class="mono">(PS&lt;feed&gt;)</code> sentinels, strict GRBL-safe <code class="mono">(...)</code> comments, separated <code class="mono">0.020"</code> IHS backlash vs. thin-sheet springback, <code class="mono">0.55 s</code> 3D ramp ignition dwell, inverter settle controls, <code class="mono">X-WRAP</code>/<code class="mono">Y-WRAP</code> round-tube wrapping, and optional fixed-calibration chuck <code class="mono">Travel / Rev</code> scaling.</li>
               <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span>: Dedicated post for Mach4 tables running the Warp9 Ethernet SmoothStepper with external or standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> touch-off probing with switch-offset compensation, standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span>: Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
               <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span>: Native <code class="mono">T112 M6</code> plasma mode, automated <code class="mono">G200</code> parameter blocks with millisecond pierce delays (<code class="mono">D&lt;ms&gt;</code>), explicit buffered <code class="mono">M666</code> (THC OFF) / <code class="mono">M667 F&lt;zFeed&gt;</code> (THC ON) corner anti-dive protection, and <code class="mono">G93</code> rotary motion.</li>
@@ -795,7 +795,7 @@
               <li><span class="ui-chip">EdingCNC Plasma (.nc)</span>: Clean EdingCNC post for CNC720/CNC760 with <code class="mono">G38.2</code> surface touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M21</code> (THC OFF) / <code class="mono">M20</code> (THC ON) anti-dive locking, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Dedicated post for PlanetCNC Mk3 and TNG software with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M54 P0</code> (THC OFF) / <code class="mono">M54 P1</code> (THC ON) corner locking, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre plasma tables and SideKick rotary attachments, emitting strict WinCNC <code class="mono">[square bracket]</code> comments (zero parentheses or semicolons), <code class="mono">M61</code>/<code class="mono">M62</code> controller-owned IHS &amp; torch macros, <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G93</code> rotary feeds, and <code class="mono">M66</code> program end.</li>
-              <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6 (.nc)</span>: 4-axis Euclidean trajectory feedrate spoofing for SimCNC 3.5 or pure ANSI/ISO <code class="mono">G93</code> inverse-time feed words (<code class="mono">F = 1 / Δt</code>) for SimCNC 3.6, coupled with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
+              <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6+ (.nc)</span>: 4D trajectory feedrate spoofing for SimCNC 3.5 or hardened <code class="mono">G93</code> inverse-time (<code class="mono">F = 1 / Δt</code>, <code class="mono">G69</code> + metric <code class="mono">G64 P0.3/P0.4</code>, micro-segment coalescing, <code class="mono">0.002 mm</code> axial feathering, <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs, <code class="mono">G92 A</code> phase-preserving unwinds, and <code class="mono">#1999</code>/<code class="mono">#4061</code> guards) for SimCNC 3.6+, with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
               <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Standard ISO 6983 G-code with decimal seconds dwells (<code class="mono">G4 P&lt;sec&gt;</code>) and configurable M-codes for open-source and industrial controllers.</li>
             </ul>
 
@@ -966,12 +966,12 @@
                     <td>Inline <code class="mono">(o=0, ...)</code> or <code class="mono">M190 P&lt;mat&gt;</code></td>
                   </tr>
                   <tr>
-                    <td><strong>Langmuir FireControl</strong></td>
+                    <td><strong>Langmuir FireControl (v1.6+ / v24.1.6)</strong></td>
                     <td><code class="mono">.tap</code></td>
-                    <td>CAM loop: <code class="mono">G38.2</code> + <code class="mono">G38.4</code> + <code class="mono">0.5mm</code></td>
-                    <td><code class="mono">M3</code> / <code class="mono">M5</code> + <code class="mono">G4 P0.5</code></td>
-                    <td><code class="mono">H0</code> (Off) / <code class="mono">H1</code> (On)</td>
-                    <td><code class="mono">G94</code> Unwrapped <code class="mono">Y</code></td>
+                    <td>CAM loop: <code class="mono">G38.2</code> + <code class="mono">G38.4</code> + <code class="mono">0.020"</code> Backlash + Auto Springback</td>
+                    <td><code class="mono">M3</code> / <code class="mono">M5</code> (<code class="mono">&ge;0.55s</code> 3D ramp dwell + Post-Cut Settle)</td>
+                    <td><code class="mono">H0</code> (Off) / <code class="mono">H1</code> (On after ramp)</td>
+                    <td><code class="mono">G94</code> <code class="mono">Y-WRAP</code> / <code class="mono">X-WRAP</code> + Optional <code class="mono">L_rev</code></td>
                     <td>Header <code class="mono">(v1.6-sc)</code> &amp; EOF <code class="mono">(PS&lt;feed&gt;)</code></td>
                   </tr>
                   <tr>
@@ -1020,13 +1020,13 @@
                     <td><code class="mono">G64 ON</code> + <code class="mono">M65</code> Profile Manager</td>
                   </tr>
                   <tr>
-                    <td><strong>CSLab SimCNC (3.5 / 3.6)</strong></td>
+                    <td><strong>CSLab SimCNC (3.5 / 3.6+)</strong></td>
                     <td><code class="mono">.nc</code></td>
                     <td>Managed by SimCNC <code class="mono">m3.py</code> macro</td>
                     <td><code class="mono">M3 S1</code> / <code class="mono">M63 P1</code> + <code class="mono">M5</code></td>
                     <td><code class="mono">M63 P0</code> (Lock) / <code class="mono">M62 P0</code> (Unlock)</td>
-                    <td>Spoofed <code class="mono">G94</code> / <code class="mono">G93</code></td>
-                    <td><code class="mono">#1111</code> Amps, <code class="mono">#1090</code> Volts, <code class="mono">#1091</code> Dwell</td>
+                    <td>3.5: Spoofed <code class="mono">G94</code> / 3.6+: Hardened <code class="mono">G93</code></td>
+                    <td><code class="mono">#1111</code> Amps, <code class="mono">#1090</code> Volts, <code class="mono">#1091</code> Dwell, <code class="mono">#4061</code> THC</td>
                   </tr>
                 </tbody>
               </table>
@@ -1071,42 +1071,44 @@
 
             <!-- Controller 2: Langmuir FireControl -->
             <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • CrossFire, CrossFire PRO &amp; CrossFire XR</div>
+              <div class="doc-section-kicker">Controller Setup • CrossFire, CrossFire PRO &amp; CrossFire XR (v1.6+ to v24.1.6)</div>
               <h3 class="doc-section-heading">2. Langmuir Systems FireControl Setup</h3>
             </div>
             <p>
-              Langmuir Systems tables (CrossFire, PRO, and XR) run on proprietary GRBL-based motion control managed by the FireControl desktop software. RotaryCAM outputs fully compliant <code class="mono">.tap</code> programs that load directly into FireControl without parser warnings:
+              Langmuir Systems tables (CrossFire, PRO, and XR) run on FireControl GRBL motion control. RotaryCAM outputs hardened <code class="mono">.tap</code> programs built for FireControl <code class="mono">v1.6+</code> through <code class="mono">v24.1.6</code> so your table cuts without parser errors, false voltage faults, or GRBL serial hiccups:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Parser Sentinels &amp; Comment Strictness:</strong> FireControl rejects standard G-code headers if parser sentinels are missing. Line 1 must begin with <code class="mono">(v1.6-sc)</code>, and the final line after <code class="mono">M30</code> must contain <code class="mono">(PS&lt;speed&gt;)</code> (e.g. <code class="mono">(PS2800)</code> in metric or <code class="mono">(PS110)</code> in imperial) to populate FireControl's program speed slider. Furthermore, <strong>all comments must use parentheses <code class="mono">(...)</code> only</strong>. Semicolons (<code class="mono">;</code>), percent signs (<code class="mono">%</code>), and variable hashes (<code class="mono">#</code>) will cause FireControl to halt with syntax errors.
+                <strong>Parser Sentinels &amp; Strict GRBL Serial Protection:</strong> Line 1 starts with <code class="mono">(v1.6-sc)</code> and the footer after <code class="mono">M30</code> emits <code class="mono">(PS&lt;feed&gt;)</code> (unscaled surface speed, e.g. <code class="mono">(PS110)</code> or <code class="mono">(PS2800)</code>) for FireControl's speed slider. Every line allows at most one <code class="mono">(...)</code> comment (nested parens become <code class="mono">[...]</code>; semicolons <code class="mono">;</code>, slashes <code class="mono">/</code>, <code class="mono">%</code>, and <code class="mono">#</code> are stripped), filters <code class="mono">&lt; 0.025 mm</code> (<code class="mono">&lt; 0.001"</code>) micro-moves while preserving vertical plunges and refreshing modal feedrates after every IHS/plunge, and caps CrossFire PRO/XR speeds at <code class="mono">300 IPM</code> XY and <code class="mono">150 IPM</code> Z.
               </li>
               <li>
-                <strong>Automated IHS Touch-Off Loop:</strong> Because FireControl does not have an internal automatic canned touch-off cycle, RotaryCAM generates Langmuir's exact dual-speed IHS probing loop before every single pierce:
+                <strong>Separated IHS Backlash &amp; Thin-Sheet Springback:</strong> FireControl's two-stage IHS probe (<code class="mono">G38.2</code> + <code class="mono">G38.4</code>) keeps mechanical <code class="mono">0.020"</code> (<code class="mono">0.508 mm</code>) <strong>IHS Backlash</strong> separate from <strong>Thin-Sheet Springback</strong>. Springback automatically drops to <code class="mono">0</code> on rigid pipe, structural tubing, and heavy plate (<code class="mono">&ge; 3/16&Prime;</code> / <code class="mono">4.7625 mm</code>) so <code class="mono">SMARTV</code> (SMART Voltage) never samples an inflated cut height:
                 <pre><code class="language-gcode">H0
 G0 X25.000 Y10.000
 G92 Z0.0
 G38.2 Z-127.0 F2540.0   (Fast ohmic/switch touch probe down)
 G38.4 Z12.7 F508.0      (Slow retract until switch un-trips)
 G92 Z0.0
-G0 Z0.508               (Compensate for switch springback backlash)
+G0 Z0.508               (0.020 in IHS backlash + sheet springback if thin)
 G92 Z0.0
 G0 Z3.800               (Retract to Pierce Height)
 M3                      (Torch Fire)
-G4 P0.400               (Stationary Pierce Delay in Seconds)
-G1 Z1.500 F1500.0       (Plunge to Cut Height)
-H1                      (THC Active)</code></pre>
+G4 P0.550               (Min 0.55s dwell on 3D ramps + Arc Transfer / Loop 1 extra)
+G1 X27.500 Y10.000 Z1.500 F2800.0  (3D ramp or plunge with H0 held)
+H1                      (THC Active only after reaching Cut Height)</code></pre>
               </li>
               <li>
-                <strong>THC Height Regulation (<code class="mono">H0</code> &amp; <code class="mono">H1</code>):</strong> FireControl turns THC on and off with standalone <code class="mono">H1</code> and <code class="mono">H0</code> command lines. RotaryCAM automatically places <code class="mono">H0</code> before every touch-off, during lead-ins, around small holes, during sharp direction changes, and before extinguishing the arc with <code class="mono">M5</code>.
+                <strong>3D Ramp Minimum Ignition Dwell (<code class="mono">0.55 s</code>) &amp; <code class="mono">H0</code> Ramp Protection:</strong> CrossFire Gen2 tables have no hardware Arc OK wire and look for cutting voltage shortly after <code class="mono">M3</code>. On 3D ramp entries, RotaryCAM enforces a mandatory <code class="mono">0.55 s</code> minimum <code class="mono">G4 P</code> dwell after <code class="mono">M3</code> to stop "Torch Moving Before Cutting Voltage Sensed" faults, holds <code class="mono">H0</code> across the entire <code class="mono">G1 X Y Z</code> ramp, and emits <code class="mono">H1</code> only after the torch reaches cut height.
               </li>
               <li>
-                <strong>Round-Tube Cutting via Y-Axis Motor Swap:</strong>
-                FireControl is fundamentally a 3-axis (<code class="mono">X, Y, Z</code>) controller with no native 4th rotary axis (<code class="mono">A</code>) or <code class="mono">G93</code> inverse-time support. To cut round tubing on a CrossFire table, fabricators physically unplug the table's <code class="mono">Y</code>-axis stepper cable and plug it into a rotary chuck drive calibrated so that <strong><code class="mono">1 mm</code> (or <code class="mono">1"</code>) of Y-axis motion equals <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of surface circumference on the pipe</strong> (<code class="mono">Y = R_outer &middot; A_rad</code>). When you select FireControl, RotaryCAM automatically wraps round pipe cuts into linear <code class="mono">Y</code> moves in standard <code class="mono">G94</code> feedrate mode.
+                <strong>Timing &amp; Plasma Inverter Settle Controls:</strong> Dial in <strong>Arc Transfer Latency</strong>, <strong>Loop 1 Extra Pierce Delay</strong> (<code class="mono">firstPierceExtraDelay</code> for cold first pierces), and <strong>Post-Cut Settle Dwell</strong> (<code class="mono">G4 P</code> after <code class="mono">M5</code> so inverters with post-flow lockouts like Bestarc BTC800XP finish post-flow cleanly before the next touch-off).
+              </li>
+              <li>
+                <strong>Round-Tube <code class="mono">Y-WRAP</code> / <code class="mono">X-WRAP</code> &amp; Fixed-Calibration Chuck (<code class="mono">L_rev</code>):</strong> FireControl is a 3-axis (<code class="mono">X, Y, Z</code>) controller with no native 4th rotary axis (<code class="mono">A</code>) or <code class="mono">G93</code> mode. RotaryCAM unwraps round pipe into linear <code class="mono">G94</code> travel and prints a dynamic <code class="mono">Y-WRAP</code> or <code class="mono">X-WRAP</code> header banner. On dual-Y CrossFire PRO/XR tables where shops swap the single <strong>X-axis motor</strong> onto the rotary, select <strong>Tube Along Y</strong> for automatic <code class="mono">X-Wrap</code> mapping. For geared rotary chucks, enter your fixed calibration <strong>Travel / Rev (<code class="mono">L_rev</code>)</strong> to get exact cylindrical DRO <code class="mono">G94</code> feed scaling across any pipe diameter without touching FireControl's steps/mm, while <code class="mono">(PS&lt;feed&gt;)</code> stays at your true unscaled surface cut speed.
                 <div class="doc-callout warning" style="margin-top: 0.75rem;">
-                  <div class="doc-callout-title">⚠ Round Tubing Only on FireControl Y-Swap</div>
+                  <div class="doc-callout-title">⚠ Round Tubing Only on FireControl Motor-Swap Rotary</div>
                   <p>
-                    Because a Y-swap setup replaces lateral torch motion with tube rotation, the torch cannot independently translate across the tube while the pipe rotates. Round pipe saddle fishmouths and holes cut cleanly, but <strong>square/rectangular HSS tubing, angle iron, C-channel, and off-crown beveling physically require 4 independent axes (<code class="mono">X, Y, Z, A</code>)</strong> and cannot be run on a 3-axis Y-swap setup. RotaryCAM will alert you if you attempt to load a non-round profile under the FireControl post.
+                    Because a motor-swap setup replaces one lateral gantry axis with pipe rotation, the torch cannot translate sideways across a flat wall while rotating. Round pipe saddles, miters, and holes cut cleanly, while square/rectangular HSS, angle iron, and C-channel require 4 independent axes (<code class="mono">X, Y, Z, A</code>).
                   </p>
                 </div>
               </li>
@@ -1417,10 +1419,33 @@ M3</code></pre>
               </li>
             </ul>
 
+            <!-- Controller 13: CSLab SimCNC -->
+            <div class="doc-section-divider" style="margin-top: 2.5rem;">
+              <div class="doc-section-kicker">Controller Setup • CSLab CSMIO/IP-M &amp; IP-S (SimCNC 3.5 &amp; 3.6+ G93)</div>
+              <h3 class="doc-section-heading">13. CSLab SimCNC (3.5 &amp; 3.6+ G93) Setup</h3>
+            </div>
+            <p>
+              CSLab SimCNC tables run either 4D Euclidean feedrate spoofing (SimCNC 3.5) or native <code class="mono">G93</code> inverse-time (SimCNC 3.6+). RotaryCAM hardens <code class="mono">SimCNC 3.6+ G93</code> output so every cut runs cleanly without controller alarms or motion stalls:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>
+                <strong>Trajectory Blending &amp; <code class="mono">G93</code> Feed Precision:</strong> Emits <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code> / <code class="mono">P0.4</code> blending even inside <code class="mono">G20</code> inch programs (banning <code class="mono">G61</code> exact-stop) and formats <code class="mono">G93 F</code> to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor.
+              </li>
+              <li>
+                <strong>Micro-Move Coalescing &amp; Axial Feathering:</strong> Coalesces sub-<code class="mono">0.05 mm</code> / <code class="mono">0.02&deg;</code> micro-segments and inserts <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) axial feathering between pure-XYZ and pure-ABC moves to prevent SimCNC planner stalls.
+              </li>
+              <li>
+                <strong>Dwell, Comment, Parameter &amp; Arc Guardrails:</strong> Suppresses sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms), limits each line to 1 <code class="mono">(...)</code> comment with strict non-comment character filtering, enforces the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), formats <code class="mono">G20</code> arcs to <code class="mono">5</code> decimals (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>), and runs phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).
+              </li>
+              <li>
+                <strong>Motion-Sync Macros &amp; Feedrate Guide:</strong> For <code class="mono">ExtTrajSyncOut</code> wiring (<code class="mono">M62/M63 P0/P1</code>) and 3D ramp handshakes, see <a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Sync</a> and <a href="rotary-and-sheet-feedrates.html" style="color: var(--amber-400);">Tutorial 11: G94, G93 &amp; G20/G21 Feedrates</a>.
+              </li>
+            </ul>
+
             <!-- Scribe Section: EasyScribe vs Pneumatic -->
             <div class="doc-section-divider" style="margin-top: 2.5rem;">
               <div class="doc-section-kicker">Multi-Tool Marking • Part IDs, Bend Lines &amp; Weld Witness Ticks</div>
-              <h3 class="doc-section-heading">13. Scribing: Coaxial EasyScribe vs. Pneumatic Air-Scribe Setup</h3>
+              <h3 class="doc-section-heading">14. Scribing: Coaxial EasyScribe vs. Pneumatic Air-Scribe Setup</h3>
             </div>
             <p>
               RotaryCAM supports both drag scribing and pneumatic impact scribing across all 12 controllers in <strong>Pro Shop ($399)</strong>, letting you engrave Part IDs, chassis bend lines, and weld fit-up witness marks directly on your parts before cutting:

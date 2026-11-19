@@ -189,26 +189,26 @@ M05 ; Torch off</code></pre>
             </div>
 
             <div class="doc-callout info" style="margin-top: 1.5rem;">
-              <div class="doc-callout-title">⚙ The 3-Axis Rotary Wrap &amp; The Chuck vs. Roller Calibration Trap (Langmuir FireControl)</div>
+              <div class="doc-callout-title">⚙ The 3-Axis Rotary Wrap &amp; Fixed-Calibration Chuck Scaling (Langmuir FireControl)</div>
               <p>
-                How do 3-axis tables like the <strong>Langmuir CrossFire PRO / XR</strong> (running FireControl) cut round pipe in <code class="mono">G94</code>? FireControl does not have a native 4th rotary axis driver. Instead, the operator unplugs one linear axis motor cable and plugs in the rotary attachment. (Because CrossFire PRO and XR use <strong>dual Y1/Y2 gantry motors</strong>, many shops swap the single-motor <strong>X-axis</strong> instead of Y).
+                How do 3-axis tables like the <strong>Langmuir CrossFire PRO / XR</strong> (running FireControl <code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code>) cut round pipe in <code class="mono">G94</code>? FireControl has no native 4th rotary axis driver, so you unplug one linear axis motor cable and plug in the rotary attachment. RotaryCAM prints a dynamic <code class="mono">Y-WRAP</code> or <code class="mono">X-WRAP</code> header banner matching your setup. Because CrossFire PRO and XR use <strong>dual Y1/Y2 gantry motors</strong>, select <strong>Tube Along Y</strong> when swapping the single-motor <strong>X-axis</strong> onto your rotary (<code class="mono">X-Wrap</code>).
               </p>
               <p style="margin-top: 0.5rem;">
-                RotaryCAM unrolls the round pipe circumference into a flat 2D sheet: <code class="mono">Y = &pi; &times; OD &times; (A / 360&deg;)</code>. Because the controller thinks it is moving along linear distance, standard <code class="mono">G94</code> feedrates apply: <code class="mono">F2540.0 mm/min</code> in <code class="mono">G21</code> drops to <code class="mono">F100.0 IPM</code> in <code class="mono">G20</code>. However, beware of the <strong>rotary chuck calibration trap</strong>:
+                RotaryCAM unrolls round pipe circumference into linear travel: <code class="mono">Y = &pi; &times; OD &times; (A / 360&deg;)</code> (or <code class="mono">X</code> in <code class="mono">X-Wrap</code>). Standard <code class="mono">G94</code> feedrates apply (<code class="mono">F2540.0 mm/min</code> in <code class="mono">G21</code> drops to <code class="mono">F100.0 IPM</code> in <code class="mono">G20</code>), and rotary chucks now have a dedicated calibration option:
               </p>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
                 <li>
-                  <strong>Surface-Drive Friction Rollers (No Recalibration Needed):</strong> If your rotary uses friction drive rollers where the outer pipe surface rests directly on driven wheels, 1 mm of roller linear travel rolls 1 mm of pipe surface travel regardless of pipe diameter. Unrolling works across any tube OD without touching your machine's steps/unit calibration!
+                  <strong>Surface-Drive Friction Rollers (No Recalibration Needed):</strong> When your pipe rests directly on driven wheels, <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of roller travel rolls <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of pipe surface on any tube OD.
                 </li>
                 <li>
-                  <strong>Rotary Chucks (Steps/Unit Trap):</strong> If your rotary uses a chuck (geared or direct stepper drive), 360&deg; of chuck rotation always requires a fixed linear command travel (<code class="mono">Y_cal</code>). Commanding <code class="mono">&pi; &times; OD</code> on any pipe diameter other than your calibrated OD will over- or under-rotate the chuck unless you recalculate and update GRBL steps/mm in FireControl for every tube size!
+                  <strong>Rotary Chucks with Fixed-Calibration <code class="mono">Travel / Rev (L_rev)</code>:</strong> On geared rotary chucks, one full revolution requires a fixed linear command travel (<code class="mono">L_rev</code>). Enter your chuck's <code class="mono">Travel / Rev (L_rev)</code> once in Machine Settings and RotaryCAM outputs exact cylindrical DRO <code class="mono">G94</code> feed scaling across any pipe diameter without changing GRBL steps/mm between jobs, while keeping the <code class="mono">(PS&lt;feed&gt;)</code> footer at your true unscaled surface speed.
                 </li>
                 <li>
-                  <strong>FireControl G-Code Syntax:</strong> FireControl does not use generic <code class="mono">M03 S1</code>. It uses <code class="mono">H1</code> / <code class="mono">H0</code> for Torch Height Control (THC) lock/unlock, a two-stage <code class="mono">G38.2</code> / <code class="mono">G38.4</code> Initial Height Sensing (IHS) touch-off loop, and standard <code class="mono">M3</code> / <code class="mono">M5</code>.
+                  <strong>FireControl G-Code Syntax:</strong> FireControl uses <code class="mono">H1</code> / <code class="mono">H0</code> for THC enable/disable, a two-stage <code class="mono">G38.2</code> / <code class="mono">G38.4</code> IHS loop with separated <code class="mono">0.020"</code> (<code class="mono">0.508 mm</code>) backlash vs. thin-sheet springback (auto-zeroed on rigid pipe and <code class="mono">&ge; 3/16"</code> plate), a mandatory <code class="mono">0.55 s</code> minimum <code class="mono">G4 P</code> ignition dwell after <code class="mono">M3</code> on 3D ramps (holding <code class="mono">H0</code> until cut height), and <code class="mono">M3</code> / <code class="mono">M5</code>.
                 </li>
               </ul>
               <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <em>Note:</em> 3-axis linear unrolling <strong>only works on constant-diameter round pipe</strong>. It cannot cut rectangular HSS tubing, angle iron, or channel, where unrolled corners cause the surface speed to surge and stall violently.
+                <em>Note:</em> 3-axis linear unrolling <strong>only works on constant-diameter round pipe</strong>. Square/rectangular HSS tubing, angle iron, and C-channel require 4 independent axes (<code class="mono">X, Y, Z, A</code>).
               </p>
             </div>
           </div>
@@ -403,7 +403,7 @@ G00 Z0.9843</code></pre>
                 where <code class="mono">X, Y, Z</code> are in linear units (millimeters or inches) and <code class="mono">A</code> is in angular degrees (<code class="mono">&deg;</code>). RotaryCAM automatically calculates the spoofed <code class="mono">F</code> word for every line.
               </li>
               <li>
-                <strong>SimCNC 3.6+ (Beta released September 2026):</strong> CSLab added native <code class="mono">G93</code> inverse-time support! RotaryCAM supports this directly via the <code class="mono">SimCNC 3.6 beta</code> machine profile, emitting clean <code class="mono">G93</code> inverse-time blocks (identical to Step 03) without requiring 4D vector spoofing.
+                <strong>SimCNC 3.6+ (Native <code class="mono">G93</code> Inverse-Time):</strong> CSLab added native <code class="mono">G93</code> inverse-time support in SimCNC 3.6+. Under the <code class="mono">SimCNC 3.6+</code> profile, RotaryCAM emits hardened <code class="mono">G93</code> inverse-time blocks (identical in <code class="mono">G20</code> and <code class="mono">G21</code>, formatted to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor) without 4D vector spoofing. Controller-safe rules emit <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code>/<code class="mono">P0.4</code> blending even in <code class="mono">G20</code> programs (banning <code class="mono">G61</code>), coalesce <code class="mono">&lt; 0.05 mm</code> / <code class="mono">&lt; 0.02&deg;</code> micro-segments, apply <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) axial feathering between pure-XYZ and pure-ABC moves, suppress sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms), enforce the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), format <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>), cap comments at 1 <code class="mono">(...)</code> per line, and emit phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).
               </li>
             </ul>
 
@@ -506,12 +506,12 @@ G00 Z25.000 ; Retract</code></pre>
                     <td style="padding: 0.65rem 0.85rem;">Internal (<code class="mono">M3 $0 S1</code>)</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
-                    <td style="padding: 0.65rem 0.85rem;"><strong>Langmuir FireControl</strong></td>
-                    <td style="padding: 0.65rem 0.85rem;">Plate &amp; Surface-Roller Wrap (or Chuck with recalibrated steps)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Langmuir FireControl (v1.6+ / v24.1.6)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate, Roller Wrap, or Fixed-Cal Chuck (<code class="mono">L_rev</code>)</td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code></td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
-                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (Y/X-Wrap)</td>
-                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G38.2/G38.4 IHS, H1/H0 THC)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (Y/X-Wrap or DRO-scaled <code class="mono">L_rev</code>; unscaled <code class="mono">PS</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G38.2/G38.4 IHS, H0/H1, &ge;0.55s ramp dwell)</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
                     <td style="padding: 0.65rem 0.85rem;"><strong>ArtSoft Mach4 (Warp9 ESS)</strong></td>

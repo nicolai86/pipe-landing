@@ -986,6 +986,18 @@ M63 P1                          ( 2. Arm Torch Relay OFF on first step of overbu
 G1 X48.350 Y0.000 Z13.500 A267.500 F2200.0   ( Torch extinguishes in motion across seam )
 M5                              ( 3. Fast no-wiggle cleanup &amp; immediate Safe Z retract )</code></pre>
             </div>
+
+            <div class="doc-callout info" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">🛡 SimCNC 3.6+ (<code class="mono">G93</code> Inverse-Time) Controller-Safe Hardening</div>
+              <p>
+                When running the <strong>SimCNC 3.6+ (<code class="mono">G93</code> Inverse-Time)</strong> profile, RotaryCAM enforces these controller guardrails automatically across both <code class="mono">G21</code> metric and <code class="mono">G20</code> inch programs:
+              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
+                <li><strong>Blending &amp; Feed Precision:</strong> Emits <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code>/<code class="mono">P0.4</code> blending even inside <code class="mono">G20</code> inch programs (banning <code class="mono">G61</code> exact-stop), and formats <code class="mono">G93 F</code> to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor.</li>
+                <li><strong>Micro-Segment &amp; Transition Protection:</strong> Coalesces <code class="mono">&lt; 0.05 mm</code> / <code class="mono">&lt; 0.02&deg;</code> slivers, inserts <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) axial feathering between pure-XYZ and pure-ABC moves, and suppresses sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms).</li>
+                <li><strong>Syntax, Parameters &amp; Arcs:</strong> Caps comments at 1 <code class="mono">(...)</code> per line with strict non-comment character filtering, enforces the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), outputs <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>), and uses phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).</li>
+              </ul>
+            </div>
           </div>
         </article>
 
