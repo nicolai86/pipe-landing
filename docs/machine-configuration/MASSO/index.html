@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MASSO G3 + DTHC v5.x Setup & Cut Cycle | RotaryCAM Docs</title>
+  <meta name="description" content="MASSO G3 + DTHC setup guide: 3 THC hardware modes, G200 O0/O1 probing, mandatory M667 F<zFeed> and M666 anti-dive, Bare G200 vs Hybrid C=P 3D ramps, Template C 4D HSS, and M30 L bar-advance." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../docs.css?v=20261119" />
+  <style>
+    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
+    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
+    
+    .site-header-left { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .site-header .brand { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+    .site-header .brand-tag { font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .site-header .nav-back-link { color: #94a3b8 !important; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.15s ease; white-space: nowrap; }
+    .site-header .nav-back-link:hover { color: #f59e0b !important; }
+    .site-header .nav-divider { width: 1px; height: 16px; background: #232833; }
+
+    .site-header .nav-links { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
+    .site-header .nav-links > a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.82rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.35rem 0; font-weight: 500; }
+    .site-header .nav-links > a:hover { color: #fff; }
+    .site-header .nav-links > a.active { color: #fff; font-weight: 600; }
+    .site-header .nav-links > a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+
+    /* Interactive Tutorials Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { background: transparent; border: none; color: #94a3b8; font-size: 0.82rem; font-family: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.35rem 0; transition: color 0.15s ease; }
+    .nav-dropdown-trigger:hover, .nav-dropdown:hover .nav-dropdown-trigger, .nav-dropdown-trigger.active { color: #fff; }
+    .nav-dropdown-trigger.active { font-weight: 600; }
+    .nav-dropdown-trigger .dropdown-caret { transition: transform 0.2s ease; opacity: 0.7; }
+    .nav-dropdown:hover .dropdown-caret, .nav-dropdown:focus-within .dropdown-caret { transform: rotate(180deg); opacity: 1; color: #f59e0b; }
+    .nav-active-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 1px 5px; border-radius: 4px; font-weight: 700; line-height: 1.2; }
+    .nav-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #232833; padding: 1px 5px; border-radius: 4px; font-weight: 600; line-height: 1.2; }
+
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 0.65rem); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(18, 22, 29, 0.98); border: 1px solid #232833; border-radius: 10px; box-shadow: 0 16px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); padding: 0.75rem; width: 560px; max-width: calc(100vw - 2rem); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; z-index: 1050; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: none; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .nav-dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.55rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.45rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+    .nav-dropdown-count { color: #f59e0b; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.5rem; max-height: 380px; }
+    .nav-dropdown-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.45rem 0.6rem; border-radius: 6px; text-decoration: none; color: #cbd5e1; transition: background 0.15s ease, color 0.15s ease; position: relative; }
+    .nav-dropdown-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .nav-dropdown-item.active { background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-dropdown-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #64748b; background: rgba(255,255,255,0.04); padding: 2px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+    .nav-dropdown-item.active .nav-dropdown-num { color: #f59e0b; background: rgba(245, 158, 11, 0.18); }
+    .nav-dropdown-content { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+    .nav-dropdown-title { font-size: 0.78rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-dropdown-sub { font-size: 0.66rem; color: #64748b; line-height: 1.2; }
+    .nav-dropdown-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink: 0; }
+
+    /* Right Section */
+    .site-header-right { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; font-weight: 500; }
+    .site-header .nav-cta:hover { border-color: #f59e0b; color: #fff; }
+    
+    .nav-mobile-toggle { display: none; background: #14171d; border: 1px solid #232833; color: #94a3b8; border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; padding: 0; }
+    .nav-mobile-toggle:hover { color: #fff; border-color: #f59e0b; }
+
+    /* Mobile Drawer */
+    .docs-mobile-drawer { display: none; position: fixed; inset: 0; top: 57px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 999; padding: 1.5rem; overflow-y: auto; flex-direction: column; gap: 1.25rem; }
+    .docs-mobile-drawer.open { display: flex; }
+    .docs-mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .docs-mobile-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .docs-mobile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 8px; text-decoration: none; color: #cbd5e1; background: rgba(255,255,255,0.02); border: 1px solid #232833; font-size: 0.88rem; }
+    .docs-mobile-link:hover, .docs-mobile-link.active { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+
+    @media (max-width: 960px) {
+      .site-header .nav-links { display: none; }
+      .site-header .nav-divider { display: none; }
+      .nav-mobile-toggle { display: inline-flex; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <header class="site-header" id="navbar">
+    <nav aria-label="Documentation Navigation">
+      <div class="site-header-left">
+        <a href="../../../index.html" class="brand" aria-label="RotaryCAM Home">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.8.3-BETA</span>
+        </a>
+        <div class="nav-divider" aria-hidden="true"></div>
+        <a href="../../../index.html" class="nav-back-link">← rotarycam.app</a>
+      </div>
+
+      <div class="nav-links">
+        <a href="../../index.html">Overview</a>
+
+        <!-- Tutorials Dropdown -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger active" aria-expanded="false" aria-haspopup="true">
+            <span>Tutorials</span>
+            
+            <span class="nav-active-badge">01</span>
+            
+            <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-header">
+              <span>All Workflows &amp; Tutorials</span>
+              <span class="nav-dropdown-count">13 Guides</span>
+            </div>
+            <div class="nav-dropdown-grid">
+              
+              <a href="../../machine-configuration.html" class="nav-dropdown-item active" role="menuitem">
+                <span class="nav-dropdown-num">01</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Machine Configuration</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+                <span class="nav-dropdown-dot" title="Current Guide"></span>
+                
+              </a>
+              
+              <a href="../../cut-path-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">02</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">UI & Cut Path Config</span>
+                  <span class="nav-dropdown-sub">8 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../nesting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">03</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Multi-Part Stick Nesting</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../bending.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">04</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Bending HSS & HSS-O</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../changelog.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">05</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Build Info & Changelog</span>
+                  <span class="nav-dropdown-sub">3 Steps • Diagnostics & Storage</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../ai-autodetection.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">06</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Fusion 360 & AI Autodetect</span>
+                  <span class="nav-dropdown-sub">8 Steps • 11 Screenshots</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../simcnc-motion-sync.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">07</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">SimCNC Motion-Sync & 3D Ramp</span>
+                  <span class="nav-dropdown-sub">12 Steps • Technical Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../cut-charts-and-features.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">08</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
+                  <span class="nav-dropdown-sub">7 Steps • Visual Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../mcp-offline-workflows.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">09</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Offline MCP & AI Automation</span>
+                  <span class="nav-dropdown-sub">8 Steps • Integration Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../dxf-svg-flat-sheet.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../rotary-and-sheet-feedrates.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">11</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">G94, G93 & G20/G21 Feeds</span>
+                  <span class="nav-dropdown-sub">5 Sections</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../interactive-canvas-controls.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">12</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Interactive Canvas Controls</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../flat-plate-pro-cutting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">13</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Flat Pro Primitives</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+            </div>
+          </div>
+        </div>
+
+        <a href="../../../index.html#pricing">Pricing</a>
+        <a href="../../../hardware-thc.html" style="color: #f59e0b; font-weight: 600;">Hardware THC</a>
+        <a href="../../../build-guide.html">Machine Blueprint</a>
+        <a href="../../../changelog.html">Changelog</a>
+      </div>
+
+      <div class="site-header-right">
+        <a href="../../../index.html#download" class="nav-cta">Download Beta</a>
+        <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
+    <div class="docs-mobile-section-title">Navigation</div>
+    <div class="docs-mobile-list">
+      <a href="../../../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="../../../index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
+      <a href="../../index.html" class="docs-mobile-link">Documentation Hub Overview</a>
+      <a href="../../../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
+      <a href="../../../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
+      <a href="../../../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
+    </div>
+
+    <div class="docs-mobile-section-title" style="margin-top: 1rem;">Tutorials &amp; Guides</div>
+    <div class="docs-mobile-list">
+      
+      <a href="../../machine-configuration.html" class="docs-mobile-link active">
+        <span class="nav-dropdown-num">01</span>
+        <span>Machine Configuration</span>
+      </a>
+      
+      <a href="../../cut-path-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">02</span>
+        <span>UI & Cut Path Config</span>
+      </a>
+      
+      <a href="../../nesting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">03</span>
+        <span>Multi-Part Stick Nesting</span>
+      </a>
+      
+      <a href="../../bending.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">04</span>
+        <span>Bending HSS & HSS-O</span>
+      </a>
+      
+      <a href="../../changelog.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">05</span>
+        <span>Build Info & Changelog</span>
+      </a>
+      
+      <a href="../../ai-autodetection.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">06</span>
+        <span>Fusion 360 & AI Autodetect</span>
+      </a>
+      
+      <a href="../../simcnc-motion-sync.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">07</span>
+        <span>SimCNC Motion-Sync & 3D Ramp</span>
+      </a>
+      
+      <a href="../../cut-charts-and-features.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">08</span>
+        <span>Cut Charts & Feature Toggles</span>
+      </a>
+      
+      <a href="../../mcp-offline-workflows.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">09</span>
+        <span>Offline MCP & AI Automation</span>
+      </a>
+      
+      <a href="../../dxf-svg-flat-sheet.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
+      <a href="../../rotary-and-sheet-feedrates.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">11</span>
+        <span>G94, G93 & G20/G21 Feeds</span>
+      </a>
+      
+      <a href="../../interactive-canvas-controls.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">12</span>
+        <span>Interactive Canvas Controls</span>
+      </a>
+      
+      <a href="../../flat-plate-pro-cutting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">13</span>
+        <span>Flat Pro Primitives</span>
+      </a>
+      
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="../../../index.html#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Mobile drawer toggle
+      const toggle = document.getElementById('navMobileToggle');
+      const drawer = document.getElementById('docsMobileDrawer');
+      if (toggle && drawer) {
+        toggle.addEventListener('click', function () {
+          const isOpen = drawer.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        drawer.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            drawer.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Desktop/tablet dropdown toggle on click
+      const ddTrigger = document.querySelector('.nav-dropdown-trigger');
+      const dd = document.querySelector('.nav-dropdown');
+      if (ddTrigger && dd) {
+        ddTrigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = dd.classList.toggle('open');
+          ddTrigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function (e) {
+          if (!dd.contains(e.target)) {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
+
+  <main>
+
+    <!-- ======================================================================
+         CONTROLLER SETUP HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../../../index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <a href="../../index.html">Documentation</a>
+          <span class="sep">/</span>
+          <a href="../../machine-configuration.html#step-6">01. Machine Configuration</a>
+          <span class="sep">/</span>
+          <span class="current">MASSO G3 + DTHC</span>
+        </div>
+
+        <h1 class="docs-title">MASSO G3 + <span class="text-gradient-amber">DTHC Setup</span></h1>
+        <p class="docs-subtitle">
+          Hardened <code class="mono">.nc</code> output built around MASSO firmware rules: <code class="mono">T112 M6</code> plasma mode, <code class="mono">G200</code> / <code class="mono">G38.2</code> probing, buffered <code class="mono">M666</code> / <code class="mono">M667 F&lt;thcFeed&gt;</code> anti-dive, and integer-millisecond dwells.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>CONTROLLER GUIDE</strong> &bull; MASSO G3 &amp; Touch &bull; DTHC v5.x (.nc)</span>
+          
+          <span class="docs-meta-pill cyan"><strong>Extension:</strong> <code class="mono">.nc</code></span>
+          
+          <span class="docs-meta-pill"><strong>Dwell Units:</strong> Integer <code class="mono">ms</code> (<code class="mono">D400</code>, <code class="mono">G04 P400</code>)</span>
+          
+          <span class="docs-meta-pill"><strong>Tools:</strong> <code class="mono">T112 M6</code> Plasma &bull; <code class="mono">T111 M6</code> Air Scribe</span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6-PHASE CUT CYCLE VISUALIZATION + EXACT STAGE G-CODE BREAKDOWN
+         ====================================================================== -->
+    <section class="container cut-cycle-section" id="cut-cycle">
+      <div class="cut-cycle-header">
+        <div>
+          <div class="cut-cycle-kicker">6-Phase Plasma Cut Cycle &bull; MASSO G3 + DTHC v5.x</div>
+          <h2 class="cut-cycle-heading">Torch Motion, Z-Height &amp; Exact Stage G-Code</h2>
+        </div>
+        <div class="cut-cycle-legend">
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #22d3ee;"></span> G0 Rapid / Motion</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #fbbf24;"></span> Probe / Dwell</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #fb7185;"></span> Plasma Arc ON</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #34d399;"></span> THC Active / Cut</span>
+        </div>
+      </div>
+
+      <div class="cut-cycle-scroll">
+        <div class="cut-cycle-board">
+          <!-- Shared Dark-Themed 6-Phase Torch Motion SVG -->
+          <div class="cut-cycle-svg-wrap">
+            <svg class="cut-cycle-svg" viewBox="0 0 1200 246" width="1200" height="246" role="img" aria-label="6-phase plasma cut cycle timeline showing torch Z-height, arc state, and THC state across Rapid and Rotate, IHS Touch-Off, Pierce and Dwell, Cut and THC Control, Torch Off and Unlock, and Safe Retract and Unwind">
+              <defs>
+                <linearGradient id="plasmaArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fbbf24" />
+                  <stop offset="50%" stop-color="#fb7185" />
+                  <stop offset="100%" stop-color="#22d3ee" />
+                </linearGradient>
+                <linearGradient id="cutPathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fb7185" />
+                  <stop offset="40%" stop-color="#34d399" />
+                  <stop offset="100%" stop-color="#34d399" />
+                </linearGradient>
+                <linearGradient id="plateSteelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#334155" />
+                  <stop offset="100%" stop-color="#1e293b" />
+                </linearGradient>
+                <radialGradient id="pierceGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.85" />
+                  <stop offset="55%" stop-color="#fb7185" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#fb7185" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Background Phase Columns -->
+              <rect x="0" y="0" width="200" height="246" fill="rgba(6, 182, 212, 0.03)" />
+              <rect x="200" y="0" width="200" height="246" fill="rgba(245, 158, 11, 0.03)" />
+              <rect x="400" y="0" width="200" height="246" fill="rgba(251, 113, 133, 0.04)" />
+              <rect x="600" y="0" width="200" height="246" fill="rgba(16, 185, 129, 0.04)" />
+              <rect x="800" y="0" width="200" height="246" fill="rgba(245, 158, 11, 0.025)" />
+              <rect x="1000" y="0" width="200" height="246" fill="rgba(148, 163, 184, 0.03)" />
+
+              <!-- Top Phase Header Bar -->
+              <rect x="0" y="0" width="1200" height="30" fill="#0d121c" />
+              <line x1="0" y1="30" x2="1200" y2="30" stroke="#232833" stroke-width="1" />
+
+              <!-- Vertical Phase Dividers -->
+              <line x1="200" y1="0" x2="200" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="400" y1="0" x2="400" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="600" y1="0" x2="600" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="800" y1="0" x2="800" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="1000" y1="0" x2="1000" y2="246" stroke="#1e2636" stroke-width="1" />
+
+              <!-- Phase Titles -->
+              <text x="14" y="19" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">01 RAPID &amp; ROTATE</text>
+              <text x="214" y="19" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">02 IHS TOUCH-OFF</text>
+              <text x="414" y="19" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">03 PIERCE &amp; DWELL</text>
+              <text x="614" y="19" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">04 CUT &amp; THC</text>
+              <text x="814" y="19" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">05 TORCH OFF</text>
+              <text x="1014" y="19" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">06 RETRACT &amp; UNWIND</text>
+
+              <!-- Chevrons at dividers -->
+              <path d="M193 11 L198 15 L193 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M393 11 L398 15 L393 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M593 11 L598 15 L593 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M793 11 L798 15 L793 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M993 11 L998 15 L993 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Horizontal Z Reference Lines -->
+              <line x1="0" y1="54" x2="1200" y2="54" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4" />
+              <text x="8" y="49" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">SAFE Z</text>
+
+              <line x1="0" y1="108" x2="1200" y2="108" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 4" />
+              <text x="8" y="103" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">PIERCE H</text>
+
+              <line x1="0" y1="136" x2="1200" y2="136" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 4" />
+              <text x="8" y="131" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">CUT H</text>
+
+              <!-- Steel Workpiece Surface (Z = 0) -->
+              <rect x="0" y="164" width="1200" height="12" fill="url(#plateSteelGrad)" />
+              <line x1="0" y1="164" x2="1200" y2="164" stroke="#475569" stroke-width="1.2" />
+              <text x="8" y="173" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600">STOCK SURFACE Z = 0</text>
+
+              <!-- PHASE 1: Rapid & Rotate at Safe Z -->
+              <path d="M 18 54 L 185 54" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="7 4" />
+              <circle cx="18" cy="54" r="3.5" fill="#22d3ee" />
+              <polygon points="185,54 176,49 176,59" fill="#22d3ee" />
+              <!-- Rotary A Spin Badge -->
+              <circle cx="102" cy="82" r="13" fill="rgba(6, 182, 212, 0.1)" stroke="#22d3ee" stroke-width="1.3" stroke-dasharray="4 2" />
+              <path d="M 111 73 L 114 79 L 107 79" fill="none" stroke="#22d3ee" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+              <text x="102" y="85" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">A&deg;</text>
+              <text x="102" y="106" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">G0 XY + A</text>
+
+              <!-- PHASE 2: IHS Touch-Off Down to Z=0 & Backoff -->
+              <path d="M 185 54 L 222 54 L 266 163 L 296 151 L 348 151 L 388 108" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linejoin="round" />
+              <!-- Contact spark ring at Z=0 -->
+              <circle cx="266" cy="163" r="6" fill="none" stroke="#fbbf24" stroke-width="1.6" />
+              <circle cx="266" cy="163" r="2.5" fill="#fbbf24" />
+              <text x="266" y="187" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8">TOUCH Z0</text>
+              <text x="332" y="88" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">Offset + Lift</text>
+
+              <!-- PHASE 3: Pierce & Dwell -> Plunge / 3D Ramp to Cut H -->
+              <circle cx="445" cy="108" r="26" fill="url(#pierceGlow)" />
+              <path d="M 388 108 L 440 108 L 535 108 L 592 136" fill="none" stroke="#fb7185" stroke-width="2.75" stroke-linejoin="round" />
+              <!-- Plasma pierce jet cone -->
+              <polygon points="445,112 436,164 454,164" fill="rgba(251, 113, 133, 0.35)" />
+              <line x1="445" y1="112" x2="445" y2="164" stroke="#fbbf24" stroke-width="2" />
+              <!-- Torch nozzle icon at Pierce H -->
+              <polygon points="438,94 452,94 449,108 441,108" fill="#cbd5e1" />
+              <text x="488" y="96" text-anchor="middle" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">M3 + DWELL</text>
+              <text x="566" y="152" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Plunge / Ramp</text>
+
+              <!-- PHASE 4: Cut & THC Control -->
+              <path d="M 592 136 C 635 136, 660 130, 700 136 C 740 142, 765 136, 808 136" fill="none" stroke="#34d399" stroke-width="2.8" />
+              <!-- Plasma cutting arc curtain -->
+              <polygon points="620,137 788,137 788,164 620,164" fill="rgba(16, 185, 129, 0.14)" />
+              <line x1="700" y1="137" x2="700" y2="164" stroke="#22d3ee" stroke-width="2.2" />
+              <polygon points="693,122 707,122 704,136 696,136" fill="#e2e8f0" />
+              <text x="700" y="96" text-anchor="middle" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">ARC + THC ACTIVE</text>
+
+              <!-- PHASE 5: Torch Off & Lock -->
+              <path d="M 808 136 L 945 136" fill="none" stroke="#fbbf24" stroke-width="2.5" />
+              <circle cx="845" cy="136" r="5" fill="#0b0f17" stroke="#fbbf24" stroke-width="2" />
+              <line x1="839" y1="130" x2="851" y2="142" stroke="#fb7185" stroke-width="2" />
+              <line x1="851" y1="130" x2="839" y2="142" stroke="#fb7185" stroke-width="2" />
+              <text x="895" y="122" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">LOCK THC + ARC OFF</text>
+
+              <!-- PHASE 6: Safe Retract & Unwind -->
+              <path d="M 945 136 L 1030 54 L 1182 54" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="6 3" />
+              <polygon points="1182,54 1173,49 1173,59" fill="#94a3b8" />
+              <circle cx="1108" cy="82" r="13" fill="rgba(148, 163, 184, 0.08)" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="4 2" />
+              <text x="1108" y="85" text-anchor="middle" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">A&rarr;0</text>
+              <text x="1108" y="106" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">SAFE Z + UNWIND</text>
+
+              <!-- Bottom Status Strips: ARC & THC -->
+              <rect x="0" y="192" width="1200" height="54" fill="#090d14" />
+              <line x1="0" y1="192" x2="1200" y2="192" stroke="#1e2636" stroke-width="1" />
+
+              <!-- ARC STATE BAR -->
+              <text x="10" y="211" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">ARC:</text>
+              <rect x="52" y="201" width="338" height="14" rx="3" fill="rgba(148, 163, 184, 0.1)" stroke="#232833" />
+              <text x="221" y="211" text-anchor="middle" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8">ARC OFF (POSITIONING / PROBING)</text>
+
+              <rect x="404" y="201" width="192" height="14" rx="3" fill="rgba(251, 113, 133, 0.18)" stroke="rgba(251, 113, 133, 0.45)" />
+              <text x="500" y="211" text-anchor="middle" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">PILOT / PIERCE IGNITION</text>
+
+              <rect x="604" y="201" width="192" height="14" rx="3" fill="rgba(16, 185, 129, 0.18)" stroke="rgba(16, 185, 129, 0.45)" />
+              <text x="700" y="211" text-anchor="middle" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">CUTTING ARC LIVE</text>
+
+              <rect x="804" y="201" width="386" height="14" rx="3" fill="rgba(148, 163, 184, 0.1)" stroke="#232833" />
+              <text x="997" y="211" text-anchor="middle" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8">ARC EXTINGUISHED / SAFE RETRACT</text>
+
+              <!-- THC STATE BAR -->
+              <text x="10" y="233" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">THC:</text>
+              <rect x="52" y="223" width="544" height="14" rx="3" fill="rgba(245, 158, 11, 0.12)" stroke="rgba(245, 158, 11, 0.32)" />
+              <text x="324" y="233" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="600">THC LOCKED (NO DIVE DURING PROBE / PIERCE / RAMP)</text>
+
+              <rect x="604" y="223" width="192" height="14" rx="3" fill="rgba(6, 182, 212, 0.15)" stroke="rgba(6, 182, 212, 0.4)" />
+              <text x="700" y="233" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">UNLOCKED / CORNER LOCK</text>
+
+              <rect x="804" y="223" width="386" height="14" rx="3" fill="rgba(245, 158, 11, 0.1)" stroke="rgba(245, 158, 11, 0.25)" />
+              <text x="997" y="233" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">LOCKED BEFORE ARC OFF / RESET</text>
+            </svg>
+          </div>
+
+          <!-- 6 Exact Stage Columns Aligned Directly Below the SVG -->
+          <div class="cut-cycle-stages">
+            
+            <div class="cut-stage-col" data-phase="1">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">01</span>
+                <span class="cut-stage-title">Rapid & Rotate</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G53 G0 Z0 / T112 M6</code>
+                  <span class="cut-stage-code-desc">Home Z & select MASSO Plasma Tool 112</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G200 ... / G200</code>
+                  <span class="cut-stage-code-desc">Parameterized G200 or Bare G200</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G0 X<x> Y<y> A<a></code>
+                  <span class="cut-stage-code-desc">Rapid at Safe Z (omitted before #1 in G200 Auto-IHS)</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Auto-IHS skips Safe Z before feature #1 because work Z=0 is unset until the first M3.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="2">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">02</span>
+                <span class="cut-stage-title">IHS Touch-Off</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M3 (G200 Auto-IHS)</code>
+                  <span class="cut-stage-code-desc">O0 Touch Switch or O1 Ohmic probing</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G38.2 Z<tgt> F<p></code>
+                  <span class="cut-stage-code-desc">Bare G200 (4D HSS / Ext THC / Option B2 ramps)</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G92 Z0 / G0 Z<off> / G92 Z</code>
+                  <span class="cut-stage-code-desc">Switch offset compensation</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Bare G200 cancels canned auto-IHS so 4D HSS, bevels, and 3D ramps keep explicit Z control.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="3">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">03</span>
+                <span class="cut-stage-title">Pierce & Dwell</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G0 Z<pierceH></code>
+                  <span class="cut-stage-code-desc">Bare G200 lifts to pierce height</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M3</code>
+                  <span class="cut-stage-code-desc">Fire torch (G200 runs P, D<ms>, C internally)</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G04 P<ms></code>
+                  <span class="cut-stage-code-desc">Bare G200 integer ms dwell (>= 400ms on ramps)</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M666</code>
+                  <span class="cut-stage-code-desc">Lock DTHC for lead-in / ramp / 4D Z</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G1 Z<cutH> F<plunge></code>
+                  <span class="cut-stage-code-desc">Plunge to cut height (non-ramp)</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Hybrid Option B1 sets C=P inside G200 so M3 holds at pierce height before ramping down.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="4">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">04</span>
+                <span class="cut-stage-title">Cut & THC Control</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G93</code>
+                  <span class="cut-stage-code-desc">Inverse-time rotary cut strokes</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M667 F<thcFeed></code>
+                  <span class="cut-stage-code-desc">DTHC ON (F word ALWAYS included: 75-600 mm/min)</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M666</code>
+                  <span class="cut-stage-code-desc">DTHC OFF on corners, small holes, 4D HSS</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Omitting F on M667 breaks THC Z tracking on MASSO; RotaryCAM always emits M667 F<zFeed>.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="5">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">05</span>
+                <span class="cut-stage-title">Torch Off & Unlock</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M666</code>
+                  <span class="cut-stage-code-desc">Lock DTHC before torch off</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M5</code>
+                  <span class="cut-stage-code-desc">Extinguish plasma arc</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G94</code>
+                  <span class="cut-stage-code-desc">Restore G94 before Safe Z retract</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Final cut segment splits cleanly before M5 when DTHC is active.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="6">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">06</span>
+                <span class="cut-stage-title">Safe Retract & Unwind</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G0 Z<safeZ> / G92.1</code>
+                  <span class="cut-stage-code-desc">Retract & clear temporary Z offset</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G53 G0 Z0</code>
+                  <span class="cut-stage-code-desc">EOF retract to machine Z top</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G91 / G28 A0 / G90</code>
+                  <span class="cut-stage-code-desc">3-line rotary unwind (+ G0 A0)</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M30 / M30 L<count></code>
+                  <span class="cut-stage-code-desc">End or chuck-fed bar-advance loop</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Never emits G92 A0, keeping rotary phase intact across unwinds.</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="cut-cycle-scroll-hint">Scroll horizontally to inspect all 6 cut-cycle columns side by side.</div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN CONTROLLER REFERENCE & CHECKLIST SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Controller Navigation">
+        <div class="docs-sidebar-group">
+          <a href="../../machine-configuration.html#step-6" class="controller-sidebar-back">
+            <span>&larr;</span>
+            <span>All 14 Controllers Overview</span>
+          </a>
+          <div class="docs-sidebar-heading">Controller Guides</div>
+          <ul class="controller-sidebar-list">
+            
+            <li>
+              <a href="../LinuxCNC/index.html">
+                <span>LinuxCNC QTPlasmaC</span>
+                <span class="controller-sidebar-ext">.ngc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../FireControl/index.html">
+                <span>Langmuir FireControl</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Mach4/index.html">
+                <span>Mach4 + ESS / TMC3in1</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../MASSO/index.html" class="active">
+                <span>MASSO G3 + DTHC</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Mach3/index.html">
+                <span>ArtSoft Mach3</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Acorn/index.html">
+                <span>Centroid Acorn CNC12</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../grblHAL/index.html">
+                <span>grblHAL 32-Bit Plasma</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../UCCNC/index.html">
+                <span>CNCdrive UCCNC</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../FlashCut/index.html">
+                <span>FlashCut CNC</span>
+                <span class="controller-sidebar-ext">.nc / .gc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../EdingCNC/index.html">
+                <span>EdingCNC Plasma</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../PlanetCNC/index.html">
+                <span>PlanetCNC TNG</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../WinCNC/index.html">
+                <span>ShopSabre WinCNC</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../SimCNC/index.html">
+                <span>CSLab SimCNC</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../GenericG94/index.html">
+                <span>Portable RS-274</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Scribing/index.html">
+                <span>Scribing (EasyScribe / Air)</span>
+                <span class="controller-sidebar-ext">Multi-Tool</span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#cut-cycle"><span class="docs-toc-step">00</span> 6-Phase Cut Cycle</a></li>
+            
+            <li><a href="#thc-modes"><span class="docs-toc-step">01</span> 3 THC Modes &amp; G200 Rules</a></li>
+            
+            <li><a href="#ramps-hss"><span class="docs-toc-step">02</span> 3D Ramps (B2 vs B1) &amp; 4D HSS</a></li>
+            
+            <li><a href="#checklist"><span class="docs-toc-step">03</span> F1 Setup &amp; Bar-Advance Checklist</a></li>
+            
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Controller Documentation Column -->
+      <div class="docs-main">
+        
+        <article class="doc-step-card" id="thc-modes">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">THC & G200</span>
+            <h2 class="doc-step-title">3 THC Hardware Modes, G200 Probing &amp; Mandatory M667 F</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <ul class="doc-bullet-list">
+              <li><strong>MASSO DTHC (<code class="mono">G200</code> Auto-IHS):</strong> Emits full <code class="mono">G200 F&lt;probe&gt; P&lt;pierce&gt; D&lt;ms&gt; C&lt;cut&gt; V&lt;volts&gt; A0 O&lt;0|1&gt; S&lt;0|1&gt;</code> blocks on flat sheet and round pipe. <code class="mono">O0</code> selects Touch Switch; <code class="mono">O1</code> selects Plasma Ohmic; <code class="mono">S0</code> runs continuous; <code class="mono">S1</code> pauses for Slag-Stop.</li>
+              <li><strong>External Up/Down THC (Bare <code class="mono">G200</code> + <code class="mono">G38.2</code>):</strong> Cancels canned auto-IHS with a bare <code class="mono">G200</code> line, probes with <code class="mono">G38.2</code>, and drives pierce-to-cut Z moves directly.</li>
+              <li><strong>Fixed Height / No THC:</strong> Uses <code class="mono">M666</code> locked height (never emitting <code class="mono">M667</code>) so the torch holds programmed Z cut height.</li>
+              <li><strong>Mandatory <code class="mono">M667 F&lt;thcFeed&gt;</code> &amp; <code class="mono">M666</code> Anti-Dive:</strong> MASSO firmware does not implement the <code class="mono">A</code> anti-dive percentage inside <code class="mono">G200</code>. RotaryCAM emits buffered <code class="mono">M666</code> / <code class="mono">M667 F&lt;thcFeed&gt;</code> (<code class="mono">75-600 mm/min</code> in <code class="mono">G21</code>, or <code class="mono">3-24 IPM</code> in <code class="mono">G20</code>).</li>
+            </ul>
+          </div>
+        </article>
+        
+        <article class="doc-step-card" id="ramps-hss">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">3D & 4D Rules</span>
+            <h2 class="doc-step-title">3D Ramp Lead-Ins (Option B2 vs. Hybrid B1) &amp; Template C 4D HSS</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <ul class="doc-bullet-list">
+              <li><strong>Option B2 (Bare <code class="mono">G200</code> 3D Ramps, Default):</strong> Drops canned <code class="mono">G200</code> parameters and runs explicit <code class="mono">G38.2</code>, <code class="mono">M3</code>, <code class="mono">G04 P&lt;ms&gt;</code>, and a diagonal XYZ ramp to cut height without MASSO overriding Z.</li>
+              <li><strong>Opt-In Option B1 (Hybrid <code class="mono">C=P</code>):</strong> Sets <code class="mono">G200</code> cut height equal to pierce height (<code class="mono">C=P</code>) so MASSO runs auto-IHS and ignites at pierce height before ramping down under <code class="mono">M666</code>. Requires explicit target voltage (<code class="mono">V &gt; 0</code>, never <code class="mono">V0</code> auto-sampling).</li>
+              <li><strong>Template C (Continuous 4D HSS Tubes):</strong> Square/rectangular tubes and eccentric bevels run <code class="mono">Bare G200</code> + <code class="mono">G38.2</code> + <code class="mono">G92 Z</code> + <code class="mono">G92.1</code> + <code class="mono">M666</code> so 4D Z corner climbs track cleanly.</li>
+            </ul>
+          </div>
+        </article>
+        
+        <article class="doc-step-card" id="checklist">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">F1 Checklist</span>
+            <h2 class="doc-step-title">MASSO F1-Setup Checklist &amp; Bar-Advance Looping</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <ul class="doc-bullet-list">
+              <li><strong>Keep <code class="mono">T112 M6</code> for Plasma (<code class="mono">T111 M6</code> for Air Scribe):</strong> Switching away from <code class="mono">T112</code> exits MASSO plasma mode; zero out multi-head X/Y/Z tool offsets on <code class="mono">T112</code> in F1 Setup.</li>
+              <li><strong>Millisecond Dwells:</strong> Both <code class="mono">D</code> in <code class="mono">G200</code> and <code class="mono">G04 P</code> run in integer milliseconds (<code class="mono">D400</code> = 0.4 s).</li>
+              <li><strong>Firmware Version:</strong> Avoid <code class="mono">v5.100b BETA Phase 1</code> firmware.</li>
+              <li><strong>Bar-Advance Looping (<code class="mono">M30 L&lt;count&gt;</code>):</strong> On single-part rotary jobs, enable <code class="mono">M30 L&lt;count&gt;</code> to park at <code class="mono">X0 Y0 A0</code>, prompt to advance the bar to the stop, and loop cleanly.</li>
+            </ul>
+          </div>
+        </article>
+        
+
+        <!-- Prev / Next Controller Pagination -->
+        <nav class="docs-pagination" aria-label="Controller Guide Pagination">
+          
+          <a href="../Mach4/index.html" class="docs-page-link prev">
+            <span class="docs-page-dir">&larr; Previous Controller</span>
+            <span class="docs-page-title">Mach4 + ESS / TMC3in1</span>
+            <span class="docs-page-desc">Modal G90/G91.1 separation, G31.0-G31.3 + refDistance skip-probe, Output #4 TMC3in1 THC &amp; M62/M63 P3 torch.</span>
+          </a>
+          
+          
+          <a href="../Mach3/index.html" class="docs-page-link next">
+            <span class="docs-page-dir">Next Controller &rarr;</span>
+            <span class="docs-page-title">ArtSoft Mach3</span>
+            <span class="docs-page-desc">4 THC hardware topologies, ESS G31 vs LPT G28.1 probing, G54-baked scribe offsets, % framing &amp; .xml import.</span>
+          </a>
+          
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+
+
+  <!-- ========================================================================
+       FOOTER (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../../../index.html" class="brand">
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="../../index.html">Documentation Overview</a>
+          
+          <a href="../../machine-configuration.html">01. Machine Configuration</a>
+          
+          <a href="../../cut-path-configuration.html">02. Cut Path Configuration</a>
+          
+          <a href="../../nesting.html">03. Multi-Part Nesting</a>
+          
+          <a href="../../bending.html">04. Bending HSS & HSS-O</a>
+          
+          <a href="../../changelog.html">05. Build Info & Changelog</a>
+          
+          <a href="../../ai-autodetection.html">06. Fusion 360 & AI Autodetect</a>
+          
+          <a href="../../simcnc-motion-sync.html">07. SimCNC Motion-Sync & Ramp</a>
+          
+          <a href="../../cut-charts-and-features.html">08. Cut Charts & Feature Toggles</a>
+          
+          <a href="../../mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
+          
+          <a href="../../dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+          <a href="../../rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
+          
+          <a href="../../interactive-canvas-controls.html">12. Interactive Canvas Controls</a>
+          
+          <a href="../../flat-plate-pro-cutting.html">13. Flat Pro Primitives</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../../../index.html#showcase">Showcase</a>
+          <a href="../../../index.html#features">Capabilities</a>
+          <a href="../../../index.html#kinematics">4-Axis Kinematics</a>
+          <a href="../../../hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
+          <a href="../../../build-guide.html">Build Your Own Table</a>
+          <a href="../../../changelog.html">Release Changelog &amp; Downloads</a>
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
+    </div>
+  </footer>
+
+
+</body>
+</html>

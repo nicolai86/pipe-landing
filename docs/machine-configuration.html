@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 
   <!-- Styles -->
-  <link rel="stylesheet" href="docs.css?v=20261023" />
+  <link rel="stylesheet" href="docs.css?v=20261119" />
   <style>
     .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
     .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
@@ -406,7 +406,7 @@
 
         <h1 class="docs-title">01. Basic <span class="text-gradient-amber">Machine Configuration</span></h1>
         <p class="docs-subtitle">
-          How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 12 major controllers.
+          How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 14 supported controllers.
         </p>
 
         <div class="docs-meta-bar">
@@ -414,7 +414,7 @@
           
           <span class="docs-meta-pill cyan"><strong>Persistence:</strong> Multi-Profile Saved Across Restarts</span>
           
-          <span class="docs-meta-pill"><strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC</span>
+          <span class="docs-meta-pill"><strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC • Generic RS-274</span>
           
         </div>
       </div>
@@ -933,18 +933,18 @@
         <article class="doc-step-card" id="step-6">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 06</span>
-            <h2 class="doc-step-title">Supported CNC Controllers &amp; Post-Processor Setup Guides</h2>
+            <h2 class="doc-step-title">Supported CNC Controllers &amp; Cut Cycle Guides</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              Different CNC plasma controllers have very different rules for how they probe metal, fire the torch, freeze the torch height control (THC), and blend rotary motion. RotaryCAM includes tailored, zero-hand-edit post-processors for the 6 most common shop-floor controllers (unlocked across both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong> licenses).
+              Every CNC controller handles touch-off probing, torch ignition, THC locking, and rotary motion differently. RotaryCAM ships zero-hand-edit post-processors for all <strong>14 supported controllers</strong> (unlocked in both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong>) plus coaxial EasyScribe and pneumatic air-scribe marking.
             </p>
             <p>
-              Use the reference table below for a quick shop-floor comparison, then read the detailed setup guide for your specific controller:
+              Compare all 14 dialects below, then open your controller's dedicated guide for the 6-phase cut cycle diagram, exact stage G-code, checklists, and hardware toggles.
             </p>
 
-            <div class="table-wrap" style="margin: 1.5rem 0; overflow-x: auto;">
+            <div class="table-wrap" style="margin: 0.75rem 0;">
               <table class="doc-table">
                 <thead>
                   <tr>
@@ -954,729 +954,374 @@
                     <th>Torch Fire / Extinguish</th>
                     <th>THC Lock / Unlock</th>
                     <th>Rotary Mode</th>
-                    <th>Dynamic Process Sync</th>
+                    <th>Dynamic Sync &amp; Framing</th>
                   </tr>
                 </thead>
                 <tbody>
+                  
                   <tr>
-                    <td><strong>LinuxCNC 2.9+ QTPlasmaC</strong></td>
+                    <td>
+                      <a href="machine-configuration/LinuxCNC/index.html" class="doc-table-link">LinuxCNC 2.9+ QTPlasmaC</a>
+                    </td>
                     <td><code class="mono">.ngc</code></td>
-                    <td>2D: <code class="mono">plasmac</code> (<code class="mono">M3 $0 S1</code>) / 3D &amp; Rotary: <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code></td>
-                    <td><code class="mono">M3 $0 S1</code> / <code class="mono">M5 $0</code> (+ <code class="mono">G94 G1 Z</code> on 3D/Rotary)</td>
-                    <td><code class="mono">M62 P1/P2</code> (Lock) / <code class="mono">M63 P1/P2</code> (Unlock)</td>
-                    <td><code class="mono">G94</code> (2D &amp; HSS flats) / <code class="mono">G93</code> (<code class="mono">A</code> moves)</td>
-                    <td>Inline <code class="mono">(o=0, ...)</code> or <code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code></td>
+                    <td>2D: plasmac internal | 3D/4D: G91/G38.2/G90/G1 Z#5063/G10 L20 P0</td>
+                    <td>M3 $0 S1 / M5 $0 (+ G94 G1 Z on 3D/4D)</td>
+                    <td>M62 P1/P2 (Lock) / M63 P1/P2 (Unlock)</td>
+                    <td>G94 (2D/HSS Flats) + G93 (Rotary)</td>
+                    <td>(o=0, ...) or M190 P<n> -> M66 P3 L3 Q2</td>
                   </tr>
+                  
                   <tr>
-                    <td><strong>Langmuir FireControl (v1.6+ / v24.1.6)</strong></td>
+                    <td>
+                      <a href="machine-configuration/FireControl/index.html" class="doc-table-link">Langmuir Systems FireControl v1.6+ / v24.1.6</a>
+                    </td>
                     <td><code class="mono">.tap</code></td>
-                    <td>CAM loop: <code class="mono">G38.2</code> + <code class="mono">G38.4</code> + <code class="mono">0.020"</code> Backlash + Auto Springback</td>
-                    <td><code class="mono">M3</code> / <code class="mono">M5</code> (<code class="mono">&ge;0.55s</code> 3D ramp dwell + Post-Cut Settle)</td>
-                    <td><code class="mono">H0</code> (Off) / <code class="mono">H1</code> (On after ramp)</td>
-                    <td><code class="mono">G94</code> <code class="mono">Y-WRAP</code> / <code class="mono">X-WRAP</code> + Optional <code class="mono">L_rev</code></td>
-                    <td>Header <code class="mono">(v1.6-sc)</code> &amp; EOF <code class="mono">(PS&lt;feed&gt;)</code></td>
+                    <td>G92 Z0 -> G38.2 -> G38.4 -> 0.020" Backlash + Springback</td>
+                    <td>M3 / M5 (>= 0.55s 3D ramp dwell + Post-Cut Settle)</td>
+                    <td>H0 (Off) / H1 (On after ramp)</td>
+                    <td>G94 Y-WRAP / X-WRAP (+ L_rev)</td>
+                    <td>(v1.6-sc) header + (PS<feed>) strictly final line</td>
                   </tr>
+                  
                   <tr>
-                    <td><strong>Mach4 (Warp9 ESS)</strong></td>
+                    <td>
+                      <a href="machine-configuration/Mach4/index.html" class="doc-table-link">ArtSoft Mach4 + Warp9 ESS / TMC3in1</a>
+                    </td>
                     <td><code class="mono">.tap</code></td>
-                    <td><code class="mono">G31</code> probe + switch offset + <code class="mono">G92 Z</code></td>
-                    <td><code class="mono">M3</code> / <code class="mono">M5</code> (or <code class="mono">M62/M63 P2</code>)</td>
-                    <td><code class="mono">M63 P2</code> (Lock) / <code class="mono">M62 P2</code> (Unlock)</td>
-                    <td><code class="mono">G93</code> Inverse-Time</td>
-                    <td>External THC / Proma / PriceCNC</td>
+                    <td>G31.0-G31.3 + switch offset + G92 Z (+ m2020 Lua sync)</td>
+                    <td>M62/M63 P3 + M65 P3 fail-safe (or OB1 m3/m5)</td>
+                    <td>M63 P4 / M62 P4 (TMC3in1) or M63 P2 / M62 P2 (ESS)</td>
+                    <td>G93 Inverse-Time (strokes only)</td>
+                    <td>W9_HC m2020 (...) + G04 P0.100 Lua sync</td>
                   </tr>
+                  
                   <tr>
-                    <td><strong>Mach4 (Warp9 TMC3in1 / WarpRunner)</strong></td>
+                    <td>
+                      <a href="machine-configuration/MASSO/index.html" class="doc-table-link">MASSO G3 + DTHC v5.x</a>
+                    </td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>G200 + M3 (Auto-IHS) or Bare G200 + G38.2 (4D / Ext THC)</td>
+                    <td>M3 / M5 (T112 M6 Plasma | T111 M6 Scribe)</td>
+                    <td>M666 (Off) / M667 F<zFeed> (On, F always required)</td>
+                    <td>G93 Inverse-Time</td>
+                    <td>G200 F P D<ms> C V A0 O<0|1> S<0|1></td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/Mach3/index.html" class="doc-table-link">ArtSoft Mach3 R3.043.062</a>
+                    </td>
                     <td><code class="mono">.tap</code></td>
-                    <td><code class="mono">G31</code> + <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code></td>
-                    <td><code class="mono">M62 P3</code> / <code class="mono">M63 P3</code></td>
-                    <td><code class="mono">M63 P2</code> (Lock) / <code class="mono">M62 P2</code> (Unlock)</td>
-                    <td><code class="mono">G93</code> Inverse-Time</td>
-                    <td><code class="mono">m2020 (...)</code> + <code class="mono">G04 P0.1</code> Lua dwell</td>
+                    <td>G31 (ESS 100-127 mm) or G28.1 Z (LPT) + G92 Z</td>
+                    <td>M3 / M5 + immediate G94 restore</td>
+                    <td>M11Px/M10Px, CandCNC S900/S10/S20, M102/M101, or M7/M9</td>
+                    <td>G93 Inverse-Time (Use Radius OFF)</td>
+                    <td>(CONFIG: ...) header + one-click .xml setup import</td>
                   </tr>
+                  
                   <tr>
-                    <td><strong>MASSO G3 + DTHC</strong></td>
+                    <td>
+                      <a href="machine-configuration/Acorn/index.html" class="doc-table-link">Centroid Acorn CNC12 v5.4+</a>
+                    </td>
                     <td><code class="mono">.nc</code></td>
-                    <td>Managed by <code class="mono">G200</code> + <code class="mono">M3</code> (or <code class="mono">G38.2</code>)</td>
-                    <td><code class="mono">M3</code> / <code class="mono">M5</code></td>
-                    <td><code class="mono">M666</code> (Off) / <code class="mono">M667 F&lt;zFeed&gt;</code> (On)</td>
-                    <td><code class="mono">G93</code> Inverse-Time</td>
-                    <td><code class="mono">G200 ... D&lt;ms&gt; V&lt;volts&gt;</code></td>
+                    <td>2D: M61 (0 Z words) | 3D/4D: M150 (M115 + G92 Z)</td>
+                    <td>2D: M61 / M62 | 3D/4D: M3 / M5</td>
+                    <td>2D: 15% Voltage Anti-Dive | 3D/4D: M36 Hold (M35 unlock)</td>
+                    <td>G94 (2D) / G93.1 Smoothed (3D/4D)</td>
+                    <td>G64 ON + M65 + ; comments (0 parens) + P220=1/P225=1</td>
                   </tr>
+                  
                   <tr>
-                    <td><strong>ArtSoft Mach3</strong></td>
+                    <td>
+                      <a href="machine-configuration/grblHAL/index.html" class="doc-table-link">grblHAL 32-Bit Plasma + Rotary</a>
+                    </td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>G38.2 + switch offset + G92 Z (M190 P-1 explicit CAM Z)</td>
+                    <td>M3 / M5 + G94 F (+ M65 P3 inhibit clear)</td>
+                    <td>$674 P2: M64/M62 P2 (Lock) / M63/M65 P2 (Enable)</td>
+                    <td>G94 (2D / Y-Wrap) / G93 (4-Axis)</td>
+                    <td>M190 P-1 + M68/M67 E3 feed override + $674 virtual ports</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/UCCNC/index.html" class="doc-table-link">CNCdrive UCCNC v1.2115+</a>
+                    </td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>G31 + G92 Z<Zm-offset>, Neuron Lite, or Legacy M31</td>
+                    <td>M3 / M5 + G94 F (UC100 >= 0.2s dwell floor)</td>
+                    <td>M205-M212 ArcOK-safe handshake (+ M206 bilateral lock)</td>
+                    <td>G93 Inverse-Time (strokes only)</td>
+                    <td>Checkbox 212 (sec/ms) + G20/G21 suppress + Z >= 500 mm/s2</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/FlashCut/index.html" class="doc-table-link">FlashCut CNC Plasma</a>
+                    </td>
+                    <td><code class="mono">.nc / .gc</code></td>
+                    <td>Mode 1: M80 internal G605 | Mode 2: Explicit G605</td>
+                    <td>Mode 1: M80/M81 | Mode 2: M50 + M101 I<n> / M51</td>
+                    <td>G602 (Suspend THC) / G603 (Resume THC)</td>
+                    <td>G93 Inverse-Time (2D/3D/4D)</td>
+                    <td>Setup.xml import + #fabhead.mode=Cut vs G631/G630</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/EdingCNC/index.html" class="doc-table-link">EdingCNC Plasma</a>
+                    </td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>Guarded G38.2 (#5380/#5397) + #5067 miss check + G92 Z</td>
+                    <td>M3 / M5 + optional M56 P<n> L1 Arc-OK + post-M5 dwell</td>
+                    <td>M21 (Lock) / M20 (Unlock) + M22/M23 Q<volts></td>
+                    <td>G93 Inverse-Time (0.005 mm deadband)</td>
+                    <td>If [#5150==2] 4THMILL guard + G64 R + MOD 360 unwind</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/PlanetCNC/index.html" class="doc-table-link">PlanetCNC TNG Plasma</a>
+                    </td>
+                    <td><code class="mono">.nc</code></td>
+                    <td>G38.2 (+ optional 2-stage) + AL Axis-Lock G91 G01 backoff + G92 Z</td>
+                    <td>M3 / M5 + G04 P<sec> + G94 F restore</td>
+                    <td>M54 P0 (Lock) / M54 P1 Q<spd> R1 (2D) / M54 P1 R1 (4D Round)</td>
+                    <td>G93 Inverse-Time (optional G94 lookahead)</td>
+                    <td>G90.2 + M55/56/57 P0 + ; comments + (status, ...)</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/WinCNC/index.html" class="doc-table-link">ShopSabre WinCNC + SideKick Rotary</a>
+                    </td>
                     <td><code class="mono">.tap</code></td>
-                    <td><code class="mono">G31</code> (ESS, <code class="mono">100-127 mm</code> / <code class="mono">4-5 in</code>) or <code class="mono">G28.1 Z</code> (LPT)</td>
-                    <td><code class="mono">M3</code> / <code class="mono">M5</code> + immediate <code class="mono">G94</code> restore</td>
-                    <td>4 topologies: <code class="mono">M11Px/M10Px</code>, CandCNC <code class="mono">S900/S10/S20</code>, <code class="mono">M102/M101</code>, or <code class="mono">M7/M9</code></td>
-                    <td><code class="mono">G93</code> Inverse-Time (<code class="mono">Use Radius</code> OFF)</td>
-                    <td><code class="mono">(CONFIG: ...)</code> header + <code class="mono">R3.043.062</code> checks</td>
+                    <td>Pattern 1: M61 (+ G92 Z on 4D) | Pattern 2: G31 + G92 Z</td>
+                    <td>Pattern 1: M61 / M62 | Pattern 2: L38 T0.0 P100 / M62</td>
+                    <td>L37.2 D1/D0 + inline D1/D0 (or Legacy L37/L36)</td>
+                    <td>G93 Inverse-Time (A / W / B letter)</td>
+                    <td>G22 mm (NEVER G21!) + [...] comments + L38.1 + L28.1/L92/M66</td>
                   </tr>
+                  
                   <tr>
-                    <td><strong>Centroid Acorn CNC12</strong></td>
+                    <td>
+                      <a href="machine-configuration/SimCNC/index.html" class="doc-table-link">CSLab SimCNC 3.5 & 3.6+ G93</a>
+                    </td>
                     <td><code class="mono">.nc</code></td>
-                    <td>2D: <code class="mono">M61</code> (zero Z words) / 3D &amp; 4D: <code class="mono">M150</code> (<code class="mono">M115</code> + <code class="mono">G92 Z</code>)</td>
-                    <td>2D: <code class="mono">M61</code> / <code class="mono">M62</code> &bull; 3D/4D: <code class="mono">M3</code> / <code class="mono">M5</code></td>
-                    <td>2D: 15% Voltage Anti-Dive / 3D &amp; 4D: <code class="mono">M36</code> Hold before <code class="mono">M3</code></td>
-                    <td><code class="mono">G94</code> (2D) / <code class="mono">G93.1</code> Smoothed + <code class="mono">G94</code> before <code class="mono">M5</code></td>
-                    <td><code class="mono">G64 ON</code> + <code class="mono">M65</code> + <code class="mono">;</code> comments (0 parens) + <code class="mono">P220=1</code>/<code class="mono">P225=1</code></td>
+                    <td>Managed inside SimCNC m3.py macro (#1110-#1114 / #1090-#1092)</td>
+                    <td>M3 S1 (ExtTrajSyncOut1 M62 P1) / M63 P1 + M5</td>
+                    <td>M63 P0 (Lock) / M62 P0 (Unlock) / #4061</td>
+                    <td>3.5: 4D Spoofed G94 | 3.6+: Hardened G93</td>
+                    <td>config.xml import + G64 P0.3/0.4 + 0.002mm feather + M112</td>
                   </tr>
+                  
                   <tr>
-                    <td><strong>grblHAL (32-bit Plasma)</strong></td>
+                    <td>
+                      <a href="machine-configuration/GenericG94/index.html" class="doc-table-link">Portable RS-274 (generic_g94)</a>
+                    </td>
                     <td><code class="mono">.nc</code></td>
-                    <td><code class="mono">G38.2</code> + switch offset + <code class="mono">G92 Z</code></td>
-                    <td><code class="mono">M3</code> / <code class="mono">M5</code> + <code class="mono">G94 F</code> (+ <code class="mono">M65 P3</code>)</td>
-                    <td><code class="mono">$674 P2</code>: <code class="mono">M64/M62 P2</code> (Lock) / <code class="mono">M63/M65 P2</code> (Enable)</td>
-                    <td><code class="mono">G94</code> (2D) / <code class="mono">G93</code> (Rotary) + <code class="mono">G92 A&lt;mod_360&gt;</code></td>
-                    <td><code class="mono">M190 P-1</code> + <code class="mono">M68/M67 E3</code> + <code class="mono">$674</code></td>
+                    <td>Pre-zeroed Z0 default (or optional G38.2/G31/G28.1)</td>
+                    <td>M03 / M05 (split 3D ramp; Dry-Run suppress option)</td>
+                    <td>None default (warning on 3D/4D Z) or M62/M63 / custom M</td>
+                    <td>Modal G94 (dL_xyz/dt; deg/min or rad/min)</td>
+                    <td>Strict ISO 6983 core, uppercase (COMMENT) <= 80 chars, G92 A unwind</td>
                   </tr>
-                  <tr>
-                    <td><strong>CSLab SimCNC (3.5 / 3.6+)</strong></td>
-                    <td><code class="mono">.nc</code></td>
-                    <td>Managed by SimCNC <code class="mono">m3.py</code> macro</td>
-                    <td><code class="mono">M3 S1</code> / <code class="mono">M63 P1</code> + <code class="mono">M5</code></td>
-                    <td><code class="mono">M63 P0</code> (Lock) / <code class="mono">M62 P0</code> (Unlock)</td>
-                    <td>3.5: Spoofed <code class="mono">G94</code> / 3.6+: Hardened <code class="mono">G93</code></td>
-                    <td><code class="mono">#1111</code> Amps, <code class="mono">#1090</code> Volts, <code class="mono">#1091</code> Dwell, <code class="mono">#4061</code> THC</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Generic RS-274 (<code class="mono">generic_g94</code>)</strong></td>
-                    <td><code class="mono">.nc</code></td>
-                    <td>Pre-zeroed top-surface <code class="mono">Z0</code> default</td>
-                    <td><code class="mono">M03</code> / <code class="mono">M05</code> (split 3D ramp; Dry-Run option)</td>
-                    <td><code class="mono">None</code> default (header warning on 3D/4D Z) or <code class="mono">M62/M63</code> / custom M-codes</td>
-                    <td><code class="mono">G94</code> (<code class="mono">dL_xyz/dt</code>; pure-<code class="mono">A</code> <code class="mono">deg/min</code> or <code class="mono">rad/min</code>; <code class="mono">&le; 2.5&deg;</code>)</td>
-                    <td>Configurable <code class="mono">G04</code> (<code class="mono">P0.500</code> / <code class="mono">P500</code> / <code class="mono">X0.500</code> / off), <code class="mono">G92 A</code> unwind</td>
-                  </tr>
+                  
                 </tbody>
               </table>
             </div>
 
-            <!-- Controller 1: LinuxCNC QTPlasmaC -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • LinuxCNC 2.9+ QTPlasmaC</div>
-              <h3 class="doc-section-heading">1. LinuxCNC 2.9+ QTPlasmaC Configuration</h3>
-            </div>
-            <p>
-              LinuxCNC 2.9+ <code class="mono">QTPlasmaC</code> switches how it handles Z motion, probing, and path blending depending on what you cut. RotaryCAM outputs <code class="mono">.ngc</code> files matched to three clean regimes so <code class="mono">plasmac</code> never fights your rotary chuck, 3D ramps, or drag scribe:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Regime 1: 2D Flat Sheet (No <code class="mono">#&lt;tube_cut&gt;</code>, No <code class="mono">#&lt;keep-z-motion&gt;</code>, Zero Z/A Words):</strong>
-                On flat plate, <code class="mono">plasmac</code> owns all probing and torch height regulation internally inside <code class="mono">M3 $0 S1</code> and <code class="mono">M5 $0</code>. RotaryCAM emits zero <code class="mono">Z</code> or <code class="mono">A</code> words so nothing collides with QTPlasmaC's internal Z loop, sets <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code> to track your active cut chart, runs <code class="mono">G64 P0.1 Q0.02</code> tight corner blending with <code class="mono">M52 P1</code> adaptive feed enabled, and sets <code class="mono">#&lt;holes&gt;=0</code> so QTPlasmaC's G-code filter never double-scales CAM bolt holes.
-              </li>
-              <li>
-                <strong>Regime 2: Rotary &amp; 3D Ramps (<code class="mono">#&lt;tube_cut&gt;=1</code> Before Motion):</strong>
-                For 4-axis pipe saddles, square/rectangular HSS tubes, open beams, and 3D ramp lead-ins, RotaryCAM injects <code class="mono">#&lt;tube_cut&gt;=1</code> before any axis motion so QTPlasmaC hands explicit Z probing and motion back to your program:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Explicit Surface Probing &amp; Ramp Plunge:</strong> Probes top surface height with <code class="mono">G91</code> / <code class="mono">G38.2</code> / <code class="mono">G90</code> / <code class="mono">G1 Z#5063</code> / <code class="mono">G10 L20 P0</code>, fires <code class="mono">M3 $0 S1</code>, and executes a <code class="mono">G94 G1 Z</code> ramp or plunge to cut height.</li>
-                  <li><strong>Blending &amp; Rotary Lookahead (<code class="mono">G94</code> &rarr; <code class="mono">G93</code>):</strong> Emits <code class="mono">G64 P0.25 Q0.05</code> blending and uses rotary lookahead to cut flat HSS faces in linear <code class="mono">G94</code> mode, switching cleanly to <code class="mono">G93</code> inverse-time whenever the <code class="mono">A</code> axis rotates. Programs end with <code class="mono">M190 P-1</code> to restore your default material.</li>
-                  <li><strong>Per-Part Re-Probing in Unrolled Pack Runs:</strong> Every nested piece in an unrolled Pack Mode program re-probes its own surface height so minor stick bow or chuck runout never ruins cut height.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Regime 3: Non-<code class="mono">M3</code> Scribes &amp; Markers (<code class="mono">#&lt;keep-z-motion&gt;=1</code> Restricted):</strong>
-                <code class="mono">#&lt;keep-z-motion&gt;=1</code> is restricted strictly to non-<code class="mono">M3</code> scribes and markers (such as coaxial EasyScribe drag tools) where no plasma arc fires. Never use <code class="mono">#&lt;keep-z-motion&gt;=1</code> on <code class="mono">M3</code> plasma cuts; rotary and 3D plasma jobs always use <code class="mono">#&lt;tube_cut&gt;=1</code> instead. For multi-tool plasma and offset air-scribe jobs, RotaryCAM uses <code class="mono">M3 $0 S1</code> (plasma), <code class="mono">M3 $1 S1</code> / <code class="mono">M5 $1</code> (pneumatic air-scribe), and <code class="mono">M3 $2 S1</code> (center-point dimple).
-              </li>
-              <li>
-                <strong>Inline Cut Chart (<code class="mono">o=0</code>) vs. Catalog Materials (<code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code>):</strong>
-                Choose one material source in Machine Settings; the two modes are strictly mutually exclusive:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Inline Cut Chart (<code class="mono">(o=0, ...)</code>):</strong> Writes your active cut chart directly into the file header:
-                  <pre><code class="language-gcode">(o=0, na=45A Mild Steel 3mm, ph=3.8, pd=0.25, ch=1.5, fr=2800, kw=1.5, th=1, ca=45, cv=115, pe=0.5, gp=75, cm=1)</code></pre>
-                  QTPlasmaC parses this comment on load and populates pierce height (<code class="mono">ph</code>), pierce delay (<code class="mono">pd</code>), cut height (<code class="mono">ch</code>), feedrate (<code class="mono">fr</code>), arc voltage (<code class="mono">cv</code>), and gas pressure (<code class="mono">gp</code>) automatically.</li>
-                  <li><strong>Catalog Material Mode (<code class="mono">M190 P&lt;n&gt;</code>):</strong> Enable <em>Use Controller Material Table</em> to load saved QTPlasmaC materials via <code class="mono">M190 P&lt;n&gt;</code> followed by <code class="mono">M66 P3 L3 Q2</code> so motion waits until QTPlasmaC confirms the material swap. Never mix <code class="mono">(o=0, ...)</code> comments into a catalog <code class="mono">M190 P&lt;n&gt;</code> file.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Kerf Void Protection (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>) &amp; Small-Hole Scaling (<code class="mono">M67 E3 Q60</code> / <code class="mono">Q0</code>):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Kerf Void &amp; Anti-Dive Lock (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>):</strong> When crossing previously cut kerf slots or decelerating around corners and lead-ins, RotaryCAM emits synchronous <code class="mono">M62 P1</code> (Ignore Arc OK ON) and <code class="mono">M62 P2</code> (THC Disable ON) so voltage spikes and brief arc gaps never trigger false arc-loss faults or torch dives. Once back on solid plate, <code class="mono">M63 P1</code> and <code class="mono">M63 P2</code> restore Arc OK checking and THC tracking cleanly.</li>
-                  <li><strong>True Hole Velocity Scaling (<code class="mono">M67 E3 Q60</code> / <code class="mono">Q0</code>):</strong> On enclosed bolt holes <code class="mono">&le; 25.4 mm</code> (<code class="mono">1"</code>), RotaryCAM emits <code class="mono">M67 E3 Q60</code> to drop cutting velocity to 60% alongside THC lock, then emits <code class="mono">M67 E3 Q0</code> to restore 100% feedrate when entering the scrap lead-out.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Shop-Floor LinuxCNC 2.9+ INI / HAL Checklist (Verify Before Cutting):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong><code class="mono">[TRAJ] SPINDLES=3</code>:</strong> Enable 3 spindles in your <code class="mono">.ini</code> file so <code class="mono">M3 $0</code> (plasma), <code class="mono">M3 $1</code> (air scribe), and <code class="mono">M3 $2</code> (dimple/spot) work without invalid-spindle alarms.</li>
-                  <li><strong><code class="mono">[AXIS_Z] OFFSET_AV_RATIO=0.5</code> + Doubled Z Limits:</strong> Set <code class="mono">OFFSET_AV_RATIO = 0.5</code> and double your <code class="mono">[AXIS_Z]</code> <code class="mono">MAX_VELOCITY</code> (at least <code class="mono">&ge; 100 mm/s</code> so both G-code Z plunges and THC external offsets retain <code class="mono">&ge; 50 mm/s</code> physical speed) and <code class="mono">MAX_ACCELERATION</code>.</li>
-                  <li><strong><code class="mono">[RS274NGC] HAL_PIN_VARS=1</code>:</strong> Required so <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code> can read QTPlasmaC's live cut speed pin inside 2D flat-sheet programs.</li>
-                  <li><strong>Unrolled Pack Mode Clearance:</strong> Because unrolled rotary pack programs re-probe surface height on every part, make sure hold-downs, tailstock pins, and chuck jaws clear the probe path between parts.</li>
-                </ul>
-              </li>
-            </ul>
-
-            <!-- Controller 2: Langmuir FireControl -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • CrossFire, CrossFire PRO &amp; CrossFire XR (v1.6+ to v24.1.6)</div>
-              <h3 class="doc-section-heading">2. Langmuir Systems FireControl Setup</h3>
-            </div>
-            <p>
-              Langmuir Systems tables (CrossFire, PRO, and XR) run on FireControl GRBL motion control. RotaryCAM outputs hardened <code class="mono">.tap</code> programs built for FireControl <code class="mono">v1.6+</code> through <code class="mono">v24.1.6</code> so your table cuts without parser errors, false voltage faults, or GRBL serial hiccups:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Parser Sentinels &amp; Strict GRBL Serial Protection:</strong> Line 1 starts with <code class="mono">(v1.6-sc)</code> and the footer after <code class="mono">M30</code> emits <code class="mono">(PS&lt;feed&gt;)</code> (unscaled surface speed, e.g. <code class="mono">(PS110)</code> or <code class="mono">(PS2800)</code>) for FireControl's speed slider. Every line allows at most one <code class="mono">(...)</code> comment (nested parens become <code class="mono">[...]</code>; semicolons <code class="mono">;</code>, slashes <code class="mono">/</code>, <code class="mono">%</code>, and <code class="mono">#</code> are stripped), filters <code class="mono">&lt; 0.025 mm</code> (<code class="mono">&lt; 0.001"</code>) micro-moves while preserving vertical plunges and refreshing modal feedrates after every IHS/plunge, and caps CrossFire PRO/XR speeds at <code class="mono">300 IPM</code> XY and <code class="mono">150 IPM</code> Z.
-              </li>
-              <li>
-                <strong>Separated IHS Backlash &amp; Thin-Sheet Springback:</strong> FireControl's two-stage IHS probe (<code class="mono">G38.2</code> + <code class="mono">G38.4</code>) keeps mechanical <code class="mono">0.020"</code> (<code class="mono">0.508 mm</code>) <strong>IHS Backlash</strong> separate from <strong>Thin-Sheet Springback</strong>. Springback automatically drops to <code class="mono">0</code> on rigid pipe, structural tubing, and heavy plate (<code class="mono">&ge; 3/16&Prime;</code> / <code class="mono">4.7625 mm</code>) so <code class="mono">SMARTV</code> (SMART Voltage) never samples an inflated cut height:
-                <pre><code class="language-gcode">H0
-G0 X25.000 Y10.000
-G92 Z0.0
-G38.2 Z-127.0 F2540.0   (Fast ohmic/switch touch probe down)
-G38.4 Z12.7 F508.0      (Slow retract until switch un-trips)
-G92 Z0.0
-G0 Z0.508               (0.020 in IHS backlash + sheet springback if thin)
-G92 Z0.0
-G0 Z3.800               (Retract to Pierce Height)
-M3                      (Torch Fire)
-G4 P0.550               (Min 0.55s dwell on 3D ramps + Arc Transfer / Loop 1 extra)
-G1 X27.500 Y10.000 Z1.500 F2800.0  (3D ramp or plunge with H0 held)
-H1                      (THC Active only after reaching Cut Height)</code></pre>
-              </li>
-              <li>
-                <strong>3D Ramp Minimum Ignition Dwell (<code class="mono">0.55 s</code>) &amp; <code class="mono">H0</code> Ramp Protection:</strong> CrossFire Gen2 tables have no hardware Arc OK wire and look for cutting voltage shortly after <code class="mono">M3</code>. On 3D ramp entries, RotaryCAM enforces a mandatory <code class="mono">0.55 s</code> minimum <code class="mono">G4 P</code> dwell after <code class="mono">M3</code> to stop "Torch Moving Before Cutting Voltage Sensed" faults, holds <code class="mono">H0</code> across the entire <code class="mono">G1 X Y Z</code> ramp, and emits <code class="mono">H1</code> only after the torch reaches cut height.
-              </li>
-              <li>
-                <strong>Timing &amp; Plasma Inverter Settle Controls:</strong> Dial in <strong>Arc Transfer Latency</strong>, <strong>Loop 1 Extra Pierce Delay</strong> (<code class="mono">firstPierceExtraDelay</code> for cold first pierces), and <strong>Post-Cut Settle Dwell</strong> (<code class="mono">G4 P</code> after <code class="mono">M5</code> so inverters with post-flow lockouts like Bestarc BTC800XP finish post-flow cleanly before the next touch-off).
-              </li>
-              <li>
-                <strong>Round-Tube <code class="mono">Y-WRAP</code> / <code class="mono">X-WRAP</code> &amp; Fixed-Calibration Chuck (<code class="mono">L_rev</code>):</strong> FireControl is a 3-axis (<code class="mono">X, Y, Z</code>) controller with no native 4th rotary axis (<code class="mono">A</code>) or <code class="mono">G93</code> mode. RotaryCAM unwraps round pipe into linear <code class="mono">G94</code> travel and prints a dynamic <code class="mono">Y-WRAP</code> or <code class="mono">X-WRAP</code> header banner. On dual-Y CrossFire PRO/XR tables where shops swap the single <strong>X-axis motor</strong> onto the rotary, select <strong>Tube Along Y</strong> for automatic <code class="mono">X-Wrap</code> mapping. For geared rotary chucks, enter your fixed calibration <strong>Travel / Rev (<code class="mono">L_rev</code>)</strong> to get exact cylindrical DRO <code class="mono">G94</code> feed scaling across any pipe diameter without touching FireControl's steps/mm, while <code class="mono">(PS&lt;feed&gt;)</code> stays at your true unscaled surface cut speed.
-                <div class="doc-callout warning" style="margin-top: 0.75rem;">
-                  <div class="doc-callout-title">⚠ Round Tubing Only on FireControl Motor-Swap Rotary</div>
-                  <p>
-                    Because a motor-swap setup replaces one lateral gantry axis with pipe rotation, the torch cannot translate sideways across a flat wall while rotating. Round pipe saddles, miters, and holes cut cleanly, while square/rectangular HSS, angle iron, and C-channel require 4 independent axes (<code class="mono">X, Y, Z, A</code>).
-                  </p>
-                </div>
-              </li>
-            </ul>
-
-            <!-- Controller 3: Mach4 + Warp9 ESS / TMC3in1 -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • ArtSoft Mach4 &amp; Warp9 Ethernet SmoothStepper</div>
-              <h3 class="doc-section-heading">3. ArtSoft Mach4 + Warp9 ESS / TMC3in1 Setup</h3>
-            </div>
-            <p>
-              Mach4 tables running a Warp9 Ethernet SmoothStepper (ESS) or Warp9 TMC3in1 / WarpRunner THC board require strict modal separation, clean probing sync, and matched I/O pins. RotaryCAM hardens <code class="mono">mach4_ess</code> output across Standard ESS and TMC3in1 builds:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Preamble, <code class="mono">G94</code>/<code class="mono">G93</code> Lifecycle &amp; Program Framing:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Separate <code class="mono">G90</code> &amp; <code class="mono">G91.1</code> Lines:</strong> Emits <code class="mono">G00 G90 G17 G54 G40 G49 G80</code> followed by <code class="mono">G91.1</code> on its own line so Mach4 never rejects combined distance and arc-center modes on a single block.</li>
-                  <li><strong><code class="mono">G94</code> Startup to <code class="mono">G93</code> Rotary Strokes:</strong> Starts in <code class="mono">G94</code> for positioning, rapids, and probing, switches to <code class="mono">G93</code> inverse-time strictly during rotary cut strokes, and restores <code class="mono">G94</code> for retracts and touch-offs.</li>
-                  <li><strong>Modulo-360 Wrap Resets &amp; Clean EOF:</strong> Emits modulo-360 <code class="mono">G92 A0.000</code> mid-pack resets without <code class="mono">G92.1</code> so active offsets stay intact, then closes at EOF with <code class="mono">G92.1</code>, <code class="mono">M30</code>, and a trailing <code class="mono">%</code> plus newline.</li>
-                </ul>
-              </li>
-              <li>
-                <strong><code class="mono">G31.0</code>-<code class="mono">G31.3</code> Touch-Off, Incremental Backoff &amp; Skip-After-Probe (<code class="mono">refDistance</code>):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong><code class="mono">G31.0</code>-<code class="mono">G31.3</code> + Relative Backoff:</strong> Probes on the selected <code class="mono">G31.0</code> through <code class="mono">G31.3</code> channel and backs off incrementally (<code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>).</li>
-                  <li><strong>TMC3in1 Lua Z-Zero Sync:</strong> On Warp9 TMC3in1, emits <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code> + <code class="mono">G04 P0.100</code> after both plasma and EasyScribe probes so the height controller registers the new Z zero before motion resumes.</li>
-                  <li><strong>Skip-After-Probe (<code class="mono">refDistance</code>):</strong> Skips redundant touch-offs across closely spaced features inside your configured <code class="mono">refDistance</code> threshold.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Standard ESS Pathways (Pathway A Synced vs. Pathway B <code class="mono">m3</code>/<code class="mono">m5</code> OB1 Fallback):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Pathway A (Motion-Synced ESS):</strong> Fires and shuts off the torch with <code class="mono">M62 P3</code> / <code class="mono">M63 P3</code> plus an <code class="mono">M65 P3</code> fail-safe shutoff, and toggles external THC (Proma 150, PriceCNC, or standalone) with <code class="mono">M62 P2</code> / <code class="mono">M63 P2</code> without emitting <code class="mono">m2020</code> macros.</li>
-                  <li><strong>Pathway B (<code class="mono">m3</code>/<code class="mono">m5</code> OB1 Fallback):</strong> Uses standard <code class="mono">m3</code> / <code class="mono">m5</code> torch control for OB1-wired tables that do not use synced <code class="mono">M62/M63</code> pins.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Warp9 TMC3in1 / WarpRunner Output #4 THC, 3-Step Pierce Drop &amp; <code class="mono">W9_HC</code> <code class="mono">m2020</code> Setup:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Output #4 Active-Low THC (<code class="mono">M63 P4</code> Lock / <code class="mono">M62 P4</code> Unlock):</strong> Moves TMC3in1 THC lock/unlock to Output #4 active-low (<code class="mono">M63 P4</code> Lock, <code class="mono">M62 P4</code> Unlock), fixing the legacy <code class="mono">P2</code> output conflict.</li>
-                  <li><strong>3-Step Pierce Drop:</strong> Drops from pierce to cut height with a 3-step sequence (<code class="mono">&ge; 2</code> steps + <code class="mono">G04 P0.0011</code> + <code class="mono">G01 Z&lt;pierce&gt;</code>) for predictable plunge timing.</li>
-                  <li><strong>Full <code class="mono">W9_HC</code> <code class="mono">m2020</code> Parameters &amp; Rotary <code class="mono">AD3</code> Disable:</strong> Pushes full <code class="mono">W9_HC</code> parameters (<code class="mono">AD1</code> delay, voltage and deadband bands, ATV buffer, HC Z min/max limits, <code class="mono">ESS_DELAY_AFTER_ARC_OKAY</code>, <code class="mono">AD2_M62_M63_ENABLED=1</code>, <code class="mono">AD3_VELOCITY_ENABLED</code>, and <code class="mono">TARGET_TIP_VOLTS</code>) followed by <code class="mono">G04 P0.100</code> Lua sync. Forces <code class="mono">AD3_VELOCITY_ENABLED=0</code> on rotary cuts so <code class="mono">G93</code> speed swings never trip false velocity anti-dive.</li>
-                  <li><strong>Continuous 4D Dynamic-Z Lock &amp; Post-Ramp Unlock:</strong> Keeps THC locked continuously across 4D dynamic-Z tube cuts to prevent <code class="mono">HC Z Delta</code> desync, and unlocks THC only after 3D ramp lead-ins finish.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Macro Hygiene &amp; Dwell Units:</strong> Filters out banned black-listed Mach4 macros and emits all <code class="mono">G04 P&lt;sec&gt;</code> dwells in decimal seconds.
-              </li>
-            </ul>
-
-            <!-- Controller 4: MASSO G3 -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • MASSO G3 &amp; MASSO Touch Plasma</div>
-              <h3 class="doc-section-heading">4. MASSO G3 + DTHC Configuration</h3>
-            </div>
-            <p>
-              MASSO G3 is a standalone hardware controller that runs canned plasma routines instead of PC macros. RotaryCAM outputs hardened <code class="mono">.nc</code> programs built around MASSO firmware rules:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>3 THC Hardware Modes (Machine Settings):</strong>
-                Pick the mode that matches your Z-axis and voltage hardware:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong><code class="mono">MASSO DTHC (G200 Auto-IHS)</code>:</strong> Uses full <code class="mono">G200</code> parameter blocks so MASSO handles touch-off, pierce height, cut height, and DTHC arc-voltage tracking on flat sheet and round pipe.</li>
-                  <li><strong><code class="mono">External Up/Down THC (Bare G200 + G38.2)</code>:</strong> Cancels canned auto-IHS by emitting a bare <code class="mono">G200</code> line, probes with explicit <code class="mono">G38.2</code>, and drives pierce-to-cut Z moves directly for standalone Up/Down THCs.</li>
-                  <li><strong><code class="mono">Fixed Height / No THC</code>:</strong> Uses bare <code class="mono">G200</code> + <code class="mono">G38.2</code> probing with <code class="mono">M666</code> locked height (never emitting <code class="mono">M667</code>) so the torch holds your programmed Z cut height.</li>
-                </ul>
-              </li>
-              <li>
-                <strong><code class="mono">G200</code> Probing (<code class="mono">O0/O1</code>), Slag-Stop (<code class="mono">S0/S1</code>) &amp; Millisecond Dwells:</strong>
-                <pre><code class="language-gcode">T112 M6
-G200 F600 P3.8 D400 C1.5 V115 A0 O1 S0
-M3</code></pre>
-                <code class="mono">O0</code> selects a Touch Switch (floating head), while <code class="mono">O1</code> selects Plasma Ohmic probing. <code class="mono">S0</code> runs Continuous cutting, while <code class="mono">S1</code> enables Slag-Stop pauses between cuts. MASSO reads both <code class="mono">D</code> in <code class="mono">G200</code> and <code class="mono">G04 P</code> strictly in <strong>integer milliseconds</strong> (<code class="mono">D400</code> or <code class="mono">G04 P400</code> = 0.4 s).
-              </li>
-              <li>
-                <strong>Mandatory <code class="mono">M667 F&lt;thcFeed&gt;</code> &amp; <code class="mono">M666</code> Anti-Dive:</strong>
-                MASSO firmware does not implement the <code class="mono">A</code> anti-dive percentage inside <code class="mono">G200</code>. To keep the torch from diving in small bolt holes, corners, and lead-outs, RotaryCAM emits explicit buffered <code class="mono">M666</code> (THC OFF) and <code class="mono">M667 F&lt;thcFeed&gt;</code> (THC ON). The <code class="mono">F</code> word on <code class="mono">M667</code> is <strong>always included</strong> (<code class="mono">75-600 mm/min</code> in <code class="mono">G21</code>, or <code class="mono">3-24 IPM</code> scaled by <code class="mono">1/25.4</code> in <code class="mono">G20</code>); omitting <code class="mono">F</code> breaks THC Z tracking on MASSO.
-              </li>
-              <li>
-                <strong>3D Ramp Lead-Ins (Option B2 vs. Opt-In Hybrid B1) &amp; Template C 4D HSS:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Option B2 (Bare <code class="mono">G200</code> 3D Ramps, Default):</strong> Drops canned <code class="mono">G200</code> parameters and runs explicit <code class="mono">G38.2</code>, <code class="mono">M3</code>, <code class="mono">G04 P&lt;ms&gt;</code>, and a smooth diagonal XYZ ramp from pierce height to cut height without MASSO overriding Z.</li>
-                  <li><strong>Opt-In Option B1 (Hybrid <code class="mono">C=P</code>):</strong> Sets <code class="mono">G200</code> cut height equal to pierce height (<code class="mono">C=P</code>) so MASSO runs auto-IHS and ignites at pierce height before RotaryCAM ramps down to cut height. Requires an explicit target voltage (<code class="mono">V &gt; 0</code>, never <code class="mono">V0</code> auto-sampling).</li>
-                  <li><strong>Template C (Continuous 4D HSS Tubes):</strong> Square and rectangular tubes use <code class="mono">Bare G200</code> + <code class="mono">G38.2</code> + <code class="mono">G92 Z</code> surface zeroing + <code class="mono">G92.1</code> cleanup + <code class="mono">M666</code> so 4D Z corner climbs track the rotating tube face cleanly.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Safe Retracts, Offset Hygiene, Rotary Unwind &amp; Bar-Advance Looping:</strong>
-                Programs retract to machine top with <code class="mono">G53 G0 Z0</code>, clear temporary Z offsets with <code class="mono">G92.1</code> (never <code class="mono">G92 A0</code>, keeping rotary phase intact), and emit rotary unwinds as three separate lines (<code class="mono">G91</code> / <code class="mono">G28 A0</code> / <code class="mono">G90</code>). For chuck-fed production runs, enable <code class="mono">M30 L&lt;count&gt;</code> bar-advance looping at program end.
-              </li>
-              <li>
-                <strong>MASSO F1-Setup Checklist:</strong>
-                Always keep <code class="mono">T112 M6</code> at the top of plasma files (changing tools cancels plasma mode; pneumatic air scribe uses <code class="mono">T111 M6</code>), zero out any multi-head X/Y/Z tool offsets on <code class="mono">T112</code> in F1 Setup, and avoid <code class="mono">v5.100b BETA Phase 1</code> firmware.
-              </li>
-            </ul>
-
-            <!-- Controller 5: ArtSoft Mach3 -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • ArtSoft Mach3 R3.043.062 Plasma &amp; 4-Axis Rotary</div>
-              <h3 class="doc-section-heading">5. ArtSoft Mach3 Setup</h3>
-            </div>
-            <p>
-              Tens of thousands of plasma tables still run reliably on ArtSoft Mach3. RotaryCAM's hardened Mach3 post (<code class="mono">.tap</code>) handles THC wiring differences, prevents <code class="mono">G52</code>/<code class="mono">G92</code> probe conflicts, and prints a mode-aware <code class="mono">(CONFIG: ...)</code> checklist right in the file header:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>One-Click <code class="mono">.xml</code> Setup Import (<span class="ui-chip">Import Mach3 Setup (.xml)</span>):</strong>
-                Upload your Mach3 profile <code class="mono">.xml</code> in the <strong>Machines</strong> modal to auto-fill machine units, XYZA velocity and acceleration limits, and rotary angular limits, and surface Plasma, Spindle, and slaved-axis safety warnings before cutting.
-              </li>
-              <li>
-                <strong>4-Topology Mach3 THC Hardware Selector (Machine Settings):</strong>
-                Standard <code class="mono">M101/M102</code> VBScript macros force Mach3 to stop dead before toggling pins, burning blowout holes. Pick the topology that matches your control cabinet:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong><code class="mono">M11Px / M10Px</code> Motion-Synced (Pins 1-6 + Polarity Invert):</strong> Fires <code class="mono">M11 P#</code> (ON) and <code class="mono">M10 P#</code> (OFF) at the exact microsecond the next axis move begins. RotaryCAM emits <code class="mono">G93</code> before <code class="mono">M11</code> and never leaves a stranded <code class="mono">M11</code> right before <code class="mono">M5</code>.</li>
-                  <li><strong>CandCNC DTHC DCC (<code class="mono">S900/S10/S20</code> + Optional <code class="mono">S3xx</code> Voltage + Polarity Invert):</strong> Commands CandCNC digital THC lock, unlock, and optional target arc voltage using <code class="mono">S</code> words without motion pauses.</li>
-                  <li><strong>ESS Proma 150 / TMC3in1:</strong> Emits stationary <code class="mono">M102/M101</code> before <code class="mono">M3</code> and activates Internal Anti-Dive locking on small bolt holes, 3D ramps, and 4D rotary cuts.</li>
-                  <li><strong>ESS Proma Compact THC SD:</strong> Enforces a mandatory <code class="mono">G31</code> touch-off on every pierce and toggles the auxiliary bypass relay (<code class="mono">M7/M9</code>) during corner slowdowns and lead-outs.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>ESS <code class="mono">G31</code> vs. LPT <code class="mono">G28.1</code> Probing &amp; Bowed-Stock Depth Tip:</strong>
-                On a <strong>Warp9 Ethernet SmoothStepper (ESS)</strong>, always use <strong><code class="mono">G31</code> Straight Probe</strong> instead of legacy LPT <code class="mono">G28.1</code> floating-head homing. Set your ESS probe depth to <strong><code class="mono">100-127 mm</code> (<code class="mono">4-5 in</code>)</strong> so touch-offs never air-fault on bowed sheet or warped tubing. RotaryCAM adds a <code class="mono">&ge; 0.50 mm</code> (<code class="mono">0.02 in</code>) <code class="mono">G31</code> stroke guard with surface-relative probing.
-              </li>
-              <li>
-                <strong>Mach3 <code class="mono">R3.043.062</code> Rotary &amp; General Config Checklist:</strong>
-                Verify these console settings (summarized in your file's <code class="mono">(CONFIG: ...)</code> header) before pressing Cycle Start:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Version &amp; License:</strong> Run <strong>Mach3 <code class="mono">R3.043.062</code></strong> with an active license file (Demo mode caps files at 500 lines and can drop rotary motion).</li>
-                  <li><strong>Dwells &amp; Trajectory Blending:</strong> Leave <code class="mono">G04 Dwell in ms</code> <strong>UNCHECKED</strong> (dwells output in decimal seconds), set <strong>LookAhead</strong> to <code class="mono">200</code>, and keep <strong>CV Feedrate OFF</strong>. RotaryCAM emits clean <code class="mono">G64</code> without syntax-breaking <code class="mono">P</code> words.</li>
-                  <li><strong><code class="mono">Use Radius for Feedrate</code> Rule:</strong> Keep <strong>Use Radius for Feedrate UNCHECKED</strong> during <code class="mono">G93</code> inverse-time rotary cuts. If you ever run a <code class="mono">G94</code> round-pipe cut using Mach3's radius DRO, enter <code class="mono">+0.0001</code> instead of <code class="mono">0</code> so Mach3 engages feed scaling.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Clean Program Framing, <code class="mono">G94</code> Restore &amp; <code class="mono">G54</code> Scribe Offsets:</strong>
-                Every <code class="mono">.tap</code> file wraps with <code class="mono">%</code> framing and a trailing <code class="mono">M30\n%\n</code> newline, restores <code class="mono">G94</code> immediately after <code class="mono">M5</code> and coaxial scribe strokes, filters sub-<code class="mono">0.002 mm</code> (<code class="mono">0.0001 in</code>) <code class="mono">G93</code> linear noise, and bakes pneumatic scribe XY offsets directly into <code class="mono">G54</code> coordinates to avoid Mach3's <code class="mono">G52</code> vs. <code class="mono">G92</code> register conflict.
-              </li>
-            </ul>
-
-            <!-- Controller 6: Centroid Acorn -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • Centroid Acorn &amp; AcornSix CNC12 v5.4+ Plasma</div>
-              <h3 class="doc-section-heading">6. Centroid Acorn CNC12 Setup</h3>
-            </div>
-            <p>
-              Centroid Acorn and AcornSix boards running CNC12 v5.4+ Plasma behave completely differently on flat plate than on 3D ramps or 4-axis tube. RotaryCAM switches automatically between two native <code class="mono">.nc</code> regimes so neither CNC12's ATHC nor your rotary chuck fights programmed Z moves:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Regime 1: 2D Flat Plate (<code class="mono">G64 ON</code>, <code class="mono">M65</code>, <code class="mono">M61</code> / <code class="mono">M62</code>, Zero Z Words):</strong>
-                On flat sheet, CNC12 owns all Z height control inside its built-in plasma macros:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Smoothing &amp; Material Profile:</strong> Emits <code class="mono">G64 ON</code> trajectory smoothing and <code class="mono">M65</code> to load your active cut chart from CNC12's Profile Manager.</li>
-                  <li><strong>Zero Z Words &amp; Canned Cycles:</strong> Calls <code class="mono">M61</code> to touch off, retract to pierce height, fire the torch, wait for Arc OK, and drop to cut height, then <code class="mono">M62</code> to shut off and retract. RotaryCAM emits zero <code class="mono">Z</code> coordinates so nothing overrides CNC12's live height loop.</li>
-                  <li><strong>15% Voltage Anti-Dive:</strong> Uses CNC12's built-in 15% Voltage Anti-Dive protection automatically during corner slowdowns.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Regime 2: 3D Ramps &amp; 4D Rotary (<code class="mono">Z=0</code> Centerline, <code class="mono">M150</code>, <code class="mono">M36</code>, <code class="mono">G93.1</code>):</strong>
-                On 3D ramp pierces, round pipe saddles, and square or rectangular HSS tubing where Z must track rotating corners, RotaryCAM takes direct Z control:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Centerline <code class="mono">Z=0</code> &amp; <code class="mono">G54</code>:</strong> References your tube centerline as <code class="mono">Z=0</code> under <code class="mono">G54</code> work offsets.</li>
-                  <li><strong><code class="mono">M150</code> Touch-Off (<code class="mono">mfunc150.mac</code>):</strong> Probes with <code class="mono">M115</code> and sets live tube height via <code class="mono">G92 Z&lt;Zm + offset&gt;</code> without letting <code class="mono">M61</code> hijack your Z datum.</li>
-                  <li><strong><code class="mono">M36</code> ATHC Hold Before <code class="mono">M3</code>:</strong> Locks Auto THC with <code class="mono">M36</code> before firing <code class="mono">M3</code> so voltage feedback never fights programmed Z ramp plunges or rotating HSS corners.</li>
-                  <li><strong><code class="mono">G93.1</code> Smoothed Inverse Time &amp; <code class="mono">G94</code> Restore:</strong> Cuts rotary moves in CNC12's <code class="mono">G93.1</code> smoothed inverse-time mode for constant surface speed without chuck stutter, then restores <code class="mono">G94</code> cleanly before <code class="mono">M5</code> torch-off.</li>
-                  <li><strong>Clean Syntax Guardrails:</strong> Outputs standalone <code class="mono">G4 P</code> pierce dwells, exact 360&deg; <code class="mono">G92 A0</code> rotary resets, and semicolon <code class="mono">;</code> comments only (zero parentheses anywhere in the file).</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Shop-Floor CNC12 v5.4+ Setup Checklist (Verify Before Cutting):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>License Tier (Plasma Pro / Ultimate):</strong> Free or base CNC12 licenses cap program size at <code class="mono">50 KB</code>. Rotary HSS and saddle files routinely exceed <code class="mono">50 KB</code>, so run <strong>CNC12 Plasma Pro</strong> or <strong>Ultimate</strong>.</li>
-                  <li><strong>Controller Hardware (AcornSix for Dual-Y + A):</strong> Standard 4-axis Acorn boards run out of motor channels on Dual-Y gantries with a rotary chuck. Use <strong>Centroid AcornSix</strong> whenever you pair Dual-Y gantry motors with an <code class="mono">A</code> rotary axis.</li>
-                  <li><strong><code class="mono">mfunc150.mac</code> Macro Setup:</strong> Install <code class="mono">mfunc150.mac</code> in your CNC12 macro directory for <code class="mono">M150</code> touch-offs. Keep it strictly on <code class="mono">M115</code> + <code class="mono">G92 Z</code> and avoid calling <code class="mono">M38</code> (Laser Interlock) or colliding with reserved <code class="mono">OUTPUT1-5</code> relays.</li>
-                  <li><strong>Onboard Fast Inputs (~5 ms vs. Ether1616 ~100 ms):</strong> Wire your ohmic/floating touch-off switch and Arc OK directly to <strong>Acorn onboard fast inputs</strong> (~<code class="mono">5 ms</code> latency) rather than an Ether1616 expansion board (~<code class="mono">100 ms</code> polling lag) so <code class="mono">M115</code> probes stop dead on contact.</li>
-                  <li><strong>CNC12 Parameters (<code class="mono">P220=1</code> &amp; <code class="mono">P225=1</code>):</strong> Set <code class="mono">P220=1</code> and <code class="mono">P225=1</code> in CNC12 Setup Parameters so smoothed <code class="mono">G93.1</code> inverse-time rotary motion and plasma macro timing execute properly.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Integrated Marking &amp; Scribe Macros (<code class="mono">M64</code> &amp; <code class="mono">M39</code> / <code class="mono">M40</code>):</strong> <code class="mono">M64</code> runs CNC12's automated low-power plasma center-point dimple cycle, while <code class="mono">M39</code> (extend and apply offset) and <code class="mono">M40</code> (retract) drive pneumatic air scribes.
-              </li>
-            </ul>
-
-            <!-- Controller 7: grblHAL -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • 32-Bit Microcontrollers (Teensy 4.1, ESP32, STM32, RP2040)</div>
-              <h3 class="doc-section-heading">7. grblHAL (32-Bit Plasma + Rotary) Setup</h3>
-            </div>
-            <p>
-              grblHAL brings 32-bit motion control and hardware THC to Teensy 4.1, ESP32, STM32, and RP2040 boards. RotaryCAM outputs hardened <code class="mono">.nc</code> programs built for <strong>grblHAL core <code class="mono">20261015+</code></strong> and the <strong>Nov 2026+ <code class="mono">Plugin_plasma</code></strong>:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong><code class="mono">$674</code> Virtual Ports (<code class="mono">P2</code>, <code class="mono">P3</code>, <code class="mono">E3</code>) on Standalone Blocks:</strong>
-                RotaryCAM drives <code class="mono">Plugin_plasma</code> through <code class="mono">$674</code> virtual ports rather than raw output pin numbers. Each virtual-port M-code sits on its own standalone line and is never mixed with motion or other M-codes on the same block:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong><code class="mono">P2</code> (Active-High THC Disable):</strong> <code class="mono">M64 P2</code> (immediate) or <code class="mono">M62 P2</code> (motion-synced) locks and disables THC; <code class="mono">M65 P2</code> (immediate) or <code class="mono">M63 P2</code> (motion-synced) enables THC.</li>
-                  <li><strong><code class="mono">P3</code> (Torch Inhibit Clear):</strong> <code class="mono">M65 P3</code> clears the plugin's torch inhibit before firing.</li>
-                  <li><strong><code class="mono">E3</code> (Feedrate Override):</strong> <code class="mono">M68 E3 Q100</code> restores 100% feedrate immediately, and <code class="mono">M67 E3 Q60</code> applies motion-synced 60% small-hole and corner speed scaling.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Explicit CAM Z (<code class="mono">M190 P-1</code>), Continuous 3D/4D Hold &amp; Core Issue #1027 Safety:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Preamble <code class="mono">M190 P-1</code>:</strong> Keeps <code class="mono">Plugin_plasma</code> <code class="mono">pierce_height = 0</code> so <code class="mono">G38.2</code> touch-off probing, switch-offset <code class="mono">G92 Z</code> zeroing, pierce height, and plunge or ramp Z moves stay under explicit CAM control.</li>
-                  <li><strong>Continuous <code class="mono">M64 P2</code> on 3D Ramps &amp; 4D HSS:</strong> Holds <code class="mono">M64 P2</code> active throughout 3D ramp entries and 4D HSS contours so voltage THC never fights programmed Z ramps or rotating tube corners.</li>
-                  <li><strong>Safe <code class="mono">G93</code> Exit (<code class="mono">M5</code> + <code class="mono">G94 F</code>):</strong> Emits <code class="mono">M5</code> followed immediately by <code class="mono">G94 F&lt;feed&gt;</code> right after <code class="mono">G93</code> rotary segments so inverse-time mode never carries into the next <code class="mono">G38.2</code> probe or rapid retract (avoiding grblHAL Core Issue #1027 and the <code class="mono">G38.2</code> crash trap).</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Firmware &amp; EEPROM Checklist + Serial Hygiene:</strong>
-                Verify these controller settings before pressing Cycle Start:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Firmware Build:</strong> grblHAL core <code class="mono">20261015+</code> paired with Nov 2026+ <code class="mono">Plugin_plasma</code>.</li>
-                  <li><strong>Required EEPROM Settings:</strong> <code class="mono">$376=1</code>, <code class="mono">$133=0</code>, <code class="mono">$384=1</code>, <code class="mono">$674</code> (<code class="mono">virtual_ports=1</code>, <code class="mono">sync_pos=1</code>), and <code class="mono">$350</code>.</li>
-                  <li><strong>Modulo Unwinds &amp; Float Dwells:</strong> Resets rotary wrap with modulo <code class="mono">G92 A&lt;mod_360&gt;</code> (never <code class="mono">G92.1</code>) and emits <code class="mono">G4 P&lt;sec&gt;</code> pierces in floating-point seconds.</li>
-                  <li><strong>Serial Block &amp; Comment Limits:</strong> Caps every line at <code class="mono">&le; 80</code> characters and strips <code class="mono">?</code>, <code class="mono">!</code>, and <code class="mono">~</code> real-time command characters from all comments.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Rotary Feedrates &amp; Optional Y-Wrap:</strong> Full 4-axis <code class="mono">G93</code> inverse-time mode coordinates rotational speed with linear travel. For 3-axis grblHAL boards running a rotary chuck swapped onto the Y motor driver, RotaryCAM can unroll round-tube cuts into linear circumferential Y moves (<code class="mono">Y = R &middot; A_rad</code>) in standard <code class="mono">G94</code>.
-              </li>
-            </ul>
-
-            <!-- Controller 8: CNCdrive UCCNC -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • CNCdrive UC100, UC300ETH, UC400ETH &amp; AXBB-E</div>
-              <h3 class="doc-section-heading">8. CNCdrive UCCNC Configuration</h3>
-            </div>
-            <p>
-              Run UCCNC Plasma on CNCdrive <code class="mono">UC100</code>, <code class="mono">UC300ETH</code>, <code class="mono">UC400ETH</code>, or <code class="mono">AXBB-E</code> hardware without hand-editing G-code. Pick your touch-off mode, motion board, and <code class="mono">Checkbox 212</code> dwell unit in Machine Settings so your <code class="mono">.nc</code> program matches your UCCNC profile:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Touch-Off &amp; THC Mode (Pick One of Three):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Integrated <code class="mono">G31</code> + <code class="mono">G92 Z&lt;Zm - SwitchOffset&gt;</code> (Default):</strong> Probes the surface with <code class="mono">G31</code> and zeros Z using your measured switch offset before retracting to pierce height. Works on flat plate, round pipe, 3D ramps, and 4D HSS profiles.</li>
-                  <li><strong><code class="mono">Neuron Lite</code> (XY-Only External Z):</strong> Leaves all Z motion and touch-off to the Neuron controller. Emits XY(A) contours and <code class="mono">M3/M5</code> only.</li>
-                  <li><strong>Legacy <code class="mono">M31</code> Macro (Flat / Concentric Round Only):</strong> Triggers UCCNC's built-in <code class="mono">M31</code> probe macro for flat plate and concentric round pipe. Not supported on 3D ramps or 4D HSS corners.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>ArcOK-Safe <code class="mono">M205-M212</code> THC Handshake:</strong>
-                UCCNC ignores THC lock commands until the plasma arc is live and stable:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Before <code class="mono">M3</code>:</strong> Emits <code class="mono">M205</code>, <code class="mono">M207</code>, <code class="mono">M209</code>, and <code class="mono">M211</code> to arm THC height, anti-dive, and ArcOK defaults cleanly before ignition.</li>
-                  <li><strong>Flat &amp; Concentric Round Modulation:</strong> Toggles <code class="mono">M211</code> / <code class="mono">M212</code> anti-dive modulation across tight corners and speed drops.</li>
-                  <li><strong>3D Ramps &amp; 4D Profiles:</strong> Executes a <code class="mono">0.200 mm</code> check move after pierce before locking THC with <code class="mono">M206</code>, so ArcOK stays active while Z stays frozen.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Motion Controller Dwell Floor (<code class="mono">UC100</code> vs. Ethernet / <code class="mono">AXBB-E</code>):</strong>
-                Select <strong><code class="mono">UC100</code></strong> to enforce a <code class="mono">0.2 s / 200 ms</code> minimum pierce dwell floor (required by USB <code class="mono">UC100</code> buffering). Choose <strong><code class="mono">UC300ETH</code> / <code class="mono">UC400ETH</code> / <code class="mono">AXBB-E</code></strong> for full short-dwell precision.
-              </li>
-              <li>
-                <strong>UCCNC <code class="mono">Checkbox 212</code> (<code class="mono">G04 P</code> Seconds vs. Milliseconds):</strong>
-                Match UCCNC <em>Configuration &rarr; General Settings &rarr; Checkbox 212 (G04 dwell in ms)</em>. Leave unchecked for decimal seconds (<code class="mono">G04 P0.5</code>), or check the matching box in Machine Settings to output integer milliseconds (<code class="mono">G04 P500</code>).
-              </li>
-              <li>
-                <strong>Unit Suppression (<code class="mono">G20</code> / <code class="mono">G21</code>) &amp; Z Acceleration:</strong>
-                Enable <strong>Suppress <code class="mono">G20/G21</code></strong> if your UCCNC profile locks machine units via <code class="mono">Steps/unit</code> calibration. Set UCCNC Z-axis acceleration to <strong><code class="mono">&ge; 500 mm/s&sup2;</code></strong> so rapid plunges and THC corrections keep up with 4D tube motion.
-              </li>
-              <li>
-                <strong>Pneumatic Air-Scribe &amp; <code class="mono">G93</code> Rotary Kinematics:</strong> Emits <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> air-scribe offsets (cleared with <code class="mono">G52 X0 Y0</code> before plasma <code class="mono">M3</code>) and <code class="mono">G93</code> inverse-time feeds across all tube profiles.
-              </li>
-            </ul>
-
-            <!-- Controller 9: FlashCut CNC Plasma -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • FlashCut CNC &amp; Fabrication Head</div>
-              <h3 class="doc-section-heading">9. FlashCut CNC Plasma Setup</h3>
-            </div>
-            <p>
-              FlashCut CNC plasma systems with the Fabrication Head handle touch-off sensing, torch ignition, and optical voltage THC inside controller cycles. RotaryCAM exports compliant <code class="mono">.nc</code> / <code class="mono">.gc</code> files for your FlashCut table:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>One-Click <code class="mono">.xml</code> Setup Import (Machines Modal):</strong>
-                Upload your FlashCut controller <code class="mono">.xml</code> setup file directly inside the <strong>Machines</strong> modal. RotaryCAM automatically extracts your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID (such as <code class="mono">Hplasma1</code>), verifies <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code>, and sets your rotary axis orientation (<code class="mono">Tube Along X</code> vs. <code class="mono">Tube Along Y</code>).
-              </li>
-              <li>
-                <strong>Mode 2 Explicit Dynamic-Z for 3D Ramp &amp; Square/Angle Tubes (<code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code>):</strong>
-                For 3D Ramp Lead-Ins and HSS square, rectangular, or angle-iron tubes, RotaryCAM runs FlashCut Mode 2 Explicit Z without emitting <code class="mono">G601</code>/<code class="mono">G600</code>:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">G631</code> enters Explicit Dynamic-Z mode and <code class="mono">G602</code> suspends THC. <code class="mono">G605</code> probes the tube surface, <code class="mono">M50</code> ignites the torch, and <code class="mono">M101 I&lt;n&gt;</code> waits for arc transfer.</li>
-                  <li>The torch executes the <code class="mono">3D Ramp / +CutHeight Z</code> plunge, resumes THC on steady runs with <code class="mono">G603</code>, shuts off with <code class="mono">M51</code>, retracts with <code class="mono">G0 Z</code>, and exits with <code class="mono">G630</code>.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>FlashCut Dwell Syntax (<code class="mono">G04 X&lt;sec&gt;</code>):</strong> FlashCut uses the <code class="mono">X</code> word rather than <code class="mono">P</code> for dwell times. RotaryCAM outputs pierce delays as <code class="mono">G04 X&lt;sec&gt;</code> in seconds.
-              </li>
-              <li>
-                <strong>Native THC Anti-Dive Protection (<code class="mono">G602</code> / <code class="mono">G603</code>):</strong>
-                Prevents torch diving during speed drops:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">G602</code>: <strong>Suspends THC</strong> height tracking around sharp corners, tube transitions, and small bolt holes.</li>
-                  <li><code class="mono">G603</code>: <strong>Resumes THC</strong> voltage tracking on straight runs.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Rotary Feedrates:</strong> Full 4-axis <code class="mono">G93</code> inverse-time mode keeps plasma surface speed constant across tube corners and pipe contours.
-              </li>
-            </ul>
-
-            <!-- Controller 10: EdingCNC Plasma -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • EdingCNC CNC720, CNC760 &amp; Legacy Hardware</div>
-              <h3 class="doc-section-heading">10. EdingCNC Plasma Setup</h3>
-            </div>
-            <p>
-              EdingCNC controllers (CNC720, CNC760) run <code class="mono">.nc</code> programs directly with deterministic pulse output and built-in plasma macros. RotaryCAM hardens EdingCNC output for 4-axis rotary cuts, touch-off probing, and THC safety:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Preamble Guards, <code class="mono">G64 R</code> &amp; Modulo-360 Unwinds:</strong> Starts safely in <code class="mono">G94</code> with initial <code class="mono">M21</code> (THC OFF) and <code class="mono">M5</code> (torch OFF), guards against 4THMILL Y-to-A mapping (<code class="mono">If [#5150 == 2] Errmsg ...</code>), and zeroes the chuck with <code class="mono">G10 L20 P#5220 A0.000</code>. Resets rotary wrap with <code class="mono">A[#5004 MOD 360.0]</code> (zero <code class="mono">G92.1</code>), supports optional <code class="mono">G64 R&lt;tol&gt;</code> path tolerance (never <code class="mono">G64 P...</code>), flattens comments to stay under EdingCNC's 256-character line limit, filters rotary micro-steps under <code class="mono">0.005 mm</code>, restores <code class="mono">G94 F...</code> before safe-Z retracts, and supports optional <code class="mono">M60</code> UI Nesting program end.
-              </li>
-              <li>
-                <strong>Guarded Probing (<code class="mono">G38.2</code>), <code class="mono">#5067</code> Miss Check &amp; Centerline Datum:</strong> Guards touch-off blocks against unrendered loads or dry simulations (<code class="mono">If [[#5380 == 0] AND [#5397 == 0]]</code>), checks <code class="mono">#5067 == 0</code> to abort cleanly on a missed probe, applies direct <code class="mono">G92 Z[datum - switchOffset]</code> compensation, and supports optional centerline WCS <code class="mono">Z0</code> on HSS and structural tubes.
-              </li>
-              <li>
-                <strong>Torch Ignition, <code class="mono">M56</code> Arc-OK &amp; THC Voltage Control (<code class="mono">M20-M23</code>):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Setpoint vs. Auto-Sample:</strong> Choose programmable <code class="mono">M22 Q&lt;volts&gt;</code> / <code class="mono">M23 Q&lt;volts&gt;</code> target voltage or <code class="mono">measuredIsSetpoint = 1</code> material auto-sample mode.</li>
-                  <li><strong>Optional <code class="mono">M56</code> Arc-OK Handshake:</strong> Fires <code class="mono">M3</code>, waits decimal-second <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, and can verify <code class="mono">M56</code> Arc-OK input with an explicit <code class="mono">#5399</code> timeout check.</li>
-                  <li><strong>Anti-Dive Locking &amp; 4D Default:</strong> Holds <code class="mono">M21</code> (THC OFF) by default on 4D dynamic-Z cuts, unlocks with <code class="mono">M20</code> after 3D ramp lead-ins finish, locks corners and small holes, and adds a post-<code class="mono">M5</code> anti-dive dwell (<code class="mono">G4 P...</code>) before retracting.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Rotary Motion:</strong> Native <code class="mono">G93</code> inverse-time feedrate programming keeps surface arc energy uniform across 4-axis rotary cuts, switching cleanly back to <code class="mono">G94 F...</code> for safe-Z retracts.
-              </li>
-              <li>
-                <strong>EdingCNC Commissioning Checklist (Verify Before Cutting):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Disable 4THMILL:</strong> Turn off EdingCNC's 4THMILL Y-to-A mapping so rotary moves drive the <code class="mono">A</code> chuck instead of tripping <code class="mono">#5150 == 2</code>.</li>
-                  <li><strong>Disable <code class="mono">G4 ms</code>:</strong> Keep millisecond dwell mode unchecked so <code class="mono">G4 P&lt;sec&gt;</code> pierce and post-<code class="mono">M5</code> dwells execute in seconds.</li>
-                  <li><strong>Disable Pause on Unexpected Probe Trigger:</strong> Uncheck pause-on-unexpected-probe in setup so IHS contact transitions never stall the run.</li>
-                  <li><strong>CNC720 <code class="mono">P2</code>/<code class="mono">P3</code> FLOOD/MIST Ports:</strong> Verify <code class="mono">P2</code>/<code class="mono">P3</code> (FLOOD/MIST) output mapping on CNC720 boards if driving auxiliary THC hold or air-scribe relays.</li>
-                  <li><strong>Check <code class="mono">macro.cnc ;@unit</code>:</strong> Confirm <code class="mono">macro.cnc</code> declares the matching <code class="mono">;@unit</code> header (<code class="mono">mm</code> or <code class="mono">inch</code>) for your <code class="mono">G21</code>/<code class="mono">G20</code> table setup.</li>
-                </ul>
-              </li>
-            </ul>
-
-            <!-- Controller 11: PlanetCNC TNG -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • PlanetCNC Mk3, Mk3/4 &amp; TNG Software</div>
-              <h3 class="doc-section-heading">11. PlanetCNC TNG Plasma Setup</h3>
-            </div>
-            <p>
-              PlanetCNC Mk3 and Mk3/4 controllers running PlanetCNC TNG drive plasma tables and 4-axis rotaries directly from <code class="mono">.nc</code> code. RotaryCAM hardens TNG output so lookahead, probing, and active comments stay safe:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Preamble &amp; <code class="mono">G94</code>/<code class="mono">G93</code> Lifecycle:</strong> Starts with <code class="mono">G90 G90.2</code> (rotary absolute distance mode), initial <code class="mono">M54 P0</code> (THC OFF before positioning), and <code class="mono">M55 P0 M56 P0 M57 P0</code> to cancel residual Transform, Warp, and Swap offsets. Jobs start in <code class="mono">G94</code>, switch to <code class="mono">G93</code> only during rotary cut strokes, and restore <code class="mono">G94 F...</code> before safe-Z retracts and the program footer.
-              </li>
-              <li>
-                <strong>Active-Comment Keyword Safety (<code class="mono">; ...</code> vs. <code class="mono">(status, ...)</code>):</strong> TNG treats 38 parenthetical keywords as live commands. RotaryCAM emits general notes and pauses as <code class="mono">; ...</code> semicolon comments so they never trigger TNG actions, and reserves <code class="mono">(status, ...)</code> strictly for intentional UI progress updates.
-              </li>
-              <li>
-                <strong>AL Axis-Lock IHS, Two-Stage Probing &amp; HSS Centerline Datum:</strong> Runs <code class="mono">G38.2</code> touch-off probing followed by an AL Axis-Lock clearing retract (<code class="mono">G91 G01 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>), setting centerline <code class="mono">Z=0</code> on HSS and structural tubes. Enable optional two-stage precision probing for a fast initial touch followed by a slow latch re-probe.
-              </li>
-              <li>
-                <strong>Lookahead-Preserving THC (<code class="mono">M54</code>) &amp; 4D Dynamic-Z Lock:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M54 P1 Q&lt;speed&gt; R1</code>: Used on 2D flat plate and Y-wrap cuts to keep TNG's motion lookahead intact with speed-gated anti-dive.</li>
-                  <li><code class="mono">M54 P1 R1</code> (omits <code class="mono">Q</code>): Used on 4-axis round pipe cuts so inverse-time rotary motion does not trip flat-plane speed gating.</li>
-                  <li><strong>Continuous Lock &amp; Post-Ramp Unlock:</strong> Holds <code class="mono">M54 P0</code> continuously throughout 4D dynamic-Z cuts, unlocks with <code class="mono">M54</code> after 3D lead-in ramps finish, and freezes THC into corners and small holes.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Modulo-360 Unwinds &amp; Program End:</strong> Resets rotary wrap using modulo-360 <code class="mono">G92 A&lt;mod_360&gt;</code> (zero <code class="mono">G92.1</code>) and closes with selectable <code class="mono">M02</code> or <code class="mono">M30</code> program end. Emits <code class="mono">M3</code>/<code class="mono">M5</code> torch control with <code class="mono">G04 P&lt;sec&gt;</code> pierce delays.
-              </li>
-              <li>
-                <strong>PlanetCNC TNG Commissioning Checklist (Verify Before Cutting):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Disable Probe Lock:</strong> Turn off <strong>Probe Lock</strong> under TNG <em>Jogging</em> settings so IHS switch trips do not lock out subsequent moves.</li>
-                  <li><strong>Zero Spindle Delays:</strong> Set <code class="mono">#&lt;_spindle_delay_start&gt;</code> and <code class="mono">#&lt;_spindle_delay_stop&gt;</code> to <code class="mono">0</code> so TNG does not stack extra delays onto G-code <code class="mono">G04</code> pierces.</li>
-                  <li><strong>Disable A Soft Limits:</strong> Turn off soft limits on the <code class="mono">A</code> rotary axis so modulo-360 cuts and <code class="mono">G92 A</code> resets never trip a soft-limit alarm.</li>
-                  <li><strong>Verify <code class="mono">#&lt;_thc_speed&gt;</code> &amp; Audit <code class="mono">Scripts/M3.gcode</code>:</strong> Confirm <code class="mono">#&lt;_thc_speed&gt;</code> is configured in units/s (not units/min) and audit <code class="mono">Scripts/M3.gcode</code> to ensure it does not inject conflicting touch-off or THC commands.</li>
-                </ul>
-              </li>
-            </ul>
-
-            <!-- Controller 12: ShopSabre WinCNC -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • ShopSabre Plasma Tables &amp; SideKick Rotary Attachments</div>
-              <h3 class="doc-section-heading">12. ShopSabre WinCNC Plasma Setup</h3>
-            </div>
-            <p>
-              ShopSabre plasma tables with SideKick 4-axis rotary attachments run on WinCNC controller hardware. Check your WinCNC build under <code class="mono">Help &rarr; About</code>: RotaryCAM targets <code class="mono">v3.1.06d+</code> by default and includes a legacy toggle for older installs.
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Units (<code class="mono">G22</code> Metric vs. <code class="mono">G20</code> Imperial, Never <code class="mono">G21</code>):</strong> WinCNC interprets <code class="mono">G21</code> as <em>centimeters</em>, which scales parts 10x too large. RotaryCAM strictly outputs <code class="mono">G22</code> for millimeters and <code class="mono">G20</code> for inches.
-              </li>
-              <li>
-                <strong>SideKick Axis Letter Check (<code class="mono">WINCNC.INI</code>: <code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>):</strong> Open <code class="mono">WINCNC.INI</code> on your controller PC and confirm which axis letter drives your SideKick rotary (<code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>). Select that matching letter in Machine Settings so rotary moves, <code class="mono">G93</code> feeds, and <code class="mono">L28.1</code> wraps command the right motor.
-              </li>
-              <li>
-                <strong>Strict Bracket Comments &amp; Program Lifecycle (<code class="mono">[...]</code>, <code class="mono">M65</code>, <code class="mono">G9 S10</code>, <code class="mono">G94</code>, <code class="mono">L28.1</code>, <code class="mono">L92</code>, <code class="mono">M66</code>):</strong> Emits <code class="mono">[square bracket]</code> comments only (zero parentheses or semicolons), <code class="mono">M65</code> init, optional <code class="mono">G9 S10</code> smoothing, <code class="mono">G94</code> restored before rapids and <code class="mono">M62</code>, <code class="mono">L28.1</code> modulo 0-360 wrap on rotary moves, <code class="mono">G4 X&lt;sec&gt;</code> decimal-second dwells, and Pack-only <code class="mono">L92</code> before <code class="mono">M66</code> program end (keeping single-part <code class="mono">G92</code> restore intact).
-              </li>
-              <li>
-                <strong>Continuous THC (<code class="mono">L37.2 D#</code>) vs. Cut Parameters (<code class="mono">L38.1</code>) &amp; Legacy Fallback:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong><code class="mono">v3.1.06d+</code> Continuous THC (<code class="mono">L37.2 D1/D0</code>):</strong> Emits <code class="mono">L37.2 D1</code> / <code class="mono">D0</code> and inline <code class="mono">D1</code> / <code class="mono">D0</code> where <code class="mono">D1</code> = Disabled (locked) and <code class="mono">D0</code> = Enabled. Older builds can switch to legacy <code class="mono">L37</code> / <code class="mono">L36</code>.</li>
-                  <li><strong>Decoupled <code class="mono">L38.1</code> Cut-Parameter Injection:</strong> Toggle <code class="mono">L38.1</code> on to push rotary cut parameters (<code class="mono">THC=... M1</code> Enabled vs. <code class="mono">M0</code> Disabled) from RotaryCAM, or turn it off to run your WinCNC material table directly.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Pattern 1 (<code class="mono">M61</code>) vs. Pattern 2 (<code class="mono">L38</code> Direct Ignition Bypass):</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Pattern 1 (<code class="mono">M61</code>):</strong> Runs WinCNC's touch-off and pierce cycle, suppresses duplicate <code class="mono">G4 X</code> dwells, and applies centerline <code class="mono">G92 Z</code> on 4D HSS tubing and ramps.</li>
-                  <li><strong>Pattern 2 (<code class="mono">L38</code>):</strong> Bypasses <code class="mono">M61</code> for direct torch ignition and automatically engages on 3D ramps whenever <code class="mono">L38.1</code> is off or legacy mode is active. <code class="mono">M62</code> shuts off the arc and retracts Z cleanly.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Pneumatic Scribe (<code class="mono">G54</code> XY Baking):</strong> Bakes pneumatic air-scribe XY offsets directly into <code class="mono">G54</code> coordinates with zero <code class="mono">G52</code>, <code class="mono">G53</code>, or <code class="mono">G56</code> conflicts.
-              </li>
-            </ul>
-
-            <!-- Controller 13: CSLab SimCNC -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • CSLab CSMIO/IP-M &amp; IP-S (SimCNC 3.5 &amp; 3.6+ G93)</div>
-              <h3 class="doc-section-heading">13. CSLab SimCNC (3.5 &amp; 3.6+ G93) Setup</h3>
-            </div>
-            <p>
-              CSLab SimCNC tables run either 4D Euclidean feedrate spoofing (SimCNC 3.5) or native <code class="mono">G93</code> inverse-time (SimCNC 3.6+). RotaryCAM hardens <code class="mono">SimCNC 3.6+ G93</code> output so every cut runs cleanly without controller alarms or motion stalls:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>One-Click <code class="mono">config.xml</code> Import (<span class="ui-chip">Import SimCNC Config (config.xml)</span>):</strong>
-                Upload your SimCNC 3.6 <code class="mono">config.xml</code> in the <strong>Machines</strong> modal to auto-fill machine units, XYZA velocity/acceleration/jerk limits, and rotary angular limits (<code class="mono">rad/s</code>), and surface Plasma, Spindle, and slaved-axis safety warnings.
-              </li>
-              <li>
-                <strong>Trajectory Blending &amp; <code class="mono">G93</code> Feed Precision:</strong> Emits <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code> / <code class="mono">P0.4</code> blending even inside <code class="mono">G20</code> inch programs (banning <code class="mono">G61</code> exact-stop) and formats <code class="mono">G93 F</code> to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor.
-              </li>
-              <li>
-                <strong>Micro-Move Coalescing &amp; Axial Feathering:</strong> Coalesces sub-<code class="mono">0.05 mm</code> / <code class="mono">0.02&deg;</code> micro-segments and inserts <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) axial feathering between pure-XYZ and pure-ABC moves to prevent SimCNC planner stalls.
-              </li>
-              <li>
-                <strong>Dwell, Comment, Parameter &amp; Arc Guardrails:</strong> Suppresses sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms), limits each line to 1 <code class="mono">(...)</code> comment with strict non-comment character filtering, enforces the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), formats <code class="mono">G20</code> arcs to <code class="mono">5</code> decimals (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>), and runs phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).
-              </li>
-              <li>
-                <strong>Motion-Sync Macros &amp; Feedrate Guide:</strong> For <code class="mono">ExtTrajSyncOut</code> wiring (<code class="mono">M62/M63 P0/P1</code>) and 3D ramp handshakes, see <a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Sync</a> and <a href="rotary-and-sheet-feedrates.html" style="color: var(--amber-400);">Tutorial 11: G94, G93 &amp; G20/G21 Feedrates</a>.
-              </li>
-            </ul>
-
-            <!-- Controller 14: Portable RS-274 (generic_g94) -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • Portable ISO 6983 RS-274 (<code class="mono">generic_g94</code>)</div>
-              <h3 class="doc-section-heading">14. Portable RS-274 (<code class="mono">generic_g94</code>) Setup</h3>
-            </div>
-            <p>
-              Use the hardened <code class="mono">Generic RS-274</code> post when driving open-source, retrofit, or industrial <code class="mono">G94</code> controllers that do not use a vendor-specific macro language. Output stays inside a strict, clean ISO 6983 core so stock interpreters load files with zero syntax errors:
-            </p>
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Strict Portable Subset &amp; Comment Hygiene:</strong> Emits only <code class="mono">G00</code>, <code class="mono">G01</code>, <code class="mono">G02</code>, <code class="mono">G03</code>, <code class="mono">G04</code>, <code class="mono">G17</code>, <code class="mono">G20</code>/<code class="mono">G21</code>, <code class="mono">G40</code>, <code class="mono">G90</code>, <code class="mono">G92</code>, <code class="mono">G94</code>, <code class="mono">M03</code>, <code class="mono">M05</code>, and <code class="mono">M30</code>. All comments are uppercase <code class="mono">(COMMENT)</code> blocks capped at <code class="mono">&le; 80</code> characters, with zero <code class="mono">;</code> semicolons, zero <code class="mono">%</code> framing, zero <code class="mono">G49</code>, and zero <code class="mono">G92.1</code> or <code class="mono">G10 L20</code> work-offset rewrites.
-              </li>
-              <li>
-                <strong>THC Mode (<code class="mono">None</code> Default vs. <code class="mono">M62/M63</code> or Custom M-Codes) &amp; Dry-Run Mode:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong><code class="mono">None</code> Default + Header Warning:</strong> Defaults to zero THC M-codes and prints an explicit header THC-lock warning on 3D ramps and 4D Z motion so you remember to disable external voltage THC on non-flat cuts.</li>
-                  <li><strong>Optional THC Outputs:</strong> Enable <code class="mono">M62/M63</code> or custom THC lock/unlock M-codes in Machine Settings if your hardware THC accepts digital hold signals.</li>
-                  <li><strong>Dry-Run Mode:</strong> Toggle <strong>Dry-Run</strong> to verify clearances, chuck rotations, and lead-ins on the table with plasma <code class="mono">M03</code> ignition suppressed.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Pre-Zeroed <code class="mono">Z0</code>, Configurable <code class="mono">G04</code> Dwells &amp; Split 3D Ramp Ignition:</strong> Assumes a pre-zeroed top-surface <code class="mono">Z0</code> datum by default so no controller-specific probe macro is required. Configure pierce dwells as <code class="mono">G04 P0.500</code>, <code class="mono">G04 P500</code>, <code class="mono">G04 X0.500</code>, or suppressed (clamped to <code class="mono">&ge; 10 ms</code> with a forced decimal point on decimal formats). On 3D ramp entries, <code class="mono">M03</code> ignition and pierce dwell split cleanly before the angled ramp descent begins.
-              </li>
-              <li>
-                <strong>Combined Cartesian <code class="mono">G94</code> Feeds, Swing-Envelope Safe Z &amp; Rotary Hygiene:</strong>
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>Cartesian <code class="mono">G94</code> + Pure-Rotary Units:</strong> Mixed moves output <code class="mono">F_G94 = dL_xyz / dt</code>, while pure-<code class="mono">A</code> rotations output your choice of <code class="mono">deg/min</code> or <code class="mono">rad/min</code>.</li>
-                  <li><strong>Safe Z &amp; <code class="mono">&le; 2.5&deg;</code> Discretization:</strong> Snaps linear jitter below <code class="mono">0.005 mm</code>, retracts above the tube swing envelope before <code class="mono">A</code> rapids, and discretizes rotary contours at <code class="mono">&le; 2.5&deg;</code> steps.</li>
-                  <li><strong>2D Suppression &amp; Modulo Unwind:</strong> Suppresses all <code class="mono">A</code> words on 2D flat sheet and wraps rotary coordinates cleanly using 360-degree <code class="mono">G92 A</code> modulo unwinds.</li>
-                </ul>
-              </li>
-            </ul>
-            <div class="doc-callout warning" style="margin-top: 0.75rem;">
-              <div class="doc-callout-title">⚠ Incompatible Controllers: Burny, Dynatorch &amp; FlashCut Stingray</div>
-              <p>
-                Portable RS-274 (<code class="mono">generic_g94</code>) is <strong>NOT compatible with Burny, Dynatorch, or FlashCut Stingray</strong> controllers, which rely on proprietary dialects, word ordering, or non-standard ESSI/torch protocols.
+            <div class="doc-section-divider" style="margin-top: 0.75rem;">
+              <div class="doc-section-kicker">Per-Controller Setup &amp; 6-Phase Cut Cycle Guides</div>
+              <h3 class="doc-section-heading">Open Your Controller Guide</h3>
+              <p class="doc-section-desc">
+                Each page shows the 6-phase torch motion timeline alongside the exact G-codes, M-codes, and registers emitted in every stage.
               </p>
             </div>
 
-            <!-- Scribe Section: EasyScribe vs Pneumatic -->
-            <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Multi-Tool Marking • Part IDs, Bend Lines &amp; Weld Witness Ticks</div>
-              <h3 class="doc-section-heading">15. Scribing: Coaxial EasyScribe vs. Pneumatic Air-Scribe Setup</h3>
+            <div class="controller-grid">
+              
+              <a href="machine-configuration/LinuxCNC/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.ngc</span>
+                  <span class="controller-card-mode">G94 (2D/HSS Flats) + G93 (Rotary)</span>
+                </div>
+                <div class="controller-card-title">LinuxCNC 2.9+ QTPlasmaC</div>
+                <p class="controller-card-summary">Three clean regimes (2D flat, #&lt;tube_cut&gt;=1 rotary/3D, non-M3 scribe) with M62/M63 kerf void protection.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/FireControl/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.tap</span>
+                  <span class="controller-card-mode">G94 Y-WRAP / X-WRAP (+ L_rev)</span>
+                </div>
+                <div class="controller-card-title">Langmuir Systems FireControl v1.6+ / v24.1.6</div>
+                <p class="controller-card-summary">Hardened .tap output for CrossFire, PRO &amp; XR with dual G38.2/G38.4 IHS, 0.55s 3D ramp dwell &amp; Y/X-WRAP.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/Mach4/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.tap</span>
+                  <span class="controller-card-mode">G93 Inverse-Time (strokes only)</span>
+                </div>
+                <div class="controller-card-title">ArtSoft Mach4 + Warp9 ESS / TMC3in1</div>
+                <p class="controller-card-summary">Modal G90/G91.1 separation, G31.0-G31.3 + refDistance skip-probe, Output #4 TMC3in1 THC &amp; M62/M63 P3 torch.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/MASSO/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">G93 Inverse-Time</span>
+                </div>
+                <div class="controller-card-title">MASSO G3 + DTHC v5.x</div>
+                <p class="controller-card-summary">T112 M6 plasma mode, 3 THC modes, mandatory M667 F<zFeed> anti-dive, Bare G200 vs Hybrid C=P ramps &amp; G28 A0 unwind.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/Mach3/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.tap</span>
+                  <span class="controller-card-mode">G93 Inverse-Time (Use Radius OFF)</span>
+                </div>
+                <div class="controller-card-title">ArtSoft Mach3 R3.043.062</div>
+                <p class="controller-card-summary">4 THC hardware topologies, ESS G31 vs LPT G28.1 probing, G54-baked scribe offsets, % framing &amp; .xml import.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/Acorn/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">G94 (2D) / G93.1 Smoothed (3D/4D)</span>
+                </div>
+                <div class="controller-card-title">Centroid Acorn CNC12 v5.4+</div>
+                <p class="controller-card-summary">Dual-regime CNC12 v5.4+ post: canned M61/M62 2D plate vs. M150/M36/G93.1 3D &amp; 4D rotary with semicolon-only comments.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/grblHAL/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">G94 (2D / Y-Wrap) / G93 (4-Axis)</span>
+                </div>
+                <div class="controller-card-title">grblHAL 32-Bit Plasma + Rotary</div>
+                <p class="controller-card-summary">Standalone-line $674 virtual ports (P2/P3/E3), M190 P-1 explicit Z, Core #1027 G94-before-G38.2 safety &amp; <= 80-char blocks.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/UCCNC/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">G93 Inverse-Time (strokes only)</span>
+                </div>
+                <div class="controller-card-title">CNCdrive UCCNC v1.2115+</div>
+                <p class="controller-card-summary">Integrated G31 / Neuron Lite / M31 modes, ArcOK-safe M205-M212 handshake, 0.200 mm check move + M206 &amp; Checkbox 212.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/FlashCut/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc / .gc</span>
+                  <span class="controller-card-mode">G93 Inverse-Time (2D/3D/4D)</span>
+                </div>
+                <div class="controller-card-title">FlashCut CNC Plasma</div>
+                <p class="controller-card-summary">Fabrication Head Cut2D (Mode 1) vs Explicit Dynamic-Z G631/G605/M50/M101/G630 (Mode 2), G04 X<sec> &amp; Setup.xml import.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/EdingCNC/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">G93 Inverse-Time (0.005 mm deadband)</span>
+                </div>
+                <div class="controller-card-title">EdingCNC Plasma</div>
+                <p class="controller-card-summary">CNC720/760 post with #5150 4THMILL guard, #5067 probe miss check, M22/M23 voltage, M56 Arc-OK &amp; M20/M21 THC.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/PlanetCNC/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">G93 Inverse-Time (optional G94 lookahead)</span>
+                </div>
+                <div class="controller-card-title">PlanetCNC TNG Plasma</div>
+                <p class="controller-card-summary">G90.2 rotary absolute mode, AL Axis-Lock G91 G01 probe backoff, lookahead M54 P1 Q R1 THC &amp; semicolon comment safety.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/WinCNC/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.tap</span>
+                  <span class="controller-card-mode">G93 Inverse-Time (A / W / B letter)</span>
+                </div>
+                <div class="controller-card-title">ShopSabre WinCNC + SideKick Rotary</div>
+                <p class="controller-card-summary">G22 mm / G20 in (never G21!), configurable A/W/B SideKick letter, L37.2 D1/D0 inline THC, L38.1 params &amp; M61/L38 patterns.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/SimCNC/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">3.5: 4D Spoofed G94 | 3.6+: Hardened G93</span>
+                </div>
+                <div class="controller-card-title">CSLab SimCNC 3.5 & 3.6+ G93</div>
+                <p class="controller-card-summary">Hardware-verified SimCNC post: config.xml import, G69/G64 P0.3-0.4, 0.002 mm feathering, #1110/#1113 3D ramps &amp; M62/M63 sync.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/GenericG94/index.html" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.nc</span>
+                  <span class="controller-card-mode">Modal G94 (dL_xyz/dt; deg/min or rad/min)</span>
+                </div>
+                <div class="controller-card-title">Portable RS-274 (generic_g94)</div>
+                <p class="controller-card-summary">Clean ISO 6983 G94 core with configurable G04 dwells, swing-envelope Safe Z, optional THC/IHS, and Dry-Run mode.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/Scribing/index.html" class="controller-card scribing-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">Multi-Tool</span>
+                  <span class="controller-card-mode">All 14 Controllers (Pro Shop)</span>
+                </div>
+                <div class="controller-card-title">Coaxial EasyScribe vs. Pneumatic Air-Scribe</div>
+                <p class="controller-card-summary">Engrave Part IDs, bend lines &amp; weld ticks using coaxial EasyScribe (all controllers, M0 swap) or pneumatic offset air-scribe.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
             </div>
-            <p>
-              RotaryCAM supports both drag scribing and pneumatic impact scribing across all 12 controllers in <strong>Pro Shop ($399)</strong>, letting you engrave Part IDs, chassis bend lines, and weld fit-up witness marks directly on your parts before cutting:
-            </p>
-
-            <div class="doc-intro-grid" style="margin: 1.25rem 0;">
-              <div class="doc-intro-stat">
-                <span class="label">Coaxial EasyScribe (Drag)</span>
-                <span class="value">Installs in Plasma Torch Cup • All 12 Controllers • Auto M0 Swap Pause</span>
-              </div>
-              <div class="doc-intro-stat">
-                <span class="label">Pneumatic Air-Scribe (Offset)</span>
-                <span class="value">Independent Air Slide • Multi-Tool M-Codes • Zero Swap Pause</span>
-              </div>
-            </div>
-
-            <ul class="doc-bullet-list">
-              <li>
-                <strong>Coaxial Drag Scribing (<code class="mono">EasyScribe</code>):</strong>
-                The EasyScribe tool replaces the shield cup and nozzle directly inside your plasma torch body. It requires zero auxiliary air valves or wiring and works on <strong>every table and controller (including Langmuir FireControl)</strong>.
-                When scribing with EasyScribe:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li>The plasma arc is kept strictly <strong>OFF</strong> (<code class="mono">M3</code> is never fired).</li>
-                  <li>The machine touches off the stock surface, plunges into the spring preload depth (<code class="mono">Z_scribe</code>, typically <code class="mono">1.0–1.5 mm</code>), drags the diamond or carbide stylus across the part contour, and retracts to Safe Z.</li>
-                  <li>When scribing and cutting in the same job, RotaryCAM automatically injects an <code class="mono">M0</code> program pause with a message on your screen prompting you to swap between the EasyScribe tool and your plasma cutting consumables.</li>
-                </ul>
-              </li>
-              <li>
-                <strong>Pneumatic Offset Air-Scribe:</strong>
-                For high-production shops with an air-powered stylus mounted on a pneumatic slide alongside the plasma torch. RotaryCAM applies the physical <code class="mono">(X, Y, Z)</code> head offset automatically and drives the scribe using your controller's native multi-tool commands:
-                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><strong>LinuxCNC QTPlasmaC:</strong> <code class="mono">M3 $1 S1</code> (air on + slide drop) / <code class="mono">M5 $1</code> (retract)</li>
-                  <li><strong>MASSO G3:</strong> <code class="mono">T111 M6</code> (switch to Air Scribe) / <code class="mono">T112 M6</code> (switch back to Plasma)</li>
-                  <li><strong>Centroid Acorn:</strong> <code class="mono">M39</code> (extend &amp; offset) / <code class="mono">M40</code> (retract)</li>
-                  <li><strong>Mach4 &amp; UCCNC:</strong> Auxiliary output M-code pair with automatic <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> work coordinate shift and <code class="mono">G52 X0 Y0</code> cancellation.</li>
-                  <li><strong>ArtSoft Mach3:</strong> Auxiliary output M-code pair with XY scribe offsets baked directly into <code class="mono">G54</code> coordinates (avoiding <code class="mono">G52</code> vs. <code class="mono">G92</code> probe register conflicts).</li>
-                  <li><strong>ShopSabre WinCNC:</strong> Software-baked <code class="mono">G54</code> XY pneumatic scribe offsets with zero <code class="mono">G52</code>, <code class="mono">G53</code>, or <code class="mono">G56</code> conflicts.</li>
-                </ul>
-                Because the air scribe is permanently mounted beside the torch, your machine marks all Part IDs, bend lines, and alignment ticks, then immediately switches to the plasma torch and cuts out the parts in one completely hands-off automated run.
-              </li>
-            </ul>
           </div>
         </article>
 

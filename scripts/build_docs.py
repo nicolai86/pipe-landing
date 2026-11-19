@@ -34,11 +34,12 @@ except ImportError:
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import version
+import controllers_data
 TEMPLATES_DIR = ROOT_DIR / "templates" / "docs"
 PAGES_TEMPLATE_DIR = TEMPLATES_DIR / "pages"
 DOCS_OUT_DIR = ROOT_DIR / "docs"
 
-CSS_VERSION = "20261023"
+CSS_VERSION = "20261119"
 VERSION = version.resolve_version()
 BETA_LABEL = version.beta_label(VERSION)
 FOOTER_TECH_STRIP = "G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING"
@@ -56,12 +57,12 @@ TUTORIALS = [
         "meta_title": "01. Basic Machine Configuration | RotaryCAM Documentation",
         "meta_description": "Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in RotaryCAM.",
         "hero_title_html": 'Basic <span class="text-gradient-amber">Machine Configuration</span>',
-        "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 12 major controllers.',
+        "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 14 supported controllers.',
         "steps_count": 7,
         "steps_label": "7 Steps",
         "meta_pills": [
             {"style": "cyan", "html": "<strong>Persistence:</strong> Multi-Profile Saved Across Restarts"},
-            {"style": "", "html": "<strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC"},
+            {"style": "", "html": "<strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC • Generic RS-274"},
         ],
         "toc": [
             {"id": "step-1", "badge": "01", "label": "Open Machine Profiles Modal"},
@@ -82,7 +83,7 @@ TUTORIALS = [
             "Velocity, acceleration, jerk &amp; Safe Z clearance limits",
             "Rotary axis orientation (Along X vs. Y) &amp; 4 chuck travel modes",
             "Flat sheet orientation (0° vs. 90° CCW) &amp; 6 work zero origins",
-            "12 Controller Dialects: QTPlasmaC, FireControl, Mach4, MASSO, Mach3, Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, WinCNC",
+            "14 Controller Dialects: QTPlasmaC, FireControl, Mach4, MASSO, Mach3, Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, WinCNC, SimCNC &amp; Generic RS-274",
             "Synchronous M62/M63 THC locking &amp; 60% small-hole bolt speed",
             "Hardware motor polarity (Invert X/Y/A) &amp; air-scribe setup",
         ],
@@ -671,6 +672,8 @@ def build_all_docs():
         version=VERSION,
         beta_label=BETA_LABEL,
         footer_tech_strip=FOOTER_TECH_STRIP,
+        docs_prefix="",
+        root_prefix="../",
     )
     (DOCS_OUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
     print(f"[build] Rendered docs/index.html ({total_tutorials} workflows, {total_steps} steps)")
@@ -683,6 +686,7 @@ def build_all_docs():
         rendered = tmpl.render(
             page=t,
             tutorials=TUTORIALS,
+            controllers=controllers_data.CONTROLLERS,
             total_tutorials=total_tutorials,
             total_steps=total_steps,
             prev_tutorial=prev_t,
@@ -691,18 +695,67 @@ def build_all_docs():
             version=VERSION,
             beta_label=BETA_LABEL,
             footer_tech_strip=FOOTER_TECH_STRIP,
+            docs_prefix="",
+            root_prefix="../",
         )
         out_path = DOCS_OUT_DIR / t["filename"]
         out_path.write_text(rendered, encoding="utf-8")
         print(f"[build] Rendered docs/{t['filename']} (Tutorial {t['num']:02d} of {total_tutorials:02d})")
 
+    # 3. Render dedicated controller subpages under docs/machine-configuration/<Slug>/index.html
+    controllers = controllers_data.CONTROLLERS
+    ctrl_tmpl = env.get_template("controller_detail.html.j2")
+    for idx, c in enumerate(controllers):
+        prev_c = controllers[idx - 1] if idx > 0 else None
+        next_c = controllers[idx + 1] if idx + 1 < len(controllers) else None
+        ctrl_page = {
+            "slug": f"machine-configuration-{c['slug']}",
+            "parent_slug": "machine-configuration",
+            "num": 1,
+            "meta_title": c["meta_title"],
+            "meta_description": c["meta_description"],
+            "has_lightbox": False,
+        }
+        rendered = ctrl_tmpl.render(
+            page=ctrl_page,
+            controller=c,
+            all_controllers=controllers,
+            prev_controller=prev_c,
+            next_controller=next_c,
+            tutorials=TUTORIALS,
+            total_tutorials=total_tutorials,
+            total_steps=total_steps,
+            css_version=CSS_VERSION,
+            version=VERSION,
+            beta_label=BETA_LABEL,
+            footer_tech_strip=FOOTER_TECH_STRIP,
+            docs_prefix="../../",
+            root_prefix="../../../",
+        )
+        out_dir = DOCS_OUT_DIR / "machine-configuration" / c["slug"]
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / "index.html"
+        out_path.write_text(rendered, encoding="utf-8")
+        print(f"[build] Rendered docs/machine-configuration/{c['slug']}/index.html")
+
+
+def controller_subpage_paths():
+    return [
+        DOCS_OUT_DIR / "machine-configuration" / c["slug"] / "index.html"
+        for c in controllers_data.CONTROLLERS
+    ]
+
 
 def verify_links_and_assets():
-    html_files = [
-        ROOT_DIR / "index.html",
-        ROOT_DIR / "build-guide.html",
-        DOCS_OUT_DIR / "index.html",
-    ] + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
+    html_files = (
+        [
+            ROOT_DIR / "index.html",
+            ROOT_DIR / "build-guide.html",
+            DOCS_OUT_DIR / "index.html",
+        ]
+        + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
+        + controller_subpage_paths()
+    )
 
     missing = []
     checked = 0
@@ -727,13 +780,18 @@ def verify_links_and_assets():
 
 
 def verify_zero_em_dashes():
-    html_files = [
-        ROOT_DIR / "index.html",
-        ROOT_DIR / "build-guide.html",
-        ROOT_DIR / "changelog.html",
-        ROOT_DIR / "hardware-thc.html",
-        DOCS_OUT_DIR / "index.html",
-    ] + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
+    html_files = (
+        [
+            ROOT_DIR / "index.html",
+            ROOT_DIR / "build-guide.html",
+            ROOT_DIR / "changelog.html",
+            ROOT_DIR / "hardware-thc.html",
+            DOCS_OUT_DIR / "index.html",
+            DOCS_OUT_DIR / "docs.css",
+        ]
+        + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
+        + controller_subpage_paths()
+    )
 
     # Copywriting Rule #5: strictly ban em-dashes
     em_dash_pattern = re.compile(rf"([{chr(8212)}]|&{'md' + 'ash'};|&{'#82' + '12'};|&{'#x20' + '14'};)")

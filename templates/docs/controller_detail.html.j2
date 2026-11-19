@@ -1,0 +1,315 @@
+{% extends "base.html.j2" %}
+
+{% block main %}
+    <!-- ======================================================================
+         CONTROLLER SETUP HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <a href="{{ docs_prefix }}index.html">Documentation</a>
+          <span class="sep">/</span>
+          <a href="{{ docs_prefix }}machine-configuration.html#step-6">01. Machine Configuration</a>
+          <span class="sep">/</span>
+          <span class="current">{{ controller.short_name }}</span>
+        </div>
+
+        <h1 class="docs-title">{{ controller.hero_title_html | safe }}</h1>
+        <p class="docs-subtitle">
+          {{ controller.subtitle_html | safe }}
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>CONTROLLER GUIDE</strong> &bull; {{ controller.badge_label }}</span>
+          {% for pill in controller.meta_pills %}
+          <span class="docs-meta-pill{% if pill.style %} {{ pill.style }}{% endif %}">{{ pill.html | safe }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6-PHASE CUT CYCLE VISUALIZATION + EXACT STAGE G-CODE BREAKDOWN
+         ====================================================================== -->
+    <section class="container cut-cycle-section" id="cut-cycle">
+      <div class="cut-cycle-header">
+        <div>
+          <div class="cut-cycle-kicker">6-Phase Plasma Cut Cycle &bull; {{ controller.name }}</div>
+          <h2 class="cut-cycle-heading">Torch Motion, Z-Height &amp; Exact Stage G-Code</h2>
+        </div>
+        <div class="cut-cycle-legend">
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #22d3ee;"></span> G0 Rapid / Motion</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #fbbf24;"></span> Probe / Dwell</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #fb7185;"></span> Plasma Arc ON</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #34d399;"></span> THC Active / Cut</span>
+        </div>
+      </div>
+
+      <div class="cut-cycle-scroll">
+        <div class="cut-cycle-board">
+          <!-- Shared Dark-Themed 6-Phase Torch Motion SVG -->
+          <div class="cut-cycle-svg-wrap">
+            <svg class="cut-cycle-svg" viewBox="0 0 1200 246" width="1200" height="246" role="img" aria-label="6-phase plasma cut cycle timeline showing torch Z-height, arc state, and THC state across Rapid and Rotate, IHS Touch-Off, Pierce and Dwell, Cut and THC Control, Torch Off and Unlock, and Safe Retract and Unwind">
+              <defs>
+                <linearGradient id="plasmaArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fbbf24" />
+                  <stop offset="50%" stop-color="#fb7185" />
+                  <stop offset="100%" stop-color="#22d3ee" />
+                </linearGradient>
+                <linearGradient id="cutPathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fb7185" />
+                  <stop offset="40%" stop-color="#34d399" />
+                  <stop offset="100%" stop-color="#34d399" />
+                </linearGradient>
+                <linearGradient id="plateSteelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#334155" />
+                  <stop offset="100%" stop-color="#1e293b" />
+                </linearGradient>
+                <radialGradient id="pierceGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.85" />
+                  <stop offset="55%" stop-color="#fb7185" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#fb7185" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Background Phase Columns -->
+              <rect x="0" y="0" width="200" height="246" fill="rgba(6, 182, 212, 0.03)" />
+              <rect x="200" y="0" width="200" height="246" fill="rgba(245, 158, 11, 0.03)" />
+              <rect x="400" y="0" width="200" height="246" fill="rgba(251, 113, 133, 0.04)" />
+              <rect x="600" y="0" width="200" height="246" fill="rgba(16, 185, 129, 0.04)" />
+              <rect x="800" y="0" width="200" height="246" fill="rgba(245, 158, 11, 0.025)" />
+              <rect x="1000" y="0" width="200" height="246" fill="rgba(148, 163, 184, 0.03)" />
+
+              <!-- Top Phase Header Bar -->
+              <rect x="0" y="0" width="1200" height="30" fill="#0d121c" />
+              <line x1="0" y1="30" x2="1200" y2="30" stroke="#232833" stroke-width="1" />
+
+              <!-- Vertical Phase Dividers -->
+              <line x1="200" y1="0" x2="200" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="400" y1="0" x2="400" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="600" y1="0" x2="600" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="800" y1="0" x2="800" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="1000" y1="0" x2="1000" y2="246" stroke="#1e2636" stroke-width="1" />
+
+              <!-- Phase Titles -->
+              <text x="14" y="19" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">01 RAPID &amp; ROTATE</text>
+              <text x="214" y="19" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">02 IHS TOUCH-OFF</text>
+              <text x="414" y="19" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">03 PIERCE &amp; DWELL</text>
+              <text x="614" y="19" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">04 CUT &amp; THC</text>
+              <text x="814" y="19" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">05 TORCH OFF</text>
+              <text x="1014" y="19" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">06 RETRACT &amp; UNWIND</text>
+
+              <!-- Chevrons at dividers -->
+              <path d="M193 11 L198 15 L193 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M393 11 L398 15 L393 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M593 11 L598 15 L593 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M793 11 L798 15 L793 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M993 11 L998 15 L993 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Horizontal Z Reference Lines -->
+              <line x1="0" y1="54" x2="1200" y2="54" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4" />
+              <text x="8" y="49" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">SAFE Z</text>
+
+              <line x1="0" y1="108" x2="1200" y2="108" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 4" />
+              <text x="8" y="103" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">PIERCE H</text>
+
+              <line x1="0" y1="136" x2="1200" y2="136" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 4" />
+              <text x="8" y="131" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">CUT H</text>
+
+              <!-- Steel Workpiece Surface (Z = 0) -->
+              <rect x="0" y="164" width="1200" height="12" fill="url(#plateSteelGrad)" />
+              <line x1="0" y1="164" x2="1200" y2="164" stroke="#475569" stroke-width="1.2" />
+              <text x="8" y="173" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600">STOCK SURFACE Z = 0</text>
+
+              <!-- PHASE 1: Rapid & Rotate at Safe Z -->
+              <path d="M 18 54 L 185 54" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="7 4" />
+              <circle cx="18" cy="54" r="3.5" fill="#22d3ee" />
+              <polygon points="185,54 176,49 176,59" fill="#22d3ee" />
+              <!-- Rotary A Spin Badge -->
+              <circle cx="102" cy="82" r="13" fill="rgba(6, 182, 212, 0.1)" stroke="#22d3ee" stroke-width="1.3" stroke-dasharray="4 2" />
+              <path d="M 111 73 L 114 79 L 107 79" fill="none" stroke="#22d3ee" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+              <text x="102" y="85" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">A&deg;</text>
+              <text x="102" y="106" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">G0 XY + A</text>
+
+              <!-- PHASE 2: IHS Touch-Off Down to Z=0 & Backoff -->
+              <path d="M 185 54 L 222 54 L 266 163 L 296 151 L 348 151 L 388 108" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linejoin="round" />
+              <!-- Contact spark ring at Z=0 -->
+              <circle cx="266" cy="163" r="6" fill="none" stroke="#fbbf24" stroke-width="1.6" />
+              <circle cx="266" cy="163" r="2.5" fill="#fbbf24" />
+              <text x="266" y="187" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8">TOUCH Z0</text>
+              <text x="332" y="88" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">Offset + Lift</text>
+
+              <!-- PHASE 3: Pierce & Dwell -> Plunge / 3D Ramp to Cut H -->
+              <circle cx="445" cy="108" r="26" fill="url(#pierceGlow)" />
+              <path d="M 388 108 L 440 108 L 535 108 L 592 136" fill="none" stroke="#fb7185" stroke-width="2.75" stroke-linejoin="round" />
+              <!-- Plasma pierce jet cone -->
+              <polygon points="445,112 436,164 454,164" fill="rgba(251, 113, 133, 0.35)" />
+              <line x1="445" y1="112" x2="445" y2="164" stroke="#fbbf24" stroke-width="2" />
+              <!-- Torch nozzle icon at Pierce H -->
+              <polygon points="438,94 452,94 449,108 441,108" fill="#cbd5e1" />
+              <text x="488" y="96" text-anchor="middle" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">M3 + DWELL</text>
+              <text x="566" y="152" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Plunge / Ramp</text>
+
+              <!-- PHASE 4: Cut & THC Control -->
+              <path d="M 592 136 C 635 136, 660 130, 700 136 C 740 142, 765 136, 808 136" fill="none" stroke="#34d399" stroke-width="2.8" />
+              <!-- Plasma cutting arc curtain -->
+              <polygon points="620,137 788,137 788,164 620,164" fill="rgba(16, 185, 129, 0.14)" />
+              <line x1="700" y1="137" x2="700" y2="164" stroke="#22d3ee" stroke-width="2.2" />
+              <polygon points="693,122 707,122 704,136 696,136" fill="#e2e8f0" />
+              <text x="700" y="96" text-anchor="middle" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">ARC + THC ACTIVE</text>
+
+              <!-- PHASE 5: Torch Off & Lock -->
+              <path d="M 808 136 L 945 136" fill="none" stroke="#fbbf24" stroke-width="2.5" />
+              <circle cx="845" cy="136" r="5" fill="#0b0f17" stroke="#fbbf24" stroke-width="2" />
+              <line x1="839" y1="130" x2="851" y2="142" stroke="#fb7185" stroke-width="2" />
+              <line x1="851" y1="130" x2="839" y2="142" stroke="#fb7185" stroke-width="2" />
+              <text x="895" y="122" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">LOCK THC + ARC OFF</text>
+
+              <!-- PHASE 6: Safe Retract & Unwind -->
+              <path d="M 945 136 L 1030 54 L 1182 54" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="6 3" />
+              <polygon points="1182,54 1173,49 1173,59" fill="#94a3b8" />
+              <circle cx="1108" cy="82" r="13" fill="rgba(148, 163, 184, 0.08)" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="4 2" />
+              <text x="1108" y="85" text-anchor="middle" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">A&rarr;0</text>
+              <text x="1108" y="106" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">SAFE Z + UNWIND</text>
+
+              <!-- Bottom Status Strips: ARC & THC -->
+              <rect x="0" y="192" width="1200" height="54" fill="#090d14" />
+              <line x1="0" y1="192" x2="1200" y2="192" stroke="#1e2636" stroke-width="1" />
+
+              <!-- ARC STATE BAR -->
+              <text x="10" y="211" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">ARC:</text>
+              <rect x="52" y="201" width="338" height="14" rx="3" fill="rgba(148, 163, 184, 0.1)" stroke="#232833" />
+              <text x="221" y="211" text-anchor="middle" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8">ARC OFF (POSITIONING / PROBING)</text>
+
+              <rect x="404" y="201" width="192" height="14" rx="3" fill="rgba(251, 113, 133, 0.18)" stroke="rgba(251, 113, 133, 0.45)" />
+              <text x="500" y="211" text-anchor="middle" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">PILOT / PIERCE IGNITION</text>
+
+              <rect x="604" y="201" width="192" height="14" rx="3" fill="rgba(16, 185, 129, 0.18)" stroke="rgba(16, 185, 129, 0.45)" />
+              <text x="700" y="211" text-anchor="middle" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">CUTTING ARC LIVE</text>
+
+              <rect x="804" y="201" width="386" height="14" rx="3" fill="rgba(148, 163, 184, 0.1)" stroke="#232833" />
+              <text x="997" y="211" text-anchor="middle" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8">ARC EXTINGUISHED / SAFE RETRACT</text>
+
+              <!-- THC STATE BAR -->
+              <text x="10" y="233" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">THC:</text>
+              <rect x="52" y="223" width="544" height="14" rx="3" fill="rgba(245, 158, 11, 0.12)" stroke="rgba(245, 158, 11, 0.32)" />
+              <text x="324" y="233" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="600">THC LOCKED (NO DIVE DURING PROBE / PIERCE / RAMP)</text>
+
+              <rect x="604" y="223" width="192" height="14" rx="3" fill="rgba(6, 182, 212, 0.15)" stroke="rgba(6, 182, 212, 0.4)" />
+              <text x="700" y="233" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">UNLOCKED / CORNER LOCK</text>
+
+              <rect x="804" y="223" width="386" height="14" rx="3" fill="rgba(245, 158, 11, 0.1)" stroke="rgba(245, 158, 11, 0.25)" />
+              <text x="997" y="233" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">LOCKED BEFORE ARC OFF / RESET</text>
+            </svg>
+          </div>
+
+          <!-- 6 Exact Stage Columns Aligned Directly Below the SVG -->
+          <div class="cut-cycle-stages">
+            {% for stage in controller.stages %}
+            <div class="cut-stage-col" data-phase="{{ stage.num }}">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">0{{ stage.num }}</span>
+                <span class="cut-stage-title">{{ stage.title }}</span>
+              </div>
+              <div class="cut-stage-codes">
+                {% for item in stage.codes %}
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">{{ item.code }}</code>
+                  <span class="cut-stage-code-desc">{{ item.desc }}</span>
+                </div>
+                {% endfor %}
+              </div>
+              <p class="cut-stage-note">{{ stage.note | safe }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="cut-cycle-scroll-hint">Scroll horizontally to inspect all 6 cut-cycle columns side by side.</div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN CONTROLLER REFERENCE & CHECKLIST SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Controller Navigation">
+        <div class="docs-sidebar-group">
+          <a href="{{ docs_prefix }}machine-configuration.html#step-6" class="controller-sidebar-back">
+            <span>&larr;</span>
+            <span>All 14 Controllers Overview</span>
+          </a>
+          <div class="docs-sidebar-heading">Controller Guides</div>
+          <ul class="controller-sidebar-list">
+            {% for c in all_controllers %}
+            <li>
+              <a href="../{{ c.slug }}/index.html"{% if c.slug == controller.slug %} class="active"{% endif %}>
+                <span>{{ c.short_name }}</span>
+                <span class="controller-sidebar-ext">{{ c.ext }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#cut-cycle"><span class="docs-toc-step">00</span> 6-Phase Cut Cycle</a></li>
+            {% for item in controller.toc %}
+            <li><a href="#{{ item.id }}"><span class="docs-toc-step">{{ item.badge }}</span> {{ item.label | safe }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Controller Documentation Column -->
+      <div class="docs-main">
+        {% for sec in controller.sections %}
+        <article class="doc-step-card" id="{{ sec.id }}">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">{{ sec.badge }}</span>
+            <h2 class="doc-step-title">{{ sec.title | safe }}</h2>
+          </div>
+
+          <div class="doc-step-body">
+            {{ sec.body_html | safe }}
+          </div>
+        </article>
+        {% endfor %}
+
+        <!-- Prev / Next Controller Pagination -->
+        <nav class="docs-pagination" aria-label="Controller Guide Pagination">
+          {% if prev_controller %}
+          <a href="../{{ prev_controller.slug }}/index.html" class="docs-page-link prev">
+            <span class="docs-page-dir">&larr; Previous Controller</span>
+            <span class="docs-page-title">{{ prev_controller.short_name }}</span>
+            <span class="docs-page-desc">{{ prev_controller.card_summary }}</span>
+          </a>
+          {% else %}
+          <a href="{{ docs_prefix }}machine-configuration.html#step-6" class="docs-page-link prev">
+            <span class="docs-page-dir">&larr; Back to Tutorial 01</span>
+            <span class="docs-page-title">Machine Configuration</span>
+            <span class="docs-page-desc">Overview table &amp; all 14 controller cards</span>
+          </a>
+          {% endif %}
+          {% if next_controller %}
+          <a href="../{{ next_controller.slug }}/index.html" class="docs-page-link next">
+            <span class="docs-page-dir">Next Controller &rarr;</span>
+            <span class="docs-page-title">{{ next_controller.short_name }}</span>
+            <span class="docs-page-desc">{{ next_controller.card_summary }}</span>
+          </a>
+          {% else %}
+          <a href="{{ docs_prefix }}machine-configuration.html#import-warnings-faq" class="docs-page-link next">
+            <span class="docs-page-dir">Next Section &rarr;</span>
+            <span class="docs-page-title">Step 07: XML Import Warnings FAQ</span>
+            <span class="docs-page-desc">Mach3, FlashCut &amp; SimCNC XML troubleshooting</span>
+          </a>
+          {% endif %}
+        </nav>
+      </div>
+    </section>
+{% endblock %}

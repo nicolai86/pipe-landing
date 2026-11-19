@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ROTARYCAM / PIPE CAM — DOCUMENTATION & TUTORIALS STYLESHEET
+   ROTARYCAM / PIPE CAM: DOCUMENTATION & TUTORIALS STYLESHEET
    Self-contained design system matching index.html & build-guide.html
    ========================================================================== */
 
@@ -1189,4 +1189,458 @@ a {
   .doc-step-title {
     font-size: 1.2rem;
   }
+}
+
+/* ---------- Technical Reference Tables ---------- */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: #090c12;
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.doc-table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--amber-400);
+  background: rgba(20, 25, 35, 0.96);
+  padding: 0.78rem 0.9rem;
+  border-bottom: 1px solid var(--border-light);
+  white-space: nowrap;
+}
+
+.doc-table tbody td {
+  padding: 0.72rem 0.9rem;
+  border-bottom: 1px solid rgba(35, 40, 51, 0.75);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+
+.doc-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.doc-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.doc-table tbody td strong {
+  color: var(--text-primary);
+}
+
+.doc-table-link {
+  color: var(--cyan-400);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.doc-table-link:hover {
+  color: var(--amber-400);
+  text-decoration: underline;
+}
+
+/* ---------- Step 6 Controller Card Grid ---------- */
+.controller-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+  gap: 1.1rem;
+  margin-top: 1.25rem;
+}
+
+.controller-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.15rem 1.2rem;
+  background: linear-gradient(155deg, rgba(18, 22, 30, 0.96), rgba(11, 14, 20, 0.98));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.controller-card:hover {
+  border-color: rgba(245, 158, 11, 0.55);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px -12px rgba(0, 0, 0, 0.75), 0 0 18px rgba(245, 158, 11, 0.08);
+}
+
+.controller-card.scribing-card {
+  border-color: rgba(6, 182, 212, 0.32);
+  background: linear-gradient(155deg, rgba(14, 24, 34, 0.95), rgba(10, 14, 20, 0.98));
+}
+
+.controller-card.scribing-card:hover {
+  border-color: rgba(34, 211, 238, 0.65);
+  box-shadow: 0 14px 32px -12px rgba(0, 0, 0, 0.75), 0 0 18px rgba(6, 182, 212, 0.12);
+}
+
+.controller-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.controller-card-ext {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.16rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--amber-400);
+}
+
+.controller-card-mode {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--cyan-400);
+  background: rgba(6, 182, 212, 0.09);
+  border: 1px solid rgba(6, 182, 212, 0.24);
+  padding: 0.16rem 0.45rem;
+  border-radius: 4px;
+}
+
+.controller-card-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.controller-card-summary {
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.controller-card-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(35, 40, 51, 0.8);
+}
+
+.controller-card-spec {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.14rem 0.4rem;
+  border-radius: 4px;
+}
+
+.controller-card-cta {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--amber-400);
+  margin-top: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.controller-card.scribing-card .controller-card-cta {
+  color: var(--cyan-400);
+}
+
+/* ---------- Per-Controller 6-Phase Cut Cycle Visualization ---------- */
+.cut-cycle-section {
+  padding-top: 2.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.cut-cycle-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.cut-cycle-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--cyan-400);
+  margin-bottom: 0.3rem;
+}
+
+.cut-cycle-heading {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.015em;
+}
+
+.cut-cycle-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.cut-cycle-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.cut-cycle-scroll {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  background: #070a0f;
+  box-shadow: var(--shadow-card);
+}
+
+.cut-cycle-board {
+  min-width: 1060px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cut-cycle-svg-wrap {
+  width: 100%;
+  border-bottom: 1px solid var(--border-light);
+  background: radial-gradient(circle at 50% 10%, rgba(6, 182, 212, 0.06), transparent 60%), #070a0f;
+}
+
+.cut-cycle-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cut-cycle-stages {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  width: 100%;
+  background: #0b0f17;
+}
+
+.cut-stage-col {
+  padding: 0.95rem 0.8rem 1.05rem;
+  border-right: 1px solid rgba(35, 40, 51, 0.85);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.cut-stage-col:last-child {
+  border-right: none;
+}
+
+.cut-stage-col-head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(35, 40, 51, 0.75);
+}
+
+.cut-stage-num {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.14rem 0.38rem;
+  border-radius: 4px;
+  background: rgba(6, 182, 212, 0.14);
+  color: var(--cyan-400);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  flex-shrink: 0;
+}
+
+.cut-stage-col[data-phase="2"] .cut-stage-num {
+  background: rgba(245, 158, 11, 0.14);
+  color: var(--amber-400);
+  border-color: rgba(245, 158, 11, 0.32);
+}
+
+.cut-stage-col[data-phase="3"] .cut-stage-num {
+  background: rgba(251, 113, 133, 0.14);
+  color: var(--rose-400);
+  border-color: rgba(251, 113, 133, 0.32);
+}
+
+.cut-stage-col[data-phase="4"] .cut-stage-num {
+  background: rgba(16, 185, 129, 0.14);
+  color: var(--emerald-400);
+  border-color: rgba(16, 185, 129, 0.32);
+}
+
+.cut-stage-col[data-phase="5"] .cut-stage-num {
+  background: rgba(245, 158, 11, 0.14);
+  color: var(--amber-400);
+  border-color: rgba(245, 158, 11, 0.32);
+}
+
+.cut-stage-col[data-phase="6"] .cut-stage-num {
+  background: rgba(148, 163, 184, 0.14);
+  color: #cbd5e1;
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.cut-stage-title {
+  font-family: var(--font-display);
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.cut-stage-codes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.38rem;
+}
+
+.cut-stage-code-item {
+  background: rgba(7, 10, 15, 0.92);
+  border: 1px solid rgba(46, 54, 70, 0.72);
+  border-radius: 5px;
+  padding: 0.38rem 0.48rem;
+}
+
+.cut-stage-code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  font-weight: 600;
+  color: var(--amber-400);
+  word-break: break-word;
+  line-height: 1.38;
+}
+
+.cut-stage-code-desc {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin-top: 0.14rem;
+}
+
+.cut-stage-note {
+  margin-top: auto;
+  padding-top: 0.4rem;
+  font-size: 0.74rem;
+  line-height: 1.42;
+  color: var(--text-secondary);
+}
+
+.cut-cycle-scroll-hint {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1120px) {
+  .cut-cycle-scroll-hint {
+    display: block;
+  }
+}
+
+/* ---------- Controller Subpage Sidebar Switcher ---------- */
+.controller-sidebar-back {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.58rem 0.75rem;
+  margin-bottom: 0.7rem;
+  border-radius: 6px;
+  background: rgba(6, 182, 212, 0.08);
+  border: 1px solid rgba(6, 182, 212, 0.28);
+  color: var(--cyan-400);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.controller-sidebar-back:hover {
+  background: rgba(6, 182, 212, 0.16);
+  color: #fff;
+}
+
+.controller-sidebar-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.controller-sidebar-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.42rem 0.6rem;
+  border-radius: 5px;
+  font-size: 0.81rem;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.controller-sidebar-list a:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.controller-sidebar-list a.active {
+  color: var(--amber-400);
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(245, 158, 11, 0.32);
+  font-weight: 600;
+}
+
+.controller-sidebar-ext {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.controller-sidebar-list a.active .controller-sidebar-ext {
+  color: var(--amber-400);
 }
