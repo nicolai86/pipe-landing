@@ -543,10 +543,10 @@ G00 Z25.000 ; Retract</code></pre>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
                     <td style="padding: 0.65rem 0.85rem;"><strong>Centroid Acorn CNC12</strong></td>
                     <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
-                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93.1</code></td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
-                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
-                    <td style="padding: 0.65rem 0.85rem;">Controller macro</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (<code class="mono">G93.1</code> + <code class="mono">G94</code> before <code class="mono">M5</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;">2D: <code class="mono">M61/M62</code> / 3D &amp; 4D: <code class="mono">M150</code> (<code class="mono">M115</code>)</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
                     <td style="padding: 0.65rem 0.85rem;"><strong>grblHAL (32-bit Plasma)</strong></td>

@@ -788,7 +788,7 @@
               <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span>: Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
               <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span>: Native <code class="mono">T112 M6</code> plasma mode, 3-mode THC selector (<strong>MASSO DTHC</strong> <code class="mono">G200</code> Auto-IHS, <strong>External Up/Down THC</strong> Bare <code class="mono">G200</code> + <code class="mono">G38.2</code>, or <strong>Fixed Height / No THC</strong>), <code class="mono">O0/O1</code> probing, <code class="mono">S0/S1</code> slag-stop, explicit <code class="mono">M667 F&lt;thcFeed&gt;</code> / <code class="mono">M666</code> anti-dive, Bare <code class="mono">G200</code> / Hybrid <code class="mono">C=P</code> 3D ramps, Template C 4D HSS, <code class="mono">G53 G0 Z0</code> / <code class="mono">G92.1</code> hygiene, <code class="mono">G91</code>/<code class="mono">G28 A0</code>/<code class="mono">G90</code> unwinds, <code class="mono">M30 L&lt;count&gt;</code> bar-advance looping, and <code class="mono">G93</code> rotary motion.</li>
               <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span>: Hardened for Mach3 <code class="mono">R3.043.062</code> with one-click <code class="mono">.xml</code> setup import, a 4-topology THC selector (<code class="mono">M11Px/M10Px</code> pins 1-6, CandCNC <code class="mono">DTHC DCC</code> <code class="mono">S900/S10/S20</code>, ESS Proma 150 / TMC3in1 <code class="mono">M102/M101</code>, and ESS Proma Compact THC SD <code class="mono">M7/M9</code>), <code class="mono">G31</code> ESS probe vs. <code class="mono">G28.1</code> floating-head, <code class="mono">G54</code>-baked scribe offsets (zero <code class="mono">G52/G92</code> conflict), <code class="mono">%</code> framing with <code class="mono">M30\n%\n</code>, immediate <code class="mono">G94</code> restore after <code class="mono">M5</code>, and <code class="mono">G93</code> inverse-time rotary feeds.</li>
-              <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span>: Automated controller-managed cycle macros including <code class="mono">G64 ON</code> plasma smoothing, <code class="mono">M65</code> material profile loading, <code class="mono">M61</code> touch-off + pierce cycle, <code class="mono">M62</code> torch-off + retract cycle, <code class="mono">M36</code>/<code class="mono">M35</code> THC lock/unlock, and native <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span>: Splits cleanly into two regimes: <strong>2D Flat Plate</strong> (<code class="mono">G64 ON</code>, <code class="mono">M65</code> Material Profile, <code class="mono">M61/M62</code> macros, zero Z words, 15% Voltage Anti-Dive) and <strong>3D Ramps &amp; 4D Rotary</strong> (Centerline <code class="mono">Z=0</code>, <code class="mono">G54</code>, <code class="mono">M36</code> ATHC Hold before <code class="mono">M3</code>, <code class="mono">M150</code> <code class="mono">mfunc150.mac</code> <code class="mono">M115</code> + <code class="mono">G92 Z&lt;Zm + offset&gt;</code>, <code class="mono">G93.1</code> smoothed inverse time, <code class="mono">G94</code> restore before <code class="mono">M5</code>, standalone <code class="mono">G4 P</code>, exact 360&deg; <code class="mono">G92 A0</code>, and semicolon <code class="mono">;</code> comments with zero parentheses).</li>
               <li><span class="ui-chip">grblHAL (32-bit Plasma + Rotary) (.nc)</span>: Built for 32-bit grblHAL controllers ($376 rotary + Plasma THC plugin) with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> arc control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, motion-synchronized <code class="mono">M63 P0</code> (THC lock) / <code class="mono">M62 P0</code> (THC unlock) anti-dive protection, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">CNCdrive UCCNC (.nc)</span>: Hardened UCCNC post for <code class="mono">UC100</code> (<code class="mono">0.2 s / 200 ms</code> dwell floor) and <code class="mono">UC300ETH / UC400ETH / AXBB-E</code> with Integrated <code class="mono">G31</code> + <code class="mono">G92 Z&lt;Zm - SwitchOffset&gt;</code>, <code class="mono">Neuron Lite</code> (XY-only), or legacy <code class="mono">M31</code> (flat/concentric round), ArcOK-safe <code class="mono">M205-M212</code> THC handshake, <code class="mono">Checkbox 212</code> seconds/ms <code class="mono">G04 P</code> control, optional <code class="mono">G20/G21</code> suppression, and <code class="mono">G93</code> rotary motion.</li>
               <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span>: Engineered for the FlashCut Fabrication Head with one-click <code class="mono">.xml</code> setup import, Mode 2 Explicit Dynamic-Z (<code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code>, no <code class="mono">G601</code>/<code class="mono">G600</code>) for 3D Ramp Lead-Ins and square/angle tubes, <code class="mono">G04 X&lt;sec&gt;</code> delays, <code class="mono">G602</code>/<code class="mono">G603</code> THC suspend/resume, and <code class="mono">G93</code> rotary feeds.</li>
@@ -1013,11 +1013,11 @@
                   <tr>
                     <td><strong>Centroid Acorn CNC12</strong></td>
                     <td><code class="mono">.nc</code></td>
-                    <td>Managed by <code class="mono">M61</code> macro cycle</td>
-                    <td><code class="mono">M61</code> (On) / <code class="mono">M62</code> (Off + Retract)</td>
-                    <td><code class="mono">M36</code> (Lock) / <code class="mono">M35</code> (Unlock)</td>
-                    <td><code class="mono">G93</code> Inverse-Time</td>
-                    <td><code class="mono">G64 ON</code> + <code class="mono">M65</code> Profile Manager</td>
+                    <td>2D: <code class="mono">M61</code> (zero Z words) / 3D &amp; 4D: <code class="mono">M150</code> (<code class="mono">M115</code> + <code class="mono">G92 Z</code>)</td>
+                    <td>2D: <code class="mono">M61</code> / <code class="mono">M62</code> &bull; 3D/4D: <code class="mono">M3</code> / <code class="mono">M5</code></td>
+                    <td>2D: 15% Voltage Anti-Dive / 3D &amp; 4D: <code class="mono">M36</code> Hold before <code class="mono">M3</code></td>
+                    <td><code class="mono">G94</code> (2D) / <code class="mono">G93.1</code> Smoothed + <code class="mono">G94</code> before <code class="mono">M5</code></td>
+                    <td><code class="mono">G64 ON</code> + <code class="mono">M65</code> + <code class="mono">;</code> comments (0 parens) + <code class="mono">P220=1</code>/<code class="mono">P225=1</code></td>
                   </tr>
                   <tr>
                     <td><strong>CSLab SimCNC (3.5 / 3.6+)</strong></td>
@@ -1238,29 +1238,45 @@ M3</code></pre>
 
             <!-- Controller 6: Centroid Acorn -->
             <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • Centroid Acorn &amp; Acorn Six CNC12 v5.4+ Plasma</div>
+              <div class="doc-section-kicker">Controller Setup • Centroid Acorn &amp; AcornSix CNC12 v5.4+ Plasma</div>
               <h3 class="doc-section-heading">6. Centroid Acorn CNC12 Setup</h3>
             </div>
             <p>
-              Centroid Acorn and Acorn Six running CNC12 v5.4+ Plasma utilize high-speed optical encoder feedback and dedicated canned macros for industrial reliability. RotaryCAM generates native <code class="mono">.nc</code> programs that drop straight into CNC12:
+              Centroid Acorn and AcornSix boards running CNC12 v5.4+ Plasma behave completely differently on flat plate than on 3D ramps or 4-axis tube. RotaryCAM switches automatically between two native <code class="mono">.nc</code> regimes so neither CNC12's ATHC nor your rotary chuck fights programmed Z moves:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Plasma Smoothing &amp; Material Profiles (<code class="mono">G64 ON</code> &amp; <code class="mono">M65</code>):</strong> Centroid CNC12 uses the syntax <code class="mono">G64 ON</code> for trajectory smoothing. In the preamble, RotaryCAM calls <code class="mono">M65</code> to load the operator's active material profile from CNC12's Profile Manager, synchronizing pierce heights and cutting voltages.
-              </li>
-              <li>
-                <strong>Controller-Managed Canned Cycles (<code class="mono">M61</code> &amp; <code class="mono">M62</code>):</strong>
-                Instead of scattered probing and dwell lines, Centroid post-processors call Centroid's compiled macros:
+                <strong>Regime 1: 2D Flat Plate (<code class="mono">G64 ON</code>, <code class="mono">M65</code>, <code class="mono">M61</code> / <code class="mono">M62</code>, Zero Z Words):</strong>
+                On flat sheet, CNC12 owns all Z height control inside its built-in plasma macros:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M61</code> (<code class="mono">mfunc61.mac</code>): Automatically performs ohmic/floating touch-off, retracts to pierce height, fires the torch, verifies Arc OK, waits the pierce delay, plunges to cut height, and enables THC (<code class="mono">M35</code>).</li>
-                  <li><code class="mono">M62</code> (<code class="mono">mfunc62.mac</code>): Automatically locks THC (<code class="mono">M36</code>), shuts off the plasma arc (<code class="mono">M5</code>), and retracts the Z-axis to Safe Height.</li>
+                  <li><strong>Smoothing &amp; Material Profile:</strong> Emits <code class="mono">G64 ON</code> trajectory smoothing and <code class="mono">M65</code> to load your active cut chart from CNC12's Profile Manager.</li>
+                  <li><strong>Zero Z Words &amp; Canned Cycles:</strong> Calls <code class="mono">M61</code> to touch off, retract to pierce height, fire the torch, wait for Arc OK, and drop to cut height, then <code class="mono">M62</code> to shut off and retract. RotaryCAM emits zero <code class="mono">Z</code> coordinates so nothing overrides CNC12's live height loop.</li>
+                  <li><strong>15% Voltage Anti-Dive:</strong> Uses CNC12's built-in 15% Voltage Anti-Dive protection automatically during corner slowdowns.</li>
                 </ul>
               </li>
               <li>
-                <strong>Rectangular Tube Dynamic Corner Safety:</strong> On 4-axis square and rectangular tubing where the Z-axis must climb and descend rotating tube corners, RotaryCAM calls <code class="mono">M61</code> to touch off and pierce, then immediately calls <code class="mono">M36</code> (Disable THC) so Centroid's fiber-optic THC does not fight programmed Z corner moves, followed by <code class="mono">M62</code> at the end of the cut.
+                <strong>Regime 2: 3D Ramps &amp; 4D Rotary (<code class="mono">Z=0</code> Centerline, <code class="mono">M150</code>, <code class="mono">M36</code>, <code class="mono">G93.1</code>):</strong>
+                On 3D ramp pierces, round pipe saddles, and square or rectangular HSS tubing where Z must track rotating corners, RotaryCAM takes direct Z control:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Centerline <code class="mono">Z=0</code> &amp; <code class="mono">G54</code>:</strong> References your tube centerline as <code class="mono">Z=0</code> under <code class="mono">G54</code> work offsets.</li>
+                  <li><strong><code class="mono">M150</code> Touch-Off (<code class="mono">mfunc150.mac</code>):</strong> Probes with <code class="mono">M115</code> and sets live tube height via <code class="mono">G92 Z&lt;Zm + offset&gt;</code> without letting <code class="mono">M61</code> hijack your Z datum.</li>
+                  <li><strong><code class="mono">M36</code> ATHC Hold Before <code class="mono">M3</code>:</strong> Locks Auto THC with <code class="mono">M36</code> before firing <code class="mono">M3</code> so voltage feedback never fights programmed Z ramp plunges or rotating HSS corners.</li>
+                  <li><strong><code class="mono">G93.1</code> Smoothed Inverse Time &amp; <code class="mono">G94</code> Restore:</strong> Cuts rotary moves in CNC12's <code class="mono">G93.1</code> smoothed inverse-time mode for constant surface speed without chuck stutter, then restores <code class="mono">G94</code> cleanly before <code class="mono">M5</code> torch-off.</li>
+                  <li><strong>Clean Syntax Guardrails:</strong> Outputs standalone <code class="mono">G4 P</code> pierce dwells, exact 360&deg; <code class="mono">G92 A0</code> rotary resets, and semicolon <code class="mono">;</code> comments only (zero parentheses anywhere in the file).</li>
+                </ul>
               </li>
               <li>
-                <strong>Integrated Marking &amp; Scribe Macros:</strong> Centroid CNC12 includes dedicated marking macros: <code class="mono">M64</code> performs an automated low-power plasma center-point dimple cycle, while <code class="mono">M39</code> (extend &amp; apply offset) and <code class="mono">M40</code> (retract) control pneumatic air scribes.
+                <strong>Shop-Floor CNC12 v5.4+ Setup Checklist (Verify Before Cutting):</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>License Tier (Plasma Pro / Ultimate):</strong> Free or base CNC12 licenses cap program size at <code class="mono">50 KB</code>. Rotary HSS and saddle files routinely exceed <code class="mono">50 KB</code>, so run <strong>CNC12 Plasma Pro</strong> or <strong>Ultimate</strong>.</li>
+                  <li><strong>Controller Hardware (AcornSix for Dual-Y + A):</strong> Standard 4-axis Acorn boards run out of motor channels on Dual-Y gantries with a rotary chuck. Use <strong>Centroid AcornSix</strong> whenever you pair Dual-Y gantry motors with an <code class="mono">A</code> rotary axis.</li>
+                  <li><strong><code class="mono">mfunc150.mac</code> Macro Setup:</strong> Install <code class="mono">mfunc150.mac</code> in your CNC12 macro directory for <code class="mono">M150</code> touch-offs. Keep it strictly on <code class="mono">M115</code> + <code class="mono">G92 Z</code> and avoid calling <code class="mono">M38</code> (Laser Interlock) or colliding with reserved <code class="mono">OUTPUT1-5</code> relays.</li>
+                  <li><strong>Onboard Fast Inputs (~5 ms vs. Ether1616 ~100 ms):</strong> Wire your ohmic/floating touch-off switch and Arc OK directly to <strong>Acorn onboard fast inputs</strong> (~<code class="mono">5 ms</code> latency) rather than an Ether1616 expansion board (~<code class="mono">100 ms</code> polling lag) so <code class="mono">M115</code> probes stop dead on contact.</li>
+                  <li><strong>CNC12 Parameters (<code class="mono">P220=1</code> &amp; <code class="mono">P225=1</code>):</strong> Set <code class="mono">P220=1</code> and <code class="mono">P225=1</code> in CNC12 Setup Parameters so smoothed <code class="mono">G93.1</code> inverse-time rotary motion and plasma macro timing execute properly.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Integrated Marking &amp; Scribe Macros (<code class="mono">M64</code> &amp; <code class="mono">M39</code> / <code class="mono">M40</code>):</strong> <code class="mono">M64</code> runs CNC12's automated low-power plasma center-point dimple cycle, while <code class="mono">M39</code> (extend and apply offset) and <code class="mono">M40</code> (retract) drive pneumatic air scribes.
               </li>
             </ul>
 
