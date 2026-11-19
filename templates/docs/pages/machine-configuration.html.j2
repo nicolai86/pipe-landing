@@ -229,7 +229,7 @@
               Switch to the <span class="ui-chip cyan">Controller &amp; Compensation</span> tab to select your CNC plasma controller post-processor. RotaryCAM includes drop-in, zero-hand-edit post-processors for all major industrial, prosumer, and DIY plasma controllers across both <strong>Maker ($199)</strong> and <strong>Pro Shop ($399)</strong> licenses:
             </p>
             <ul class="doc-bullet-list">
-              <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span>: Native LinuxCNC 2.9/2.10 plasma post with self-contained <code class="mono">(o=0, ...)</code> process parameter comments or <code class="mono">M190</code> material table lookup, <code class="mono">M3 $0 S1</code> plasma spindle codes, active-high <code class="mono">M62 P2</code> THC lock / <code class="mono">M63 P2</code> unlock on pin 2, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
+              <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span>: Hardened for LinuxCNC 2.9+ across three distinct regimes: <strong>2D Flat Sheet</strong> (zero Z/A words, <code class="mono">M3 $0 S1</code>, <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>, <code class="mono">G64 P0.1 Q0.02</code>, <code class="mono">M52 P1</code>, <code class="mono">#&lt;holes&gt;=0</code>), <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code>, <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code>, <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code>, <code class="mono">G64 P0.25 Q0.05</code>, <code class="mono">G94</code> on HSS flats to <code class="mono">G93</code> on <code class="mono">A</code> moves, <code class="mono">M190 P-1</code>), and <strong>Non-<code class="mono">M3</code> Scribes/Markers</strong> (<code class="mono">#&lt;keep-z-motion&gt;=1</code>). Supports mutually exclusive <code class="mono">(o=0, ...)</code> vs. <code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code>, kerf void protection (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>), and <code class="mono">M67 E3 Q60</code>/<code class="mono">Q0</code> small-hole scaling.</li>
               <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span>: Hardened for FireControl <code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code> on CrossFire, PRO, and XR tables. Emits <code class="mono">(v1.6-sc)</code> and <code class="mono">(PS&lt;feed&gt;)</code> sentinels, strict GRBL-safe <code class="mono">(...)</code> comments, separated <code class="mono">0.020"</code> IHS backlash vs. thin-sheet springback, <code class="mono">0.55 s</code> 3D ramp ignition dwell, inverter settle controls, <code class="mono">X-WRAP</code>/<code class="mono">Y-WRAP</code> round-tube wrapping, and optional fixed-calibration chuck <code class="mono">Travel / Rev</code> scaling.</li>
               <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span>: Dedicated post for Mach4 tables running the Warp9 Ethernet SmoothStepper with external or standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> touch-off probing with switch-offset compensation, standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span>: Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
@@ -404,13 +404,13 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td><strong>LinuxCNC QTPlasmaC</strong></td>
+                    <td><strong>LinuxCNC 2.9+ QTPlasmaC</strong></td>
                     <td><code class="mono">.ngc</code></td>
-                    <td>Managed by <code class="mono">plasmac</code> (<code class="mono">M3 $0 S1</code>)</td>
-                    <td><code class="mono">M3 $0 S1</code> / <code class="mono">M5 $0</code></td>
-                    <td><code class="mono">M62 P2</code> (Lock) / <code class="mono">M63 P2</code> (Unlock)</td>
-                    <td><code class="mono">G93</code> Inverse-Time</td>
-                    <td>Inline <code class="mono">(o=0, ...)</code> or <code class="mono">M190 P&lt;mat&gt;</code></td>
+                    <td>2D: <code class="mono">plasmac</code> (<code class="mono">M3 $0 S1</code>) / 3D &amp; Rotary: <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code></td>
+                    <td><code class="mono">M3 $0 S1</code> / <code class="mono">M5 $0</code> (+ <code class="mono">G94 G1 Z</code> on 3D/Rotary)</td>
+                    <td><code class="mono">M62 P1/P2</code> (Lock) / <code class="mono">M63 P1/P2</code> (Unlock)</td>
+                    <td><code class="mono">G94</code> (2D &amp; HSS flats) / <code class="mono">G93</code> (<code class="mono">A</code> moves)</td>
+                    <td>Inline <code class="mono">(o=0, ...)</code> or <code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code></td>
                   </tr>
                   <tr>
                     <td><strong>Langmuir FireControl (v1.6+ / v24.1.6)</strong></td>
@@ -481,38 +481,55 @@
 
             <!-- Controller 1: LinuxCNC QTPlasmaC -->
             <div class="doc-section-divider" style="margin-top: 2.5rem;">
-              <div class="doc-section-kicker">Controller Setup • LinuxCNC 2.9 / 2.10</div>
-              <h3 class="doc-section-heading">1. LinuxCNC QTPlasmaC Configuration</h3>
+              <div class="doc-section-kicker">Controller Setup • LinuxCNC 2.9+ QTPlasmaC</div>
+              <h3 class="doc-section-heading">1. LinuxCNC 2.9+ QTPlasmaC Configuration</h3>
             </div>
             <p>
-              LinuxCNC's native <code class="mono">QTPlasmaC</code> module handles initial height sensing and torch voltage regulation through real-time HAL external offsets. RotaryCAM produces native <code class="mono">.ngc</code> programs tuned for QTPlasmaC tables:
+              LinuxCNC 2.9+ <code class="mono">QTPlasmaC</code> switches how it handles Z motion, probing, and path blending depending on what you cut. RotaryCAM outputs <code class="mono">.ngc</code> files matched to three clean regimes so <code class="mono">plasmac</code> never fights your rotary chuck, 3D ramps, or drag scribe:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Self-Contained Cut Chart Magic Comments (<code class="mono">o=0</code>):</strong> RotaryCAM writes a self-contained magic comment at the top of your program:
-                <pre><code class="language-gcode">(o=0, na=45A Mild Steel 3mm, ph=3.8, pd=0.25, ch=1.5, fr=2800, kw=1.5, th=1, ca=45, cv=115, pe=0.5, gp=75, cm=1)</code></pre>
-                When QTPlasmaC loads this file, its internal G-code filter automatically populates pierce height (<code class="mono">ph</code>), pierce delay (<code class="mono">pd</code>), cut height (<code class="mono">ch</code>), cut feedrate (<code class="mono">fr</code>), arc voltage (<code class="mono">cv</code>), and gas pressure (<code class="mono">gp</code>) directly into the operator interface. You never have to manually re-type cutting numbers at the machine console.
+                <strong>Regime 1: 2D Flat Sheet (No <code class="mono">#&lt;tube_cut&gt;</code>, No <code class="mono">#&lt;keep-z-motion&gt;</code>, Zero Z/A Words):</strong>
+                On flat plate, <code class="mono">plasmac</code> owns all probing and torch height regulation internally inside <code class="mono">M3 $0 S1</code> and <code class="mono">M5 $0</code>. RotaryCAM emits zero <code class="mono">Z</code> or <code class="mono">A</code> words so nothing collides with QTPlasmaC's internal Z loop, sets <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code> to track your active cut chart, runs <code class="mono">G64 P0.1 Q0.02</code> tight corner blending with <code class="mono">M52 P1</code> adaptive feed enabled, and sets <code class="mono">#&lt;holes&gt;=0</code> so QTPlasmaC's G-code filter never double-scales CAM bolt holes.
               </li>
               <li>
-                <strong>Central Material Table Mode (<code class="mono">M190</code>):</strong> If your shop prefers managing consumables inside QTPlasmaC's built-in material library, enable the <em>Use Controller Material Table</em> toggle in Machine Settings. RotaryCAM will emit <code class="mono">M190 P&lt;materialNumber&gt;</code> followed by <code class="mono">M66 P3 L3 Q1</code> to sync with your database.
-              </li>
-              <li>
-                <strong>Active-High Inhibit THC Lock Polarity (<code class="mono">M62 P2</code> to Lock / <code class="mono">M63 P2</code> to Unlock):</strong>
-                In LinuxCNC QTPlasmaC, digital output pin 2 (<code class="mono">motion.digital-out-02</code>) connects to <code class="mono">plasmac.thc-disable</code>. This is an <strong>active-high disable</strong> pin: the exact opposite of traditional relays! Turning pin 2 ON freezes the torch, while turning it OFF allows THC height regulation. RotaryCAM automatically handles this inverted polarity:
+                <strong>Regime 2: Rotary &amp; 3D Ramps (<code class="mono">#&lt;tube_cut&gt;=1</code> Before Motion):</strong>
+                For 4-axis pipe saddles, square/rectangular HSS tubes, open beams, and 3D ramp lead-ins, RotaryCAM injects <code class="mono">#&lt;tube_cut&gt;=1</code> before any axis motion so QTPlasmaC hands explicit Z probing and motion back to your program:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M62 P2</code>: Synchronously <strong>locks/disables THC</strong> during corner deceleration, lead-ins, 60% small bolt holes, and before torch-off.</li>
-                  <li><code class="mono">M63 P2</code>: Synchronously <strong>unlocks/enables THC</strong> when the torch reaches steady cutting speed on straight runs.</li>
+                  <li><strong>Explicit Surface Probing &amp; Ramp Plunge:</strong> Probes top surface height with <code class="mono">G91</code> / <code class="mono">G38.2</code> / <code class="mono">G90</code> / <code class="mono">G1 Z#5063</code> / <code class="mono">G10 L20 P0</code>, fires <code class="mono">M3 $0 S1</code>, and executes a <code class="mono">G94 G1 Z</code> ramp or plunge to cut height.</li>
+                  <li><strong>Blending &amp; Rotary Lookahead (<code class="mono">G94</code> &rarr; <code class="mono">G93</code>):</strong> Emits <code class="mono">G64 P0.25 Q0.05</code> blending and uses rotary lookahead to cut flat HSS faces in linear <code class="mono">G94</code> mode, switching cleanly to <code class="mono">G93</code> inverse-time whenever the <code class="mono">A</code> axis rotates. Programs end with <code class="mono">M190 P-1</code> to restore your default material.</li>
+                  <li><strong>Per-Part Re-Probing in Unrolled Pack Runs:</strong> Every nested piece in an unrolled Pack Mode program re-probes its own surface height so minor stick bow or chuck runout never ruins cut height.</li>
                 </ul>
               </li>
               <li>
-                <strong>Small-Hole True Hole Velocity Scaling (<code class="mono">M67 E3 Q60</code>):</strong> On bolt holes <code class="mono">&le; 25.4 mm</code> (<code class="mono">1"</code>), RotaryCAM emits <code class="mono">M67 E3 Q60</code> to drop feedrate to 60% and lock the THC, restoring full speed with <code class="mono">M67 E3 Q0</code> when entering the scrap lead-out.
+                <strong>Regime 3: Non-<code class="mono">M3</code> Scribes &amp; Markers (<code class="mono">#&lt;keep-z-motion&gt;=1</code> Restricted):</strong>
+                <code class="mono">#&lt;keep-z-motion&gt;=1</code> is restricted strictly to non-<code class="mono">M3</code> scribes and markers (such as coaxial EasyScribe drag tools) where no plasma arc fires. Never use <code class="mono">#&lt;keep-z-motion&gt;=1</code> on <code class="mono">M3</code> plasma cuts; rotary and 3D plasma jobs always use <code class="mono">#&lt;tube_cut&gt;=1</code> instead. For multi-tool plasma and offset air-scribe jobs, RotaryCAM uses <code class="mono">M3 $0 S1</code> (plasma), <code class="mono">M3 $1 S1</code> / <code class="mono">M5 $1</code> (pneumatic air-scribe), and <code class="mono">M3 $2 S1</code> (center-point dimple).
               </li>
               <li>
-                <strong>Corner Collision Prevention on Square/Rectangular Tube (<code class="mono">#&lt;keep-z-motion&gt; = 1</code>):</strong>
-                By default, QTPlasmaC's G-code loader <em>strips out all Z coordinates</em> so <code class="mono">plasmac</code> can own torch height. On 4-axis square or rectangular tubing, stripping Z coordinates would cause your torch to slam directly into rotating tube corners! RotaryCAM detects when you are cutting non-round tubing or open structural profiles and automatically injects <code class="mono">#&lt;keep-z-motion&gt; = 1</code> in the header, forcing QTPlasmaC to preserve programmed Z corner climbing moves.
+                <strong>Inline Cut Chart (<code class="mono">o=0</code>) vs. Catalog Materials (<code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code>):</strong>
+                Choose one material source in Machine Settings; the two modes are strictly mutually exclusive:
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Inline Cut Chart (<code class="mono">(o=0, ...)</code>):</strong> Writes your active cut chart directly into the file header:
+                  <pre><code class="language-gcode">(o=0, na=45A Mild Steel 3mm, ph=3.8, pd=0.25, ch=1.5, fr=2800, kw=1.5, th=1, ca=45, cv=115, pe=0.5, gp=75, cm=1)</code></pre>
+                  QTPlasmaC parses this comment on load and populates pierce height (<code class="mono">ph</code>), pierce delay (<code class="mono">pd</code>), cut height (<code class="mono">ch</code>), feedrate (<code class="mono">fr</code>), arc voltage (<code class="mono">cv</code>), and gas pressure (<code class="mono">gp</code>) automatically.</li>
+                  <li><strong>Catalog Material Mode (<code class="mono">M190 P&lt;n&gt;</code>):</strong> Enable <em>Use Controller Material Table</em> to load saved QTPlasmaC materials via <code class="mono">M190 P&lt;n&gt;</code> followed by <code class="mono">M66 P3 L3 Q2</code> so motion waits until QTPlasmaC confirms the material swap. Never mix <code class="mono">(o=0, ...)</code> comments into a catalog <code class="mono">M190 P&lt;n&gt;</code> file.</li>
+                </ul>
               </li>
               <li>
-                <strong>Multi-Tool Spindle Codes:</strong> RotaryCAM outputs native QTPlasmaC multi-tool codes: <code class="mono">M3 $0 S1</code> for plasma cutting, <code class="mono">M3 $1 S1</code> for pneumatic air-scribe marking (with X/Y offsets managed in HAL), and <code class="mono">M3 $2 S1</code> followed by a micro-move for stationary center-point dimples.
+                <strong>Kerf Void Protection (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>) &amp; Small-Hole Scaling (<code class="mono">M67 E3 Q60</code> / <code class="mono">Q0</code>):</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Kerf Void &amp; Anti-Dive Lock (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>):</strong> When crossing previously cut kerf slots or decelerating around corners and lead-ins, RotaryCAM emits synchronous <code class="mono">M62 P1</code> (Ignore Arc OK ON) and <code class="mono">M62 P2</code> (THC Disable ON) so voltage spikes and brief arc gaps never trigger false arc-loss faults or torch dives. Once back on solid plate, <code class="mono">M63 P1</code> and <code class="mono">M63 P2</code> restore Arc OK checking and THC tracking cleanly.</li>
+                  <li><strong>True Hole Velocity Scaling (<code class="mono">M67 E3 Q60</code> / <code class="mono">Q0</code>):</strong> On enclosed bolt holes <code class="mono">&le; 25.4 mm</code> (<code class="mono">1"</code>), RotaryCAM emits <code class="mono">M67 E3 Q60</code> to drop cutting velocity to 60% alongside THC lock, then emits <code class="mono">M67 E3 Q0</code> to restore 100% feedrate when entering the scrap lead-out.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Shop-Floor LinuxCNC 2.9+ INI / HAL Checklist (Verify Before Cutting):</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong><code class="mono">[TRAJ] SPINDLES=3</code>:</strong> Enable 3 spindles in your <code class="mono">.ini</code> file so <code class="mono">M3 $0</code> (plasma), <code class="mono">M3 $1</code> (air scribe), and <code class="mono">M3 $2</code> (dimple/spot) work without invalid-spindle alarms.</li>
+                  <li><strong><code class="mono">[AXIS_Z] OFFSET_AV_RATIO=0.5</code> + Doubled Z Limits:</strong> Set <code class="mono">OFFSET_AV_RATIO = 0.5</code> and double your <code class="mono">[AXIS_Z]</code> <code class="mono">MAX_VELOCITY</code> (at least <code class="mono">&ge; 100 mm/s</code> so both G-code Z plunges and THC external offsets retain <code class="mono">&ge; 50 mm/s</code> physical speed) and <code class="mono">MAX_ACCELERATION</code>.</li>
+                  <li><strong><code class="mono">[RS274NGC] HAL_PIN_VARS=1</code>:</strong> Required so <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code> can read QTPlasmaC's live cut speed pin inside 2D flat-sheet programs.</li>
+                  <li><strong>Unrolled Pack Mode Clearance:</strong> Because unrolled rotary pack programs re-probe surface height on every part, make sure hold-downs, tailstock pins, and chuck jaws clear the probe path between parts.</li>
+                </ul>
               </li>
             </ul>
 

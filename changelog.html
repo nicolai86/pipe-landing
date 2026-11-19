@@ -1328,10 +1328,10 @@
               <span class="release-date">Upcoming</span>
               <span class="release-version-pill">v0.8.2 (Upcoming)</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; CNCdrive UCCNC &amp; Centroid Acorn CNC12 v5.4+ Hardening</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; LinuxCNC 2.9+ QTPlasmaC, UCCNC &amp; Centroid Acorn CNC12 v5.4+ Hardening</span>
           </div>
           <p class="release-summary">
-            One-click ArtSoft Mach3 (.xml) and CSLab SimCNC 3.6 (config.xml) profile import in the Machines modal, direct mailto:contact@rotarycam.app Machine Verification email drafts, CNCdrive UCCNC XYZA post-processor hardening (UC100, UC300ETH, UC400ETH, AXBB-E), and Centroid Acorn CNC12 v5.4+ Plasma two-regime hardening.
+            One-click ArtSoft Mach3 (.xml) and CSLab SimCNC 3.6 (config.xml) profile import in the Machines modal, direct mailto:contact@rotarycam.app Machine Verification email drafts, LinuxCNC 2.9+ QTPlasmaC three-regime hardening, CNCdrive UCCNC XYZA post-processor hardening (UC100, UC300ETH, UC400ETH, AXBB-E), and Centroid Acorn CNC12 v5.4+ Plasma two-regime hardening.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -1344,6 +1344,12 @@
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
                 <strong>Direct Machine Verification Email Draft (<code class="mono">mailto:contact@rotarycam.app</code>):</strong> Machine Verification submissions now launch a pre-filled <code class="mono">mailto:contact@rotarycam.app</code> email draft with <strong>Open Email Draft</strong> and <strong>Copy Report</strong> buttons so beta cut feedback reaches RotaryCAM directly.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>LinuxCNC 2.9+ QTPlasmaC (<code class="mono">.ngc</code>) Three-Regime Hardening:</strong> Separates <strong>2D Flat Sheet</strong> (no <code class="mono">#&lt;tube_cut&gt;</code>, no <code class="mono">#&lt;keep-z-motion&gt;</code>, zero Z/A words, <code class="mono">M3 $0 S1</code>, <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>, <code class="mono">G64 P0.1 Q0.02</code>, <code class="mono">M52 P1</code>, <code class="mono">#&lt;holes&gt;=0</code>), <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code> before motion, <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code> probing, <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code>, <code class="mono">G64 P0.25 Q0.05</code>, rotary lookahead <code class="mono">G94</code> on flat HSS faces to <code class="mono">G93</code> on <code class="mono">A</code> moves, <code class="mono">M190 P-1</code>, and per-part re-probing in unrolled pack runs), and <strong>Non-<code class="mono">M3</code> Scribes/Markers</strong> (<code class="mono">#&lt;keep-z-motion&gt;=1</code> restricted strictly to non-<code class="mono">M3</code> scribes and markers). Adds mutually exclusive catalog materials (<code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code>, never mixed with <code class="mono">(o=0, ...)</code>), kerf void protection (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>), small-hole scaling (<code class="mono">M67 E3 Q60</code> / <code class="mono">Q0</code>), and the shop-floor INI/HAL checklist (<code class="mono">[TRAJ] SPINDLES=3</code>, <code class="mono">[AXIS_Z] OFFSET_AV_RATIO=0.5</code> with doubled <code class="mono">MAX_VELOCITY &ge; 100 mm/s</code> &amp; <code class="mono">MAX_ACCELERATION</code>, and <code class="mono">[RS274NGC] HAL_PIN_VARS=1</code>).
               </div>
             </li>
             <li class="change-item">
