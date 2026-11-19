@@ -1328,10 +1328,10 @@
               <span class="release-date">Upcoming</span>
               <span class="release-version-pill">v0.8.2 (Upcoming)</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; LinuxCNC 2.9+ QTPlasmaC, UCCNC &amp; Centroid Acorn CNC12 v5.4+ Hardening</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; LinuxCNC, UCCNC, Acorn CNC12 &amp; grblHAL Hardening</span>
           </div>
           <p class="release-summary">
-            One-click ArtSoft Mach3 (.xml) and CSLab SimCNC 3.6 (config.xml) profile import in the Machines modal, direct mailto:contact@rotarycam.app Machine Verification email drafts, LinuxCNC 2.9+ QTPlasmaC three-regime hardening, CNCdrive UCCNC XYZA post-processor hardening (UC100, UC300ETH, UC400ETH, AXBB-E), and Centroid Acorn CNC12 v5.4+ Plasma two-regime hardening.
+            One-click ArtSoft Mach3 (.xml) and CSLab SimCNC 3.6 (config.xml) profile import in the Machines modal, direct mailto:contact@rotarycam.app Machine Verification email drafts, LinuxCNC 2.9+ QTPlasmaC three-regime hardening, CNCdrive UCCNC XYZA post-processor hardening (UC100, UC300ETH, UC400ETH, AXBB-E), Centroid Acorn CNC12 v5.4+ Plasma two-regime hardening, and grblHAL 32-Bit Plasma ($674 virtual ports &amp; Core Issue #1027) hardening.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -1362,6 +1362,12 @@
               <span class="badge-tag badge-improvement">IMPROVED</span>
               <div class="change-content">
                 <strong>Centroid Acorn CNC12 v5.4+ Plasma (<code class="mono">.nc</code>) Two-Regime Hardening:</strong> Splits <strong>2D Flat Plate</strong> (<code class="mono">G64 ON</code>, <code class="mono">M65</code> Material Profile, <code class="mono">M61/M62</code> macros, zero Z words, 15% Voltage Anti-Dive) from <strong>3D Ramps &amp; 4D Rotary</strong> (Centerline <code class="mono">Z=0</code>, <code class="mono">G54</code>, <code class="mono">M36</code> ATHC Hold before <code class="mono">M3</code>, <code class="mono">M150</code> <code class="mono">mfunc150.mac</code> touch-off via <code class="mono">M115</code> + <code class="mono">G92 Z&lt;Zm + offset&gt;</code>, <code class="mono">G93.1</code> smoothed inverse time, <code class="mono">G94</code> restore before <code class="mono">M5</code>, standalone <code class="mono">G4 P</code> dwells, exact 360&deg; <code class="mono">G92 A0</code> resets, and <code class="mono">;</code> comments with zero parentheses). Documents the CNC12 setup checklist: Plasma Pro/Ultimate (&gt;50 KB files), AcornSix for Dual-Y + A, <code class="mono">mfunc150.mac</code> rules (no <code class="mono">M38</code> Laser Interlock or <code class="mono">OUTPUT1-5</code>), onboard fast inputs (~5 ms vs. Ether1616 ~100 ms), and <code class="mono">P220=1</code> / <code class="mono">P225=1</code>.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>grblHAL 32-Bit Plasma (<code class="mono">.nc</code>) Hardening:</strong> Controls <code class="mono">Plugin_plasma</code> through standalone-line <code class="mono">$674</code> virtual ports (<code class="mono">P2</code> active-high THC disable <code class="mono">M64/M62 P2</code> &amp; enable <code class="mono">M63/M65 P2</code>, <code class="mono">P3</code> torch inhibit clear <code class="mono">M65 P3</code>, and <code class="mono">E3</code> feed override <code class="mono">M68 E3 Q100</code> / <code class="mono">M67 E3 Q60</code>, never mixed on one block). Emits <code class="mono">M190 P-1</code> in the preamble to keep <code class="mono">pierce_height = 0</code> under explicit CAM Z control, holds <code class="mono">M64 P2</code> continuously on 3D ramps and 4D HSS contours, emits <code class="mono">M5</code> + <code class="mono">G94 F</code> right after <code class="mono">G93</code> (preventing Core Issue #1027 &amp; the <code class="mono">G38.2</code> crash trap), uses modulo <code class="mono">G92 A&lt;mod_360&gt;</code> unwinds without <code class="mono">G92.1</code>, emits <code class="mono">G4 P</code> float seconds, caps lines at <code class="mono">&le; 80</code> chars, strips <code class="mono">? ! ~</code> from comments, and adds the core <code class="mono">20261015+</code> + Nov 2026+ <code class="mono">Plugin_plasma</code> checklist (<code class="mono">$376=1</code>, <code class="mono">$133=0</code>, <code class="mono">$384=1</code>, <code class="mono">$674</code> <code class="mono">virtual_ports=1</code> / <code class="mono">sync_pos=1</code>, <code class="mono">$350</code>).
               </div>
             </li>
           </ul>

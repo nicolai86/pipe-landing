@@ -342,6 +342,9 @@ M05 ; Torch off</code></pre>
                 </div>
                 <pre><code>G21 ; Millimeters
 G90 ; Absolute positioning
+M190 P-1 ; Explicit CAM Z (pierce_height = 0)
+M65 P3 ; Clear torch inhibit
+M64 P2 ; Lock THC (active-high disable)
 G94 ; Start in G94 for touch-off probe
 G00 X50.000 A0.000
 G38.2 Z-25.0 F1000.0 ; Probe at 1000 mm/min (grblHAL)
@@ -354,7 +357,7 @@ G93 ; SWITCH TO G93 INVERSE-TIME FOR ROTARY
 G01 X51.524 A4.584 F1000.0 ; 0.060s move (2540 mm/min surface speed)
 G01 X53.048 A9.167 F1000.0 ; 0.060s move (2540 mm/min surface speed)
 M05 ; Torch off
-G94 ; Return to G94 for safe retract
+G94 F1500.0 ; Restore G94 + F right after G93 (Core Issue #1027)
 G00 Z25.000</code></pre>
               </div>
 
@@ -365,6 +368,9 @@ G00 Z25.000</code></pre>
                 </div>
                 <pre><code>G20 ; Inches (4-decimal)
 G90 ; Absolute positioning
+M190 P-1 ; Explicit CAM Z (pierce_height = 0)
+M65 P3 ; Clear torch inhibit
+M64 P2 ; Lock THC (active-high disable)
 G94 ; Start in G94 for touch-off probe
 G00 X1.9685 A0.000
 G38.2 Z-0.9843 F39.4 ; Probe at 39.4 IPM (&divide;25.4)
@@ -377,7 +383,7 @@ G93 ; SWITCH TO G93 INVERSE-TIME FOR ROTARY
 G01 X2.0285 A4.584 F1000.0 ; IDENTICAL F! (0.060s move = 100.0 IPM)
 G01 X2.0885 A9.167 F1000.0 ; IDENTICAL F! (0.060s move = 100.0 IPM)
 M05 ; Torch off
-G94 ; Return to G94 for safe retract
+G94 F59.1 ; Restore G94 + F right after G93 (Core Issue #1027)
 G00 Z0.9843</code></pre>
               </div>
             </div>
@@ -553,7 +559,7 @@ G00 Z25.000 ; Retract</code></pre>
                     <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
-                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (<code class="mono">G93</code> + <code class="mono">M5</code> / <code class="mono">G94 F</code>)</td>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G38.2 / G94)</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
