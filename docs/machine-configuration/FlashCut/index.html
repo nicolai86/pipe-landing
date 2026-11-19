@@ -416,7 +416,7 @@
           
           <span class="docs-meta-pill cyan"><strong>Extensions:</strong> <code class="mono">.nc</code> / <code class="mono">.gc</code></span>
           
-          <span class="docs-meta-pill"><strong>XML Importer:</strong> Auto-fills <code class="mono">Hplasma&lt;n&gt;</code>, <code class="mono">M101 I&lt;n&gt;</code> &amp; <a href="../../machine-configuration.html#faq-flashcut-zero-lift" style="color: var(--cyan-400); text-decoration: underline;">ZeroLift Check</a></span>
+          <span class="docs-meta-pill"><strong>XML Importer:</strong> Auto-fills <code class="mono">Hplasma&lt;n&gt;</code>, <code class="mono">M101 I&lt;n&gt;</code> &amp; <a href="#faq-flashcut-zero-lift" style="color: var(--cyan-400); text-decoration: underline;">ZeroLift FAQ</a></span>
           
           <span class="docs-meta-pill"><strong>Dwell:</strong> <code class="mono">G04 X&lt;sec&gt;</code></span>
           
@@ -893,6 +893,8 @@
             
             <li><a href="#xml-import"><span class="docs-toc-step">03</span> Setup.xml Import &amp; Rotary Mapping</a></li>
             
+            <li><a href="#import-warnings-faq"><span class="docs-toc-step">FAQ</span> FlashCut (Setup.xml) Warnings FAQ</a></li>
+            
           </ul>
         </div>
       </aside>
@@ -946,8 +948,67 @@
           <div class="doc-step-body">
             
             <p>
-              Upload your FlashCut <code class="mono">Setup.xml</code> inside the <strong>Machines</strong> modal to auto-fill your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID (<code class="mono">Hplasma1</code>), <code class="mono">M50/M51</code> codes, <code class="mono">Tube Along X/Y</code> orientation, and verify <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code>. See <a href="../../machine-configuration.html#faq-flashcut-units" style="color: var(--cyan-400);">Step 07: FlashCut XML Import Warnings FAQ</a> if any flag appears.
+              Upload your FlashCut <code class="mono">Setup.xml</code> inside the <strong>Machines</strong> modal to auto-fill your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID (<code class="mono">Hplasma1</code>), <code class="mono">M50/M51</code> codes, <code class="mono">Tube Along X/Y</code> orientation, and verify <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code>. See the <a href="#import-warnings-faq" style="color: var(--cyan-400);">FlashCut XML Import Warnings FAQ</a> below if any flag appears.
             </p>
+          </div>
+        </article>
+        
+
+        
+        <article class="doc-step-card" id="import-warnings-faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">XML FAQ</span>
+            <h2 class="doc-step-title">FlashCut CNC XML Import Warnings FAQ</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When you import a FlashCut CNC XML configuration file into RotaryCAM, any warning flagged in the modal maps directly to one of the checks below:
+            </p>
+            
+              
+            <div class="doc-callout" id="faq-flashcut-units" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title">Unrecognized or Missing <code class="mono">SystemUnits</code></div>
+              <p>
+                <strong>What it means:</strong> RotaryCAM could not read <code class="mono">SystemUnits</code> from your FlashCut <code class="mono">Setup.xml</code> and defaulted Machine Units to <strong>mm</strong>.<br />
+                <strong>What to do:</strong> Check <strong>Machine Units</strong> (<code class="mono">mm</code> vs. <code class="mono">in</code>) in the RotaryCAM Machines modal and match your FlashCut table units.
+              </p>
+            </div>
+
+            <div class="doc-callout info" id="faq-flashcut-rotary-axis" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title">Missing or Unexpected <code class="mono">AxisParallel</code></div>
+              <p>
+                <strong>What it means:</strong> Your <code class="mono">Setup.xml</code> did not specify which gantry rail your rotary attachment runs along, so RotaryCAM defaulted <strong>Rotary Tube Axis</strong> to <strong>X</strong>.<br />
+                <strong>What to do:</strong> If your rotary chuck sits parallel to the Y gantry rail, select <strong>Parallel to Y-Axis</strong> in RotaryCAM's Machines modal.
+              </p>
+            </div>
+
+            <div class="doc-callout" id="faq-flashcut-plasma-head" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title">Plasma Head ID Not Found in <code class="mono">&lt;Machine&gt;&lt;FabHeads&gt;</code></div>
+              <p>
+                <strong>What it means:</strong> RotaryCAM could not match your requested Plasma Head ID or found no <code class="mono">*PlasmaHead</code> entries in your FlashCut XML, so head ID, arc transfer, and torch M-codes could not be auto-filled.<br />
+                <strong>What to do:</strong> Pick your active plasma head from the dropdown in RotaryCAM, or type your <strong>Head ID</strong> (e.g. <code class="mono">Hplasma1</code>), <strong>Arc Transfer Input</strong>, and <code class="mono">M50/M51</code> M-codes manually.
+              </p>
+            </div>
+
+            <div class="doc-callout" id="faq-flashcut-zero-lift" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title"><code class="mono">ZeroLiftAxisPositionAfterTouchOff="False"</code></div>
+              <p>
+                <strong>What it means:</strong> FlashCut is not resetting its Z lift coordinate to zero after <code class="mono">G605</code> touch-off probing. Standard 2D flat-sheet and round-pipe cuts work as-is, but 3D Ramp Lead-Ins and 4D square/angle tubes need a zeroed Z datum.<br />
+                <strong>What to do:</strong> Enable <strong>Zero Lift Axis Position After Touch Off</strong> inside FlashCut (<code class="mono">Setup &rarr; FabHeads</code>) before running 3D ramps or 4D structural tubing.
+              </p>
+            </div>
+
+            <div class="doc-callout" id="faq-flashcut-arc-transfer" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title">Missing <code class="mono">M101 I&lt;n&gt;</code> Arc Transfer Input</div>
+              <p>
+                <strong>What it means:</strong> RotaryCAM could not find <code class="mono">M101 I&lt;n&gt;</code> in your Cut2D start macro (or had to guess from <code class="mono">InputLines</code>), so it cannot confirm which input waits for Arc OK.<br />
+                <strong>What to do:</strong> Open FlashCut (<code class="mono">Setup &rarr; I/O &rarr; Inputs</code>), find your Arc Transfer / Arc OK input line number, and enter that number in RotaryCAM's FlashCut settings.
+              </p>
+            </div>
+
+
+            
           </div>
         </article>
         

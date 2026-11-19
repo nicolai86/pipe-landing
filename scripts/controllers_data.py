@@ -602,13 +602,14 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "subtitle_html": 'Hardened <code class="mono">.tap</code> output for Mach3 tables with 4 THC hardware topologies, <code class="mono">G31</code> ESS probing, <code class="mono">G54</code>-baked scribe offsets, and one-click <code class="mono">.xml</code> setup import.',
         "meta_pills": [
             {"style": "cyan", "html": '<strong>Extension:</strong> <code class="mono">.tap</code>'},
-            {"style": "", "html": '<strong>XML Importer:</strong> Auto-fills units, XYZA limits &amp; <a href="../../machine-configuration.html#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">Import Warnings FAQ</a>'},
+            {"style": "", "html": '<strong>XML Importer:</strong> Auto-fills units, XYZA limits &amp; <a href="#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">Import Warnings FAQ</a>'},
             {"style": "", "html": '<strong>Framing:</strong> <code class="mono">%</code> &hellip; <code class="mono">M30 / %</code>'},
         ],
         "toc": [
             {"id": "thc-topologies", "badge": "01", "label": "4 Mach3 THC Hardware Topologies"},
             {"id": "probing-g93", "badge": "02", "label": "ESS G31 Probing &amp; G54 Scribing"},
             {"id": "checklist", "badge": "03", "label": "Mach3 R3.043.062 Console Checklist"},
+            {"id": "import-warnings-faq", "badge": "FAQ", "label": "Mach3 (.xml) Import Warnings FAQ"},
         ],
         "stages": [
             {
@@ -707,7 +708,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "title": "Mach3 R3.043.062 Console Checklist &amp; .xml Import",
                 "body_html": """
             <ul class="doc-bullet-list">
-              <li><strong>One-Click <code class="mono">.xml</code> Import:</strong> Click <span class="ui-chip">Import Mach3 Setup (.xml)</span> in the Machines modal to auto-fill units and XYZA limits. Any flagged warnings link straight to <a href="../../machine-configuration.html#import-warnings-faq" style="color: var(--cyan-400);">Step 07: XML Import Warnings FAQ</a>.</li>
+              <li><strong>One-Click <code class="mono">.xml</code> Import:</strong> Click <span class="ui-chip">Import Mach3 Setup (.xml)</span> in the Machines modal to auto-fill units and XYZA limits. Any flagged warnings link straight to the <a href="#import-warnings-faq" style="color: var(--cyan-400);">Mach3 XML Import Warnings FAQ</a> below.</li>
               <li><strong>Licensed <code class="mono">R3.043.062</code>:</strong> Run an active license (Demo mode caps at 500 lines and can drop rotary motion).</li>
               <li><strong>Dwells &amp; Trajectory Blending:</strong> Leave <code class="mono">G04 Dwell in ms</code> <strong>UNCHECKED</strong>, set <strong>LookAhead</strong> to <code class="mono">200</code>, uncheck <strong>Plasma Mode</strong> and <strong>CV Dist Tolerance</strong>, and keep <strong>CV Feedrate OFF</strong>.</li>
               <li><strong><code class="mono">Use Radius for Feedrate</code> Rule:</strong> Keep <strong>Use Radius for Feedrate UNCHECKED</strong> during <code class="mono">G93</code> rotary cuts (and uncheck <code class="mono">Rot 360 rollover</code> &amp; <code class="mono">Ang Short Rot on G0</code>).</li>
@@ -1125,13 +1126,14 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "subtitle_html": 'Built for FlashCut Fabrication Head systems with automatic Mode 1 (<code class="mono">#fabhead.mode = Cut</code>) vs. Mode 2 Explicit Dynamic-Z (<code class="mono">G631/G605/M50/M101/G630</code>) switching and <code class="mono">Setup.xml</code> import.',
         "meta_pills": [
             {"style": "cyan", "html": '<strong>Extensions:</strong> <code class="mono">.nc</code> / <code class="mono">.gc</code>'},
-            {"style": "", "html": '<strong>XML Importer:</strong> Auto-fills <code class="mono">Hplasma&lt;n&gt;</code>, <code class="mono">M101 I&lt;n&gt;</code> &amp; <a href="../../machine-configuration.html#faq-flashcut-zero-lift" style="color: var(--cyan-400); text-decoration: underline;">ZeroLift Check</a>'},
+            {"style": "", "html": '<strong>XML Importer:</strong> Auto-fills <code class="mono">Hplasma&lt;n&gt;</code>, <code class="mono">M101 I&lt;n&gt;</code> &amp; <a href="#faq-flashcut-zero-lift" style="color: var(--cyan-400); text-decoration: underline;">ZeroLift FAQ</a>'},
             {"style": "", "html": '<strong>Dwell:</strong> <code class="mono">G04 X&lt;sec&gt;</code>'},
         ],
         "toc": [
             {"id": "mode1-vs-mode2", "badge": "01", "label": "Mode 1 (Cut2D) vs. Mode 2 (Explicit Z)"},
             {"id": "thc-dwells", "badge": "02", "label": "G602/G603 THC &amp; G04 X Dwells"},
             {"id": "xml-import", "badge": "03", "label": "Setup.xml Import &amp; Rotary Mapping"},
+            {"id": "import-warnings-faq", "badge": "FAQ", "label": "FlashCut (Setup.xml) Warnings FAQ"},
         ],
         "stages": [
             {
@@ -1228,7 +1230,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "title": "One-Click Setup.xml Import &amp; Checklist",
                 "body_html": """
             <p>
-              Upload your FlashCut <code class="mono">Setup.xml</code> inside the <strong>Machines</strong> modal to auto-fill your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID (<code class="mono">Hplasma1</code>), <code class="mono">M50/M51</code> codes, <code class="mono">Tube Along X/Y</code> orientation, and verify <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code>. See <a href="../../machine-configuration.html#faq-flashcut-units" style="color: var(--cyan-400);">Step 07: FlashCut XML Import Warnings FAQ</a> if any flag appears.
+              Upload your FlashCut <code class="mono">Setup.xml</code> inside the <strong>Machines</strong> modal to auto-fill your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID (<code class="mono">Hplasma1</code>), <code class="mono">M50/M51</code> codes, <code class="mono">Tube Along X/Y</code> orientation, and verify <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code>. See the <a href="#import-warnings-faq" style="color: var(--cyan-400);">FlashCut XML Import Warnings FAQ</a> below if any flag appears.
             </p>""",
             },
         ],
@@ -1631,13 +1633,14 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "subtitle_html": 'Hardware-verified <code class="mono">.nc</code> output for CSMIO/IP-M and IP-S controllers with one-click <code class="mono">config.xml</code> import, hardened <code class="mono">G93</code> inverse-time (<code class="mono">3.6+</code>) or 4D spoofed <code class="mono">G94</code> (<code class="mono">3.5</code>), and <code class="mono">M62/M63 P0/P1</code> motion-synced torch &amp; THC.',
         "meta_pills": [
             {"style": "cyan", "html": '<strong>Extension:</strong> <code class="mono">.nc</code> &bull; <code class="mono">Hardware Verified</code>'},
-            {"style": "", "html": '<strong>XML Importer:</strong> <code class="mono">config.xml</code> + <a href="../../machine-configuration.html#faq-simcnc-units" style="color: var(--cyan-400); text-decoration: underline;">Import Warnings FAQ</a>'},
+            {"style": "", "html": '<strong>XML Importer:</strong> <code class="mono">config.xml</code> + <a href="#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">Import Warnings FAQ</a>'},
             {"style": "", "html": '<strong>Deep Dive:</strong> <a href="../../simcnc-motion-sync.html" style="color: var(--amber-400); text-decoration: underline;">Tutorial 07: SimCNC Motion-Sync</a>'},
         ],
         "toc": [
             {"id": "blending-g93", "badge": "01", "label": "G64 Blending, Feathering &amp; Guardrails"},
             {"id": "macro-sync", "badge": "02", "label": "m3.py Parameters &amp; M62/M63 Sync"},
             {"id": "xml-links", "badge": "03", "label": "config.xml Import &amp; Guides"},
+            {"id": "import-warnings-faq", "badge": "FAQ", "label": "SimCNC (config.xml) Warnings FAQ"},
         ],
         "stages": [
             {
@@ -1734,7 +1737,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "title": "One-Click <code class=\"mono\">config.xml</code> Import",
                 "body_html": """
             <p>
-              Upload your SimCNC 3.6 <code class="mono">config.xml</code> in the <strong>Machines</strong> modal (<span class="ui-chip">Import SimCNC Config (config.xml)</span>) to auto-fill base units, XYZA velocity/acceleration/jerk limits, and rotary <code class="mono">rad/s</code> limits. Any axis, IJK, or MotionKit mismatches link straight to <a href="../../machine-configuration.html#faq-simcnc-units" style="color: var(--cyan-400);">Step 07: SimCNC config.xml Import Warnings FAQ</a>.
+              Upload your SimCNC 3.6 <code class="mono">config.xml</code> in the <strong>Machines</strong> modal (<span class="ui-chip">Import SimCNC Config (config.xml)</span>) to auto-fill base units, XYZA velocity/acceleration/jerk limits, and rotary <code class="mono">rad/s</code> limits. Any axis, IJK, or MotionKit mismatches link straight to the <a href="#import-warnings-faq" style="color: var(--cyan-400);">SimCNC config.xml Import Warnings FAQ</a> below.
             </p>""",
             },
         ],
@@ -1984,3 +1987,159 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         ],
     },
 ]
+
+XML_IMPORT_WARNINGS = {
+    "Mach3": [
+        {
+            "id": "faq-mach3-units",
+            "style": "",
+            "title_html": 'Unrecognized or Missing <code class="mono">&lt;Units&gt;</code>',
+            "meaning_html": 'Your Mach3 XML did not specify inches or millimeters, so RotaryCAM defaulted Machine Units to <strong>mm</strong>. If your steps/unit in Motor Tuning are calibrated in inches, parts will cut 25.4x the wrong size.',
+            "action_html": 'Check <strong>Machine Units</strong> (<code class="mono">mm</code> vs. <code class="mono">in</code>) in the RotaryCAM Machines modal and match your Mach3 Motor Tuning units.',
+        },
+        {
+            "id": "faq-mach3-slaved-a",
+            "style": "info",
+            "title_html": 'Motor 3 (A-Axis) Slaved to X / Y / Z (<code class="mono">Slave0=0/1/2</code>)',
+            "meaning_html": 'Your table uses Motor 3 (A-axis) as the second motor on a dual-drive gantry (common on Bulltear Plasma and HVAC gantry tables) instead of a rotary chuck.',
+            "action_html": 'Flat-sheet DXF/SVG cuts work right away with zero changes. To cut round pipe on a dual-drive table, either switch <strong>Rotary Axis Mapping</strong> to <strong>3-Axis Y-Axis Wrap</strong> (and plug your rotary into Y), or unslave Motor 3 in Mach3 (<code class="mono">Config &rarr; Slave Axis</code>) if you move dual-drive slaving to hardware or the B-axis.',
+        },
+        {
+            "id": "faq-mach3-a-angular",
+            "style": "",
+            "title_html": 'A-Axis Is Set to Linear Mode (<code class="mono">&lt;AAngular&gt;=0</code>)',
+            "meaning_html": 'Mach3 treats your A-axis as linear millimeters or inches instead of degrees, so <code class="mono">G93</code> rotary speeds and chuck rotations will be way off.',
+            "action_html": 'In Mach3, open <code class="mono">Config &rarr; General Config</code>, check <strong>A-Axis is Angular</strong>, save, and re-import your XML (or type your true A-axis <code class="mono">deg/min</code> limits directly into RotaryCAM).',
+        },
+        {
+            "id": "faq-mach3-a-disabled",
+            "style": "info",
+            "title_html": '4th Axis Disabled (<code class="mono">&lt;AAxisOn&gt;=0</code>)',
+            "meaning_html": 'The A-axis output is turned off in your Mach3 profile.',
+            "action_html": 'Flat-sheet cuts work as-is with no changes. For 4-axis pipe cutting, enable Axis A in Mach3 (<code class="mono">Config &rarr; Ports &amp; Pins &rarr; Motor Outputs</code>), or switch RotaryCAM to <strong>3-Axis Y-Axis Wrap</strong>.',
+        },
+        {
+            "id": "faq-mach3-spindle-delay",
+            "style": "",
+            "title_html": 'Spindle Spin-Up / Spin-Down Delay Active (<code class="mono">SpinDelayCW &gt; 0</code>)',
+            "meaning_html": 'Mach3 adds an extra hidden pause after every <code class="mono">M3</code> torch fire on top of RotaryCAM\'s <code class="mono">G04</code> pierce delay, causing blown pierces and arc-loss faults.',
+            "action_html": 'Open <code class="mono">Config &rarr; Ports &amp; Pins &rarr; Spindle Setup</code> in Mach3 and set CW and CCW <strong>Delay Spin UP</strong> and <strong>Spin DOWN</strong> to <code class="mono">0</code>.',
+        },
+        {
+            "id": "faq-mach3-screenset",
+            "style": "info",
+            "title_html": 'Mill / Spindle Screenset Detected',
+            "meaning_html": 'Your Mach3 profile loads a router or mill screenset (<code class="mono">.set</code>) instead of a plasma screenset, so on-screen THC controls and Arc OK LEDs may be missing.',
+            "action_html": 'Load a plasma screenset in Mach3 (<code class="mono">View &rarr; Load Screens</code>), or verify your <code class="mono">M3/M5</code> torch output and THC pins before cutting.',
+        },
+        {
+            "id": "faq-mach3-dwell-ms",
+            "style": "danger",
+            "title_html": 'G04 Dwell in Milliseconds (<code class="mono">&lt;DwellinMilli&gt;=1</code>)',
+            "meaning_html": 'Mach3 reads <code class="mono">G04 P0.5</code> as 0.5 milliseconds instead of 0.5 seconds, so your torch plunges before piercing through the plate.',
+            "action_html": 'Open <code class="mono">Config &rarr; General Config</code> in Mach3 and uncheck <strong>G04 Dwell in ms</strong> so Mach3 reads RotaryCAM\'s <code class="mono">G04 P</code> dwells in seconds.',
+        },
+        {
+            "id": "faq-mach3-plasma-cv",
+            "style": "",
+            "title_html": 'Plasma Mode or CV Feedrate Active (<code class="mono">&lt;PlasmaMode&gt;=1</code> / <code class="mono">&lt;CVFeedOn&gt;=1</code>)',
+            "meaning_html": 'Mach3\'s built-in Plasma Mode, CV Dist Tolerance, and CV Feedrate fight <code class="mono">G93</code> inverse-time rotary blending and cause choppy chuck motion.',
+            "action_html": 'In Mach3 <code class="mono">Config &rarr; General Config</code>, uncheck <strong>Plasma Mode</strong> and <strong>CV Dist Tolerance</strong>, then open the <strong>Settings (Alt-6)</strong> tab and turn <strong>CV Feedrate OFF</strong>.',
+        },
+        {
+            "id": "faq-mach3-lookahead",
+            "style": "",
+            "title_html": 'LookAhead Too High (<code class="mono">&lt;LookAhead&gt; &gt; 200</code>)',
+            "meaning_html": 'LookAhead values above <code class="mono">200</code> lines in Mach3 can overflow the motion planner buffer and stutter on dense 4-axis tube saddle toolpaths.',
+            "action_html": 'Open <code class="mono">Config &rarr; General Config</code> in Mach3 and set <strong>LookAhead</strong> to <code class="mono">200</code> lines.',
+        },
+        {
+            "id": "faq-mach3-ij-mode",
+            "style": "info",
+            "title_html": 'Absolute IJ Arc Mode (<code class="mono">&lt;IJMode&gt;=0</code>)',
+            "meaning_html": 'Your Mach3 default is Absolute IJ instead of Incremental IJ. RotaryCAM emits <code class="mono">G91.1</code> at the top of every file to force Incremental IJ, so normal runs cut fine, but mid-program restarts can drop back to Absolute IJ and throw crop-circle arcs.',
+            "action_html": 'Switch <strong>IJ Mode</strong> to <strong>Inc</strong> in Mach3 <code class="mono">Config &rarr; General Config</code> so mid-program <em>Run From Here</em> restarts stay safe.',
+        },
+        {
+            "id": "faq-mach3-safe-z",
+            "style": "",
+            "title_html": 'Safe Z Height Zero or Negative (<code class="mono">m_SafeZ &lt;= 0</code>)',
+            "meaning_html": 'Mach3 has no positive Safe Z retract height configured, so pausing or stopping mid-cut will not clear clamps or rotating tube corners.',
+            "action_html": 'Set a positive Safe Z height in Mach3 (<code class="mono">Config &rarr; Safe_Z Setup</code>) and verify your <strong>Safe Z Clearance</strong> in RotaryCAM clears your biggest tube diagonal.',
+        },
+        {
+            "id": "faq-mach3-ess-g28",
+            "style": "",
+            "title_html": 'Warp9 ESS + <code class="mono">G28.1</code> Probing Warning',
+            "meaning_html": 'Selecting <code class="mono">G28.1</code> touch-off probing with a Warp9 Ethernet SmoothStepper (ESS) often hangs the controller during floating-head probing.',
+            "action_html": 'Keep RotaryCAM\'s <strong>Touch-Off Strategy</strong> on <code class="mono">G31 Probe</code> (the Mach3 default) instead of <code class="mono">G28.1</code>.',
+        },
+    ],
+    "FlashCut": [
+        {
+            "id": "faq-flashcut-units",
+            "style": "",
+            "title_html": 'Unrecognized or Missing <code class="mono">SystemUnits</code>',
+            "meaning_html": 'RotaryCAM could not read <code class="mono">SystemUnits</code> from your FlashCut <code class="mono">Setup.xml</code> and defaulted Machine Units to <strong>mm</strong>.',
+            "action_html": 'Check <strong>Machine Units</strong> (<code class="mono">mm</code> vs. <code class="mono">in</code>) in the RotaryCAM Machines modal and match your FlashCut table units.',
+        },
+        {
+            "id": "faq-flashcut-rotary-axis",
+            "style": "info",
+            "title_html": 'Missing or Unexpected <code class="mono">AxisParallel</code>',
+            "meaning_html": 'Your <code class="mono">Setup.xml</code> did not specify which gantry rail your rotary attachment runs along, so RotaryCAM defaulted <strong>Rotary Tube Axis</strong> to <strong>X</strong>.',
+            "action_html": 'If your rotary chuck sits parallel to the Y gantry rail, select <strong>Parallel to Y-Axis</strong> in RotaryCAM\'s Machines modal.',
+        },
+        {
+            "id": "faq-flashcut-plasma-head",
+            "style": "",
+            "title_html": 'Plasma Head ID Not Found in <code class="mono">&lt;Machine&gt;&lt;FabHeads&gt;</code>',
+            "meaning_html": 'RotaryCAM could not match your requested Plasma Head ID or found no <code class="mono">*PlasmaHead</code> entries in your FlashCut XML, so head ID, arc transfer, and torch M-codes could not be auto-filled.',
+            "action_html": 'Pick your active plasma head from the dropdown in RotaryCAM, or type your <strong>Head ID</strong> (e.g. <code class="mono">Hplasma1</code>), <strong>Arc Transfer Input</strong>, and <code class="mono">M50/M51</code> M-codes manually.',
+        },
+        {
+            "id": "faq-flashcut-zero-lift",
+            "style": "",
+            "title_html": '<code class="mono">ZeroLiftAxisPositionAfterTouchOff="False"</code>',
+            "meaning_html": 'FlashCut is not resetting its Z lift coordinate to zero after <code class="mono">G605</code> touch-off probing. Standard 2D flat-sheet and round-pipe cuts work as-is, but 3D Ramp Lead-Ins and 4D square/angle tubes need a zeroed Z datum.',
+            "action_html": 'Enable <strong>Zero Lift Axis Position After Touch Off</strong> inside FlashCut (<code class="mono">Setup &rarr; FabHeads</code>) before running 3D ramps or 4D structural tubing.',
+        },
+        {
+            "id": "faq-flashcut-arc-transfer",
+            "style": "",
+            "title_html": 'Missing <code class="mono">M101 I&lt;n&gt;</code> Arc Transfer Input',
+            "meaning_html": 'RotaryCAM could not find <code class="mono">M101 I&lt;n&gt;</code> in your Cut2D start macro (or had to guess from <code class="mono">InputLines</code>), so it cannot confirm which input waits for Arc OK.',
+            "action_html": 'Open FlashCut (<code class="mono">Setup &rarr; I/O &rarr; Inputs</code>), find your Arc Transfer / Arc OK input line number, and enter that number in RotaryCAM\'s FlashCut settings.',
+        },
+    ],
+    "SimCNC": [
+        {
+            "id": "faq-simcnc-units",
+            "style": "",
+            "title_html": 'Unrecognized or Missing <code class="mono">&lt;baseUnits&gt;</code>',
+            "meaning_html": 'Your SimCNC <code class="mono">config.xml</code> did not list <code class="mono">&lt;baseUnits&gt;</code>, so RotaryCAM defaulted Machine Units to <strong>mm</strong>.',
+            "action_html": 'Check <strong>Machine Units</strong> (<code class="mono">mm</code> vs. <code class="mono">in</code>) in RotaryCAM and confirm it matches your SimCNC Configuration units.',
+        },
+        {
+            "id": "faq-simcnc-rotary-a",
+            "style": "info",
+            "title_html": '<code class="mono">axis_3</code> (A-Axis) Disabled, Unbound, or Set to <code class="mono">linear</code>',
+            "meaning_html": 'In SimCNC, <code class="mono">axis_3</code> (A) is turned off, has no MotionKit assigned, or is configured as a <code class="mono">linear</code> axis instead of <code class="mono">angular</code>.',
+            "action_html": 'Flat-sheet cuts work as-is. For 4-axis pipe cutting, open SimCNC (<code class="mono">Configuration &rarr; Axes</code>), enable <code class="mono">axis_3</code>, set its type to <strong>angular</strong>, bind a MotionKit, and re-import <code class="mono">config.xml</code>.',
+        },
+        {
+            "id": "faq-simcnc-motionkit",
+            "style": "",
+            "title_html": 'Missing <code class="mono">&lt;motionKit_N&gt;</code> or Mismatched Dual-Drive Gantry Limits',
+            "meaning_html": 'Either a <code class="mono">&lt;motionKit_N&gt;</code> block is missing under <code class="mono">&lt;device&gt;&lt;modules&gt;</code>, or the two motors on a dual-drive gantry have different velocity, acceleration, or jerk limits (which can rack the gantry).',
+            "action_html": 'Copy Max Velocity, Accel, and Jerk from SimCNC (<code class="mono">Configuration &rarr; Modules</code>) into RotaryCAM manually, and make sure both dual-drive gantry MotionKits use identical limits in SimCNC.',
+        },
+        {
+            "id": "faq-simcnc-ijk-mode",
+            "style": "",
+            "title_html": '<code class="mono">&lt;ijkMode&gt;</code> Not Set to <code class="mono">relative</code>',
+            "meaning_html": 'SimCNC is expecting Absolute IJK arc centers while RotaryCAM outputs Incremental (Relative) IJK arcs (and does not emit <code class="mono">G90.1</code>/<code class="mono">G91.1</code> on SimCNC), causing huge unwanted arc loops or soft-limit errors.',
+            "action_html": 'Open SimCNC (<code class="mono">Configuration &rarr; General</code>) and set <strong>Arc IJK Mode</strong> to <strong>Relative</strong>.',
+        },
+    ],
+}

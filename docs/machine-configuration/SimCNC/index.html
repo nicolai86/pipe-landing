@@ -416,7 +416,7 @@
           
           <span class="docs-meta-pill cyan"><strong>Extension:</strong> <code class="mono">.nc</code> &bull; <code class="mono">Hardware Verified</code></span>
           
-          <span class="docs-meta-pill"><strong>XML Importer:</strong> <code class="mono">config.xml</code> + <a href="../../machine-configuration.html#faq-simcnc-units" style="color: var(--cyan-400); text-decoration: underline;">Import Warnings FAQ</a></span>
+          <span class="docs-meta-pill"><strong>XML Importer:</strong> <code class="mono">config.xml</code> + <a href="#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">Import Warnings FAQ</a></span>
           
           <span class="docs-meta-pill"><strong>Deep Dive:</strong> <a href="../../simcnc-motion-sync.html" style="color: var(--amber-400); text-decoration: underline;">Tutorial 07: SimCNC Motion-Sync</a></span>
           
@@ -913,6 +913,8 @@
             
             <li><a href="#xml-links"><span class="docs-toc-step">03</span> config.xml Import &amp; Guides</a></li>
             
+            <li><a href="#import-warnings-faq"><span class="docs-toc-step">FAQ</span> SimCNC (config.xml) Warnings FAQ</a></li>
+            
           </ul>
         </div>
       </aside>
@@ -962,8 +964,59 @@
           <div class="doc-step-body">
             
             <p>
-              Upload your SimCNC 3.6 <code class="mono">config.xml</code> in the <strong>Machines</strong> modal (<span class="ui-chip">Import SimCNC Config (config.xml)</span>) to auto-fill base units, XYZA velocity/acceleration/jerk limits, and rotary <code class="mono">rad/s</code> limits. Any axis, IJK, or MotionKit mismatches link straight to <a href="../../machine-configuration.html#faq-simcnc-units" style="color: var(--cyan-400);">Step 07: SimCNC config.xml Import Warnings FAQ</a>.
+              Upload your SimCNC 3.6 <code class="mono">config.xml</code> in the <strong>Machines</strong> modal (<span class="ui-chip">Import SimCNC Config (config.xml)</span>) to auto-fill base units, XYZA velocity/acceleration/jerk limits, and rotary <code class="mono">rad/s</code> limits. Any axis, IJK, or MotionKit mismatches link straight to the <a href="#import-warnings-faq" style="color: var(--cyan-400);">SimCNC config.xml Import Warnings FAQ</a> below.
             </p>
+          </div>
+        </article>
+        
+
+        
+        <article class="doc-step-card" id="import-warnings-faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">XML FAQ</span>
+            <h2 class="doc-step-title">CSLab SimCNC XML Import Warnings FAQ</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When you import a CSLab SimCNC XML configuration file into RotaryCAM, any warning flagged in the modal maps directly to one of the checks below:
+            </p>
+            
+              
+            <div class="doc-callout" id="faq-simcnc-units" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title">Unrecognized or Missing <code class="mono">&lt;baseUnits&gt;</code></div>
+              <p>
+                <strong>What it means:</strong> Your SimCNC <code class="mono">config.xml</code> did not list <code class="mono">&lt;baseUnits&gt;</code>, so RotaryCAM defaulted Machine Units to <strong>mm</strong>.<br />
+                <strong>What to do:</strong> Check <strong>Machine Units</strong> (<code class="mono">mm</code> vs. <code class="mono">in</code>) in RotaryCAM and confirm it matches your SimCNC Configuration units.
+              </p>
+            </div>
+
+            <div class="doc-callout info" id="faq-simcnc-rotary-a" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title"><code class="mono">axis_3</code> (A-Axis) Disabled, Unbound, or Set to <code class="mono">linear</code></div>
+              <p>
+                <strong>What it means:</strong> In SimCNC, <code class="mono">axis_3</code> (A) is turned off, has no MotionKit assigned, or is configured as a <code class="mono">linear</code> axis instead of <code class="mono">angular</code>.<br />
+                <strong>What to do:</strong> Flat-sheet cuts work as-is. For 4-axis pipe cutting, open SimCNC (<code class="mono">Configuration &rarr; Axes</code>), enable <code class="mono">axis_3</code>, set its type to <strong>angular</strong>, bind a MotionKit, and re-import <code class="mono">config.xml</code>.
+              </p>
+            </div>
+
+            <div class="doc-callout" id="faq-simcnc-motionkit" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title">Missing <code class="mono">&lt;motionKit_N&gt;</code> or Mismatched Dual-Drive Gantry Limits</div>
+              <p>
+                <strong>What it means:</strong> Either a <code class="mono">&lt;motionKit_N&gt;</code> block is missing under <code class="mono">&lt;device&gt;&lt;modules&gt;</code>, or the two motors on a dual-drive gantry have different velocity, acceleration, or jerk limits (which can rack the gantry).<br />
+                <strong>What to do:</strong> Copy Max Velocity, Accel, and Jerk from SimCNC (<code class="mono">Configuration &rarr; Modules</code>) into RotaryCAM manually, and make sure both dual-drive gantry MotionKits use identical limits in SimCNC.
+              </p>
+            </div>
+
+            <div class="doc-callout" id="faq-simcnc-ijk-mode" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title"><code class="mono">&lt;ijkMode&gt;</code> Not Set to <code class="mono">relative</code></div>
+              <p>
+                <strong>What it means:</strong> SimCNC is expecting Absolute IJK arc centers while RotaryCAM outputs Incremental (Relative) IJK arcs (and does not emit <code class="mono">G90.1</code>/<code class="mono">G91.1</code> on SimCNC), causing huge unwanted arc loops or soft-limit errors.<br />
+                <strong>What to do:</strong> Open SimCNC (<code class="mono">Configuration &rarr; General</code>) and set <strong>Arc IJK Mode</strong> to <strong>Relative</strong>.
+              </p>
+            </div>
+
+
+            
           </div>
         </article>
         

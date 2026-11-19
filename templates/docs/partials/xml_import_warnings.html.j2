@@ -1,0 +1,9 @@
+{% for item in faq_items %}
+            <div class="doc-callout{% if item.style %} {{ item.style }}{% endif %}" id="{{ item.id }}" style="scroll-margin-top: 6rem;">
+              <div class="doc-callout-title">{{ item.title_html | safe }}</div>
+              <p>
+                <strong>What it means:</strong> {{ item.meaning_html | safe }}<br />
+                <strong>What to do:</strong> {{ item.action_html | safe }}
+              </p>
+            </div>
+{% endfor %}

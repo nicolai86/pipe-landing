@@ -687,6 +687,7 @@ def build_all_docs():
             page=t,
             tutorials=TUTORIALS,
             controllers=controllers_data.CONTROLLERS,
+            xml_warnings=controllers_data.XML_IMPORT_WARNINGS,
             total_tutorials=total_tutorials,
             total_steps=total_steps,
             prev_tutorial=prev_t,
@@ -719,6 +720,7 @@ def build_all_docs():
         rendered = ctrl_tmpl.render(
             page=ctrl_page,
             controller=c,
+            controller_xml_faq=controllers_data.XML_IMPORT_WARNINGS.get(c["slug"]),
             all_controllers=controllers,
             prev_controller=prev_c,
             next_controller=next_c,

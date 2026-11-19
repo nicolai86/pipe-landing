@@ -281,6 +281,24 @@
         </article>
         {% endfor %}
 
+        {% if controller_xml_faq %}
+        <article class="doc-step-card" id="import-warnings-faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">XML FAQ</span>
+            <h2 class="doc-step-title">{{ controller.short_name }} XML Import Warnings FAQ</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              When you import a {{ controller.short_name }} XML configuration file into RotaryCAM, any warning flagged in the modal maps directly to one of the checks below:
+            </p>
+            {% with faq_items = controller_xml_faq %}
+              {% include "partials/xml_import_warnings.html.j2" %}
+            {% endwith %}
+          </div>
+        </article>
+        {% endif %}
+
         <!-- Prev / Next Controller Pagination -->
         <nav class="docs-pagination" aria-label="Controller Guide Pagination">
           {% if prev_controller %}
