@@ -589,12 +589,12 @@ G00 Z25.000 ; Retract</code></pre>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (G94)</td>
                   </tr>
                   <tr style="border-bottom: 1px solid var(--border-subtle);">
-                    <td style="padding: 0.65rem 0.85rem;"><strong>ShopSabre WinCNC Plasma</strong></td>
-                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS</td>
-                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> / <code class="mono">G93</code></td>
-                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
-                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (G93)</td>
-                    <td style="padding: 0.65rem 0.85rem;">Controller macro</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong>ShopSabre WinCNC Plasma (<code class="mono">v3.1.06d+</code>)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS (<code class="mono">A/W/B</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> (rapids/<code class="mono">M62</code>) / <code class="mono">G93</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (<code class="mono">G22</code> mm / <code class="mono">G20</code> in, never <code class="mono">G21</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (<code class="mono">G93</code> + <code class="mono">L28.1</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">M61</code> / <code class="mono">L38</code> + <code class="mono">L38.1</code> (<code class="mono">G4 X</code>)</td>
                   </tr>
                   <tr>
                     <td style="padding: 0.65rem 0.85rem;"><strong>CSLab SimCNC Rotary (&lt; 3.6 / 3.6+)</strong></td>
@@ -615,6 +615,9 @@ G00 Z25.000 ; Retract</code></pre>
               </p>
               <p style="margin-top: 0.5rem; margin-bottom: 0;">
                 <strong>LinuxCNC QtPlasmaC:</strong> Initial height sensing (IHS), pierce delay, and cut plunge are executed internally inside the real-time HAL component via <code class="mono">M3 $0 S1</code> (and extinguished with <code class="mono">M5 $0</code>). Emitting manual <code class="mono">G38.2</code> probing commands in G-code would collide with QtPlasmaC's internal Z state machine.
+              </p>
+              <p style="margin-top: 0.5rem; margin-bottom: 0;">
+                <strong>ShopSabre WinCNC (<code class="mono">v3.1.06d+</code> via <code class="mono">Help &rarr; About</code>):</strong> WinCNC reads <code class="mono">G21</code> as <em>centimeters</em>, so RotaryCAM strictly emits <code class="mono">G22</code> for metric millimeters and <code class="mono">G20</code> for inches (never <code class="mono">G21</code>). Match your SideKick rotary axis letter (<code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>) to <code class="mono">WINCNC.INI</code>. Programs emit <code class="mono">M65</code> init, optional <code class="mono">G9 S10</code>, <code class="mono">G94</code> before rapids and <code class="mono">M62</code>, <code class="mono">L28.1</code> 0-360 rotary wraps, Pack-only <code class="mono">L92</code> before <code class="mono">M66</code> (preserving single-part <code class="mono">G92</code> restore), <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L37.2 D1/D0</code> continuous THC (<code class="mono">D1</code> = Disabled, <code class="mono">D0</code> = Enabled) vs. legacy <code class="mono">L37/L36</code>, decoupled <code class="mono">L38.1</code> (<code class="mono">THC=... M1</code> vs. <code class="mono">M0</code>), <code class="mono">M61</code> vs. <code class="mono">L38</code> cycles, and <code class="mono">G54</code>-baked pneumatic scribe XY offsets.
               </p>
             </div>
 

@@ -241,7 +241,7 @@
               <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span>: Engineered for the FlashCut Fabrication Head with one-click <code class="mono">.xml</code> setup import, Mode 2 Explicit Dynamic-Z (<code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code>, no <code class="mono">G601</code>/<code class="mono">G600</code>) for 3D Ramp Lead-Ins and square/angle tubes, <code class="mono">G04 X&lt;sec&gt;</code> delays, <code class="mono">G602</code>/<code class="mono">G603</code> THC suspend/resume, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">EdingCNC Plasma (.nc)</span>: Clean EdingCNC post for CNC720/CNC760 with <code class="mono">G38.2</code> surface touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G4 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M21</code> (THC OFF) / <code class="mono">M20</code> (THC ON) anti-dive locking, and <code class="mono">G93</code> rotary inverse-time feeds.</li>
               <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Dedicated post for PlanetCNC Mk3 and TNG software with <code class="mono">G38.2</code> touch-off probing, <code class="mono">M3</code>/<code class="mono">M5</code> torch control, <code class="mono">G04 P&lt;sec&gt;</code> pierce delays, native <code class="mono">M54 P0</code> (THC OFF) / <code class="mono">M54 P1</code> (THC ON) corner locking, and <code class="mono">G93</code> rotary feeds.</li>
-              <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre plasma tables and SideKick rotary attachments, emitting strict WinCNC <code class="mono">[square bracket]</code> comments (zero parentheses or semicolons), <code class="mono">M61</code>/<code class="mono">M62</code> controller-owned IHS &amp; torch macros, <code class="mono">G04 X&lt;sec&gt;</code> pierce delays, <code class="mono">G93</code> rotary feeds, and <code class="mono">M66</code> program end.</li>
+              <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre plasma tables and SideKick rotary attachments (<code class="mono">v3.1.06d+</code> or legacy), emitting <code class="mono">G22</code> mm / <code class="mono">G20</code> in (never <code class="mono">G21</code>), strict <code class="mono">[square bracket]</code> comments, configurable <code class="mono">A</code>/<code class="mono">W</code>/<code class="mono">B</code> SideKick axis letter matching <code class="mono">WINCNC.INI</code>, <code class="mono">L37.2 D1/D0</code> continuous THC (or legacy <code class="mono">L37/L36</code>), decoupled <code class="mono">L38.1</code> cut parameters (<code class="mono">THC=... M1/M0</code>), <code class="mono">M61</code> / <code class="mono">L38</code> cycles, <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L28.1</code>/<code class="mono">L92</code> rotary/work wraps, <code class="mono">G54</code>-baked scribe offsets, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6+ (.nc)</span>: 4D trajectory feedrate spoofing for SimCNC 3.5 or hardened <code class="mono">G93</code> inverse-time (<code class="mono">F = 1 / Δt</code>, <code class="mono">G69</code> + metric <code class="mono">G64 P0.3/P0.4</code>, micro-segment coalescing, <code class="mono">0.002 mm</code> axial feathering, <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs, <code class="mono">G92 A</code> phase-preserving unwinds, and <code class="mono">#1999</code>/<code class="mono">#4061</code> guards) for SimCNC 3.6+, with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
               <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Standard ISO 6983 G-code with decimal seconds dwells (<code class="mono">G4 P&lt;sec&gt;</code>) and configurable M-codes for open-source and industrial controllers.</li>
             </ul>
@@ -849,28 +849,34 @@ M3</code></pre>
               <h3 class="doc-section-heading">12. ShopSabre WinCNC Plasma Setup</h3>
             </div>
             <p>
-              ShopSabre industrial plasma tables equipped with SideKick 4-axis rotary indexers run on WinCNC controller hardware. RotaryCAM produces dedicated <code class="mono">.tap</code> programs engineered specifically for WinCNC's syntax requirements:
+              ShopSabre plasma tables with SideKick 4-axis rotary attachments run on WinCNC controller hardware. Check your WinCNC build under <code class="mono">Help &rarr; About</code>: RotaryCAM targets <code class="mono">v3.1.06d+</code> by default and includes a legacy toggle for older installs.
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Strict Bracket-Only Comment Syntax (<code class="mono">[...]</code>):</strong> WinCNC rejects standard G-code parentheses <code class="mono">(...)</code> and semicolons <code class="mono">;</code>, halting with parser errors. RotaryCAM strictly outputs <code class="mono">[square bracket]</code> comments throughout your file.
+                <strong>Units (<code class="mono">G22</code> Metric vs. <code class="mono">G20</code> Imperial, Never <code class="mono">G21</code>):</strong> WinCNC interprets <code class="mono">G21</code> as <em>centimeters</em>, which scales parts 10x too large. RotaryCAM strictly outputs <code class="mono">G22</code> for millimeters and <code class="mono">G20</code> for inches.
               </li>
               <li>
-                <strong>Controller-Owned Touch-Off &amp; Torch Cycles (<code class="mono">M61</code> / <code class="mono">M62</code>):</strong>
-                ShopSabre WinCNC tables use internal macros to manage the pierce cycle:
+                <strong>SideKick Axis Letter Check (<code class="mono">WINCNC.INI</code>: <code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>):</strong> Open <code class="mono">WINCNC.INI</code> on your controller PC and confirm which axis letter drives your SideKick rotary (<code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>). Select that matching letter in Machine Settings so rotary moves, <code class="mono">G93</code> feeds, and <code class="mono">L28.1</code> wraps command the right motor.
+              </li>
+              <li>
+                <strong>Strict Bracket Comments &amp; Program Lifecycle (<code class="mono">[...]</code>, <code class="mono">M65</code>, <code class="mono">G9 S10</code>, <code class="mono">G94</code>, <code class="mono">L28.1</code>, <code class="mono">L92</code>, <code class="mono">M66</code>):</strong> Emits <code class="mono">[square bracket]</code> comments only (zero parentheses or semicolons), <code class="mono">M65</code> init, optional <code class="mono">G9 S10</code> smoothing, <code class="mono">G94</code> restored before rapids and <code class="mono">M62</code>, <code class="mono">L28.1</code> modulo 0-360 wrap on rotary moves, <code class="mono">G4 X&lt;sec&gt;</code> decimal-second dwells, and Pack-only <code class="mono">L92</code> before <code class="mono">M66</code> program end (keeping single-part <code class="mono">G92</code> restore intact).
+              </li>
+              <li>
+                <strong>Continuous THC (<code class="mono">L37.2 D#</code>) vs. Cut Parameters (<code class="mono">L38.1</code>) &amp; Legacy Fallback:</strong>
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
-                  <li><code class="mono">M61</code>: Executes the automated ohmic/switch touch-off, lifts to pierce height, fires the torch, confirms arc transfer, and plunges to cut height.</li>
-                  <li><code class="mono">M62</code>: Extinguishes the plasma arc, disables THC, and retracts Z to clearance height.</li>
+                  <li><strong><code class="mono">v3.1.06d+</code> Continuous THC (<code class="mono">L37.2 D1/D0</code>):</strong> Emits <code class="mono">L37.2 D1</code> / <code class="mono">D0</code> and inline <code class="mono">D1</code> / <code class="mono">D0</code> where <code class="mono">D1</code> = Disabled (locked) and <code class="mono">D0</code> = Enabled. Older builds can switch to legacy <code class="mono">L37</code> / <code class="mono">L36</code>.</li>
+                  <li><strong>Decoupled <code class="mono">L38.1</code> Cut-Parameter Injection:</strong> Toggle <code class="mono">L38.1</code> on to push rotary cut parameters (<code class="mono">THC=... M1</code> Enabled vs. <code class="mono">M0</code> Disabled) from RotaryCAM, or turn it off to run your WinCNC material table directly.</li>
                 </ul>
               </li>
               <li>
-                <strong>WinCNC Dwell Syntax (<code class="mono">G04 X&lt;sec&gt;</code>):</strong> Formats stationary pierce dwells in decimal seconds using WinCNC's <code class="mono">X</code> dwell parameter.
+                <strong>Pattern 1 (<code class="mono">M61</code>) vs. Pattern 2 (<code class="mono">L38</code> Direct Ignition Bypass):</strong>
+                <ul class="doc-bullet-list" style="margin-top: 0.35rem;">
+                  <li><strong>Pattern 1 (<code class="mono">M61</code>):</strong> Runs WinCNC's touch-off and pierce cycle, suppresses duplicate <code class="mono">G4 X</code> dwells, and applies centerline <code class="mono">G92 Z</code> on 4D HSS tubing and ramps.</li>
+                  <li><strong>Pattern 2 (<code class="mono">L38</code>):</strong> Bypasses <code class="mono">M61</code> for direct torch ignition and automatically engages on 3D ramps whenever <code class="mono">L38.1</code> is off or legacy mode is active. <code class="mono">M62</code> shuts off the arc and retracts Z cleanly.</li>
+                </ul>
               </li>
               <li>
-                <strong>Clean Program Termination (<code class="mono">M66</code>):</strong> Closes each program with ShopSabre's native <code class="mono">M66</code> macro to cleanly end execution and reset table states.
-              </li>
-              <li>
-                <strong>Rotary Inverse-Time:</strong> Emits full <code class="mono">G93</code> inverse-time feedrates to drive the SideKick rotary axis in perfect coordination with gantry travel.
+                <strong>Pneumatic Scribe (<code class="mono">G54</code> XY Baking):</strong> Bakes pneumatic air-scribe XY offsets directly into <code class="mono">G54</code> coordinates with zero <code class="mono">G52</code>, <code class="mono">G53</code>, or <code class="mono">G56</code> conflicts.
               </li>
             </ul>
 
@@ -937,6 +943,7 @@ M3</code></pre>
                   <li><strong>Centroid Acorn:</strong> <code class="mono">M39</code> (extend &amp; offset) / <code class="mono">M40</code> (retract)</li>
                   <li><strong>Mach4 &amp; UCCNC:</strong> Auxiliary output M-code pair with automatic <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> work coordinate shift and <code class="mono">G52 X0 Y0</code> cancellation.</li>
                   <li><strong>ArtSoft Mach3:</strong> Auxiliary output M-code pair with XY scribe offsets baked directly into <code class="mono">G54</code> coordinates (avoiding <code class="mono">G52</code> vs. <code class="mono">G92</code> probe register conflicts).</li>
+                  <li><strong>ShopSabre WinCNC:</strong> Software-baked <code class="mono">G54</code> XY pneumatic scribe offsets with zero <code class="mono">G52</code>, <code class="mono">G53</code>, or <code class="mono">G56</code> conflicts.</li>
                 </ul>
                 Because the air scribe is permanently mounted beside the torch, your machine marks all Part IDs, bend lines, and alignment ticks, then immediately switches to the plasma torch and cuts out the parts in one completely hands-off automated run.
               </li>
