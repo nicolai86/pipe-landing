@@ -1495,7 +1495,7 @@
     <nav>
       <a href="#" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.8.2-BETA</span>
+        <span class="brand-tag">v0.8.3-BETA</span>
       </a>
       <div class="nav-links">
         <a href="#showcase">Showcase</a>
@@ -1533,7 +1533,7 @@
 
       <div class="cta-group" id="download">
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.2/RotaryCam-macOS-v0.8.2.dmg" class="primary-btn" id="hero-download-btn">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.3/RotaryCam-macOS-v0.8.3.dmg" class="primary-btn" id="hero-download-btn">
             <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
             </svg>
@@ -1562,13 +1562,13 @@
         <!-- Platform Selector Chips -->
         <div class="platform-chips">
           <span style="font-size: 0.76rem; color: var(--text-dim); margin-right: 0.25rem;">Platform builds:</span>
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.2/RotaryCam-macOS-v0.8.2.dmg" class="platform-chip active" id="chip-macos" onclick="selectPlatform('macos', event)">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.3/RotaryCam-macOS-v0.8.3.dmg" class="platform-chip active" id="chip-macos" onclick="selectPlatform('macos', event)">
             🍎 macOS (arm64)
           </a>
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.2/RotaryCam-Windows-v0.8.2.zip" class="platform-chip" id="chip-windows" onclick="selectPlatform('windows', event)">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.3/RotaryCam-Windows-v0.8.3.zip" class="platform-chip" id="chip-windows" onclick="selectPlatform('windows', event)">
             🪟 Windows (x64)
           </a>
-          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.2/RotaryCam-Linux-v0.8.2.zip" class="platform-chip" id="chip-linux" onclick="selectPlatform('linux', event)">
+          <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.3/RotaryCam-Linux-v0.8.3.zip" class="platform-chip" id="chip-linux" onclick="selectPlatform('linux', event)">
             🐧 Linux (x64)
           </a>
           <a href="changelog.html#downloads" class="platform-chip" style="color: var(--plasma-amber); border-color: rgba(245, 158, 11, 0.35);">
@@ -1595,7 +1595,7 @@
           <div class="term-dot" style="background: #eab308;"></div>
           <div class="term-dot" style="background: #22c55e;"></div>
         </div>
-        <span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">RotaryCAM v0.8.2: 3D Tube &amp; Flat-Sheet Plasma CAM</span>
+        <span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">RotaryCAM v0.8.3: 3D Tube &amp; Flat-Sheet Plasma CAM</span>
       </div>
       <img src="assets/cad-inspection.png" 
            alt="RotaryCAM Web Application Interface" 
@@ -2657,7 +2657,7 @@
           IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </p>
         <p>
-          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono" id="disclaimer-version">v0.8.2-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
+          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono" id="disclaimer-version">v0.8.3-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
         </p>
 
         <!-- Trademark & Compatibility Notice -->
@@ -2795,7 +2795,7 @@
       updateActiveNav();
 
       // 3. OS Detection & Platform Switching
-      const releaseVer = (window.ROTARYCAM_VERSION || '0.8.2').replace(/^v/, '');
+      const releaseVer = (window.ROTARYCAM_VERSION || '0.8.3').replace(/^v/, '');
       const releaseBase = `https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v${releaseVer}`;
       const downloadUrls = {
         macos: `${releaseBase}/RotaryCam-macOS-v${releaseVer}.dmg`,
@@ -3444,7 +3444,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.2-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.3-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }

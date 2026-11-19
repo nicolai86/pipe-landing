@@ -990,7 +990,7 @@
     <nav>
       <a href="index.html" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.8.2-BETA</span>
+        <span class="brand-tag">v0.8.3-BETA</span>
       </a>
       <div class="nav-links">
         <a href="index.html">Overview</a>
@@ -1039,11 +1039,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.8.2" class="jump-pill">
+      <a href="#v0.8.3" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.8.2)
+        Release History (v0.8.3)
       </a>
     </div>
 
@@ -1115,7 +1115,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.2/RotaryCam-macOS-v0.8.2.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.3/RotaryCam-macOS-v0.8.3.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1146,7 +1146,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.2/RotaryCam-Windows-v0.8.2.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.3/RotaryCam-Windows-v0.8.3.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1177,7 +1177,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.2/RotaryCam-Linux-v0.8.2.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.3/RotaryCam-Linux-v0.8.3.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1318,6 +1318,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 19, 2026 (v0.8.3)
+           ================================================================ -->
+      <article class="release-entry" id="v0.8.3">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 19, 2026</span>
+              <span class="release-version-pill">v0.8.3 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-Part Pack Unselection Fix &bull; Clean Pro Feature Defaults &bull; Actionable XML Import Warnings</span>
+          </div>
+          <p class="release-summary">
+            Unchecking parts in Multi-Part Pack Nesting now removes them from both your nest layout and exported G-code. Pro-only automation defaults stay OFF until enabled, and Mach3, FlashCut, and SimCNC XML import warnings link straight to the rotarycam.app FAQ.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIX</span>
+              <div class="change-content">
+                <strong>Multi-Part Pack Nesting Part Unselection Fix:</strong> Unchecking a part in Multi-Part Pack Nesting now drops it cleanly from both the nest layout and the generated G-code across flat-sheet and rotary stick runs.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Clean Pro Feature Defaults:</strong> Assembly Witness Marks, Auto-Scribe Part IDs, and Common-Line Cutting now default to OFF so new jobs stay clean until you turn them on.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Actionable Mach3, FlashCut &amp; SimCNC XML Import Warnings:</strong> Profile import warnings for Mach3 (<code class="mono">.xml</code>), FlashCut (<code class="mono">.xml</code>), and SimCNC (<code class="mono">config.xml</code>) now show clear fix steps with direct links to the <a href="docs/machine-configuration.html#import-warnings-faq" style="color: var(--plasma-amber);">rotarycam.app XML Import Warnings FAQ</a>.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 19, 2026 (v0.8.2)
            ================================================================ -->
       <article class="release-entry" id="v0.8.2">
@@ -1326,7 +1365,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.2 &bull; LATEST</span>
+              <span class="release-version-pill">v0.8.2</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; LinuxCNC, UCCNC, Acorn CNC12, grblHAL, Portable RS-274, PlanetCNC TNG, EdingCNC &amp; Mach4 ESS/TMC3in1 Hardening</span>
           </div>
@@ -2672,11 +2711,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.2-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.3-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.8.2').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.8.3').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',

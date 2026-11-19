@@ -234,10 +234,23 @@
               The built-in changelog view reflects all recent production engine updates. Below is the full transcript of recent engineering releases directly from the application:
             </p>
 
-            <!-- Release: Nov 19, 2026 (v0.8.2 • Latest) -->
+            <!-- Release: Nov 19, 2026 (v0.8.3 • Latest) -->
             <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--amber-400); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
               <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
-                <span class="mono" style="color: var(--amber-400); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 19, 2026 (v0.8.2 &bull; Latest)</span>
+                <span class="mono" style="color: var(--amber-400); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 19, 2026 (v0.8.3 &bull; Latest)</span>
+                <span style="color: var(--text-muted); font-size: 0.82rem;">Multi-Part Pack Unselection Fix &bull; Clean Pro Feature Defaults &bull; Actionable XML Import Warnings</span>
+              </div>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
+                <li><strong>Multi-Part Pack Nesting Part Unselection Fix:</strong> Unchecking a part in Multi-Part Pack Nesting now drops it cleanly from both the nest layout and the generated G-code across flat-sheet and rotary stick runs.</li>
+                <li><strong>Clean Pro Feature Defaults:</strong> Assembly Witness Marks, Auto-Scribe Part IDs, and Common-Line Cutting now default to OFF so new jobs stay clean until you turn them on.</li>
+                <li><strong>Actionable Mach3, FlashCut &amp; SimCNC XML Import Warnings:</strong> Profile import warnings for Mach3 (<code class="mono">.xml</code>), FlashCut (<code class="mono">.xml</code>), and SimCNC (<code class="mono">config.xml</code>) now show clear fix steps with direct links to the <a href="machine-configuration.html#import-warnings-faq" style="color: var(--amber-400);">rotarycam.app XML Import Warnings FAQ</a>.</li>
+              </ul>
+            </div>
+
+            <!-- Release: Nov 19, 2026 (v0.8.2) -->
+            <div style="background: rgba(20, 23, 29, 0.95); border: 1px solid var(--surface-border); border-left: 3px solid var(--cyan-arc); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.6rem;">
+                <span class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.95rem;">🗓️ Nov 19, 2026 (v0.8.2)</span>
                 <span style="color: var(--text-muted); font-size: 0.82rem;">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; LinuxCNC, UCCNC, Acorn CNC12, grblHAL, Portable RS-274, PlanetCNC TNG, EdingCNC &amp; Mach4 ESS/TMC3in1 Hardening</span>
               </div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
