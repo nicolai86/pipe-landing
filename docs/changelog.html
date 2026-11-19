@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>05. Build Information & Changelog | RotaryCAM Documentation</title>
-  <meta name="description" content="How to access RotaryCAM's built-in About modal, verify your version and Git commit hash, locate saved machine profiles and cut charts across macOS, Windows, and Linux, review release notes, and copy diagnostics." />
+  <title>Build Info, File Paths & Changelog | RotaryCAM Docs</title>
+  <meta name="description" content="Check your RotaryCAM version and Git commit hash, locate saved machine profiles and cut charts on macOS, Windows, and Linux, and copy diagnostics." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/changelog.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/changelog.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Build Info, File Paths & Changelog | RotaryCAM Docs" />
+  <meta property="og:description" content="Check your RotaryCAM version and Git commit hash, locate saved machine profiles and cut charts on macOS, Windows, and Linux, and copy diagnostics." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/changelog-2-modal.png" />
+  <meta property="og:image:alt" content="RotaryCAM About Modal with Build Information & Changelog" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Build Info, File Paths & Changelog | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Check your RotaryCAM version and Git commit hash, locate saved machine profiles and cut charts on macOS, Windows, and Linux, and copy diagnostics." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/changelog-2-modal.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Build Information \u0026 Changelog",
+        "item": "https://rotarycam.app/docs/changelog.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Build Information \u0026 Changelog",
+    "description": "Check your RotaryCAM version and Git commit hash, locate saved machine profiles and cut charts on macOS, Windows, and Linux, and copy diagnostics.",
+    "image": "https://rotarycam.app/docs/assets/changelog-2-modal.png",
+    "url": "https://rotarycam.app/docs/changelog.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/changelog.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -596,7 +665,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/changelog-1-open-about.png" alt="Step 1: Clicking the About button in the top-right header bar of RotaryCAM" loading="lazy" />
+              <picture>
+                <source srcset="assets/changelog-1-open-about.webp" type="image/webp" />
+                <img src="assets/changelog-1-open-about.png" alt="Step 1: Clicking the About button in the top-right header bar of RotaryCAM" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -627,7 +699,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/changelog-2-modal.png" alt="Step 2: About RotaryCAM modal displaying build metadata, release changelog, and Copy Diagnostics button" loading="lazy" />
+              <picture>
+                <source srcset="assets/changelog-2-modal.webp" type="image/webp" />
+                <img src="assets/changelog-2-modal.png" alt="Step 2: About RotaryCAM modal displaying build metadata, release changelog, and Copy Diagnostics button" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -1326,9 +1401,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

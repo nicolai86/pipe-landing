@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>13. Flat-Plate Pro Cutting Primitives & Torch Crash Protection | RotaryCAM Documentation</title>
-  <meta name="description" content="Prevent torch dives with Spatial Void THC Auto-Lock, set Left/Right/Center kerf on open slits, fire Edge-Start pierces on thick plate, crop square remnants, and run Daisy-Chain or Micro-Bridge passes." />
+  <title>Flat-Plate Pro Cutting & THC Lock | RotaryCAM Docs</title>
+  <meta name="description" content="Prevent torch dives with Spatial Void THC Auto-Lock, offset open slits Left/Right/Center, pierce thick plate from the edge, crop remnants, and chain." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/flat-plate-pro-cutting.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/flat-plate-pro-cutting.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Flat-Plate Pro Cutting & THC Lock | RotaryCAM Docs" />
+  <meta property="og:description" content="Prevent torch dives with Spatial Void THC Auto-Lock, offset open slits Left/Right/Center, pierce thick plate from the edge, crop remnants, and chain." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/v08-flat-pro-pack.png" />
+  <meta property="og:image:alt" content="RotaryCAM Flat-Sheet Pack Mode with Guillotine Crop Cut, Usable Remnant, and Chain/Bridge Cutting" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Flat-Plate Pro Cutting & THC Lock | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Prevent torch dives with Spatial Void THC Auto-Lock, offset open slits Left/Right/Center, pierce thick plate from the edge, crop remnants, and chain." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/v08-flat-pro-pack.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Flat-Plate Pro Cutting Primitives \u0026 Torch Crash Protection",
+        "item": "https://rotarycam.app/docs/flat-plate-pro-cutting.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Flat-Plate Pro Cutting Primitives \u0026 Torch Crash Protection",
+    "description": "Prevent torch dives with Spatial Void THC Auto-Lock, offset open slits Left/Right/Center, pierce thick plate from the edge, crop remnants, and chain.",
+    "image": "https://rotarycam.app/docs/assets/v08-flat-pro-pack.png",
+    "url": "https://rotarycam.app/docs/flat-plate-pro-cutting.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/flat-plate-pro-cutting.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -619,7 +688,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/v08-open-path-edge-start.png" alt="Step 2: Open-path Center Left Right kerf control and Edge-Start Thick Plate lead-in dropdown" loading="lazy" />
+              <picture>
+                <source srcset="assets/v08-open-path-edge-start.webp" type="image/webp" />
+                <img src="assets/v08-open-path-edge-start.png" alt="Step 2: Open-path Center Left Right kerf control and Edge-Start Thick Plate lead-in dropdown" width="2880" height="1800" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -650,7 +722,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/v08-flat-pro-pack.png" alt="Step 3: Flat-sheet Pack Mode showing Guillotine Crop Cut, Usable Remnant area, and Chain/Bridge cutting" loading="lazy" />
+              <picture>
+                <source srcset="assets/v08-flat-pro-pack.webp" type="image/webp" />
+                <img src="assets/v08-flat-pro-pack.png" alt="Step 3: Flat-sheet Pack Mode showing Guillotine Crop Cut, Usable Remnant area, and Chain/Bridge cutting" width="2880" height="1800" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -795,9 +870,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

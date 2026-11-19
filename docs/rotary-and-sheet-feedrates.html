@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>11. Understanding G94, G93 Inverse-Time & G20/G21 Feedrates | RotaryCAM Documentation</title>
-  <meta name="description" content="Practical fabricator guide to CNC plasma feedrates: G94 distance-per-minute on flat plate and 3-axis Y-wrap, G93 inverse-time on 4-axis rotary tubes, SimCNC 4D vector scaling, and why G93 F stays identical in G20 Imperial and G21 Metric." />
+  <title>G94, G93 Inverse-Time & G20/G21 Feeds | RotaryCAM Docs</title>
+  <meta name="description" content="Learn why flat-sheet G94 F drops 25.4x in inches while rotary G93 F stays constant, plus SimCNC 4D vector scaling and G-code checks before cutting." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/rotary-and-sheet-feedrates.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/rotary-and-sheet-feedrates.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="G94, G93 Inverse-Time & G20/G21 Feeds | RotaryCAM Docs" />
+  <meta property="og:description" content="Learn why flat-sheet G94 F drops 25.4x in inches while rotary G93 F stays constant, plus SimCNC 4D vector scaling and G-code checks before cutting." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/dxf-svg-5-imperial-sim.png" />
+  <meta property="og:image:alt" content="RotaryCAM 3D Torch Simulation with Imperial G20 and Metric G21 Feedrates" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="G94, G93 Inverse-Time & G20/G21 Feeds | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Learn why flat-sheet G94 F drops 25.4x in inches while rotary G93 F stays constant, plus SimCNC 4D vector scaling and G-code checks before cutting." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/dxf-svg-5-imperial-sim.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Understanding G94, G93 Inverse-Time \u0026 G20/G21 Feedrates",
+        "item": "https://rotarycam.app/docs/rotary-and-sheet-feedrates.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Understanding G94, G93 Inverse-Time \u0026 G20/G21 Feedrates",
+    "description": "Learn why flat-sheet G94 F drops 25.4x in inches while rotary G93 F stays constant, plus SimCNC 4D vector scaling and G-code checks before cutting.",
+    "image": "https://rotarycam.app/docs/assets/dxf-svg-5-imperial-sim.png",
+    "url": "https://rotarycam.app/docs/rotary-and-sheet-feedrates.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/rotary-and-sheet-feedrates.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

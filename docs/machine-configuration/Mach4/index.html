@@ -3,8 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ArtSoft Mach4 + Warp9 ESS / TMC3in1 Setup & Cut Cycle | RotaryCAM Docs</title>
-  <meta name="description" content="Mach4 + Warp9 ESS and TMC3in1 setup guide: G90/G91.1 separation, G31.0-G31.3 probing with refDistance, M62/M63 P3 torch vs OB1 m3/m5, Output #4 THC, and W9_HC m2020 registers." />
+  <title>Mach4 + Warp9 ESS / TMC3in1 Setup & Cut Cycle | RotaryCAM Docs</title>
+  <meta name="description" content="Mach4 + Warp9 ESS and TMC3in1 setup: G90/G91.1 mode split, G31 probing with refDistance, M62/M63 P3 torch vs m3/m5, Output #4 THC, and m2020." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/machine-configuration/Mach4/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/machine-configuration/Mach4/" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Mach4 + Warp9 ESS / TMC3in1 Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta property="og:description" content="Mach4 + Warp9 ESS and TMC3in1 setup: G90/G91.1 mode split, G31 probing with refDistance, M62/M63 P3 torch vs m3/m5, Output #4 THC, and m2020." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="ArtSoft Mach4 + Warp9 ESS / TMC3in1 Setup and Cut Cycle in RotaryCAM" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Mach4 + Warp9 ESS / TMC3in1 Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Mach4 + Warp9 ESS and TMC3in1 setup: G90/G91.1 mode split, G31 probing with refDistance, M62/M63 P3 torch vs m3/m5, Output #4 THC, and m2020." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Machine Configuration",
+        "item": "https://rotarycam.app/docs/machine-configuration.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "ArtSoft Mach4 + Warp9 ESS / TMC3in1",
+        "item": "https://rotarycam.app/docs/machine-configuration/Mach4/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "ArtSoft Mach4 + Warp9 ESS / TMC3in1 Setup and Cut Cycle",
+    "description": "Mach4 + Warp9 ESS and TMC3in1 setup: G90/G91.1 mode split, G31 probing with refDistance, M62/M63 P3 torch vs m3/m5, Output #4 THC, and m2020.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/machine-configuration/Mach4/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/machine-configuration/Mach4/"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

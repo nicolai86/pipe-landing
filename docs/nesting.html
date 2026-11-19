@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>03. Multi-Part Stick Nesting | RotaryCAM Documentation</title>
-  <meta name="description" content="Step-by-step guide to RotaryCAM's Multi-Part Pack Nesting: load a 37-part STEP assembly, filter by cross-section profile, pack 17 parts across multiple 6000 mm sticks at 99.8% efficiency, and export per-stick G-code." />
+  <title>Multi-Part Tube Stick Nesting | RotaryCAM Docs</title>
+  <meta name="description" content="Load multi-body STEP weldments, filter parts by tube profile, interlock miters and copes across 6000 mm sticks at 99.8% yield, and export .nc files." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/nesting.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/nesting.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Multi-Part Tube Stick Nesting | RotaryCAM Docs" />
+  <meta property="og:description" content="Load multi-body STEP weldments, filter parts by tube profile, interlock miters and copes across 6000 mm sticks at 99.8% yield, and export .nc files." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/nesting-5-compile.png" />
+  <meta property="og:image:alt" content="RotaryCAM Multi-Part Pack Nesting Across Multiple Sticks" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Multi-Part Tube Stick Nesting | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Load multi-body STEP weldments, filter parts by tube profile, interlock miters and copes across 6000 mm sticks at 99.8% yield, and export .nc files." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/nesting-5-compile.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Multi-Part Stick Nesting",
+        "item": "https://rotarycam.app/docs/nesting.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Multi-Part Stick Nesting",
+    "description": "Load multi-body STEP weldments, filter parts by tube profile, interlock miters and copes across 6000 mm sticks at 99.8% yield, and export .nc files.",
+    "image": "https://rotarycam.app/docs/assets/nesting-5-compile.png",
+    "url": "https://rotarycam.app/docs/nesting.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/nesting.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -601,7 +670,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/nesting-1-fixture.png" alt="Step 1: Selecting Headache Rack [COMPLEX] in Quick CAD Fixtures" loading="lazy" />
+              <picture>
+                <source srcset="assets/nesting-1-fixture.webp" type="image/webp" />
+                <img src="assets/nesting-1-fixture.png" alt="Step 1: Selecting Headache Rack [COMPLEX] in Quick CAD Fixtures" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -631,7 +703,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/nesting-2-open-pack.png" alt="Step 2: Clicking the Multi-Part Pack Nesting (37 PARTS) tab or Open Pack button" loading="lazy" />
+              <picture>
+                <source srcset="assets/nesting-2-open-pack.webp" type="image/webp" />
+                <img src="assets/nesting-2-open-pack.png" alt="Step 2: Clicking the Multi-Part Pack Nesting (37 PARTS) tab or Open Pack button" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -660,7 +735,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/nesting-3-profile-selector.png" alt="Step 3: Highlighting the CUTTING PROFILE selector bar in Multi-Part Pack Nesting" loading="lazy" />
+              <picture>
+                <source srcset="assets/nesting-3-profile-selector.webp" type="image/webp" />
+                <img src="assets/nesting-3-profile-selector.png" alt="Step 3: Highlighting the CUTTING PROFILE selector bar in Multi-Part Pack Nesting" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -692,7 +770,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/nesting-4-select-profile.png" alt="Step 4: Dropdown showing detected tube profiles and selecting Profile_HSS_Rect (25.4x25.4mm) (17 parts)" loading="lazy" />
+              <picture>
+                <source srcset="assets/nesting-4-select-profile.webp" type="image/webp" />
+                <img src="assets/nesting-4-select-profile.png" alt="Step 4: Dropdown showing detected tube profiles and selecting Profile_HSS_Rect (25.4x25.4mm) (17 parts)" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -736,7 +817,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/nesting-5-compile.png" alt="Step 5: Multi-Stick arrangement bar showing 99.8% efficiency and Compile Pack G-Code button" loading="lazy" />
+              <picture>
+                <source srcset="assets/nesting-5-compile.webp" type="image/webp" />
+                <img src="assets/nesting-5-compile.png" alt="Step 5: Multi-Stick arrangement bar showing 99.8% efficiency and Compile Pack G-Code button" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -783,7 +867,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/nesting-6-download.png" alt="Step 6: Downloading pack_stick_1.nc and switching sticks in 3D Machine Simulation" loading="lazy" />
+              <picture>
+                <source srcset="assets/nesting-6-download.webp" type="image/webp" />
+                <img src="assets/nesting-6-download.png" alt="Step 6: Downloading pack_stick_1.nc and switching sticks in 3D Machine Simulation" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -943,9 +1030,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

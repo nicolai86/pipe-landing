@@ -67,6 +67,10 @@ a {
   text-decoration: none;
 }
 
+picture {
+  display: contents;
+}
+
 .mono, code.mono {
   font-family: var(--font-mono);
 }

@@ -3,8 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Documentation & Workflows: RotaryCAM | 4-Axis Rotary CNC Plasma CAM</title>
-  <meta name="description" content="Step-by-step visual documentation and shop tutorials for RotaryCAM: 4-axis machine setup, 3D STEP cut-path inspection, zero-bevel saddle compensation, multi-stick nesting, HSS & round pipe Cut-and-Bend unfolding, Fusion 360 modeling, and SimCNC motion-sync torch control." />
+  <title>RotaryCAM Docs | 4-Axis Rotary & Flat-Sheet Plasma Guides</title>
+  <meta name="description" content="Step-by-step RotaryCAM guides for 4-axis tube cutting, zero-bevel copes, stick nesting, DXF/SVG flat sheets, cut charts, and CNC controller setup." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rotarycam.app/docs/" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="RotaryCAM Docs | 4-Axis Rotary & Flat-Sheet Plasma Guides" />
+  <meta property="og:description" content="Step-by-step RotaryCAM guides for 4-axis tube cutting, zero-bevel copes, stick nesting, DXF/SVG flat sheets, cut charts, and CNC controller setup." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="RotaryCAM 3D CAD Tube Inspection and Feature Extraction" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RotaryCAM Docs | 4-Axis Rotary & Flat-Sheet Plasma Guides" />
+  <meta name="twitter:description" content="Step-by-step RotaryCAM guides for 4-axis tube cutting, zero-bevel copes, stick nesting, DXF/SVG flat sheets, cut charts, and CNC controller setup." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "RotaryCAM Documentation and CAM Workflows",
+    "description": "Step-by-step RotaryCAM guides for 4-axis tube cutting, zero-bevel copes, stick nesting, DXF/SVG flat sheets, cut charts, and CNC controller setup.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -423,7 +486,10 @@
         <a href="machine-configuration.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/machine-config-2-limits.png" alt="RotaryCAM Machine Profiles & Kinematics Modal" loading="lazy" />
+            <picture>
+              <source srcset="assets/machine-config-2-limits.webp" type="image/webp" />
+              <img src="assets/machine-config-2-limits.png" alt="RotaryCAM Machine Profiles & Kinematics Modal" width="2324" height="1397" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 01 • 7 STEPS</span>
           </div>
@@ -458,7 +524,10 @@
         <a href="cut-path-configuration.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/cut-path-6-zero-bevel.png" alt="RotaryCAM Per-Contour Cut Path & Zero-Bevel Configuration" loading="lazy" />
+            <picture>
+              <source srcset="assets/cut-path-6-zero-bevel.webp" type="image/webp" />
+              <img src="assets/cut-path-6-zero-bevel.png" alt="RotaryCAM Per-Contour Cut Path & Zero-Bevel Configuration" width="2324" height="1397" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 02 • 8 STEPS</span>
           </div>
@@ -489,7 +558,10 @@
         <a href="nesting.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/nesting-5-compile.png" alt="RotaryCAM Multi-Part Pack Nesting Across Multiple Sticks" loading="lazy" />
+            <picture>
+              <source srcset="assets/nesting-5-compile.webp" type="image/webp" />
+              <img src="assets/nesting-5-compile.png" alt="RotaryCAM Multi-Part Pack Nesting Across Multiple Sticks" width="2324" height="1397" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 03 • 6 STEPS</span>
           </div>
@@ -520,7 +592,10 @@
         <a href="bending.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/bending-4-configure-bend.png" alt="RotaryCAM HSS & HSS-O Cut-and-Bend Unfolding" loading="lazy" />
+            <picture>
+              <source srcset="assets/bending-4-configure-bend.webp" type="image/webp" />
+              <img src="assets/bending-4-configure-bend.png" alt="RotaryCAM HSS & HSS-O Cut-and-Bend Unfolding" width="2324" height="1397" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 04 • 5 STEPS</span>
           </div>
@@ -551,7 +626,10 @@
         <a href="changelog.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/changelog-2-modal.png" alt="RotaryCAM About Modal with Build Information & Changelog" loading="lazy" />
+            <picture>
+              <source srcset="assets/changelog-2-modal.webp" type="image/webp" />
+              <img src="assets/changelog-2-modal.png" alt="RotaryCAM About Modal with Build Information & Changelog" width="2324" height="1397" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 05 • 3 STEPS • DIAGNOSTICS & STORAGE</span>
           </div>
@@ -582,7 +660,10 @@
         <a href="ai-autodetection.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/ai-cad-8-autodetect.png" alt="RotaryCAM Fusion 360 Structural Member & Automatic Tube Detection" loading="lazy" />
+            <picture>
+              <source srcset="assets/ai-cad-8-autodetect.webp" type="image/webp" />
+              <img src="assets/ai-cad-8-autodetect.png" alt="RotaryCAM Fusion 360 Structural Member & Automatic Tube Detection" width="2324" height="1397" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 06 • 8 STEPS • 11 SCREENSHOTS</span>
           </div>
@@ -655,7 +736,10 @@
         <a href="cut-charts-and-features.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/cut-charts-2-modal.png" alt="RotaryCAM Hypertherm Cut Charts Manager and Parameter Editor" loading="lazy" />
+            <picture>
+              <source srcset="assets/cut-charts-2-modal.webp" type="image/webp" />
+              <img src="assets/cut-charts-2-modal.png" alt="RotaryCAM Hypertherm Cut Charts Manager and Parameter Editor" width="2324" height="1397" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 08 • 7 STEPS • VISUAL GUIDE</span>
           </div>
@@ -728,7 +812,10 @@
         <a href="dxf-svg-flat-sheet.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/dxf-svg-4-sheet-nesting.png" alt="RotaryCAM 2D Sheet Nesting of 30 Parts on a 96x48 in Sheet with Imperial G20 G-Code" loading="lazy" />
+            <picture>
+              <source srcset="assets/dxf-svg-4-sheet-nesting.webp" type="image/webp" />
+              <img src="assets/dxf-svg-4-sheet-nesting.png" alt="RotaryCAM 2D Sheet Nesting of 30 Parts on a 96x48 in Sheet with Imperial G20 G-Code" width="2880" height="1800" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 10 • 5 STEPS</span>
           </div>
@@ -761,7 +848,10 @@
         <a href="rotary-and-sheet-feedrates.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/dxf-svg-5-imperial-sim.png" alt="RotaryCAM 3D Torch Simulation with Imperial G20 and Metric G21 Feedrates" loading="lazy" />
+            <picture>
+              <source srcset="assets/dxf-svg-5-imperial-sim.webp" type="image/webp" />
+              <img src="assets/dxf-svg-5-imperial-sim.png" alt="RotaryCAM 3D Torch Simulation with Imperial G20 and Metric G21 Feedrates" width="2880" height="1800" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 11 • 5 SECTIONS</span>
           </div>
@@ -794,7 +884,10 @@
         <a href="interactive-canvas-controls.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/v08-move-pierce.png" alt="RotaryCAM Interactive Move Pierce on 3D and 2D Contours" loading="lazy" />
+            <picture>
+              <source srcset="assets/v08-move-pierce.webp" type="image/webp" />
+              <img src="assets/v08-move-pierce.png" alt="RotaryCAM Interactive Move Pierce on 3D and 2D Contours" width="2880" height="1800" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 12 • 4 STEPS</span>
           </div>
@@ -825,7 +918,10 @@
         <a href="flat-plate-pro-cutting.html" class="docs-hub-card">
           <div class="docs-hub-thumb">
             
-            <img src="assets/v08-flat-pro-pack.png" alt="RotaryCAM Flat-Sheet Pack Mode with Guillotine Crop Cut, Usable Remnant, and Chain/Bridge Cutting" loading="lazy" />
+            <picture>
+              <source srcset="assets/v08-flat-pro-pack.webp" type="image/webp" />
+              <img src="assets/v08-flat-pro-pack.png" alt="RotaryCAM Flat-Sheet Pack Mode with Guillotine Crop Cut, Usable Remnant, and Chain/Bridge Cutting" width="2880" height="1800" loading="lazy" />
+            </picture>
             
             <span class="docs-hub-badge">TUTORIAL 13 • 4 STEPS</span>
           </div>

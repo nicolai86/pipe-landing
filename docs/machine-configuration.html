@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>01. Basic Machine Configuration | RotaryCAM Documentation</title>
-  <meta name="description" content="Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in RotaryCAM." />
+  <title>Basic Machine Configuration | RotaryCAM Docs</title>
+  <meta name="description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/machine-configuration.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/machine-configuration.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Basic Machine Configuration | RotaryCAM Docs" />
+  <meta property="og:description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/machine-config-2-limits.png" />
+  <meta property="og:image:alt" content="RotaryCAM Machine Profiles & Kinematics Modal" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Basic Machine Configuration | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/machine-config-2-limits.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Basic Machine Configuration",
+        "item": "https://rotarycam.app/docs/machine-configuration.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Basic Machine Configuration",
+    "description": "Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers.",
+    "image": "https://rotarycam.app/docs/assets/machine-config-2-limits.png",
+    "url": "https://rotarycam.app/docs/machine-configuration.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/machine-configuration.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -603,7 +672,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/machine-config-1-open.png" alt="Step 1: Click Config in the CNC Plasma Kinematics panel or Machines in the top bar" loading="lazy" />
+              <picture>
+                <source srcset="assets/machine-config-1-open.webp" type="image/webp" />
+                <img src="assets/machine-config-1-open.png" alt="Step 1: Click Config in the CNC Plasma Kinematics panel or Machines in the top bar" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -765,7 +837,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/machine-config-2-limits.png" alt="Step 2: Axis Kinematics and Limits tab showing linear and rotary velocity, acceleration, and jerk settings" loading="lazy" />
+              <picture>
+                <source srcset="assets/machine-config-2-limits.webp" type="image/webp" />
+                <img src="assets/machine-config-2-limits.png" alt="Step 2: Axis Kinematics and Limits tab showing linear and rotary velocity, acceleration, and jerk settings" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -841,7 +916,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/machine-config-3-dialect.png" alt="Step 3: Controller and Compensation tab showing G-code dialect dropdown and post-processor compensation checkboxes" loading="lazy" />
+              <picture>
+                <source srcset="assets/machine-config-3-dialect.webp" type="image/webp" />
+                <img src="assets/machine-config-3-dialect.png" alt="Step 3: Controller and Compensation tab showing G-code dialect dropdown and post-processor compensation checkboxes" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -891,7 +969,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/machine-config-4-thc.png" alt="Step 4: THC and Plasma Hardware tab showing synchronous THC lock and unlock settings" loading="lazy" />
+              <picture>
+                <source srcset="assets/machine-config-4-thc.webp" type="image/webp" />
+                <img src="assets/machine-config-4-thc.png" alt="Step 4: THC and Plasma Hardware tab showing synchronous THC lock and unlock settings" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -922,7 +1003,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/machine-config-5-defaults.png" alt="Step 5: Zero-Bevel and Corner Loops tab and Save Profile button" loading="lazy" />
+              <picture>
+                <source srcset="assets/machine-config-5-defaults.webp" type="image/webp" />
+                <img src="assets/machine-config-5-defaults.png" alt="Step 5: Zero-Bevel and Corner Loops tab and Save Profile button" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -1658,9 +1742,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

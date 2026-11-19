@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>04. Bending HSS & HSS-O Sticks | RotaryCAM Documentation</title>
-  <meta name="description" content="Step-by-step guide to RotaryCAM's Cut-and-Bend unfolding workflow for square/rectangular HSS and round HSS-O sticks: load a bent tube STEP file, expand relief kerf cuts, customize cut counts and living-hinge spine width (Edge Left), preview the unfolded straight stick in 3D, and export G-code." />
+  <title>Bending HSS & Round Pipe Sticks | RotaryCAM Docs</title>
+  <meta name="description" content="Unfold 3D bent square HSS and round pipe STEP models into straight sticks with custom kerf relief cuts and spine widths, then preview and export G-code." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/bending.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/bending.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Bending HSS & Round Pipe Sticks | RotaryCAM Docs" />
+  <meta property="og:description" content="Unfold 3D bent square HSS and round pipe STEP models into straight sticks with custom kerf relief cuts and spine widths, then preview and export G-code." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/bending-4-configure-bend.png" />
+  <meta property="og:image:alt" content="RotaryCAM HSS & HSS-O Cut-and-Bend Unfolding" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Bending HSS & Round Pipe Sticks | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Unfold 3D bent square HSS and round pipe STEP models into straight sticks with custom kerf relief cuts and spine widths, then preview and export G-code." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/bending-4-configure-bend.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Bending HSS \u0026 HSS-O Sticks",
+        "item": "https://rotarycam.app/docs/bending.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Bending HSS \u0026 HSS-O Sticks",
+    "description": "Unfold 3D bent square HSS and round pipe STEP models into straight sticks with custom kerf relief cuts and spine widths, then preview and export G-code.",
+    "image": "https://rotarycam.app/docs/assets/bending-4-configure-bend.png",
+    "url": "https://rotarycam.app/docs/bending.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/bending.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -599,7 +668,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/bending-1-fixture.png" alt="Step 1: Selecting HSS Bending [CUT & BEND] in Quick CAD Fixtures" loading="lazy" />
+              <picture>
+                <source srcset="assets/bending-1-fixture.webp" type="image/webp" />
+                <img src="assets/bending-1-fixture.png" alt="Step 1: Selecting HSS Bending [CUT & BEND] in Quick CAD Fixtures" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -629,7 +701,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/bending-2-select-cuts.png" alt="Step 2: Selecting Bend #1 and clicking Cuts (3) next to Bend Config" loading="lazy" />
+              <picture>
+                <source srcset="assets/bending-2-select-cuts.webp" type="image/webp" />
+                <img src="assets/bending-2-select-cuts.png" alt="Step 2: Selecting Bend #1 and clicking Cuts (3) next to Bend Config" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -664,7 +739,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/bending-3-expanded-cuts.png" alt="Step 3: Expanded relief cuts under Bend #1 showing Cuts: 3 and Edge Left: 13.5 mm" loading="lazy" />
+              <picture>
+                <source srcset="assets/bending-3-expanded-cuts.webp" type="image/webp" />
+                <img src="assets/bending-3-expanded-cuts.png" alt="Step 3: Expanded relief cuts under Bend #1 showing Cuts: 3 and Edge Left: 13.5 mm" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -696,7 +774,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/bending-4-configure-bend.png" alt="Step 4: Setting Cuts to 5 and Edge Left to 30.0 mm on Bend #1 and clicking 3D Cut Simulation" loading="lazy" />
+              <picture>
+                <source srcset="assets/bending-4-configure-bend.webp" type="image/webp" />
+                <img src="assets/bending-4-configure-bend.png" alt="Step 4: Setting Cuts to 5 and Edge Left to 30.0 mm on Bend #1 and clicking 3D Cut Simulation" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -733,7 +814,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/bending-5-simulate-download.png" alt="Step 5: 3D Cut Simulation of the unfolded straight stick with 5 relief cuts and clicking Download" loading="lazy" />
+              <picture>
+                <source srcset="assets/bending-5-simulate-download.webp" type="image/webp" />
+                <img src="assets/bending-5-simulate-download.png" alt="Step 5: 3D Cut Simulation of the unfolded straight stick with 5 relief cuts and clicking Download" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -857,9 +941,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

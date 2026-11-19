@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>08. Plasma Cut Charts, Torch Settings & Feature Toggling | RotaryCAM Documentation</title>
-  <meta name="description" content="Complete guide to RotaryCAM's 1,025 built-in plasma cut presets across 3 torch families (Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma), automatic wall-thickness matching, unit-aware CSV cut chart import and export, custom preset editing, and selective feature omission in 3D tube inspection." />
+  <title>Plasma Cut Charts & Feature Toggles | RotaryCAM Docs</title>
+  <meta name="description" content="Browse 1,025 plasma cut presets for Hypertherm SYNC, Duramax, and air plasma, import or export CSV charts, auto-match wall thickness, and omit holes." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/cut-charts-and-features.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/cut-charts-and-features.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Plasma Cut Charts & Feature Toggles | RotaryCAM Docs" />
+  <meta property="og:description" content="Browse 1,025 plasma cut presets for Hypertherm SYNC, Duramax, and air plasma, import or export CSV charts, auto-match wall thickness, and omit holes." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/cut-charts-2-modal.png" />
+  <meta property="og:image:alt" content="RotaryCAM Hypertherm Cut Charts Manager and Parameter Editor" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Plasma Cut Charts & Feature Toggles | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Browse 1,025 plasma cut presets for Hypertherm SYNC, Duramax, and air plasma, import or export CSV charts, auto-match wall thickness, and omit holes." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/cut-charts-2-modal.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Plasma Cut Charts \u0026 Feature Toggling",
+        "item": "https://rotarycam.app/docs/cut-charts-and-features.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Plasma Cut Charts \u0026 Feature Toggling",
+    "description": "Browse 1,025 plasma cut presets for Hypertherm SYNC, Duramax, and air plasma, import or export CSV charts, auto-match wall thickness, and omit holes.",
+    "image": "https://rotarycam.app/docs/assets/cut-charts-2-modal.png",
+    "url": "https://rotarycam.app/docs/cut-charts-and-features.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/cut-charts-and-features.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -611,7 +680,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-charts-1-open.png" alt="Step 1: Clicking Cut Charts button in top-right application header" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-charts-1-open.webp" type="image/webp" />
+                <img src="assets/cut-charts-1-open.png" alt="Step 1: Clicking Cut Charts button in top-right application header" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -654,7 +726,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-charts-2-modal.png" alt="Step 2: Browsing and filtering 1,025 cut charts across Hypertherm SYNC, Duramax, and Generic Air Plasma" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-charts-2-modal.webp" type="image/webp" />
+                <img src="assets/cut-charts-2-modal.png" alt="Step 2: Browsing and filtering 1,025 cut charts across Hypertherm SYNC, Duramax, and Generic Air Plasma" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -685,7 +760,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-charts-3-edit.png" alt="Step 3: Editing cut parameters inline or clicking Add Preset" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-charts-3-edit.webp" type="image/webp" />
+                <img src="assets/cut-charts-3-edit.png" alt="Step 3: Editing cut parameters inline or clicking Add Preset" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -762,7 +840,10 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-charts-4-session.png" alt="Step 5: Automatic wall thickness matching badge and cut parameters in sidebar" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-charts-4-session.webp" type="image/webp" />
+                <img src="assets/cut-charts-4-session.png" alt="Step 5: Automatic wall thickness matching badge and cut parameters in sidebar" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -795,7 +876,10 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-charts-5-checkbox.png" alt="Step 6: Interactive enable/disable checkboxes for tube cutouts with locked sever cuts" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-charts-5-checkbox.webp" type="image/webp" />
+                <img src="assets/cut-charts-5-checkbox.png" alt="Step 6: Interactive enable/disable checkboxes for tube cutouts with locked sever cuts" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -826,7 +910,10 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-charts-6-omitted.png" alt="Step 7: Omitted feature excluded from 3D cut path and live G-code recompiled" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-charts-6-omitted.webp" type="image/webp" />
+                <img src="assets/cut-charts-6-omitted.png" alt="Step 7: Omitted feature excluded from 3D cut path and live G-code recompiled" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -950,9 +1037,9 @@ name,source,material,amperage,consumable_type,thickness_in,feed_ipm,kerf_in,cut_
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

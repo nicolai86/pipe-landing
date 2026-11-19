@@ -5,6 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ page.meta_title }}</title>
   <meta name="description" content="{{ page.meta_description }}" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="{{ canonical_url }}" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="{{ og_type | default('article') }}" />
+  <meta property="og:url" content="{{ canonical_url }}" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="{{ page.meta_title }}" />
+  <meta property="og:description" content="{{ page.meta_description }}" />
+  <meta property="og:image" content="{{ og_image }}" />
+  <meta property="og:image:alt" content="{{ og_image_alt }}" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ page.meta_title }}" />
+  <meta name="twitter:description" content="{{ page.meta_description }}" />
+  <meta name="twitter:image" content="{{ og_image }}" />
+
+  {% block structured_data %}{% endblock %}
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -298,9 +317,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

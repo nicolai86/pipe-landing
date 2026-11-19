@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary SEO Meta -->
-  <title>Smart Z-Axis Hardware THC (v2): 10,000 Hz Step/Dir Plasma Height Controller ($199 CAD) | RotaryCAM</title>
-  <meta name="title" content="Smart Z-Axis Hardware THC (v2): 10,000 Hz Step/Dir Plasma Height Controller ($199 CAD) | RotaryCAM" />
-  <meta name="description" content="Standalone 10,000 Hz hardware Torch Height Controller &amp; Z-axis Step/Dir motion interceptor ($199 CAD target). Plugs inline between any 5V differential CNC controller and your existing Z drive: 2.0 ms ohmic tip-up escape, macro-free corner anti-dive, zero-clamp full-lifter-stroke warp tracking (&lt;0.002&Prime; lag on ClearPath servos), 4-axis rotary tube cam, and 20 KB black-box crash recorder." />
-  <meta name="keywords" content="plasma torch height controller, standalone hardware THC, Step Dir THC interposer, CSMIO IP-M THC, SimCNC plasma THC, Mach3 Mach4 THC upgrade, LinuxCNC Mesa plasma THC, MASSO Acorn plasma THC, rotary tube plasma THC, ohmic anti-crash plasma" />
+  <title>Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM</title>
+  <meta name="title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
+  <meta name="description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, corner freeze, and 4-axis rotary cam." />
   <meta name="author" content="Raphael Randschau" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://rotarycam.app/hardware-thc.html" />
@@ -18,16 +17,16 @@
   <meta property="og:type" content="product" />
   <meta property="og:url" content="https://rotarycam.app/hardware-thc.html" />
   <meta property="og:site_name" content="RotaryCAM" />
-  <meta property="og:title" content="10,000 Hz Hardware Torch Height Controller &amp; Z-Axis Interceptor ($199 CAD)" />
-  <meta property="og:description" content="Stop wrecking consumables on warped plate and tipped-up slugs. Plug inline between your existing CNC controller and Z drive in 15 minutes: 100 µs hardware Z loop, 2.0 ms ohmic collision escape, macro-free corner freeze, and 4-axis rotary tube cam." />
+  <meta property="og:title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
+  <meta property="og:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, corner freeze, and 4-axis rotary cam." />
   <meta property="og:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
   <meta property="og:image:alt" content="RotaryCAM Hardware v2 10 kHz Z-Axis Torch Height Controller PCB" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://rotarycam.app/hardware-thc.html" />
-  <meta name="twitter:title" content="10,000 Hz Hardware Torch Height Controller &amp; Z-Axis Interceptor ($199 CAD)" />
-  <meta name="twitter:description" content="Drops inline between any 5V RS-422 Step/Dir CNC controller and your existing Z drive. 2.0 ms ohmic tip-up escape, zero-clamp full-lifter-stroke warp tracking (&lt;0.002&Prime; lag on ClearPath servos), $199 CAD target." />
+  <meta name="twitter:title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
+  <meta name="twitter:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, corner freeze, and 4-axis rotary cam." />
   <meta name="twitter:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
 
   <!-- Favicon -->
@@ -1997,6 +1996,7 @@
         align-items: flex-start;
       }
     }
+    picture { display: contents; }
   </style>
 </head>
 <body>
@@ -2007,7 +2007,7 @@
   <!-- Single-Line Sticky Navigation -->
   <header class="site-header">
     <div class="site-header-bar">
-      <a href="index.html" class="nav-back-link">← Back to RotaryCAM</a>
+      <a href="./" class="nav-back-link">← Back to RotaryCAM</a>
       <nav aria-label="Hardware THC Navigation">
         <a href="#" class="brand">
           <span>RotaryCAM</span>
@@ -2649,13 +2649,17 @@
 
             <button type="button" class="pinout-zoom-btn" id="pinout-open-btn" aria-label="Zoom Hardware v2 PCB connector pinout diagram">
               <div class="pinout-img-frame">
-                <img
-                  src="assets/z-axis-thc-v2-pinout.jpg"
-                  alt="Annotated Hardware v2 THC PCB connector pinout showing INPUT X-C (S-, D+, S+, D-), OUTPUT X-C (D-, S+, D+, S-), POWER (24V, 0V), INPUTS &amp; OUTPUTS (ARC OK, THC ENA, WATCHDOG, ARC VIN, TARGET VIN), GND, and RS485 (A, B)"
-                  width="2000"
-                  height="2000"
-                  loading="eager"
-                />
+                <picture>
+                  <source srcset="assets/z-axis-thc-v2-pinout.webp" type="image/webp" />
+                  <img
+                    src="assets/z-axis-thc-v2-pinout.jpg"
+                    alt="Annotated Hardware v2 THC PCB connector pinout showing INPUT X-C (S-, D+, S+, D-), OUTPUT X-C (D-, S+, D+, S-), POWER (24V, 0V), INPUTS &amp; OUTPUTS (ARC OK, THC ENA, WATCHDOG, ARC VIN, TARGET VIN), GND, and RS485 (A, B)"
+                    width="2000"
+                    height="2000"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </picture>
               </div>
             </button>
 
@@ -2673,13 +2677,17 @@
             <button type="button" class="pinout-dialog-close" id="pinout-close-btn">ESC / Close ✕</button>
           </div>
           <div class="pinout-dialog-body">
-            <img
-              src="assets/z-axis-thc-v2-pinout.jpg"
-              alt="Full-resolution Hardware v2 THC PCB connector pinout"
-              width="2000"
-              height="2000"
-              loading="lazy"
-            />
+            <picture>
+              <source srcset="assets/z-axis-thc-v2-pinout.webp" type="image/webp" />
+              <img
+                src="assets/z-axis-thc-v2-pinout.jpg"
+                alt="Full-resolution Hardware v2 THC PCB connector pinout"
+                width="2000"
+                height="2000"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </div>
         </dialog>
 
@@ -3121,9 +3129,9 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
       <div class="footer-sub">10,000 Hz Hardware Z-Axis THC &amp; 4-Axis Rotary / Flat-Sheet CNC Plasma CAM</div>
     </div>
     <div class="footer-links">
-      <a href="index.html" class="footer-link">← RotaryCAM Home</a>
-      <a href="index.html#pricing" class="footer-link" style="color: var(--emerald-cut);">CAM Pricing &amp; Offline Keys</a>
-      <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
+      <a href="./" class="footer-link">← RotaryCAM Home</a>
+      <a href="./#pricing" class="footer-link" style="color: var(--emerald-cut);">CAM Pricing &amp; Offline Keys</a>
+      <a href="docs/" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
       <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">6-Meter Machine Build Guide ↗</a>
       <a href="changelog.html" class="footer-link">Changelog &amp; Downloads</a>
       <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>

@@ -4,7 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Centroid Acorn CNC12 v5.4+ Setup & Cut Cycle | RotaryCAM Docs</title>
-  <meta name="description" content="Centroid Acorn CNC12 v5.4+ setup guide: 2D M61/M62 zero-Z regime vs. 3D/4D M150 (mfunc150.mac) + M36 ATHC Hold + G93.1 smoothed inverse-time, AcornSix Dual-Y, and P220/P225 parameters." />
+  <meta name="description" content="Centroid Acorn CNC12 v5.4+ setup guide: 2D M61/M62 zero-Z vs 3D/4D M150 macro, M36 ATHC Hold, G93.1 inverse-time, Dual-Y AcornSix, and P220/P225." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/machine-configuration/Acorn/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/machine-configuration/Acorn/" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Centroid Acorn CNC12 v5.4+ Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta property="og:description" content="Centroid Acorn CNC12 v5.4+ setup guide: 2D M61/M62 zero-Z vs 3D/4D M150 macro, M36 ATHC Hold, G93.1 inverse-time, Dual-Y AcornSix, and P220/P225." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="Centroid Acorn CNC12 v5.4+ Setup and Cut Cycle in RotaryCAM" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Centroid Acorn CNC12 v5.4+ Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Centroid Acorn CNC12 v5.4+ setup guide: 2D M61/M62 zero-Z vs 3D/4D M150 macro, M36 ATHC Hold, G93.1 inverse-time, Dual-Y AcornSix, and P220/P225." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Machine Configuration",
+        "item": "https://rotarycam.app/docs/machine-configuration.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Centroid Acorn CNC12 v5.4+",
+        "item": "https://rotarycam.app/docs/machine-configuration/Acorn/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Centroid Acorn CNC12 v5.4+ Setup and Cut Cycle",
+    "description": "Centroid Acorn CNC12 v5.4+ setup guide: 2D M61/M62 zero-Z vs 3D/4D M150 macro, M36 ATHC Hold, G93.1 inverse-time, Dual-Y AcornSix, and P220/P225.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/machine-configuration/Acorn/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/machine-configuration/Acorn/"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

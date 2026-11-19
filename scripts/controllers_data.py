@@ -23,7 +23,7 @@ CONTROLLERS = [
         "card_summary": "Three clean regimes (2D flat, #&lt;tube_cut&gt;=1 rotary/3D, non-M3 scribe) with M62/M63 kerf void protection.",
         "badge_label": "LinuxCNC 2.9+ &bull; QTPlasmaC (.ngc)",
         "meta_title": "LinuxCNC 2.9+ QTPlasmaC Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "Complete LinuxCNC 2.9+ QTPlasmaC setup guide: 2D vs. rotary #&lt;tube_cut&gt;=1 regimes, G38.2/#5063/G10 L20 P0 probing, M62/M63 P1/P2 kerf void protection, and 6-phase cut cycle.",
+        "meta_description": "LinuxCNC 2.9+ QTPlasmaC setup guide: rotary tube_cut=1 mode, G38.2 and G10 L20 P0 probing, M62/M63 kerf void lock, and full 6-phase cut cycle.",
         "hero_title_html": 'LinuxCNC 2.9+ <span class="text-gradient-amber">QTPlasmaC Setup</span>',
         "subtitle_html": 'How RotaryCAM drives <code class="mono">.ngc</code> files across 2D flat plate, 4-axis rotary <code class="mono">#&lt;tube_cut&gt;=1</code> cuts, and non-<code class="mono">M3</code> drag scribes without QTPlasmaC fighting your Z axis.',
         "meta_pills": [
@@ -176,8 +176,8 @@ CONTROLLERS = [
         "sync_summary": "(v1.6-sc) header + (PS<feed>) strictly final line",
         "card_summary": "Hardened .tap output for CrossFire, PRO &amp; XR with dual G38.2/G38.4 IHS, 0.55s 3D ramp dwell &amp; Y/X-WRAP.",
         "badge_label": "CrossFire, PRO &amp; XR &bull; v1.6+ to v24.1.6 (.tap)",
-        "meta_title": "Langmuir FireControl v1.6+ / v24.1.6 Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "Langmuir FireControl setup guide for CrossFire, PRO, and XR: (v1.6-sc)/(PS) sentinels, G38.2/G38.4 IHS backlash vs. springback, 0.55s 3D ramp dwell, H0/H1 THC, and Y-WRAP/X-WRAP.",
+        "meta_title": "FireControl v1.6+ / v24.1.6 Setup & Cut Cycle | RotaryCAM Docs",
+        "meta_description": "Langmuir FireControl setup for CrossFire, PRO, and XR: v1.6-sc sentinels, G38.2/G38.4 IHS probing, 0.55s ramp dwell, H0/H1 THC, and Y/X-WRAP.",
         "hero_title_html": 'Langmuir <span class="text-gradient-amber">FireControl Setup</span>',
         "subtitle_html": 'Hardened <code class="mono">.tap</code> output for CrossFire, CrossFire PRO, and CrossFire XR (<code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code>) with two-stage <code class="mono">G38.2/G38.4</code> probing, <code class="mono">0.55 s</code> 3D ramp dwell, and <code class="mono">Y-WRAP</code> / <code class="mono">X-WRAP</code>.',
         "meta_pills": [
@@ -334,8 +334,8 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "sync_summary": "W9_HC m2020 (...) + G04 P0.100 Lua sync",
         "card_summary": "Modal G90/G91.1 separation, G31.0-G31.3 + refDistance skip-probe, Output #4 TMC3in1 THC &amp; M62/M63 P3 torch.",
         "badge_label": "ArtSoft Mach4 &bull; Warp9 ESS &amp; TMC3in1 (.tap)",
-        "meta_title": "ArtSoft Mach4 + Warp9 ESS / TMC3in1 Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "Mach4 + Warp9 ESS and TMC3in1 setup guide: G90/G91.1 separation, G31.0-G31.3 probing with refDistance, M62/M63 P3 torch vs OB1 m3/m5, Output #4 THC, and W9_HC m2020 registers.",
+        "meta_title": "Mach4 + Warp9 ESS / TMC3in1 Setup & Cut Cycle | RotaryCAM Docs",
+        "meta_description": "Mach4 + Warp9 ESS and TMC3in1 setup: G90/G91.1 mode split, G31 probing with refDistance, M62/M63 P3 torch vs m3/m5, Output #4 THC, and m2020.",
         "hero_title_html": 'ArtSoft Mach4 + <span class="text-gradient-amber">Warp9 ESS / TMC3in1</span>',
         "subtitle_html": 'Hardened <code class="mono">.tap</code> output for Standard ESS (Proma/PriceCNC) and Warp9 TMC3in1 / WarpRunner boards with clean <code class="mono">G31</code> probing, <code class="mono">m2020</code> Lua sync, and zero-pause <code class="mono">M62/M63</code> switching.',
         "meta_pills": [
@@ -467,7 +467,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "T112 M6 plasma mode, 3 THC modes, mandatory M667 F<zFeed> anti-dive, Bare G200 vs Hybrid C=P ramps &amp; G28 A0 unwind.",
         "badge_label": "MASSO G3 &amp; Touch &bull; DTHC v5.x (.nc)",
         "meta_title": "MASSO G3 + DTHC v5.x Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "MASSO G3 + DTHC setup guide: 3 THC hardware modes, G200 O0/O1 probing, mandatory M667 F<zFeed> and M666 anti-dive, Bare G200 vs Hybrid C=P 3D ramps, Template C 4D HSS, and M30 L bar-advance.",
+        "meta_description": "MASSO G3 + DTHC v5.x setup guide: 3 THC hardware modes, G200 probing, M667/M666 anti-dive, Hybrid C=P 3D ramps, Template C HSS, and M30 L feed.",
         "hero_title_html": 'MASSO G3 + <span class="text-gradient-amber">DTHC Setup</span>',
         "subtitle_html": 'Hardened <code class="mono">.nc</code> output built around MASSO firmware rules: <code class="mono">T112 M6</code> plasma mode, <code class="mono">G200</code> / <code class="mono">G38.2</code> probing, buffered <code class="mono">M666</code> / <code class="mono">M667 F&lt;thcFeed&gt;</code> anti-dive, and integer-millisecond dwells.',
         "meta_pills": [
@@ -597,7 +597,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "4 THC hardware topologies, ESS G31 vs LPT G28.1 probing, G54-baked scribe offsets, % framing &amp; .xml import.",
         "badge_label": "ArtSoft Mach3 R3.043.062 &bull; ESS / CandCNC / Proma (.tap)",
         "meta_title": "ArtSoft Mach3 R3.043.062 Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "ArtSoft Mach3 R3.043.062 setup guide: 4 THC topologies (M11Px/M10Px, CandCNC DCC, Proma 150, Proma SD), ESS G31 vs LPT G28.1 probing, G93 Use Radius rule, and .xml import.",
+        "meta_description": "ArtSoft Mach3 R3.043.062 setup: 4 THC wiring modes, ESS G31 vs LPT G28.1 probing, G93 Use Radius rules, .xml profile import, and 6-phase cut cycle.",
         "hero_title_html": 'ArtSoft Mach3 <span class="text-gradient-amber">R3.043.062 Setup</span>',
         "subtitle_html": 'Hardened <code class="mono">.tap</code> output for Mach3 tables with 4 THC hardware topologies, <code class="mono">G31</code> ESS probing, <code class="mono">G54</code>-baked scribe offsets, and one-click <code class="mono">.xml</code> setup import.',
         "meta_pills": [
@@ -730,7 +730,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "Dual-regime CNC12 v5.4+ post: canned M61/M62 2D plate vs. M150/M36/G93.1 3D &amp; 4D rotary with semicolon-only comments.",
         "badge_label": "Centroid Acorn &amp; AcornSix &bull; CNC12 v5.4+ (.nc)",
         "meta_title": "Centroid Acorn CNC12 v5.4+ Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "Centroid Acorn CNC12 v5.4+ setup guide: 2D M61/M62 zero-Z regime vs. 3D/4D M150 (mfunc150.mac) + M36 ATHC Hold + G93.1 smoothed inverse-time, AcornSix Dual-Y, and P220/P225 parameters.",
+        "meta_description": "Centroid Acorn CNC12 v5.4+ setup guide: 2D M61/M62 zero-Z vs 3D/4D M150 macro, M36 ATHC Hold, G93.1 inverse-time, Dual-Y AcornSix, and P220/P225.",
         "hero_title_html": 'Centroid Acorn <span class="text-gradient-amber">CNC12 v5.4+ Setup</span>',
         "subtitle_html": 'Two native <code class="mono">.nc</code> regimes for Acorn and AcornSix: hands-off <code class="mono">M61/M62</code> canned macros on 2D plate, and explicit <code class="mono">M150</code> + <code class="mono">M36</code> ATHC hold + <code class="mono">G93.1</code> smoothed inverse-time on 3D ramps and 4D rotary tubing.',
         "meta_pills": [
@@ -861,7 +861,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "Standalone-line $674 virtual ports (P2/P3/E3), M190 P-1 explicit Z, Core #1027 G94-before-G38.2 safety &amp; <= 80-char blocks.",
         "badge_label": "Teensy 4.1, ESP32, STM32, RP2040 &bull; Core 20261015+ (.nc)",
         "meta_title": "grblHAL 32-Bit Plasma + Rotary Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "grblHAL 32-bit plasma setup guide: $674 virtual ports (P2/P3/E3) on standalone blocks, M190 P-1 explicit CAM Z, M5 + G94 Core #1027 safety, EEPROM checklist ($376/$133/$384/$674/$350), and Y-wrap.",
+        "meta_description": "grblHAL 32-bit plasma and rotary setup: $674 virtual ports P2/P3/E3, M190 P-1 Z, Core #1027 M5 safety, EEPROM settings ($376/$133), and Y-wrap.",
         "hero_title_html": 'grblHAL <span class="text-gradient-amber">32-Bit Plasma + Rotary</span>',
         "subtitle_html": 'Hardened <code class="mono">.nc</code> output for grblHAL core <code class="mono">20261015+</code> and Nov 2026+ <code class="mono">Plugin_plasma</code> with standalone <code class="mono">$674</code> virtual-port blocks, <code class="mono">M190 P-1</code> explicit Z, and <code class="mono">G93</code>/<code class="mono">G94</code> safety.',
         "meta_pills": [
@@ -994,7 +994,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "Integrated G31 / Neuron Lite / M31 modes, ArcOK-safe M205-M212 handshake, 0.200 mm check move + M206 &amp; Checkbox 212.",
         "badge_label": "UC100, UC300ETH, UC400ETH &amp; AXBB-E (.nc)",
         "meta_title": "CNCdrive UCCNC v1.2115+ Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "CNCdrive UCCNC setup guide: Integrated G31 vs Neuron Lite vs M31, ArcOK-safe M205-M212 and M206 bilateral THC lock, UC100 0.2s dwell floor, Checkbox 212, and G20/G21 suppression.",
+        "meta_description": "CNCdrive UCCNC v1.2115+ setup: Integrated G31 vs Neuron Lite vs M31, ArcOK-safe M205-M212, M206 THC lock, UC100 0.2s dwell floor, and Checkbox 212.",
         "hero_title_html": 'CNCdrive <span class="text-gradient-amber">UCCNC Setup</span>',
         "subtitle_html": 'Hardened <code class="mono">.nc</code> output for <code class="mono">UC100</code>, <code class="mono">UC300ETH</code>, <code class="mono">UC400ETH</code>, and <code class="mono">AXBB-E</code> with ArcOK-safe <code class="mono">M205-M212</code> THC handshakes, <code class="mono">Checkbox 212</code> dwell matching, and <code class="mono">G93</code> rotary feeds.',
         "meta_pills": [
@@ -1121,7 +1121,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "Fabrication Head Cut2D (Mode 1) vs Explicit Dynamic-Z G631/G605/M50/M101/G630 (Mode 2), G04 X<sec> &amp; Setup.xml import.",
         "badge_label": "FlashCut CNC &amp; Fabrication Head (.nc / .gc)",
         "meta_title": "FlashCut CNC Plasma Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "FlashCut CNC Plasma setup guide: Mode 1 FabHead Cut2D vs Mode 2 Explicit Dynamic-Z (G631 -> G602 -> G605 -> M50 -> M101 -> G603 -> M51 -> G630), G04 X<s> dwells, and Setup.xml import.",
+        "meta_description": "FlashCut CNC Plasma setup guide: Mode 1 FabHead Cut2D vs Mode 2 Dynamic-Z (G631/G602/M50/M101/G603/G630), G04 X dwells, and Setup.xml import.",
         "hero_title_html": 'FlashCut CNC <span class="text-gradient-amber">Plasma Setup</span>',
         "subtitle_html": 'Built for FlashCut Fabrication Head systems with automatic Mode 1 (<code class="mono">#fabhead.mode = Cut</code>) vs. Mode 2 Explicit Dynamic-Z (<code class="mono">G631/G605/M50/M101/G630</code>) switching and <code class="mono">Setup.xml</code> import.',
         "meta_pills": [
@@ -1249,7 +1249,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "CNC720/760 post with #5150 4THMILL guard, #5067 probe miss check, M22/M23 voltage, M56 Arc-OK &amp; M20/M21 THC.",
         "badge_label": "EdingCNC CNC720, CNC760 &amp; Legacy (.nc)",
         "meta_title": "EdingCNC Plasma Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "EdingCNC Plasma setup guide for CNC720/CNC760: #5150 4THMILL guard, G64 R<tol>, guarded G38.2 with #5067 miss check, M22/M23 Q<volts>, M56 Arc-OK, M20/M21 THC, and MOD 360 unwind.",
+        "meta_description": "EdingCNC CNC720 and CNC760 setup: #5150 4THMILL guard, G64 tolerance, guarded G38.2 with #5067 check, M22/M23 volts, M56 Arc-OK, and MOD 360 unwind.",
         "hero_title_html": 'EdingCNC <span class="text-gradient-amber">Plasma Setup</span>',
         "subtitle_html": 'Hardened <code class="mono">.nc</code> programs for CNC720 and CNC760 with <code class="mono">#5150</code> 4THMILL guards, <code class="mono">#5067</code> probe miss checks, <code class="mono">M22/M23</code> arc voltage, optional <code class="mono">M56</code> Arc-OK handshakes, and <code class="mono">G64 R</code> blending.',
         "meta_pills": [
@@ -1380,7 +1380,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "G90.2 rotary absolute mode, AL Axis-Lock G91 G01 probe backoff, lookahead M54 P1 Q R1 THC &amp; semicolon comment safety.",
         "badge_label": "PlanetCNC Mk3, Mk3/4 &amp; TNG (.nc)",
         "meta_title": "PlanetCNC TNG Plasma Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "PlanetCNC TNG Plasma setup guide: G90.2 startup, active-comment ; safety vs (status, ...), AL Axis-Lock G38.2 probing, M54 P1 Q R1 lookahead THC, and TNG commissioning checklist.",
+        "meta_description": "PlanetCNC TNG plasma setup: G90.2 startup, semicolon vs status comment safety, AL Axis-Lock G38.2 probing, M54 lookahead THC, and commissioning.",
         "hero_title_html": 'PlanetCNC <span class="text-gradient-amber">TNG Plasma Setup</span>',
         "subtitle_html": 'Hardened <code class="mono">.nc</code> output for PlanetCNC Mk3, Mk3/4, and TNG with <code class="mono">G90.2</code> rotary mode, <code class="mono">AL</code> Axis-Lock IHS clearing, lookahead <code class="mono">M54 P1 Q R1</code> THC, and active-comment protection.',
         "meta_pills": [
@@ -1505,8 +1505,8 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "sync_summary": "G22 mm (NEVER G21!) + [...] comments + L38.1 + L28.1/L92/M66",
         "card_summary": "G22 mm / G20 in (never G21!), configurable A/W/B SideKick letter, L37.2 D1/D0 inline THC, L38.1 params &amp; M61/L38 patterns.",
         "badge_label": "ShopSabre &amp; SideKick Rotary &bull; v3.1.06d+ (.tap)",
-        "meta_title": "ShopSabre WinCNC + SideKick Rotary Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "ShopSabre WinCNC setup guide: G22 mm vs G20 in (never G21), SideKick A/W/B axis letter, [bracket] comments, L37.2 D1/D0 + inline D1/D0 THC, L38.1 cut params, M61 vs L38 patterns, and L28.1/L92/M66.",
+        "meta_title": "WinCNC + SideKick Rotary Setup & Cut Cycle | RotaryCAM Docs",
+        "meta_description": "ShopSabre WinCNC + SideKick setup: G22 mm vs G20 in, A/W/B rotary axis letter, L37.2 D1/D0 THC, L38.1 cut params, M61 patterns, and L28.1/L92.",
         "hero_title_html": 'ShopSabre <span class="text-gradient-amber">WinCNC + SideKick Setup</span>',
         "subtitle_html": 'Built for ShopSabre plasma tables and SideKick rotary attachments (<code class="mono">v3.1.06d+</code> and legacy), emitting <code class="mono">G22</code> mm / <code class="mono">G20</code> in, <code class="mono">[bracket]</code> comments, <code class="mono">L37.2 D1/D0</code> inline THC, and <code class="mono">L28.1/L92/M66</code> framing.',
         "meta_pills": [
@@ -1628,7 +1628,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "Hardware-verified SimCNC post: config.xml import, G69/G64 P0.3-0.4, 0.002 mm feathering, #1110/#1113 3D ramps &amp; M62/M63 sync.",
         "badge_label": "CSLab CSMIO/IP-M &amp; IP-S &bull; Hardware Verified (.nc)",
         "meta_title": "CSLab SimCNC 3.5 & 3.6+ G93 Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "CSLab SimCNC 3.5 & 3.6+ setup guide: config.xml import, G69 + metric G64 P0.3/0.4, 0.002mm axial feathering, #1110-#1114/#1090-#1092 m3.py handshake, M62/M63 P0/P1 motion sync, and 6-phase cut cycle.",
+        "meta_description": "CSLab SimCNC 3.5 & 3.6+ setup: config.xml import, G69 and G64 smoothing, 0.002 mm feathering, #1110/#1090 m3.py handshake, and M62/M63 P0/P1 sync.",
         "hero_title_html": 'CSLab SimCNC <span class="text-gradient-amber">3.5 &amp; 3.6+ G93 Setup</span>',
         "subtitle_html": 'Hardware-verified <code class="mono">.nc</code> output for CSMIO/IP-M and IP-S controllers with one-click <code class="mono">config.xml</code> import, hardened <code class="mono">G93</code> inverse-time (<code class="mono">3.6+</code>) or 4D spoofed <code class="mono">G94</code> (<code class="mono">3.5</code>), and <code class="mono">M62/M63 P0/P1</code> motion-synced torch &amp; THC.',
         "meta_pills": [
@@ -1756,7 +1756,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "card_summary": "Clean ISO 6983 G94 core with configurable G04 dwells, swing-envelope Safe Z, optional THC/IHS, and Dry-Run mode.",
         "badge_label": "Portable ISO 6983 RS-274 &bull; generic_g94 (.nc)",
         "meta_title": "Portable RS-274 (generic_g94) Setup & Cut Cycle | RotaryCAM Docs",
-        "meta_description": "Portable RS-274 (generic_g94) setup guide: strict ISO 6983 G00-G94/M03-M30 core, pre-zeroed Z0 vs optional IHS, configurable G04 P/X dwells, THC None/M62-M63/Custom, and Dry-Run mode.",
+        "meta_description": "Portable RS-274 (generic_g94) setup: ISO 6983 G00-G94/M03-M30 core, pre-zeroed Z0 vs IHS, G04 P/X dwells, THC M62-M63 or Custom, and Dry-Run.",
         "hero_title_html": 'Portable RS-274 <span class="text-gradient-amber">(generic_g94) Setup</span>',
         "subtitle_html": 'Strict ISO 6983 <code class="mono">G94</code> post-processor for open-source, retrofit, and industrial controllers without vendor macros. Zero <code class="mono">;</code>, <code class="mono">%</code>, <code class="mono">G49</code>, or <code class="mono">G92.1</code> rewrites.',
         "meta_pills": [
@@ -1883,8 +1883,8 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "sync_summary": "EasyScribe coaxial (0 wiring) vs Pneumatic (G52 / G54 baked)",
         "card_summary": "Engrave Part IDs, bend lines &amp; weld ticks using coaxial EasyScribe (all controllers, M0 swap) or pneumatic offset air-scribe.",
         "badge_label": "Multi-Tool Marking &bull; Pro Shop ($399)",
-        "meta_title": "Scribing: Coaxial EasyScribe vs. Pneumatic Air-Scribe | RotaryCAM Docs",
-        "meta_description": "Coaxial EasyScribe drag scribing vs. Pneumatic offset air-scribe setup across all 14 RotaryCAM controllers: M0 swap pauses, Z_scribe preload, M3 $1, T111 M6, M39/M40, and G52/G54 offsets.",
+        "meta_title": "Coaxial EasyScribe & Air-Scribe Setup | RotaryCAM Docs",
+        "meta_description": "Coaxial EasyScribe vs pneumatic offset air-scribe setup across 14 controllers: M0 tool pauses, Z_scribe preload, M3 $1, T111 M6, and G52/G54 shifts.",
         "hero_title_html": 'Scribing: <span class="text-gradient-amber">EasyScribe &amp; Air-Scribe</span>',
         "subtitle_html": 'Engrave Part IDs, chassis bend lines, and weld fit-up witness ticks directly on your parts before cutting, using either a drop-in <strong>Coaxial EasyScribe</strong> or a dedicated <strong>Pneumatic Offset Air-Scribe</strong>.',
         "meta_pills": [

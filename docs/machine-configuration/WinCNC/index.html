@@ -3,8 +3,83 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopSabre WinCNC + SideKick Rotary Setup & Cut Cycle | RotaryCAM Docs</title>
-  <meta name="description" content="ShopSabre WinCNC setup guide: G22 mm vs G20 in (never G21), SideKick A/W/B axis letter, [bracket] comments, L37.2 D1/D0 + inline D1/D0 THC, L38.1 cut params, M61 vs L38 patterns, and L28.1/L92/M66." />
+  <title>WinCNC + SideKick Rotary Setup & Cut Cycle | RotaryCAM Docs</title>
+  <meta name="description" content="ShopSabre WinCNC + SideKick setup: G22 mm vs G20 in, A/W/B rotary axis letter, L37.2 D1/D0 THC, L38.1 cut params, M61 patterns, and L28.1/L92." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/machine-configuration/WinCNC/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/machine-configuration/WinCNC/" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="WinCNC + SideKick Rotary Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta property="og:description" content="ShopSabre WinCNC + SideKick setup: G22 mm vs G20 in, A/W/B rotary axis letter, L37.2 D1/D0 THC, L38.1 cut params, M61 patterns, and L28.1/L92." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="ShopSabre WinCNC + SideKick Rotary Setup and Cut Cycle in RotaryCAM" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="WinCNC + SideKick Rotary Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta name="twitter:description" content="ShopSabre WinCNC + SideKick setup: G22 mm vs G20 in, A/W/B rotary axis letter, L37.2 D1/D0 THC, L38.1 cut params, M61 patterns, and L28.1/L92." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Machine Configuration",
+        "item": "https://rotarycam.app/docs/machine-configuration.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "ShopSabre WinCNC + SideKick Rotary",
+        "item": "https://rotarycam.app/docs/machine-configuration/WinCNC/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "ShopSabre WinCNC + SideKick Rotary Setup and Cut Cycle",
+    "description": "ShopSabre WinCNC + SideKick setup: G22 mm vs G20 in, A/W/B rotary axis letter, L37.2 D1/D0 THC, L38.1 cut params, M61 patterns, and L28.1/L92.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/machine-configuration/WinCNC/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/machine-configuration/WinCNC/"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

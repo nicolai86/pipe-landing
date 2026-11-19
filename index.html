@@ -5,10 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <!-- Primary SEO Meta -->
-  <title>RotaryCAM | 4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM from 3D CAD</title>
-  <meta name="title" content="RotaryCAM | 4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM from 3D CAD" />
-  <meta name="description" content="Dedicated 4-axis rotary and 2D flat-sheet CNC plasma CAM software. Drop 3D CAD assemblies and multi-file DXF/SVG kits straight in to get ready-to-cut G-code with automatic tube copes, zero-gap saddle joints, recursive part-in-cutout sheet nesting, 1,025 built-in cut presets, and 12 controller dialects in native Imperial (G20) and Metric (G21)." />
-  <meta name="keywords" content="rotary plasma CAM, 4-axis plasma cutting, flat sheet plasma nesting, pipe notching software, tube coping CAM, saddle joint zero bevel, SimCNC rotary plasma, QTPlasmaC, FireControl, Mach4 plasma, square tube plasma, HSS rotary cutting, CNC plasma G-code, DXF SVG nesting, STEP to G-code" />
+  <title>4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM | RotaryCAM</title>
+  <meta name="title" content="4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM | RotaryCAM" />
+  <meta name="description" content="Drop 3D STEP tube assemblies and DXF/SVG kits straight in for cut-ready G-code. 12 controller dialects in G20/G21, 1,025 cut presets, and 100% offline." />
   <meta name="author" content="Raphael Randschau" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://rotarycam.app/" />
@@ -18,21 +17,21 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rotarycam.app/" />
   <meta property="og:site_name" content="RotaryCAM" />
-  <meta property="og:title" content="RotaryCAM | 4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM from 3D CAD" />
-  <meta property="og:description" content="Cut round pipe, square tube, structural beams, and multi-file DXF/SVG flat sheet on your CNC plasma table straight from CAD. 12 controller dialects in native G20/G21, 1,025 cut presets across 3 torch families, recursive sheet nesting, and 100% offline at the machine." />
+  <meta property="og:title" content="4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM | RotaryCAM" />
+  <meta property="og:description" content="Drop 3D STEP tube assemblies and DXF/SVG kits straight in for cut-ready G-code. 12 controller dialects in G20/G21, 1,025 cut presets, and 100% offline." />
   <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
   <meta property="og:image:secure_url" content="https://rotarycam.app/assets/cad-inspection.png" />
   <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="2880" />
-  <meta property="og:image:height" content="1800" />
+  <meta property="og:image:width" content="2000" />
+  <meta property="og:image:height" content="1060" />
   <meta property="og:image:alt" content="RotaryCAM 3D CAD Tube Inspection and Feature Extraction" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://rotarycam.app/" />
-  <meta name="twitter:title" content="RotaryCAM | 4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM from 3D CAD" />
-  <meta name="twitter:description" content="Dedicated 4-axis rotary and 2D flat-sheet CNC plasma CAM. Drop 3D CAD assemblies and DXF/SVG kits straight in to get ready-to-cut G-code with automatic tube copes, zero-gap saddle joints, recursive sheet nesting, and 12 controller dialects in native G20/G21." />
+  <meta name="twitter:title" content="4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM | RotaryCAM" />
+  <meta name="twitter:description" content="Drop 3D STEP tube assemblies and DXF/SVG kits straight in for cut-ready G-code. 12 controller dialects in G20/G21, 1,025 cut presets, and 100% offline." />
   <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
   <meta name="twitter:image:alt" content="RotaryCAM 4-Axis Rotary CNC Plasma CAM Interface" />
 
@@ -1544,6 +1543,7 @@
         padding: 1.25rem;
       }
     }
+    picture { display: contents; }
   </style>
 </head>
 <body>
@@ -1562,7 +1562,7 @@
         <a href="#kinematics">Machine Safety</a>
         <a href="#simulation">3D Sim</a>
         <a href="#pricing">Pricing</a>
-        <a href="docs/index.html">Docs</a>
+        <a href="docs/">Docs</a>
         <a href="hardware-thc.html" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC</a>
         <a href="build-guide.html">Build Guide</a>
         <a href="changelog.html">Changelog</a>
@@ -1571,6 +1571,7 @@
     </nav>
   </header>
 
+  <main>
   <!-- Hero Section -->
   <section class="hero">
     <div>
@@ -1622,7 +1623,7 @@
           <a href="#pricing" class="secondary-btn" style="border-color: rgba(245, 158, 11, 0.45); color: var(--plasma-amber);">
             Pricing: $199
           </a>
-          <a href="docs/index.html" class="secondary-btn">
+          <a href="docs/" class="secondary-btn">
             Tutorials ↗
           </a>
         </div>
@@ -1641,10 +1642,16 @@
         </div>
         <span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">RotaryCAM v0.8.4: 3D Tube &amp; Flat-Sheet Plasma CAM</span>
       </div>
-      <img src="assets/cad-inspection.png" 
-           alt="RotaryCAM Web Application Interface" 
-           loading="eager" 
-           style="width: 100%; border-radius: 6px; display: block; border: 1px solid var(--surface-border);" />
+      <picture>
+        <source srcset="assets/cad-inspection.webp" type="image/webp" />
+        <img src="assets/cad-inspection.png"
+             alt="RotaryCAM Web Application Interface"
+             width="2000"
+             height="1060"
+             fetchpriority="high"
+             decoding="async"
+             style="width: 100%; height: auto; border-radius: 6px; display: block; border: 1px solid var(--surface-border);" />
+      </picture>
     </div>
   </section>
 
@@ -1664,7 +1671,10 @@
         </p>
       </div>
       <div class="showcase-img-container">
-        <img src="assets/desktop-app.png" alt="Standalone Offline Desktop Application in RotaryCAM" loading="lazy">
+        <picture>
+          <source srcset="assets/desktop-app.webp" type="image/webp" />
+          <img src="assets/desktop-app.png" alt="Standalone Offline Desktop Application in RotaryCAM" width="2000" height="1060" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </div>
 
@@ -1683,7 +1693,10 @@
         </div>
       </div>
       <div class="showcase-img-container">
-        <img src="assets/cad-inspection.png" alt="Single Part CAD Inspection in RotaryCAM" loading="lazy">
+        <picture>
+          <source srcset="assets/cad-inspection.webp" type="image/webp" />
+          <img src="assets/cad-inspection.png" alt="Single Part CAD Inspection in RotaryCAM" width="2000" height="1060" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </div>
 
@@ -1702,7 +1715,10 @@
         </div>
       </div>
       <div class="showcase-img-container">
-        <img src="assets/pack-nesting.png" alt="Multi-Part Pack Nesting in RotaryCAM" loading="lazy">
+        <picture>
+          <source srcset="assets/pack-nesting.webp" type="image/webp" />
+          <img src="assets/pack-nesting.png" alt="Multi-Part Pack Nesting in RotaryCAM" width="2000" height="1061" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </div>
 
@@ -1726,7 +1742,10 @@
         </div>
       </div>
       <div class="showcase-img-container">
-        <img src="assets/dxf-svg-flat-sheet.png" alt="Multi-File DXF and SVG Flat-Sheet Nesting with Imperial G20 G-Code in RotaryCAM" loading="lazy">
+        <picture>
+          <source srcset="assets/dxf-svg-flat-sheet.webp" type="image/webp" />
+          <img src="assets/dxf-svg-flat-sheet.png" alt="Multi-File DXF and SVG Flat-Sheet Nesting with Imperial G20 G-Code in RotaryCAM" width="2000" height="1061" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </div>
 
@@ -1745,7 +1764,10 @@
         </div>
       </div>
       <div class="showcase-img-container">
-        <img src="assets/cut-simulation.png" alt="3D Cut Simulation and Kinematic DRO in RotaryCAM" loading="lazy">
+        <picture>
+          <source srcset="assets/cut-simulation.webp" type="image/webp" />
+          <img src="assets/cut-simulation.png" alt="3D Cut Simulation and Kinematic DRO in RotaryCAM" width="2000" height="1059" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </div>
 
@@ -1764,7 +1786,10 @@
         </div>
       </div>
       <div class="showcase-img-container">
-        <img src="assets/machine-kinematics.png" alt="Machine Kinematics and Hardware THC Synchronization in RotaryCAM" loading="lazy">
+        <picture>
+          <source srcset="assets/machine-kinematics.webp" type="image/webp" />
+          <img src="assets/machine-kinematics.png" alt="Machine Kinematics and Hardware THC Synchronization in RotaryCAM" width="2880" height="1800" loading="lazy" decoding="async" />
+        </picture>
       </div>
     </div>
 
@@ -2365,7 +2390,7 @@
         <h2>Step-by-Step Shop Guides</h2>
         <p>Visual walkthroughs for machine setup, controller dialects, THC locking, Zero-Bevel joints, nesting, and bent tubing.</p>
       </div>
-      <a href="docs/index.html" class="secondary-btn" style="border-color: rgba(6, 182, 212, 0.45); color: var(--cyan-arc);">
+      <a href="docs/" class="secondary-btn" style="border-color: rgba(6, 182, 212, 0.45); color: var(--cyan-arc);">
         Open Full Documentation Hub →
       </a>
     </div>
@@ -2374,7 +2399,10 @@
       <!-- Tutorial 1 Card -->
       <a href="docs/machine-configuration.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="assets/machine-kinematics.png" alt="Tutorial 01: Basic Machine Configuration" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="assets/machine-kinematics.webp" type="image/webp" />
+            <img src="assets/machine-kinematics.png" alt="Tutorial 01: Basic Machine Configuration" width="2880" height="1800" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2389,7 +2417,10 @@
       <!-- Tutorial 2 Card -->
       <a href="docs/cut-path-configuration.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="docs/assets/cut-path-6-zero-bevel.png" alt="Tutorial 02: UI Layout and STEP Cut Path Configuration" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="docs/assets/cut-path-6-zero-bevel.webp" type="image/webp" />
+            <img src="docs/assets/cut-path-6-zero-bevel.png" alt="Tutorial 02: UI Layout and STEP Cut Path Configuration" width="2324" height="1397" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2404,7 +2435,10 @@
       <!-- Tutorial 3 Card -->
       <a href="docs/nesting.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="docs/assets/nesting-5-compile.png" alt="Tutorial 03: Multi-Part Stick Nesting" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="docs/assets/nesting-5-compile.webp" type="image/webp" />
+            <img src="docs/assets/nesting-5-compile.png" alt="Tutorial 03: Multi-Part Stick Nesting" width="2324" height="1397" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2419,7 +2453,10 @@
       <!-- Tutorial 4 Card -->
       <a href="docs/bending.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="docs/assets/bending-4-configure-bend.png" alt="Tutorial 04: Bending HSS &amp; HSS-O Sticks" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="docs/assets/bending-4-configure-bend.webp" type="image/webp" />
+            <img src="docs/assets/bending-4-configure-bend.png" alt="Tutorial 04: Bending HSS &amp; HSS-O Sticks" width="2324" height="1397" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2434,7 +2471,10 @@
       <!-- Tutorial 5 Card -->
       <a href="docs/changelog.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="docs/assets/changelog-2-modal.png" alt="Tutorial 05: Build Information &amp; Changelog" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="docs/assets/changelog-2-modal.webp" type="image/webp" />
+            <img src="docs/assets/changelog-2-modal.png" alt="Tutorial 05: Build Information &amp; Changelog" width="2324" height="1397" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2449,7 +2489,10 @@
       <!-- Tutorial 6 Card -->
       <a href="docs/ai-autodetection.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="docs/assets/ai-cad-8-autodetect.png" alt="Tutorial 06: Fusion 360 &amp; AI Profile Autodetection" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="docs/assets/ai-cad-8-autodetect.webp" type="image/webp" />
+            <img src="docs/assets/ai-cad-8-autodetect.png" alt="Tutorial 06: Fusion 360 &amp; AI Profile Autodetection" width="2324" height="1397" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2488,7 +2531,10 @@
       <!-- Tutorial 8 Card -->
       <a href="docs/cut-charts-and-features.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="assets/cut-charts-modal.png" alt="Tutorial 08: Plasma Cut Charts, Torch Settings &amp; Feature Toggling" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="assets/cut-charts-modal.webp" type="image/webp" />
+            <img src="assets/cut-charts-modal.png" alt="Tutorial 08: Plasma Cut Charts, Torch Settings &amp; Feature Toggling" width="2880" height="1800" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2524,7 +2570,10 @@
       <!-- Tutorial 10 Card -->
       <a href="docs/dxf-svg-flat-sheet.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
         <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
-          <img src="docs/assets/dxf-svg-4-sheet-nesting.png" alt="Tutorial 10: Multi-File DXF and SVG Flat-Sheet CAM and Imperial G20 G-Code" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          <picture>
+            <source srcset="docs/assets/dxf-svg-4-sheet-nesting.webp" type="image/webp" />
+            <img src="docs/assets/dxf-svg-4-sheet-nesting.png" alt="Tutorial 10: Multi-File DXF and SVG Flat-Sheet CAM and Imperial G20 G-Code" width="2880" height="1800" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
         </div>
         <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
           <div>
@@ -2587,6 +2636,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   <!-- Footer -->
   <footer>
@@ -2596,7 +2646,7 @@
     </div>
     <div class="footer-links">
       <a href="#pricing" class="footer-link" style="color: var(--emerald-cut);">Pricing &amp; Offline Keys</a>
-      <a href="docs/index.html" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
+      <a href="docs/" class="footer-link" style="color: var(--cyan-arc);">Documentation &amp; Tutorials ↗</a>
       <a href="hardware-thc.html" class="footer-link" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC ($199 CAD) ↗</a>
       <a href="build-guide.html" class="footer-link" style="color: var(--plasma-amber);">Build Your Own Table (Open Hardware) ↗</a>
       <a href="changelog.html" class="footer-link" style="color: #fff;">Changelog &amp; Downloads ↗</a>

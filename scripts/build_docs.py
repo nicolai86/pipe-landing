@@ -14,7 +14,9 @@ Usage:
 
 import os
 import re
+import struct
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Auto-locate a Python interpreter with Jinja2 installed if the default python3 lacks it
@@ -54,8 +56,8 @@ TUTORIALS = [
         "sidebar_label": "Machine Configuration",
         "footer_label": "Machine Configuration",
         "breadcrumb_title": "Basic Machine Configuration",
-        "meta_title": "01. Basic Machine Configuration | RotaryCAM Documentation",
-        "meta_description": "Step-by-step guide to configuring 4-axis CNC plasma machine profiles, axis velocity/acceleration limits, G94/G93 controller dialects, synchronous THC corner locking, and zero-bevel defaults in RotaryCAM.",
+        "meta_title": "Basic Machine Configuration | RotaryCAM Docs",
+        "meta_description": "Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers.",
         "hero_title_html": 'Basic <span class="text-gradient-amber">Machine Configuration</span>',
         "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 14 supported controllers.',
         "steps_count": 7,
@@ -98,8 +100,8 @@ TUTORIALS = [
         "sidebar_label": "UI & Cut Path Config",
         "footer_label": "Cut Path Configuration",
         "breadcrumb_title": "UI Layout & STEP Cut Path Configuration",
-        "meta_title": "02. UI Layout & STEP File Cut Path Configuration | RotaryCAM Documentation",
-        "meta_description": "Step-by-step visual guide to RotaryCAM's 3D CAD assembly inspector, per-contour lead-in/lead-out settings, Zero-Bevel Dual-Curve saddle compensation, and 4-axis 3D toolpath simulation.",
+        "meta_title": "UI Layout & STEP Cut Path Config | RotaryCAM Docs",
+        "meta_description": "Inspect multi-body STEP assemblies, tune per-contour lead-ins and 80% zero-bevel saddle copes, add weld bevels or tabs, and preview in 3D simulation.",
         "hero_title_html": 'UI Layout &amp; <span class="text-gradient-amber">STEP Cut Path Configuration</span>',
         "hero_subtitle_html": 'Learn how to load a multi-body STEP file, switch between solids in the 3D assembly overview, inspect and customize individual cut contours (<code class="mono">STARTCUT</code>, <code class="mono">ENDCUT</code>, <code class="mono">CUTOUT</code>), apply Zero-Bevel Dual-Curve saddle compensation, and verify the 4-axis toolpath in 3D simulation.',
         "steps_count": 8,
@@ -141,8 +143,8 @@ TUTORIALS = [
         "sidebar_label": "Multi-Part Stick Nesting",
         "footer_label": "Multi-Part Nesting",
         "breadcrumb_title": "Multi-Part Stick Nesting",
-        "meta_title": "03. Multi-Part Stick Nesting | RotaryCAM Documentation",
-        "meta_description": "Step-by-step guide to RotaryCAM's Multi-Part Pack Nesting: load a 37-part STEP assembly, filter by cross-section profile, pack 17 parts across multiple 6000 mm sticks at 99.8% efficiency, and export per-stick G-code.",
+        "meta_title": "Multi-Part Tube Stick Nesting | RotaryCAM Docs",
+        "meta_description": "Load multi-body STEP weldments, filter parts by tube profile, interlock miters and copes across 6000 mm sticks at 99.8% yield, and export .nc files.",
         "hero_title_html": 'Multi-Part <span class="text-gradient-amber">Stick Nesting</span>',
         "hero_subtitle_html": 'How to load a complex multi-body STEP weldment, group tubes by cross-section profile, automatically pack 17 parts across multiple <code class="mono">6000 mm</code> raw stock sticks at <code class="mono">99.8%</code> material utilization, and export per-stick G-code programs.',
         "steps_count": 6,
@@ -182,8 +184,8 @@ TUTORIALS = [
         "sidebar_label": "Bending HSS & HSS-O",
         "footer_label": "Bending HSS & HSS-O",
         "breadcrumb_title": "Bending HSS & HSS-O Sticks",
-        "meta_title": "04. Bending HSS & HSS-O Sticks | RotaryCAM Documentation",
-        "meta_description": "Step-by-step guide to RotaryCAM's Cut-and-Bend unfolding workflow for square/rectangular HSS and round HSS-O sticks: load a bent tube STEP file, expand relief kerf cuts, customize cut counts and living-hinge spine width (Edge Left), preview the unfolded straight stick in 3D, and export G-code.",
+        "meta_title": "Bending HSS & Round Pipe Sticks | RotaryCAM Docs",
+        "meta_description": "Unfold 3D bent square HSS and round pipe STEP models into straight sticks with custom kerf relief cuts and spine widths, then preview and export G-code.",
         "hero_title_html": 'Bending <span class="text-gradient-amber">HSS &amp; HSS-O Sticks</span>',
         "hero_subtitle_html": 'How to load a 3D bent tube STEP model, automatically unfold its centerline into a straight stick with kerf-bending relief cuts, customize the number of relief cuts (<code class="mono">3 → 5</code>) and the uncut spine bridge width (<code class="mono">Edge Left: 30 mm</code>), preview the unfolded straight stick in 3D simulation, and download shop-ready G-code.',
         "steps_count": 5,
@@ -222,8 +224,8 @@ TUTORIALS = [
         "sidebar_label": "Build Info & Changelog",
         "footer_label": "Build Info & Changelog",
         "breadcrumb_title": "Build Information & Changelog",
-        "meta_title": "05. Build Information & Changelog | RotaryCAM Documentation",
-        "meta_description": "How to access RotaryCAM's built-in About modal, verify your version and Git commit hash, locate saved machine profiles and cut charts across macOS, Windows, and Linux, review release notes, and copy diagnostics.",
+        "meta_title": "Build Info, File Paths & Changelog | RotaryCAM Docs",
+        "meta_description": "Check your RotaryCAM version and Git commit hash, locate saved machine profiles and cut charts on macOS, Windows, and Linux, and copy diagnostics.",
         "hero_title_html": 'Build Information &amp; <span class="text-gradient-amber">Changelog</span>',
         "hero_subtitle_html": 'How to verify your running RotaryCAM version, Git commit hash, UTC build timestamp, platform architecture, and release changelog directly inside the application, and copy one-click diagnostics when reporting shop-floor feedback.',
         "steps_count": 3,
@@ -261,8 +263,8 @@ TUTORIALS = [
         "sidebar_label": "Fusion 360 & AI Autodetect",
         "footer_label": "Fusion 360 & AI Autodetect",
         "breadcrumb_title": "Fusion 360 & AI Profile Autodetection",
-        "meta_title": "06. Modeling in Fusion 360 for AI Profile Autodetection | RotaryCAM Documentation",
-        "meta_description": "Step-by-step guide to modeling tube and pipe assemblies in Autodesk Fusion 360 using the Structural Member (SM) plugin so RotaryCAM automatically detects tube profiles, sizes, and wall thicknesses straight out of CAD.",
+        "meta_title": "Fusion 360 Structural Member & AI Detect | RotaryCAM Docs",
+        "meta_description": "Model tube frames in Fusion 360 with the Structural Member plugin, combine bend bodies, export STEP assemblies, and auto-detect profiles in RotaryCAM.",
         "hero_title_html": 'Fusion 360 &amp; <span class="text-gradient-amber">AI Profile Autodetection</span>',
         "hero_subtitle_html": 'How to model tube and pipe structures in <strong>Autodesk Fusion 360</strong> using the <strong>Structural Member (<code class="mono">SM</code>)</strong> plugin so that RotaryCAM automatically recognizes every tube profile, wall thickness, and bend centerline straight out of CAD.',
         "steps_count": 8,
@@ -304,8 +306,8 @@ TUTORIALS = [
         "sidebar_label": "SimCNC Motion-Sync & 3D Ramp",
         "footer_label": "SimCNC Motion-Sync & Ramp",
         "breadcrumb_title": "SimCNC Motion-Synchronized Torch & 3D Ramp Lead-Ins",
-        "meta_title": "07. SimCNC Motion-Synchronized Torch On/Off & 3D Ramp Lead-Ins | RotaryCAM Documentation",
-        "meta_description": "Complete technical implementation guide to achieving motion-synchronized torch ignition/extinguish (M62/M63 P1), hardware THC locking (M62/M63 P0), direct CSMIO/IP-M Arc OK polling, and 3D Ramp Lead-Ins in CSLab SimCNC for RotaryCAM.",
+        "meta_title": "SimCNC Motion-Sync Torch & 3D Ramps | RotaryCAM Docs",
+        "meta_description": "Wire SimCNC M62/M63 P0/P1 trajectory-sync outputs, direct Arc OK polling, and m3.py/m5.py macros for 3D ramp lead-ins and zero-overburn torch-out.",
         "hero_title_html": 'SimCNC Motion-Synchronized <span class="text-gradient-amber">Torch On/Off &amp; 3D Ramp Lead-Ins</span>',
         "hero_subtitle_html": 'How to configure CSLab SimCNC (<code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, <code class="mono">m5.py</code>) and the <strong>RotaryCAM Post-Processor</strong> for sub-millisecond <code class="mono">M62/M63</code> trajectory-synchronized torch switching, direct CSMIO/IP-M <code class="mono">Arc OK</code> polling, <strong>Zero-Overburn Early Torch-Out</strong>, and <strong>3D Ramp Lead-Ins</strong>.',
         "steps_count": 12,
@@ -364,8 +366,8 @@ TUTORIALS = [
         "sidebar_label": "Cut Charts & Feature Toggles",
         "footer_label": "Cut Charts & Feature Toggles",
         "breadcrumb_title": "Plasma Cut Charts & Feature Toggling",
-        "meta_title": "08. Plasma Cut Charts, Torch Settings & Feature Toggling | RotaryCAM Documentation",
-        "meta_description": "Complete guide to RotaryCAM's 1,025 built-in plasma cut presets across 3 torch families (Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma), automatic wall-thickness matching, unit-aware CSV cut chart import and export, custom preset editing, and selective feature omission in 3D tube inspection.",
+        "meta_title": "Plasma Cut Charts & Feature Toggles | RotaryCAM Docs",
+        "meta_description": "Browse 1,025 plasma cut presets for Hypertherm SYNC, Duramax, and air plasma, import or export CSV charts, auto-match wall thickness, and omit holes.",
         "hero_title_html": 'Plasma Cut Charts, Torch Settings &amp; <span class="text-gradient-amber">Feature Toggling</span>',
         "hero_subtitle_html": 'How to utilize RotaryCAM&rsquo;s 1,025 built-in cut presets across 3 plasma torch families (Hypertherm SYNC 3.2&nbsp;mm, Hypertherm Duramax 1.5&nbsp;mm, and Generic Air Plasma 1.5&nbsp;mm), import and export shop cut charts via unit-aware CSV, match cut parameters automatically to detected STEP wall thickness, create and edit custom shop presets, and selectively toggle holes, slots, or cutouts without touching CAD.',
         "steps_count": 7,
@@ -406,8 +408,8 @@ TUTORIALS = [
         "sidebar_label": "Offline MCP & AI Automation",
         "footer_label": "Offline MCP & AI Automation",
         "breadcrumb_title": "Offline Model Context Protocol (MCP) & AI Automation",
-        "meta_title": "09. Offline Model Context Protocol (MCP) & AI Automation | RotaryCAM Documentation",
-        "meta_description": "Step-by-step guide to RotaryCAM's 100% offline Model Context Protocol (MCP) server: connect Claude Desktop, Cursor, or LM Studio, run first-principles drive math, analyze STEP CAD files, apply zero-bevel copes, and emit production G-code air-gapped.",
+        "meta_title": "Offline MCP Server & AI Automation | RotaryCAM Docs",
+        "meta_description": "Connect Claude Desktop, Cursor, or LM Studio to rotarycam-mcp over stdio for offline drive math, STEP inspection, zero-bevel copes, and G-code output.",
         "hero_title_html": 'Offline Model Context Protocol (MCP) &amp; <span class="text-gradient-amber">AI Automation</span>',
         "hero_subtitle_html": 'How to connect local AI coding assistants (Claude Desktop, Cursor, LM Studio) to RotaryCAM&rsquo;s 100% offline MCP stdio server (<code class="mono">rotarycam-mcp</code>), calculate drive kinematics with first-principles physics, inspect STEP CAD solids, apply dual-curve zero-bevel compensation, and emit shop-ready G-code without sending a single byte to the cloud.',
         "steps_count": 8,
@@ -460,8 +462,8 @@ TUTORIALS = [
         "sidebar_label": "DXF/SVG & Imperial Units",
         "footer_label": "DXF/SVG Flat-Sheet CAM",
         "breadcrumb_title": "Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial G20 G-Code",
-        "meta_title": "10. Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial Units | RotaryCAM Documentation",
-        "meta_description": "Step-by-step visual guide to importing multi-file DXF/SVG flat-sheet parts, setting sheet thickness, fixing drawing scale with magnetic 2-point snapping, nesting 2D plates, and emitting native G20 Imperial or G21 Metric G-code in RotaryCAM.",
+        "meta_title": "DXF/SVG Flat-Sheet CAM & G20 Units | RotaryCAM Docs",
+        "meta_description": "Drop multi-file DXF, SVG, or ZIP kits, set sheet thickness, fix scale with 2-point snapping, nest parts inside cutouts, and export G20 or G21 G-code.",
         "hero_title_html": 'Multi-File DXF &amp; SVG <span class="text-gradient-amber">Flat-Sheet CAM &amp; Imperial Units</span>',
         "hero_subtitle_html": 'How to drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> bracket drawings onto your plasma table (or launch the built-in <code class="mono">Flat Sheet DXF Kit</code>), confirm sheet thickness to unlock cut charts, fix unknown drawing scale with magnetic 2-point snapping, nest kits onto sheets with recursive cutout nesting &amp; 2D common-line cutting, and export native <code class="mono">G20</code> (Imperial) or <code class="mono">G21</code> (Metric) G-code.',
         "steps_count": 5,
@@ -501,8 +503,8 @@ TUTORIALS = [
         "sidebar_label": "G94, G93 & G20/G21 Feeds",
         "footer_label": "Rotary & Sheet Feedrates",
         "breadcrumb_title": "Understanding G94, G93 Inverse-Time & G20/G21 Feedrates",
-        "meta_title": "11. Understanding G94, G93 Inverse-Time & G20/G21 Feedrates | RotaryCAM Documentation",
-        "meta_description": "Practical fabricator guide to CNC plasma feedrates: G94 distance-per-minute on flat plate and 3-axis Y-wrap, G93 inverse-time on 4-axis rotary tubes, SimCNC 4D vector scaling, and why G93 F stays identical in G20 Imperial and G21 Metric.",
+        "meta_title": "G94, G93 Inverse-Time & G20/G21 Feeds | RotaryCAM Docs",
+        "meta_description": "Learn why flat-sheet G94 F drops 25.4x in inches while rotary G93 F stays constant, plus SimCNC 4D vector scaling and G-code checks before cutting.",
         "hero_title_html": 'Understanding <span class="text-gradient-amber">G94, G93 Inverse-Time &amp; G20/G21 Feedrates</span>',
         "hero_subtitle_html": 'Why flat-sheet <code class="mono">F</code> numbers drop by <code class="mono">25.4&times;</code> when switching from <code class="mono">mm</code> to <code class="mono">inches</code>, why rotary <code class="mono">G93</code> <code class="mono">F</code> numbers stay 100% identical, how SimCNC 4D trajectory spoofing works, and how to verify G-code before striking an arc.',
         "steps_count": 5,
@@ -542,8 +544,8 @@ TUTORIALS = [
         "sidebar_label": "Interactive Canvas Controls",
         "footer_label": "Interactive Canvas Controls",
         "breadcrumb_title": "Interactive Canvas Controls & Nest Tweaking",
-        "meta_title": "12. Interactive Canvas Controls & Nest Tweaking | RotaryCAM Documentation",
-        "meta_description": "Move pierce points directly on 3D and 2D contours, place custom micro-joint holding tabs, drag, rotate, and flip 2D sheet parts with live collision halos, and tweak 1D rotary stick strips.",
+        "meta_title": "Interactive Canvas & Nest Controls | RotaryCAM Docs",
+        "meta_description": "Drag pierce points into scrap on 3D and 2D contours, place custom micro-joint holding tabs, rotate 2D sheet parts, and flip or roll 1D stick tubes.",
         "hero_title_html": 'Interactive Canvas Controls &amp; <span class="text-gradient-amber">Nest Tweaking</span>',
         "hero_subtitle_html": 'Click or drag on the canvas to move pierces into scrap, place holding tabs along tight contours, nudge 2D sheet parts with live collision halos, and flip or roll 1D rotary tubes along the stick.',
         "steps_count": 4,
@@ -581,8 +583,8 @@ TUTORIALS = [
         "sidebar_label": "Flat Pro Primitives",
         "footer_label": "Flat Pro Primitives",
         "breadcrumb_title": "Flat-Plate Pro Cutting Primitives & Torch Crash Protection",
-        "meta_title": "13. Flat-Plate Pro Cutting Primitives & Torch Crash Protection | RotaryCAM Documentation",
-        "meta_description": "Prevent torch dives with Spatial Void THC Auto-Lock, set Left/Right/Center kerf on open slits, fire Edge-Start pierces on thick plate, crop square remnants, and run Daisy-Chain or Micro-Bridge passes.",
+        "meta_title": "Flat-Plate Pro Cutting & THC Lock | RotaryCAM Docs",
+        "meta_description": "Prevent torch dives with Spatial Void THC Auto-Lock, offset open slits Left/Right/Center, pierce thick plate from the edge, crop remnants, and chain.",
         "hero_title_html": 'Flat-Plate Pro Cutting Primitives &amp; <span class="text-gradient-amber">Torch Crash Protection</span>',
         "hero_subtitle_html": 'Lock THC automatically before crossing cut voids, set Left/Right/Center kerf on open slits, run Edge-Start pierces on thick plate, crop square remnants, and link parts with Daisy-Chain or Micro-Bridge cutting.',
         "steps_count": 4,
@@ -643,8 +645,67 @@ def bootstrap_missing_page_templates():
         print(f"[bootstrap] Created template {j2_path.relative_to(ROOT_DIR)}")
 
 
+SITE_BASE = "https://rotarycam.app"
+DEFAULT_OG_IMAGE = f"{SITE_BASE}/assets/cad-inspection.png"
+DEFAULT_OG_ALT = "RotaryCAM 3D CAD Tube Inspection and Feature Extraction"
+
+
+def png_dimensions(png_path: Path):
+    with open(png_path, "rb") as f:
+        header = f.read(24)
+    if len(header) < 24 or header[:8] != b"\x89PNG\r\n\x1a\n":
+        raise RuntimeError(f"Invalid PNG header in {png_path}")
+    return struct.unpack(">II", header[16:24])
+
+
+def generate_sitemap(controllers):
+    entries = [
+        (f"{SITE_BASE}/", ROOT_DIR / "index.html"),
+        (f"{SITE_BASE}/hardware-thc.html", ROOT_DIR / "hardware-thc.html"),
+        (f"{SITE_BASE}/build-guide.html", ROOT_DIR / "build-guide.html"),
+        (f"{SITE_BASE}/changelog.html", ROOT_DIR / "changelog.html"),
+        (f"{SITE_BASE}/docs/", DOCS_OUT_DIR / "index.html"),
+    ]
+    for t in TUTORIALS:
+        entries.append((f"{SITE_BASE}/docs/{t['filename']}", DOCS_OUT_DIR / t["filename"]))
+    for c in controllers:
+        entries.append(
+            (
+                f"{SITE_BASE}/docs/machine-configuration/{c['slug']}/",
+                DOCS_OUT_DIR / "machine-configuration" / c["slug"] / "index.html",
+            )
+        )
+
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for loc, path in entries:
+        lastmod = datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
+        lines.extend(
+            [
+                "  <url>",
+                f"    <loc>{loc}</loc>",
+                f"    <lastmod>{lastmod}</lastmod>",
+                "  </url>",
+            ]
+        )
+    lines.append("</urlset>\n")
+    sitemap_path = ROOT_DIR / "sitemap.xml"
+    sitemap_path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"[build] Generated sitemap.xml ({len(entries)} URLs)")
+
+
 def build_all_docs():
     bootstrap_missing_page_templates()
+
+    for t in TUTORIALS:
+        thumb = t.get("hub_thumb")
+        if thumb:
+            w, h = png_dimensions(DOCS_OUT_DIR / thumb)
+            t["hub_thumb_webp"] = thumb[:-4] + ".webp"
+            t["hub_thumb_width"] = w
+            t["hub_thumb_height"] = h
 
     env = jinja2.Environment(
         loader=jinja2.FileSystemLoader([str(TEMPLATES_DIR), str(PAGES_TEMPLATE_DIR)]),
@@ -658,8 +719,8 @@ def build_all_docs():
     # 1. Render docs/index.html
     index_page = {
         "slug": "index",
-        "meta_title": "Documentation & Workflows: RotaryCAM | 4-Axis Rotary CNC Plasma CAM",
-        "meta_description": "Step-by-step visual documentation and shop tutorials for RotaryCAM: 4-axis machine setup, 3D STEP cut-path inspection, zero-bevel saddle compensation, multi-stick nesting, HSS & round pipe Cut-and-Bend unfolding, Fusion 360 modeling, and SimCNC motion-sync torch control.",
+        "meta_title": "RotaryCAM Docs | 4-Axis Rotary & Flat-Sheet Plasma Guides",
+        "meta_description": "Step-by-step RotaryCAM guides for 4-axis tube cutting, zero-bevel copes, stick nesting, DXF/SVG flat sheets, cut charts, and CNC controller setup.",
         "has_lightbox": False,
     }
     index_tmpl = env.get_template("pages/index.html.j2")
@@ -674,6 +735,10 @@ def build_all_docs():
         footer_tech_strip=FOOTER_TECH_STRIP,
         docs_prefix="",
         root_prefix="../",
+        canonical_url=f"{SITE_BASE}/docs/",
+        og_type="website",
+        og_image=DEFAULT_OG_IMAGE,
+        og_image_alt=DEFAULT_OG_ALT,
     )
     (DOCS_OUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
     print(f"[build] Rendered docs/index.html ({total_tutorials} workflows, {total_steps} steps)")
@@ -683,6 +748,8 @@ def build_all_docs():
         prev_t = TUTORIALS[idx - 1] if idx > 0 else None
         next_t = TUTORIALS[idx + 1] if idx + 1 < total_tutorials else None
         tmpl = env.get_template(f"pages/{t['slug']}.html.j2")
+        og_img = f"{SITE_BASE}/docs/{t['hub_thumb']}" if t.get("hub_thumb") else DEFAULT_OG_IMAGE
+        og_alt = t.get("hub_thumb_alt") or DEFAULT_OG_ALT
         rendered = tmpl.render(
             page=t,
             tutorials=TUTORIALS,
@@ -698,6 +765,10 @@ def build_all_docs():
             footer_tech_strip=FOOTER_TECH_STRIP,
             docs_prefix="",
             root_prefix="../",
+            canonical_url=f"{SITE_BASE}/docs/{t['filename']}",
+            og_type="article",
+            og_image=og_img,
+            og_image_alt=og_alt,
         )
         out_path = DOCS_OUT_DIR / t["filename"]
         out_path.write_text(rendered, encoding="utf-8")
@@ -733,12 +804,19 @@ def build_all_docs():
             footer_tech_strip=FOOTER_TECH_STRIP,
             docs_prefix="../../",
             root_prefix="../../../",
+            canonical_url=f"{SITE_BASE}/docs/machine-configuration/{c['slug']}/",
+            og_type="article",
+            og_image=DEFAULT_OG_IMAGE,
+            og_image_alt=f"{c['name']} Setup and Cut Cycle in RotaryCAM",
         )
         out_dir = DOCS_OUT_DIR / "machine-configuration" / c["slug"]
         out_dir.mkdir(parents=True, exist_ok=True)
         out_path = out_dir / "index.html"
         out_path.write_text(rendered, encoding="utf-8")
         print(f"[build] Rendered docs/machine-configuration/{c['slug']}/index.html")
+
+    # 4. Generate sitemap.xml covering all 33 pages
+    generate_sitemap(controllers)
 
 
 def controller_subpage_paths():
@@ -753,6 +831,8 @@ def verify_links_and_assets():
         [
             ROOT_DIR / "index.html",
             ROOT_DIR / "build-guide.html",
+            ROOT_DIR / "changelog.html",
+            ROOT_DIR / "hardware-thc.html",
             DOCS_OUT_DIR / "index.html",
         ]
         + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
@@ -763,22 +843,24 @@ def verify_links_and_assets():
     checked = 0
     for f in html_files:
         text = f.read_text(encoding="utf-8")
-        for attr, val in re.findall(r'(href|src)="([^"]+)"', text):
-            if val.startswith(("http://", "https://", "mailto:", "#", "javascript:", "data:")):
-                continue
-            clean = val.split("#")[0].split("?")[0]
-            if not clean:
-                continue
-            target = (f.parent / clean).resolve()
-            checked += 1
-            if not target.exists():
-                missing.append((f.relative_to(ROOT_DIR), attr, val, target))
+        for attr, val in re.findall(r'(href|src|srcset)="([^"]+)"', text):
+            candidates = [part.strip().split()[0] for part in val.split(",")] if attr == "srcset" else [val]
+            for item in candidates:
+                if not item or item.startswith(("http://", "https://", "mailto:", "#", "javascript:", "data:")):
+                    continue
+                clean = item.split("#")[0].split("?")[0]
+                if not clean:
+                    continue
+                target = (f.parent / clean).resolve()
+                checked += 1
+                if not target.exists():
+                    missing.append((f.relative_to(ROOT_DIR), attr, item, target))
 
     if missing:
         for src_file, attr, val, target in missing:
             print(f"[ERROR] Broken {attr}=\"{val}\" in {src_file} -> {target}", file=sys.stderr)
         sys.exit(1)
-    print(f"[verify] Verified {checked} internal href/src references across {len(html_files)} HTML files: 0 broken links!")
+    print(f"[verify] Verified {checked} internal href/src/srcset references across {len(html_files)} HTML files: 0 broken links!")
 
 
 def verify_zero_em_dashes():

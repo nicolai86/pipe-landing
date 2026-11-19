@@ -4,10 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Rotary CNC Plasma Cutter v1: Complete 6-Meter 4-Axis Build Guide | RotaryCAM</title>
-  <meta name="title" content="Rotary CNC Plasma Cutter v1: Complete 6-Meter 4-Axis Build Guide | RotaryCAM" />
-  <meta name="description" content="Complete technical documentation, bill of materials, and interactive 3D CAD model for a 6-meter 4-axis rotary CNC plasma cutter built with CSLab IP-M, Teknic ClearPath servos, and dual chucks." />
-  <meta name="keywords" content="rotary plasma build guide, DIY 4-axis plasma cutter, rotary CNC plasma BOM, Teknic ClearPath plasma, CSLab IP-M rotary plasma, ZCT200 rotary table, XSU080318 slewing bearing, SimCNC rotary kinematics, pipe plasma machine build" />
+  <title>6m 4-Axis Rotary CNC Plasma Build Guide &amp; BOM | RotaryCAM</title>
+  <meta name="title" content="6m 4-Axis Rotary CNC Plasma Build Guide &amp; BOM | RotaryCAM" />
+  <meta name="description" content="Open-hardware blueprint, full BOM, and interactive 3D CAD assembly for a 6-meter 4-axis rotary CNC plasma cutter with ClearPath servos and dual chucks." />
   <meta name="author" content="Raphael Randschau" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://rotarycam.app/build-guide.html" />
@@ -17,18 +16,115 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://rotarycam.app/build-guide.html" />
   <meta property="og:site_name" content="RotaryCAM" />
-  <meta property="og:title" content="Rotary CNC Plasma Cutter v1: 6-Meter 4-Axis Build Guide" />
-  <meta property="og:description" content="Open-hardware engineering blueprint, complete BOM, and interactive 3D CAD assembly for a 20ft 4-axis rotary CNC plasma table." />
+  <meta property="og:title" content="6m 4-Axis Rotary CNC Plasma Build Guide &amp; BOM | RotaryCAM" />
+  <meta property="og:description" content="Open-hardware blueprint, full BOM, and interactive 3D CAD assembly for a 6-meter 4-axis rotary CNC plasma cutter with ClearPath servos and dual chucks." />
   <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rotary CNC Plasma Cutter v1: 6-Meter 4-Axis Build Guide" />
-  <meta name="twitter:description" content="Complete 4-axis rotary CNC plasma build guide: CSLab IP-M, Teknic ClearPath servos, dual synchronized chucks, and interactive 3D model." />
+  <meta name="twitter:title" content="6m 4-Axis Rotary CNC Plasma Build Guide &amp; BOM | RotaryCAM" />
+  <meta name="twitter:description" content="Open-hardware blueprint, full BOM, and interactive 3D CAD assembly for a 6-meter 4-axis rotary CNC plasma cutter with ClearPath servos and dual chucks." />
   <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
 
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%2314171d' stroke='%23f59e0b' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='16' r='4' fill='%23f59e0b'/></svg>" />
+
+  <!-- Schema.org TechArticle & VideoObject Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "headline": "6m 4-Axis Rotary CNC Plasma Build Guide & BOM",
+        "description": "Open-hardware blueprint, full BOM, and interactive 3D CAD assembly for a 6-meter 4-axis rotary CNC plasma cutter with ClearPath servos and dual chucks.",
+        "url": "https://rotarycam.app/build-guide.html",
+        "mainEntityOfPage": "https://rotarycam.app/build-guide.html",
+        "image": "https://rotarycam.app/assets/cad-inspection.png",
+        "author": {
+          "@type": "Person",
+          "name": "Raphael Randschau"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "RotaryCAM",
+          "url": "https://rotarycam.app/"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "name": "Rotary CNC Plasma Cutter Build & Live Cut Videos",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "VideoObject",
+              "name": "Cutting Square & Rectangular HSS",
+              "description": "Live plasma cutting on structural rectangular tubing with dynamic THC height tracking and 4D feedrate scaling across corner radii.",
+              "thumbnailUrl": "https://i.ytimg.com/vi/9BRmgDwqXck/hqdefault.jpg",
+              "uploadDate": "2026-10-18T00:00:00Z",
+              "embedUrl": "https://www.youtube.com/embed/9BRmgDwqXck",
+              "contentUrl": "https://www.youtube.com/shorts/9BRmgDwqXck"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "VideoObject",
+              "name": "First Test Cut on Round Pipe",
+              "description": "Synchronized 360-degree A-axis stock rotation and longitudinal X traverse cutting a saddle joint fishmouth on round pipe.",
+              "thumbnailUrl": "https://i.ytimg.com/vi/ACsAyeFF3xk/hqdefault.jpg",
+              "uploadDate": "2026-10-18T00:00:00Z",
+              "embedUrl": "https://www.youtube.com/embed/ACsAyeFF3xk",
+              "contentUrl": "https://www.youtube.com/shorts/ACsAyeFF3xk"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "VideoObject",
+              "name": "A & X Axis Motion Walkthrough",
+              "description": "Walkaround of the 6-meter carriage traversing the helical rack, paired with dual synchronized ClearPath rotary chucks.",
+              "thumbnailUrl": "https://i.ytimg.com/vi/SxPffLVxEtA/hqdefault.jpg",
+              "uploadDate": "2026-10-18T00:00:00Z",
+              "embedUrl": "https://www.youtube.com/embed/SxPffLVxEtA",
+              "contentUrl": "https://www.youtube.com/shorts/SxPffLVxEtA"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "VideoObject",
+              "name": "Front Chuck & Slewing Ring",
+              "description": "Close-up of the front headstock with XSU080318 crossed roller slewing ring, machined 6061 faceplate, and protective covers.",
+              "thumbnailUrl": "https://i.ytimg.com/vi/dbIxk7xQxyU/hqdefault.jpg",
+              "uploadDate": "2026-10-18T00:00:00Z",
+              "embedUrl": "https://www.youtube.com/embed/dbIxk7xQxyU",
+              "contentUrl": "https://www.youtube.com/shorts/dbIxk7xQxyU"
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "VideoObject",
+              "name": "Machine Chassis & Bed Assembly",
+              "description": "Fabrication progress overview on the 5x3x1/4 inch steel spine, M24 leveling pedestals, HGH25 linear rails, and cable carrier.",
+              "thumbnailUrl": "https://i.ytimg.com/vi/0OIRPtqcSMY/hqdefault.jpg",
+              "uploadDate": "2026-10-18T00:00:00Z",
+              "embedUrl": "https://www.youtube.com/embed/0OIRPtqcSMY",
+              "contentUrl": "https://www.youtube.com/shorts/0OIRPtqcSMY"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1250,9 +1346,9 @@
   <!-- Sticky Header -->
   <header class="site-header">
     <div class="site-header-bar">
-      <a href="index.html" class="nav-back-link">← Back to RotaryCAM</a>
+      <a href="./" class="nav-back-link">← Back to RotaryCAM</a>
       <nav>
-        <a href="index.html" class="brand">
+        <a href="./" class="brand">
           <span>RotaryCAM</span>
           <span class="brand-tag">v0.8.4-BETA</span>
         </a>
@@ -1275,6 +1371,7 @@
     </div>
   </header>
 
+  <main>
   <div class="container">
     <!-- Hero Section -->
     <section class="guide-hero">
@@ -2223,7 +2320,7 @@
         <!-- Video 1 -->
         <div class="video-card" data-video-id="9BRmgDwqXck">
           <div class="video-thumb-wrap">
-            <img src="https://i.ytimg.com/vi/9BRmgDwqXck/oar2.jpg" alt="CNC rotary plasma cutter cutting rectangular HSS tubing" loading="lazy" class="video-thumb">
+            <img src="https://i.ytimg.com/vi/9BRmgDwqXck/oar2.jpg" width="405" height="720" alt="CNC rotary plasma cutter cutting rectangular HSS tubing" loading="lazy" class="video-thumb">
             <div class="video-overlay">
               <div class="play-btn-circle">
                 <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -2247,7 +2344,7 @@
         <!-- Video 2 -->
         <div class="video-card" data-video-id="ACsAyeFF3xk">
           <div class="video-thumb-wrap">
-            <img src="https://i.ytimg.com/vi/ACsAyeFF3xk/oar2.jpg" alt="First test cut on round pipe with CNC rotary plasma" loading="lazy" class="video-thumb">
+            <img src="https://i.ytimg.com/vi/ACsAyeFF3xk/oar2.jpg" width="405" height="720" alt="First test cut on round pipe with CNC rotary plasma" loading="lazy" class="video-thumb">
             <div class="video-overlay">
               <div class="play-btn-circle">
                 <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -2271,7 +2368,7 @@
         <!-- Video 3 -->
         <div class="video-card" data-video-id="SxPffLVxEtA">
           <div class="video-thumb-wrap">
-            <img src="https://i.ytimg.com/vi/SxPffLVxEtA/oar2.jpg" alt="Rotary plasma cutter A and X axis walkthrough" loading="lazy" class="video-thumb">
+            <img src="https://i.ytimg.com/vi/SxPffLVxEtA/oar2.jpg" width="405" height="720" alt="Rotary plasma cutter A and X axis walkthrough" loading="lazy" class="video-thumb">
             <div class="video-overlay">
               <div class="play-btn-circle">
                 <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -2295,7 +2392,7 @@
         <!-- Video 4 -->
         <div class="video-card" data-video-id="dbIxk7xQxyU">
           <div class="video-thumb-wrap">
-            <img src="https://i.ytimg.com/vi/dbIxk7xQxyU/oar2.jpg" alt="Rotary CNC plasma front chuck walkthrough" loading="lazy" class="video-thumb">
+            <img src="https://i.ytimg.com/vi/dbIxk7xQxyU/oar2.jpg" width="405" height="720" alt="Rotary CNC plasma front chuck walkthrough" loading="lazy" class="video-thumb">
             <div class="video-overlay">
               <div class="play-btn-circle">
                 <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -2319,7 +2416,7 @@
         <!-- Video 5 -->
         <div class="video-card" data-video-id="0OIRPtqcSMY">
           <div class="video-thumb-wrap">
-            <img src="https://i.ytimg.com/vi/0OIRPtqcSMY/oar2.jpg" alt="Rotary CNC plasma build progress" loading="lazy" class="video-thumb">
+            <img src="https://i.ytimg.com/vi/0OIRPtqcSMY/oar2.jpg" width="405" height="720" alt="Rotary CNC plasma build progress" loading="lazy" class="video-thumb">
             <div class="video-overlay">
               <div class="play-btn-circle">
                 <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -2870,6 +2967,7 @@
       </div>
     </section>
   </div>
+  </main>
 
   <!-- Footer -->
   <footer>
@@ -2878,12 +2976,12 @@
       <div style="color: var(--text-dim); font-size: 0.825rem;">Rotary CNC Plasma Cutter v1 Open Hardware Blueprint • Built for SimCNC, Mach4, LinuxCNC &amp; Masso</div>
     </div>
     <div class="footer-links">
-      <a href="index.html" class="footer-link">← Back to RotaryCAM</a>
+      <a href="./" class="footer-link">← Back to RotaryCAM</a>
       <a href="hardware-thc.html" class="footer-link" style="color: var(--plasma-amber); font-weight: 600;">Hardware THC v2 ($199 CAD) ↗</a>
       <a href="changelog.html" class="footer-link">Changelog &amp; Downloads</a>
       <a href="#learnings" class="footer-link">v2 Roadmap</a>
       <a href="#disclaimer" class="footer-link">Build Disclaimer</a>
-      <a href="index.html#impressum" class="footer-link">Legal Notice &amp; Safety</a>
+      <a href="./#impressum" class="footer-link">Legal Notice &amp; Safety</a>
       <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
     </div>
   </footer>

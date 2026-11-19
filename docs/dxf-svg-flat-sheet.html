@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>10. Multi-File DXF & SVG Flat-Sheet CAM, 2-Point Scaling & Imperial Units | RotaryCAM Documentation</title>
-  <meta name="description" content="Step-by-step visual guide to importing multi-file DXF/SVG flat-sheet parts, setting sheet thickness, fixing drawing scale with magnetic 2-point snapping, nesting 2D plates, and emitting native G20 Imperial or G21 Metric G-code in RotaryCAM." />
+  <title>DXF/SVG Flat-Sheet CAM & G20 Units | RotaryCAM Docs</title>
+  <meta name="description" content="Drop multi-file DXF, SVG, or ZIP kits, set sheet thickness, fix scale with 2-point snapping, nest parts inside cutouts, and export G20 or G21 G-code." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/dxf-svg-flat-sheet.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/dxf-svg-flat-sheet.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="DXF/SVG Flat-Sheet CAM & G20 Units | RotaryCAM Docs" />
+  <meta property="og:description" content="Drop multi-file DXF, SVG, or ZIP kits, set sheet thickness, fix scale with 2-point snapping, nest parts inside cutouts, and export G20 or G21 G-code." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/dxf-svg-4-sheet-nesting.png" />
+  <meta property="og:image:alt" content="RotaryCAM 2D Sheet Nesting of 30 Parts on a 96x48 in Sheet with Imperial G20 G-Code" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="DXF/SVG Flat-Sheet CAM & G20 Units | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Drop multi-file DXF, SVG, or ZIP kits, set sheet thickness, fix scale with 2-point snapping, nest parts inside cutouts, and export G20 or G21 G-code." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/dxf-svg-4-sheet-nesting.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Multi-File DXF \u0026 SVG Flat-Sheet CAM, 2-Point Scaling \u0026 Imperial G20 G-Code",
+        "item": "https://rotarycam.app/docs/dxf-svg-flat-sheet.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Multi-File DXF \u0026 SVG Flat-Sheet CAM, 2-Point Scaling \u0026 Imperial G20 G-Code",
+    "description": "Drop multi-file DXF, SVG, or ZIP kits, set sheet thickness, fix scale with 2-point snapping, nest parts inside cutouts, and export G20 or G21 G-code.",
+    "image": "https://rotarycam.app/docs/assets/dxf-svg-4-sheet-nesting.png",
+    "url": "https://rotarycam.app/docs/dxf-svg-flat-sheet.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/dxf-svg-flat-sheet.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -614,7 +683,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/dxf-svg-1-upload.png" alt="Step 1: Multi-file DXF and SVG dropzone with Langmuir FireControl in / G20 machine units toggle" loading="lazy" />
+              <picture>
+                <source srcset="assets/dxf-svg-1-upload.webp" type="image/webp" />
+                <img src="assets/dxf-svg-1-upload.png" alt="Step 1: Multi-file DXF and SVG dropzone with Langmuir FireControl in / G20 machine units toggle" width="2880" height="1800" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -648,7 +720,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/dxf-svg-2-thickness-gate.png" alt="Step 2: Sheet thickness selection pills from 16ga to 1/2 inch with Awaiting Thickness safety gate" loading="lazy" />
+              <picture>
+                <source srcset="assets/dxf-svg-2-thickness-gate.webp" type="image/webp" />
+                <img src="assets/dxf-svg-2-thickness-gate.png" alt="Step 2: Sheet thickness selection pills from 16ga to 1/2 inch with Awaiting Thickness safety gate" width="2880" height="1800" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -685,7 +760,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/dxf-svg-3-scale-part.png" alt="Step 3: Magnetic 2-point Scale Part popover with P1/P2 snap, measured vs target dimension, and 25.4 flip buttons" loading="lazy" />
+              <picture>
+                <source srcset="assets/dxf-svg-3-scale-part.webp" type="image/webp" />
+                <img src="assets/dxf-svg-3-scale-part.png" alt="Step 3: Magnetic 2-point Scale Part popover with P1/P2 snap, measured vs target dimension, and 25.4 flip buttons" width="2880" height="1800" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -721,7 +799,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/dxf-svg-4-sheet-nesting.png" alt="Step 4: 2D XY sheet nesting of 30 parts on a 96 by 48 inch sheet with Imperial spacing and live G-code" loading="lazy" />
+              <picture>
+                <source srcset="assets/dxf-svg-4-sheet-nesting.webp" type="image/webp" />
+                <img src="assets/dxf-svg-4-sheet-nesting.png" alt="Step 4: 2D XY sheet nesting of 30 parts on a 96 by 48 inch sheet with Imperial spacing and live G-code" width="2880" height="1800" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -754,7 +835,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/dxf-svg-5-imperial-sim.png" alt="Step 5: Live 3D cut simulation with Imperial DRO 138 IPM, Cut Dist 3135.2 in, and synced G20 G-code" loading="lazy" />
+              <picture>
+                <source srcset="assets/dxf-svg-5-imperial-sim.webp" type="image/webp" />
+                <img src="assets/dxf-svg-5-imperial-sim.png" alt="Step 5: Live 3D cut simulation with Imperial DRO 138 IPM, Cut Dist 3135.2 in, and synced G20 G-code" width="2880" height="1800" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -951,9 +1035,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

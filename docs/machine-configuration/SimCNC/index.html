@@ -4,7 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CSLab SimCNC 3.5 & 3.6+ G93 Setup & Cut Cycle | RotaryCAM Docs</title>
-  <meta name="description" content="CSLab SimCNC 3.5 & 3.6+ setup guide: config.xml import, G69 + metric G64 P0.3/0.4, 0.002mm axial feathering, #1110-#1114/#1090-#1092 m3.py handshake, M62/M63 P0/P1 motion sync, and 6-phase cut cycle." />
+  <meta name="description" content="CSLab SimCNC 3.5 & 3.6+ setup: config.xml import, G69 and G64 smoothing, 0.002 mm feathering, #1110/#1090 m3.py handshake, and M62/M63 P0/P1 sync." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/machine-configuration/SimCNC/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/machine-configuration/SimCNC/" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="CSLab SimCNC 3.5 & 3.6+ G93 Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta property="og:description" content="CSLab SimCNC 3.5 & 3.6+ setup: config.xml import, G69 and G64 smoothing, 0.002 mm feathering, #1110/#1090 m3.py handshake, and M62/M63 P0/P1 sync." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="CSLab SimCNC 3.5 & 3.6+ G93 Setup and Cut Cycle in RotaryCAM" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CSLab SimCNC 3.5 & 3.6+ G93 Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta name="twitter:description" content="CSLab SimCNC 3.5 & 3.6+ setup: config.xml import, G69 and G64 smoothing, 0.002 mm feathering, #1110/#1090 m3.py handshake, and M62/M63 P0/P1 sync." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Machine Configuration",
+        "item": "https://rotarycam.app/docs/machine-configuration.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "CSLab SimCNC 3.5 \u0026 3.6+ G93",
+        "item": "https://rotarycam.app/docs/machine-configuration/SimCNC/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "CSLab SimCNC 3.5 \u0026 3.6+ G93 Setup and Cut Cycle",
+    "description": "CSLab SimCNC 3.5 \u0026 3.6+ setup: config.xml import, G69 and G64 smoothing, 0.002 mm feathering, #1110/#1090 m3.py handshake, and M62/M63 P0/P1 sync.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/machine-configuration/SimCNC/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/machine-configuration/SimCNC/"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

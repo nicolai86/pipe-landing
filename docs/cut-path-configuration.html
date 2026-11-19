@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>02. UI Layout & STEP File Cut Path Configuration | RotaryCAM Documentation</title>
-  <meta name="description" content="Step-by-step visual guide to RotaryCAM's 3D CAD assembly inspector, per-contour lead-in/lead-out settings, Zero-Bevel Dual-Curve saddle compensation, and 4-axis 3D toolpath simulation." />
+  <title>UI Layout & STEP Cut Path Config | RotaryCAM Docs</title>
+  <meta name="description" content="Inspect multi-body STEP assemblies, tune per-contour lead-ins and 80% zero-bevel saddle copes, add weld bevels or tabs, and preview in 3D simulation." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/cut-path-configuration.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/cut-path-configuration.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="UI Layout & STEP Cut Path Config | RotaryCAM Docs" />
+  <meta property="og:description" content="Inspect multi-body STEP assemblies, tune per-contour lead-ins and 80% zero-bevel saddle copes, add weld bevels or tabs, and preview in 3D simulation." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/cut-path-6-zero-bevel.png" />
+  <meta property="og:image:alt" content="RotaryCAM Per-Contour Cut Path & Zero-Bevel Configuration" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="UI Layout & STEP Cut Path Config | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Inspect multi-body STEP assemblies, tune per-contour lead-ins and 80% zero-bevel saddle copes, add weld bevels or tabs, and preview in 3D simulation." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/cut-path-6-zero-bevel.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "UI Layout \u0026 STEP Cut Path Configuration",
+        "item": "https://rotarycam.app/docs/cut-path-configuration.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "UI Layout \u0026 STEP Cut Path Configuration",
+    "description": "Inspect multi-body STEP assemblies, tune per-contour lead-ins and 80% zero-bevel saddle copes, add weld bevels or tabs, and preview in 3D simulation.",
+    "image": "https://rotarycam.app/docs/assets/cut-path-6-zero-bevel.png",
+    "url": "https://rotarycam.app/docs/cut-path-configuration.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/cut-path-configuration.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -605,7 +674,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-1-fixture.png" alt="Step 1: Quick CAD Fixtures panel highlighting Saddle Joint (Zero-Bevel)" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-1-fixture.webp" type="image/webp" />
+                <img src="assets/cut-path-1-fixture.png" alt="Step 1: Quick CAD Fixtures panel highlighting Saddle Joint (Zero-Bevel)" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -635,7 +707,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-2-overview.png" alt="Step 2: Entire Model Overview 3D assembly viewer and Active CAD Solid selector bar" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-2-overview.webp" type="image/webp" />
+                <img src="assets/cut-path-2-overview.png" alt="Step 2: Entire Model Overview 3D assembly viewer and Active CAD Solid selector bar" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -668,7 +743,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-3-preview.png" alt="Step 3: 3D Part Preview and Cutting Contours viewport" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-3-preview.webp" type="image/webp" />
+                <img src="assets/cut-path-3-preview.png" alt="Step 3: 3D Part Preview and Cutting Contours viewport" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -697,7 +775,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-4-select-endcut.png" alt="Step 4: Selecting the ENDCUT feature row in the feature table" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-4-select-endcut.webp" type="image/webp" />
+                <img src="assets/cut-path-4-select-endcut.png" alt="Step 4: Selecting the ENDCUT feature row in the feature table" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -729,7 +810,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-5-open-config.png" alt="Step 5: Clicking Config on the ENDCUT row to open the 4-column contour configuration drawer" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-5-open-config.webp" type="image/webp" />
+                <img src="assets/cut-path-5-open-config.png" alt="Step 5: Clicking Config on the ENDCUT row to open the 4-column contour configuration drawer" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -796,7 +880,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-6-zero-bevel.png" alt="Step 6: Enabling Apply Zero-Bevel Compensation at 80%, clicking Save, and selecting 3D Cut Simulation" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-6-zero-bevel.webp" type="image/webp" />
+                <img src="assets/cut-path-6-zero-bevel.png" alt="Step 6: Enabling Apply Zero-Bevel Compensation at 80%, clicking Save, and selecting 3D Cut Simulation" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -826,7 +913,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-7-sim-start.png" alt="Step 7: 3D Cut Simulation showing Play button and live CNC DRO (XYZA)" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-7-sim-start.webp" type="image/webp" />
+                <img src="assets/cut-path-7-sim-start.png" alt="Step 7: 3D Cut Simulation showing Play button and live CNC DRO (XYZA)" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -856,7 +946,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/cut-path-8-sim-done.png" alt="Step 8: Completed 3D Cut Simulation at 100% showing full 4-axis toolpath" loading="lazy" />
+              <picture>
+                <source srcset="assets/cut-path-8-sim-done.webp" type="image/webp" />
+                <img src="assets/cut-path-8-sim-done.png" alt="Step 8: Completed 3D Cut Simulation at 100% showing full 4-axis toolpath" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -980,9 +1073,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);

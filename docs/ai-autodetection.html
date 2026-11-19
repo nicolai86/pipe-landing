@@ -3,8 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>06. Modeling in Fusion 360 for AI Profile Autodetection | RotaryCAM Documentation</title>
-  <meta name="description" content="Step-by-step guide to modeling tube and pipe assemblies in Autodesk Fusion 360 using the Structural Member (SM) plugin so RotaryCAM automatically detects tube profiles, sizes, and wall thicknesses straight out of CAD." />
+  <title>Fusion 360 Structural Member & AI Detect | RotaryCAM Docs</title>
+  <meta name="description" content="Model tube frames in Fusion 360 with the Structural Member plugin, combine bend bodies, export STEP assemblies, and auto-detect profiles in RotaryCAM." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/ai-autodetection.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/ai-autodetection.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Fusion 360 Structural Member & AI Detect | RotaryCAM Docs" />
+  <meta property="og:description" content="Model tube frames in Fusion 360 with the Structural Member plugin, combine bend bodies, export STEP assemblies, and auto-detect profiles in RotaryCAM." />
+  <meta property="og:image" content="https://rotarycam.app/docs/assets/ai-cad-8-autodetect.png" />
+  <meta property="og:image:alt" content="RotaryCAM Fusion 360 Structural Member & Automatic Tube Detection" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fusion 360 Structural Member & AI Detect | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Model tube frames in Fusion 360 with the Structural Member plugin, combine bend bodies, export STEP assemblies, and auto-detect profiles in RotaryCAM." />
+  <meta name="twitter:image" content="https://rotarycam.app/docs/assets/ai-cad-8-autodetect.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Fusion 360 \u0026 AI Profile Autodetection",
+        "item": "https://rotarycam.app/docs/ai-autodetection.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Fusion 360 \u0026 AI Profile Autodetection",
+    "description": "Model tube frames in Fusion 360 with the Structural Member plugin, combine bend bodies, export STEP assemblies, and auto-detect profiles in RotaryCAM.",
+    "image": "https://rotarycam.app/docs/assets/ai-cad-8-autodetect.png",
+    "url": "https://rotarycam.app/docs/ai-autodetection.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/ai-autodetection.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -612,7 +681,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-1-fusion.png" alt="Step 1: Autodesk Fusion 360 workspace showing the Structural Member SM icons in the CREATE toolbar" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-1-fusion.webp" type="image/webp" />
+                <img src="assets/ai-cad-1-fusion.png" alt="Step 1: Autodesk Fusion 360 workspace showing the Structural Member SM icons in the CREATE toolbar" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -642,7 +714,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-2-sketch.png" alt="Step 2: Clicking Create Sketch and selecting the origin plane in Fusion 360" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-2-sketch.webp" type="image/webp" />
+                <img src="assets/ai-cad-2-sketch.png" alt="Step 2: Clicking Create Sketch and selecting the origin plane in Fusion 360" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -672,7 +747,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-3-draw.png" alt="Step 3: Completed 2D centerline sketch in Fusion 360 with straight lines and tangent corner fillets" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-3-draw.webp" type="image/webp" />
+                <img src="assets/ai-cad-3-draw.png" alt="Step 3: Completed 2D centerline sketch in Fusion 360 with straight lines and tangent corner fillets" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -703,7 +781,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-4a-sm-menu.png" alt="Step 4a: Selecting Structural Member Command from the Fusion 360 Create menu" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-4a-sm-menu.webp" type="image/webp" />
+                <img src="assets/ai-cad-4a-sm-menu.png" alt="Step 4a: Selecting Structural Member Command from the Fusion 360 Create menu" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
 
@@ -713,7 +794,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-4b-sm-dialog.png" alt="Step 4b: Configuring ANSI_AISC HSS 1-1/2 x 1-1/2 x 1/8 in the Structural Member Command dialog" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-4b-sm-dialog.webp" type="image/webp" />
+                <img src="assets/ai-cad-4b-sm-dialog.png" alt="Step 4b: Configuring ANSI_AISC HSS 1-1/2 x 1-1/2 x 1/8 in the Structural Member Command dialog" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
 
@@ -723,7 +807,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-4c-sm-complete.png" alt="Step 4c: Completed 3D structural member assembly with SM0001:1 through SM0007:1 in the Fusion 360 Browser" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-4c-sm-complete.webp" type="image/webp" />
+                <img src="assets/ai-cad-4c-sm-complete.png" alt="Step 4c: Completed 3D structural member assembly with SM0001:1 through SM0007:1 in the Fusion 360 Browser" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -760,7 +847,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-5-combine.png" alt="Step 5: Combining contiguous straight and curved structural member segments into a single solid body in Fusion 360" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-5-combine.webp" type="image/webp" />
+                <img src="assets/ai-cad-5-combine.png" alt="Step 5: Combining contiguous straight and curved structural member segments into a single solid body in Fusion 360" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -791,7 +881,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-6-export.png" alt="Step 6: Exporting the entire Fusion 360 design as a STEP file" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-6-export.webp" type="image/webp" />
+                <img src="assets/ai-cad-6-export.png" alt="Step 6: Exporting the entire Fusion 360 design as a STEP file" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -821,7 +914,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-7a-drop.png" alt="Step 7a: Dropping the exported STEP file into the RotaryCAM CAD Ingestion panel" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-7a-drop.webp" type="image/webp" />
+                <img src="assets/ai-cad-7a-drop.png" alt="Step 7a: Dropping the exported STEP file into the RotaryCAM CAD Ingestion panel" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
 
@@ -831,7 +927,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-7b-load.png" alt="Step 7b: 3D preview of rotarycam-demo.step and clicking Load & Process CAD" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-7b-load.webp" type="image/webp" />
+                <img src="assets/ai-cad-7b-load.png" alt="Step 7b: 3D preview of rotarycam-demo.step and clicking Load & Process CAD" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -861,7 +960,10 @@
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
-              <img src="assets/ai-cad-8-autodetect.png" alt="Step 8: RotaryCAM AI Cross-Section & Dimensions card and Multi-Part Pack Nesting dropdown showing autodetected rectangular and round tube profiles" loading="lazy" />
+              <picture>
+                <source srcset="assets/ai-cad-8-autodetect.webp" type="image/webp" />
+                <img src="assets/ai-cad-8-autodetect.png" alt="Step 8: RotaryCAM AI Cross-Section & Dimensions card and Multi-Part Pack Nesting dropdown showing autodetected rectangular and round tube profiles" width="2324" height="1397" loading="lazy" />
+              </picture>
             </div>
           </figure>
         </article>
@@ -985,9 +1087,9 @@
         const img = fig.querySelector('img');
         const cap = fig.querySelector('.doc-figure-caption');
         const open = () => {
-          lightboxImg.src = img.src;
-          lightboxImg.alt = img.alt;
-          lightboxCaption.textContent = cap ? cap.textContent.trim() : img.alt;
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt || '';
+          lightboxCaption.textContent = cap ? cap.textContent.trim() : (img.alt || '');
           lightbox.classList.add('open');
         };
         fig.querySelector('.doc-figure-img-wrap').addEventListener('click', open);
