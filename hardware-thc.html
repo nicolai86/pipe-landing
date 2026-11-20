@@ -2043,7 +2043,7 @@
             <h1>Stop Wrecking Consumables on Warped Plate. <span>Give Your Table 10,000 Hz Height Control.</span></h1>
 
             <p class="hero-lead">
-              Plug this standalone board inline on your Z Step/Dir cable and turn your controller&rsquo;s sluggish software THC off. The board runs a <strong>100 µs height loop in silicon</strong> with a <strong>2.0 ms ohmic tip-up escape</strong>, tracks warps across <strong>100% of your lifter stroke</strong>, and <strong>locks onto consumable wear automatically</strong> so you stop chasing cut-chart volts.
+              Plug this standalone board inline on your Z Step/Dir cable and turn off your CNC&rsquo;s slow software THC. It runs a <strong>100 µs height loop in silicon</strong> with a <strong>2.0 ms ohmic tip-up escape</strong>. You get <strong>100% of your lifter stroke</strong> on warped plate and <strong>automatic electrode-wear lock</strong>, so you stop chasing cut-chart volts.
             </p>
 
             <!-- Target Price Callout Strip -->
@@ -2135,7 +2135,7 @@
         <div class="telemetry-strip">
           <div class="telemetry-metric">
             <div class="telemetry-val">10,000 Hz <span>(100 µs)</span></div>
-            <div class="telemetry-lbl">Deterministic Z Step/Dir Loop in STM32G431 Silicon</div>
+            <div class="telemetry-lbl">Fixed 100 µs Z Step/Dir Loop in STM32G431 Silicon</div>
           </div>
           <div class="telemetry-metric cyan">
             <div class="telemetry-val">2.0 ms <span>Trigger</span></div>
@@ -2167,7 +2167,7 @@
           <span class="section-kicker">01 // Why Software THCs Dive</span>
           <h2>Your Z motor isn&rsquo;t too slow. Your CNC controller&rsquo;s motion buffer is in the way.</h2>
           <p>
-            Most PC and Ethernet CNCs route arc voltage through a 15–40 ms trajectory buffer. By the time software reacts, the torch has already dived into a corner or crashed into bowed plate.
+            PC and Ethernet CNCs route arc voltage through a 15–40 ms motion buffer. By the time software reacts, your torch has already dived into a corner or slammed into bowed plate.
           </p>
         </div>
 
@@ -2177,7 +2177,7 @@
               True Hardware Summing-Junction Interceptor
             </div>
             <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 580px;">
-              Intercepts Z Step/Dir inline while passing <code class="mono-inline">X/Y/A/B/C</code> straight through (<strong style="color:#fff;">100-200 µs pass-through</strong>). Zero CNC plugins. During a cut, physical Z tracks plate warps independently of your CNC&rsquo;s Z DRO, then unwinds its step offset back to host Z at <code class="mono-inline">M5</code>.
+              Sits inline on Z Step/Dir while passing <code class="mono-inline">X/Y/A/B/C</code> straight through (<strong style="color:#fff;">100-200 µs pass-through</strong>). Zero CNC plugins. Mid-cut, your physical Z tracks bowed plate independently of the CNC DRO, then unwinds its offset back to zero at <code class="mono-inline">M5</code>.
             </p>
           </div>
           <div class="arch-eq-formula">
@@ -2200,7 +2200,7 @@
                 <td class="row-label">Closed-Loop Latency</td>
                 <td><span class="bad-pill">15–40 ms buffer delay</span>: forces detuned gains to prevent torch bounce</td>
                 <td>Fast internal loop, locked to proprietary drive box</td>
-                <td class="col-smart"><span class="good-pill">100 µs (10,000 Hz) deterministic</span>: 16&times; oversampled ADC finishes in 90.35 µs</td>
+                <td class="col-smart"><span class="good-pill">100 µs (10,000 Hz) fixed loop</span>: 16&times; oversampled ADC finishes in 90.35 µs</td>
               </tr>
               <tr>
                 <td class="row-label">Warped Plate Range</td>
@@ -2251,7 +2251,7 @@
             <span class="crash-badge">2.0 ms Silicon Trigger</span>
             <h3>Active In-Cut Ohmic Collision Escape</h3>
             <p>
-              Voltage THCs go blind during corner freezes and kerf crossings. A single wire tee off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) overrides all freezes and commands an instant retract in silicon within 2.0 ms when a tipped slug touches the shield.
+              Voltage THCs go blind during corner freezes and kerf crossings. Tap one wire off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) and the board overrides every freeze, pulling the torch up in 2.0 ms when a tipped slug hits the shield.
             </p>
             <div class="crash-stat-footer">
               0.001&Prime; travel @ 30 IPM &bull; +0.500&Prime; (12.7 mm) lift cap
@@ -2263,7 +2263,7 @@
             <span class="crash-badge cyan">Zero Macros Needed</span>
             <h3>Macro-Free Corner, Hole &amp; Kerf Anti-Dive</h3>
             <p>
-              Reads live step pulses and locks downward Z automatically when speed drops below 80% of cruise or deceleration hits 0.08–0.10 G. No post-processor macros or M-codes needed, even on legacy G-code.
+              Watches your live step pulses and locks downward Z whenever speed drops below 80% of cruise or decel hits 0.08–0.10 G. You need zero post-processor macros or M-codes, even on old G-code.
             </p>
             <div class="crash-stat-footer">
               Up to 295 IPM UP (ClearPath 2311S) / 75 IPM DOWN &bull; Auto-adapts to FRO
@@ -2275,7 +2275,7 @@
             <span class="crash-badge emerald">Zero Z Clamps</span>
             <h3>Zero Software Clamps: Uses Your Full Lifter Stroke</h3>
             <p>
-              Unlike software THCs clamped to &plusmn;0.5&Prime;, this board unlocks 100% of your lifter&rsquo;s physical stroke with zero artificial limits. A 1 kHz Bessel filter and upward slope integrator track severe warps smoothly, then unwind the injected Z step offset back to host Z at <code class="mono-inline">M5</code>.
+              Software THCs clamp travel to &plusmn;0.5&Prime;. This board uses 100% of your lifter&rsquo;s physical stroke with a 1 kHz Bessel filter and upward slope integrator, then unwinds every injected step back to host Z at <code class="mono-inline">M5</code>.
             </p>
             <div class="crash-stat-footer">
               &lt; 0.002&Prime; lag (ClearPath 2311S) &bull; 3rd-order S-curve jerk limited
@@ -2287,7 +2287,7 @@
             <span class="crash-badge">&le; 20 ms Lock</span>
             <h3>HYBRID_SAV Auto-Voltage &amp; Sprung-Sheet Lock</h3>
             <p>
-              Samples live arc voltage in &le; 20 ms inside a [-7 V, +15 V] window to absorb electrode wear and dirty slats automatically. Bowed sheet pierces clamp back to cut-chart voltage so the torch cuts at true height.
+              Locks onto your live arc in &le; 20 ms inside a [-7 V, +15 V] window to track electrode wear automatically, while clamping bowed thin-sheet pierces back to cut-chart voltage.
             </p>
             <div class="crash-stat-footer">
               65 V ON / 50 V OFF hysteresis &bull; &gt; 220 V inverter bleed-down latch
@@ -2299,7 +2299,7 @@
             <span class="crash-badge cyan">0 Bus Collisions</span>
             <h3>Passive Hypertherm Powermax SYNC Snooping</h3>
             <p>
-              Passively monitors your Powermax SYNC&rsquo;s 2-wire RS-485 bus to capture live amperage, air pressure, and fault codes with zero added bus traffic. A hardware auto-direction transceiver prevents bus lockups on MCU reset.
+              Listens passively on your Powermax SYNC&rsquo;s 2-wire RS-485 bus to log live amps, air pressure, and fault codes with zero added traffic. A hardware auto-direction transceiver prevents bus lockups on MCU reset.
             </p>
             <div class="crash-stat-footer">
               Auto 8E1 / 7E1 / 8N1 framing &bull; THVD1406 zero-GPIO direction
@@ -2311,7 +2311,7 @@
             <span class="crash-badge emerald">Opto-Coupled 24V + Isolated Arc</span>
             <h3>Dual Cross-Checked 24V Watchdog &amp; Isolation</h3>
             <p>
-              Opto-coupled 24V cabinet I/O (Toshiba TLP291-4) paired with upstream galvanic arc-voltage isolation protects your motion signals from plasma HF noise. Dual hardware watchdogs drop the E-stop line within 50 ms on any fault.
+              Opto-coupled 24V cabinet I/O (Toshiba TLP291-4) plus upstream galvanic arc isolation keep plasma HF noise out of your drives. Dual watchdogs drop the E-stop line within 50 ms on any fault.
             </p>
             <div class="crash-stat-footer">
               BAT54S Schottky clamped inputs &bull; 4 onboard diagnostic LEDs
@@ -2325,7 +2325,7 @@
             <span class="section-kicker">Auto-Voltage Modes</span>
             <h2>Stop Chasing Cut-Chart Volts: Pure SAV vs. Hybrid SAV</h2>
             <p>
-              Arc voltage is only a stand-in for physical torch-to-plate height, and that voltage climbs all afternoon as your electrode pits and wears. Instead of bumping voltage knobs by +1V every twenty pierces, Smart Auto-Voltage (SAV) lets your calibrated Z-axis set the physical cut height first, then locks onto the real live arc.
+              Arc voltage climbs all afternoon as your electrode pits. Instead of bumping voltage by +1V every twenty pierces, Smart Auto-Voltage (SAV) sets physical cut height with your Z-axis first, then locks onto the live arc.
             </p>
           </div>
 
@@ -2340,13 +2340,13 @@
               <h3>Pure SAV: Zero-Config &ldquo;Set Z and Forget It&rdquo;</h3>
               <div class="sav-mode-body">
                 <p>
-                  <strong>How it works:</strong> Your 24V ohmic touch-off finds true plate surface (<code class="mono-inline">Z = 0</code>), lifts to pierce height, pierces, and drops to your programmed cut height (for example, <code class="mono-inline">0.060"</code>). As soon as the arc settles, the THC samples the live voltage plateau and holds it for the rest of the cut.
+                  <strong>How it works:</strong> Your 24V ohmic touch-off finds <code class="mono-inline">Z = 0</code>, lifts to pierce height, pierces, and drops to cut height (for example, <code class="mono-inline">0.060"</code>). Once the arc settles, the THC locks onto that live plateau voltage for the rest of the cut.
                 </p>
                 <p>
-                  <strong>Why you will love it:</strong> Once your Z steps-per-unit and touch-off offset are dialed in, you never type arc voltages into CAM again. Fresh consumables, worn electrodes, and small shop-air swings are tracked automatically from pierce #1 until the electrode is spent.
+                  <strong>On the table:</strong> Dial in your Z steps-per-unit and ohmic offset once, and stop typing arc volts into CAM. Fresh consumables, worn tips, and small shop-air swings track automatically until the electrode is spent.
                 </p>
                 <p>
-                  <strong>Cabinet wiring bonus:</strong> Needs zero 0-10V analog target wires and zero RS-485 links from your CNC controller. Great for barebones Mach3/4, Centroid Acorn, MASSO, FlashCut, or LinuxCNC cabinets.
+                  <strong>Cabinet wiring bonus:</strong> Needs zero 0-10V analog target wires and zero RS-485 links from your CNC. Built for Mach3/4, Centroid Acorn, MASSO, FlashCut, or LinuxCNC cabinets.
                 </p>
               </div>
             </article>
@@ -2360,13 +2360,13 @@
               <h3>Hybrid SAV: Thin-Sheet Bow Protection</h3>
               <div class="sav-mode-body">
                 <p>
-                  <strong>How it works:</strong> Runs the exact same automatic wear-tracking sample after every pierce, guarded by a <code class="mono-inline">[-7 V, +15 V]</code> safety window around your cut-chart target voltage (fed over 0-10V analog input on <code class="mono-inline">J2 Pin 5</code> or RS-485).
+                  <strong>How it works:</strong> Runs the same wear-tracking sample after every pierce, guarded by a <code class="mono-inline">[-7 V, +15 V]</code> safety window around your cut-chart target (over 0-10V on <code class="mono-inline">J2 Pin 5</code> or RS-485).
                 </p>
                 <p>
-                  <strong>Why you will love it:</strong> Thin sheet (22 ga to 11 ga) and tight skeleton nests flex or pop upward from heat right on the pierce. Basic auto-voltage samplers lock onto that bowed height and freeze your torch too high (or dive it into the plate). Hybrid SAV lets normal +1 V to +10 V electrode wear float freely inside the window, while clamping abnormal pierce spikes right away to pull your torch back to true cut height.
+                  <strong>On the table:</strong> Thin sheet (22 ga to 11 ga) and tight nests pop upward from heat right on the pierce. Plain auto-voltage locks onto that bowed height and cuts too high. Hybrid SAV lets +1 V to +10 V wear float inside the window while clamping pierce spikes back to true cut height.
                 </p>
                 <p>
-                  <strong>Shop-floor bonus:</strong> Gives you unattended sheet runs without babysitting. If a slat finger springs up or a nest bows 0.150", the hardware clamps the voltage target to cut-chart nominal and keeps your torch cutting on plane.
+                  <strong>Shop-floor bonus:</strong> Run unattended sheet nests with confidence. Even if a slat finger springs up or a nest bows 0.150", the clamp pulls your torch right back onto the cut plane.
                 </p>
               </div>
             </article>
@@ -2414,7 +2414,7 @@
               <div class="zero-sw-main">
                 <span class="crash-badge emerald" style="margin-bottom: 0.25rem;">The Only Requirement for Pure SAV</span>
                 <p style="margin-top: 0.45rem; font-size: 0.92rem; color: #f1f5f9; line-height: 1.6;">
-                  Because Pure SAV trusts your physical pierce-to-cut drop to set target voltage, dial in your Z-axis steps/mm (or steps/inch) and ohmic touch-off offset once with a <code class="mono-inline">0.060"</code> feeler gauge, and the THC handles voltage from there.
+                  Pure SAV trusts your physical pierce-to-cut drop to lock the arc voltage. Set your Z steps/unit and ohmic offset once with a <code class="mono-inline">0.060"</code> feeler gauge, and the board takes care of voltage from there.
                 </p>
               </div>
             </div>
@@ -2433,7 +2433,7 @@
           <span class="section-kicker">03 // Compatibility &amp; 15-Minute Cabinet Hookup</span>
           <h2>Works with your table, your motors, and your plasma cutter.</h2>
           <p>
-            All field wiring uses positive-latching <strong>Molex Mini-Fit Jr.</strong> connectors: no loose screw terminals shaking out under high-G rapids. Start with 4 plugs in 15 minutes, or wire all 6 axes for full anti-dive protection.
+            Every wire locks into positive-latching <strong>Molex Mini-Fit Jr.</strong> plugs so high-G rapids never shake a terminal loose. Wire 4 plugs in 15 minutes to start, or plug in all 6 axes for full anti-dive.
           </p>
         </div>
 
@@ -2700,13 +2700,13 @@
             </div>
             <h3>Pure SAV + Warp Tracking</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Minimum standalone drop-in: tracks plate warps across your full stroke with zero CAM arc-voltage entry:
+              Four plugs get you running with full-stroke warp tracking and zero CAM voltage entry:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">01</span><span><strong>[POWER]:</strong> 24V DC cabinet power (<code class="mono-inline">24V</code> / <code class="mono-inline">0V</code> + <code class="mono-inline">[GND]</code>).</span></li>
-              <li><span class="plug-bullet">02</span><span><strong>[INPUT Z] &rarr; [OUTPUT Z]:</strong> Unplug your Z Step/Dir cable and snap inline (CNC Z Out &rarr; THC Z In &rarr; THC Z Out &rarr; Z Stepper / ClearPath Drive).</span></li>
-              <li><span class="plug-bullet">03</span><span><strong>[ARC VIN]:</strong> Galvanically isolated 0-10V divided arc voltage (50:1 CPC port or ext. HV divider &rarr; upstream Galvanic Isolation Card &rarr; THC ARC VIN).</span></li>
-              <li><span class="plug-bullet">04</span><span><strong>[ARC OK]:</strong> Plasma <code class="mono-inline">ARC OK</code> signal (or run wire-free arc detection).</span></li>
+              <li><span class="plug-bullet">01</span><span><strong>[POWER]:</strong> Wire 24V DC cabinet power to <code class="mono-inline">24V</code>, <code class="mono-inline">0V</code>, and <code class="mono-inline">[GND]</code>.</span></li>
+              <li><span class="plug-bullet">02</span><span><strong>[INPUT Z] &rarr; [OUTPUT Z]:</strong> Unplug your Z Step/Dir lead and snap the board inline to your Z drive.</span></li>
+              <li><span class="plug-bullet">03</span><span><strong>[ARC VIN]:</strong> Feed isolated 0-10V divided arc voltage from your 50:1 CPC port or external HV divider card.</span></li>
+              <li><span class="plug-bullet">04</span><span><strong>[ARC OK]:</strong> Connect your plasma <code class="mono-inline">ARC OK</code> signal, or run wire-free arc detection.</span></li>
             </ul>
           </div>
 
@@ -2717,12 +2717,12 @@
             </div>
             <h3>Adds X/Y Speed Tap &amp; 2.0 ms Ohmic Escape</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Unlocks automatic M-code-free corner lock and active mid-cut tip-up collision escape:
+              Adds M-code-free corner freeze and mid-cut tip-up collision escape:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">+</span><span><strong>[INPUT X, Y] &rarr; [OUTPUT X, Y]:</strong> 100-200 µs pass-through + passive step tap so hardware computes live 2D vector speed for M-code-free corner lock.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>24V Ohmic Tee (J3-2):</strong> Parallel tap off your 24V ohmic shield sense for 2.0 ms mid-cut tip-up retract.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>Optional Signals:</strong> <code class="mono-inline">TARGET VIN</code> (0-10V for Hybrid SAV), <code class="mono-inline">THC ENA</code> (24V CAM freeze), and <code class="mono-inline">WATCHDOG</code> (50 ms cabinet E-stop chain).</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>[INPUT X, Y] &rarr; [OUTPUT X, Y]:</strong> Pass X/Y through in 100-200 µs so the board reads live 2D speed for corner locks.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>24V Ohmic Tee (J3-2):</strong> Tap off your 24V ohmic shield line for 2.0 ms tip-up retracts.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Optional Signals:</strong> Wire <code class="mono-inline">TARGET VIN</code> for Hybrid SAV, <code class="mono-inline">THC ENA</code> for CAM freeze, and <code class="mono-inline">WATCHDOG</code> for 50 ms E-stop drop.</span></li>
             </ul>
           </div>
 
@@ -2733,13 +2733,13 @@
             </div>
             <h3>CLI Scope, SYNC Snoop &amp; Updates</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Connect the RS-485 port to your PC or a network TCP bridge for diagnostic telemetry:
+              Add two RS-485 wires to your PC or Ethernet bridge for live diagnostics:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">+</span><span><strong>Live Register Health Audit:</strong> Monitor live arc voltages, 6-axis step rates, and setpoint registers.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>Passive SYNC Snoop:</strong> Stream live cutting amperage, air pressure, and fault codes from Hypertherm Powermax SYNC.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>20 KB Flight Recorder:</strong> Export 46-column CSV and ASCII terminal plots after any cut.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>Field Firmware Updates:</strong> Update firmware over the wire in under 2 minutes with write-protected bootloader.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Live Health Audit:</strong> Inspect arc voltage, 6-axis step rates, and setpoint registers live.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Passive SYNC Snoop:</strong> Read live amps, air pressure, and fault codes off Hypertherm Powermax SYNC.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>20 KB Flight Recorder:</strong> Dump 46-column CSV logs and ASCII plots after any cut.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Field Updates:</strong> Flash firmware in under 2 minutes over a write-protected bootloader.</span></li>
             </ul>
           </div>
         </div>
@@ -2750,11 +2750,11 @@
             <span class="crash-badge" style="margin-bottom: 0.1rem;">What You Don&rsquo;t Hook Up on Flat Sheet &amp; Round Pipe</span>
             <h3>Zero CNC Software or Post-Processor Changes*</h3>
             <p>
-              On flat sheet and round pipe, leave your CNC software alone: no THC Up/Down inputs to configure in Mach3/4, MASSO, Centroid Acorn, LinuxCNC, FlashCut, or simCNC, and no M-codes to set up in SheetCAM. When running in Pure SAV mode, you also need no <code class="mono-inline">0-10V</code> analog DAC output from your controller.
+              On flat sheet and round pipe, leave your CNC software untouched. You do not configure THC Up/Down pins in Mach3/4, MASSO, Centroid Acorn, LinuxCNC, FlashCut, or simCNC, and you do not add M-codes in SheetCAM. In Pure SAV mode, you also need zero <code class="mono-inline">0-10V</code> analog DAC wires from your controller.
             </p>
           </div>
           <div class="zero-sw-footnote">
-            <strong>*Small Bolt Holes &amp; Rotary Square/Rect HSS:</strong> Cutting small bolt holes below cruise speed or 4-axis square/rect HSS? Wire one optional THC ENA output so your post-processor (built into RotaryCAM and standard in SheetCAM) freezes Z during intentional geometry/hole rules.
+            <strong>*Small Bolt Holes &amp; Rotary Square/Rect HSS:</strong> Cutting small holes below cruise speed or 4-axis square/rect HSS? Wire one optional THC ENA output so your post-processor (built into RotaryCAM and standard in SheetCAM) freezes Z on hole and corner rules.
           </div>
         </div>
 
@@ -2765,7 +2765,7 @@
           <article class="wiring-qa-card">
             <h3>&ldquo;Does it work with single-ended 5V Step/Dir or only differential?&rdquo;</h3>
             <p>
-              The board&rsquo;s X through C inputs and outputs use noise-immune <strong>RS-422 differential Step/Dir</strong> (<code class="mono-inline">S+/S-</code>, <code class="mono-inline">D+/D-</code>). If your CNC breakout board only outputs single-ended <code class="mono-inline">5V</code> Step/Dir, wire a compact <strong>5V single-ended to RS-422 differential encoder (line driver)</strong> module inline ahead of the THC inputs.
+              X through C inputs and outputs use noise-immune <strong>RS-422 differential Step/Dir</strong> (<code class="mono-inline">S+/S-</code>, <code class="mono-inline">D+/D-</code>). If your breakout board only sends single-ended <code class="mono-inline">5V</code> Step/Dir, drop a small <strong>5V single-ended to RS-422 line driver</strong> inline ahead of the THC inputs.
             </p>
           </article>
 
@@ -2775,11 +2775,11 @@
             <div class="plasma-compat-badges">
               <div class="plasma-compat-badge emerald">
                 <span class="plasma-compat-badge-lbl">✓ Plug-and-Play 50:1 Divided Arc</span>
-                Hypertherm CPC port, Razorweld, and Everlast CNC ports: run the low-voltage divided signal straight into the isolated card.
+                Hypertherm CPC, Razorweld, and Everlast CNC ports: wire the low-voltage divided signal straight into your isolation card.
               </div>
               <div class="plasma-compat-badge amber">
                 <span class="plasma-compat-badge-lbl">⚡ Raw-Arc Cutters</span>
-                Mount an external isolated HV voltage divider at the plasma power supply so <strong>raw 300V torch leads never enter your CNC cabinet</strong>.
+                Mount an external isolated HV voltage divider at the plasma unit so <strong>raw 300V torch leads never enter your CNC cabinet</strong>.
               </div>
             </div>
           </article>
@@ -2788,7 +2788,7 @@
           <article class="wiring-qa-card">
             <h3>&ldquo;Won&rsquo;t injecting Z steps throw off my CNC&rsquo;s Z DRO?&rdquo;</h3>
             <p>
-              Never. The board counts every injected <code class="mono-inline">+Z</code> and <code class="mono-inline">-Z</code> step in hardware and unwinds <strong>100% of the net offset back to zero</strong> the instant <code class="mono-inline">ARC OK</code> drops at the end of each cut, so your CNC&rsquo;s Z DRO never drifts across pierces.
+              Never. Hardware counts every <code class="mono-inline">+Z</code>/<code class="mono-inline">-Z</code> step and unwinds <strong>100% back to zero</strong> when <code class="mono-inline">ARC OK</code> drops, keeping your Z DRO dead on.
             </p>
           </article>
         </div>
@@ -2842,18 +2842,18 @@
           <span class="section-kicker">04 // 4-Axis Rotary Tube Cam Engine (XYZA)</span>
           <h2>Follows spinning square &amp; rectangular HSS corners before voltage error even develops.</h2>
           <p>
-            Spinning a bowed tube whips corners past the torch faster than voltage can react. The board solves tube geometry and runout in silicon, moving Z before voltage error even forms.
+            Spinning a bowed tube whips corners past your torch faster than arc voltage can react. The board solves tube geometry and chuck runout in silicon, moving Z ahead of the corner.
           </p>
         </div>
 
         <div class="rotary-split">
           <div class="rotary-scan-card">
             <div class="mono" style="font-size: 0.74rem; color: var(--plasma-amber); font-weight: 700; text-transform: uppercase; margin-bottom: 0.65rem;">
-              On-MCU Multi-Angle Touch-Off Solver (RS-485-Free or Modbus)
+              On-Board Multi-Angle Touch-Off Solver (RS-485-Free or Modbus)
             </div>
-            <h3 style="font-size: 1.28rem; margin-bottom: 0.75rem;">Solves Round Pipe, Square Tube &amp; Rectangular HSS in Seconds</h3>
+            <h3 style="font-size: 1.28rem; margin-bottom: 0.75rem;">Measures Round Pipe, Square Tube &amp; Rectangular HSS in Seconds</h3>
             <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.1rem;">
-              Latches coordinates via 0.2 ms ohmic touch at up to 16 angles, solving tube geometry and chuck runout in closed form:
+              Touches off at up to 16 chuck angles (0.2 ms ohmic latch) to map your tube size and bow automatically:
             </p>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;" class="mono">
               <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
@@ -2864,37 +2864,37 @@
               <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
                 <div style="font-size: 0.7rem; color: var(--plasma-amber);">RUNOUT &amp; BOW VECTOR</div>
                 <div style="font-size: 0.88rem; color: #fff; font-weight: 700; margin-top: 0.2rem;">2D Eccentricity (e_z, e_y)</div>
-                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">From 0&deg;/180&deg; &amp; 90&deg;/270&deg; faces</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Measured on 0&deg;/180&deg; &amp; 90&deg;/270&deg; faces</div>
               </div>
               <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
-                <div style="font-size: 0.7rem; color: var(--emerald-cut);">PROFILE CLASSIFIER</div>
+                <div style="font-size: 0.7rem; color: var(--emerald-cut);">PROFILE DETECTOR</div>
                 <div style="font-size: 0.88rem; color: #fff; font-weight: 700; margin-top: 0.2rem;">30&deg; Secant Rise (&ge; 0.25 mm)</div>
-                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Round vs. Square vs. Rect HSS</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Tells Round, Square &amp; Rect HSS apart</div>
               </div>
               <div style="background: var(--surface); border: 1px solid var(--surface-border); border-radius: 8px; padding: 0.8rem;">
-                <div style="font-size: 0.7rem; color: #f8fafc;">SOLVED DIMENSIONS</div>
+                <div style="font-size: 0.7rem; color: #f8fafc;">MEASURED TUBE SPECS</div>
                 <div style="font-size: 0.88rem; color: #fff; font-weight: 700; margin-top: 0.2rem;">H &times; W, Z_center &amp; R_c</div>
-                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Outer corner radius included</div>
+                <div style="font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem;">Includes outer corner radius</div>
               </div>
             </div>
           </div>
 
           <div class="rotary-feature-list">
             <div class="rotary-feat-item">
-              <h4><span class="mono" style="color: var(--plasma-amber);">01</span> Analytical Cam + Runout Feedforward</h4>
-              <p>Differentiates tube wall and bow curves against live A-axis rotation, moving Z proactively around HSS corners.</p>
+              <h4><span class="mono" style="color: var(--plasma-amber);">01</span> Live Tube Cam &amp; Bow Tracking</h4>
+              <p>Tracks your tube faces and chuck wobble directly from A-axis rotation, lifting Z ahead of spinning HSS corners.</p>
             </div>
             <div class="rotary-feat-item">
-              <h4><span class="mono" style="color: var(--cyan-arc);">02</span> True Tangential Surface Speed (<code class="mono-inline">v_surface(&theta;)</code>)</h4>
-              <p>Computes instantaneous surface speed at 10 kHz to feed the corner anti-dive lock.</p>
+              <h4><span class="mono" style="color: var(--cyan-arc);">02</span> True Surface Speed (<code class="mono-inline">v_surface(&theta;)</code>)</h4>
+              <p>Calculates real torch speed over the tube skin at 10 kHz to drive corner anti-dive.</p>
             </div>
             <div class="rotary-feat-item">
-              <h4><span class="mono" style="color: var(--emerald-cut);">03</span> Corner-Window vs. Kerf Discrimination</h4>
-              <p>Filters out expected geometric voltage spikes on corner rolls while keeping flat faces sensitive to kerfs and cutouts.</p>
+              <h4><span class="mono" style="color: var(--emerald-cut);">03</span> Corner Roll vs. Kerf Filter</h4>
+              <p>Ignores normal voltage bumps on corner rolls while keeping flat faces locked against kerf dives.</p>
             </div>
             <div class="rotary-feat-item">
-              <h4><span class="mono" style="color: var(--plasma-amber);">04</span> Hard +0.50 mm Physical Wall Floor Guard</h4>
-              <p>Maintains a hard floor +0.50 mm above the runout-compensated tube surface, preventing nozzle gouging.</p>
+              <h4><span class="mono" style="color: var(--plasma-amber);">04</span> Hard +0.50 mm Tube Wall Floor</h4>
+              <p>Sets a hard stop +0.50 mm above your measured tube skin so the nozzle never gouges steel.</p>
             </div>
           </div>
         </div>
@@ -2910,7 +2910,7 @@
           <span class="section-kicker">05 // 20 KB Black-Box Flight Recorder &amp; smart-thc CLI</span>
           <h2>Replace shop-floor guesswork with a 10,000 Hz digital oscilloscope.</h2>
           <p>
-            When a cut ends or a fault trips, the board freezes 1,024 synchronized frames (20 KB) in SRAM with 32-bit machine coordinates so you can inspect the exact cut trajectory.
+            After every cut or fault, the board freezes 1,024 synchronized frames (20 KB) in SRAM with 32-bit coordinates so you can inspect the exact torch path.
           </p>
         </div>
 
@@ -3032,7 +3032,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
             <div class="spec-dl">
               <div class="spec-row">
                 <div class="spec-key">Control Loop &amp; Filter</div>
-                <div class="spec-val">10,000 Hz (100 µs) deterministic TIM6 loop; 4th-order 1 kHz Bessel filter (~0.33 ms delay); &plusmn;0.75 V deadband</div>
+                <div class="spec-val">10,000 Hz (100 µs) fixed TIM6 hardware loop; 4th-order 1 kHz Bessel filter (~0.33 ms delay); &plusmn;0.75 V deadband</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Tracking Modes</div>
@@ -3064,7 +3064,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
 
         <!-- Lifter & Motor Caveat Banner -->
         <div class="thc-caveat-banner" id="specs-caveat" style="margin-top: 2rem;">
-          <strong>Lifter &amp; Motor Caveat (*):</strong> The PCB runs the 10,000 Hz loop, 2.0 ms ohmic trigger, and zero-clamp step injection in silicon, but physical travel depends on your Z lifter (a 2&Prime; lifter gives 2&Prime; max, not 5&Prime;) and mechanical response depends on your motors. All speed and tracking numbers (&lt; 0.002&Prime; lag, 295 IPM UP, 150 IPM retract) come from <strong>Teknic ClearPath (2311S)</strong> servos; steppers work out of the box up to their speed ceiling.
+          <strong>Lifter &amp; Motor Caveat (*):</strong> The PCB runs the 10,000 Hz loop, 2.0 ms ohmic trigger, and zero-clamp step injection in silicon. Physical travel still matches your Z lifter (a 2&Prime; slide moves 2&Prime;, not 5&Prime;), and speed depends on your motors. Benchmarks (&lt; 0.002&Prime; lag, 295 IPM UP, 150 IPM retract) were measured on <strong>Teknic ClearPath (2311S)</strong> servos; steppers work out of the box up to their speed ceiling.
         </div>
 
         <!-- Bottom $199 CAD Notify for Updates Card -->
@@ -3078,7 +3078,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               Want a $199 CAD 10 kHz Hardware THC in your cabinet?
             </h2>
             <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">
-              Enter your shop email below. We&rsquo;re sizing the first production batch now. We&rsquo;ll send board specs, wiring pinouts, and early ordering access when Batch 1 opens.
+              Drop your shop email below to help size Batch 1. You&rsquo;ll get board specs, pinouts, and early ordering access when units open.
             </p>
           </div>
 

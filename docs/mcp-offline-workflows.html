@@ -629,35 +629,20 @@
 
         <!-- Intro Card -->
         <div class="doc-intro-card">
-          <h2>100% Offline AI Automation for 4-Axis Rotary Plasma</h2>
+          <h2>Run 4-Axis Plasma CAM Offline From Your Own AI Assistant</h2>
           <p>
-            Modern AI coding assistants (Claude Desktop, Cursor, VS Code, LM Studio) can write scripts, generate code, and answer questions. But on the shop floor, fabricators and machine operators face two hard requirements: <strong>privacy</strong> (never uploading proprietary CAD or defense/motorsport weldment files to third-party cloud servers) and <strong>reliability</strong> (cutting parts even when the shop internet goes down).
+            Keep customer STEP files and defense weldments off cloud servers, and keep cutting even when shop internet goes down.
           </p>
           <p style="margin-top: 0.75rem;">
-            RotaryCAM solves this with a standalone, native <strong>Model Context Protocol (MCP)</strong> stdio server: <code class="mono">rotarycam-mcp</code>. It runs completely offline on your local machine across macOS, Linux, and Windows, exposing 19 first-principles tools directly to your AI assistant:
+            Hook Claude Desktop, Cursor, VS Code, or LM Studio straight to <code class="mono">rotarycam-mcp</code>, a local stdio <strong>Model Context Protocol (MCP)</strong> server on macOS, Linux, or Windows. You get 19 offline shop tools:
           </p>
 
           <ul class="doc-bullet-list" style="margin-top: 0.85rem;">
-            <li>
-              <strong>1. First-Principles Drive Math (<code class="mono">rack_pinion_travel</code>, <code class="mono">lead_screw_travel</code>, <code class="mono">rotary_travel</code>):</strong>
-              Calculate pitch diameters, travel per revolution, motor steps/unit, maximum velocity, and acceleration directly from physical gearbox ratios, pinion modules, and ballscrew pitches, eliminating trial-and-error magic numbers.
-            </li>
-            <li>
-              <strong>2. Headless STEP B-Rep CAD Analysis (<code class="mono">analyze_step</code>):</strong>
-              Parse 3D CAD assemblies locally. Identify hollow structural profiles (round, square/rectangular HSS, angle iron, C-channel), extract true wall thickness and outer dimensions, and classify all cut features (<code class="mono">STARTCUT</code>, <code class="mono">ENDCUT</code>, holes, notches).
-            </li>
-            <li>
-              <strong>3. Dual-Curve Zero-Bevel Compensation (<code class="mono">apply_zero_bevel</code>):</strong>
-              Automatically detect angled saddle joints and copes on round tube. Calculate the 3D intersection curves between the outer and inner tube walls and apply zero-bevel torch compensation at your chosen intensity (e.g., 60%) to prevent inside weld-prep gouges.
-            </li>
-            <li>
-              <strong>4. Shop-Ready G-Code &amp; Multi-Stick Nesting (<code class="mono">generate_gcode</code>):</strong>
-              Emit production-ready G-code programs with SimCNC 4D velocity scaling, trajectory-synchronized torch firing (<code class="mono">M62/M63 P1</code>), and 1D bin packing across standard raw stock stick lengths.
-            </li>
-            <li>
-              <strong>5. Visual 3D Handoff (<code class="mono">open_in_rotarycam</code>):</strong>
-              Hand off the active part directly to your browser for visual 3D WebGL inspection and simulated toolpath verification before striking the arc.
-            </li>
+            <li><strong>Drive math:</strong> Compute exact axis limits with <code class="mono">rack_pinion_travel</code>, <code class="mono">lead_screw_travel</code>, and <code class="mono">rotary_travel</code>.</li>
+            <li><strong>STEP inspection:</strong> Run <code class="mono">analyze_step</code> on round pipe, HSS, angle, and channel (<code class="mono">STARTCUT</code>, <code class="mono">ENDCUT</code>, holes, notches).</li>
+            <li><strong>Zero-bevel copes:</strong> Apply <code class="mono">apply_zero_bevel</code> for tight saddle weld fit-up.</li>
+            <li><strong>G-code &amp; stick nesting:</strong> Run <code class="mono">generate_gcode</code> for 4D velocity scaling and <code class="mono">M62/M63 P1</code> torch sync.</li>
+            <li><strong>3D preview:</strong> Call <code class="mono">open_in_rotarycam</code> to inspect your cut path in your browser before striking an arc.</li>
           </ul>
 
           <div class="doc-intro-grid">
@@ -682,12 +667,12 @@
         <article class="doc-step-card" id="step-1">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 01</span>
-            <h2 class="doc-step-title">Locate the Binary &amp; Activate Offline License (<code class="mono">rotarycam.lic</code>)</h2>
+            <h2 class="doc-step-title">Locate the Binary &amp; Activate Your Offline License (<code class="mono">rotarycam.lic</code>)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              The standalone <code class="mono">rotarycam-mcp</code> executable is bundled directly inside your RotaryCAM application directory. No separate runtime, Python environment, or external package manager is required.
+              The <code class="mono">rotarycam-mcp</code> binary sits right inside your app folder. You need no Python install, Node runtime, or package manager.
             </p>
 
             <ul class="doc-bullet-list">
@@ -700,7 +685,7 @@
                 </ul>
               </li>
               <li>
-                <strong>Offline License Activation:</strong> Place your signed <code class="mono">rotarycam.lic</code> license file in the <em>same directory</em> as the <code class="mono">rotarycam-mcp</code> executable. When the server launches, it detects the cryptographic Ed25519 token locally and unlocks all Pro features (dual-curve zero-bevel compensation, multi-stick pack nesting, and custom machine kinematics) without requiring an internet connection.
+                <strong>Offline License Activation:</strong> Drop your signed <code class="mono">rotarycam.lic</code> file in the <em>same folder</em> as <code class="mono">rotarycam-mcp</code>. The server checks your offline license key locally at startup and unlocks zero-bevel compensation, multi-stick nesting, and custom machine profiles with zero internet access.
               </li>
             </ul>
 
@@ -729,7 +714,7 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
 
           <div class="doc-step-body">
             <p>
-              To give Anthropic's Claude Desktop direct control over RotaryCAM, add the server entry to your Claude Desktop configuration file:
+              Point Claude Desktop to your local <code class="mono">rotarycam-mcp</code> binary by adding this block to your config file:
             </p>
 
             <ul class="doc-bullet-list">
@@ -752,7 +737,7 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
             </div>
 
             <p style="margin-top: 0.75rem;">
-              Restart Claude Desktop. Look for the hammer (<span class="mono">🔨</span>) icon in the chat composer to verify that all 19 RotaryCAM tools are registered and ready.
+              Restart Claude Desktop. Check for the hammer (<span class="mono">🔨</span>) icon in the chat box to verify all 19 tools loaded.
             </p>
           </div>
         </article>
@@ -768,12 +753,12 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
 
           <div class="doc-step-body">
             <p>
-              If you use Cursor IDE or VS Code with an MCP extension for shop automation scripts or CAD pipeline development:
+              If you run shop automation scripts in Cursor IDE or VS Code, register your local stdio server in three clicks:
             </p>
 
             <ul class="doc-bullet-list">
               <li>
-                <strong>1. Open Cursor Settings:</strong> Press <code class="mono">Ctrl + Shift + J</code> (or <code class="mono">Cmd + ,</code> on macOS) and navigate to <strong>Features → MCP Servers</strong>.
+                <strong>1. Open Cursor Settings:</strong> Press <code class="mono">Ctrl + Shift + J</code> (or <code class="mono">Cmd + ,</code> on macOS) and open <strong>Features → MCP Servers</strong>.
               </li>
               <li>
                 <strong>2. Click "+ Add New MCP Server":</strong>
@@ -784,7 +769,7 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
                 </ul>
               </li>
               <li>
-                <strong>3. Refresh Connection:</strong> Click the green refresh button. The server indicator will turn green, indicating active communication with RotaryCAM's kinematics core.
+                <strong>3. Refresh Connection:</strong> Click the green refresh button. A green status dot shows your editor is talking to the local CAM engine.
               </li>
             </ul>
           </div>
@@ -796,23 +781,23 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
         <article class="doc-step-card" id="step-4">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 04</span>
-            <h2 class="doc-step-title">Air-Gapped Setup with Local Open LLMs (LM Studio / Ollama)</h2>
+            <h2 class="doc-step-title">Run Fully Air-Gapped With Local LLMs (LM Studio / Ollama)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              For complete air-gapped isolation in classified, ITAR, or remote job sites without internet, connect <code class="mono">rotarycam-mcp</code> to an open-weights model (such as Qwen 2.5 Coder or Llama 3.3) running locally via LM Studio:
+              For ITAR work or remote job sites with zero internet, pair <code class="mono">rotarycam-mcp</code> with a local model (such as Qwen 2.5 Coder or Llama 3.3) in LM Studio:
             </p>
 
             <ul class="doc-bullet-list">
               <li>
-                <strong>1. Open LM Studio:</strong> Navigate to the <strong>Developer / MCP</strong> tab in LM Studio.
+                <strong>1. Open LM Studio:</strong> Go to the <strong>Developer / MCP</strong> tab.
               </li>
               <li>
-                <strong>2. Add Stdio Server:</strong> Enter the absolute path to <code class="mono">rotarycam-mcp</code>.
+                <strong>2. Add Stdio Server:</strong> Paste the full path to your <code class="mono">rotarycam-mcp</code> binary.
               </li>
               <li>
-                <strong>3. Full Air-Gap Execution:</strong> Because both the large language model and the CAD/CAM solver run on your local machine, geometry parsing, kinematics scaling, and G-code generation remain 100% on-premises.
+                <strong>3. Cut Off-Grid:</strong> Your language model and CAM solver both run on your own PC. Zero CAD files or G-code ever leave your shop.
               </li>
             </ul>
           </div>
@@ -824,12 +809,12 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
         <article class="doc-step-card" id="step-5">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 05</span>
-            <h2 class="doc-step-title">Calculate Kinematic Limits from Physical Drive Hardware</h2>
+            <h2 class="doc-step-title">Calculate Axis Limits From Your Drive Hardware</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              Setting axis velocity, acceleration, and jerk limits in CNC controllers usually involves guesswork and magic numbers. RotaryCAM provides first-principles drive math tools to compute precise physical limits directly from hardware specs:
+              Stop guessing axis velocity, acceleration, and jerk limits in your controller. Ask your assistant to compute exact numbers from your gearbox, pinion, and motor specs:
             </p>
 
             <div class="doc-code-block">
@@ -869,7 +854,7 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
             </div>
 
             <p style="margin-top: 0.75rem;">
-              Similar physics tools are available for ballscrews (<code class="mono">lead_screw_travel</code>), rotary chucks (<code class="mono">rotary_travel</code>), and S-curve jerk ramps (<code class="mono">axis_jerk_from_ramp</code>).
+              You get matching drive-math tools for ballscrews (<code class="mono">lead_screw_travel</code>), rotary chucks (<code class="mono">rotary_travel</code>), and S-curve jerk ramps (<code class="mono">axis_jerk_from_ramp</code>).
             </p>
           </div>
         </article>
@@ -880,12 +865,12 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
         <article class="doc-step-card" id="step-6">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 06</span>
-            <h2 class="doc-step-title">Analyze STEP CAD Assemblies Headless (<code class="mono">analyze_step</code>)</h2>
+            <h2 class="doc-step-title">Inspect 3D STEP Assemblies Locally (<code class="mono">analyze_step</code>)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              Feed any 3D STEP file directly to the assistant. The underlying OpenCASCADE topology kernel inspects every solid body, identifies cross-section profiles, and classifies cut contours:
+              Point your assistant to any 3D STEP file on disk. It reads every tube body, measures wall thickness and OD, and tags each cut feature:
             </p>
 
             <div class="doc-code-block">
@@ -916,7 +901,7 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
             </div>
 
             <p style="margin-top: 0.75rem;">
-              Notice how the engine automatically flags <code class="mono">is_cope_or_fishmouth: true</code> when an angled saddle joint or tube copes intersection is detected.
+              Any angled saddle joint or tube cope is flagged with <code class="mono">is_cope_or_fishmouth: true</code> so you know right away where zero-bevel prep applies.
             </p>
           </div>
         </article>
@@ -927,12 +912,12 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
         <article class="doc-step-card" id="step-7">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 07</span>
-            <h2 class="doc-step-title">Apply Dual-Curve Zero-Bevel Compensation (<code class="mono">apply_zero_bevel</code>)</h2>
+            <h2 class="doc-step-title">Apply Zero-Bevel Saddle Compensation (<code class="mono">apply_zero_bevel</code>)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              When a perpendicular plasma torch cuts an angled fishmouth or saddle joint around a round tube, the back wall of the cut receives an inward bevel that leaves unwanted gaps during TIG or MIG fitup. RotaryCAM's <strong>Zero-Bevel Dual-Curve Compensation</strong> shifts the cutting path to the inner cylinder intersection:
+              When your perpendicular plasma torch cuts an angled fishmouth on round pipe, the back wall tilts inward and leaves a weld gap. Run zero-bevel compensation to shift your cut path to the inner-wall curve for tight TIG or MIG fit-up:
             </p>
 
             <div class="doc-code-block">
@@ -971,7 +956,7 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
             </div>
 
             <p style="margin-top: 0.75rem;">
-              The engine automatically skips straight 90° cuts and applies compensation exclusively where dual-curve geometry is physically required.
+              Straight 90° cuts are skipped automatically, so compensation only shifts true cope and saddle joints.
             </p>
           </div>
         </article>
@@ -982,12 +967,12 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
         <article class="doc-step-card" id="step-8">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 08</span>
-            <h2 class="doc-step-title">Generate Production G-Code &amp; Inspect in 3D (<code class="mono">generate_gcode</code> &amp; <code class="mono">open_in_rotarycam</code>)</h2>
+            <h2 class="doc-step-title">Generate G-Code &amp; Inspect in 3D (<code class="mono">generate_gcode</code> &amp; <code class="mono">open_in_rotarycam</code>)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              Once cut features and compensations are configured, emit machine-ready G-code and immediately inspect the result:
+              Once your cuts and bevel settings look right, write your <code class="mono">.nc</code> stick program to disk and pop open the 3D preview:
             </p>
 
             <div class="doc-code-block">
@@ -1023,7 +1008,7 @@ $ ./rotarycam-mcp -license ./rotarycam.lic</code></pre>
             </div>
 
             <p style="margin-top: 0.75rem;">
-              Your default browser automatically opens the RotaryCAM 3D viewport, displaying the exact toolpath, kerf offset, pierce locations, and animated 4-axis motion simulator.
+              Your browser opens the 3D viewport right away so you can check your kerf offset, pierce points, and 4-axis motion path. Before you strike an arc, do a quick dry run to confirm chuck clearance, torch retract height, and IHS/THC settings on your table.
             </p>
           </div>
         </article>

@@ -3,15 +3,15 @@
 {% block tutorial_body %}
         <!-- Intro Card -->
         <div class="doc-intro-card">
-          <h2>How Your CNC Controller Governs Plasma Torch Speed Across Plate &amp; Tubing</h2>
+          <h2>How Your CNC Controller Controls Torch Speed on Plate &amp; Tubing</h2>
           <p>
-            On a flat-sheet plasma table, calculating feedrates is straightforward: your torch moves along <code class="mono">X</code> and <code class="mono">Y</code> at a fixed speed (say, <code class="mono">2540 mm/min</code> or <code class="mono">100 IPM</code>). Your CNC controller simply measures the physical distance traveled divided by time.
+            On a flat plate, feedrate math is simple: your torch moves in <code class="mono">X</code> and <code class="mono">Y</code> at one set speed, such as <code class="mono">2540 mm/min</code> (<code class="mono">100 IPM</code>). Your controller divides travel distance by time.
           </p>
           <p style="margin-top: 0.75rem;">
-            When you mount a rotary chuck to cut round pipe, square tubing, or structural channel, standard CNC rules break down. The machine coordinates linear axes (<code class="mono">X, Y, Z</code>) in millimeters or inches with a rotary chuck axis (<code class="mono">A</code>) in angular degrees. If a G-code line commands <code class="mono">G1 A90 F2540</code>, what does <code class="mono">F2540</code> mean? 2540 degrees per minute? 2540 millimeters per minute at the surface of a 1" tube? Or 2540 mm/min on a 6" pipe?
+            Add a rotary chuck, and linear rules break down. Your linear axes (<code class="mono">X, Y, Z</code>) move in millimeters or inches while your chuck (<code class="mono">A</code>) turns in degrees. When a line reads <code class="mono">G1 A90 F2540</code>, what is <code class="mono">2540</code>? Degrees per minute, surface speed on a 1" tube, or surface speed on a 6" pipe?
           </p>
           <p style="margin-top: 0.75rem;">
-            Different CNC plasma controllers solve this in completely different ways: standard <code class="mono">G94</code> Units-Per-Minute, <code class="mono">G93</code> Inverse-Time (used on 4-axis rotary cutting across almost all controllers, including <code class="mono">SimCNC 3.6+</code> beta), or 4D Euclidean trajectory interpolation (<code class="mono">SimCNC &lt; 3.6</code>). While several controllers (Mach3, Mach4, UCCNC, MASSO, Centroid Acorn) allow entering a manual rotation radius on round pipe to scale G94 feedrates, that fails the moment you cut rectangular HSS, angle iron, or complex saddles where the radius from the rotation center to the cutting surface varies continuously. This guide explains what happens to your feedrates when flipping between Metric (<code class="mono">G21</code>) and Imperial (<code class="mono">G20</code>), why rotary <code class="mono">G93</code> feedrates stay 100% identical between inches and millimeters, and how to verify your G-code so you never blow out a pipe wall or stall a torch.
+            Controllers solve this in three ways: <code class="mono">G94</code> Units-Per-Minute, <code class="mono">G93</code> Inverse-Time (standard on 4-axis rotary across almost all controllers, including <code class="mono">SimCNC 3.6+</code> beta), or 4D Euclidean blending (<code class="mono">SimCNC &lt; 3.6</code>). Controllers like Mach3, Mach4, UCCNC, MASSO, and Centroid Acorn let you type a manual round-pipe radius to scale <code class="mono">G94</code>. That breaks on rectangular HSS, angle iron, or saddles where the surface radius changes constantly. Below is what changes when you flip Metric (<code class="mono">G21</code>) to Imperial (<code class="mono">G20</code>), why <code class="mono">G93</code> rotary <code class="mono">F</code> values stay identical, and how to check your G-code before firing the torch.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -31,11 +31,10 @@
 
         <!-- Quick Summary Callout -->
         <div class="doc-callout tip" style="margin-top: 1.5rem; margin-bottom: 2rem;">
-          <div class="doc-callout-title">💡 Shop Rule of Thumb: Distance-Based vs. Time-Based Feeds</div>
+          <div class="doc-callout-title">💡 Quick Rule: Metric (<code class="mono">G21</code>) vs. Imperial (<code class="mono">G20</code>)</div>
           <p>
-            When switching your machine profile from Metric (<code class="mono">G21</code>) to Imperial (<code class="mono">G20</code>):
-            <strong>Flat-sheet <code class="mono">G94</code> feedrates divide by 25.4</strong> (<code class="mono">F2540.0 &rarr; F100.0</code>) because <code class="mono">F</code> represents distance per minute.
-            <strong>4-axis rotary <code class="mono">G93</code> feedrates stay identical</strong> (<code class="mono">F1000.0 &rarr; F1000.0</code>) because <code class="mono">F</code> represents inverse time (<code class="mono">1 / &Delta;t</code>). The 25.4 unit factor cancels out because both cut speed and move distance divide by 25.4.
+            <strong>Flat-sheet <code class="mono">G94</code> feeds divide by 25.4</strong> (<code class="mono">F2540.0 &rarr; F100.0</code>) because <code class="mono">F</code> is distance per minute.
+            <strong>4-axis rotary <code class="mono">G93</code> feeds stay identical</strong> (<code class="mono">F1000.0 &rarr; F1000.0</code>) because <code class="mono">F</code> is inverse time (<code class="mono">1 / &Delta;t</code>), where the 25.4 factor cancels out.
           </p>
         </div>
 
@@ -50,32 +49,32 @@
 
           <div class="doc-step-body">
             <p>
-              Plasma cutting relies on a delicate balance of heat and velocity: an electric arc ionizes compressed air or oxygen at over 20,000&deg;C to melt steel, while a high-pressure gas jet blows molten dross out the bottom of the kerf. If your torch travel speed across the steel surface drifts by even 15–20%, cut quality degrades immediately:
+              Plasma cutting depends on matching arc heat to torch travel speed. An arc over 20,000&deg;C melts steel while the gas jet blows molten dross out the bottom of the kerf. Drift off your chart speed by even 15–20% and cut quality drops right away:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Cutting Too Slow:</strong> When the torch lingers too long over one spot, excessive heat soaks into the base metal. The kerf widens, the top edge rounds over, and heavy "low-speed dross" welds itself to the bottom of the cut, requiring an angle grinder or chipping hammer to clean. On thin-wall pipe (&le; 1/8" or 3 mm), moving too slow blows molten holes through the wall and spatters slag onto the inside of the opposite pipe wall.
+                <strong>Cutting Too Slow:</strong> Heat soaks into the steel. The kerf widens, the top edge rounds over, and heavy low-speed dross welds to the bottom edge. On thin-wall pipe (&le; 1/8" or 3 mm), going too slow blows holes in the wall and spatters slag inside the opposite pipe wall.
               </li>
               <li>
-                <strong>Cutting Too Fast:</strong> When the torch travels faster than the plasma arc can penetrate, the arc column trails backward behind the nozzle tip (arc lag). This produces severe cut-edge bevel angle (often 10&deg;–20&deg; off square), high-speed glassy dross, and incomplete penetration where bottom webs fail to sever.
+                <strong>Cutting Too Fast:</strong> The arc lags behind the nozzle tip. You get steep 10&deg;–20&deg; bevels, glassy high-speed dross, and uncut bottom webs.
               </li>
             </ul>
 
             <div class="doc-callout danger" style="margin-top: 1.25rem;">
-              <div class="doc-callout-title">⚠ The Rotary Kinematics Mismatch: Millimeters vs. Degrees</div>
+              <div class="doc-callout-title">⚠ The Rotary Mismatch: Millimeters vs. Degrees</div>
               <p>
-                Linear axes (<code class="mono">X, Y, Z</code>) measure physical distance: millimeters (<code class="mono">mm</code>) or inches (<code class="mono">in</code>). But a rotary chuck (<code class="mono">A</code>) measures angle: degrees (<code class="mono">&deg;</code>). The physical distance the steel moves under the torch nozzle depends directly on the tube's outer radius (<code class="mono">R = OD / 2</code>):
+                Linear axes (<code class="mono">X, Y, Z</code>) move in <code class="mono">mm</code> or <code class="mono">in</code>, while your chuck (<code class="mono">A</code>) turns in degrees (<code class="mono">&deg;</code>). How much steel passes under the nozzle depends on your tube radius (<code class="mono">R = OD / 2</code>):
               </p>
               <div style="background: rgba(0, 0, 0, 0.5); padding: 0.85rem 1.15rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.75rem 0; font-family: var(--font-mono); font-size: 0.86rem; color: var(--amber-400);">
                 Surface Distance (&Delta;s) = R &times; &Delta;A_radians = (OD / 2) &times; (&Delta;A_deg &times; &pi; / 180&deg;)
               </div>
               <p style="margin-bottom: 0;">
-                Consider a 90&deg; rotation: On a <strong>1" OD tube (25.4 mm)</strong>, 90&deg; of chuck rotation sweeps <strong>19.95 mm (0.785")</strong> of steel past the torch. On a <strong>4" OD tube (101.6 mm)</strong>, that exact same 90&deg; rotation sweeps <strong>79.80 mm (3.142")</strong>, four times further! If a controller runs a fixed chuck rotation speed, the torch crawls on small tubing and sprints dangerously fast on large pipe.
+                Rotate a <strong>1" OD tube (25.4 mm)</strong> by 90&deg;, and <strong>19.95 mm (0.785")</strong> of steel passes under the torch. Rotate a <strong>4" OD pipe (101.6 mm)</strong> by 90&deg;, and <strong>79.80 mm (3.142")</strong> sweeps past, four times further. A fixed chuck RPM crawls on small tube and races on large pipe.
               </p>
             </div>
 
             <p style="margin-top: 1.25rem;">
-              When cutting rectangular HSS tubing or angled pipe saddles, the challenge is even greater: the distance from the tube's rotation center to the cutting surface changes continuously on every millimeter of motion. At the center of a flat face, the radius is small; at the corner fillet, the radius spikes outward. To maintain constant surface speed, the controller must adjust axis speeds continuously.
+              Square HSS and angled pipe saddles are even trickier. The distance from chuck center to torch tip changes on every millimeter of motion, shrinking at flat face centers and spiking at corner fillets. Your G-code must adjust axis speeds on every segment to hold constant surface speed.
             </p>
           </div>
         </article>
@@ -191,24 +190,24 @@ M05 ; Torch off</code></pre>
             <div class="doc-callout info" style="margin-top: 1.5rem;">
               <div class="doc-callout-title">⚙ The 3-Axis Rotary Wrap &amp; Fixed-Calibration Chuck Scaling (Langmuir FireControl)</div>
               <p>
-                How do 3-axis tables like the <strong>Langmuir CrossFire PRO / XR</strong> (running FireControl <code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code>) cut round pipe in <code class="mono">G94</code>? FireControl has no native 4th rotary axis driver, so you unplug one linear axis motor cable and plug in the rotary attachment. RotaryCAM prints a dynamic <code class="mono">Y-WRAP</code> or <code class="mono">X-WRAP</code> header banner matching your setup. Because CrossFire PRO and XR use <strong>dual Y1/Y2 gantry motors</strong>, select <strong>Tube Along Y</strong> when swapping the single-motor <strong>X-axis</strong> onto your rotary (<code class="mono">X-Wrap</code>).
+                <strong>Langmuir CrossFire PRO / XR</strong> tables running FireControl (<code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code>) have no 4th rotary axis driver, so you swap one linear motor cable onto the rotary attachment. Your post prints a <code class="mono">Y-WRAP</code> or <code class="mono">X-WRAP</code> header banner to match. Since CrossFire PRO and XR use <strong>dual Y1/Y2 gantry motors</strong>, choose <strong>Tube Along Y</strong> when plugging the single-motor <strong>X-axis</strong> into your rotary (<code class="mono">X-Wrap</code>).
               </p>
               <p style="margin-top: 0.5rem;">
-                RotaryCAM unrolls round pipe circumference into linear travel: <code class="mono">Y = &pi; &times; OD &times; (A / 360&deg;)</code> (or <code class="mono">X</code> in <code class="mono">X-Wrap</code>). Standard <code class="mono">G94</code> feedrates apply (<code class="mono">F2540.0 mm/min</code> in <code class="mono">G21</code> drops to <code class="mono">F100.0 IPM</code> in <code class="mono">G20</code>), and rotary chucks now have a dedicated calibration option:
+                Round pipe circumference unrolls directly into linear travel: <code class="mono">Y = &pi; &times; OD &times; (A / 360&deg;)</code> (or <code class="mono">X</code> in <code class="mono">X-Wrap</code>). Normal <code class="mono">G94</code> feedrates apply (<code class="mono">F2540.0 mm/min</code> in <code class="mono">G21</code> becomes <code class="mono">F100.0 IPM</code> in <code class="mono">G20</code>), with two rotary calibration modes:
               </p>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem;">
                 <li>
-                  <strong>Surface-Drive Friction Rollers (No Recalibration Needed):</strong> When your pipe rests directly on driven wheels, <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of roller travel rolls <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of pipe surface on any tube OD.
+                  <strong>Surface-Drive Friction Rollers (No Recalibration Needed):</strong> When your pipe rides on driven wheels, <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of roller travel rolls <code class="mono">1 mm</code> (or <code class="mono">1"</code>) of pipe surface on any OD.
                 </li>
                 <li>
-                  <strong>Rotary Chucks with Fixed-Calibration <code class="mono">Travel / Rev (L_rev)</code>:</strong> On geared rotary chucks, one full revolution requires a fixed linear command travel (<code class="mono">L_rev</code>). Enter your chuck's <code class="mono">Travel / Rev (L_rev)</code> once in Machine Settings and RotaryCAM outputs exact cylindrical DRO <code class="mono">G94</code> feed scaling across any pipe diameter without changing GRBL steps/mm between jobs, while keeping the <code class="mono">(PS&lt;feed&gt;)</code> footer at your true unscaled surface speed.
+                  <strong>Rotary Chucks with Fixed-Calibration <code class="mono">Travel / Rev (L_rev)</code>:</strong> Geared chucks take a fixed linear travel command (<code class="mono">L_rev</code>) per turn. Enter <code class="mono">Travel / Rev (L_rev)</code> once in Machine Settings. Your <code class="mono">G94</code> feed scales automatically to the cylindrical DRO for any pipe OD without editing GRBL steps/mm between jobs, while <code class="mono">(PS&lt;feed&gt;)</code> keeps your true surface speed.
                 </li>
                 <li>
-                  <strong>FireControl G-Code Syntax:</strong> FireControl uses <code class="mono">H1</code> / <code class="mono">H0</code> for THC enable/disable, a two-stage <code class="mono">G38.2</code> / <code class="mono">G38.4</code> IHS loop with separated <code class="mono">0.020"</code> (<code class="mono">0.508 mm</code>) backlash vs. thin-sheet springback (auto-zeroed on rigid pipe and <code class="mono">&ge; 3/16"</code> plate), a mandatory <code class="mono">0.55 s</code> minimum <code class="mono">G4 P</code> ignition dwell after <code class="mono">M3</code> on 3D ramps (holding <code class="mono">H0</code> until cut height), and <code class="mono">M3</code> / <code class="mono">M5</code>.
+                  <strong>FireControl G-Code Syntax:</strong> FireControl toggles THC with <code class="mono">H1</code> / <code class="mono">H0</code> and probes with a two-stage <code class="mono">G38.2</code> / <code class="mono">G38.4</code> IHS cycle. It separates <code class="mono">0.020"</code> (<code class="mono">0.508 mm</code>) backlash from thin-sheet springback (auto-zeroed on rigid pipe and <code class="mono">&ge; 3/16"</code> plate). On 3D ramps, it enforces a <code class="mono">0.55 s</code> minimum <code class="mono">G4 P</code> dwell after <code class="mono">M3</code> while holding <code class="mono">H0</code> until cut height, then shuts off with <code class="mono">M5</code>.
                 </li>
               </ul>
               <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <em>Note:</em> 3-axis linear unrolling <strong>only works on constant-diameter round pipe</strong>. Square/rectangular HSS tubing, angle iron, and C-channel require 4 independent axes (<code class="mono">X, Y, Z, A</code>).
+                <em>Note:</em> 3-axis linear wrapping <strong>only works on constant-OD round pipe</strong>. Square HSS, angle iron, and C-channel require 4 independent axes (<code class="mono">X, Y, Z, A</code>).
               </p>
             </div>
           </div>
@@ -225,24 +224,24 @@ M05 ; Torch off</code></pre>
 
           <div class="doc-step-body">
             <p>
-              When cutting 4-axis rotary tubes (round pipe saddles, square/rectangular tubing, angle iron, C-channel), almost all professional CNC plasma controllers (including <strong>LinuxCNC QTPlasmaC, Mach4, MASSO G3, Mach3, Centroid Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, ShopSabre WinCNC, and SimCNC 3.6+</strong>, which added native G93 inverse-time mode in beta in September 2026) use <strong><code class="mono">G93</code> Inverse-Time Feedrate Mode</strong>.
+              For 4-axis rotary tubes (pipe saddles, square/rectangular HSS, angle iron, C-channel), almost every controller runs <strong><code class="mono">G93</code> Inverse-Time Feedrate Mode</strong>. That includes <strong>LinuxCNC QTPlasmaC, Mach4, MASSO G3, Mach3, Centroid Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, ShopSabre WinCNC, and SimCNC 3.6+</strong> (which added G93 beta support in September 2026).
             </p>
 
             <div class="doc-callout tip" style="margin-top: 1.25rem;">
-              <div class="doc-callout-title">💡 What About the Controller's Built-In "Rotation Radius" Setting?</div>
+              <div class="doc-callout-title">💡 Why You Should Skip the Controller's Manual "Rotation Radius" DRO</div>
               <p>
-                Several controllers (including ArtSoft Mach3, Mach4, CNCdrive UCCNC, MASSO G3, and Centroid Acorn) provide a DRO setting where you can manually enter a workpiece rotation radius or diameter so the controller scales <code class="mono">G94</code> feedrates across round pipe. While convenient for basic round pipe parting, relying on a manual controller radius setting creates major shop hazards:
+                Mach3, Mach4, UCCNC, MASSO G3, and Centroid Acorn let you type a manual workpiece radius into a DRO to scale <code class="mono">G94</code> speeds on round pipe. That shortcut causes three common failures:
               </p>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
-                <li><strong>Operator Error:</strong> If you forget to update the DRO setting when switching from a 2" tube to a 4" pipe, the torch burns at the wrong speed.</li>
-                <li><strong>Fails on Rectangular HSS &amp; Structural Shapes:</strong> On square/rectangular tubing, angle iron, and C-channel, the distance from the chuck centerline to the torch nozzle changes continuously (from a small radius at face centers to a large radius at corner fillets). A static radius setting cannot maintain constant surface speed.</li>
-                <li><strong>Multi-Axis Vectors:</strong> On saddle fishmouths and branch joints, linear X/Y feed vectors combine with rotary A feed vectors in constantly shifting proportions.</li>
+                <li><strong>Forgotten DRO Updates:</strong> Switch from 2" tube to 4" pipe without updating the DRO, and your torch cuts at double speed.</li>
+                <li><strong>Fails on Square HSS &amp; Shapes:</strong> On rectangular tubing, angle iron, and channel, surface radius changes from face center to corner fillet. A fixed radius cannot hold constant surface speed.</li>
+                <li><strong>Combined X+A Moves:</strong> Fishmouth copes and branch saddles mix linear X/Y travel with rotary A spin in shifting ratios.</li>
               </ul>
               <p style="margin-top: 0.5rem;">
-                CAM-generated <code class="mono">G93</code> Inverse-Time eliminates these headaches: RotaryCAM computes the exact physical 3D surface speed along the true CAD model for every single segment. You get perfect surface speed across any shape or tube size without touching a radius DRO.
+                With CAM-computed <code class="mono">G93</code> Inverse-Time, every segment carries the exact surface speed from your 3D part. Leave the controller radius DRO alone across all tube sizes and profiles.
               </p>
               <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <strong>ArtSoft Mach3 (<code class="mono">R3.043.062</code>) Rotary Check:</strong> Under <code class="mono">G93</code> inverse-time cutting, keep <strong>Use Radius for Feedrate UNCHECKED</strong>, <strong>G04 Dwell in ms UNCHECKED</strong>, <strong>LookAhead = 200</strong>, <strong>CV Feedrate OFF</strong>, and run a licensed Mach3 install (Demo caps at 500 lines). If you ever run a <code class="mono">G94</code> round-pipe job using Mach3's radius DRO, set Rotation Radius to <code class="mono">+0.0001</code> (never <code class="mono">0</code>). RotaryCAM restores <code class="mono">G94</code> immediately after every <code class="mono">M5</code> and coaxial scribe stroke, and filters sub-<code class="mono">0.002 mm</code> (<code class="mono">0.0001 in</code>) linear noise in <code class="mono">G93</code>.
+                <strong>ArtSoft Mach3 (<code class="mono">R3.043.062</code>) Checklist:</strong> For <code class="mono">G93</code> rotary jobs, leave <strong>Use Radius for Feedrate UNCHECKED</strong> and <strong>G04 Dwell in ms UNCHECKED</strong>. Set <strong>LookAhead = 200</strong>, turn <strong>CV Feedrate OFF</strong>, and use a licensed Mach3 install (Demo stops at 500 lines). If you run a <code class="mono">G94</code> round-pipe file with Mach3's radius DRO, set Rotation Radius to <code class="mono">+0.0001</code> (never <code class="mono">0</code>). Your G-code restores <code class="mono">G94</code> right after every <code class="mono">M5</code> and coaxial scribe stroke, and drops sub-<code class="mono">0.002 mm</code> (<code class="mono">0.0001 in</code>) linear noise in <code class="mono">G93</code>.
               </p>
             </div>
 
@@ -318,18 +317,18 @@ M05 ; Torch off</code></pre>
             <!-- G94 vs G93 Hybrid Explanation -->
             <h3 style="font-size: 1.15rem; color: #fff; margin: 1.75rem 0 0.5rem;">The Hybrid Reality: G94 Probing vs. G93 Rotary Cutting</h3>
             <p>
-              Inside a single 4-axis rotary G-code file, both <code class="mono">G94</code> and <code class="mono">G93</code> exist together, and different controllers handle surface touch-off differently:
+              One 4-axis rotary program mixes both <code class="mono">G94</code> and <code class="mono">G93</code>. Touch-off probing runs differently depending on your controller:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>Initial Height Sensing (IHS) &amp; Plunges Run in <code class="mono">G94</code>:</strong> Before the arc fires, surface touch-off probing (<code class="mono">G38.2</code> on grblHAL / bare LinuxCNC, <code class="mono">G31</code> on ArtSoft Mach3 / Mach4 / UCCNC) and vertical plunges to pierce/cut height move pure linear Z distance. They run in <code class="mono">G94</code> distance-per-minute mode. In <code class="mono">G21</code>, the probe moves at <code class="mono">F1000.0 mm/min</code>; in <code class="mono">G20</code>, the probe moves at <code class="mono">F39.4 IPM</code> (<code class="mono">1000 &divide; 25.4</code>).
+                <strong>IHS Probing &amp; Plunges Run in <code class="mono">G94</code>:</strong> Touch-off probing (<code class="mono">G38.2</code> on grblHAL / bare LinuxCNC, <code class="mono">G31</code> on Mach3 / Mach4 / UCCNC) and Z plunges move straight linear Z distance. They stay in <code class="mono">G94</code> distance-per-minute: <code class="mono">F1000.0 mm/min</code> in <code class="mono">G21</code>, or <code class="mono">F39.4 IPM</code> (<code class="mono">1000 &divide; 25.4</code>) in <code class="mono">G20</code>.
               </li>
               <li>
-                <strong>Integrated vs. Explicit Touch-Off Loops (LinuxCNC QtPlasmaC &amp; MASSO G3):</strong>
-                On <strong>2D Flat Sheet</strong> (no <code class="mono">#&lt;tube_cut&gt;</code>, zero Z/A words), <strong>LinuxCNC QtPlasmaC</strong> runs ohmic/float touch-off, pierce height, pierce delay, and cut-height plunge internally inside <code class="mono">M3 $0 S1</code> (ended with <code class="mono">M5 $0</code>), using <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>. On <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code> before motion), QtPlasmaC yields Z control back to G-code: RotaryCAM probes explicitly with <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code>, executes <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code> plunges, and uses rotary lookahead (<code class="mono">G94</code> on flat HSS faces switching to <code class="mono">G93</code> on <code class="mono">A</code> moves). Similarly, <strong>MASSO G3 + DTHC</strong> handles probing and pierce timing automatically inside <code class="mono">M3</code> via its <code class="mono">G200</code> plasma cycle.
+                <strong>Internal vs. Explicit Probing (LinuxCNC QtPlasmaC &amp; MASSO G3):</strong>
+                On <strong>2D Flat Sheet</strong> (no <code class="mono">#&lt;tube_cut&gt;</code>, zero Z/A words), <strong>LinuxCNC QtPlasmaC</strong> runs probing, pierce height, pierce delay, and plunge inside <code class="mono">M3 $0 S1</code> (ended by <code class="mono">M5 $0</code>) at <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>. On <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code>), QtPlasmaC yields Z to G-code: you get explicit <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code> probes, <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code> plunges, and rotary lookahead (<code class="mono">G94</code> on HSS flats switching to <code class="mono">G93</code> on <code class="mono">A</code> moves). <strong>MASSO G3 + DTHC</strong> also probes and pierces inside <code class="mono">M3</code> using its <code class="mono">G200</code> cycle.
               </li>
               <li>
-                <strong>Contour Cutting Runs in <code class="mono">G93</code>:</strong> As soon as the torch fires and lateral/rotary cutting begins, the program switches to <code class="mono">G93</code>. Every contour line carries an inverse-time <code class="mono">F</code> word that paces the move to the millisecond.
+                <strong>Contour Cutting Runs in <code class="mono">G93</code>:</strong> Once the arc fires and lateral/rotary motion starts, the code switches to <code class="mono">G93</code>. Each segment gets an inverse-time <code class="mono">F</code> word timed to the millisecond.
               </li>
             </ul>
 
@@ -401,24 +400,29 @@ G00 Z0.9843</code></pre>
 
           <div class="doc-step-body">
             <p>
-              CSLab SimCNC (running CSMIO/IP-M and IP-S controllers) provides hardware trajectory generation and sub-millisecond motion-synchronized digital pins (<code class="mono">M62/M63</code>). However, how SimCNC executes rotary motion depends on your software version:
+              CSLab SimCNC (CSMIO/IP-M and IP-S controllers) uses hardware trajectory planning and sub-millisecond motion-synced digital pins (<code class="mono">M62/M63</code>). Rotary feed mode depends on your SimCNC version:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>SimCNC &lt; 3.6 (e.g. Stable 3.5):</strong> Does not support native <code class="mono">G93</code> inverse-time mode. In standard <code class="mono">G94</code> mode, SimCNC's motion planner calculates trajectory displacement across all active axes as a <strong>4D Euclidean vector</strong>:
+                <strong>SimCNC &lt; 3.6 (e.g. Stable 3.5):</strong> Lacks native <code class="mono">G93</code> inverse-time support. In <code class="mono">G94</code> mode, SimCNC calculates move length across all active axes as a <strong>4D Euclidean vector</strong>:
                 <div style="background: rgba(0, 0, 0, 0.5); padding: 0.85rem 1.15rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.75rem 0; font-family: var(--font-mono); font-size: 0.88rem; color: var(--emerald-400);">
                   L_4D = &radic;(&Delta;X&sup2; + &Delta;Y&sup2; + &Delta;Z&sup2; + &Delta;A&sup2;)
                 </div>
-                where <code class="mono">X, Y, Z</code> are in linear units (millimeters or inches) and <code class="mono">A</code> is in angular degrees (<code class="mono">&deg;</code>). RotaryCAM automatically calculates the spoofed <code class="mono">F</code> word for every line.
+                Here <code class="mono">X, Y, Z</code> are linear units (mm or in) and <code class="mono">A</code> is degrees (<code class="mono">&deg;</code>). Your G-code outputs the spoofed <code class="mono">F</code> word on every line.
               </li>
               <li>
-                <strong>SimCNC 3.6+ (Native <code class="mono">G93</code> Inverse-Time):</strong> CSLab added native <code class="mono">G93</code> inverse-time support in SimCNC 3.6+. Under the <code class="mono">SimCNC 3.6+</code> profile, RotaryCAM emits hardened <code class="mono">G93</code> inverse-time blocks (identical in <code class="mono">G20</code> and <code class="mono">G21</code>, formatted to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor) without 4D vector spoofing. Controller-safe rules emit <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code>/<code class="mono">P0.4</code> blending even in <code class="mono">G20</code> programs (banning <code class="mono">G61</code>), coalesce <code class="mono">&lt; 0.05 mm</code> / <code class="mono">&lt; 0.02&deg;</code> micro-segments, apply <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) axial feathering between pure-XYZ and pure-ABC moves, suppress sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms), enforce the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), format <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>), cap comments at 1 <code class="mono">(...)</code> per line, and emit phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).
+                <strong>SimCNC 3.6+ (Native <code class="mono">G93</code> Inverse-Time):</strong> SimCNC 3.6+ adds native <code class="mono">G93</code> inverse-time support. Your program uses hardened <code class="mono">G93</code> blocks with no 4D spoofing:
+                <ul>
+                  <li><strong>Identical Feeds &amp; Blending:</strong> <code class="mono">G93</code> <code class="mono">F</code> values match across <code class="mono">G20</code> and <code class="mono">G21</code> (<code class="mono">4</code> decimals, <code class="mono">0.0001</code> floor). Blending uses <code class="mono">G69</code> and metric <code class="mono">G64 P0.3</code>/<code class="mono">P0.4</code> even in <code class="mono">G20</code> (banning <code class="mono">G61</code>).</li>
+                  <li><strong>Micro-Moves &amp; Arcs:</strong> Merges <code class="mono">&lt; 0.05 mm</code> / <code class="mono">&lt; 0.02&deg;</code> segments and feathers <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) between pure-XYZ and pure-ABC moves. Formats <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>).</li>
+                  <li><strong>Dwells, Parameters &amp; Unwinds:</strong> Drops sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms). Stays under the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync). Keeps comments to 1 <code class="mono">(...)</code> per line and unwinds with phase-preserving <code class="mono">G92 A</code> (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).</li>
+                </ul>
               </li>
             </ul>
 
-            <h3 style="font-size: 1.15rem; color: #fff; margin: 1.25rem 0 0.5rem;">How RotaryCAM "Spoofs" SimCNC's 4D Feedrate (SimCNC &lt; 3.6)</h3>
+            <h3 style="font-size: 1.15rem; color: #fff; margin: 1.25rem 0 0.5rem;">How Your SimCNC 4D Feedrate Is Spoofed (SimCNC &lt; 3.6)</h3>
             <p>
-              Because SimCNC does not know the physical tube radius in its trajectory planner, a standard linear <code class="mono">F</code> word would cause rotary cuts to crawl or race. RotaryCAM's kinematics engine solves this by calculating the true required move duration <code class="mono">&Delta;t</code> from physical surface speed, then reverse-engineering the exact spoofed <code class="mono">F</code> number that forces SimCNC's 4D vector equation to complete the move at the correct time:
+              SimCNC &lt; 3.6 does not know your physical tube radius. A standard linear <code class="mono">F</code> word makes rotary cuts crawl or race. Your post finds the true move time <code class="mono">&Delta;t</code> from target surface speed, then solves for the exact <code class="mono">F</code> value that makes SimCNC's 4D planner finish on time:
             </p>
             <div style="background: rgba(0, 0, 0, 0.5); padding: 0.75rem 1rem; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.08); margin: 0.5rem 0; font-family: var(--font-mono); font-size: 0.86rem; color: var(--amber-400);">
               F_spoofed = L_4D / &Delta;t = &radic;(&Delta;X&sup2; + &Delta;Y&sup2; + &Delta;Z&sup2; + &Delta;A&sup2;) / &Delta;t
@@ -428,15 +432,15 @@ G00 Z0.9843</code></pre>
             <ul class="doc-bullet-list">
               <li>
                 <strong>Pure Rotary Chuck Spins (&Delta;X = &Delta;Y = &Delta;Z = 0):</strong>
-                When only the chuck rotates, <code class="mono">L_4D = |&Delta;A|</code> degrees. In <code class="mono">G94</code> / SimCNC &lt; 3.6, the feedrate represents degrees per minute:
+                When only the chuck turns, <code class="mono">L_4D = |&Delta;A|</code> degrees. In <code class="mono">G94</code> / SimCNC &lt; 3.6, <code class="mono">F</code> means degrees per minute:
                 <div style="background: rgba(0, 0, 0, 0.5); padding: 0.5rem 0.85rem; border-radius: 4px; margin: 0.35rem 0; font-family: var(--font-mono); font-size: 0.82rem; color: var(--cyan-400);">
                   F_pure_A = (&Delta;A / &Delta;t) = (Surface Speed / (&pi; &times; OD)) &times; 360&deg;
                 </div>
-                Because angular rotational speed in degrees/minute (and chuck RPM) for a given surface speed is determined strictly by the tube OD, <strong>pure-A rotary moves keep the exact same F value in both G21 and G20!</strong>
+                Since chuck RPM for a set surface speed depends only on tube OD, <strong>pure-A moves keep the exact same F value in G21 and G20.</strong>
               </li>
               <li>
-                <strong>Combined X+A Diagonal Moves (Fishmouths &amp; Miters):</strong>
-                In <code class="mono">G20</code>, <code class="mono">&Delta;X</code> is in inches (<code class="mono">&Delta;X_mm &divide; 25.4</code>), while <code class="mono">&Delta;A</code> remains in degrees. The 4D hypotenuse changes ratio between inches and degrees, and RotaryCAM scales <code class="mono">F_spoofed</code> on every line so the physical surface cutting speed across the tube wall remains completely constant at your dialed-in cut-chart IPM.
+                <strong>Combined X+A Moves (Fishmouths &amp; Miters):</strong>
+                In <code class="mono">G20</code>, <code class="mono">&Delta;X</code> is in inches (<code class="mono">&Delta;X_mm &divide; 25.4</code>) while <code class="mono">&Delta;A</code> stays in degrees. The 4D ratio shifts, so <code class="mono">F_spoofed</code> scales per line to hold your true chart IPM on the tube wall.
               </li>
             </ul>
 
@@ -468,12 +472,12 @@ G00 Z25.000 ; Retract</code></pre>
             </div>
 
             <div class="doc-callout warning" style="margin-top: 1.25rem;">
-              <div class="doc-callout-title">⚠️ The SimCNC M05 Deceleration Trap (Why M63 Px is Required for Zero-Divot Cuts)</div>
+              <div class="doc-callout-title">⚠️ The SimCNC M05 Deceleration Trap (Why M63 Px Prevents Divots)</div>
               <p>
-                In SimCNC, calling standard <code class="mono">M05</code> triggers a Python macro (<code class="mono">m5.py</code>). SimCNC's trajectory planner is <strong>not motion-synchronized with standard M-codes</strong>: it forces the motion planner to decelerate axes to a complete standstill before executing <code class="mono">m5.py</code>.
+                In SimCNC, <code class="mono">M05</code> calls a Python macro (<code class="mono">m5.py</code>). Standard M-codes are not motion-synced, so SimCNC slows all axes to zero before running <code class="mono">m5.py</code>.
               </p>
               <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                Stopping the torch while the plasma arc is burning gouges an ugly blowout divot right into the cut edge! To achieve a true zero-divot cut, RotaryCAM triggers a motion-synchronized hardware pin (<code class="mono">M63 Px</code>) roughly 1.5–2.0 mm before the end of the toolpath. The plasma arc extinguishes instantly while the torch continues moving at full programmed cutting speed, allowing residual plasma gas to sever the kerf. Standard <code class="mono">M05</code> is then called only after motion has come to a stop.
+                Stopping with a live arc gouges a blowout divot in your cut edge. To prevent divots, your program fires a motion-synced pin (<code class="mono">M63 Px</code>) about 1.5–2.0 mm before the cut ends. The arc kills instantly at full cut speed while residual gas finishes the kerf, and <code class="mono">M05</code> runs only after motion stops.
               </p>
             </div>
           </div>
@@ -624,47 +628,70 @@ G00 Z25.000 ; Retract</code></pre>
 
             <div class="doc-callout tip" style="margin-top: 1rem; margin-bottom: 1.25rem;">
               <div class="doc-callout-title">💡 Controller Probing Notes: MASSO G3, LinuxCNC QtPlasmaC, Mach4 ESS/TMC3in1, EdingCNC, PlanetCNC TNG, WinCNC &amp; Generic RS-274</div>
-              <p>
-                <strong>MASSO G3 + DTHC:</strong> MASSO uses <code class="mono">T112 M6</code> followed by <code class="mono">G200 F... P... D... C... V...</code>, where <code class="mono">M3</code> automatically executes torch touch-off probing, pierce delay, and plunge to cut height without requiring manual <code class="mono">G38.2 Z</code> + <code class="mono">G92 Z0</code> blocks in standard cutting. (Manual probing is only used in legacy external-THC or custom dynamic-4D-Z setups). Note that the plunge/cut feedrate parameter <code class="mono">F</code> inside <code class="mono">G200</code> still divides by 25.4 when running in Imperial <code class="mono">G20</code>.
-              </p>
-              <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <strong>LinuxCNC 2.9+ QtPlasmaC:</strong> On <strong>2D Flat Sheet</strong> (zero Z/A words, no <code class="mono">#&lt;tube_cut&gt;</code>), IHS, pierce delay, and cut plunge execute internally via <code class="mono">M3 $0 S1</code> (and shut off with <code class="mono">M5 $0</code>), so never emit <code class="mono">G38.2</code> or Z words there. On <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code> before motion), QtPlasmaC hands Z control to G-code: RotaryCAM runs explicit <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code> probing and <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code> plunges. (<code class="mono">#&lt;keep-z-motion&gt;=1</code> is reserved strictly for non-<code class="mono">M3</code> scribes and markers.)
-              </p>
-              <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <strong>ArtSoft Mach4 (Warp9 ESS / TMC3in1):</strong> Separates <code class="mono">G90</code> and <code class="mono">G91.1</code> onto distinct lines (<code class="mono">G00 G90 G17 G54 G40 G49 G80</code> then <code class="mono">G91.1</code>), runs <code class="mono">G94</code> for startup, rapids, and probing (switching to <code class="mono">G93</code> strictly during rotary strokes), resets mid-pack wraps with modulo-360 <code class="mono">G92 A0.000</code> (no <code class="mono">G92.1</code>), and closes EOF with <code class="mono">G92.1</code> + <code class="mono">M30</code> + trailing <code class="mono">%</code> and newline. Probing uses <code class="mono">G31.0</code>-<code class="mono">G31.3</code> with relative incremental backoff (<code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>), <code class="mono">refDistance</code> skip-after-probe, and TMC3in1 <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code> + <code class="mono">G04 P0.100</code> Lua sync on plasma and EasyScribe probes. Standard ESS supports Pathway A (<code class="mono">M62/M63 P3</code> + <code class="mono">M65 P3</code> + <code class="mono">M62/M63 P2</code>) vs. Pathway B (<code class="mono">m3/m5</code> OB1 fallback), while TMC3in1 uses Output #4 active-low (<code class="mono">M63 P4</code> Lock / <code class="mono">M62 P4</code> Unlock), 3-step Pierce Drop (<code class="mono">&ge; 2</code> steps + <code class="mono">G04 P0.0011</code> + <code class="mono">G01 Z&lt;pierce&gt;</code>), <code class="mono">AD3_VELOCITY_ENABLED=0</code> on rotary cuts, full <code class="mono">W9_HC m2020</code> parameters (<code class="mono">AD1</code>, bands, ATV buffer, HC Z min/max, <code class="mono">ESS_DELAY_AFTER_ARC_OKAY</code>), continuous 4D dynamic-Z THC lock (<code class="mono">HC Z Delta</code> protection), post-ramp unlock, and banned black-listed macro filtering.
-              </p>
-              <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <strong>EdingCNC Plasma (CNC720 / CNC760):</strong> Guards against 4THMILL Y-to-A mapping (<code class="mono">If [#5150 == 2] Errmsg</code>), starts in <code class="mono">G94</code> with initial <code class="mono">M21</code> + <code class="mono">M5</code> and <code class="mono">G10 L20 P#5220 A0.000</code>, resets rotary wraps with <code class="mono">A[#5004 MOD 360.0]</code> (zero <code class="mono">G92.1</code>), supports optional <code class="mono">G64 R&lt;tol&gt;</code> (never <code class="mono">G64 P...</code>), and restores <code class="mono">G94 F...</code> before safe-Z retracts. Probing uses <code class="mono">If [[#5380 == 0] AND [#5397 == 0]]</code> + <code class="mono">#5067 == 0</code> checks with direct <code class="mono">G92 Z[datum - switchOffset]</code> and optional centerline WCS <code class="mono">Z0</code>, while THC supports <code class="mono">M22 Q&lt;volts&gt;</code> / <code class="mono">M23 Q&lt;volts&gt;</code> vs. <code class="mono">measuredIsSetpoint = 1</code>, optional <code class="mono">M56</code> Arc-OK + <code class="mono">#5399</code> timeout, continuous <code class="mono">M21</code> on 4D dynamic-Z cuts, post-ramp <code class="mono">M20</code> unlock, and post-<code class="mono">M5</code> anti-dive dwells (<code class="mono">G4 P...</code>).
-              </p>
-              <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <strong>PlanetCNC TNG Plasma:</strong> Emits <code class="mono">G90 G90.2</code> rotary absolute mode, initial <code class="mono">M54 P0</code>, and <code class="mono">M55 P0 M56 P0 M57 P0</code> (canceling Transform, Warp, and Swap). Jobs start in <code class="mono">G94</code>, switch to <code class="mono">G93</code> only during rotary cut strokes, and restore <code class="mono">G94 F...</code> before safe-Z retracts and the footer. IHS runs <code class="mono">G38.2</code> (plus optional two-stage slow latch re-probe) with AL Axis-Lock clearing retract (<code class="mono">G91 G01 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>) and centerline <code class="mono">Z=0</code> on HSS tubes. Lookahead-safe THC emits <code class="mono">M54 P1 Q&lt;speed&gt; R1</code> on 2D flat/Y-wrap vs. <code class="mono">M54 P1 R1</code> (no <code class="mono">Q</code>) on 4-axis round pipe, holds <code class="mono">M54 P0</code> continuously on 4D dynamic-Z cuts, unlocks <code class="mono">M54</code> after ramps, resets wraps with modulo-360 <code class="mono">G92 A</code> (zero <code class="mono">G92.1</code>), and isolates notes in <code class="mono">; ...</code> comments (<code class="mono">(status, ...)</code> for UI progress only).
-              </p>
-              <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <strong>ShopSabre WinCNC (<code class="mono">v3.1.06d+</code> via <code class="mono">Help &rarr; About</code>):</strong> WinCNC reads <code class="mono">G21</code> as <em>centimeters</em>, so RotaryCAM strictly emits <code class="mono">G22</code> for metric millimeters and <code class="mono">G20</code> for inches (never <code class="mono">G21</code>). Match your SideKick rotary axis letter (<code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>) to <code class="mono">WINCNC.INI</code>. Programs emit <code class="mono">M65</code> init, optional <code class="mono">G9 S10</code>, <code class="mono">G94</code> before rapids and <code class="mono">M62</code>, <code class="mono">L28.1</code> 0-360 rotary wraps, Pack-only <code class="mono">L92</code> before <code class="mono">M66</code> (preserving single-part <code class="mono">G92</code> restore), <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L37.2 D1/D0</code> continuous THC (<code class="mono">D1</code> = Disabled, <code class="mono">D0</code> = Enabled) vs. legacy <code class="mono">L37/L36</code>, decoupled <code class="mono">L38.1</code> (<code class="mono">THC=... M1</code> vs. <code class="mono">M0</code>), <code class="mono">M61</code> vs. <code class="mono">L38</code> cycles, and <code class="mono">G54</code>-baked pneumatic scribe XY offsets.
-              </p>
-              <p style="margin-top: 0.5rem; margin-bottom: 0;">
-                <strong>Portable RS-274 (<code class="mono">generic_g94</code>):</strong> Assumes a pre-zeroed top-surface <code class="mono">Z0</code> datum by default and uses a strict core subset (<code class="mono">G00/G01/G02/G03/G04/G17/G20-G21/G40/G90/G92/G94</code>, <code class="mono">M03/M05/M30</code>) with uppercase <code class="mono">(COMMENT)</code> blocks (&le; 80 chars) and zero <code class="mono">;</code>, <code class="mono">%</code>, <code class="mono">G49</code>, <code class="mono">G92.1</code>, or <code class="mono">G10 L20</code>. THC defaults to <code class="mono">None</code> (printing a header THC-lock warning on 3D ramps and 4D Z motion) with optional <code class="mono">M62/M63</code> or custom M-codes, configurable <code class="mono">G04</code> dwells (<code class="mono">P0.500</code>, <code class="mono">P500</code>, <code class="mono">X0.500</code>, or off; clamped &ge; 10 ms with forced decimal), <code class="mono">&lt; 0.005 mm</code> linear snap, split 3D ramp <code class="mono">M03</code> ignition, swing-envelope Safe Z before <code class="mono">A</code> rapids, and Dry-Run mode. Not compatible with Burny, Dynatorch, or FlashCut Stingray.
-              </p>
+              <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
+                <li>
+                  <strong>MASSO G3 + DTHC:</strong> Runs <code class="mono">T112 M6</code> then <code class="mono">G200 F... P... D... C... V...</code>. Inside <code class="mono">M3</code>, MASSO handles touch-off probing, pierce delay, and plunge without manual <code class="mono">G38.2 Z</code> + <code class="mono">G92 Z0</code> blocks. Manual probing applies only to legacy external-THC or custom dynamic-4D-Z setups. In Imperial <code class="mono">G20</code>, the <code class="mono">F</code> inside <code class="mono">G200</code> still divides by 25.4.
+                </li>
+                <li>
+                  <strong>LinuxCNC 2.9+ QtPlasmaC:</strong> On <strong>2D Flat Sheet</strong> (no Z/A words, no <code class="mono">#&lt;tube_cut&gt;</code>), <code class="mono">M3 $0 S1</code> handles IHS, pierce delay, and plunge internally (ended by <code class="mono">M5 $0</code>), so omit <code class="mono">G38.2</code> and Z moves. On <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code> before motion), QtPlasmaC hands Z to G-code: you get explicit <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code> probes and <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code> plunges. (<code class="mono">#&lt;keep-z-motion&gt;=1</code> stays reserved for non-<code class="mono">M3</code> scribes and markers.)
+                </li>
+                <li>
+                  <strong>ArtSoft Mach4 (Warp9 ESS / TMC3in1):</strong>
+                  <ul>
+                    <li><strong>Modes &amp; Wraps:</strong> Separates <code class="mono">G90</code> and <code class="mono">G91.1</code> (<code class="mono">G00 G90 G17 G54 G40 G49 G80</code> then <code class="mono">G91.1</code>). Runs <code class="mono">G94</code> for startup, rapids, and probes, switches to <code class="mono">G93</code> for rotary strokes, resets mid-pack wraps via modulo-360 <code class="mono">G92 A0.000</code> (no <code class="mono">G92.1</code>), and ends with <code class="mono">G92.1</code> + <code class="mono">M30</code> + trailing <code class="mono">%</code> and newline.</li>
+                    <li><strong>Probing:</strong> Uses <code class="mono">G31.0</code>-<code class="mono">G31.3</code> with relative backoff (<code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>), <code class="mono">refDistance</code> skip-after-probe, and TMC3in1 <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code> + <code class="mono">G04 P0.100</code> Lua sync on plasma and EasyScribe probes.</li>
+                    <li><strong>THC &amp; Pins:</strong> Standard ESS supports Pathway A (<code class="mono">M62/M63 P3</code> + <code class="mono">M65 P3</code> + <code class="mono">M62/M63 P2</code>) or Pathway B (<code class="mono">m3/m5</code> OB1 fallback). TMC3in1 uses Output #4 active-low (<code class="mono">M63 P4</code> Lock / <code class="mono">M62 P4</code> Unlock), 3-step Pierce Drop (<code class="mono">&ge; 2</code> steps + <code class="mono">G04 P0.0011</code> + <code class="mono">G01 Z&lt;pierce&gt;</code>), <code class="mono">AD3_VELOCITY_ENABLED=0</code> on rotary cuts, full <code class="mono">W9_HC m2020</code> parameters (<code class="mono">AD1</code>, bands, ATV buffer, HC Z min/max, <code class="mono">ESS_DELAY_AFTER_ARC_OKAY</code>), continuous 4D dynamic-Z THC lock (<code class="mono">HC Z Delta</code> protection), post-ramp unlock, and blacklisted macro filtering.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>EdingCNC Plasma (CNC720 / CNC760):</strong>
+                  <ul>
+                    <li><strong>Setup &amp; Wraps:</strong> Guards against 4THMILL Y-to-A mapping (<code class="mono">If [#5150 == 2] Errmsg</code>), starts in <code class="mono">G94</code> with <code class="mono">M21</code> + <code class="mono">M5</code> and <code class="mono">G10 L20 P#5220 A0.000</code>, resets wraps with <code class="mono">A[#5004 MOD 360.0]</code> (no <code class="mono">G92.1</code>), supports <code class="mono">G64 R&lt;tol&gt;</code> (never <code class="mono">G64 P...</code>), and restores <code class="mono">G94 F...</code> before safe-Z retracts.</li>
+                    <li><strong>Probing &amp; THC:</strong> Checks <code class="mono">If [[#5380 == 0] AND [#5397 == 0]]</code> + <code class="mono">#5067 == 0</code> with <code class="mono">G92 Z[datum - switchOffset]</code> and optional centerline WCS <code class="mono">Z0</code>. Supports <code class="mono">M22 Q&lt;volts&gt;</code> / <code class="mono">M23 Q&lt;volts&gt;</code> vs. <code class="mono">measuredIsSetpoint = 1</code>, optional <code class="mono">M56</code> Arc-OK + <code class="mono">#5399</code> timeout, continuous <code class="mono">M21</code> on 4D dynamic-Z cuts, post-ramp <code class="mono">M20</code> unlock, and post-<code class="mono">M5</code> anti-dive dwells (<code class="mono">G4 P...</code>).</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>PlanetCNC TNG Plasma:</strong>
+                  <ul>
+                    <li><strong>Modes &amp; IHS:</strong> Starts with <code class="mono">G90 G90.2</code>, <code class="mono">M54 P0</code>, and <code class="mono">M55 P0 M56 P0 M57 P0</code> (canceling Transform, Warp, Swap). Opens in <code class="mono">G94</code>, switches to <code class="mono">G93</code> only for rotary strokes, and restores <code class="mono">G94 F...</code> before safe-Z retracts and EOF. IHS runs <code class="mono">G38.2</code> (plus optional slow latch re-probe) with AL Axis-Lock backoff (<code class="mono">G91 G01 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>) and centerline <code class="mono">Z=0</code> on HSS tubes.</li>
+                    <li><strong>THC &amp; Comments:</strong> Emits lookahead-safe <code class="mono">M54 P1 Q&lt;speed&gt; R1</code> on 2D flat/Y-wrap and <code class="mono">M54 P1 R1</code> (no <code class="mono">Q</code>) on 4-axis round pipe. Locks <code class="mono">M54 P0</code> on 4D dynamic-Z cuts, unlocks <code class="mono">M54</code> after ramps, resets wraps with modulo-360 <code class="mono">G92 A</code> (no <code class="mono">G92.1</code>), and puts notes in <code class="mono">; ...</code> comments (<code class="mono">(status, ...)</code> for UI progress only).</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>ShopSabre WinCNC (<code class="mono">v3.1.06d+</code> via <code class="mono">Help &rarr; About</code>):</strong>
+                  <ul>
+                    <li><strong>Units &amp; Axis:</strong> WinCNC treats <code class="mono">G21</code> as <em>centimeters</em>, so your post emits <code class="mono">G22</code> for millimeters and <code class="mono">G20</code> for inches (never <code class="mono">G21</code>). Match your SideKick rotary letter (<code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>) to <code class="mono">WINCNC.INI</code>.</li>
+                    <li><strong>Macros &amp; THC:</strong> Emits <code class="mono">M65</code> init, optional <code class="mono">G9 S10</code>, <code class="mono">G94</code> before rapids and <code class="mono">M62</code>, <code class="mono">L28.1</code> 0-360 wraps, Pack-only <code class="mono">L92</code> before <code class="mono">M66</code> (keeping single-part <code class="mono">G92</code> restore), and <code class="mono">G4 X&lt;sec&gt;</code> dwells. Uses <code class="mono">L37.2 D1/D0</code> continuous THC (<code class="mono">D1</code> = Disabled, <code class="mono">D0</code> = Enabled) vs. legacy <code class="mono">L37/L36</code>, decoupled <code class="mono">L38.1</code> (<code class="mono">THC=... M1</code> vs. <code class="mono">M0</code>), <code class="mono">M61</code> vs. <code class="mono">L38</code> cycles, and <code class="mono">G54</code>-baked pneumatic scribe XY offsets.</li>
+                  </ul>
+                </li>
+                <li>
+                  <strong>Portable RS-274 (<code class="mono">generic_g94</code>):</strong>
+                  <ul>
+                    <li><strong>Subset &amp; Datum:</strong> Assumes a pre-zeroed <code class="mono">Z0</code> top datum. Uses core codes (<code class="mono">G00/G01/G02/G03/G04/G17/G20-G21/G40/G90/G92/G94</code>, <code class="mono">M03/M05/M30</code>), uppercase <code class="mono">(COMMENT)</code> lines (&le; 80 chars), and zero <code class="mono">;</code>, <code class="mono">%</code>, <code class="mono">G49</code>, <code class="mono">G92.1</code>, or <code class="mono">G10 L20</code>.</li>
+                    <li><strong>THC, Dwells &amp; Limits:</strong> THC defaults to <code class="mono">None</code> (printing a THC-lock warning on 3D ramps and 4D Z motion) with optional <code class="mono">M62/M63</code> or custom M-codes. Supports <code class="mono">G04</code> dwells (<code class="mono">P0.500</code>, <code class="mono">P500</code>, <code class="mono">X0.500</code>, or off; clamped &ge; 10 ms with forced decimal), <code class="mono">&lt; 0.005 mm</code> linear snap, split 3D ramp <code class="mono">M03</code> ignition, swing-envelope Safe Z before <code class="mono">A</code> rapids, and Dry-Run mode. Not compatible with Burny, Dynatorch, or FlashCut Stingray.</li>
+                  </ul>
+                </li>
+              </ul>
             </div>
 
             <!-- 5 Golden Shop Rules -->
             <div class="doc-callout info">
-              <div class="doc-callout-title">📋 5 Shop Rules to Remember at the Machine Console</div>
+              <div class="doc-callout-title">📋 5 Shop Rules at the Machine Console</div>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
                 <li>
-                  <strong>Rule 1 (Flat Sheet = Distance):</strong> On 2D plate and 3-axis Y-wrapped round pipe, feedrates are <code class="mono">G94</code> distance-per-minute. When flipping from metric to inches, <code class="mono">F</code> divides by 25.4 (<code class="mono">2540 mm/min &rarr; 100 IPM</code>).
+                  <strong>Rule 1 (Flat Sheet = Distance):</strong> On 2D plate and 3-axis Y-wrapped round pipe, <code class="mono">G94</code> <code class="mono">F</code> divides by 25.4 in Imperial (<code class="mono">2540 mm/min &rarr; 100 IPM</code>).
                 </li>
                 <li>
-                  <strong>Rule 2 (4-Axis Rotary = Inverse Time):</strong> On 4-axis rotary tubes, cutting feedrates are <code class="mono">G93</code> inverse-time (<code class="mono">1 / &Delta;t</code>). Because both cutting speed and move distance divide by 25.4, the unit factor cancels out: <code class="mono">F1000.0</code> is identical in Metric and Imperial. Never divide a <code class="mono">G93</code> <code class="mono">F</code> word by 25.4.
+                  <strong>Rule 2 (4-Axis Rotary = Inverse Time):</strong> On 4-axis rotary tubes, <code class="mono">G93</code> <code class="mono">F</code> (<code class="mono">1 / &Delta;t</code>) stays identical in Metric and Imperial (<code class="mono">F1000.0</code>). Never divide a <code class="mono">G93</code> <code class="mono">F</code> word by 25.4.
                 </li>
                 <li>
-                  <strong>Rule 3 (Probes &amp; Plunges Scale):</strong> Initial touch-off sensing (<code class="mono">G38.2</code> on grblHAL, <code class="mono">G31</code> on Mach3/UCCNC, <code class="mono">G31.0</code>-<code class="mono">G31.3</code> on Mach4, <code class="mono">G200</code> on MASSO) and vertical Z plunges run in <code class="mono">G94</code> linear mode before the arc strikes. Their feedrates <em>do</em> divide by 25.4 in Imperial (<code class="mono">1000 mm/min &rarr; 39.4 IPM</code>). On 2D Flat Sheet in LinuxCNC QtPlasmaC, probing, pierce height, and cut plunge run internally inside <code class="mono">M3 $0 S1</code>; on Rotary &amp; 3D Ramps (<code class="mono">#&lt;tube_cut&gt;=1</code>), RotaryCAM emits explicit <code class="mono">G38.2</code> probing and <code class="mono">G94 G1 Z</code> plunges.
+                  <strong>Rule 3 (Probes &amp; Plunges Scale):</strong> Touch-off probing (<code class="mono">G38.2</code> on grblHAL, <code class="mono">G31</code> on Mach3/UCCNC, <code class="mono">G31.0</code>-<code class="mono">G31.3</code> on Mach4, <code class="mono">G200</code> on MASSO) and Z plunges run in <code class="mono">G94</code>, so feeds divide by 25.4 in Imperial (<code class="mono">1000 mm/min &rarr; 39.4 IPM</code>). In LinuxCNC QtPlasmaC, 2D Flat Sheet runs IHS, pierce height, and plunge inside <code class="mono">M3 $0 S1</code>; Rotary &amp; 3D Ramps (<code class="mono">#&lt;tube_cut&gt;=1</code>) emit explicit <code class="mono">G38.2</code> probes and <code class="mono">G94 G1 Z</code> plunges.
                 </li>
                 <li>
-                  <strong>Rule 4 (Pure A Rotations: G93 is ALWAYS Inverse Time, NEVER deg/min):</strong> When the chuck rotates without lateral motion (<code class="mono">&Delta;X = &Delta;Y = &Delta;Z = 0</code>), in <code class="mono">G93</code> mode <code class="mono">F</code> is still strictly inverse time (<code class="mono">1 / &Delta;t</code> in <code class="mono">min&sup1;</code>), NEVER degrees per minute! Only <code class="mono">G94</code> (such as <code class="mono">SimCNC &lt; 3.6</code>) expresses pure-A spins in <code class="mono">deg/min</code>. For example, at <code class="mono">5729.6&deg;/min</code> (<code class="mono">2540 mm/min / 100 IPM</code> surface speed on 2" / 50.8 mm OD pipe), a 90&deg; pure-A spin runs at <code class="mono">F5729.6</code> (<code class="mono">deg/min</code>) in <code class="mono">G94</code> / <code class="mono">SimCNC &lt; 3.6</code>, whereas in <code class="mono">G93</code> it runs at <code class="mono">F63.66</code> (<code class="mono">&Delta;t = 0.01571 min = 0.942 s</code>, <code class="mono">1 / &Delta;t = 63.66 min&sup1;</code>). Both values remain 100% identical between <code class="mono">G20</code> and <code class="mono">G21</code>, but only <code class="mono">G94</code> is <code class="mono">deg/min</code>.
+                  <strong>Rule 4 (Pure A Rotations: G93 is Inverse Time, Not deg/min):</strong> On pure-A spins (<code class="mono">&Delta;X = &Delta;Y = &Delta;Z = 0</code>), <code class="mono">G93</code> <code class="mono">F</code> is <code class="mono">1 / &Delta;t</code> in <code class="mono">min&sup1;</code>, never <code class="mono">deg/min</code>. Only <code class="mono">G94</code> (like <code class="mono">SimCNC &lt; 3.6</code>) writes pure-A moves in <code class="mono">deg/min</code>. At <code class="mono">5729.6&deg;/min</code> (<code class="mono">2540 mm/min / 100 IPM</code>) on 2" / 50.8 mm OD pipe, a 90&deg; spin runs at <code class="mono">F5729.6</code> in <code class="mono">G94</code> / <code class="mono">SimCNC &lt; 3.6</code>, or <code class="mono">F63.66</code> in <code class="mono">G93</code> (<code class="mono">&Delta;t = 0.01571 min = 0.942 s</code>, <code class="mono">1 / &Delta;t = 63.66 min&sup1;</code>). Both stay identical between <code class="mono">G20</code> and <code class="mono">G21</code>.
                 </li>
                 <li>
-                  <strong>Rule 5 (Keep Override at 100% on Rotary Cuts):</strong> In <code class="mono">G93</code> inverse-time mode, Feedrate Override (FRO) scales every block's duration uniformly (e.g., dialing FRO down to 50% cleanly doubles every block's cut time). However, you should leave FRO at 100% on rotary plasma cuts for two critical physical reasons: (1) Slowing down below target surface speed widens the kerf and raises arc voltage, causing voltage-based Torch Height Control (THC) to dive the torch tip directly into the pipe wall; (2) Pushing FRO above 100% can clip against your rotary A-axis maximum velocity limit on tight saddle crotches or square tube corner sweeps, bottlenecking motion and creating torch gouges.
+                  <strong>Rule 5 (Keep Feed Override at 100% on Rotary Cuts):</strong> In <code class="mono">G93</code>, Feedrate Override (FRO) scales every block's time equally (50% FRO doubles cut duration). Leave FRO at 100% on rotary cuts: slowing down widens kerf and raises arc voltage so THC dives into the pipe, while going above 100% hits your A-axis speed ceiling on tight saddle crotches or square corners and gouges the edge.
                 </li>
               </ul>
             </div>

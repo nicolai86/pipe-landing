@@ -1382,7 +1382,7 @@
       </div>
       <h1>Rotary CNC Plasma Cutter <span>v1</span></h1>
       <p>
-        Architecture, schematics, BOM, and interactive 3D model for a 6-meter (20-foot) 4-axis rotary plasma table built to cut uncut mill sticks of pipe, square tube, and rectangular HSS.
+        Use these blueprints, schematics, BOM, and 3D model to build a 6-meter (20-foot) 4-axis rotary plasma table. Cut full mill sticks of pipe, square tube, and rectangular HSS straight off the rack.
       </p>
 
       <!-- Key Specs Strip -->
@@ -1462,13 +1462,13 @@
         Open Hardware Blueprint, Community Feedback &amp; Safety Disclaimer
       </div>
       <p style="color: var(--text); font-size: 0.925rem; line-height: 1.65; margin-bottom: 0.85rem;">
-        <strong>Built for My Shop, Shared Freely:</strong> I designed and built this 4-axis table to cut full 20-foot (6-meter) mill sticks of pipe, square tube, and rectangular HSS without pre-cutting. It runs daily in production. All 3D CAD assemblies, schematics, custom PCB Gerbers, and verified BOM specifications are <strong>100% free open hardware</strong>.
+        <strong>Built for My Shop, Shared Freely:</strong> You get the exact 3D CAD assembly, schematics, PCB Gerbers, and BOM I run in daily production. Cut full 20-foot (6-meter) sticks of pipe, square tube, and rectangular HSS with no cold-saw pre-cutting. Everything here is <strong>100% free open hardware</strong>.
       </p>
       <p style="color: var(--text); font-size: 0.925rem; line-height: 1.65; margin-bottom: 0.85rem;">
-        <strong>Feedback Welcome:</strong> Planning a build or have design improvements? Reach out directly at <a href="mailto:contact@rotarycam.app" style="color: var(--plasma-amber); text-decoration: underline;">contact@rotarycam.app</a>.
+        <strong>Feedback Welcome:</strong> Building your own table or spotting a better way? Email me at <a href="mailto:contact@rotarycam.app" style="color: var(--plasma-amber); text-decoration: underline;">contact@rotarycam.app</a>.
       </p>
       <p style="color: #fca5a5; font-size: 0.86rem; line-height: 1.55; margin-bottom: 0;">
-        <strong>DIY Liability &amp; Safety Disclaimer:</strong> CNC plasma cutting involves lethal open-circuit voltages (&gt;100–300V DC), high-torque rotary chucks, 70V DC bulk linear power supplies, molten dross, and rotating 20-foot steel sticks. All files and schematics are provided strictly for educational reference "as-is". Build and operate at your own risk; the author assumes no liability for injuries, fire, machine damage, or ruined materials.
+        <strong>DIY Liability &amp; Safety Disclaimer:</strong> CNC plasma cutting carries lethal open-circuit voltages (&gt;100–300V DC), high-torque rotary chucks, 70V DC bulk linear power supplies, molten dross, and spinning 20-foot steel sticks. All files and schematics are shared "as-is" for educational reference. You build and run this machine at your own risk; the author assumes no liability for injury, fire, machine damage, or ruined stock.
       </p>
     </div>
 
@@ -1478,7 +1478,7 @@
         <div class="section-num">Section 01</div>
         <h2 class="section-title">Machine Envelope &amp; Structural Architecture</h2>
         <p class="section-desc">
-          Built for fabrication shops cutting raw 20-foot (6-meter) structural mill sticks without cold-saw pre-cutting.
+          Load raw 20-foot (6-meter) structural mill sticks straight onto your bed with zero saw pre-cutting.
         </p>
       </div>
 
@@ -1487,10 +1487,10 @@
           <span class="card-badge amber mono">STRUCTURAL FOUNDATION</span>
           <h3>5" × 3" &amp; 4" × 4" Structural Steel Frame</h3>
           <p>
-            A single 6-meter <strong>5.0" × 3.0" × 1/4" (127 × 76 × 6.35 mm) rectangular HSS spine</strong> keeps the bed flat under heavy pipe and hard gantry reversals.
+            A single 6-meter <strong>5.0" × 3.0" × 1/4" (127 × 76 × 6.35 mm) rectangular HSS spine</strong> keeps your bed flat under heavy pipe and hard gantry reversals.
           </p>
           <p>
-            Headstock and tailstock frames use a 20-foot stick of <strong>4.0" × 4.0" × 1/4" square HSS</strong> on heavy-duty M24 leveling pedestals, providing rigid framing against rotary torque and laser-straight bed alignment on uneven shop floors.
+            Your headstock and tailstock frames use one 20-foot stick of <strong>4.0" × 4.0" × 1/4" square HSS</strong> on M24 leveling pedestals. That locks out rotary twist and lets you level the bed straight on uneven shop concrete.
           </p>
         </div>
 
@@ -1498,12 +1498,12 @@
           <span class="card-badge cyan mono">KINEMATICS OVERVIEW</span>
           <h3>True 4-Axis Synchronized Motion</h3>
           <p>
-            Unlike 2-axis rotary add-ons that replace a flat-table Y-axis, this machine runs true dedicated 4-axis kinematics:
+            Two-axis rotary add-ons hijack your flat-table Y-axis. Instead, this frame runs four dedicated axes:
           </p>
           <ul style="color: var(--text-muted); font-size: 0.925rem; margin-left: 1.25rem; margin-bottom: 1rem;">
-            <li style="margin-bottom: 0.4rem;"><strong>X-Axis (Longitudinal):</strong> 6,096 mm (20 ft) travel along the bed for full mill sticks.</li>
+            <li style="margin-bottom: 0.4rem;"><strong>X-Axis (Longitudinal):</strong> 6,096 mm (20 ft) bed travel for full mill sticks.</li>
             <li style="margin-bottom: 0.4rem;"><strong>Y-Axis (Transverse):</strong> 20" (508 mm) cross slide for wide profiles, off-center slots, and holes.</li>
-            <li style="margin-bottom: 0.4rem;"><strong>Z-Axis (Vertical Lifter):</strong> Fast initial height sensing (IHS) touch-offs and active arc voltage tracking.</li>
+            <li style="margin-bottom: 0.4rem;"><strong>Z-Axis (Vertical Lifter):</strong> Fast initial height sensing (IHS) touch-offs and live arc voltage tracking.</li>
             <li style="margin-bottom: 0.4rem;"><strong>A-Axis (Rotary):</strong> Continuous 360° stock rotation driven by dual synchronized chucks.</li>
           </ul>
         </div>
@@ -1516,7 +1516,7 @@
         <div class="section-num">Section 02</div>
         <h2 class="section-title">Motion Controller &amp; SimCNC 4D Feedrate Scaling</h2>
         <p class="section-desc">
-          CSLab CSMIO/IP-M hardware paired with RotaryCAM's 4D trajectory feedrate scaling.
+          Pair CSLab CSMIO/IP-M hardware with 4D trajectory feedrate scaling so your torch keeps constant surface speed.
         </p>
       </div>
 
@@ -1525,10 +1525,10 @@
           <span class="card-badge cyan mono">HARDWARE CONTROLLER</span>
           <h3>CSLab CSMIO/IP-M 4-Axis Controller</h3>
           <p>
-            The control cabinet runs on a <strong>CSLab CSMIO/IP-M Ethernet motion controller</strong>, generating 125 kHz step/direction signals over galvanic Ethernet: zero PC jitter, zero USB dropouts.
+            Your cabinet runs on a <strong>CSLab CSMIO/IP-M Ethernet motion controller</strong>. It outputs 125 kHz step/direction pulses over galvanic Ethernet with zero PC jitter or USB dropouts.
           </p>
           <p>
-            Hardware <strong>24V opto-isolated I/O</strong> shields the controller from high-voltage plasma pilot arc interference and HF start spikes.
+            Built-in <strong>24V opto-isolated I/O</strong> shields your controller from plasma pilot arc noise and HF start spikes.
           </p>
           <a href="https://en.cs-lab.eu/product/4-axis-cnc-control-system-csmio-ip-m-board-with-software/" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--plasma-amber); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; margin-top: 0.5rem;">↗ CSLab CSMIO/IP-M Official Product Page</a>
         </div>
@@ -1537,18 +1537,18 @@
           <span class="card-badge amber mono">ROTARYCAM 4D FEEDRATE</span>
           <h3>The Rotary Feedrate Problem &amp; CAM Solution</h3>
           <p>
-            Standard controllers (including SimCNC) calculate feedrate in linear units/min or rotary deg/min. They cannot blend linear X/Y with rotary A at constant surface speed. Cutting a 2-inch pipe at fixed F spikes or drops surface speed, causing dross or lost arcs. On square tube, surface radius changes continuously between flats and corners.
+            Standard controllers (including SimCNC) compute feedrate in linear units/min or rotary deg/min. They cannot blend X/Y with rotary A to hold steady torch surface speed. On a 2-inch pipe, fixed F speeds up or slows down the torch, causing heavy dross or lost arcs. On square tube, the surface radius shifts constantly between flat faces and tight corners.
           </p>
           <div class="callout-box">
             <div class="callout-title">
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              How RotaryCAM Solves This (G94 &amp; G93 Controllers)
+              How Your G-Code Solves This (G94 &amp; G93 Controllers)
             </div>
             <p style="margin-bottom: 0.6rem;">
-              <strong>G94 controllers (units/min):</strong> RotaryCAM embeds <strong>true 4D surface speed</strong> directly into G-code, recalculating feedrates dynamically per segment to keep torch surface speed flat across flats and corner radii with no hardware changes.
+              <strong>G94 controllers (units/min):</strong> Your posted G-code recalculates <strong>true 4D surface speed</strong> segment by segment. Torch speed stays flat across tube faces and corner radii with zero hardware mods.
             </p>
             <p>
-              <strong>G93 controllers (inverse time):</strong> RotaryCAM outputs native G93 reciprocal-time blocks (supported on Mach4, LinuxCNC, and Masso), where each block specifies the exact time needed for constant surface speed.
+              <strong>G93 controllers (inverse time):</strong> For Mach4, LinuxCNC, and Masso, you get native G93 reciprocal-time blocks. Each line specifies exact move duration for constant surface speed.
             </p>
           </div>
         </div>
@@ -1582,10 +1582,10 @@
             <span class="card-badge cyan mono">CUSTOM HARDWARE DESIGN • V3 CARRIER HAT</span>
             <h3>CSLab CSMIO/IP-M Breakout HAT</h3>
             <p>
-              Loose flying leads from servos, limit switches, and torch signals create electrical noise, ground loops, and cabinet clutter.
+              Loose flying leads from servos, limit switches, and torch signals invite electrical noise, ground loops, and messy cabinets.
             </p>
             <p>
-              This custom 2-layer carrier HAT mounts directly onto the CSLab CSMIO/IP-M. It provides pluggable screw terminals, clean 24V field wiring distribution, onboard filtering, and status LEDs for every motion axis, enable line, and limit sensor. Opto-isolation is handled upstream by the FastCutCNC Hypertherm interface box and IP-M native inputs.
+              This custom 2-layer carrier HAT plugs straight onto your CSLab CSMIO/IP-M. You get pluggable screw terminals, clean 24V field power distribution, onboard filtering, and status LEDs for every axis, enable line, and limit sensor. Upstream opto-isolation stays inside the FastCutCNC Hypertherm box and IP-M inputs.
             </p>
             <div class="pcb-specs-grid">
               <div class="pcb-spec-item">
@@ -1633,7 +1633,7 @@
           <h3>2x SDHP-3446P-ELN</h3>
           <p><strong>NEMA 34 High-Power ClearPath</strong></p>
           <p>
-            Dedicated servos drive the front and rear chucks. Synchronized in hardware via the RS422 splitter off one controller axis, dual chucks grip both ends of a 20-foot stick, eliminating tube twist on thin-wall stock.
+            Two servos spin your front and rear chucks together. Linked in hardware by the RS422 splitter off one controller axis, they hold both ends of a 20-foot stick so thin-wall tube never twists.
           </p>
         </div>
 
@@ -1642,7 +1642,7 @@
           <h3>1x SDHP-3446P-ELN</h3>
           <p><strong>NEMA 34 High-Power ClearPath</strong></p>
           <p>
-            Drives the 6-meter bed carriage through a precision helical pinion, delivering 1,200 IPM traverse speeds and rapid acceleration without missing steps.
+            Drives your 6-meter carriage across a helical pinion at 1,200 IPM rapids with hard acceleration and zero lost steps.
           </p>
         </div>
 
@@ -1651,8 +1651,8 @@
           <h3>CPM-SDSK-2331S / 2311S</h3>
           <p><strong>NEMA 23 High-Torque ClearPath</strong></p>
           <p>
-            <strong>Y-Axis:</strong> CPM-SDSK-2331S-RLN drives the 20" cross slide.<br>
-            <strong>Z-Axis:</strong> CPM-SDSK-2311S-RQN delivers high-speed retracts and low-latency THC voltage response.
+            <strong>Y-Axis:</strong> CPM-SDSK-2331S-RLN drives your 20" cross slide.<br>
+            <strong>Z-Axis:</strong> CPM-SDSK-2311S-RQN handles fast pierce retracts and low-lag THC voltage tracking.
           </p>
         </div>
       </div>
@@ -1685,10 +1685,10 @@
             <span class="card-badge amber mono">HARDWARE SYNCHRONIZATION • RS422 SPLITTER V1</span>
             <h3>Active RS422 Differential Step/Dir Splitter</h3>
             <p>
-              <strong>The Challenge:</strong> Rotating a 20-foot (6-meter) tube without torsional twist requires two NEMA 34 ClearPath servos (front XSU080318 slewing ring and rear ZCT200 actuator). The IP-M controller has only one physical A-axis channel. Wiring differential step/dir lines in raw parallel causes impedance mismatches, signal reflections, and pulse jitter at 125 kHz.
+              <strong>The Challenge:</strong> Rotating a 20-foot (6-meter) tube without twist takes two NEMA 34 ClearPath servos (front XSU080318 slewing ring and rear ZCT200 actuator). Your IP-M controller only has one A-axis output. Splitting differential step/dir wires in raw parallel causes impedance mismatches, signal reflections, and pulse jitter at 125 kHz.
             </p>
             <p>
-              <strong>The Solution:</strong> This active RS422 splitter buffers the IP-M pulse stream through high-speed line receivers into two independent, impedance-matched differential outputs. Both servos run in hardware lockstep with sub-5 ns skew and zero software latency.
+              <strong>The Solution:</strong> This active RS422 splitter buffers the IP-M pulse stream through high-speed line receivers into two impedance-matched differential outputs. Both chucks stay locked in hardware with sub-5 ns skew and zero software lag.
             </p>
             <div class="pcb-specs-grid">
               <div class="pcb-spec-item">
@@ -1726,7 +1726,7 @@
         <div class="section-num">Section 04</div>
         <h2 class="section-title">Dual Rotary Headstocks &amp; Crossed Roller Slew Rings</h2>
         <p class="section-desc">
-          Eliminating 20-foot torsional whip and slag contamination with industrial through-bore rotary mechanics.
+          Stop 20-foot tube whip and keep plasma slag out of your bearings with through-bore rotary hardware.
         </p>
       </div>
 
@@ -1735,10 +1735,10 @@
           <span class="card-badge amber mono">FRONT HEADSTOCK</span>
           <h3>XSU080318 Crossed Roller Slew Bearing</h3>
           <p>
-            Standard bearings fail fast under falling plasma dross and sparks. The front headstock uses an <strong>XSU080318 crossed roller slewing ring</strong>.
+            Standard ball bearings die quickly under falling plasma dross and sparks. Your front headstock runs an <strong>XSU080318 crossed roller slewing ring</strong> instead.
           </p>
           <p>
-            Alternating cylindrical rollers handle massive simultaneous radial, axial, and moment loads. They rotate heavy pipe with zero radial play and zero deflection under torch downward pressure.
+            Alternating cylindrical rollers carry heavy radial, axial, and moment loads at once. Heavy pipe spins with zero play and zero flex under torch probing.
           </p>
           <div style="margin-top: 0.75rem; display: flex; flex-direction: column; gap: 0.4rem;">
             <a href="https://www.aliexpress.com/item/1005006498334475.html" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--plasma-amber); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem;">↗ Sourced on AliExpress (XSU080318)</a>
@@ -1750,10 +1750,10 @@
           <span class="card-badge cyan mono">REAR CHUCK &amp; REDUCER</span>
           <h3>ZCT200 10:1 Hollow Actuator + K72 Chuck</h3>
           <p>
-            The drive actuator is a <strong>ZCT200 10:1 hollow rotary platform</strong> with zero-backlash planetary gearing and a large central through-bore for long pipe pass-through.
+            The rear drive uses a <strong>ZCT200 10:1 hollow rotary platform</strong> with zero-backlash planetary gearing. Its large center bore lets long pipe pass straight through.
           </p>
           <p>
-            Fitted with a <strong>K72 4-jaw independent chuck</strong> with reversible hardened jaws to center round pipe, square tube, rectangular HSS, and asymmetric angle iron.
+            Bolt on a <strong>K72 4-jaw independent chuck</strong> with reversible hardened jaws to dial in round pipe, square tube, rectangular HSS, and angle iron.
           </p>
           <a href="https://www.aliexpress.com/item/1005008398317265.html" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--plasma-amber); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.85rem; margin-top: 0.5rem;">↗ Sourced on AliExpress (ZCT200)</a>
         </div>
@@ -1766,7 +1766,7 @@
         <div class="section-num">Section 05</div>
         <h2 class="section-title">Precision Linear Guides &amp; Helical Rack Drives</h2>
         <p class="section-desc">
-          Continuous helical tooth engagement eliminates the tooth chatter and scalloped cut edges of spur racks.
+          Overlapping helical teeth eliminate the chatter and scalloped cut edges you get from straight spur racks.
         </p>
       </div>
 
@@ -1775,10 +1775,10 @@
           <span class="card-badge mono">X &amp; Y AXIS GUIDES</span>
           <h3>HGH25 Heavy-Load Profile Linear Rails</h3>
           <p>
-            The 6-meter bed carriage and 20-inch cross slide ride on <strong>precision-ground HGH25 linear profile rails</strong> with flanged recirculating ball carriage blocks.
+            Your 6-meter bed carriage and 20-inch cross slide glide on <strong>precision-ground HGH25 linear profile rails</strong> with flanged ball blocks.
           </p>
           <p>
-            Rails bolt directly to the machined top reference surface of the HSS spine, ensuring parallelism and zero bind across 20 feet of travel.
+            Bolt the rails straight to the machined top face of your HSS spine for zero bind across all 20 feet of travel.
           </p>
         </div>
 
@@ -1786,10 +1786,10 @@
           <span class="card-badge amber mono">TRANSMISSION</span>
           <h3>Module 1.5 Hardened Helical Rack &amp; Pinion</h3>
           <p>
-            Straight spur racks vibrate as teeth enter and exit mesh, leaving ripples on plasma cuts. This machine runs <strong>precision-ground module 1.5 helical rack and pinion</strong>.
+            Straight spur racks tick as each tooth enters mesh, leaving ripples along your plasma kerf. Instead, this build runs <strong>precision-ground module 1.5 helical rack and pinion</strong>.
           </p>
           <p>
-            Continuous, overlapping tooth contact provides whisper-quiet motion, high positional accuracy, and mirror-clean plasma edge finishes.
+            Continuous overlapping tooth contact keeps motion quiet, accurate, and smooth enough for clean plasma edges.
           </p>
           <div style="margin-top: 0.75rem;">
             <a href="https://www.youtube.com/shorts/SxPffLVxEtA" target="_blank" rel="noopener noreferrer" class="mono" style="color: var(--plasma-amber); text-decoration: none; display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.825rem;">▶ Watch A &amp; X Axis Helical Drive in Action (Short) ↗</a>
@@ -1804,7 +1804,7 @@
         <div class="section-num">Section 06</div>
         <h2 class="section-title">Torch Lifter, Dual IHS &amp; Safety Systems</h2>
         <p class="section-desc">
-          Zero-deflection ohmic sensing, mechanical floating head backup, and high-speed corner anti-dive locking.
+          Zero-flex ohmic sensing, mechanical floating-head backup, and fast corner anti-dive locking.
         </p>
       </div>
 
@@ -1813,7 +1813,7 @@
           <span class="card-badge cyan mono">PRIMARY IHS</span>
           <h3>FastCutCNC Ohmic Sensing</h3>
           <p>
-            A dedicated <a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC ohmic sensing isolator box ↗</a> couples directly to the Hypertherm shield cap. It detects plate continuity with zero downward force, preventing thin-wall tube deflection during pierce referencing.
+            A <a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC ohmic sensing isolator box ↗</a> connects straight to your Hypertherm shield cap. It finds the tube surface with zero downward pressure, so thin-wall stock never flexes during touch-offs.
           </p>
         </div>
 
@@ -1821,7 +1821,7 @@
           <span class="card-badge mono">BACKUP IHS</span>
           <h3>Floating Head Microswitch</h3>
           <p>
-            A mechanical floating head slider sits behind the torch mount. If heavy mill scale, rust, or oil blocks ohmic continuity, the switch triggers instantly as a mechanical fail-safe before the Z servo stalls.
+            A mechanical floating head slider sits behind your torch mount. If heavy mill scale, rust, or oil blocks ohmic contact, the switch trips before the Z servo stalls.
           </p>
         </div>
 
@@ -1829,10 +1829,10 @@
           <span class="card-badge amber mono">TORCH LIFTER &amp; BREAKAWAY</span>
           <h3>Karvecut MAGFLO-PRO-A Lifter</h3>
           <p>
-            The torch carriage mounts to an industrial <a href="https://karvecutcnc.com/products/copy-of-magflo-pro-a-series-cnc-plasma-lifter-torch-protection-system" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Karvecut MAGFLO-PRO-A CNC plasma lifter ↗</a> with magnetic breakaway protection.
+            Your torch rides on a <a href="https://karvecutcnc.com/products/copy-of-magflo-pro-a-series-cnc-plasma-lifter-torch-protection-system" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">Karvecut MAGFLO-PRO-A CNC plasma lifter ↗</a> with magnetic breakaway protection.
           </p>
           <p>
-            Neodymium magnets hold the carrier. If a severed tube slug tips up, the torch snaps off cleanly without bending the barrel and instantly trips the IP-M emergency stop.
+            Neodymium magnets hold the carrier square. If a cut slug tips up, the torch pops free without bending the barrel and trips your IP-M E-stop.
           </p>
         </div>
       </div>
@@ -1845,7 +1845,7 @@
           </div>
           <h3 style="font-size: 1.28rem; color: #fff; margin-bottom: 0.4rem;">Want this 10,000 Hz Hardware THC on your CNC plasma table?</h3>
           <p style="color: var(--text-muted); font-size: 0.91rem; line-height: 1.58; margin: 0;">
-            Hardware v2 packages the DSP core into a compact <strong>82.5 &times; 89.8 mm 4-layer isolated board</strong>: 15&times; Molex Mini-Fit Jr. connectors, <strong>2.0 ms ohmic tip-up escape</strong>, macro-free XY(A) corner freeze, 4-axis tube cam feedforward, passive Powermax SYNC snooping, and a 20 KB flight recorder. It is compatible with any 5V RS-422 Step/Dir controller and stepper or ClearPath Z axis.
+            Hardware v2 packs the entire DSP core onto an <strong>82.5 &times; 89.8 mm 4-layer isolated board</strong> with 15&times; Molex Mini-Fit Jr. plugs, <strong>2.0 ms ohmic tip-up escape</strong>, macro-free XY(A) corner freeze, 4-axis tube cam feedforward, passive Powermax SYNC snooping, and a 20 KB flight recorder. Drop it inline with any 5V RS-422 Step/Dir controller and stepper or ClearPath Z axis.
           </p>
         </div>
         <a href="hardware-thc.html" class="primary-btn" style="padding: 0.8rem 1.35rem; font-size: 0.9rem; white-space: nowrap; text-decoration: none;">
@@ -1881,27 +1881,27 @@
             <span class="card-badge amber mono">AUTONOMOUS DSP • HARDWARE V1</span>
             <h3>Real-Time 10 kHz Step/Dir Interposer THC</h3>
             <p>
-              Most plasma height controls rely on slow relays or lookahead-buffered motion planners with 15–40 ms of latency. This standalone <strong>10 kHz RS-422 Step/Dir interposer</strong> runs on a 170 MHz ARM Cortex-M4F DSP inline between the CSLab IP-M controller and Z ClearPath servo.
+              Software THCs route arc voltage through motion buffers with 15–40 ms of lag. This standalone <strong>10 kHz RS-422 Step/Dir interposer</strong> runs on a 170 MHz ARM Cortex-M4F DSP right between your CSLab IP-M controller and Z ClearPath servo.
             </p>
             <p>
-              Rapids, touch-offs, and pierce lifts pass straight through. Once arc transfer confirms (<code>THC_ENA</code> asserts), the DSP blends real-time voltage corrections directly into the step stream.
+              Rapids, touch-offs, and pierce lifts pass straight through. Once arc transfer confirms (<code>THC_ENA</code> goes active), the DSP adds live voltage corrections directly into the step stream.
             </p>
             <div class="callout-box" style="margin: 1rem 0;">
               <div class="callout-title">
                 <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                Cut Quality &amp; Process Reliability Benefits
+                What That Means on Your Table
               </div>
               <p style="margin-bottom: 0.5rem;">
-                <strong>&plusmn;0.25V (~120 &mu;m) Standoff:</strong> Holds torch height within fractions of a millimeter across 20 feet for weld-ready, square kerf walls.
+                <strong>&plusmn;0.25V (~120 &mu;m) Standoff:</strong> Keeps torch height locked across 20 feet for square, weld-ready kerfs.
               </p>
               <p style="margin-bottom: 0.5rem;">
-                <strong>Dross &amp; Double-Arc Prevention:</strong> Stops torch climbing (which flares the arc and leaves dross) and torch diving (which destroys nozzles).
+                <strong>Dross &amp; Double-Arc Prevention:</strong> Stops torch climb (heavy dross) and torch dive (ruined nozzles).
               </p>
               <p style="margin-bottom: 0.5rem;">
-                <strong>Predictive dV/dt Anti-Dive:</strong> Freezes Z in milliseconds when crossing voids or prior kerfs, preventing torch crashes.
+                <strong>Predictive dV/dt Anti-Dive:</strong> Freezes Z in milliseconds over voids or prior kerfs so your torch stays clear.
               </p>
               <p>
-                <strong>Post-Cut Offset Unwinding:</strong> Counts every THC microstep injected during the cut (while physical Z tracks independently of the CNC DRO) and unwinds that offset back to host Z at cut end.
+                <strong>Auto Offset Unwind:</strong> Counts every injected Z step mid-cut and unwinds that offset back to host Z at cut end.
               </p>
             </div>
             <div class="pcb-specs-grid">
@@ -1940,7 +1940,7 @@
             <span class="card-badge amber mono">DSP ARCHITECTURE &amp; FLIGHT TELEMETRY</span>
             <h3 style="font-size: 1.65rem; margin-top: 0.5rem; color: #fff;">10 kHz Real-Time Step/Dir Interposer Deep-Dive</h3>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem; max-width: 840px;">
-              Most motion controllers route arc voltage through an Ethernet/USB buffer with 15–40 ms of lookahead lag, forcing detuned loop gains to prevent torch oscillation. That causes sluggish tracking on warped sheet and dives at kerf crossings. Direct hardware Step/Dir interposing runs at 10 kHz with &gt;80° phase margin.
+              PC and Ethernet motion buffers add 15–40 ms of lag, forcing soft gains to stop torch bounce. That lag makes your torch wander on warped steel and dive at kerf crossings. Direct hardware Step/Dir interposing runs at 10 kHz with &gt;80° phase margin.
             </p>
           </div>
           <div class="mono" style="font-size: 0.8rem; color: var(--plasma-amber); background: rgba(245, 158, 11, 0.08); padding: 0.5rem 0.9rem; border-radius: 6px; border: 1px solid rgba(245, 158, 11, 0.25);">
@@ -1955,7 +1955,7 @@
             Three Operating Modes: HYBRID_SAV, PURE_SAV &amp; PRESET
           </h4>
           <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
-            Fixed book-voltage THCs (<code>PRESET</code>) fail as electrodes wear (+5V to +10V drift causes plate crashes). Pure sample-voltage (<code>PURE_SAV</code>) solves wear, but locks in bogus 165V+ standoffs if warped plate springs back after touch-off. The firmware supports three modes, with <strong>HYBRID_SAV</strong> as default:
+            Fixed cut-chart volts (<code>PRESET</code>) crash your torch as electrodes pit (+5V to +10V drift). Plain sample-voltage (<code>PURE_SAV</code>) handles wear, yet locks onto bogus 165V+ heights if thin sheet springs up after touch-off. Firmware supports three modes, with <strong>HYBRID_SAV</strong> as default:
           </p>
 
           <!-- Mode 1: HYBRID_SAV (Featured Default) -->
@@ -1966,25 +1966,25 @@
             </div>
             <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem;">1. HYBRID_SAV (Default: EWMV Plateau Lock + Cut-Chart Sanity Window)</h3>
             <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 1rem;">
-              Reads live arc voltage on ADC and the CNC's cut-chart preset on ADC2 (from simCNC / <code>m3.py</code>). Driven by a statistical EWMV plateau engine, it combines the speed of sample-voltage with cut-chart safety bounds:
+              Reads live arc volts on ADC and your cut-chart target on ADC2 (from simCNC / <code>m3.py</code>). You get fast sample-voltage tracking inside safe cut-chart bounds:
             </p>
             <div class="grid-3" style="gap: 1rem;">
               <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
                 <div class="mono" style="color: var(--plasma-cyan); font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem;">Statistical EWMV Plateau Lock</div>
                 <p style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0;">
-                  <strong>12–78 ms (41.5 ms mean):</strong> Instead of a fixed 150–500 ms delay timer after pierce, HYBRID_SAV computes real-time arc voltage variance at 10 kHz. Once the column stabilizes (&sigma;&sup2; &le; threshold for 10.0 ms), it locks target voltage in as little as 12 ms, tracking within 0.13" (3.3 mm) of reaching full XY cut speed.
+                  <strong>12–78 ms (41.5 ms mean):</strong> Skips fixed 150–500 ms pierce delays. It checks arc stability at 10 kHz (&sigma;&sup2; &le; threshold for 10.0 ms) and locks voltage within 0.13" (3.3 mm) of full XY speed.
                 </p>
               </div>
               <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
                 <div class="mono" style="color: var(--plasma-amber); font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem;">Asymmetric Cut-Chart Clamping</div>
                 <p style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0;">
-                  <strong>[-7.0 V, +15.0 V]:</strong> If the measured plateau falls within [Preset - 7.0 V, Preset + 15.0 V], it locks measured voltage (compensating for wear, lead drop, and FineCut drag). If warped metal causes an out-of-bounds start (e.g., 165 V), it clamps to the window boundary and drives the torch to proper cut height without freezing the axis.
+                  <strong>[-7.0 V, +15.0 V]:</strong> Lets normal electrode wear and FineCut drag float inside [Preset - 7.0 V, Preset + 15.0 V]. If warped steel pops up at 165 V, it clamps to the window and pulls your torch down to cut height.
                 </p>
               </div>
               <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--surface-border); border-radius: 6px; padding: 1.15rem;">
                 <div class="mono" style="color: #94a3b8; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.35rem;">Automatic PURE_SAV Fallback</div>
                 <p style="font-size: 0.825rem; line-height: 1.5; color: var(--text-muted); margin-bottom: 0;">
-                  <strong>ADC2 &lt; 55 V Auto-Detect:</strong> If no valid ADC2 preset is present (ADC2 &lt; 55 V after an E-stop or on controllers without analog output), HYBRID_SAV falls back to PURE_SAV ([55 V .. 200 V] global bounds) automatically.
+                  <strong>ADC2 &lt; 55 V Auto-Detect:</strong> If your CNC sends no analog target (ADC2 &lt; 55 V after an E-stop or on simple cabinets), it switches to PURE_SAV ([55 V .. 200 V]) on the fly.
                 </p>
               </div>
             </div>
@@ -1996,14 +1996,14 @@
               <span class="card-badge cyan mono">MODE 2 • AUTONOMOUS RETROFIT</span>
               <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.5rem;">2. PURE_SAV (Autonomous EWMV Plateau Lock)</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Uses the 10 kHz EWMV statistical detector to lock post-pierce arc voltage in &lt; 45 ms mean within global [55 V .. 200 V] bounds, ignoring ADC2 entirely. Ideal for standalone retrofits without CNC analog setpoints.
+                Locks post-pierce voltage in &lt; 45 ms mean inside [55 V .. 200 V] and ignores ADC2. Great for standalone tables with no CNC analog output.
               </p>
             </div>
             <div class="doc-card">
               <span class="card-badge mono">MODE 3 • DIRECT CNC TRACKING</span>
               <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.5rem;">3. PRESET (Direct Cut-Chart Tracking)</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Bypasses sampling and tracks directly to the live ADC2 analog setpoint from the CNC controller. Best for dialed-in book-spec cuts with fresh consumables.
+                Skips sampling and holds the live ADC2 target from your CNC. Best for dialed-in book specs with fresh consumables.
               </p>
             </div>
           </div>
@@ -2013,10 +2013,10 @@
         <div style="margin-bottom: 2.5rem;">
           <h4 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
             <span class="mono" style="color: var(--plasma-amber); font-size: 0.95rem;">02.</span>
-            Deterministic DSP Control Loop Innovations
+            Inside the 10 kHz Control Loop
           </h4>
           <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
-            Running at 10 kHz (100 µs cycle time) on a hardware interrupt, the firmware integrates four physical filters built for rotary kinematics:
+            Every 100 µs (10 kHz), the board runs four filters tuned for spinning tube and warped sheet:
           </p>
 
           <div class="grid-2">
@@ -2024,7 +2024,7 @@
               <span class="card-badge cyan mono">SIGNAL CONDITIONING</span>
               <h3>4th-Order Bessel Low-Pass Filter (1 kHz)</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Sampled at Fs = 10 kHz with fc = 1 kHz. Flat group delay (0.33 ms) strips 20–100 kHz inverter switching noise without phase distortion or ringing.
+                Runs at Fs = 10 kHz with fc = 1 kHz and 0.33 ms group delay. Strips 20–100 kHz inverter noise with zero ringing.
               </p>
             </div>
 
@@ -2032,10 +2032,10 @@
               <span class="card-badge amber mono">SERVO ADAPTATION</span>
               <h3>Asymmetric Adaptive Gain &amp; Upward Fast-Bleed Integrator</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0.5rem;">
-                Inside fine regulation (|error| &le; 1.5 V), baseline gain of 3.06 mm/s/V keeps the torch calm on flat plate; scales smoothly to 6.80 mm/s/V with an upward-only leaky integrator on steep slopes.
+                Inside |error| &le; 1.5 V, gentle 3.06 mm/s/V gain keeps your torch calm on flat steel. On steep climbs, gain ramps to 6.80 mm/s/V with an upward-only leaky integrator.
               </p>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Eliminates uphill lag (&lt; 0.4 V steady-state lag on a 1.12" ramp) and fast-drains in &lt; 3 ms (&tau; = 0.64 ms) at crests. Downward tracking uses pure proportional control: zero downward windup, zero diving into voids.
+                You get &lt; 0.4 V lag on a 1.12" ramp and &lt; 3 ms drain (&tau; = 0.64 ms) at crests. Downward moves stay pure proportional so your torch never winds up and dives into voids.
               </p>
             </div>
 
@@ -2043,7 +2043,7 @@
               <span class="card-badge cyan mono">COLLISION PREVENTION</span>
               <h3>Motion-Compensated Kerf Anti-Dive (dV/dt Observer)</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Evaluates voltage rate-of-change over a 3.0 ms rolling window while subtracting voltage rise from the torch's own upward steps. Crossing a prior kerf freezes downward motion in 100 µs while permitting upward retraction.
+                Tracks voltage rise over a 3.0 ms window while subtracting your torch's own upward Z steps. When you cross a kerf, downward steps freeze in 100 µs while upward lift stays open.
               </p>
             </div>
 
@@ -2051,7 +2051,7 @@
               <span class="card-badge mono">POSITION INTEGRITY</span>
               <h3>3rd-Order S-Curve Profiler &amp; Baseline Return</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Enforces machine velocity, acceleration, and jerk limits in hardware on tracking and return. While physical Z moves independently of the CNC DRO during active tracking, the board unwinds its injected step offset back to host Z at cut end.
+                Enforces your Z velocity, acceleration, and jerk caps in hardware. When the cut finishes, it unwinds injected THC steps back to zero so your CNC DRO stays exact.
               </p>
             </div>
           </div>
@@ -2208,7 +2208,7 @@
             Direct Workpiece Grounding, Galvanic Isolation &amp; Field Shielding Strategy
           </h4>
           <p style="color: var(--text-muted); font-size: 0.925rem; line-height: 1.6; margin-bottom: 1.25rem;">
-            Plasma cutting generates intense EMI and 20–100A+ return currents. Letting return current flow through linear rails or bearings causes raceway micro-arcing and encoder noise. Dedicated galvanic separation isolates the machine:
+            Plasma cutting dumps heavy EMI and 20–100A+ return currents into your table. Letting return current travel through linear rails or bearings pits raceways and scrambles encoder lines. Dedicated galvanic isolation protects your hardware:
           </p>
 
           <div class="grid-3" style="gap: 1.25rem;">
@@ -2216,7 +2216,7 @@
               <span class="card-badge amber mono">CHASSIS ISOLATION</span>
               <h3>FR-4 Galvanic Isolation Washers</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Both front XSU080318 slewing ring and rear ZCT200 actuator are <strong>electrically isolated from the steel frame</strong>. Machined FR-4 composite washers and blind insulated nuts decouple chuck mounts, keeping 100% of arc return off rails and bearings.
+                Both your front XSU080318 slewing ring and rear ZCT200 actuator are <strong>electrically isolated from the steel frame</strong>. Machined FR-4 washers and blind insulated nuts decouple both chucks so 100% of arc return stays off rails and bearings.
               </p>
             </div>
 
@@ -2224,7 +2224,7 @@
               <span class="card-badge amber mono">ROTARY RETURN PATH</span>
               <h3>Spring-Mounted 4/0 AWG Ground Contact</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                Because 20-foot pipe rotates continuously at up to 100 RPM, standard clamped ground leads would wrap and rip off. A spring-mounted <strong>4/0 AWG (0000) grounding wire contact</strong> rides the rear of the ZCT200 actuator, providing a low-resistance path straight to the work lead.
+                Because 20-foot pipe spins continuously at up to 100 RPM, a standard ground clamp would twist and snap off. A spring-loaded <strong>4/0 AWG (0000) copper contact</strong> rides the rear of your ZCT200 actuator, routing return current straight to the work lead.
               </p>
             </div>
 
@@ -2232,7 +2232,7 @@
               <span class="card-badge cyan mono">100% DOUBLE-SHIELDED</span>
               <h3>Double-Shielded Field Cabling Everywhere</h3>
               <p style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 0;">
-                <strong>Every wire outside the control box is double-shielded</strong> (braided copper mesh + foil with drain wire) across ClearPath DC bus, step/dir, limit switches, ohmic lines, and THC signals. All shields drain exclusively to the cabinet copper star ground bar.
+                <strong>Every wire outside your control box is double-shielded</strong> (braided copper mesh + foil with drain wire), covering ClearPath DC power, step/dir, limit switches, ohmic lines, and THC signals. Drain all shields to one central copper star ground bar inside your cabinet.
               </p>
             </div>
           </div>
@@ -2246,7 +2246,7 @@
         <div class="section-num">Section 07</div>
         <h2 class="section-title">Custom Machined Aluminum Components &amp; JLCPCB Package</h2>
         <p class="section-desc">
-          All custom 6061-T6 aluminum mounting plates, bearing adapters, and gear tensioners were machined via JLCPCB's online CNC machining service. Order-ready production files below.
+          Upload the 6061-T6 aluminum mount plates, bearing adapters, and tensioners straight to JLCPCB's CNC quoting portal.
         </p>
       </div>
 
@@ -2256,15 +2256,15 @@
             <span class="card-badge amber mono">PRODUCTION READY • JLCPCB CNC MACHINING BUNDLE</span>
             <h3 style="font-size: 1.4rem; margin-top: 0.5rem;">Complete Machine Shop Package (V1.zip)</h3>
             <p style="color: var(--text); font-size: 0.95rem; margin-top: 0.5rem;">
-              Contains all 39 manufacturing files ordered from JLCPCB: individual solid STEP models, dimensioned drawing PDFs, and BOM counts ready for instant online quoting.
+              Includes all 39 STEP models, dimensioned PDF drawings, and part counts you need to order every machined plate online:
             </p>
             <ul style="color: var(--text-muted); font-size: 0.88rem; margin: 1rem 0 1.25rem 1.25rem; line-height: 1.6;">
-              <li><strong>Front Headstock Frame Assembly:</strong> <code>rotary-front-mount-1x</code>, <code>rotary-front-left-right-2x</code>, <code>rotary-front-top-bottom-outer-2x</code>, <code>rotary-front-inner-mount-4x</code>.</li>
-              <li><strong>Slew Ring Adapter Flange:</strong> <code>rotary-front-gear.step</code> and bearing mount flange for the XSU080318 slewing ring.</li>
-              <li><strong>Bed Rail Supports &amp; Mounts:</strong> <code>rotary-beam-support-4x</code>, <code>rotary-beam-support-4x-mount</code>, and <code>rotary-beam-slim-mount</code>.</li>
-              <li><strong>Helical Rack Tensioner &amp; Pivot:</strong> Spring-loaded cam pivot blocks for smooth helical pinion engagement.</li>
-              <li><strong>Roller Supports &amp; Drawings:</strong> <code>roller-mount.step</code> and dimensioned PDF <code>rotary-front Drawing v2.pdf</code>.</li>
-              <li><strong>Protective Chuck Enclosures:</strong> Machined 6061 chuck covers (<code>cover-1x</code>, <code>top</code>, <code>bottom</code>, <code>back</code>, <code>leftright</code> plates).</li>
+              <li><strong>Front Headstock Frame:</strong> <code>rotary-front-mount-1x</code>, <code>rotary-front-left-right-2x</code>, <code>rotary-front-top-bottom-outer-2x</code>, <code>rotary-front-inner-mount-4x</code>.</li>
+              <li><strong>Slew Ring Flange:</strong> <code>rotary-front-gear.step</code> and mount flange for the XSU080318 bearing.</li>
+              <li><strong>Bed Rail Mounts:</strong> <code>rotary-beam-support-4x</code>, <code>rotary-beam-support-4x-mount</code>, and <code>rotary-beam-slim-mount</code>.</li>
+              <li><strong>Rack Tensioner &amp; Pivot:</strong> Spring-loaded cam blocks that keep your helical pinion tight in mesh.</li>
+              <li><strong>Roller Supports &amp; Drawings:</strong> <code>roller-mount.step</code> and PDF drawing <code>rotary-front Drawing v2.pdf</code>.</li>
+              <li><strong>Chuck Covers:</strong> Machined 6061 shields (<code>cover-1x</code>, <code>top</code>, <code>bottom</code>, <code>back</code>, <code>leftright</code> plates).</li>
             </ul>
           </div>
           <div>
@@ -2286,21 +2286,21 @@
           <span class="card-badge mono">JLCPCB PART: ADAPTER</span>
           <h3>Slew Ring Adapter Flange</h3>
           <p>
-            Precision 6061-T6 aluminum flange mounting the XSU080318 crossed roller slewing ring to the front uprights with labyrinth O-ring seals to lock out slag and dross.
+            Bolts your XSU080318 slewing ring to the front uprights with O-ring labyrinth seals that keep slag out.
           </p>
         </div>
         <div class="doc-card">
           <span class="card-badge mono">JLCPCB PART: TENSION-MOUNT</span>
           <h3>Spring-Loaded Pinion Pivots</h3>
           <p>
-            Cam-adjusted pivot brackets with calibrated pre-load springs maintain firm helical rack-and-pinion mesh without binding across temperature swings.
+            Cam pivot arms and die springs hold firm helical rack mesh across shop temperature swings without binding.
           </p>
         </div>
         <div class="doc-card">
           <span class="card-badge mono">JLCPCB PART: ROLLER-MOUNT</span>
           <h3>Z-Axis &amp; Roller Carrier Plates</h3>
           <p>
-            Pocketed 6061-T6 carrier plates integrating linear guide blocks, ballscrew nut, floating microswitch, and magnetic breakaway sockets into one rigid assembly.
+            Pocketed 6061-T6 plates tie your linear blocks, ballscrew nut, backup switch, and magnetic breakaway together.
           </p>
         </div>
       </div>
@@ -2786,7 +2786,7 @@
         <div class="section-num">Section 10</div>
         <h2 class="section-title">Frequently Asked Questions</h2>
         <p class="section-desc">
-          Direct answers on servo selection, ohmic sensing, bed scaling, and parts sourcing.
+          Direct answers on servos, ohmic sensing, shorter beds, and parts sourcing.
         </p>
       </div>
 
@@ -2795,13 +2795,13 @@
           <span class="card-badge amber mono">MOTORS &amp; DRIVES</span>
           <h3>Do I have to use Teknic ClearPath servos, or will steppers work?</h3>
           <p>
-            <strong>No, but closed-loop servos are strongly recommended.</strong>
+            <strong>No, though closed-loop servos make a huge difference.</strong>
           </p>
           <p>
-            Closed-loop NEMA 34 steppers work on tight budgets. However, rotating a 20-foot (6-meter) steel tube carries high rotational inertia; standard steppers lose torque at higher speeds (up to 36,000°/min) and can stall on heavy wall pipe.
+            Closed-loop NEMA 34 steppers work if you are on a tight budget. Just keep in mind a 20-foot (6-meter) steel stick carries heavy rotational inertia; standard steppers lose torque at high RPM (up to 36,000°/min) and can stall on thick-wall pipe.
           </p>
           <p>
-            Dual ClearPath servos maintain flat peak torque across their entire speed range and lock both chucks in hardware synchronization, completely eliminating tube twist on thin-wall stock.
+            Dual ClearPath servos hold flat torque across their full speed range and keep both chucks locked together, stopping tube twist on thin-wall stock.
           </p>
         </div>
 
@@ -2809,13 +2809,13 @@
           <span class="card-badge cyan mono">TORCH SENSING</span>
           <h3>Is the FastCutCNC ohmic box &amp; Hypertherm interface mandatory?</h3>
           <p>
-            <strong>Not mandatory, but it eliminates days of wiring and troubleshooting.</strong>
+            <strong>No, but it saves you days of wiring and debugging.</strong>
           </p>
           <p>
-            You can build a relay isolator or rely solely on a mechanical floating head switch. However, plasma arcs generate violent electrical spikes that can destroy 5V/24V controller inputs.
+            You can wire your own relay isolator or run solely off a mechanical floating head switch. Just remember plasma arcs fire nasty voltage spikes that can fry 5V/24V controller inputs.
           </p>
           <p>
-            The <a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC ohmic box ↗</a> provides optical isolation and plugs straight into the Hypertherm machine interface cable for clean arc transfer, arc voltage division, and reliable touch-offs.
+            The <a href="http://fastcutcnc.com/" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">FastCutCNC ohmic box ↗</a> adds optical isolation and plugs straight into your Hypertherm machine port for clean arc transfer, voltage division, and repeatable touch-offs.
           </p>
         </div>
 
@@ -2823,13 +2823,13 @@
           <span class="card-badge mono">PARTS SOURCING</span>
           <h3>Where do the custom aluminum mounts and brackets come from?</h3>
           <p>
-            <strong>Direct order from JLCPCB CNC machining.</strong>
+            <strong>Order them straight from JLCPCB CNC machining.</strong>
           </p>
           <p>
-            All custom 6061-T6 aluminum plates were uploaded to JLCPCB's online CNC portal with no manual milling needed.
+            Every 6061-T6 aluminum plate was ordered through JLCPCB's online CNC portal with zero manual milling.
           </p>
           <p>
-            Download the <a href="assets/V1.zip" download style="color: var(--plasma-amber); font-weight: 600;">JLCPCB Machining Package (V1.zip)</a> above for 1-click quoting (STEP files, drawings, and BOM counts). The <a href="https://www.aliexpress.com/item/1005008398317265.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">ZCT200 10:1 actuator ↗</a> and <a href="https://www.aliexpress.com/item/1005006498334475.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">XSU080318 slewing ring ↗</a> were ordered on AliExpress.
+            Grab the <a href="assets/V1.zip" download style="color: var(--plasma-amber); font-weight: 600;">JLCPCB Machining Package (V1.zip)</a> above for 1-click quoting (STEP files, drawings, and BOM counts). The <a href="https://www.aliexpress.com/item/1005008398317265.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">ZCT200 10:1 actuator ↗</a> and <a href="https://www.aliexpress.com/item/1005006498334475.html" target="_blank" rel="noopener noreferrer" style="color: var(--plasma-amber); text-decoration: underline;">XSU080318 slewing ring ↗</a> came from AliExpress.
           </p>
         </div>
 
@@ -2837,13 +2837,13 @@
           <span class="card-badge mono">BED SIZING</span>
           <h3>Can I build this with a shorter bed length (e.g. 10ft / 3m instead of 6m)?</h3>
           <p>
-            <strong>Yes, the design scales linearly.</strong>
+            <strong>Yes, scale the bed length straight down.</strong>
           </p>
           <p>
-            If you don't cut full 20ft mill sticks, shorten the 5" × 3" × 1/4" HSS spine, HGH25 rails, and helical rack to 10 or 12 feet.
+            If you do not cut full 20ft mill sticks, cut your 5" × 3" × 1/4" HSS spine, HGH25 rails, and helical rack to 10 or 12 feet.
           </p>
           <p>
-            All headstock mounts, chuck adapters, servo brackets, cross-slide carriages, and Z-axis torch lifters remain 100% identical.
+            Every headstock mount, chuck plate, servo bracket, cross-slide carriage, and Z-axis lifter stays 100% identical.
           </p>
         </div>
       </div>
@@ -2855,7 +2855,7 @@
         <div class="section-num">Section 11</div>
         <h2 class="section-title">Build Learnings &amp; What I'll Change in v2</h2>
         <p class="section-desc">
-          What works great in v1, and the key changes planned for v2 after thousands of production cuts on 20-foot sticks.
+          What held up in v1 and what I would change for v2 after thousands of production cuts on 20-foot sticks.
         </p>
       </div>
 
@@ -2868,13 +2868,13 @@
           Critical Architecture Note: Heavily Modified SimCNC &amp; Hypertherm RS485 Interface
         </div>
         <p style="color: var(--text); font-size: 0.92rem; line-height: 1.6; margin-bottom: 0.75rem;">
-          Stock CNC software and generic plasma setups struggle with rotary tube cutting. Two controller modifications were critical for square cuts and process reliability:
+          Off-the-shelf CNC profiles struggle with rotary tube cutting. Two controller upgrades made the biggest difference for square cuts and reliable runs:
         </p>
         <p style="color: var(--text); font-size: 0.92rem; line-height: 1.6; margin-bottom: 0.75rem;">
-          <strong>1. Customized SimCNC Environment:</strong> Standard SimCNC lacks 4D rotary kinematic blending. Custom Python screen scripts and real-time interlocks handle coordinate transforms, stock offsets, and 4D trajectory feedrate scaling.
+          <strong>1. Customized SimCNC Environment:</strong> Stock SimCNC cannot blend 4D rotary kinematics. Custom Python screen scripts and interlocks handle coordinate transforms, stock offsets, and 4D feedrate scaling.
         </p>
         <p style="color: var(--text); font-size: 0.92rem; line-height: 1.6; margin-bottom: 0;">
-          <strong>2. Hypertherm RS485 Serial Interface:</strong> Rather than relying solely on analog 50:1 divided arc voltage and dry relays, RS485 serial communication links the plasma power supply directly to the CNC. This enables automated cut-chart amperage selection, real-time gas pressure monitoring, consumable wear tracking, and instant diagnostic reporting on the console.
+          <strong>2. Hypertherm RS485 Serial Interface:</strong> Instead of relying only on 50:1 analog voltage and dry relays, RS485 serial links your plasma unit straight to the CNC. Your console sets cut-chart amps automatically and reads live gas pressure, consumable wear, and fault codes.
         </p>
       </div>
 
@@ -2883,13 +2883,13 @@
           <span class="card-badge amber mono">MACHINE FOOTPRINT</span>
           <h3>Moving-Cutter X-Axis vs. Moving-Stock Feed</h3>
           <p>
-            <strong>v2 moves the cutter along the tube, not the tube through the cutter.</strong>
+            <strong>v2 moves the torch along the tube, not the tube under the torch.</strong>
           </p>
           <p>
-            In v1, the torch is stationary while the 20-foot stick feeds along the bed. Cutting features near the tail requires ~20 feet of tube stick-out beyond the frame, demanding a <strong>40-foot (12-meter)</strong> shop footprint.
+            In v1, the torch stays fixed while the 20-foot stick slides along the bed. Cutting near the tail pushes ~20 feet of steel past the end of the frame, eating a <strong>40-foot (12-meter)</strong> shop bay.
           </p>
           <p>
-            Moving the cutter along a stationary rotating stick caps the total shop footprint strictly to <strong>20 feet (6 meters)</strong>.
+            Moving the torch gantry over a stationary spinning stick locks your shop footprint to <strong>20 feet (6 meters)</strong>.
           </p>
         </div>
 
@@ -2897,13 +2897,13 @@
           <span class="card-badge cyan mono">SHOP ENVIRONMENT &amp; SMOKE CONTROL</span>
           <h3>Internal Water Quenching vs. Air Exhaust Blowers</h3>
           <p>
-            <strong>Stationary stock enables internal water flushing to keep the shop clean.</strong>
+            <strong>Stationary stock lets you flush water straight through the tube.</strong>
           </p>
           <p>
-            Capturing smoke and dross from a sliding 20-foot tube requires massive exhaust hoods and high-power blowers.
+            Catching smoke and dross off a sliding 20-foot stick takes huge exhaust hoods and noisy blowers.
           </p>
           <p>
-            With stationary rotating stock, a rotary water union on the rear spindle feeds water through the tube during cuts. Water instantly quenches sparks, traps smoke at the cut, cools the steel to prevent heat warp, and flushes dross into a settling tank without blowers or dirty shop air.
+            When the stick stays in place, a rotary water union on the rear chuck pumps water down the bore mid-cut. Water quenches sparks on contact, traps smoke at the kerf, keeps the steel cool against warp, and washes dross straight into a settling tank.
           </p>
         </div>
 
@@ -2911,13 +2911,13 @@
           <span class="card-badge mono">5-AXIS / 6-AXIS BEVEL HEAD</span>
           <h3>6-Axis Rotary Kinematics (XYZABC Articulated Torch)</h3>
           <p>
-            <strong>Adding torch roll and tilt for true weld-prep bevels.</strong>
+            <strong>Add torch roll and tilt for weld-prep bevels.</strong>
           </p>
           <p>
-            Perpendicular 4-axis cuts handle copes, holes, and saddle joints cleanly, but heavy-wall structural and roll-cage tube require 30° to 45° bevels for 100% weld penetration.
+            Perpendicular 4-axis cuts handle copes, holes, and saddles cleanly. Still, heavy-wall structural and roll-cage tube need 30° to 45° bevels for full weld penetration.
           </p>
           <p>
-            v2 targets a <strong>6-axis CNC rotary (XYZABC)</strong> with a compact 2-axis motorized tilting wrist (B/C axes) on the torch lifter to cut weld-ready chamfers, countersunk holes, and intersecting copes with zero grinder beveling.
+            v2 targets a <strong>6-axis CNC rotary (XYZABC)</strong> using a compact 2-axis tilting wrist (B/C axes) on the lifter. Cut weld-ready chamfers, countersunk holes, and beveled copes with zero hand grinding.
           </p>
         </div>
 
@@ -2925,13 +2925,13 @@
           <span class="card-badge mono">YIELD OPTIMIZATION (v1.1 RETROFIT)</span>
           <h3>Front Chuck Holding Extension (Saving 50 cm Scrap Drop)</h3>
           <p>
-            <strong>Eliminating the final 50 cm of scrap with a pass-through mandrel.</strong>
+            <strong>Save the final 50 cm of scrap with a pass-through mandrel.</strong>
           </p>
           <p>
-            In v1, the rear chuck cannot pass through the front slewing ring, leaving <strong>~50 cm (~20 inches) of tube</strong> unsupported at the end of every stick.
+            In v1, the rear chuck stops short of the front slewing ring, leaving <strong>~50 cm (~20 inches) of tube</strong> unusable at the tail of every stick.
           </p>
           <p>
-            A <strong>v1.1 retrofit</strong> will introduce a pass-through holding extension / mandrel through the front chuck, supporting stock all the way through the headstock to cut right down to the final centimeters.
+            A <strong>v1.1 retrofit</strong> adds a pass-through holding extension through the front chuck so you can support and cut right down to the last few centimeters.
           </p>
         </div>
 
@@ -2939,13 +2939,13 @@
           <span class="card-badge amber mono">CHASSIS FABRICATION LABOR</span>
           <h3>Drilling &amp; Tapping ~500 Holes in a 20-Foot Steel Spine: What I’d Do Differently</h3>
           <p>
-            <strong>Drilling and tapping ~500 blind M6 holes into 1/4" steel by hand was grueling.</strong>
+            <strong>Hand-drilling and tapping ~500 blind M6 holes into 1/4" steel was brutal.</strong>
           </p>
           <p>
-            The continuous 5" × 3" × 1/4" HSS spine delivers unbeatable rigidity and vibration damping. But mounting 6 meters of HGH25 linear rails (spaced every 60 mm) and Module 1.5 helical gear racks required hundreds of precision tapped holes. Even with magnetic drill guides and spiral-point machine taps, keeping centerlines straight across 20 feet of steel was exhausting.
+            The 5" × 3" × 1/4" HSS spine is rock-solid and dead quiet. Even so, mounting 6 meters of HGH25 rails (every 60 mm) and Module 1.5 helical rack meant hundreds of blind tapped holes. Even with a mag drill and spiral-point taps, keeping centerlines dead straight across 20 feet wore me out.
           </p>
           <p style="margin-bottom: 0;">
-            <strong>What I’d do for v2 (or recommend to builders):</strong> Either build the spine from heavy <strong>80×160 mm structural aluminum extrusion</strong> (rails and racks bolt straight into T-slots with roll-in nuts: zero drilling or tapping), or send the raw steel beam to a machine shop with a long-bed gantry mill to CNC drill, thread-mill, and face reference surfaces in a single setup.
+            <strong>What I’d do next time (and recommend to you):</strong> Build the spine from heavy <strong>80×160 mm aluminum extrusion</strong> so rails and racks bolt right into T-slots with roll-in nuts. Or drop the raw steel beam at a local machine shop with a long-bed gantry mill to drill, thread-mill, and skim the rail pads in one setup.
           </p>
         </div>
       </div>
@@ -2956,7 +2956,7 @@
       <div class="cam-cta-card">
         <h2>The Hardware is Only Half the Battle.</h2>
         <p>
-          You can't cut 3D tube geometry by unrolling flat 2D DXFs in CAD. RotaryCAM turns 3D CAD STEP files directly into machine-ready G-code with zero-bevel saddle compensation, automatic copes, 4D feedrate scaling, and full mill-stick nesting.
+          You cannot cut 3D tube joints by unrolling flat 2D DXFs. Drop your 3D STEP files straight into RotaryCAM for zero-bevel saddle compensation, automatic copes, 4D feedrate scaling, and full 20-foot stick nesting.
         </p>
         <a href="changelog.html#downloads" class="primary-btn">
           <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">

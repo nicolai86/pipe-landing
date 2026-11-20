@@ -629,15 +629,15 @@
 
         <!-- Intro Card -->
         <div class="doc-intro-card">
-          <h2>Why Fusion 360 + Structural Member Is Required Today</h2>
+          <h2>Model Tubes in Fusion 360 Structural Member</h2>
           <p>
-            RotaryCAM automatically inspects 3D CAD solids on STEP import to detect each tube&rsquo;s cross-section family (<code class="mono">Profile_HSS_Rect</code>, <code class="mono">Profile_HSS_Round</code>, <code class="mono">Profile_Angle</code>, <code class="mono">Profile_Channel</code>) along with its outer dimensions and wall thickness.
+            When you drop a STEP file, your tubes are scanned automatically for cross-section family (<code class="mono">Profile_HSS_Rect</code>, <code class="mono">Profile_HSS_Round</code>, <code class="mono">Profile_Angle</code>, <code class="mono">Profile_Channel</code>), outer dimensions, and wall thickness.
           </p>
           <div class="doc-callout warning" style="margin-top: 1rem; margin-bottom: 1.25rem;">
             <span class="doc-callout-icon">⚠️</span>
             <div>
-              <strong>Current Requirement: Autodesk Fusion 360 + Structural Member:</strong>
-              Different CAD programs structure solid models with slightly different internal surface math. Today, RotaryCAM&rsquo;s automatic tube scanner is calibrated specifically for <strong>Autodesk Fusion 360</strong> assemblies built with the <strong>Structural Member (<code class="mono">SM</code>)</strong> tool. Follow the 8 steps below to guarantee 100% automatic tube recognition and sizing.
+              <strong>Use Autodesk Fusion 360 + Structural Member:</strong>
+              Every CAD program writes slightly different surface math. Right now, automatic tube scanning is calibrated for <strong>Autodesk Fusion 360</strong> assemblies built with the <strong>Structural Member (<code class="mono">SM</code>)</strong> tool. Follow these 8 steps so your parts size and nest cleanly on the first load.
             </div>
           </div>
           <div class="doc-intro-grid">
@@ -647,11 +647,11 @@
             </div>
             <div class="doc-intro-stat">
               <span class="label">Bend Unfolding Prep</span>
-              <span class="value"><code class="mono">Modify → Combine</code> Contiguous Tube Bodies</span>
+              <span class="value"><code class="mono">Modify → Combine</code> Connected Tube Bodies</span>
             </div>
             <div class="doc-intro-stat">
-              <span class="label">CAM Ingestion</span>
-              <span class="value">Zero-Click <code class="mono">AI</code> Profile &amp; Pack Grouping</span>
+              <span class="label">Automatic Setup</span>
+              <span class="value">Auto Profile &amp; Pack Grouping</span>
             </div>
           </div>
         </div>
@@ -667,11 +667,11 @@
 
           <div class="doc-step-body">
             <p>
-              Launch <strong>Autodesk Fusion 360</strong> and create or save a new design document (for example, <code class="mono">rotarycam-demo</code>):
+              Launch <strong>Autodesk Fusion 360</strong> and open a new design (such as <code class="mono">rotarycam-demo</code>):
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Verify the Structural Member Toolbar Icons:</strong> In the <strong>DESIGN &rarr; SOLID &rarr; CREATE</strong> ribbon, confirm that the four blue <strong>Structural Member</strong> icons (<span class="ui-chip">SM</span> Structural Member, Miter, Notch, and Trim/Extend) are visible.</li>
-              <li><strong>2. Document Units:</strong> In the left <strong>Browser</strong> tree under <strong>Document Settings</strong>, you can work in millimeters (<code class="mono">mm, g</code>) or inches, while selecting standard imperial or metric tube profiles inside the Structural Member library.</li>
+              <li><strong>1. Check the Structural Member Icons:</strong> In <strong>DESIGN &rarr; SOLID &rarr; CREATE</strong>, verify the four blue <strong>Structural Member</strong> icons (<span class="ui-chip">SM</span> Structural Member, Miter, Notch, and Trim/Extend) are present.</li>
+              <li><strong>2. Set Document Units:</strong> Under <strong>Document Settings</strong> in the left <strong>Browser</strong>, work in millimeters (<code class="mono">mm, g</code>) or inches. You can still pick either imperial or metric tube sizes inside the Structural Member library.</li>
             </ul>
           </div>
 
@@ -700,11 +700,11 @@
 
           <div class="doc-step-body">
             <p>
-              Structural Member bodies are swept along 2D or 3D sketch lines and arcs representing the tube centerline:
+              Pick a plane for your tube centerline sketch:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Click <span class="ui-chip">Create Sketch</span>:</strong> Click the <strong>Create Sketch</strong> icon at the far left of the <strong>SOLID &rarr; CREATE</strong> toolbar.</li>
-              <li><strong>2. Choose an Origin Plane:</strong> Click one of the primary origin planes (<code class="mono">XY</code>, <code class="mono">XZ</code>, or <code class="mono">YZ</code>) in the 3D viewport to enter Sketch mode.</li>
+              <li><strong>1. Click <span class="ui-chip">Create Sketch</span>:</strong> Click <strong>Create Sketch</strong> at the left end of <strong>SOLID &rarr; CREATE</strong>.</li>
+              <li><strong>2. Pick an Origin Plane:</strong> Click <code class="mono">XY</code>, <code class="mono">XZ</code>, or <code class="mono">YZ</code> in the 3D viewport.</li>
             </ul>
           </div>
 
@@ -733,11 +733,11 @@
 
           <div class="doc-step-body">
             <p>
-              Lay out the centerline wireframe for your frame or bent tube assembly:
+              Draw the centerline wireframe for your frame or bent tube:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Draw Straight Segments &amp; Tangent Bend Arcs:</strong> Use <strong>Line</strong> (<code class="mono">L</code>) for straight members and <strong>Fillet</strong> (<code class="mono">F</code>) or tangent arcs where a tube will be bent around a centerline radius. In this example, the vertical line on the left represents a straight square HSS post, and the D-shaped loop with two tangent corner radii represents a bent tube that meets the post.</li>
-              <li><strong>2. Click <span class="ui-chip emerald">✓ Finish Sketch</span>:</strong> Click the green <strong>Finish Sketch</strong> button in the top-right toolbar (or in the Sketch Palette) to return to the 3D Solid workspace.</li>
+              <li><strong>1. Draw Straight Runs &amp; Bend Arcs:</strong> Use <strong>Line</strong> (<code class="mono">L</code>) for straight tubes and <strong>Fillet</strong> (<code class="mono">F</code>) or tangent arcs for bend corners. Here, the left vertical line is a straight square HSS post, and the D-shaped loop with two corner radii is a bent tube meeting that post.</li>
+              <li><strong>2. Click <span class="ui-chip emerald">✓ Finish Sketch</span>:</strong> Click <strong>Finish Sketch</strong> in the top-right toolbar (or Sketch Palette) to return to the 3D Solid workspace.</li>
             </ul>
           </div>
 
@@ -766,12 +766,12 @@
 
           <div class="doc-step-body">
             <p>
-              With your centerline sketch complete, use the <strong>Structural Member</strong> add-in to generate real hollow structural section (HSS) or round pipe solids along each sketch segment and trim their intersections:
+              Turn your centerline sketch into hollow HSS or round pipe solids and cope the joints:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Launch Structural Member Command (4a):</strong> Open <strong>CREATE &rarr; Structural Member &rarr; Structural Member Command</strong> (or click the <span class="ui-chip">SM</span> shortcut icon directly in the top ribbon). Notice that the same submenu and toolbar also provide <strong>Miter Command</strong>, <strong>Notch Command</strong>, and <strong>Trim Extend Command</strong> for coping and mitering joints between members.</li>
-              <li><strong>2. Select Sketch Lines &amp; Choose Profile Dimensions (4b):</strong> Click a sketch segment in the viewport, then select your standard and cross-section in the <strong>STRUCTURAL MEMBER COMMAND</strong> dialog. For example, <strong>Select Standard:</strong> <code class="mono">ANSI_AISC</code>, <strong>Select Family:</strong> <code class="mono">HSS</code>, <strong>Select Size:</strong> <code class="mono">1-1/2 x 1-1/2</code> (<code class="mono">38.1 &times; 38.1 mm</code>), and <strong>Select Thickness:</strong> <code class="mono">1/8</code> (<code class="mono">3.17 mm</code>). Click <strong>OK</strong>.</li>
-              <li><strong>3. Populate Remaining Segments &amp; Notch/Trim Joints (4c):</strong> Repeat for the remaining sketch segments (here using round pipe along the U-shaped loop, creating components <code class="mono">SM0001:1</code> through <code class="mono">SM0007:1</code> in the Browser tree) and use <strong>Notch / Trim Extend</strong> so the round loop saddles cleanly against the vertical square post.</li>
+              <li><strong>1. Open Structural Member (4a):</strong> Click <strong>CREATE &rarr; Structural Member &rarr; Structural Member Command</strong> (or press the <span class="ui-chip">SM</span> ribbon icon). The same menu gives you <strong>Miter Command</strong>, <strong>Notch Command</strong>, and <strong>Trim Extend Command</strong> for coping joints.</li>
+              <li><strong>2. Pick Lines &amp; Profile Size (4b):</strong> Click a sketch segment, then set your tube in <strong>STRUCTURAL MEMBER COMMAND</strong>. For this post: <strong>Standard:</strong> <code class="mono">ANSI_AISC</code>, <strong>Family:</strong> <code class="mono">HSS</code>, <strong>Size:</strong> <code class="mono">1-1/2 x 1-1/2</code> (<code class="mono">38.1 &times; 38.1 mm</code>), and <strong>Thickness:</strong> <code class="mono">1/8</code> (<code class="mono">3.17 mm</code>). Click <strong>OK</strong>.</li>
+              <li><strong>3. Sweep &amp; Notch the Remaining Loop (4c):</strong> Repeat for the other segments using round pipe around the U-shaped loop (<code class="mono">SM0001:1</code> through <code class="mono">SM0007:1</code> in the Browser). Run <strong>Notch / Trim Extend</strong> so the round loop saddles cleanly onto the square post.</li>
             </ul>
           </div>
 
@@ -821,29 +821,29 @@
         <article class="doc-step-card" id="step-5">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 05</span>
-            <h2 class="doc-step-title">Combine Contiguous Tube Segments <em>(Required Only for Cut-and-Bend Support)</em></h2>
+            <h2 class="doc-step-title">Combine Bent Tube Segments <em>(Only for Cut-and-Bend)</em></h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              By default, the Structural Member plugin creates a separate component/body for every individual line and arc in your sketch (<code class="mono">SM0002:1</code> through <code class="mono">SM0007:1</code>).
+              Structural Member creates a separate body for every line and arc in your sketch (<code class="mono">SM0002:1</code> through <code class="mono">SM0007:1</code>).
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>If you are only cutting straight discrete tubes:</strong> Leave each structural member as its own separate body.</li>
-              <li><strong>IF you want RotaryCAM Cut-and-Bend unfolding support:</strong> Click <span class="ui-chip">Modify &rarr; Combine</span> in the top toolbar, select the first segment of the bent tube as the <strong>Target Body</strong>, select all contiguous bend elbows and straight legs of that same tube as <strong>Tool Bodies</strong>, set <strong>Operation</strong> to <strong>Join</strong> (with <em>New Component</em> and <em>Keep Tools</em> unchecked), and click <strong>OK</strong>.</li>
+              <li><strong>Cutting straight separate tubes?</strong> Leave each structural member as its own body.</li>
+              <li><strong>Unfolding a bent tube for Cut-and-Bend?</strong> Click <span class="ui-chip">Modify &rarr; Combine</span>. Pick the first bent segment as <strong>Target Body</strong>, then select all connected elbows and straight legs of that tube as <strong>Tool Bodies</strong>. Set <strong>Operation</strong> to <strong>Join</strong>, uncheck <em>New Component</em> and <em>Keep Tools</em>, and click <strong>OK</strong>.</li>
             </ul>
 
             <div class="doc-callout info">
               <span class="doc-callout-icon">💡</span>
               <div>
-                <strong>Why Combine Is Essential for Bending:</strong> Merging the straight legs and tangent elbows of a bent tube into a <strong>single continuous solid body</strong> tells RotaryCAM&rsquo;s 3D unfolding solver that those segments are fabricated from one continuous stick of stock with kerf-bending relief cuts (see <a href="bending.html" style="color: var(--cyan-arc);">Tutorial 04: Bending HSS &amp; HSS-O</a>). Do <em>not</em> combine separate tubes that are welded together at joints (keep the vertical square post <code class="mono">SM0001:1</code> separate from the curved round loop).
+                <strong>Why Combine for Bending:</strong> Joining the straight legs and elbows into <strong>one solid body</strong> tells the bend unfolder that those pieces come from one continuous stick of stock with kerf-bending relief cuts (see <a href="bending.html" style="color: var(--cyan-arc);">Tutorial 04: Bending HSS &amp; HSS-O</a>). Do <em>not</em> combine separate tubes that weld together at a joint. Keep the vertical square post <code class="mono">SM0001:1</code> separate from the curved round loop.
               </div>
             </div>
           </div>
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 5: Using Modify → Combine (Join) to merge contiguous straight and bent segments into one solid body</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5: Using Modify → Combine (Join) to merge connected straight and bent segments into one solid body</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">
@@ -866,12 +866,12 @@
 
           <div class="doc-step-body">
             <p>
-              You do not need to export parts one by one. RotaryCAM ingests multi-body STEP assemblies directly:
+              Export the whole assembly in one STEP file:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Open File &rarr; Export:</strong> Click the <strong>File</strong> menu icon in the top-left application bar and select <strong>Export...</strong></li>
-              <li><strong>2. Select STEP Format:</strong> In the <strong>Export</strong> modal, set <strong>Type</strong> to <span class="ui-chip">STEP Files (*.stp *.step)</span>.</li>
-              <li><strong>3. Click <span class="ui-chip cyan">Export</span>:</strong> Save the <code class="mono">.step</code> file of your entire design to disk.</li>
+              <li><strong>1. Open File &rarr; Export:</strong> Click <strong>File</strong> in the top-left bar and choose <strong>Export...</strong></li>
+              <li><strong>2. Pick STEP Format:</strong> Set <strong>Type</strong> to <span class="ui-chip">STEP Files (*.stp *.step)</span>.</li>
+              <li><strong>3. Click <span class="ui-chip cyan">Export</span>:</strong> Save your <code class="mono">.step</code> file.</li>
             </ul>
           </div>
 
@@ -900,11 +900,11 @@
 
           <div class="doc-step-body">
             <p>
-              Switch to RotaryCAM (<code class="mono">Pipe CAM</code>) and ingest your exported <code class="mono">rotarycam-demo.step</code> file:
+              Open RotaryCAM (<code class="mono">Pipe CAM</code>) and load your <code class="mono">rotarycam-demo.step</code> file:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Drop or Select Your STEP File (7a):</strong> Drag and drop <code class="mono">rotarycam-demo.step</code> into the <strong>CAD INGESTION (Drop STEP or ZIP Bundle)</strong> box in the left sidebar (or click to browse your filesystem).</li>
-              <li><strong>2. Click <span class="ui-chip cyan">Load &amp; Process CAD</span> (7b):</strong> RotaryCAM immediately previews the full 3D assembly in the viewport. Click <strong>Load &amp; Process CAD</strong> (with <code class="mono">☑ One-Shot</code> enabled in the top bar to automatically run feature extraction, unfolding, and G-code generation).</li>
+              <li><strong>1. Drop Your STEP File (7a):</strong> Drag <code class="mono">rotarycam-demo.step</code> into <strong>CAD INGESTION (Drop STEP or ZIP Bundle)</strong> in the left sidebar, or click to browse.</li>
+              <li><strong>2. Click <span class="ui-chip cyan">Load &amp; Process CAD</span> (7b):</strong> Preview your 3D assembly in the viewport. Keep <code class="mono">☑ One-Shot</code> checked in the top bar, then click <strong>Load &amp; Process CAD</strong> to extract features, unfold bends, and build G-code automatically.</li>
             </ul>
           </div>
 
@@ -941,22 +941,22 @@
         <article class="doc-step-card" id="step-8">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 08</span>
-            <h2 class="doc-step-title">Verify Flawless AI Cross-Section Profile Autodetection</h2>
+            <h2 class="doc-step-title">Check Autodetected Tube Profiles &amp; Pack Groups</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              As soon as CAD processing completes, RotaryCAM&rsquo;s neural network (<code class="mono">FOVNet</code>) classifies every solid in the assembly without any manual dimension entry:
+              Once processing finishes, the built-in tube scanner identifies every profile in your assembly with zero manual typing:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Cross-Section &amp; Dimensions (<span class="ui-chip">AI</span> Badge in Left Sidebar):</strong> Inspect the <strong>CROSS-SECTION &amp; DIMENSIONS</strong> card on the left: RotaryCAM automatically identifies <code class="mono">Profile_HSS_Rect</code>, outer dimensions <code class="mono">38.1&times;38.1 mm</code> (<code class="mono">1-1/2&Prime; &times; 1-1/2&Prime;</code>), wall thickness <code class="mono">3.17 mm</code> (<code class="mono">1/8&Prime;</code>), and stock length <code class="mono">110.0 mm</code>.</li>
-              <li><strong>2. Automatic Profile Grouping in Multi-Part Pack Nesting:</strong> Open the <strong>CUTTING PROFILE</strong> dropdown in the center workspace: both distinct cross-sections in the assembly (<code class="mono">Profile_HSS_Rect (38.1x38.1mm) (1 part)</code> and <code class="mono">Profile_HSS_Round (OD 42.2mm) (1 part)</code>) are automatically separated into their own stock-compatible nesting groups, ready for simulation and G-code emission.</li>
+              <li><strong>1. Check Cross-Section &amp; Dimensions (<span class="ui-chip">AI</span> Badge):</strong> Look at <strong>CROSS-SECTION &amp; DIMENSIONS</strong> in the left sidebar. You will see <code class="mono">Profile_HSS_Rect</code>, outer dimensions <code class="mono">38.1&times;38.1 mm</code> (<code class="mono">1-1/2&Prime; &times; 1-1/2&Prime;</code>), wall thickness <code class="mono">3.17 mm</code> (<code class="mono">1/8&Prime;</code>), and stock length <code class="mono">110.0 mm</code>.</li>
+              <li><strong>2. Check Pack Nesting Groups:</strong> Open the <strong>CUTTING PROFILE</strong> dropdown in the center bar. Both tube profiles (<code class="mono">Profile_HSS_Rect (38.1x38.1mm) (1 part)</code> and <code class="mono">Profile_HSS_Round (OD 42.2mm) (1 part)</code>) are grouped separately by stock size, ready to simulate and export G-code.</li>
             </ul>
           </div>
 
           <figure class="doc-figure">
             <div class="doc-figure-bar">
-              <span class="doc-figure-caption"><span class="dot"></span> Step 8: Flawless AI profile autodetection of both Profile_HSS_Rect (38.1×38.1×3.17mm) and Profile_HSS_Round (OD 42.2mm)</span>
+              <span class="doc-figure-caption"><span class="dot"></span> Step 8: Autodetected Profile_HSS_Rect (38.1×38.1×3.17mm) and Profile_HSS_Round (OD 42.2mm)</span>
               <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
             </div>
             <div class="doc-figure-img-wrap">

@@ -641,26 +641,26 @@
 
         <!-- Intro Card -->
         <div class="doc-intro-card">
-          <h2>Why Motion-Synchronized Torch Control Is Required in SimCNC</h2>
+          <h2>Why You Need Motion-Synchronized Torch Control in SimCNC</h2>
           <p>
-            By default, CSLab SimCNC fires and extinguishes the plasma torch through asynchronous macro calls (<code class="mono">d.setSpindleState()</code> / <code class="mono">d.setThcState()</code>) coupled with velocity-zero stalls (<code class="mono">d.waitForZeroVelocity()</code>). While adequate for basic stationary pierces and stops, asynchronous relay switching forces the motion planner to decelerate to a complete halt before turning the torch off. This makes <strong>Zero-Overburn Early Torch-Out</strong> (killing the arc mid-motion on a lead-out or hole overburn sweep) and <strong>3D Ramp Lead-Ins (Flying Pierce)</strong> physically impossible without burning a divot into the tube wall.
+            Stock SimCNC fires and stops your torch with macro calls (<code class="mono">d.setSpindleState()</code> / <code class="mono">d.setThcState()</code>) and velocity-zero stalls (<code class="mono">d.waitForZeroVelocity()</code>). Your machine must come to a full stop before the arc shuts off.
           </p>
           <p style="margin-top: 0.75rem;">
-            To achieve sub-millisecond, lookahead-synchronized plasma control in SimCNC (required for RotaryCAM's 3D Ramp Lead-In and Zero-Overburn Early Extinguish features), this guide implements three architectural upgrades across <code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, <code class="mono">m5.py</code>, and the <strong>RotaryCAM Post-Processor</strong>:
+            That stop-and-wait delay makes <strong>Zero-Overburn Early Torch-Out</strong> and <strong>3D Ramp Lead-Ins (Flying Pierce)</strong> impossible without burning a divot into your tube wall. Make these three updates across <code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, <code class="mono">m5.py</code>, and your G-code output:
           </p>
 
           <ul class="doc-bullet-list" style="margin-top: 0.85rem;">
             <li>
-              <strong>1. Hardware Trajectory Sync Channels (<code class="mono">ExtTrajSyncOut1 / P1</code> &amp; <code class="mono">ExtTrajSyncOut0 / P0</code>):</strong>
-              Reassign the physical <strong>Torch Fire Relay (<code class="mono">Output 0</code>)</strong> and <strong>Hardware THC Lock (<code class="mono">Output 4</code>)</strong> to SimCNC's hardware trajectory sync channels (<code class="mono">ExtTrajSyncOut1</code> / <code class="mono">P1</code> and <code class="mono">ExtTrajSyncOut0</code> / <code class="mono">P0</code>), switched deterministically inside the real-time trajectory planner via <code class="mono">M62 P&lt;n&gt;</code> (<code class="mono">ON</code>) and <code class="mono">M63 P&lt;n&gt;</code> (<code class="mono">OFF</code>).
+              <strong>1. Trajectory Sync Outputs (<code class="mono">ExtTrajSyncOut1 / P1</code> &amp; <code class="mono">ExtTrajSyncOut0 / P0</code>):</strong>
+              Move your <strong>Torch Fire Relay (<code class="mono">Output 0</code>)</strong> and <strong>Hardware THC Lock (<code class="mono">Output 4</code>)</strong> to SimCNC's trajectory sync channels. Your G-code switches them inside the motion planner with <code class="mono">M62 P&lt;n&gt;</code> (<code class="mono">ON</code>) and <code class="mono">M63 P&lt;n&gt;</code> (<code class="mono">OFF</code>).
             </li>
             <li>
-              <strong>2. Direct CSMIO/IP-M Hardware <code class="mono">Arc OK</code> Polling (<code class="mono">Digital Input 0</code>):</strong>
-              Poll the optically isolated <code class="mono">Arc OK</code> input (<code class="mono">Digital Input 0</code>) directly on the CSMIO/IP-M hardware module rather than waiting on SimCNC's internal software THC state machine (<code class="mono">#4071</code>).
+              <strong>2. Direct <code class="mono">Arc OK</code> Hardware Polling (<code class="mono">Digital Input 0</code>):</strong>
+              Read the isolated <code class="mono">Arc OK</code> signal straight from CSMIO/IP-M <code class="mono">Digital Input 0</code>. You skip SimCNC's software THC state machine (<code class="mono">#4071</code>) completely.
             </li>
             <li>
-              <strong>3. Solving SimCNC's Stationary <code class="mono">ExtTrajSync</code> Constraint (<code class="mono">&lt;1.5 ms</code> Micro-Wiggle):</strong>
-              When an output pin is assigned to <code class="mono">ExtTrajSyncOut</code>, SimCNC blocks direct <code class="mono">mod.setDigitalIO()</code> calls, and <code class="mono">M62</code>/<code class="mono">M63</code> commands only toggle the physical pin when a trajectory interpolation step occurs. Stationary macros (<code class="mono">m3.py</code> / <code class="mono">m5.py</code>) execute an atomic, zero-net-displacement Z-axis micro-wiggle (<code class="mono">±0.0005"</code> / <code class="mono">±0.01 mm</code>) immediately after <code class="mono">M62</code>/<code class="mono">M63</code> to trip the hardware output in <code class="mono">&lt;1.5 ms</code>, while mid-motion G-code (<code class="mono">M63 P1</code> before a lead-out or overburn arc) extinguishes the torch on-the-fly at full cutting speed.
+              <strong>3. Stationary Micro-Wiggle (<code class="mono">&lt;1.5 ms</code>):</strong>
+              SimCNC blocks <code class="mono">mod.setDigitalIO()</code> on <code class="mono">ExtTrajSyncOut</code> pins, and <code class="mono">M62</code>/<code class="mono">M63</code> only fire during motion. While stationary, <code class="mono">m3.py</code> and <code class="mono">m5.py</code> run a zero-net Z micro-wiggle (<code class="mono">±0.0005"</code> / <code class="mono">±0.01 mm</code>) right after <code class="mono">M62</code>/<code class="mono">M63</code> to trip the relay in <code class="mono">&lt;1.5 ms</code>. Mid-cut, <code class="mono">M63 P1</code> before a lead-out shuts the arc off on the fly at full speed.
             </li>
           </ul>
 
@@ -685,9 +685,9 @@
              ================================================================== -->
         <div class="doc-section-divider" id="part-1">
           <div class="doc-section-kicker">Part I • Real-Time Trajectory I/O Synchronization</div>
-          <h2 class="doc-section-heading">Step-by-Step Implementation Guide: Motion-Synchronized Torch On/Off</h2>
+          <h2 class="doc-section-heading">Step-by-Step Setup: Motion-Synchronized Torch On/Off</h2>
           <p class="doc-section-desc">
-            Configure SimCNC's <code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, and <code class="mono">m5.py</code> macros to switch your plasma torch relay and hardware THC lock in lockstep with <code class="mono">M62</code>/<code class="mono">M63</code> motion blocks emitted by the RotaryCAM Post-Processor.
+            Update <code class="mono">config.xml</code>, <code class="mono">___CONF.py</code>, <code class="mono">m3.py</code>, and <code class="mono">m5.py</code> so your torch relay and THC lock switch in lockstep with <code class="mono">M62</code>/<code class="mono">M63</code> moves.
           </p>
         </div>
 
@@ -702,14 +702,14 @@
 
           <div class="doc-step-body">
             <p>
-              SimCNC does not allow a physical digital output pin to be shared between <code class="mono">SpindleCW</code> / software THC and <code class="mono">ExtTrajSyncOut</code>. Before mapping the trajectory sync channels, unassign the legacy outputs:
+              SimCNC will not share an output pin between <code class="mono">SpindleCW</code> / software THC and <code class="mono">ExtTrajSyncOut</code>. Clear your old pin mappings first:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>1. Unassign Spindle CW Output:</strong> In <span class="ui-chip">Configuration → Settings → Spindle</span> (or <code class="mono">config.xml:2629-2643</code>), unassign <code class="mono">&lt;spindleCwIOSignal&gt;</code> by setting <code class="mono">&lt;moduleIndex&gt;-1&lt;/moduleIndex&gt;</code> and <code class="mono">&lt;pinNr&gt;-1&lt;/pinNr&gt;</code>.
+                <strong>1. Unassign Spindle CW Output:</strong> Open <span class="ui-chip">Configuration → Settings → Spindle</span> (<code class="mono">config.xml:2629-2643</code>). Set <code class="mono">&lt;spindleCwIOSignal&gt;</code> to <code class="mono">&lt;moduleIndex&gt;-1&lt;/moduleIndex&gt;</code> and <code class="mono">&lt;pinNr&gt;-1&lt;/pinNr&gt;</code>.
               </li>
               <li>
-                <strong>2. Unassign Software THC Digital Pins:</strong> In <span class="ui-chip">Configuration → Settings → THC</span> (comparing against <code class="mono">config.xml:4327-4371</code>), leave <code class="mono">&lt;THCUp&gt;</code>, <code class="mono">&lt;THCDown&gt;</code>, and <code class="mono">&lt;THCTorchOnDigital&gt;</code> unassigned (<code class="mono">pinNr = -1</code>) so the external hardware THC and direct <code class="mono">Arc OK</code> input operate without software THC interference.
+                <strong>2. Unassign Software THC Pins:</strong> Open <span class="ui-chip">Configuration → Settings → THC</span> (<code class="mono">config.xml:4327-4371</code>). Leave <code class="mono">&lt;THCUp&gt;</code>, <code class="mono">&lt;THCDown&gt;</code>, and <code class="mono">&lt;THCTorchOnDigital&gt;</code> set to <code class="mono">pinNr = -1</code>. Your external hardware THC and direct <code class="mono">Arc OK</code> line will run with zero software interference.
               </li>
             </ul>
 
@@ -748,7 +748,7 @@
 
           <div class="doc-step-body">
             <p>
-              Map the CSMIO/IP-M digital outputs to trajectory-synchronized channels in <span class="ui-chip">Configuration → Settings → Special IO</span> (stored under <code class="mono">&lt;axesManager&gt;&lt;ExternalTrajCtrl&gt;</code> in <code class="mono">config.xml:5046-5074</code>, compared to unassigned <code class="mono">-1</code> pins in <code class="mono">config.xml:3336-3365</code>):
+              Map your CSMIO/IP-M digital outputs under <span class="ui-chip">Configuration → Settings → Special IO</span> (<code class="mono">&lt;axesManager&gt;&lt;ExternalTrajCtrl&gt;</code> at <code class="mono">config.xml:5046-5074</code>):
             </p>
             <ul class="doc-bullet-list">
               <li>
@@ -809,24 +809,20 @@
 
           <div class="doc-step-body">
             <p>
-              Create shared helper functions in <code class="mono">___CONF.py</code> and import them (<code class="mono">from ___CONF import *</code>) in both <code class="mono">m3.py:7</code> and <code class="mono">m5.py:5</code>:
+              Add these shared helpers to <code class="mono">___CONF.py</code> and import them (<code class="mono">from ___CONF import *</code>) in <code class="mono">m3.py:7</code> and <code class="mono">m5.py:5</code>:
             </p>
             <ul class="doc-bullet-list">
               <li>
                 <strong>1. Pin Constants (<code class="mono">___CONF.py:4-23</code>):</strong>
-                <ul>
-                  <li><code class="mono">THC_Sync_Pin = "P0"</code> (<code class="mono">ExtTrajSyncOut0</code> → Output 4)</li>
-                  <li><code class="mono">Arc_Sync_Pin = "P1"</code> (<code class="mono">ExtTrajSyncOut1</code> → Output 0)</li>
-                  <li><code class="mono">Arc_OK_Pin = 0</code> and <code class="mono">Arc_OK_Inverted = True</code> (CSMIO/IP-M Digital Input 0, active-low <code class="mono">DIOPinVal.PinReset</code> when conducting).</li>
-                </ul>
+                <code class="mono">THC_Sync_Pin = "P0"</code> (Output 4), <code class="mono">Arc_Sync_Pin = "P1"</code> (Output 0), and <code class="mono">Arc_OK_Pin = 0</code> with <code class="mono">Arc_OK_Inverted = True</code> (active-low <code class="mono">DIOPinVal.PinReset</code> when cutting).
               </li>
               <li>
-                <strong>2. Stationary Micro-Wiggle Trigger (<code class="mono">trigger_motion_sync()</code>, <code class="mono">fire_torch_hardware()</code>, <code class="mono">extinguish_torch_hardware()</code>):</strong>
-                Uses <code class="mono">d.executeGCodeList()</code> to submit <code class="mono">M62 P1</code> (or <code class="mono">M63 P1</code> + <code class="mono">M63 P0</code>) followed by a relative <code class="mono">G91</code> Z-axis step out and back (<code class="mono">±0.0005"</code> at <code class="mono">F100.0</code> in imperial, or <code class="mono">±0.01 mm</code> at <code class="mono">F2500.0</code> in metric) and <code class="mono">G90</code>. Submitting as a single list avoids multi-roundtrip UDP latency and immediately latches/clears the hardware relay while stationary.
+                <strong>2. Stationary Micro-Wiggle Helpers:</strong>
+                <code class="mono">fire_torch_hardware()</code> and <code class="mono">extinguish_torch_hardware()</code> queue <code class="mono">M62</code>/<code class="mono">M63</code> plus a <code class="mono">G91</code> Z wiggle (<code class="mono">±0.0005"</code> at <code class="mono">F100.0</code> or <code class="mono">±0.01 mm</code> at <code class="mono">F2500.0</code>) in one <code class="mono">d.executeGCodeList()</code> call. Sending one list avoids UDP lag and flips the relay in <code class="mono">&lt;1.5 ms</code>.
               </li>
               <li>
                 <strong>3. Direct Hardware Arc OK Check (<code class="mono">check_arc_ok()</code>):</strong>
-                Reads <code class="mono">mod.getDigitalIO(IOPortDir.InputPort, Arc_OK_Pin)</code> directly on <code class="mono">ModuleType.IP, 0</code> instead of reading SimCNC parameter <code class="mono">#4071</code>.
+                Reads <code class="mono">Digital Input 0</code> straight from <code class="mono">ModuleType.IP, 0</code> instead of polling parameter <code class="mono">#4071</code>.
               </li>
             </ul>
 
@@ -866,7 +862,7 @@ def trigger_motion_sync(d):
 
 
 def fire_torch_hardware(d):
-    """Latch ExtTrajSyncOut1 (Output 0) ON while stationary in &lt;1.5ms via atomic GCode list."""
+    """Latch ExtTrajSyncOut1 (Output 0) ON while stationary in &lt;1.5ms via single G-code list."""
     step, feed = _wiggle_params(d)
     d.executeGCodeList([
         f"M62 {Arc_Sync_Pin}",
@@ -878,7 +874,7 @@ def fire_torch_hardware(d):
 
 
 def extinguish_torch_hardware(d):
-    """Clear Torch Relay (P1) and lock THC (P0) while stationary via atomic GCode list."""
+    """Clear Torch Relay (P1) and lock THC (P0) while stationary via single G-code list."""
     step, feed = _wiggle_params(d)
     d.executeGCodeList([
         f"M63 {Arc_Sync_Pin}",
@@ -912,24 +908,24 @@ def check_arc_ok(d):
 
           <div class="doc-step-body">
             <p>
-              Comparing the motion-synchronized <code class="mono">m3.py</code> against SimCNC's stock <code class="mono">m3.py</code>:
+              Update your <code class="mono">m3.py</code> macro in four spots:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>1. Pre-Cut Torch &amp; THC Reset (<code class="mono">m3.py:231-260</code> vs. stock <code class="mono">m3.py:79-98</code>):</strong>
-                Replace the stock <code class="mono">d.setSpindleState(SpindleState.OFF)</code> / <code class="mono">d.setThcState(ThcState.Off)</code> loops with an atomic <code class="mono">d.executeGCodeList(["M63 P1", "G91", ...])</code>, <code class="mono">d.executeGCode("M63 P0")</code>, and <code class="mono">extinguish_torch_hardware(d)</code>. Poll <code class="mono">while check_arc_ok(d):</code> to verify the physical <code class="mono">Arc OK</code> input is inactive before ohmic/floating-head probing begins.
+                <strong>1. Pre-Cut Reset (<code class="mono">m3.py:231-260</code>):</strong>
+                Replace stock <code class="mono">d.setSpindleState(SpindleState.OFF)</code> / <code class="mono">d.setThcState(ThcState.Off)</code> loops with <code class="mono">d.executeGCode("M63 P0")</code> and <code class="mono">extinguish_torch_hardware(d)</code>. Poll <code class="mono">while check_arc_ok(d):</code> before probing so you never touch off on a live arc.
               </li>
               <li>
-                <strong>2. Pre-Fire Fault Check &amp; Synchronized Torch Fire (<code class="mono">m3.py:500-519</code> vs. stock <code class="mono">m3.py:161-166</code>):</strong>
-                After probing and lifting to <code class="mono">Pierce_height</code>, verify <code class="mono">if check_arc_ok(d): emergency(...)</code> to catch shorted wiring before firing. Then call <code class="mono">fire_torch_hardware(d)</code> to execute <code class="mono">M62 P1</code> + micro-wiggle and physically close <code class="mono">Output 0</code>.
+                <strong>2. Pre-Fire Check &amp; Ignition (<code class="mono">m3.py:500-519</code>):</strong>
+                At <code class="mono">Pierce_height</code>, check <code class="mono">if check_arc_ok(d): emergency(...)</code> to catch shorted wiring. Then call <code class="mono">fire_torch_hardware(d)</code> to close <code class="mono">Output 0</code>.
               </li>
               <li>
-                <strong>3. Direct Hardware Arc Transfer &amp; Pierce Monitoring (<code class="mono">m3.py:523-602</code> vs. stock <code class="mono">m3.py:170-196</code>):</strong>
-                Replace <code class="mono">while not d.getMachineParam(Torch_is_on_pn):</code> (<code class="mono">#4071</code>) with <code class="mono">while not check_arc_ok(d):</code> polled at <code class="mono">5 ms</code> intervals (<code class="mono">time.sleep(0.005)</code>), both during initial arc transfer and throughout the pierce delay dwell.
+                <strong>3. Direct 5 ms Arc OK Polling (<code class="mono">m3.py:523-602</code>):</strong>
+                Swap <code class="mono">#4071</code> checks for <code class="mono">while not check_arc_ok(d):</code> with <code class="mono">time.sleep(0.005)</code> during arc transfer and pierce delay.
               </li>
               <li>
-                <strong>4. 3D Ramp Lead-In Handoff &amp; Removal of Post-Pierce Velocity Stall (<code class="mono">m3.py:604-626</code> vs. stock <code class="mono">m3.py:198-218</code>):</strong>
-                If 3D ramp lead-in is armed (<code class="mono">#1113 == 1.0</code>), <code class="mono">m3.py</code> leaves Z at <code class="mono">Pierce_height</code> and resets <code class="mono">#1113</code> to <code class="mono">0.0</code> so the immediately following G-code lead-in move plunges Z from <code class="mono">Pierce_height</code> to <code class="mono">Cut_height</code> synchronously with XY/A motion. Remove the stock <code class="mono">d.waitForZeroVelocity(0.1)</code> and <code class="mono">d.setThcState(ThcState.On)</code> block at the end of <code class="mono">m3.py</code>; hardware THC lock/unlock is instead controlled in G-code via <code class="mono">M62 P0</code> / <code class="mono">M63 P0</code> synchronized with motion.
+                <strong>4. 3D Ramp Handoff &amp; Stall Removal (<code class="mono">m3.py:604-626</code>):</strong>
+                When <code class="mono">#1113 == 1.0</code>, leave Z at <code class="mono">Pierce_height</code> and reset <code class="mono">#1113</code> to <code class="mono">0.0</code> so the next lead-in ramps down in motion. Delete <code class="mono">d.waitForZeroVelocity(0.1)</code> and <code class="mono">d.setThcState(ThcState.On)</code> at the end of <code class="mono">m3.py</code>; G-code handles THC lock via <code class="mono">M62 P0</code> / <code class="mono">M63 P0</code>.
               </li>
             </ul>
 
@@ -971,20 +967,16 @@ while not check_arc_ok(d):
 
           <div class="doc-step-body">
             <p>
-              Comparing the dual-path <code class="mono">m5.py</code> against SimCNC's stock <code class="mono">m5.py</code>:
+              Replace stock <code class="mono">m5.py</code> with this two-path check so mid-motion torch stops retract immediately with zero pause:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>1. Check Live Hardware Arc State (<code class="mono">m5.py:51-52</code>):</strong>
-                Read <code class="mono">arc_active = check_arc_ok(d)</code> at the very start of <code class="mono">M5</code>.
+                <strong>1. Arc Still Active (<code class="mono">m5.py:54-63</code>):</strong>
+                On an open path or manual stop, <code class="mono">check_arc_ok(d)</code> returns <code class="mono">True</code>. <code class="mono">extinguish_torch_hardware(d)</code> clears <code class="mono">P1</code> and <code class="mono">P0</code> with a Z wiggle, then waits up to <code class="mono">0.5 s</code> for <code class="mono">Arc OK</code> to drop.
               </li>
               <li>
-                <strong>2. Branch 1: Arc Still Active (Stationary Stop, <code class="mono">m5.py:54-63</code>):</strong>
-                If <code class="mono">arc_active</code> is <code class="mono">True</code> (e.g., open path cut, manual stop, or early extinguish disabled), call <code class="mono">extinguish_torch_hardware(d)</code> to execute <code class="mono">M63 P1</code> + <code class="mono">M63 P0</code> + Z micro-wiggle in a single atomic block, then poll <code class="mono">check_arc_ok(d)</code> for up to <code class="mono">0.5 s</code> until the arc is confirmed out.
-              </li>
-              <li>
-                <strong>3. Branch 2: Arc Already Extinguished On-The-Fly (Fast No-Motion Cleanup, <code class="mono">m5.py:64-75</code>):</strong>
-                If the G-code already issued <code class="mono">M63 P1</code> during a lead-out or hole overburn move, the torch relay opened in hardware while moving and <code class="mono">arc_active</code> is already <code class="mono">False</code>. <code class="mono">m5.py</code> skips the Z micro-wiggle and eliminates the stock <code class="mono">d.waitForZeroVelocity(1)</code> stall (<code class="mono">m5.py:74-83</code>), issuing only <code class="mono">d.executeGCode("M63 P1")</code>, <code class="mono">d.executeGCode("M63 P0")</code>, and <code class="mono">d.setSpindleState(SpindleState.OFF)</code> before retracting immediately to the next cut.
+                <strong>2. Arc Already Out (<code class="mono">m5.py:64-75</code>):</strong>
+                When <code class="mono">M63 P1</code> already fired on a lead-out or overburn move, <code class="mono">check_arc_ok(d)</code> is <code class="mono">False</code>. <code class="mono">m5.py</code> skips both the Z wiggle and stock <code class="mono">d.waitForZeroVelocity(1)</code> stall, cleans up <code class="mono">P1</code>/<code class="mono">P0</code>, and retracts straight to Safe Z.
               </li>
             </ul>
 
@@ -999,7 +991,7 @@ while not check_arc_ok(d):
 arc_active = check_arc_ok(d)
 
 if arc_active:
-    # Branch 1: Arc still active (stationary stop) -> atomic M63 P1 + M63 P0 + Z micro-wiggle
+    # Branch 1: Arc still active (stationary stop) -> single M63 P1 + M63 P0 + Z micro-wiggle list
     extinguish_torch_hardware(d)
     t_timeout = time.time() + 0.5
     while check_arc_ok(d) and time.time() &lt; t_timeout:
@@ -1026,17 +1018,17 @@ d.setSpindleState(SpindleState.OFF)</code></pre>
 
           <div class="doc-step-body">
             <p>
-              To take full advantage of your motion-synchronized SimCNC configuration during cutting, the <strong>RotaryCAM Post-Processor</strong> coordinates <code class="mono">P0</code> (THC Lock) and <code class="mono">P1</code> (Torch Relay) directly in the generated G-code stream:
+              With SimCNC wired for trajectory sync, your posted G-code coordinates <code class="mono">P0</code> (THC Lock) and <code class="mono">P1</code> (Torch Relay) inline with every cut:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>1. Cut Start:</strong> Emits <code class="mono">M3</code> (which runs <code class="mono">m3.py</code> to probe, fire via <code class="mono">M62 P1</code> + wiggle, and dwell), or when <code class="mono">useM3M5</code> is disabled, emits <code class="mono">M62 P1</code> directly before the lead-in motion block.
+                <strong>1. Cut Start:</strong> Emits <code class="mono">M3</code> so <code class="mono">m3.py</code> probes, fires via <code class="mono">M62 P1</code> + wiggle, and dwells (or emits <code class="mono">M62 P1</code> before lead-in when <code class="mono">useM3M5</code> is off).
               </li>
               <li>
-                <strong>2. THC Lock/Unlock (<code class="mono">P0</code>):</strong> Emits <code class="mono">M63 P0</code> before HSS tube corners, small holes, or lead-outs to lock the hardware THC in sync with motion, and <code class="mono">M62 P0</code> once steady cutting speed is reached.
+                <strong>2. THC Lock (<code class="mono">P0</code>):</strong> Emits <code class="mono">M63 P0</code> before HSS tube corners, small holes, and lead-outs, then unlocks with <code class="mono">M62 P0</code> at steady cutting speed.
               </li>
               <li>
-                <strong>3. On-The-Fly Arc Stop (<code class="mono">P1</code>: Zero-Overburn Early Torch-Out):</strong> Immediately before the lead-out or overburn <code class="mono">G1</code>/<code class="mono">G2</code>/<code class="mono">G3</code> block, the RotaryCAM Post-Processor emits <code class="mono">M63 P0</code> (lock THC so voltage decay cannot cause torch diving) and <code class="mono">M63 P1</code> (kill torch relay on the very first interpolation step of the lead-out/overburn move), followed by <code class="mono">M5</code> after the move completes.
+                <strong>3. Zero-Overburn Early Torch-Out (<code class="mono">P1</code>):</strong> Right before the lead-out or overburn <code class="mono">G1</code>/<code class="mono">G2</code>/<code class="mono">G3</code> move, your G-code emits <code class="mono">M63 P0</code> (stops THC dive on voltage drop) and <code class="mono">M63 P1</code> (kills the torch on the first motion step), followed by <code class="mono">M5</code>.
               </li>
             </ul>
 
@@ -1059,12 +1051,14 @@ M5                              ( 3. Fast no-wiggle cleanup &amp; immediate Safe
             <div class="doc-callout info" style="margin-top: 1.25rem;">
               <div class="doc-callout-title">🛡 SimCNC 3.6+ (<code class="mono">G93</code> Inverse-Time) Controller-Safe Hardening</div>
               <p>
-                When running the <strong>SimCNC 3.6+ (<code class="mono">G93</code> Inverse-Time)</strong> profile, RotaryCAM enforces these controller guardrails automatically across both <code class="mono">G21</code> metric and <code class="mono">G20</code> inch programs:
+                When you run the <strong>SimCNC 3.6+ (<code class="mono">G93</code> Inverse-Time)</strong> profile, your <code class="mono">G21</code> metric and <code class="mono">G20</code> inch code follows these safety rules automatically:
               </p>
               <ul class="doc-bullet-list" style="margin-top: 0.5rem; margin-bottom: 0;">
-                <li><strong>Blending &amp; Feed Precision:</strong> Emits <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code>/<code class="mono">P0.4</code> blending even inside <code class="mono">G20</code> inch programs (banning <code class="mono">G61</code> exact-stop), and formats <code class="mono">G93 F</code> to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor.</li>
-                <li><strong>Micro-Segment &amp; Transition Protection:</strong> Coalesces <code class="mono">&lt; 0.05 mm</code> / <code class="mono">&lt; 0.02&deg;</code> slivers, inserts <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) axial feathering between pure-XYZ and pure-ABC moves, and suppresses sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms).</li>
-                <li><strong>Syntax, Parameters &amp; Arcs:</strong> Caps comments at 1 <code class="mono">(...)</code> per line with strict non-comment character filtering, enforces the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), outputs <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>), and uses phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).</li>
+                <li><strong>Smooth Blending:</strong> Emits <code class="mono">G69</code> and metric <code class="mono">G64 P0.3</code>/<code class="mono">P0.4</code> even inside <code class="mono">G20</code> inch programs, never <code class="mono">G61</code> exact-stop.</li>
+                <li><strong>G93 Feed Floor:</strong> Formats <code class="mono">G93 F</code> to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor.</li>
+                <li><strong>Sliver &amp; Dwell Cleanup:</strong> Merges <code class="mono">&lt; 0.05 mm</code> / <code class="mono">&lt; 0.02&deg;</code> micro-moves, feathers pure-XYZ to pure-ABC transitions by <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>), and drops sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms).</li>
+                <li><strong>Comments &amp; Parameters:</strong> Keeps one <code class="mono">(...)</code> comment per line and stays under <code class="mono">#1999</code> (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync).</li>
+                <li><strong>Clean Arcs &amp; Rotary Unwinds:</strong> Outputs <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>) plus <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> after <code class="mono">G80</code>).</li>
               </ul>
             </div>
           </div>
@@ -1075,30 +1069,27 @@ M5                              ( 3. Fast no-wiggle cleanup &amp; immediate Safe
              ================================================================== -->
         <div class="doc-section-divider cyan" id="part-2">
           <div class="doc-section-kicker">Part II • Parameter Handshake (#1113 / #1110 / Z#3)</div>
-          <h2 class="doc-section-heading">How 3D Ramp Lead-Ins Work in <code class="mono">m3.py</code> &amp; RotaryCAM Post-Processor</h2>
+          <h2 class="doc-section-heading">How 3D Ramp Lead-Ins Work in <code class="mono">m3.py</code> &amp; G-Code</h2>
           <p class="doc-section-desc">
-            Replace stationary vertical puddle plunges with a coordinated 3D diagonal or helical descent from <code class="mono">Pierce_height (#2)</code> down to <code class="mono">Cut_height (#3)</code> along the lead-in trajectory.
+            Swap stationary vertical plunges for a coordinated 3D ramp from <code class="mono">Pierce_height (#2)</code> down to <code class="mono">Cut_height (#3)</code> along your lead-in path.
           </p>
         </div>
 
         <!-- Overview Card for Part II -->
         <div class="doc-intro-card" id="ramp-overview">
-          <h2>Overview: How 3D Ramp Lead-Ins Work in <code class="mono">m3.py</code></h2>
+          <h2>Three-Parameter Handshake Between G-Code and <code class="mono">m3.py</code></h2>
           <p>
-            In SimCNC's stock <code class="mono">m3.py:190-205</code>, the entire pierce cycle is strictly vertical and stationary: the torch fires at <code class="mono">Pierce_height (#2)</code>, waits 100% of <code class="mono">Pierce_delay (#4)</code>, and plunges straight down into the molten puddle to <code class="mono">Cut_height (#3)</code> before lateral motion begins.
-          </p>
-          <p style="margin-top: 0.75rem;">
-            To perform a <strong>3D Ramp Lead-In</strong>, where the torch pierces at <code class="mono">Pierce_height</code> and then descends diagonally in <code class="mono">X + Y + Z (+ A)</code> down to <code class="mono">Cut_height</code> along the lead-in line or helical arc to deflect molten spatter away from the nozzle and shield, <code class="mono">m3.py</code> uses a three-parameter handshake with the G-code program emitted by the <strong>RotaryCAM Post-Processor</strong>:
+            Stock <code class="mono">m3.py:190-205</code> fires at <code class="mono">Pierce_height (#2)</code>, waits <code class="mono">100%</code> of <code class="mono">Pierce_delay (#4)</code>, and plunges straight down into molten slag before moving XY. A 3D ramp lead-in descends in <code class="mono">X + Y + Z (+ A)</code> along the lead-in line or helical arc to throw spatter away from your nozzle.
           </p>
           <ul class="doc-bullet-list" style="margin-top: 0.75rem;">
             <li>
-              <strong><code class="mono">#1113</code> (<code class="mono">Ramp_lead_in_pn</code>):</strong> One-shot handshake flag set by G-code before <code class="mono">M3</code> (<code class="mono">1.0</code> = arm 3D ramp; <code class="mono">0.0</code> = standard vertical plunge).
+              <strong><code class="mono">#1113</code> (<code class="mono">Ramp_lead_in_pn</code>):</strong> One-shot flag set before <code class="mono">M3</code> (<code class="mono">1.0</code> = arm 3D ramp; <code class="mono">0.0</code> = vertical plunge).
             </li>
             <li>
-              <strong><code class="mono">#1110</code> (<code class="mono">Material_thickness_pn</code>):</strong> Tube wall / plate thickness used by <code class="mono">m3.py</code> to choose between a thin-sheet flying dwell (<code class="mono">60%</code>) and a thick-wall full-blowout dwell (<code class="mono">100%</code>).
+              <strong><code class="mono">#1110</code> (<code class="mono">Material_thickness_pn</code>):</strong> Tube wall or plate thickness used to choose a <code class="mono">60%</code> thin-sheet flying dwell or <code class="mono">100%</code> thick-wall dwell.
             </li>
             <li>
-              <strong><code class="mono">#2</code> (<code class="mono">Pierce_height</code>) &amp; <code class="mono">#3</code> (<code class="mono">Cut_height</code>):</strong> Program Z coordinates referenced as <code class="mono">Z#3</code> on the G-code lead-in move.
+              <strong><code class="mono">#2</code> (<code class="mono">Pierce_height</code>) &amp; <code class="mono">#3</code> (<code class="mono">Cut_height</code>):</strong> Program Z heights referenced as <code class="mono">Z#3</code> on your lead-in move.
             </li>
           </ul>
         </div>
@@ -1114,7 +1105,7 @@ M5                              ( 3. Fast no-wiggle cleanup &amp; immediate Safe
 
           <div class="doc-step-body">
             <p>
-              In <code class="mono">m3.py:145-183</code>, define the machine parameter numbers and a helper <code class="mono">extract_thickness()</code> to parse thickness from the SimCNC GUI cut chart string (in case <code class="mono">#1110</code> is not emitted by G-code or a thicker material preset is selected in the UI):
+              In <code class="mono">m3.py:145-183</code>, define both parameter numbers and <code class="mono">extract_thickness()</code>. That helper parses thickness from your SimCNC GUI cut chart if <code class="mono">#1110</code> is missing or if you selected thicker stock in the UI:
             </p>
 
             <div class="doc-code-block">
@@ -1127,7 +1118,7 @@ Material_thickness_pn = 1110  # Material thickness emitted by RotaryCAM Post-Pro
             </div>
 
             <p>
-              <code class="mono">extract_thickness(text, unit)</code> converts sheet-metal gauge numbers (<code class="mono">26 ga–7 ga</code>), metric strings (<code class="mono">mm</code>), fractions (<code class="mono">3/8</code>), or decimal inches into current machine units (<code class="mono">inch</code> or <code class="mono">mm</code>).
+              <code class="mono">extract_thickness(text, unit)</code> converts gauges (<code class="mono">26 ga–7 ga</code>), metric strings (<code class="mono">mm</code>), fractions (<code class="mono">3/8</code>), or decimal inches into your active machine units (<code class="mono">inch</code> or <code class="mono">mm</code>).
             </p>
           </div>
         </article>
@@ -1143,7 +1134,7 @@ Material_thickness_pn = 1110  # Material thickness emitted by RotaryCAM Post-Pro
 
           <div class="doc-step-body">
             <p>
-              When <code class="mono">m3.py:439-443</code> finishes probing the tube/plate surface (<code class="mono">touch_z</code>) and lifts to physical pierce height, it sets the Program Z coordinate to <code class="mono">Pierce_height</code>:
+              After <code class="mono">m3.py:439-443</code> probes the surface (<code class="mono">touch_z</code>) and lifts to pierce height, set Program Z to <code class="mono">Pierce_height</code>:
             </p>
 
             <div class="doc-code-block">
@@ -1157,9 +1148,9 @@ d.setAxisProgPosition(Axis.Z, Pierce_height)</code></pre>
             </div>
 
             <div class="doc-callout info">
-              <div class="doc-callout-title">🔬 Why Anchoring Program Z to Pierce_height (#2) Is Required</div>
+              <div class="doc-callout-title">🔬 Why You Anchor Program Z to Pierce_height (#2)</div>
               <p>
-                Setting Program Z to <code class="mono">Pierce_height (#2)</code> establishes the metal surface as <code class="mono">Program Z = 0.0</code>. When <code class="mono">m3.py</code> exits with the torch still at <code class="mono">Pierce_height</code>, the very next G-code block can command <code class="mono">Z#3</code> (<code class="mono">Cut_height</code>) in Program coordinates, and SimCNC will interpolate the exact <code class="mono">Pierce_height → Cut_height</code> Z delta simultaneously with X, Y, and A.
+                Setting Program Z to <code class="mono">Pierce_height (#2)</code> puts the metal surface at <code class="mono">Program Z = 0.0</code>. When <code class="mono">m3.py</code> exits at <code class="mono">Pierce_height</code>, your next G-code block can command <code class="mono">Z#3</code> (<code class="mono">Cut_height</code>), and SimCNC interpolates the drop alongside X, Y, and A.
               </p>
             </div>
           </div>
@@ -1176,7 +1167,7 @@ d.setAxisProgPosition(Axis.Z, Pierce_height)</code></pre>
 
           <div class="doc-step-body">
             <p>
-              After firing the torch and confirming arc transfer via <code class="mono">check_arc_ok(d)</code>, <code class="mono">m3.py:544-573</code> reads <code class="mono">#1113</code> and resolves material thickness conservatively:
+              Once <code class="mono">check_arc_ok(d)</code> confirms arc transfer, <code class="mono">m3.py:544-573</code> reads <code class="mono">#1113</code> and <code class="mono">#1110</code>:
             </p>
 
             <div class="doc-code-block">
@@ -1196,7 +1187,7 @@ except Exception:
             </div>
 
             <p>
-              To prevent an under-dwell on thick wall tubing or plate (which would cause upward arc blowout if lateral motion starts before bottom penetration), <code class="mono">m3.py:555-573</code> compares <code class="mono">#1110</code> against <code class="mono">gui.edPlasmaMaterial.getText()</code> and takes <code class="mono">max(Material_thickness, gui_thickness)</code> (or defaults to <code class="mono">0.375"</code> / <code class="mono">9.5 mm</code> if <code class="mono">Pierce_delay &gt;= 700 ms</code> or <code class="mono">Pierce_height &gt;= 0.18"</code>).
+              To avoid upward spatter blowout from moving too early on thick wall tube, <code class="mono">m3.py:555-573</code> checks <code class="mono">#1110</code> against <code class="mono">gui.edPlasmaMaterial.getText()</code> and takes <code class="mono">max(Material_thickness, gui_thickness)</code>. If <code class="mono">Pierce_delay &gt;= 700 ms</code> or <code class="mono">Pierce_height &gt;= 0.18"</code>, it defaults to <code class="mono">0.375"</code> / <code class="mono">9.5 mm</code>.
             </p>
           </div>
         </article>
@@ -1212,7 +1203,7 @@ except Exception:
 
           <div class="doc-step-body">
             <p>
-              In the pierce delay section (<code class="mono">m3.py:576-602</code>), branch the stationary dwell time based on <code class="mono">ramp_lead_in_enabled</code> and <code class="mono">Material_thickness</code>:
+              In the pierce delay section (<code class="mono">m3.py:576-602</code>), branch your dwell time by wall thickness and delay:
             </p>
 
             <div class="doc-code-block">
@@ -1243,12 +1234,12 @@ except Exception:
 
             <ul class="doc-bullet-list">
               <li>
-                <strong>Tier 1 (Thin Wall / Sheet <code class="mono">&lt;= 0.080"</code> / <code class="mono">2.0 mm</code> &amp; <code class="mono">&lt; 400 ms</code> delay):</strong>
-                Penetrates almost instantaneously; cutting the stationary dwell to <code class="mono">60%</code> (minimum <code class="mono">100 ms</code>) launches the diagonal XY+Z ramp on-the-fly while finishing blow-through.
+                <strong>Tier 1 (Thin Sheet <code class="mono">&lt;= 0.080"</code> / <code class="mono">2.0 mm</code> &amp; <code class="mono">&lt; 400 ms</code> delay):</strong>
+                Cuts stationary dwell to <code class="mono">60%</code> (min <code class="mono">100 ms</code>) so your diagonal XY+Z ramp launches on the fly.
               </li>
               <li>
                 <strong>Tier 2 (Heavy Wall / Plate <code class="mono">&gt; 0.080"</code> / <code class="mono">2.0 mm</code> or <code class="mono">&gt;= 400 ms</code> delay):</strong>
-                Dwells for the full <code class="mono">100% Pierce_delay</code> at <code class="mono">Pierce_height</code> so the puddle blows completely through the bottom of the wall first, then uses the 3D ramp to descend to <code class="mono">Cut_height</code> during lateral lead-in motion rather than plunging straight down into rising slag.
+                Holds <code class="mono">100% Pierce_delay</code> at <code class="mono">Pierce_height</code> for full blow-through, then ramps down to <code class="mono">Cut_height</code> while moving sideways out of rising slag.
               </li>
             </ul>
           </div>
@@ -1265,7 +1256,7 @@ except Exception:
 
           <div class="doc-step-body">
             <p>
-              In the Move Cut Height section (<code class="mono">m3.py:604-616</code>), replace the unconditional descent from stock <code class="mono">m3.py:200-205</code> with the conditional handoff:
+              In the Move Cut Height block (<code class="mono">m3.py:604-616</code>), replace the stock unconditional plunge (<code class="mono">m3.py:200-205</code>) with this handoff:
             </p>
 
             <div class="doc-code-block">
@@ -1286,9 +1277,9 @@ else:
             </div>
 
             <div class="doc-callout tip">
-              <div class="doc-callout-title">✓ Why #1113 Is Reset to 0.0 Inside m3.py</div>
+              <div class="doc-callout-title">✓ Why #1113 Resets to 0.0 Inside m3.py</div>
               <p>
-                Resetting <code class="mono">Ramp_lead_in_pn</code> (<code class="mono">#1113 = 0.0</code>) immediately consumes the flag as a one-shot token. If the next <code class="mono">M3</code> is triggered from MDI or a G-code operation that does not set <code class="mono">#1113=1</code>, <code class="mono">m3.py</code> safely falls back to the standard vertical plunge to <code class="mono">Cut_height</code>.
+                Resetting <code class="mono">#1113 = 0.0</code> clears the flag after one pierce. If you run <code class="mono">M3</code> from MDI without setting <code class="mono">#1113=1</code>, <code class="mono">m3.py</code> falls back to a safe vertical drop to <code class="mono">Cut_height</code>.
               </p>
             </div>
           </div>
@@ -1305,11 +1296,11 @@ else:
 
           <div class="doc-step-body">
             <p>
-              To drive the <code class="mono">m3.py</code> 3D ramp logic from G-code, the <strong>RotaryCAM Post-Processor</strong> emits the coordinated ramp handshake automatically when <strong>3D Ramp Lead-In (Flying Pierce)</strong> is enabled:
+              With <strong>3D Ramp Lead-In (Flying Pierce)</strong> enabled, your posted G-code runs these three steps automatically:
             </p>
             <ul class="doc-bullet-list">
               <li>
-                <strong>1. Validate Minimum Lead-In Length:</strong> Before emitting <code class="mono">M03</code>, the RotaryCAM Post-Processor verifies that the lead-in line or arc length is at least <code class="mono">minRampLeadLength</code> (<code class="mono">0.14"</code> / <code class="mono">3.5 mm</code>). If the lead-in is shorter than <code class="mono">0.14"</code> (<code class="mono">3.5 mm</code>), it emits <code class="mono">#1113=0</code> so <code class="mono">m3.py</code> plunges vertically first rather than attempting an overly steep ramp.
+                <strong>1. Check Lead-In Length:</strong> Your lead-in must be at least <code class="mono">minRampLeadLength</code> (<code class="mono">0.14"</code> / <code class="mono">3.5 mm</code>). Shorter lead-ins emit <code class="mono">#1113=0</code> so <code class="mono">m3.py</code> plunges vertically instead of diving too steep.
               </li>
               <li>
                 <strong>2. Arm <code class="mono">m3.py</code> &amp; Lock Hardware THC:</strong>
@@ -1344,7 +1335,7 @@ M62 P0</code></pre>
             </ul>
 
             <p>
-              Because <code class="mono">m3.py</code> left the torch at <code class="mono">Program Z = #2</code> (<code class="mono">Pierce_height</code>), SimCNC interpolates X, Y, Z (and rotary A on 4-axis tube lead-ins) simultaneously along the lead-in path and reaches <code class="mono">Z = #3</code> (<code class="mono">Cut_height</code>) at the exact point where the lead-in meets the cut contour, where <code class="mono">M62 P0</code> then unlocks the hardware THC.
+              SimCNC blends X, Y, Z, and rotary A together from <code class="mono">Z = #2</code> (<code class="mono">Pierce_height</code>) down to <code class="mono">Z = #3</code> (<code class="mono">Cut_height</code>). Right as your torch meets the contour, <code class="mono">M62 P0</code> unlocks hardware THC.
             </p>
           </div>
         </article>

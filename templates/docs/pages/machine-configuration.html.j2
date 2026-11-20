@@ -3,9 +3,9 @@
 {% block tutorial_body %}
         <!-- Overview Card -->
         <div class="doc-intro-card">
-          <h2>Why Accurate Machine Configuration Matters</h2>
+          <h2>Set Real Motor Limits Before Your First Cut</h2>
           <p>
-            Unlike flat-sheet 2D plasma tables, a 4-axis rotary tube cutter simultaneously coordinates linear axes (<code class="mono">X, Y, Z</code>) in millimeters with a rotary chuck axis (<code class="mono">A</code>) in degrees. When sweeping around rectangular HSS tube corners or cutting deep pipe saddles, the rotary chuck must rapidly accelerate and decelerate while keeping the plasma arc's surface velocity constant. RotaryCAM uses your table's exact physical motor limits to calculate smooth rotary acceleration, keep chuck motors from jerking or stalling on sharp tube corners, and freeze your Torch Height Control (THC) before the torch slows down.
+            A 4-axis rotary cutter moves <code class="mono">X, Y, Z</code> in millimeters while spinning your chuck (<code class="mono">A</code>) in degrees. When you roll around a square HSS corner or cut a steep saddle, your chuck must accelerate and decelerate fast while holding steady plasma surface speed. Entering your table's real motor limits keeps chuck drives from stalling on sharp corners and locks your Torch Height Control (THC) before the torch slows down.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -34,11 +34,11 @@
 
           <div class="doc-step-body">
             <p>
-              From the main RotaryCAM workspace, locate the <strong>CNC Plasma Kinematics</strong> summary card at the bottom of the left sidebar. This card displays your currently active rotary ratio, rapid limits, Z clearance, and post-processor dialect at a glance.
+              Look at the <strong>CNC Plasma Kinematics</strong> card at the bottom of the left sidebar. It shows your active rotary ratio, rapid limits, Z clearance, and post dialect at a glance:
             </p>
             <ul class="doc-bullet-list">
-              <li>Click the <span class="ui-chip">⚙ Config</span> button in the <strong>CNC Plasma Kinematics</strong> panel on the left sidebar, <em>or</em></li>
-              <li>Click the <span class="ui-chip cyan">⚙ Machines</span> button in the top navigation bar at any time to open the <strong>Machine Profiles &amp; Kinematics</strong> modal.</li>
+              <li>Click <span class="ui-chip">⚙ Config</span> in the <strong>CNC Plasma Kinematics</strong> panel, <em>or</em></li>
+              <li>Click <span class="ui-chip cyan">⚙ Machines</span> in the top navigation bar to open <strong>Machine Profiles &amp; Kinematics</strong>.</li>
             </ul>
           </div>
 
@@ -62,19 +62,19 @@
         <article class="doc-step-card" id="step-2">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 02</span>
-            <h2 class="doc-step-title">Configure Accurate Axis Kinematics, Velocity, Acceleration &amp; Safe Z Limits</h2>
+            <h2 class="doc-step-title">Set Axis Limits, Safe Z, Orientation &amp; Polarity</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              The first tab, <span class="ui-chip">Axis Kinematics &amp; Limits</span>, defines the physical capabilities of your CNC table's linear motors (<code class="mono">X, Y, Z</code>) and rotary chuck drive (<code class="mono">A</code>). Entering your table's real limits ensures RotaryCAM matches your machine's true motor speeds and never asks your chuck to spin faster than it physically can.
+              The <span class="ui-chip">Axis Kinematics &amp; Limits</span> tab matches your CAM speeds to what your linear motors (<code class="mono">X, Y, Z</code>) and rotary chuck (<code class="mono">A</code>) can physically hold without faulting:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Rotary Drive Ratio &amp; Direction:</strong> Specify your chuck reduction ratio (e.g., <code class="mono">10:1 Rotary</code>) and whether <code class="mono">+A</code> rotation follows right-hand or inverted conventions.</li>
-              <li><strong>Linear Axes (<code class="mono">X / Y / Z</code>) Limits:</strong> Set the true maximum rapid velocity (<code class="mono">mm/min</code>), maximum acceleration (<code class="mono">mm/s²</code>), and S-curve jerk (<code class="mono">mm/s³</code>) your drives can sustain without losing steps or faulting.</li>
-              <li><strong>Rotary Chuck (<code class="mono">A-Axis</code>) Limits:</strong> Set the maximum rotational speed (<code class="mono">deg/min</code>, e.g., <code class="mono">36000°/min</code> = 100 RPM), angular acceleration (<code class="mono">deg/s²</code>), and angular jerk (<code class="mono">deg/s³</code>). During rectangular tube corner transitions, chuck rotation is almost always the physical bottleneck. RotaryCAM uses these limits to smooth out corner speeds so your steppers or servos never lose steps.</li>
-              <li><strong>Safe Z Clearance Height:</strong> Defines the safe retract envelope (e.g., <code class="mono">25 mm</code>) above the rotating tube's maximum diagonal radius so rapid moves never clip a spinning square/rectangular corner.</li>
-              <li><strong>Chuck Jaw Dead Zone (<code class="mono">65 mm</code>), Min Chuck Grip (<code class="mono">80 mm</code>) &amp; Roller &ldquo;No-Cut&rdquo; Zones:</strong> Enter your chuck jaw keep-out distance (<code class="mono">chuckJawDeadZoneMm</code>, default <code class="mono">65 mm</code>), minimum chuck clamping grip length (<code class="mono">minChuckGripLengthMm</code>, default <code class="mono">80 mm</code>), and any steady-rest or roller keep-out bands. RotaryCAM displays a translucent red no-cut zone and 3D chuck jaws in the CAD viewer and 3D simulator, subtracts the dead zone from raw stick capacity during 1D tube nesting, shows the exact <strong>Min Stock to Load</strong> (<code class="mono">L_cut + L_dead</code>), and warns you before G-code runs if a cut reaches into the chuck jaws.</li>
+              <li><strong>Rotary Drive Ratio &amp; Direction:</strong> Enter your chuck gear ratio (such as <code class="mono">10:1 Rotary</code>) and whether <code class="mono">+A</code> follows right-hand or inverted rotation.</li>
+              <li><strong>Linear Axes (<code class="mono">X / Y / Z</code>) Limits:</strong> Set max rapid speed (<code class="mono">mm/min</code>), acceleration (<code class="mono">mm/s²</code>), and S-curve jerk (<code class="mono">mm/s³</code>) your drives can run without losing steps.</li>
+              <li><strong>Rotary Chuck (<code class="mono">A-Axis</code>) Limits:</strong> Set max rotational speed (<code class="mono">deg/min</code>, e.g., <code class="mono">36000°/min</code> = 100 RPM), angular acceleration (<code class="mono">deg/s²</code>), and angular jerk (<code class="mono">deg/s³</code>). Chuck rotation is almost always the bottleneck on square/rectangular corners, so these numbers keep your steppers or servos from stalling.</li>
+              <li><strong>Safe Z Clearance Height:</strong> Sets the retract height (e.g., <code class="mono">25 mm</code>) above your spinning tube's largest diagonal corner so rapid moves stay clear.</li>
+              <li><strong>Chuck Jaw Dead Zone (<code class="mono">65 mm</code>), Min Chuck Grip (<code class="mono">80 mm</code>) &amp; Roller &ldquo;No-Cut&rdquo; Zones:</strong> Enter your jaw keep-out (<code class="mono">chuckJawDeadZoneMm</code>, default <code class="mono">65 mm</code>), minimum clamp grip (<code class="mono">minChuckGripLengthMm</code>, default <code class="mono">80 mm</code>), and any steady-rest or roller keep-out bands. You get a translucent red keep-out zone and 3D chuck jaws in both viewers, automatic dead-zone subtraction during 1D nesting, exact <strong>Min Stock to Load</strong> (<code class="mono">L_cut + L_dead</code>), and pre-cut jaw collision warnings.</li>
             </ul>
 
             <!-- ==========================================================
@@ -86,7 +86,7 @@
                 Coordinate System, Axis Orientation &amp; Motor Polarity
               </h3>
               <p>
-                Plasma tables come in different shop layouts. Some rotary chucks sit along the long X rail; others mount parallel to the Y gantry rail. Flat sheet jobs might be loaded with the long edge along X or Y, zeroed at any corner or plate center. RotaryCAM gives you full native control over rotary alignment, 4 travel modes, 6 flat sheet work origins, and motor DIR polarity so G-code runs true on your table without manual coordinate edits or flipping motor wiring.
+                Every shop mounts chucks and loads plates differently. Set your rotary alignment, 4 travel modes, 6 flat-sheet origins, and motor DIR polarity once so your G-code cuts true without hand-editing coordinates or swapping stepper wires.
               </p>
 
               <!-- Rotary Tube Axis (Along X vs Along Y) -->
@@ -94,17 +94,17 @@
                 1. Rotary Tube Axis: Along X (Default) vs. Along Y (Gantry-Parallel)
               </h4>
               <p>
-                Select which linear axis runs down the length of your tube:
+                Pick which linear axis runs down the length of your tube:
               </p>
               <ul class="doc-bullet-list">
                 <li>
-                  <strong>Tube Along X (Standard Rotary Table):</strong> The rotary chuck spins around the machine's X-axis. Tube length runs along X, lateral cross-torch travel moves on Y, and rotary rotation spins A. This is the default setup on standalone pipe cutters and front-mounted rotary attachments.
+                  <strong>Tube Along X (Standard Rotary Table):</strong> Your chuck spins around the X-axis. Tube length runs along X, cross-torch travel moves on Y, and rotation spins A. Use this for standalone pipe cutters and front-mounted rotaries.
                 </li>
                 <li>
-                  <strong>Tube Along Y (Gantry-Parallel / Outboard Rotary Trough):</strong> For dual-purpose 4x8 or 5x10 tables (such as FlashCut CNC, ShopSabre, or custom water tables with an outboard pipe trough) where the rotary attachment sits along the long Y rail. Selecting <strong>Tube Along Y</strong> applies a true right-handed +90&deg; coordinate rotation (<code class="mono">L &rarr; Y, T &rarr; -X</code>). Longitudinal cuts move on Y, cross-torch lateral shifts (such as off-center HSS corner climbs or bevel passes) move on X, and velocity/accel limits automatically pull from the physical axis moving the torch. Because this is a true 3D spatial rotation rather than a coordinate mirror, asymmetric fishmouths, angled saddle branches, and hole offsets are <strong>never mirrored</strong>.
+                  <strong>Tube Along Y (Gantry-Parallel / Outboard Rotary Trough):</strong> Use this for dual-purpose 4x8 or 5x10 water tables (such as FlashCut CNC or ShopSabre) with an outboard pipe trough along the Y rail. It applies a true right-handed +90&deg; rotation (<code class="mono">L &rarr; Y, T &rarr; -X</code>). Length cuts move on Y, cross-torch moves (corner climbs or bevels) run on X, and speed/accel limits pull from the real moving axis. Because it is a true 3D rotation, asymmetric fishmouths, angled saddles, and hole offsets are <strong>never mirrored</strong>.
                 </li>
                 <li>
-                  <strong>3-Axis Linear Wrap (RotaryAxisMapping):</strong> For controllers without a native 4th rotary axis (such as Langmuir FireControl or 3-axis Mach3), RotaryCAM automatically wraps circumference onto physical linear travel. When the tube is along X, circumference wraps onto Y (<code class="mono">G92 Y0</code>). When the tube is along Y, circumference wraps onto X (<code class="mono">G92 X0</code>).
+                  <strong>3-Axis Linear Wrap (RotaryAxisMapping):</strong> On controllers without a 4th rotary axis (such as Langmuir FireControl or 3-axis Mach3), tube circumference wraps onto linear travel automatically: onto Y when the tube is along X (<code class="mono">G92 Y0</code>), or onto X when the tube is along Y (<code class="mono">G92 X0</code>).
                 </li>
               </ul>
 
@@ -113,7 +113,7 @@
                 2. Four Rotary Chuck &amp; Torch Travel Modes
               </h4>
               <p>
-                Plasma rotary tables move in different physical ways depending on whether your chuck pushes the pipe or your torch gantry rolls along the bed. RotaryCAM supports all 4 travel modes with automatic G92 work offset emission:
+                Match how your table physically feeds steel across all 4 travel modes with automatic <code class="mono">G92</code> datum output:
               </p>
 
               <div class="table-wrap" style="margin: 1rem 0; overflow-x: auto;">
@@ -129,27 +129,27 @@
                   <tbody>
                     <tr>
                       <td><strong>Workpiece Moves<br><code class="mono">(-L &rarr; 0)</code></strong></td>
-                      <td>Moving-tube feeder table where the chuck pushes raw stock under a stationary-length torch (e.g. SimCNC Rotary).</td>
+                      <td>Moving-tube feeder where your chuck pushes raw stock under a stationary torch (e.g. SimCNC Rotary).</td>
                       <td><code class="mono">G92 X-Length</code><br>(or <code class="mono">Y-Length</code>)</td>
-                      <td>Zeroes at the far free end of the tube. Cuts finished parts from the free end backward toward the chuck (<code class="mono">0</code>), so parts drop cleanly onto the scrap tray while the remaining stick stays rigidly clamped.</td>
+                      <td>Zeroes at the free end. Cuts work backward toward the chuck (<code class="mono">0</code>), dropping finished parts onto the tray while keeping the remaining stick rigidly clamped.</td>
                     </tr>
                     <tr>
                       <td><strong>Torch Moves:<br>Chuck at 0 &rarr; Free End at +L</strong></td>
-                      <td>Standard stationary rotary attachment where the chuck stays parked at zero and the torch gantry travels outward down the bed.</td>
+                      <td>Stationary rotary attachment where the chuck stays at zero and your torch gantry travels down the bed.</td>
                       <td><code class="mono">G92 X0</code><br>(at chuck face)</td>
-                      <td>Traditional CNC mill/lathe convention. The chuck face is your permanent physical datum (<code class="mono">0</code>), and the torch cuts outward toward the free end (<code class="mono">+L</code>). Best for short tubes fully supported over the water table.</td>
+                      <td>Traditional mill/lathe layout. Your chuck face stays at <code class="mono">0</code> and the torch cuts outward toward the free end (<code class="mono">+L</code>). Best for short tubes supported over the table.</td>
                     </tr>
                     <tr>
                       <td><strong>Torch Moves:<br>Free End at +L &rarr; Chuck at 0</strong></td>
-                      <td>Stationary rotary attachment where zero is set at the chuck face, but cut sequencing starts at the far free end.</td>
+                      <td>Stationary rotary attachment zeroed at the chuck face, but cutting from the free tip back toward the chuck.</td>
                       <td><code class="mono">G92 X0</code><br>(at chuck face)</td>
-                      <td>Prevents long sticks from sagging. Cuts start at the overhanging free tip (<code class="mono">+L</code>) and step backward toward the chuck (<code class="mono">0</code>). Each drop falls clear without unbalancing the remaining raw stock.</td>
+                      <td>Stops long sticks from sagging. Cuts start at the overhanging tip (<code class="mono">+L</code>) and step back toward the chuck (<code class="mono">0</code>), so each drop clears without unbalancing the stick.</td>
                     </tr>
                     <tr>
                       <td><strong>Torch Moves:<br>Free End at 0 &rarr; Chuck at -L</strong></td>
-                      <td>Stationary rotary table where the operator zeroes the torch right at the physical tip of the loaded tube.</td>
+                      <td>Stationary rotary table where you zero the torch right on the tip of the loaded tube.</td>
                       <td><code class="mono">G92 X0</code><br>(at free tip)</td>
-                      <td>Fastest shop-floor setup. Jog the torch to the overhanging edge of the loaded tube, zero <code class="mono">X0</code> (or <code class="mono">Y0</code>), and hit cycle start. Cuts move in negative coordinates (<code class="mono">-X</code> or <code class="mono">-Y</code>) back toward the chuck without measuring raw stick length.</td>
+                      <td>Fastest setup on the floor. Jog to the overhanging tube edge, zero <code class="mono">X0</code> (or <code class="mono">Y0</code>), and press Cycle Start. Cuts move negative (<code class="mono">-X</code> or <code class="mono">-Y</code>) toward the chuck with no stick-length measuring.</td>
                     </tr>
                   </tbody>
                 </table>
@@ -160,21 +160,21 @@
                 3. Flat Sheet Orientation (0&deg; vs. 90&deg; CCW) &amp; 6 Work Zero Origins
               </h4>
               <p>
-                When cutting 2D plate parts from DXF or SVG files, align parts with your table slats and choose where the operator zeroes the torch:
+                For 2D plate jobs from DXF or SVG files, match your table slats and pick where you zero the torch:
               </p>
               <ul class="doc-bullet-list">
                 <li>
-                  <strong>Sheet Orientation (0&deg; vs. 90&deg; CCW):</strong> Select <strong>0&deg; (Part Length along +X)</strong> to lay long parts along the X rail, or <strong>90&deg; CCW (Part Length along +Y)</strong> to orient parts along the Y gantry rail. This is a rigid Cartesian rotation (<code class="mono">X' = -Y, Y' = X</code>), guaranteeing asymmetric brackets, offset holes, and engraved text markings are <strong>never mirrored</strong>.
+                  <strong>Sheet Orientation (0&deg; vs. 90&deg; CCW):</strong> Pick <strong>0&deg; (Part Length along +X)</strong> to run long parts along X, or <strong>90&deg; CCW (Part Length along +Y)</strong> to align them along Y. This rigid rotation (<code class="mono">X' = -Y, Y' = X</code>) keeps asymmetric brackets, offset holes, and scribed text <strong>never mirrored</strong>.
                 </li>
                 <li>
                   <strong>6 Work Zero (X0, Y0) Origins:</strong>
                   <ul class="doc-bullet-list" style="margin-top: 0.35rem; margin-bottom: 0.35rem;">
-                    <li><strong>Bottom-Left (<code class="mono">[0, +X] x [0, +Y]</code>):</strong> Industry default on standard 2D plasma tables where the operator stands at the front-left corner.</li>
-                    <li><strong>Top-Left (<code class="mono">[0, +X] x [-Y, 0]</code>):</strong> Zeroes at the rear-left corner with forward-moving Y travel.</li>
-                    <li><strong>Bottom-Right (<code class="mono">[-X, 0] x [0, +Y]</code>):</strong> Zeroes at the front-right corner for right-hand loading tables.</li>
+                    <li><strong>Bottom-Left (<code class="mono">[0, +X] x [0, +Y]</code>):</strong> Standard 2D table default when standing at the front-left corner.</li>
+                    <li><strong>Top-Left (<code class="mono">[0, +X] x [-Y, 0]</code>):</strong> Zeroes at the rear-left corner with forward Y travel.</li>
+                    <li><strong>Bottom-Right (<code class="mono">[-X, 0] x [0, +Y]</code>):</strong> Zeroes at the front-right corner for right-hand loading.</li>
                     <li><strong>Top-Right (<code class="mono">[-X, 0] x [-Y, 0]</code>):</strong> Zeroes at the rear-right corner with negative X and Y travel.</li>
-                    <li><strong>Center (<code class="mono">[-X/2, +X/2] x [-Y/2, +Y/2]</code>):</strong> Places <code class="mono">X0, Y0</code> dead center of the sheet bounding box. Ideal for cutting small drops, circular flanges, or nesting inside remnant plates zeroed with a center punch mark.</li>
-                    <li><strong>Moving Sheet (<code class="mono">-X &rarr; 0</code>):</strong> For automated pinch-roller or plate-feeder machines that push steel forward beneath a stationary cutting bridge.</li>
+                    <li><strong>Center (<code class="mono">[-X/2, +X/2] x [-Y/2, +Y/2]</code>):</strong> Puts <code class="mono">X0, Y0</code> dead center of the sheet. Great for small drops, round flanges, or remnants zeroed with a center punch.</li>
+                    <li><strong>Moving Sheet (<code class="mono">-X &rarr; 0</code>):</strong> For pinch-roller or plate-feeder machines pushing steel beneath a stationary bridge.</li>
                   </ul>
                 </li>
               </ul>
@@ -186,23 +186,23 @@
               <div class="doc-callout info" style="margin-top: 0.5rem; margin-bottom: 0.5rem;">
                 <div class="doc-callout-title">💡 The Polarity Rule of Thumb</div>
                 <p>
-                  Always set your <strong>Fixture &amp; Datum</strong> (Tube Axis, Travel Mode, and Sheet Origin) first so the 3D viewport matches how raw stock physically sits on your slats or chuck. <strong>Only</strong> toggle <code class="mono">Invert X</code>, <code class="mono">Invert Y</code>, or <code class="mono">Invert Rotary A</code> if a motor's DIR wire is reversed or your chuck rotates backward.
+                  Set your <strong>Fixture &amp; Datum</strong> (Tube Axis, Travel Mode, and Sheet Origin) first so the 3D view matches your table. <strong>Only</strong> check <code class="mono">Invert X</code>, <code class="mono">Invert Y</code>, or <code class="mono">Invert Rotary A</code> if a motor DIR wire is reversed or your chuck spins backward.
                 </p>
               </div>
               <p>
-                When an axis inversion checkbox is enabled, RotaryCAM does not simply negate coordinate values in post. It handles the complete mathematical transformation:
+                Enabling an axis invert performs the full geometric flip, not just a quick sign swap:
               </p>
               <ul class="doc-bullet-list">
-                <li>Negates the physical axis coordinates in all G0 rapid and G1 cutting blocks.</li>
-                <li>Inverts directional tool offsets, including <code class="mono">G52</code> pneumatic air-scribe and center-punch fixture offsets.</li>
-                <li>Automatically flips circular arc direction (<code class="mono">G2</code> clockwise &harr; <code class="mono">G3</code> counter-clockwise) across active planes (<code class="mono">G17, G18, G19</code>). This ensures lead-in arcs and kerf offsets stay on the scrap side and never gouge into finished part walls.</li>
+                <li>Negates that axis in every <code class="mono">G0</code> rapid and <code class="mono">G1</code> cut line.</li>
+                <li>Flips directional tool offsets, including <code class="mono">G52</code> air-scribe and center-punch offsets.</li>
+                <li>Reverses arc directions (<code class="mono">G2</code> CW &harr; <code class="mono">G3</code> CCW) across <code class="mono">G17, G18, G19</code> so lead-ins and kerf stay on the scrap side and never gouge your part.</li>
               </ul>
             </div>
 
             <div class="doc-callout tip">
-              <div class="doc-callout-title">✓ Multiple Profiles Persisted Across Restarts</div>
+              <div class="doc-callout-title">✓ Multiple Profiles Saved Automatically</div>
               <p>
-                You can maintain separate profiles for different machines, rotary chucks, or plasma power sources using the left list (<code class="mono">+ New</code> or <code class="mono">Clone</code>). All configured profiles are automatically saved and persisted across browser/app restarts.
+                Keep separate profiles for different tables, chucks, or plasma cutters with <code class="mono">+ New</code> or <code class="mono">Clone</code> in the left list. Every profile saves automatically across restarts.
               </p>
             </div>
           </div>
@@ -232,57 +232,57 @@
 
           <div class="doc-step-body">
             <p>
-              Switch to the <span class="ui-chip cyan">Controller &amp; Compensation</span> tab to select your CNC plasma controller post-processor. RotaryCAM includes drop-in, zero-hand-edit post-processors for all major industrial, prosumer, and DIY plasma controllers across both <strong>Maker ($199)</strong> and <strong>Pro Shop ($399)</strong> licenses:
+              Open <span class="ui-chip cyan">Controller &amp; Compensation</span> and pick your CNC controller. Every post-processor below runs straight on your table with zero hand edits across both <strong>Maker ($199)</strong> and <strong>Pro Shop ($399)</strong> licenses:
             </p>
             <ul class="doc-bullet-list">
-              <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span>: Hardened for LinuxCNC 2.9+ across three distinct regimes: <strong>2D Flat Sheet</strong> (zero Z/A words, <code class="mono">M3 $0 S1</code>, <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>, <code class="mono">G64 P0.1 Q0.02</code>, <code class="mono">M52 P1</code>, <code class="mono">#&lt;holes&gt;=0</code>), <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code>, <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code>, <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code>, <code class="mono">G64 P0.25 Q0.05</code>, <code class="mono">G94</code> on HSS flats to <code class="mono">G93</code> on <code class="mono">A</code> moves, <code class="mono">M190 P-1</code>), and <strong>Non-<code class="mono">M3</code> Scribes/Markers</strong> (<code class="mono">#&lt;keep-z-motion&gt;=1</code>). Supports mutually exclusive <code class="mono">(o=0, ...)</code> vs. <code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code>, kerf void protection (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>), and <code class="mono">M67 E3 Q60</code>/<code class="mono">Q0</code> small-hole scaling.</li>
-              <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span>: Hardened for FireControl <code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code> on CrossFire, PRO, and XR tables. Emits <code class="mono">(v1.6-sc)</code> and <code class="mono">(PS&lt;feed&gt;)</code> sentinels, strict GRBL-safe <code class="mono">(...)</code> comments, separated <code class="mono">0.020"</code> IHS backlash vs. thin-sheet springback, <code class="mono">0.55 s</code> 3D ramp ignition dwell, inverter settle controls, <code class="mono">X-WRAP</code>/<code class="mono">Y-WRAP</code> round-tube wrapping, and optional fixed-calibration chuck <code class="mono">Travel / Rev</code> scaling.</li>
-              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span>: Dedicated post for Mach4 tables running the Warp9 Ethernet SmoothStepper with external or standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> touch-off probing with switch-offset compensation, standard <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary inverse-time feeds.</li>
-              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span>: Engineered for Warp9 TMC3in1 and WarpRunner breakout boards. Outputs native <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control for zero-hesitation cuts.</li>
-              <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span>: Native <code class="mono">T112 M6</code> plasma mode, 3-mode THC selector (<strong>MASSO DTHC</strong> <code class="mono">G200</code> Auto-IHS, <strong>External Up/Down THC</strong> Bare <code class="mono">G200</code> + <code class="mono">G38.2</code>, or <strong>Fixed Height / No THC</strong>), <code class="mono">O0/O1</code> probing, <code class="mono">S0/S1</code> slag-stop, explicit <code class="mono">M667 F&lt;thcFeed&gt;</code> / <code class="mono">M666</code> anti-dive, Bare <code class="mono">G200</code> / Hybrid <code class="mono">C=P</code> 3D ramps, Template C 4D HSS, <code class="mono">G53 G0 Z0</code> / <code class="mono">G92.1</code> hygiene, <code class="mono">G91</code>/<code class="mono">G28 A0</code>/<code class="mono">G90</code> unwinds, <code class="mono">M30 L&lt;count&gt;</code> bar-advance looping, and <code class="mono">G93</code> rotary motion.</li>
-              <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span>: Hardened for Mach3 <code class="mono">R3.043.062</code> with one-click <code class="mono">.xml</code> setup import, a 4-topology THC selector (<code class="mono">M11Px/M10Px</code> pins 1-6, CandCNC <code class="mono">DTHC DCC</code> <code class="mono">S900/S10/S20</code>, ESS Proma 150 / TMC3in1 <code class="mono">M102/M101</code>, and ESS Proma Compact THC SD <code class="mono">M7/M9</code>), <code class="mono">G31</code> ESS probe vs. <code class="mono">G28.1</code> floating-head, <code class="mono">G54</code>-baked scribe offsets (zero <code class="mono">G52/G92</code> conflict), <code class="mono">%</code> framing with <code class="mono">M30\n%\n</code>, immediate <code class="mono">G94</code> restore after <code class="mono">M5</code>, and <code class="mono">G93</code> inverse-time rotary feeds.</li>
-              <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span>: Splits cleanly into two regimes: <strong>2D Flat Plate</strong> (<code class="mono">G64 ON</code>, <code class="mono">M65</code> Material Profile, <code class="mono">M61/M62</code> macros, zero Z words, 15% Voltage Anti-Dive) and <strong>3D Ramps &amp; 4D Rotary</strong> (Centerline <code class="mono">Z=0</code>, <code class="mono">G54</code>, <code class="mono">M36</code> ATHC Hold before <code class="mono">M3</code>, <code class="mono">M150</code> <code class="mono">mfunc150.mac</code> <code class="mono">M115</code> + <code class="mono">G92 Z&lt;Zm + offset&gt;</code>, <code class="mono">G93.1</code> smoothed inverse time, <code class="mono">G94</code> restore before <code class="mono">M5</code>, standalone <code class="mono">G4 P</code>, exact 360&deg; <code class="mono">G92 A0</code>, and semicolon <code class="mono">;</code> comments with zero parentheses).</li>
-              <li><span class="ui-chip">grblHAL (32-bit Plasma + Rotary) (.nc)</span>: Hardened for grblHAL core <code class="mono">20261015+</code> + Nov 2026+ <code class="mono">Plugin_plasma</code> (<code class="mono">$376=1</code>, <code class="mono">$133=0</code>, <code class="mono">$384=1</code>, <code class="mono">$674</code> <code class="mono">virtual_ports=1</code> / <code class="mono">sync_pos=1</code>, and <code class="mono">$350</code>). Emits standalone-line <code class="mono">$674</code> virtual ports (<code class="mono">P2</code> active-high THC disable <code class="mono">M64/M62 P2</code> &amp; enable <code class="mono">M63/M65 P2</code>, <code class="mono">P3</code> torch inhibit clear <code class="mono">M65 P3</code>, and <code class="mono">E3</code> feed override <code class="mono">M68 E3 Q100</code> / <code class="mono">M67 E3 Q60</code>), <code class="mono">M190 P-1</code> explicit CAM Z control, continuous <code class="mono">M64 P2</code> on 3D ramps and 4D HSS, <code class="mono">M5</code> + <code class="mono">G94 F</code> after <code class="mono">G93</code> (preventing Core Issue #1027 &amp; <code class="mono">G38.2</code> crash traps), modulo <code class="mono">G92 A&lt;mod_360&gt;</code> unwinds (no <code class="mono">G92.1</code>), <code class="mono">G4 P</code> float seconds, <code class="mono">&le; 80</code> char blocks, and <code class="mono">? ! ~</code> stripped comments.</li>
-              <li><span class="ui-chip">CNCdrive UCCNC (.nc)</span>: Hardened UCCNC post for <code class="mono">UC100</code> (<code class="mono">0.2 s / 200 ms</code> dwell floor) and <code class="mono">UC300ETH / UC400ETH / AXBB-E</code> with Integrated <code class="mono">G31</code> + <code class="mono">G92 Z&lt;Zm - SwitchOffset&gt;</code>, <code class="mono">Neuron Lite</code> (XY-only), or legacy <code class="mono">M31</code> (flat/concentric round), ArcOK-safe <code class="mono">M205-M212</code> THC handshake, <code class="mono">Checkbox 212</code> seconds/ms <code class="mono">G04 P</code> control, optional <code class="mono">G20/G21</code> suppression, and <code class="mono">G93</code> rotary motion.</li>
-              <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span>: Engineered for the FlashCut Fabrication Head with one-click <code class="mono">.xml</code> setup import, Mode 2 Explicit Dynamic-Z (<code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code>, no <code class="mono">G601</code>/<code class="mono">G600</code>) for 3D Ramp Lead-Ins and square/angle tubes, <code class="mono">G04 X&lt;sec&gt;</code> delays, <code class="mono">G602</code>/<code class="mono">G603</code> THC suspend/resume, and <code class="mono">G93</code> rotary feeds.</li>
-              <li><span class="ui-chip">EdingCNC Plasma (.nc)</span>: Hardened for CNC720/CNC760 and EdingCNC Plasma with a 4THMILL Y-to-A mismatch guard (<code class="mono">If [#5150 == 2] Errmsg</code>), <code class="mono">G94</code> safe startup (<code class="mono">M21</code> + <code class="mono">M5</code>), <code class="mono">G10 L20 P#5220 A0.000</code> startup and modulo-360 <code class="mono">A[#5004 MOD 360.0]</code> wrap resets (zero <code class="mono">G92.1</code>), optional <code class="mono">G64 R&lt;tol&gt;</code> (never <code class="mono">G64 P...</code>), 256-char flattened comments, guarded <code class="mono">G38.2</code> probing (<code class="mono">If [[#5380 == 0] AND [#5397 == 0]]</code>, <code class="mono">#5067 == 0</code> miss check, <code class="mono">G92 Z[datum - switchOffset]</code>, optional centerline WCS <code class="mono">Z0</code>), programmable <code class="mono">M22 Q&lt;volts&gt;</code> / <code class="mono">M23 Q&lt;volts&gt;</code> vs. <code class="mono">measuredIsSetpoint = 1</code>, optional <code class="mono">M56</code> Arc-OK + <code class="mono">#5399</code> timeout, continuous <code class="mono">M21</code> on 4D dynamic-Z cuts, post-ramp <code class="mono">M20</code> unlock, post-<code class="mono">M5</code> dwell (<code class="mono">G4 P...</code>), <code class="mono">G94 F...</code> restore before safe-Z retracts, <code class="mono">0.005 mm</code> rotary deadband, and optional <code class="mono">M60</code> UI Nesting end.</li>
-              <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Hardened for PlanetCNC Mk3, Mk3/4, and TNG with <code class="mono">G90 G90.2</code> rotary absolute mode, <code class="mono">M54 P0</code> + <code class="mono">M55/M56/M57 P0</code> preamble, <code class="mono">G94</code> to <code class="mono">G93</code> cut-stroke switching (<code class="mono">G94 F...</code> restored before retracts and footer), <code class="mono">; ...</code> comments (<code class="mono">(status, ...)</code> for UI progress only), AL Axis-Lock clearing IHS (<code class="mono">G91 G01 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>) with optional two-stage probing and centerline <code class="mono">Z=0</code> on HSS tubes, lookahead-safe <code class="mono">M54 P1 Q&lt;speed&gt; R1</code> / <code class="mono">M54 P1 R1</code> THC, continuous <code class="mono">M54 P0</code> on 4D dynamic-Z cuts, post-ramp <code class="mono">M54</code> unlock, modulo-360 <code class="mono">G92 A</code> resets (zero <code class="mono">G92.1</code>), and optional <code class="mono">M02</code>/<code class="mono">M30</code> end.</li>
-              <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre plasma tables and SideKick rotary attachments (<code class="mono">v3.1.06d+</code> or legacy), emitting <code class="mono">G22</code> mm / <code class="mono">G20</code> in (never <code class="mono">G21</code>), strict <code class="mono">[square bracket]</code> comments, configurable <code class="mono">A</code>/<code class="mono">W</code>/<code class="mono">B</code> SideKick axis letter matching <code class="mono">WINCNC.INI</code>, <code class="mono">L37.2 D1/D0</code> continuous THC (or legacy <code class="mono">L37/L36</code>), decoupled <code class="mono">L38.1</code> cut parameters (<code class="mono">THC=... M1/M0</code>), <code class="mono">M61</code> / <code class="mono">L38</code> cycles, <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L28.1</code>/<code class="mono">L92</code> rotary/work wraps, <code class="mono">G54</code>-baked scribe offsets, and <code class="mono">G93</code> rotary feeds.</li>
-              <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6+ (.nc)</span>: One-click <code class="mono">config.xml</code> setup import, 4D trajectory feedrate spoofing for SimCNC 3.5, or hardened <code class="mono">G93</code> inverse-time (<code class="mono">F = 1 / Δt</code>, <code class="mono">G69</code> + metric <code class="mono">G64 P0.3/P0.4</code>, micro-segment coalescing, <code class="mono">0.002 mm</code> axial feathering, <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs, <code class="mono">G92 A</code> phase-preserving unwinds, and <code class="mono">#1999</code>/<code class="mono">#4061</code> guards) for SimCNC 3.6+, with motion-synced <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
-              <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Hardened portable <code class="mono">generic_g94</code> subset (<code class="mono">G00/G01/G02/G03/G04/G17/G20-G21/G40/G90/G92/G94</code>, <code class="mono">M03/M05/M30</code>) with uppercase <code class="mono">(COMMENT)</code> lines (&le; 80 chars), zero <code class="mono">;</code>/<code class="mono">%</code>/<code class="mono">G49</code>/<code class="mono">G92.1</code>/<code class="mono">G10 L20</code>, pre-zeroed <code class="mono">Z0</code> default, THC <code class="mono">None</code> default (or <code class="mono">M62/M63</code> / custom M-codes), configurable <code class="mono">G04</code> dwells, <code class="mono">F_G94 = dL_xyz / dt</code>, swing-envelope Safe Z, <code class="mono">G92 A</code> modulo unwinds, and Dry-Run mode. Not compatible with Burny, Dynatorch, or FlashCut Stingray.</li>
+              <li><span class="ui-chip">LinuxCNC QTPlasmaC (.ngc)</span>: Built for LinuxCNC 2.9+ across three modes. <strong>2D Flat Sheet</strong> omits Z/A words and outputs <code class="mono">M3 $0 S1</code>, <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>, <code class="mono">G64 P0.1 Q0.02</code>, <code class="mono">M52 P1</code>, and <code class="mono">#&lt;holes&gt;=0</code>. <strong>Rotary &amp; 3D Ramps</strong> adds <code class="mono">#&lt;tube_cut&gt;=1</code>, <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code>, <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code>, <code class="mono">G64 P0.25 Q0.05</code>, <code class="mono">G94</code> on HSS flats to <code class="mono">G93</code> on <code class="mono">A</code> moves, and <code class="mono">M190 P-1</code>. <strong>Non-<code class="mono">M3</code> Scribes/Markers</strong> sets <code class="mono">#&lt;keep-z-motion&gt;=1</code>. Also supports mutually exclusive <code class="mono">(o=0, ...)</code> vs. <code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code>, kerf void protection (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>), and <code class="mono">M67 E3 Q60</code>/<code class="mono">Q0</code> small-hole scaling.</li>
+              <li><span class="ui-chip">Langmuir Systems FireControl (.tap)</span>: Built for FireControl <code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code> on CrossFire, PRO, and XR tables. Outputs <code class="mono">(v1.6-sc)</code> and <code class="mono">(PS&lt;feed&gt;)</code> sentinels plus GRBL-safe <code class="mono">(...)</code> comments. Separates <code class="mono">0.020"</code> IHS backlash from thin-sheet springback, adds <code class="mono">0.55 s</code> 3D ramp pierce dwell and inverter settle delays, and handles <code class="mono">X-WRAP</code>/<code class="mono">Y-WRAP</code> round-tube wrapping with optional fixed-calibration chuck <code class="mono">Travel / Rev</code> scaling.</li>
+              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 ESS) (.tap)</span>: Built for Mach4 tables using the Warp9 Ethernet SmoothStepper with standalone THCs (Proma, PriceCNC). Emits <code class="mono">G31</code> probing with switch-offset math, <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control, and 4-axis <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner) (.tap)</span>: Built for Warp9 TMC3in1 and WarpRunner boards. Emits <code class="mono">m2020 (...)</code> tip voltage, anti-dive delay, and standoff registers with <code class="mono">G04 P0.1</code> Lua sync dwells and motion-synced <code class="mono">M62/M63 P3</code> arc control.</li>
+              <li><span class="ui-chip">MASSO G3 + DTHC (.nc)</span>: Uses <code class="mono">T112 M6</code> plasma mode and a 3-mode THC selector (<strong>MASSO DTHC</strong> <code class="mono">G200</code> Auto-IHS, <strong>External Up/Down THC</strong> Bare <code class="mono">G200</code> + <code class="mono">G38.2</code>, or <strong>Fixed Height / No THC</strong>). Includes <code class="mono">O0/O1</code> probing, <code class="mono">S0/S1</code> slag-stop, <code class="mono">M667 F&lt;thcFeed&gt;</code> / <code class="mono">M666</code> anti-dive, Bare <code class="mono">G200</code> / Hybrid <code class="mono">C=P</code> 3D ramps, and Template C 4D HSS. Also keeps <code class="mono">G53 G0 Z0</code> / <code class="mono">G92.1</code> clean, unwinds with <code class="mono">G91</code>/<code class="mono">G28 A0</code>/<code class="mono">G90</code>, and supports <code class="mono">M30 L&lt;count&gt;</code> bar-advance looping with <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">ArtSoft Mach3 (.tap)</span>: Built for Mach3 <code class="mono">R3.043.062</code> with one-click <code class="mono">.xml</code> import and a 4-mode THC selector (<code class="mono">M11Px/M10Px</code> pins 1-6, CandCNC <code class="mono">DTHC DCC</code> <code class="mono">S900/S10/S20</code>, ESS Proma 150 / TMC3in1 <code class="mono">M102/M101</code>, and ESS Proma Compact THC SD <code class="mono">M7/M9</code>). Supports <code class="mono">G31</code> ESS probing or <code class="mono">G28.1</code> floating-head, <code class="mono">G54</code>-baked scribe offsets (zero <code class="mono">G52/G92</code> conflict), <code class="mono">%</code> framing with <code class="mono">M30\n%\n</code>, immediate <code class="mono">G94</code> restore after <code class="mono">M5</code>, and <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">Centroid Acorn CNC12 v5.4+ (.nc)</span>: Splits into two modes. <strong>2D Flat Plate</strong> omits Z words and uses <code class="mono">G64 ON</code>, <code class="mono">M65</code> Material Profile, <code class="mono">M61/M62</code> macros, and 15% Voltage Anti-Dive. <strong>3D Ramps &amp; 4D Rotary</strong> uses Centerline <code class="mono">Z=0</code>, <code class="mono">G54</code>, <code class="mono">M36</code> ATHC Hold before <code class="mono">M3</code>, <code class="mono">M150</code> <code class="mono">mfunc150.mac</code> <code class="mono">M115</code> + <code class="mono">G92 Z&lt;Zm + offset&gt;</code>, <code class="mono">G93.1</code> smoothed inverse time, <code class="mono">G94</code> restore before <code class="mono">M5</code>, standalone <code class="mono">G4 P</code>, exact 360&deg; <code class="mono">G92 A0</code>, and semicolon <code class="mono">;</code> comments with zero parentheses.</li>
+              <li><span class="ui-chip">grblHAL (32-bit Plasma + Rotary) (.nc)</span>: Built for grblHAL core <code class="mono">20261015+</code> + Nov 2026+ <code class="mono">Plugin_plasma</code> (<code class="mono">$376=1</code>, <code class="mono">$133=0</code>, <code class="mono">$384=1</code>, <code class="mono">$674</code> <code class="mono">virtual_ports=1</code> / <code class="mono">sync_pos=1</code>, and <code class="mono">$350</code>). Outputs standalone-line <code class="mono">$674</code> ports (<code class="mono">P2</code> THC disable <code class="mono">M64/M62 P2</code> &amp; enable <code class="mono">M63/M65 P2</code>, <code class="mono">P3</code> torch inhibit clear <code class="mono">M65 P3</code>, and <code class="mono">E3</code> feed override <code class="mono">M68 E3 Q100</code> / <code class="mono">M67 E3 Q60</code>), plus <code class="mono">M190 P-1</code> explicit CAM Z control and continuous <code class="mono">M64 P2</code> on 3D ramps and 4D HSS. Also runs <code class="mono">M5</code> + <code class="mono">G94 F</code> after <code class="mono">G93</code> (preventing Core Issue #1027 &amp; <code class="mono">G38.2</code> crashes), modulo <code class="mono">G92 A&lt;mod_360&gt;</code> unwinds (no <code class="mono">G92.1</code>), <code class="mono">G4 P</code> float seconds, <code class="mono">&le; 80</code> char lines, and <code class="mono">? ! ~</code> stripped comments.</li>
+              <li><span class="ui-chip">CNCdrive UCCNC (.nc)</span>: Built for <code class="mono">UC100</code> (<code class="mono">0.2 s / 200 ms</code> dwell floor) and <code class="mono">UC300ETH / UC400ETH / AXBB-E</code>. Supports Integrated <code class="mono">G31</code> + <code class="mono">G92 Z&lt;Zm - SwitchOffset&gt;</code>, <code class="mono">Neuron Lite</code> (XY-only), or legacy <code class="mono">M31</code> (flat/concentric round). Includes ArcOK-safe <code class="mono">M205-M212</code> THC handshakes, <code class="mono">Checkbox 212</code> seconds/ms <code class="mono">G04 P</code> control, optional <code class="mono">G20/G21</code> suppression, and <code class="mono">G93</code> rotary motion.</li>
+              <li><span class="ui-chip">FlashCut CNC Plasma (.nc / .gc)</span>: Built for the FlashCut Fabrication Head with one-click <code class="mono">.xml</code> import. Uses Mode 2 Explicit Dynamic-Z (<code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code>, no <code class="mono">G601</code>/<code class="mono">G600</code>) for 3D Ramp Lead-Ins and square/angle tubes. Outputs <code class="mono">G04 X&lt;sec&gt;</code> delays, <code class="mono">G602</code>/<code class="mono">G603</code> THC locks, and <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">EdingCNC Plasma (.nc)</span>: Built for CNC720/CNC760 and EdingCNC Plasma with a 4THMILL Y-to-A check (<code class="mono">If [#5150 == 2] Errmsg</code>), <code class="mono">G94</code> safe startup (<code class="mono">M21</code> + <code class="mono">M5</code>), <code class="mono">G10 L20 P#5220 A0.000</code> startup, modulo-360 <code class="mono">A[#5004 MOD 360.0]</code> wrap resets (zero <code class="mono">G92.1</code>), optional <code class="mono">G64 R&lt;tol&gt;</code> (never <code class="mono">G64 P...</code>), and 256-char flattened comments. Uses guarded <code class="mono">G38.2</code> probing (<code class="mono">If [[#5380 == 0] AND [#5397 == 0]]</code>, <code class="mono">#5067 == 0</code> miss check, <code class="mono">G92 Z[datum - switchOffset]</code>, optional centerline WCS <code class="mono">Z0</code>), <code class="mono">M22 Q&lt;volts&gt;</code> / <code class="mono">M23 Q&lt;volts&gt;</code> vs. <code class="mono">measuredIsSetpoint = 1</code>, and optional <code class="mono">M56</code> Arc-OK + <code class="mono">#5399</code> timeout. Holds <code class="mono">M21</code> across 4D dynamic-Z cuts, unlocks with <code class="mono">M20</code> after ramps, adds post-<code class="mono">M5</code> <code class="mono">G4 P...</code> dwell, restores <code class="mono">G94 F...</code> before safe-Z retracts, keeps a <code class="mono">0.005 mm</code> rotary deadband, and supports optional <code class="mono">M60</code> UI Nesting end.</li>
+              <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Built for PlanetCNC Mk3, Mk3/4, and TNG using <code class="mono">G90 G90.2</code> rotary absolute mode, <code class="mono">M54 P0</code> + <code class="mono">M55/M56/M57 P0</code> startup, and <code class="mono">G94</code>-to-<code class="mono">G93</code> cut-stroke switching (<code class="mono">G94 F...</code> restored before retracts and footer) with <code class="mono">; ...</code> comments (<code class="mono">(status, ...)</code> for progress only). Clears AL Axis-Lock during IHS (<code class="mono">G91 G01 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>) with optional two-stage probing and centerline <code class="mono">Z=0</code> on HSS tubes. Uses lookahead-safe <code class="mono">M54 P1 Q&lt;speed&gt; R1</code> / <code class="mono">M54 P1 R1</code> THC, continuous <code class="mono">M54 P0</code> on 4D dynamic-Z cuts, post-ramp <code class="mono">M54</code> unlock, modulo-360 <code class="mono">G92 A</code> resets (zero <code class="mono">G92.1</code>), and optional <code class="mono">M02</code>/<code class="mono">M30</code> end.</li>
+              <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre tables and SideKick rotaries (<code class="mono">v3.1.06d+</code> or legacy). Outputs <code class="mono">G22</code> mm / <code class="mono">G20</code> in (never <code class="mono">G21</code>), <code class="mono">[square bracket]</code> comments, and configurable <code class="mono">A</code>/<code class="mono">W</code>/<code class="mono">B</code> SideKick axis letters matching <code class="mono">WINCNC.INI</code>. Handles <code class="mono">L37.2 D1/D0</code> continuous THC (or legacy <code class="mono">L37/L36</code>), <code class="mono">L38.1</code> cut parameters (<code class="mono">THC=... M1/M0</code>), <code class="mono">M61</code> / <code class="mono">L38</code> cycles, <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L28.1</code>/<code class="mono">L92</code> wraps, <code class="mono">G54</code>-baked scribe offsets, and <code class="mono">G93</code> rotary feeds.</li>
+              <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6+ (.nc)</span>: Includes one-click <code class="mono">config.xml</code> import, 4D trajectory feedrate spoofing for SimCNC 3.5, and <code class="mono">G93</code> inverse-time for SimCNC 3.6+ (<code class="mono">F = 1 / Δt</code>, <code class="mono">G69</code> + metric <code class="mono">G64 P0.3/P0.4</code>, micro-segment coalescing, <code class="mono">0.002 mm</code> axial feathering, <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs, <code class="mono">G92 A</code> phase-preserving unwinds, and <code class="mono">#1999</code>/<code class="mono">#4061</code> guards). Syncs <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
+              <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Portable <code class="mono">generic_g94</code> subset (<code class="mono">G00/G01/G02/G03/G04/G17/G20-G21/G40/G90/G92/G94</code>, <code class="mono">M03/M05/M30</code>) with uppercase <code class="mono">(COMMENT)</code> lines (&le; 80 chars) and zero <code class="mono">;</code>/<code class="mono">%</code>/<code class="mono">G49</code>/<code class="mono">G92.1</code>/<code class="mono">G10 L20</code>. Defaults to pre-zeroed <code class="mono">Z0</code> and THC <code class="mono">None</code> (or <code class="mono">M62/M63</code> / custom M-codes), with configurable <code class="mono">G04</code> dwells, <code class="mono">F_G94 = dL_xyz / dt</code>, swing-envelope Safe Z, <code class="mono">G92 A</code> modulo unwinds, and Dry-Run mode. Not compatible with Burny, Dynatorch, or FlashCut Stingray.</li>
             </ul>
 
             <div class="doc-callout info">
-              <div class="doc-callout-title">🏅 Machine Verification Badges &amp; Lifetime Updates on Existing Paid License (<code class="mono">v0.8-E</code>)</div>
+              <div class="doc-callout-title">🏅 Machine Verification Badges &amp; Lifetime Updates (<code class="mono">v0.8-E</code>)</div>
               <p>
-                In the Machines modal, <strong>CSLab SimCNC</strong> and <strong>FlashCut CNC</strong> carry the <code class="mono">Hardware Verified</code> badge, while all other controller posts show <code class="mono">Beta &middot; Help Verify</code>. A full-price paid <code class="mono">Maker</code> or <code class="mono">Pro Shop</code> license is required (no free licenses, discounts, or refunds). Submitting qualifying test-cut verification (test-cut results, controller XML/config details, and cut photos or videos) extends your existing paid license from the standard 1-year update window to <strong>Lifetime Updates</strong>. Submitting also launches a pre-filled <code class="mono">mailto:contact@rotarycam.app</code> email draft (with <strong>Open Email Draft</strong> and <strong>Copy Report</strong> buttons) so your beta cut feedback reaches RotaryCAM directly.
+                In the Machines modal, <strong>CSLab SimCNC</strong> and <strong>FlashCut CNC</strong> carry the <code class="mono">Hardware Verified</code> badge. All other controller posts show <code class="mono">Beta &middot; Help Verify</code>. On a full-price paid <code class="mono">Maker</code> or <code class="mono">Pro Shop</code> license (no free licenses, discounts, or refunds), submitting test-cut results, your controller XML/config, and cut photos or videos extends your 1-year update window to <strong>Lifetime Updates</strong>. Submitting opens a pre-filled <code class="mono">mailto:contact@rotarycam.app</code> draft (with <strong>Open Email Draft</strong> and <strong>Copy Report</strong> buttons).
               </p>
             </div>
 
             <div class="doc-callout info">
-              <div class="doc-callout-title">📖 In-Depth Controller Setup Guides Available in Step 06</div>
+              <div class="doc-callout-title">📖 Full Controller Setup Guides in Step 06</div>
               <p>
-                Each CNC controller handles initial touch-off sensing (IHS), torch height control (THC) anti-dive locking, material charts, and rotary axes differently. For full pinout mappings, macro wiring, and practical shop tips for your exact controller, jump down to <a href="#step-6"><strong>Step 06: Supported CNC Controllers &amp; Post-Processor Setup Guides</strong></a>.
+                Jump to <a href="#step-6"><strong>Step 06</strong></a> below for pinout mappings, macro wiring, and 6-phase cut-cycle checklists for your exact controller.
               </p>
             </div>
 
             <div class="doc-callout danger">
-              <div class="doc-callout-title">⚠ Critical: Why G93 Inverse-Time Is Mandatory for 4-Axis Rotary Cutting</div>
+              <div class="doc-callout-title">⚠ Why G93 Inverse-Time Is Required for 4-Axis Rotary Cutting</div>
               <p>
-                On a flat plate or fixed-radius round tube, a standard units-per-minute feedrate (<code class="mono">G94 F3000</code>) works fine. But when cutting square/rectangular HSS tubing, angle iron, or pipe bevels, the distance from the tube's center to the cutting point changes continuously as the chuck rotates. Standard controller "Rotary Radius Compensation" settings only work for a single fixed circular radius and fail on rectangular corners. This causes the machine to violently surge or crawl. In <code class="mono">G93</code> Inverse-Time mode, RotaryCAM calculates the exact physical time (<code class="mono">Δt</code>) required for each micro-segment and writes <code class="mono">F = 1 / Δt</code> on every line, guaranteeing your plasma torch cuts at the exact surface speed you set in your cut chart, regardless of stock shape or corner radius.
+                Standard units-per-minute feedrates (<code class="mono">G94 F3000</code>) work fine on flat plate or round pipe. On square/rectangular HSS, angle iron, or pipe bevels, the distance from tube center to the torch changes every time the chuck turns. Controller "Rotary Radius Compensation" only handles one fixed circle and fails on rectangular corners, making your torch surge or crawl. With <code class="mono">G93</code> Inverse-Time, every line carries <code class="mono">F = 1 / Δt</code> for its exact micro-segment duration (<code class="mono">Δt</code>), holding your cut-chart surface speed steady on any shape or corner radius.
               </p>
             </div>
 
             <p>
-              Beneath the dialect selector, configure your <strong>Post-Processor Compensation Strategy</strong>:
+              Below the dialect picker, set your <strong>Post-Processor Compensation Strategy</strong>:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Enable Acceleration &amp; Jerk Profiling:</strong> Models your machine's real motor acceleration in software so feedrate changes and THC anti-dive freeze points match what happens on the table.</li>
-              <li><strong>Smooth Rotary Corner Motion (Square &amp; Rectangular Tube):</strong> Automatically smooths chuck rotation when rolling from flat faces into corner fillets, preventing sudden rotational jerks and motor stalls.</li>
-              <li><strong>Enable Kerf Width Compensation &amp; Kerf-True Tabs:</strong> Offsets inside holes (CW) and outside cuts (CCW) by half your plasma kerf width so parts hit dimension right off the table, and adds a full kerf width to micro-joint tab gaps so thin-wall tabs never burn away.</li>
-              <li><strong>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling:</strong> Automatically slows enclosed bolt holes (<code class="mono">&le; 25.4 mm</code> / <code class="mono">1&Prime;</code>) on round pipe and square/rectangular tubing to <code class="mono">60%</code> cutting speed, stopping plasma arc-lag cone taper so bolts drop straight through without reaming.</li>
-              <li><strong>Configurable ERW Weld-Seam Pierce Avoidance:</strong> Set where your tube's internal ERW mill weld seam faces in the chuck on round pipe or square/rectangular HSS, and pierces automatically shift onto clean parent steel, preventing blowback spatter from thick internal weld flash.</li>
-              <li><strong>Heat-Optimized vs. One-Direction Cut Ordering:</strong> Choose between automatic heat staggering (alternating internal holes and slots along the tube to reduce heat bow) or one-direction cutting from the free end toward the chuck.</li>
+              <li><strong>Enable Acceleration &amp; Jerk Profiling:</strong> Models your real motor acceleration so feedrate ramps and THC freeze points match what happens on your table.</li>
+              <li><strong>Smooth Rotary Corner Motion (Square &amp; Rectangular Tube):</strong> Blends chuck rotation smoothly from flat faces onto corner radii to prevent jerks and motor stalls.</li>
+              <li><strong>Enable Kerf Width Compensation &amp; Kerf-True Tabs:</strong> Offsets inside holes (CW) and outside cuts (CCW) by half your kerf width so parts cut to size, and adds a full kerf width to micro-joint tab gaps so thin-wall tabs survive.</li>
+              <li><strong>Rotary Small-Hole (<code class="mono">60%</code>) Bolt Speed Scaling:</strong> Slows enclosed bolt holes (<code class="mono">&le; 25.4 mm</code> / <code class="mono">1&Prime;</code>) on round pipe and square/rectangular HSS to <code class="mono">60%</code> speed, cutting out arc-lag taper so bolts drop right through.</li>
+              <li><strong>Configurable ERW Weld-Seam Pierce Avoidance:</strong> Tell the software where your tube's internal ERW weld seam sits in the chuck on round pipe or square/rectangular HSS, and pierces automatically shift onto clean parent steel away from heavy internal weld flash.</li>
+              <li><strong>Heat-Optimized vs. One-Direction Cut Ordering:</strong> Alternate holes and slots along the stick to prevent heat bow, or cut straight from the free end toward the chuck.</li>
             </ul>
           </div>
 
@@ -306,35 +306,35 @@
         <article class="doc-step-card" id="step-4">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 04</span>
-            <h2 class="doc-step-title">Configure Synchronous THC Lock/Unlock &amp; Plasma Hardware</h2>
+            <h2 class="doc-step-title">Set Synchronous THC Lock &amp; Plasma Hardware</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              Select the <span class="ui-chip cyan">THC &amp; Plasma Hardware</span> tab. On a 4-axis tube cutter, <strong>Torch Height Control (THC) configuration is one of the most important settings in the entire CAM pipeline.</strong>
+              Open <span class="ui-chip cyan">THC &amp; Plasma Hardware</span>. <strong>Torch Height Control (THC) locking makes or breaks 4-axis tube cuts.</strong>
             </p>
             <p>
-              When the torch rolls around a rectangular tube corner or a steep saddle apex, the rotary chuck must slow down to stay within its angular acceleration limit. Whenever plasma cutting speed drops, the plasma arc column widens and arc voltage rises sharply. An unlocked voltage-based THC misinterprets that voltage spike as "torch too high" and drives the torch straight into the steel tube.
+              Around rectangular tube corners or steep saddle peaks, your rotary chuck slows down to stay inside its acceleration limit. Whenever cutting speed drops, the plasma arc widens and arc voltage spikes. If your voltage THC stays unlocked, it reads that spike as "torch too high" and drives your torch straight into the tube.
             </p>
 
             <ul class="doc-bullet-list">
-              <li><strong>Plasma Torch / Cut Chart Family:</strong> Select your power supply's torch family once on each machine profile:
+              <li><strong>Plasma Torch / Cut Chart Family:</strong> Pick your torch family once per machine profile:
                 <ul class="doc-bullet-list" style="margin-top: 0.35rem; margin-bottom: 0.35rem;">
-                  <li><strong>Hypertherm SYNC (<code class="mono">3.2 mm / 0.125"</code> cut height):</strong> Powermax 45/65/85/105 SYNC single-piece cartridge platform (<code class="mono">810500MU</code> Rev 4, <code class="mono">45A–105A</code>).</li>
-                  <li><strong>Hypertherm Duramax / Legacy 30XP–105 (<code class="mono">1.5 mm / 0.060"</code> cut height):</strong> Powermax 30XP through 105 torches running multi-piece mechanized shielded consumables (<code class="mono">30A–105A</code> + <code class="mono">45A FineCut</code>).</li>
-                  <li><strong>Generic Air Plasma (<code class="mono">1.5 mm / 0.060"</code> cut height):</strong> Conservative blowback torches (<code class="mono">30A, 45A, 60A, 80A</code>, ~<code class="mono">106–128 V</code>, <code class="mono">72 PSI</code>) for Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster.</li>
+                  <li><strong>Hypertherm SYNC (<code class="mono">3.2 mm / 0.125"</code> cut height):</strong> Powermax 45/65/85/105 SYNC single-piece cartridge (<code class="mono">810500MU</code> Rev 4, <code class="mono">45A–105A</code>).</li>
+                  <li><strong>Hypertherm Duramax / Legacy 30XP–105 (<code class="mono">1.5 mm / 0.060"</code> cut height):</strong> Powermax 30XP through 105 torches with multi-piece shielded consumables (<code class="mono">30A–105A</code> + <code class="mono">45A FineCut</code>).</li>
+                  <li><strong>Generic Air Plasma (<code class="mono">1.5 mm / 0.060"</code> cut height):</strong> Blowback torches (<code class="mono">30A, 45A, 60A, 80A</code>, ~<code class="mono">106–128 V</code>, <code class="mono">72 PSI</code>) for Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster.</li>
                 </ul>
-                Setting your torch family binds the correct standoff height (<code class="mono">1.5 mm</code> vs <code class="mono">3.2 mm</code>), arc voltage, and pierce delay automatically whenever a 3D tube or flat sheet is loaded.
+                Your standoff height (<code class="mono">1.5 mm</code> vs <code class="mono">3.2 mm</code>), arc voltage, and pierce delay load automatically for every tube or flat sheet.
               </li>
-              <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Choose how RotaryCAM signals your THC to freeze and unfreeze in G-code, such as synchronous digital output macros (<code class="mono">M63 P0</code> to lock / <code class="mono">M62 P0</code> to unlock without motion planner pauses) or controller-specific M-codes.</li>
-              <li><strong>Dynamic Corner Lock Threshold (<code class="mono">%</code>):</strong> Automatically locks Z-axis height regulation whenever actual surface velocity drops below the configured percentage (e.g., <code class="mono">80%</code>) of target cutting speed, and unlocks it once full surface speed resumes.</li>
-              <li><strong>Lead-In / Lead-Out THC Lock:</strong> Keeps THC locked during pierce, ramp lead-in, and overburn lead-out phases where the plasma arc is stabilizing or crossing an existing kerf.</li>
+              <li><strong>THC Mode &amp; Lock Command Syntax:</strong> Pick how your G-code locks and unlocks THC, such as synced digital outputs (<code class="mono">M63 P0</code> lock / <code class="mono">M62 P0</code> unlock with zero lookahead pause) or controller-specific M-codes.</li>
+              <li><strong>Dynamic Corner Lock Threshold (<code class="mono">%</code>):</strong> Locks Z height control whenever real surface speed drops below your threshold (such as <code class="mono">80%</code> of cut speed), and unlocks once full speed returns.</li>
+              <li><strong>Lead-In / Lead-Out THC Lock:</strong> Holds THC locked across pierce, ramp lead-in, and overburn lead-out while the arc settles or crosses an open kerf.</li>
             </ul>
 
             <div class="doc-callout info">
               <div class="doc-callout-title">⚡ Why Synchronous M62/M63 Matters</div>
               <p>
-                Standard <code class="mono">M64/M65</code> or custom M-codes on many controllers force an exact-stop motion buffer flush, causing the torch to pause momentarily and blow a divot in the tube wall. Synchronous <code class="mono">M62/M63</code> commands toggle the THC lock pin in lockstep with the next <code class="mono">G1</code> motion block at full lookahead speed.
+                Standard <code class="mono">M64/M65</code> or custom M-codes flush the motion planner on many controllers, stalling the torch for a split second and blowing a divot in your tube. Synced <code class="mono">M62/M63</code> commands flip the THC lock pin right on the next <code class="mono">G1</code> move at full lookahead speed.
               </p>
             </div>
           </div>
@@ -359,17 +359,17 @@
         <article class="doc-step-card" id="step-5">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 05</span>
-            <h2 class="doc-step-title">Set Default Zero-Bevel &amp; Corner Loop Parameters and Save Profile</h2>
+            <h2 class="doc-step-title">Set Zero-Bevel &amp; Corner Loop Defaults and Save</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              Finally, open the <span class="ui-chip cyan">Zero-Bevel &amp; Corner Loops</span> tab to define the default geometric compensation values applied to new contours (which can still be overridden per contour during part inspection):
+              Open <span class="ui-chip cyan">Zero-Bevel &amp; Corner Loops</span> to set default compensation for new parts (you can still override any individual cut later):
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Zero-Bevel Pipe Saddle &amp; Square/Rect HSS Miter Defaults:</strong> Set default <strong>Fade Angle (<code class="mono">90°</code>)</strong>, <strong>Intensity (<code class="mono">100%</code>)</strong>, and weld prep <strong>Side Gap (<code class="mono">mm</code>)</strong> for dual-curve round pipe saddles and heel-only pullback (<code class="mono">t &middot; tan(&theta;)</code>) on square/rectangular HSS miters, plus default ERW weld-seam exclusion zones so pierces stay off internal mill flash.</li>
-              <li><strong>Corner Looping (Sharp Direction Changes):</strong> Set the minimum/maximum corner angle range (<code class="mono">90°–180°</code>) and loop radius (<code class="mono">3 mm</code>) used when injecting rollout corner loops into scrap to keep sharp external corners crisp.</li>
-              <li><strong>Manage &amp; Persist Profiles:</strong> Use the bottom-left toolbar (<span class="ui-chip">+ New</span>, <span class="ui-chip">Clone</span>, <span class="ui-chip">★ Active</span>) to create or switch profiles, then click the green <span class="ui-chip emerald">Save Profile</span> button in the top-right corner of the modal.</li>
+              <li><strong>Zero-Bevel Pipe Saddle &amp; Square/Rect HSS Miter Defaults:</strong> Set default <strong>Fade Angle (<code class="mono">90°</code>)</strong>, <strong>Intensity (<code class="mono">100%</code>)</strong>, and weld prep <strong>Side Gap (<code class="mono">mm</code>)</strong> for dual-curve round pipe saddles and heel-only pullback (<code class="mono">t &middot; tan(&theta;)</code>) on square/rectangular HSS miters, plus default ERW weld-seam keep-out zones so pierces avoid internal mill flash.</li>
+              <li><strong>Corner Looping (Sharp Direction Changes):</strong> Set the corner angle range (<code class="mono">90°–180°</code>) and loop radius (<code class="mono">3 mm</code>) for scrap-side rollout loops that keep outside corners sharp.</li>
+              <li><strong>Save &amp; Switch Profiles:</strong> Use <span class="ui-chip">+ New</span>, <span class="ui-chip">Clone</span>, and <span class="ui-chip">★ Active</span> in the bottom-left bar, then click green <span class="ui-chip emerald">Save Profile</span> in the top-right corner.</li>
             </ul>
           </div>
 
@@ -398,10 +398,10 @@
 
           <div class="doc-step-body">
             <p>
-              Every CNC controller handles touch-off probing, torch ignition, THC locking, and rotary motion differently. RotaryCAM ships zero-hand-edit post-processors for all <strong>14 supported controllers</strong> (unlocked in both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong>) plus coaxial EasyScribe and pneumatic air-scribe marking.
+              Every CNC controller handles touch-off probing, torch ignition, THC locking, and rotary feeds differently. All <strong>14 supported controllers</strong> (unlocked in both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong>), plus coaxial EasyScribe and pneumatic air-scribe marking, output ready-to-run code with zero hand edits.
             </p>
             <p>
-              Compare all 14 dialects below, then open your controller's dedicated guide for the 6-phase cut cycle diagram, exact stage G-code, checklists, and hardware toggles.
+              Compare the 14 dialects below, then open your controller's guide for its 6-phase cut cycle diagram, stage G-code, wiring checklists, and hardware toggles.
             </p>
 
             <div class="table-wrap" style="margin: 0.75rem 0;">
@@ -472,7 +472,7 @@
 
           <div class="doc-step-body">
             <p>
-              When you import a controller XML file into RotaryCAM, the importer flags settings that can stall your rotary chuck, mess up pierce delays, or scale parts wrong. Find your exact warning below to see what it means on your table and what to fix before cutting.
+              When you import a controller XML file, the importer flags settings that can stall your rotary chuck, ruin pierce delays, or scale parts wrong. Look up your warning below to see what to fix on your table before cutting.
             </p>
 
             <!-- 1. ArtSoft Mach3 (.xml) -->

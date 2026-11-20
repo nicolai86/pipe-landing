@@ -623,7 +623,7 @@
         <div class="doc-intro-card">
           <h2>Heavy-Plate Piercing, Open-Path Kerf, Clean Remnants &amp; Zero Torch Dives</h2>
           <p>
-            Thick plate, open trim cuts, and tight nests punish basic 2D CAM. Blowback wrecks nozzles on 1/2&Prime; steel, crossing an old kerf slot makes THC dive into the slats, and jagged skeletons waste half your sheet. These four primitives protect your consumables and squeeze more usable parts out of every plate.
+            Thick plate, open trim cuts, and tight nests punish basic 2D CAM. Blowback wrecks nozzles on 1/2&Prime; steel, crossing an old kerf makes THC dive into the slats, and jagged skeletons waste half your sheet. Use these four tools to save your consumables and get more parts from every plate.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
@@ -647,17 +647,17 @@
         <article class="doc-step-card" id="step-1">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 01</span>
-            <h2 class="doc-step-title">Spatial Void THC Auto-Lock (<code class="mono">v0.8-A</code>: Zero Torch Dives)</h2>
+            <h2 class="doc-step-title">Void THC Auto-Lock (Zero Torch Dives)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              When a plasma torch crosses a previously cut kerf slot or pierce crater, arc voltage spikes and tricks Torch Height Control into diving the Z-axis straight into the steel.
+              When your torch crosses an old kerf slot or pierce crater, arc voltage spikes and makes THC dive the torch straight into the slats.
             </p>
             <ul class="doc-bullet-list">
-              <li>RotaryCAM's <code class="mono">SpatialVoidIndex</code> records every cut kerf path and pierce crater automatically across both flat-sheet and rotary jobs.</li>
-              <li>Whenever a later cut, common-line pass, or guillotine crop approaches within <code class="mono">0.5 &times; kerfWidth + 4.0 mm</code> of an existing void, the planner splits the <code class="mono">G1</code> segment.</li>
-              <li>THC locks automatically through the crossing zone and unlocks only after the torch clears back onto solid metal. Zero manual kerf-crossing rules required.</li>
+              <li>Every cut kerf and pierce crater is tracked automatically across flat-sheet and rotary jobs.</li>
+              <li>When a later cut, common-line pass, or crop line comes within <code class="mono">0.5 &times; kerf width + 4.0 mm</code> of a void, your <code class="mono">G1</code> move splits automatically.</li>
+              <li>THC locks across the gap and unlocks once your torch clears back onto solid steel. No manual keep-out rules needed.</li>
             </ul>
           </div>
         </article>
@@ -673,12 +673,12 @@
 
           <div class="doc-step-body">
             <p>
-              Each control sits right inside the Features table where you tune individual contours:
+              Set both options right inside the Features table for each contour:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Open-Path Kerf (<code class="mono">Center (On-Line)</code> / <code class="mono">Left</code> / <code class="mono">Right</code>):</strong> Appears inline automatically in the Features table on unclosed DXF or SVG slit and trim lines (<code class="mono">is_centerline_slit</code>). Offset direction stays locked to the original stroke direction so trimmed plate edges hold exact finished size.</li>
-              <li><strong><code class="mono">Edge-Start (Thick Plate)</code> Lead-In:</strong> Inside every feature's <code class="mono">Lead-In Strategy</code> dropdown. Selecting it reveals the <code class="mono">Edge Overhang</code> field (<code class="mono">4.0 mm</code> default) and flags an amber tip when cutting plate <code class="mono">&ge; 12 mm</code> (<code class="mono">1/2&Prime;</code>).</li>
-              <li><strong>Safe Off-Plate Ignition:</strong> RotaryCAM probes IHS on solid steel at the contour start, retracts to pierce height, shifts off the plate edge by the overhang distance to fire without molten slag blowback, and locks THC until traveling <code class="mono">6.0 mm</code> onto solid steel.</li>
+              <li><strong>Open-Path Kerf (<code class="mono">Center (On-Line)</code> / <code class="mono">Left</code> / <code class="mono">Right</code>):</strong> Appears inline on open DXF or SVG slit and trim lines. Offset stays locked to the drawing stroke direction so trimmed edges hit exact size.</li>
+              <li><strong><code class="mono">Edge-Start (Thick Plate)</code> Lead-In:</strong> Pick it in the <code class="mono">Lead-In Strategy</code> dropdown. You get an <code class="mono">Edge Overhang</code> field (<code class="mono">4.0 mm</code> default) and an amber tip whenever your plate is <code class="mono">&ge; 12 mm</code> (<code class="mono">1/2&Prime;</code>).</li>
+              <li><strong>Clean Off-Plate Piercing:</strong> Your torch probes IHS on solid steel at the contour start and lifts to pierce height. It then shifts off the plate edge by the overhang distance, fires without blowback, and locks THC until traveling <code class="mono">6.0 mm</code> onto solid steel.</li>
             </ul>
           </div>
 
@@ -707,12 +707,12 @@
 
           <div class="doc-step-body">
             <p>
-              Slice clean, square remnants off the back of your plate automatically instead of cutting freehand by eye:
+              Slice clean, square remnants off the back of your plate instead of cutting freehand by eye:
             </p>
             <ul class="doc-bullet-list">
-              <li>In flat-sheet <span class="ui-chip">Stock Nesting</span>, open the <span class="ui-chip">Guillotine Crop Cut</span> dropdown and pick <code class="mono">Best Single Cut</code>, <code class="mono">L-Cut (Both X &amp; Y)</code>, <code class="mono">Vertical (X)</code>, or <code class="mono">Horizontal (Y)</code>.</li>
-              <li>Set the crop clearance margin (<code class="mono">kerf + 5.0 mm</code> default) to control how close the shear line runs to your nested parts.</li>
-              <li>Inspect the dashed <code class="mono">CROP</code> path(s) and highlighted <code class="mono">Usable Remnant</code> area with exact dimensions inside the 2D Pack Part Preview before compiling G-code.</li>
+              <li>In flat <span class="ui-chip">Stock Nesting</span>, open <span class="ui-chip">Guillotine Crop Cut</span> and choose <code class="mono">Best Single Cut</code>, <code class="mono">L-Cut (Both X &amp; Y)</code>, <code class="mono">Vertical (X)</code>, or <code class="mono">Horizontal (Y)</code>.</li>
+              <li>Set the clearance margin (<code class="mono">kerf + 5.0 mm</code> default) to keep the shear line clear of your nested parts.</li>
+              <li>Check the dashed <code class="mono">CROP</code> path(s) and highlighted <code class="mono">Usable Remnant</code> box with exact dimensions in the 2D Pack Part Preview before exporting G-code.</li>
             </ul>
           </div>
 
@@ -741,12 +741,13 @@
 
           <div class="doc-step-body">
             <p>
-              Cut pierces per sheet or keep lightweight parts tied to the skeleton in one continuous outer pass:
+              Drop your pierce count per sheet, or keep small parts tied to the skeleton in one outer pass:
             </p>
             <ul class="doc-bullet-list">
-              <li>Load the built-in <span class="ui-chip cyan">Flat Chain &amp; Bridge</span> fixture (<code class="mono">flat-chain-bridge-kit.svg</code>) from Quick CAD Fixtures to test on a multi-part layout.</li>
-              <li>Uncheck <span class="ui-chip">Common-line cutting</span> first (Chain/Bridge and Common-Line modes are mutually exclusive in flat mode).</li>
-              <li>Select <span class="ui-chip">Daisy-Chain (Single Pierce)</span> to link outer contours in a single continuous serpentine runner, or <span class="ui-chip">Micro-Bridge (Connected)</span> to keep parts anchored with narrow uncut tabs. Interior bolt holes always cut first before the chained outer pass starts.</li>
+              <li>Load <span class="ui-chip cyan">Flat Chain &amp; Bridge</span> (<code class="mono">flat-chain-bridge-kit.svg</code>) from Quick CAD Fixtures to test on a multi-part plate.</li>
+              <li>Uncheck <span class="ui-chip">Common-line cutting</span> first, since Chain/Bridge and Common-Line cannot run together.</li>
+              <li>Pick <span class="ui-chip">Daisy-Chain (Single Pierce)</span> to link outer profiles in one continuous cut.</li>
+              <li>Or pick <span class="ui-chip">Micro-Bridge (Connected)</span> to hold small parts with narrow uncut tabs. Interior holes always cut before the chained outer pass starts.</li>
             </ul>
           </div>
         </article>

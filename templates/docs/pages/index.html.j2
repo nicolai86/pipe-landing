@@ -60,7 +60,7 @@
 
         <h1 class="docs-title">Operator Guides &amp; <span class="text-gradient-amber">CAM Workflows</span></h1>
         <p class="docs-subtitle">
-          Follow our step-by-step visual walkthroughs and technical references to configure your 4-axis rotary plasma kinematics, tune per-contour lead-ins and zero-bevel compensation, pack multi-tube STEP assemblies onto raw sticks, import multi-file DXF &amp; SVG flat-sheet kits with magnetic 2-point scaling and 2D sheet nesting, export native Imperial (<code class="mono">in / G20</code>) or Metric (<code class="mono">mm / G21</code>) G-code, unfold bent HSS &amp; round sticks with kerf relief cuts, inspect release changelogs, model Fusion 360 Structural Member assemblies for AI profile autodetection, and set up motion-synchronized <code class="mono">M62/M63</code> torch control in SimCNC.
+          Get your rotary plasma table cutting accurate parts faster. Set up your 4-axis tube and chuck limits, dial in zero-bevel saddles and lead-ins, and unfold bent HSS sticks with kerf relief cuts. Nest multi-tube STEP assemblies or DXF/SVG flat sheets with 2-point scaling, then export <code class="mono">G20</code> (in) or <code class="mono">G21</code> (mm) G-code with synced <code class="mono">M62/M63</code> torch control.
         </p>
 
         <div class="docs-meta-bar">
@@ -111,9 +111,9 @@
 
       <!-- Quick Reference Callout -->
       <div class="doc-intro-card" style="margin-bottom: 5rem;">
-        <h2>Recommended First-Time Setup Sequence</h2>
+        <h2>First-Time Setup Order</h2>
         <p>
-          If you are setting up RotaryCAM on your rotary plasma table, start with <strong><a href="machine-configuration.html" style="color: var(--amber-400);">Tutorial 01: Basic Machine Configuration</a></strong> and <strong><a href="simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a></strong>. RotaryCAM calculates true surface cutting speeds and rotary motion limits directly in software. Setting your table's true axis speeds and wiring <code class="mono">ExtTrajSyncOut0/1</code> (<code class="mono">M62/M63 P0/P1</code>) ensures your torch runs at steady cutting feedrates with zero divots and spatter-free 3D ramp lead-ins.
+          New to the table? Start with <a href="machine-configuration.html" style="color: var(--amber-400);"><strong>Tutorial 01</strong></a>, then wire <a href="simcnc-motion-sync.html" style="color: var(--cyan-400);"><strong>Tutorial 07</strong></a>. Real motor limits and <code class="mono">ExtTrajSyncOut0/1</code> (<code class="mono">M62/M63 P0/P1</code>) wiring hold steady surface speed on corners, stop THC divots, and run clean 3D ramp lead-ins.
         </p>
         <div class="doc-intro-grid">
           <div class="doc-intro-stat">

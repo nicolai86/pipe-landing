@@ -627,12 +627,12 @@
         <div class="doc-intro-card">
           <h2>From Multi-Tube CAD Weldment to Multi-Stick G-Code</h2>
           <p>
-            Real-world structural fabrications (such as roll cages, chassis frames, handrails, and headache racks) contain dozens of tubes across several cross-section sizes in a single STEP file. RotaryCAM automatically classifies every solid by cross-section profile, filters compatible parts for the stock currently loaded in your rotary chuck, flips and rolls tubes so angled miters and fishmouth copes interlock tightly end-to-end across raw sticks, optionally merges matching ends into a single shared common-line sever cut, and sequences cuts from the free end toward the chuck so your tube stays rigidly supported throughout the entire program.
+            Roll cages, chassis frames, handrails, and headache racks pack dozens of tube sizes into one STEP file. Load your assembly once to sort parts by cross-section and filter only what fits the stock in your chuck. Adjacent miters and fishmouth copes flip and roll to interlock end-to-end, optional common-line cuts merge matching ends, and every stick cuts from the free end back toward the chuck so the tube stays rigid.
           </p>
           <div class="doc-intro-grid">
             <div class="doc-intro-stat">
               <span class="label">Profile Grouping</span>
-              <span class="value">Automatic AI Cross-Section Match</span>
+              <span class="value">Auto Cross-Section Match</span>
             </div>
             <div class="doc-intro-stat">
               <span class="label">Packing Algorithm</span>
@@ -640,7 +640,7 @@
             </div>
             <div class="doc-intro-stat">
               <span class="label">Cut Sequencing</span>
-              <span class="value">Free-End → Chuck (Rigid Support)</span>
+              <span class="value">Free-End &rarr; Chuck (Rigid Support)</span>
             </div>
           </div>
         </div>
@@ -656,11 +656,11 @@
 
           <div class="doc-step-body">
             <p>
-              Start from the left sidebar's <strong>Quick CAD Fixtures</strong> panel (or upload your own multi-body <code class="mono">.step</code> assembly).
+              Open the left sidebar's <strong>Quick CAD Fixtures</strong> panel, or drop in your own multi-body <code class="mono">.step</code> file.
             </p>
             <ul class="doc-bullet-list">
-              <li>Click <span class="ui-chip">Headache Rack [COMPLEX]</span> in the <strong>Quick CAD Fixtures</strong> list.</li>
-              <li>RotaryCAM parses all <strong>37 individual solids</strong> in the assembly, extracting cross-section dimensions, lengths, and cut features in seconds.</li>
+              <li>Click <span class="ui-chip">Headache Rack [COMPLEX]</span> in <strong>Quick CAD Fixtures</strong>.</li>
+              <li>All <strong>37 solids</strong> load in seconds with their cross-section sizes, lengths, and cut features ready.</li>
             </ul>
           </div>
 
@@ -689,11 +689,11 @@
 
           <div class="doc-step-body">
             <p>
-              Once the 37-part assembly loads, the full rack structure appears in the top-left <strong>Entire Model Overview</strong>. To nest parts onto raw stock sticks:
+              Your full 37-part rack appears in the top-left <strong>Entire Model Overview</strong>. Switch to nesting to lay parts onto raw sticks:
             </p>
             <ul class="doc-bullet-list">
-              <li>Click the <span class="ui-chip">Multi-Part Pack Nesting (37 PARTS)</span> tab at the top of the center workspace, <em>or</em></li>
-              <li>Click the blue <span class="ui-chip cyan">Open Pack</span> button inside the <strong>Multi-Part Pack Nesting</strong> card on the left sidebar.</li>
+              <li>Click the <span class="ui-chip">Multi-Part Pack Nesting (37 PARTS)</span> tab at the top of the workspace, <em>or</em></li>
+              <li>Click the blue <span class="ui-chip cyan">Open Pack</span> button in the <strong>Multi-Part Pack Nesting</strong> card on the left sidebar.</li>
             </ul>
           </div>
 
@@ -722,10 +722,10 @@
 
           <div class="doc-step-body">
             <p>
-              Because a single STEP assembly often mixes several different tube sizes (e.g., <code class="mono">38.1 × 38.1 mm</code> main frame posts alongside <code class="mono">25.4 × 25.4 mm</code> louvers and <code class="mono">OD 14.3 mm</code> round bars), RotaryCAM groups parts by their cross-section profile so only matching tubes are nested onto the same physical stick.
+              One STEP file often mixes tube sizes, such as <code class="mono">38.1 × 38.1 mm</code> posts, <code class="mono">25.4 × 25.4 mm</code> louvers, and <code class="mono">OD 14.3 mm</code> round bars. Parts group by cross-section so only matching profiles pack onto the same stick.
             </p>
             <ul class="doc-bullet-list">
-              <li>Click the <span class="ui-chip">CUTTING PROFILE</span> filter right in the nesting header bar (currently showing <code class="mono">Profile_HSS_Rect (38.1x38.1mm) (7 parts)</code>) to switch cross-sections cleanly without leaving the workspace.</li>
+              <li>Click <span class="ui-chip">CUTTING PROFILE</span> in the nesting header bar (showing <code class="mono">Profile_HSS_Rect (38.1x38.1mm) (7 parts)</code>) to switch tube sizes right inside the workspace.</li>
             </ul>
           </div>
 
@@ -754,13 +754,13 @@
 
           <div class="doc-step-body">
             <p>
-              The dropdown lists every unique cross-section detected in the CAD assembly along with the exact part count for each profile:
+              The dropdown lists every tube profile found in your CAD assembly and its exact part count:
             </p>
             <ul class="doc-bullet-list">
-              <li><code class="mono">Profile_HSS_Rect (38.1x38.1mm) (7 parts)</code>: 1.5" × 1.5" square HSS frame tubes</li>
-              <li><span class="ui-chip">Profile_HSS_Rect (25.4x25.4mm) (17 parts)</span>: 1.0" × 1.0" square HSS crossbars &amp; louvers</li>
-              <li><code class="mono">Profile_HSS_Round (OD 14.3mm) (2 parts)</code>: round tube inserts</li>
-              <li>Select <span class="ui-chip">Profile_HSS_Rect (25.4x25.4mm) (17 parts)</span> to filter the nesting table and automatically select all 17 matching parts.</li>
+              <li><code class="mono">Profile_HSS_Rect (38.1x38.1mm) (7 parts)</code>: 1.5" × 1.5" square HSS frame tubes.</li>
+              <li><span class="ui-chip">Profile_HSS_Rect (25.4x25.4mm) (17 parts)</span>: 1.0" × 1.0" square HSS crossbars and louvers.</li>
+              <li><code class="mono">Profile_HSS_Round (OD 14.3mm) (2 parts)</code>: round tube inserts.</li>
+              <li>Select <span class="ui-chip">Profile_HSS_Rect (25.4x25.4mm) (17 parts)</span> to filter the table and select all 17 matching parts.</li>
             </ul>
           </div>
 
@@ -789,26 +789,24 @@
 
           <div class="doc-step-body">
             <p>
-              RotaryCAM's 1D nesting solver immediately arranges all <strong>17 pieces</strong> (<code class="mono">7480.3 mm</code> total cut length) across <strong>2 sticks</strong> of <code class="mono">6000 mm</code> raw stock with a <code class="mono">10.0 mm</code> kerf/part spacing gap:
+              All <strong>17 pieces</strong> (<code class="mono">7480.3 mm</code> total cut length) pack onto <strong>2 sticks</strong> of <code class="mono">6000 mm</code> stock with a <code class="mono">10.0 mm</code> part gap:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Stick 1 of 2 Preview Bar:</strong> Packs 7 parts (<code class="mono">Part 10</code>, <code class="mono">Part 9</code>, <code class="mono">Part 34</code>, <code class="mono">Part 36</code>, <code class="mono">Part 4</code>, <code class="mono">Part 24</code>, <code class="mono">Part 35</code>) totaling <code class="mono">5987 mm / 6000 mm</code>, leaving only <code class="mono">13 mm</code> of remainder (<span class="ui-chip emerald">99.8% EFFICIENCY</span>). Use the <code class="mono">◀ Prev Stick</code> / <code class="mono">Next Stick ▶</code> buttons to inspect Stick 2.</li>
-              <li><strong>Automatic Interlocking Miter &amp; Cope Nesting (180&deg; Flip + A-Axis Roll):</strong> You never have to waste triangular scrap wedges between angled tube ends. RotaryCAM automatically tests 180&deg; end-for-end flips and A-axis roll rotations on every tube in the pack so adjacent miters and fishmouth copes tuck tightly into each other.</li>
-              <li><strong>Optional Single-Cut Common-Line Severing:</strong> Check <strong>Common-line sever cuts</strong> to merge matching 90&deg; square cutoffs or complementary miter joints into a single shared sever cut with an on-kerf pierce, cutting your cutoff pierces in half and eliminating scrap rings between parts.</li>
-              <li><strong>Chuck Jaw &ldquo;No-Cut&rdquo; Dead Zone &amp; Exact Min Stock to Load:</strong> RotaryCAM automatically subtracts your machine's <strong>Chuck Jaw Dead Zone</strong> (default <code class="mono">65 mm</code>) from raw stick capacity (<code class="mono">L_available = L_stick - L_dead</code>), renders a red hatched no-cut zone on the chuck end of the 1D stick bar plus 3D chuck jaws in the simulator, and displays the exact <strong>Min Stock to Load</strong> (<code class="mono">L_cut + L_dead</code>) so your torch never crashes into the chuck jaws.</li>
-              <li><strong>Auto-Scribe Piece IDs (<code class="mono">P1</code>, <code class="mono">P2</code>), Mating Joint Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>) &amp; Assembly Weld Witness Marks:</strong> When you load a multi-part STEP assembly, your parts are automatically assigned short piece IDs (<code class="mono">P1</code>, <code class="mono">P2</code>, &hellip;, <code class="mono">P12</code>) matching your part list. Turn on one-click <strong>Auto-Scribe Part IDs</strong> to stencil single-stroke stick-font labels onto every nested tube via EasyScribe (<code class="mono">#1114=3</code>) or Plasma Mark (<code class="mono">#1114=2</code> at <code class="mono">15A</code>). In addition to marking each piece with its own ID (<code class="mono">P1</code>) and scribing weld witness footprints where branch tubes or brackets touch a main header tube (<code class="mono">&le; 0.5 mm</code>), you get the <strong>mating piece ID scribed right at each end cut</strong> (e.g., <code class="mono">P12</code> just inside <code class="mono">P1</code>'s coped/mitered end cut) and <strong>next to each receiving witness footprint</strong> (e.g., <code class="mono">P1</code> beside the witness mark on <code class="mono">P12</code>) so you know at a glance which piece connects to which joint on the welding table.</li>
-              <li><strong>1D Rotary Stick Strip Controls (<code class="mono">v0.8-C</code>):</strong> Directly inside the Pack panel, reorder nested tube pieces along the stick, flip individual pieces <code class="mono">180&deg;</code> end-for-end, nudge the rotary phase angle <code class="mono">&Delta;A</code>, and adjust per-part gaps without re-running CAD.</li>
-              <li><strong>Synced Cut-Path &amp; Marking Settings:</strong> Cut-path and marking settings stay synchronized between Single-Part and Nesting views, so edits made on either side carry through automatically.</li>
-              <li><strong>Customizable Quantities, Spacing &amp; Gloved-Friendly Controls:</strong> Plain shop-floor labels keep options clear at the table, with gloved-friendly <code class="mono">24 px</code> checkboxes and <code class="mono">+</code>/<code class="mono">-</code> buttons for <strong>Part Spacing (Gap)</strong> (<code class="mono">10 mm</code>), <strong>Stock Tube Length</strong> (<code class="mono">6000 mm</code>), <strong>Auto-tab pack seams</strong>, and per-part quantities.</li>
-              <li>Click the green <span class="ui-chip emerald">⚡ Compile Pack G-Code</span> button at the top of the nesting panel to generate the multi-stick 4-axis G-code programs.</li>
+              <li><strong>Stick 1 of 2 Preview Bar:</strong> Fits 7 parts (<code class="mono">Part 10</code>, <code class="mono">Part 9</code>, <code class="mono">Part 34</code>, <code class="mono">Part 36</code>, <code class="mono">Part 4</code>, <code class="mono">Part 24</code>, <code class="mono">Part 35</code>) totaling <code class="mono">5987 mm / 6000 mm</code>. Only <code class="mono">13 mm</code> remains (<span class="ui-chip emerald">99.8% EFFICIENCY</span>). Use <code class="mono">◀ Prev Stick</code> / <code class="mono">Next Stick ▶</code> to inspect Stick 2.</li>
+              <li><strong>Interlocking Miters &amp; Copes (180&deg; Flip + A-Axis Roll):</strong> Every tube is tested with 180&deg; end-for-end flips and A-axis rotations. Matching miters and fishmouth copes nest face-to-face instead of leaving triangular scrap wedges.</li>
+              <li><strong>Common-Line Sever Cuts:</strong> Check <strong>Common-line sever cuts</strong> to merge matching 90&deg; cutoffs or complementary miters into one shared on-kerf pierce. You cut cutoff pierces in half and leave zero scrap rings on the table.</li>
+              <li><strong>Chuck Jaw &ldquo;No-Cut&rdquo; Dead Zone &amp; Min Stock to Load:</strong> Your machine's <strong>Chuck Jaw Dead Zone</strong> (default <code class="mono">65 mm</code>) subtracts from stick length (<code class="mono">L_available = L_stick - L_dead</code>). A red hatched no-cut zone marks the chuck end of the stick bar, 3D chuck jaws show in the simulator, and <strong>Min Stock to Load</strong> (<code class="mono">L_cut + L_dead</code>) keeps your torch clear of the jaws.</li>
+              <li><strong>Auto-Scribe Piece IDs (<code class="mono">P1</code>, <code class="mono">P2</code>) &amp; Mating Callouts (<code class="mono">P1</code> &harr; <code class="mono">P12</code>):</strong> Multi-part assemblies assign short IDs (<code class="mono">P1</code>, <code class="mono">P2</code>, &hellip;, <code class="mono">P12</code>) matching your part list. Turn on <strong>Auto-Scribe Part IDs</strong> to mark stick-font labels with EasyScribe (<code class="mono">#1114=3</code>) or Plasma Mark (<code class="mono">#1114=2</code> at <code class="mono">15A</code>).
+                <ul>
+                  <li><strong>Part IDs &amp; Witness Marks:</strong> Each part gets its own ID plus weld witness footprints where branch tubes or brackets touch a header (<code class="mono">&le; 0.5 mm</code>).</li>
+                  <li><strong>Mating Joint Callouts:</strong> The mating ID scribes inside each end cut (e.g., <code class="mono">P12</code> on <code class="mono">P1</code>) and beside the receiving witness mark (e.g., <code class="mono">P1</code> on <code class="mono">P12</code>) for fast weld fit-up.</li>
+                </ul>
+              </li>
+              <li><strong>1D Rotary Stick Strip Controls:</strong> Reorder packed tubes along the stick, flip parts <code class="mono">180&deg;</code>, nudge rotary phase <code class="mono">&Delta;A</code>, and adjust per-part gaps right inside the Pack panel.</li>
+              <li><strong>Synced Cut-Path &amp; Marking Settings:</strong> Edits to cut-path or marking settings sync between Single-Part and Nesting views.</li>
+              <li><strong>Quantities, Spacing &amp; Table Controls:</strong> Adjust <strong>Part Spacing (Gap)</strong> (<code class="mono">10 mm</code>), <strong>Stock Tube Length</strong> (<code class="mono">6000 mm</code>), <strong>Auto-tab pack seams</strong>, and part quantities with gloved-friendly <code class="mono">24 px</code> checkboxes and <code class="mono">+</code>/<code class="mono">-</code> buttons.</li>
+              <li>Click <span class="ui-chip emerald">⚡ Compile Pack G-Code</span> at the top of the nesting panel to build your multi-stick 4-axis programs.</li>
             </ul>
-
-            <div class="doc-callout tip" style="margin-top: 1.25rem;">
-              <div class="doc-callout-title">✓ How Interlocking Miters &amp; Common-Line Sever Cuts Save Stock &amp; Consumables</div>
-              <p style="margin-bottom: 0;">
-                When nesting mitered frame rails or fishmouth-coped roll cage tubes, keeping parts in their raw CAD orientation leaves dead triangular air gaps between pieces. By automatically testing 180&deg; end-for-end flips and A-axis roll angles on every tube, RotaryCAM nests matching angles face-to-face. Turning on <strong>Common-line sever cuts</strong> takes it one step further: wherever two adjacent parts meet at a matching 90&deg; cutoff or complementary miter, the torch pierces once on the kerf line and severs both parts in a single pass. This saves half your cutoff pierces and leaves zero loose scrap rings on the table.
-              </p>
-            </div>
           </div>
 
           <figure class="doc-figure">
@@ -836,27 +834,24 @@
 
           <div class="doc-step-body">
             <p>
-              Once compiled, RotaryCAM automatically switches to the <strong>3D Cut Simulation</strong> view and populates the right-hand <strong>G-Code Post-Processor Terminal</strong> with dedicated tabs for each physical stick:
+              After compiling, the <strong>3D Cut Simulation</strong> opens and the right-hand <strong>G-Code Post-Processor Terminal</strong> creates one tab per stick:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Switch &amp; Download Stick G-Code (Top-Right Panel):</strong> Click between <span class="ui-chip">Stick 1: pack_stick_1.nc</span> and <span class="ui-chip">Stick 2: pack_stick_2.nc</span>, then click <span class="ui-chip emerald">⬇ Download pack_stick_1.nc</span> to save the G-code file for your CNC controller.</li>
-              <li><strong>Multi-Stick 3D Simulation (Center Viewport):</strong> Use the <span class="ui-chip cyan">◀ Stick 1 of 2 ▶</span> selector in the simulation toolbar and click <span class="ui-chip">▶ Play</span> to verify the entire 6000 mm stick cutting sequence, ordered automatically from the free end (<code class="mono">X = -5991.78 mm</code>) back toward the rotary chuck (<code class="mono">X = 0 mm</code>).</li>
+              <li><strong>Switch &amp; Download Stick G-Code (Top-Right Panel):</strong> Pick <span class="ui-chip">Stick 1: pack_stick_1.nc</span> or <span class="ui-chip">Stick 2: pack_stick_2.nc</span>, then click <span class="ui-chip emerald">⬇ Download pack_stick_1.nc</span>.</li>
+              <li><strong>Multi-Stick 3D Simulation (Center Viewport):</strong> Use <span class="ui-chip cyan">◀ Stick 1 of 2 ▶</span> and click <span class="ui-chip">▶ Play</span> to verify the full 6000 mm cut order from the free end (<code class="mono">X = -5991.78 mm</code>) back toward the chuck (<code class="mono">X = 0 mm</code>).</li>
             </ul>
 
             <div class="doc-callout tip">
-              <div class="doc-callout-title">✓ Why RotaryCAM Cuts from Free-End to Chuck</div>
+              <div class="doc-callout-title">✓ Why Cuts Run Free-End to Chuck</div>
               <p>
-                When cutting multiple parts out of a long 20ft / 6000 mm tube held in a single rotary chuck, RotaryCAM always sequences features starting at the farthest free end (<code class="mono">Piece 1/7</code>) and works progressively toward the chuck. Each finished part drops off cleanly only after all of its internal cutouts and end miters are cut, keeping the remaining tube rigidly clamped in the chuck right up to the final cut.
+                On a 20ft / 6000 mm tube held in one chuck, cuts start at the farthest free end (<code class="mono">Piece 1/7</code>) and move toward the chuck. Each part drops off only after all its holes and end miters are cut, keeping the remaining stock rigidly supported until the last cut.
               </p>
             </div>
 
             <div class="doc-callout info" style="margin-top: 1.25rem;">
-              <div class="doc-callout-title">📦 One-Click Multi-Stick Export: Download All Sticks (.zip)</div>
-              <p>
-                When nesting large multi-part assemblies that span across several 20ft / 6000 mm mill sticks, clicking the <strong>Download All Sticks (.zip)</strong> button bundles every compiled G-code program (<code class="mono">pack_stick_1.nc</code>, <code class="mono">pack_stick_2.nc</code>, <code class="mono">pack_stick_3.nc</code>, etc.) into a single organized archive.
-              </p>
+              <div class="doc-callout-title">📦 Download All Sticks in One Archive (.zip)</div>
               <p style="margin-bottom: 0;">
-                Copy the single <code class="mono">.zip</code> to your shop USB drive or machine console to run each stick in sequence without downloading files one-by-one or mixing up stock runs.
+                For multi-stick jobs (<code class="mono">pack_stick_1.nc</code>, <code class="mono">pack_stick_2.nc</code>, <code class="mono">pack_stick_3.nc</code>, etc.), click <strong>Download All Sticks (.zip)</strong> to grab every stick file together. Copy the <code class="mono">.zip</code> straight to your USB drive so you never mix up stock runs.
               </p>
             </div>
           </div>
@@ -881,32 +876,32 @@
         <article class="doc-step-card" id="flat-sheet-pack-primitives">
           <div class="doc-step-header">
             <span class="doc-step-badge" style="background: rgba(6, 182, 212, 0.15); color: var(--cyan-400); border-color: rgba(6, 182, 212, 0.35);">FLAT PACK</span>
-            <h2 class="doc-step-title">2D Flat-Sheet Pack Mode Primitives &amp; Remnant Guillotine Crop Cut</h2>
+            <h2 class="doc-step-title">2D Flat-Sheet Pack Options &amp; Remnant Guillotine Crop Cut</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              When you switch Nesting to 2D flat plates (<code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.flat</code> STEP sheets), the docked 2D sheet controls use plain shop-floor labels and gloved-friendly <code class="mono">24 px</code> checkboxes and <code class="mono">+</code>/<code class="mono">-</code> buttons. Inactive Crop and Chain sub-inputs stay hidden until turned on, keeping chain/bridge linking, remnant cropping, edge-start piercing, open-path kerf sides, corner loops, and void THC protection uncluttered.
+              Switch Nesting to 2D flat plates (<code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.flat</code> STEP sheets) for flat-sheet pack controls. Inactive Crop and Chain options stay hidden until you enable them.
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>Open-Path Left / Right / Center Kerf (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Choose <span class="ui-chip">Center (On-Line)</span>, <span class="ui-chip">Left</span>, or <span class="ui-chip">Right</span> kerf compensation on unclosed slit lines, edge trims, and bend reliefs. Offset direction follows the original CAD stroke direction.</li>
-              <li><strong>Thick-Plate Edge-Start Piercing (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Select <span class="ui-chip">Edge-Start (Thick Plate)</span> (<code class="mono">edge_overhang_mm</code>, default <code class="mono">4.0 mm</code>) on heavy plate (<code class="mono">&ge; 12 mm</code> / <code class="mono">1/2&Prime;</code>). RotaryCAM probes IHS on steel at the contour start point, retracts to pierce height, shifts off-edge into open air to fire, and locks THC until <code class="mono">6.0 mm</code> onto solid steel.</li>
-              <li><strong>Flared Chain / Bridge Cutting (<code class="mono">Pro Shop</code>):</strong> Link adjacent nested parts with <span class="ui-chip">Daisy-Chain (Single Pierce)</span> using flared, vertex-pinched bridges that eliminate half-shape contour retracing, or <span class="ui-chip">Micro-Bridge (Connected)</span> (<code class="mono">bridge_width_mm</code> stock-aware auto-default or <code class="mono">3.0 mm</code>, <code class="mono">max_link_dist_mm</code> default <code class="mono">25.0 mm</code>) to leave small retention tabs between parts. Interior holes always cut before chained outer contours, obstacle-crossing links are skipped, and Chain/Bridge cutting cannot be combined with Common-Line cutting in the flat-mode UI.</li>
-              <li><strong>2D Interactive Sheet Drag, Rotate, Flip &amp; Collision Halos (<code class="mono">v0.8-C</code>):</strong> Drag nested flat parts smoothly in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, flip H/V, see live part-spacing and sheet-edge collision halos, and click <span class="ui-chip">Reset Auto-Nest</span> anytime (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>).</li>
-              <li><strong>Spatial Void THC Auto-Lock (<code class="mono">v0.8-A</code>) &amp; Flat Corner Loops:</strong> <code class="mono">SpatialVoidIndex</code> locks THC automatically within <code class="mono">0.5 &times; kerfWidth + 4.0 mm</code> of prior kerf slots and pierce craters so the torch never dives across earlier cuts. Corner loop injection on <code class="mono">.flat</code> profiles exposes an adjustable loop radius (<code class="mono">corner_loop_radius_mm</code>, default <code class="mono">3.0 mm</code>) for crisp square corners.</li>
+              <li><strong>Open-Path Left / Right / Center Kerf (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Pick <span class="ui-chip">Center (On-Line)</span>, <span class="ui-chip">Left</span>, or <span class="ui-chip">Right</span> kerf offset on open slits, edge trims, and bend reliefs. Offset direction follows your CAD stroke direction.</li>
+              <li><strong>Thick-Plate Edge-Start Piercing (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Enable <span class="ui-chip">Edge-Start (Thick Plate)</span> (default overhang <code class="mono">4.0 mm</code>) on heavy plate (<code class="mono">&ge; 12 mm</code> / <code class="mono">1/2&Prime;</code>). Your torch probes IHS on steel at the start point, retracts to pierce height, shifts off-edge into open air to fire, and locks THC until <code class="mono">6.0 mm</code> onto solid steel.</li>
+              <li><strong>Flared Chain / Bridge Cutting (<code class="mono">Pro Shop</code>):</strong> Link adjacent parts with <span class="ui-chip">Daisy-Chain (Single Pierce)</span> using flared bridges that skip half-shape retracing, or use <span class="ui-chip">Micro-Bridge (Connected)</span> (default bridge width <code class="mono">3.0 mm</code> or stock auto-default, max link distance <code class="mono">25.0 mm</code>) for retention tabs. Interior holes always cut before chained contours, obstacle-crossing links are skipped, and Chain/Bridge cutting stays separate from Common-Line cutting.</li>
+              <li><strong>2D Interactive Sheet Drag, Rotate, Flip &amp; Collision Halos:</strong> Drag parts in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, and flip H/V. Live halos flag part-spacing and sheet-edge collisions, and <span class="ui-chip">Reset Auto-Nest</span> restores the auto-pack anytime (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>).</li>
+              <li><strong>Void THC Auto-Lock &amp; Flat Corner Loops:</strong> Void lock holds THC off within <code class="mono">0.5 &times; kerf + 4.0 mm</code> of prior kerf slots and pierce craters so the torch never dives across earlier cuts. On <code class="mono">.flat</code> profiles, set your corner loop radius (default <code class="mono">3.0 mm</code>) for sharp square corners.</li>
             </ul>
 
             <h3 style="font-size: 1.1rem; color: #fff; margin-top: 1.25rem; margin-bottom: 0.4rem;">
               Tutorial: Cropping &amp; Saving a Clean Sheet Remnant (<code class="mono">Pro Shop</code>)
             </h3>
             <p>
-              Use <strong>Guillotine Crop Cut</strong> in Pack Mode to square off unused sheet drop automatically after your parts finish cutting:
+              Use <strong>Guillotine Crop Cut</strong> in Pack Mode to square off leftover sheet drop after your parts finish cutting:
             </p>
             <ul class="doc-bullet-list">
-              <li><strong>1. Nest parts &amp; open docked 2D sheet controls:</strong> Arrange your parts on a flat sheet in <strong>Nesting</strong> and locate the docked 2D sheet controls bar alongside the 2D Pack Part Preview.</li>
-              <li><strong>2. Select crop mode &amp; margin:</strong> Pick <code class="mono">Best Single Cut (Max Remnant)</code>, <code class="mono">L-Cut (Both X &amp; Y)</code>, <code class="mono">Vertical (X)</code>, or <code class="mono">Horizontal (Y)</code> in <span class="ui-chip">Guillotine Crop Cut</span>; Crop sub-inputs reveal automatically to set the clearance margin (default <code class="mono">kerf + 5.0 mm</code>).</li>
-              <li><strong>3. Inspect the 2D Pack Preview SVG:</strong> Confirm the dashed <code class="mono">CROP</code> line(s), off-sheet entry marker, and highlighted <code class="mono">Usable Remnant</code> rectangle with exact dimensions before compiling.</li>
-              <li><strong>4. Cut parts first, then crop cleanly:</strong> RotaryCAM runs all part cuts first, then executes the guillotine crop from off-edge entry with <code class="mono">SpatialVoidIndex</code> kerf-crossing THC protection. See <a href="dxf-svg-flat-sheet.html#tutorial-remnant-crop" style="color: var(--amber-400);">Tutorial 10: Flat-Sheet CAM &amp; Remnant Crop</a> for the full flat-plate workflow.</li>
+              <li><strong>1. Nest parts &amp; open 2D sheet controls:</strong> Arrange parts on a flat sheet in <strong>Nesting</strong> and find the docked 2D sheet controls next to the 2D Pack Part Preview.</li>
+              <li><strong>2. Pick crop mode &amp; margin:</strong> Choose <code class="mono">Best Single Cut (Max Remnant)</code>, <code class="mono">L-Cut (Both X &amp; Y)</code>, <code class="mono">Vertical (X)</code>, or <code class="mono">Horizontal (Y)</code> in <span class="ui-chip">Guillotine Crop Cut</span>. Margin inputs appear automatically (default <code class="mono">kerf + 5.0 mm</code>).</li>
+              <li><strong>3. Check the 2D Pack Preview SVG:</strong> Verify the dashed <code class="mono">CROP</code> line(s), off-sheet entry marker, and highlighted <code class="mono">Usable Remnant</code> rectangle before compiling.</li>
+              <li><strong>4. Cut parts first, then crop:</strong> All part contours run first, followed by the off-edge guillotine crop with void-crossing THC lock. See <a href="dxf-svg-flat-sheet.html#tutorial-remnant-crop" style="color: var(--amber-400);">Tutorial 10: Flat-Sheet CAM &amp; Remnant Crop</a> for the full workflow.</li>
             </ul>
           </div>
         </article>
