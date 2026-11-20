@@ -49,7 +49,73 @@
       "price": "199",
       "priceCurrency": "CAD",
       "availability": "https://schema.org/PreOrder",
-      "url": "https://rotarycam.app/hardware-thc.html#notify"
+      "url": "https://rotarycam.app/hardware-thc.html#notify",
+      "hasMerchantReturnPolicy": {
+        "@type": "MerchantReturnPolicy",
+        "applicableCountry": ["CA", "US"],
+        "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+        "merchantReturnDays": 30,
+        "returnMethod": "https://schema.org/ReturnByMail",
+        "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility"
+      },
+      "shippingDetails": [
+        {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "minValue": 12,
+            "maxValue": 28,
+            "currency": "CAD"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "CA"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 3,
+              "maxValue": 7,
+              "unitCode": "DAY"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 3,
+              "maxValue": 10,
+              "unitCode": "DAY"
+            }
+          }
+        },
+        {
+          "@type": "OfferShippingDetails",
+          "shippingRate": {
+            "@type": "MonetaryAmount",
+            "minValue": 12,
+            "maxValue": 28,
+            "currency": "CAD"
+          },
+          "shippingDestination": {
+            "@type": "DefinedRegion",
+            "addressCountry": "US"
+          },
+          "deliveryTime": {
+            "@type": "ShippingDeliveryTime",
+            "handlingTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 3,
+              "maxValue": 7,
+              "unitCode": "DAY"
+            },
+            "transitTime": {
+              "@type": "QuantitativeValue",
+              "minValue": 3,
+              "maxValue": 10,
+              "unitCode": "DAY"
+            }
+          }
+        }
+      ]
     }
   }
   </script>
