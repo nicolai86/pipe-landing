@@ -1009,7 +1009,7 @@
     <nav>
       <a href="./" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.8.4-BETA</span>
+        <span class="brand-tag">v0.8.5-BETA</span>
       </a>
       <div class="nav-links">
         <a href="./">Overview</a>
@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.8.4" class="jump-pill">
+      <a href="#v0.8.5" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.8.4)
+        Release History (v0.8.5)
       </a>
     </div>
 
@@ -1134,7 +1134,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.4/RotaryCam-macOS-v0.8.4.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.5/RotaryCam-macOS-v0.8.5.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1165,7 +1165,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.4/RotaryCam-Windows-v0.8.4.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.5/RotaryCam-Windows-v0.8.5.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1196,7 +1196,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.4/RotaryCam-Linux-v0.8.4.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.5/RotaryCam-Linux-v0.8.5.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1337,6 +1337,45 @@
     <div class="timeline-wrap">
 
       <!-- ================================================================
+           RELEASE: November 19, 2026 (v0.8.5)
+           ================================================================ -->
+      <article class="release-entry" id="v0.8.5">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 19, 2026</span>
+              <span class="release-version-pill">v0.8.5 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Angle-Iron Sever Cuts &bull; Smooth Corner Rotations &bull; Instant Machine Switching</span>
+          </div>
+          <p class="release-summary">
+            Angle-iron start and end cuts no longer wrap around leg tips, mitered C-channel and angle-iron corners rotate smoothly in Y, and top-bar machine switches update G-code cleanly in one pass with instant spinners.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Angle-Iron Sever Cuts Without Endpoint Loops:</strong> Fixed angle-iron start and end cuts wrapping around flat leg tips and inside toe fillets so cuts start cleanly on the outer leg edge with a straight axial approach and zero kerf flips.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Smooth C-Channel &amp; Angle-Iron Corner Rotations:</strong> Replaced corner snap guesses with exact corner-pivot splitting so mitered C-channel and angle-iron cuts stay smooth in <code class="mono">Y</code> without sudden feedrate drops around 90-degree corners.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Instant Top-Bar Machine Switching &amp; Immediate Spinners:</strong> Switching machines in the top bar updates G-code cleanly in a single pass, clears the G-code pane properly on incompatible machine/profile combinations, hides the unused idle kinematics card on the home screen, and shows loading spinners immediately when you change machines, pack counts, or settings.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 19, 2026 (v0.8.4)
            ================================================================ -->
       <article class="release-entry" id="v0.8.4">
@@ -1345,7 +1384,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.4 &bull; LATEST</span>
+              <span class="release-version-pill">v0.8.4</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Streamlined Sidebar &amp; Top-Bar Controls &bull; Inline DXF/SVG Tube Overlay &bull; Synced Single/Nest Settings &bull; Gloved Nesting UI</span>
           </div>
@@ -2775,11 +2814,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.4-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.5-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.8.4').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.8.5').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',
