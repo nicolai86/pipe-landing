@@ -1252,7 +1252,7 @@
       line-height: 1.58;
     }
 
-    /* Callout 4: Zero CNC Software or Post-Processor Changes* */
+    /* Callout 4: Zero CNC THC Pin Mapping */
     .zero-sw-callout {
       background: linear-gradient(135deg, rgba(245, 158, 11, 0.09), rgba(16, 185, 129, 0.06));
       border: 1px solid rgba(245, 158, 11, 0.42);
@@ -2810,17 +2810,17 @@
           </div>
         </div>
 
-        <!-- What You Don't Hook Up Callout Box -->
+        <!-- What You Hook Up vs Optional Add-On Callout Box -->
         <div class="zero-sw-callout">
           <div class="zero-sw-main">
-            <span class="crash-badge" style="margin-bottom: 0.1rem;">What You Don&rsquo;t Hook Up on Flat Sheet &amp; Round Pipe</span>
-            <h3>Zero CNC Software or Post-Processor Changes*</h3>
+            <span class="crash-badge" style="margin-bottom: 0.1rem;">Inline Z Step/Dir Control</span>
+            <h3>Zero CNC THC Pin Mapping. Hardware Corner Freeze Built In.</h3>
             <p>
-              On flat sheet and round pipe, leave your CNC software untouched. You do not configure THC Up/Down pins in Mach3/4, MASSO, Centroid Acorn, LinuxCNC, FlashCut, or simCNC, and you do not add M-codes in SheetCAM. In Pure SAV mode, you also need zero <code class="mono-inline">0-10V</code> analog DAC wires from your controller.
+              You never map THC Up/Down pins in Mach3/4, MASSO, Centroid Acorn, LinuxCNC, FlashCut, or simCNC. Because the board reads your X/Y step rate in hardware, corner anti-dive works out of the box too. On flat sheet and round pipe in Pure SAV mode, you need zero <code class="mono-inline">0-10V</code> DAC wires and zero SheetCAM M-codes.
             </p>
           </div>
           <div class="zero-sw-footnote">
-            <strong>*Small Bolt Holes &amp; Rotary Square/Rect HSS:</strong> Cutting small holes below cruise speed or 4-axis square/rect HSS? Wire one optional THC ENA output so your post-processor (built into RotaryCAM and standard in SheetCAM) freezes Z on hole and corner rules.
+            <strong>Optional Add-On (Small Bolt Holes &amp; Square/Rect HSS):</strong> Wire one <code class="mono-inline">THC ENA</code> output from your controller to freeze Z on small holes below cruise speed or 4-axis square/rect HSS, using the CAM freeze rule built into RotaryCAM or standard in SheetCAM.
           </div>
         </div>
 
