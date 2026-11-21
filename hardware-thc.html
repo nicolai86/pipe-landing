@@ -38,7 +38,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "RotaryCAM Smart Z-Axis Hardware THC & Motion Interceptor (Hardware v2)",
-    "description": "Standalone 10,000 Hz (100 µs) RS-422 differential Step/Dir Z-axis plasma Torch Height Controller with 2.0 ms active in-cut ohmic collision escape, 100-200 µs 6-axis pass-through, macro-free XY(A) corner freeze, 4-axis rotary tube cam feedforward, passive Hypertherm SYNC bus snooping, and 20 KB 10 kHz flight recorder.",
+    "description": "Standalone 10,000 Hz (100 µs) RS-422 differential Step/Dir Z-axis plasma Torch Height Controller with 2.0 ms active in-cut ohmic collision escape, ~40 ns hardware 6-axis pass-through, macro-free XY(A) corner freeze, 4-axis rotary tube cam feedforward, passive Hypertherm SYNC bus snooping, and 20 KB 10 kHz flight recorder.",
     "brand": {
       "@type": "Brand",
       "name": "RotaryCAM"
@@ -2188,7 +2188,7 @@
             <div class="pcb-caption-bar">
               <div style="display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap;">
                 <span class="pcb-caption-pill" style="color: var(--emerald-cut); background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.35);">● HARDWARE V2 CAD</span>
-                <span><strong style="color:#fff;">82.5 &times; 89.8 mm</strong> 4-Layer PCB &bull; <strong style="color:#fff;">15&times; Molex Mini-Fit Jr.</strong></span>
+                <span><strong style="color:#fff;">82.5 &times; 89.8 mm</strong> 4-Layer PCB &bull; <strong style="color:#fff;">16&times; Molex Mini-Fit Jr.</strong></span>
               </div>
               <a href="assets/z-axis-thc-v2.step.gz" download class="mono" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.34rem 0.72rem; border-radius: 6px; background: rgba(245, 158, 11, 0.14); border: 1px solid rgba(245, 158, 11, 0.42); color: var(--plasma-amber); font-size: 0.74rem; font-weight: 700; text-decoration: none; white-space: nowrap;">
                 <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
@@ -2244,7 +2244,7 @@
               True Hardware Summing-Junction Interceptor
             </div>
             <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 580px;">
-              Sits inline on Z Step/Dir while passing <code class="mono-inline">X/Y/A/B/C</code> straight through (<strong style="color:#fff;">100-200 µs pass-through</strong>). Zero CNC plugins. Mid-cut, your physical Z tracks bowed plate independently of the CNC DRO, then unwinds its offset back to zero at <code class="mono-inline">M5</code>.
+              Sits inline on Z Step/Dir while passing <code class="mono-inline">X/Y/A/B/C</code> straight through (<strong style="color:#fff;">~40 ns hardware pass-through</strong>). Zero CNC plugins. Mid-cut, your physical Z tracks bowed plate independently of the CNC DRO, then unwinds its offset back to zero at <code class="mono-inline">M5</code>.
             </p>
           </div>
           <div class="arch-eq-formula">
@@ -2546,7 +2546,7 @@
               <span class="compat-pill">Wire-Free Arc-OK</span>
             </div>
             <p class="compat-note">
-              Reads up to ~253 V full-scale (50:1 CPC or internal dividers). A single test cut calibrates exact divider gain into flash.
+              Reads 0&ndash;10 V isolated divided arc (~288&ndash;301 V full-scale at typical 87&ndash;91:1 net dividers; 220 V ARC_OK ceiling). Calibrate exact divider gain into flash via CLI ratio, bench DC voltage, or a single test cut.
             </p>
           </div>
         </div>
@@ -2561,7 +2561,7 @@
               </div>
               <div class="wiring-legend">
                 <span><i class="legend-dot" style="background: var(--plasma-amber);"></i>Z Inline</span>
-                <span><i class="legend-dot" style="background: var(--cyan-arc);"></i>100-200 µs Pass-Through</span>
+                <span><i class="legend-dot" style="background: var(--cyan-arc);"></i>~40 ns Pass-Through</span>
                 <span><i class="legend-dot" style="background: var(--emerald-cut);"></i>Galvanic Iso</span>
               </div>
             </div>
@@ -2610,7 +2610,7 @@
                 <!-- PCB Zone 1: X/Y Pass-Through + Speed Tap -->
                 <rect x="296" y="54" width="218" height="46" rx="6" fill="#101822" stroke="rgba(6,182,212,0.45)" stroke-width="1.1" />
                 <text x="405" y="73" text-anchor="middle" fill="#22d3ee" font-family="JetBrains Mono, monospace" font-size="9.8" font-weight="700">[INPUT X,Y] -&gt; [OUTPUT X,Y]</text>
-                <text x="405" y="90" text-anchor="middle" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.6">100-200 µs Pass-Through + X/Y Speed Tap</text>
+                <text x="405" y="90" text-anchor="middle" fill="#cbd5e1" font-family="Inter, sans-serif" font-size="9.6">~40 ns Hardware Pass-Through + X/Y Speed Tap</text>
 
                 <!-- Vertical internal tap arrow from X/Y speed tap into Z loop -->
                 <line x1="405" y1="100" x2="405" y2="108" stroke="#06b6d4" stroke-width="1.5" />
@@ -2622,7 +2622,7 @@
 
                 <!-- Wires THC -> Motor Drives -->
                 <line x1="528" y1="82" x2="584" y2="82" stroke="#06b6d4" stroke-width="2" marker-end="url(#arr-cyan)" />
-                <text x="556" y="75" text-anchor="middle" fill="#67e8f9" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600">100-200 µs</text>
+                <text x="556" y="75" text-anchor="middle" fill="#67e8f9" font-family="JetBrains Mono, monospace" font-size="9" font-weight="600">~40 ns</text>
 
                 <line x1="528" y1="133" x2="584" y2="133" stroke="#f59e0b" stroke-width="2.4" marker-end="url(#arr-amber)" />
                 <text x="556" y="126" text-anchor="middle" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">Z ± ΔZ</text>
@@ -2731,7 +2731,7 @@
             </button>
 
             <div class="pinout-card-foot">
-              <span>15&times; Positive-Latching <strong style="color:#fff;">Molex Mini-Fit Jr.</strong> Headers (Identical Pinout on X through C)</span>
+              <span>16&times; Positive-Latching <strong style="color:#fff;">Molex Mini-Fit Jr.</strong> Headers (Identical Pinout on X through C)</span>
               <a href="assets/z-axis-thc-v2-pinout.jpg" target="_blank" rel="noopener">Open Full-Res ↗</a>
             </div>
           </div>
@@ -2787,7 +2787,7 @@
               Adds M-code-free corner freeze and mid-cut tip-up collision escape:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">+</span><span><strong>[INPUT X, Y] &rarr; [OUTPUT X, Y]:</strong> Pass X/Y through in 100-200 µs so the board reads live 2D speed for corner locks.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>[INPUT X, Y] &rarr; [OUTPUT X, Y]:</strong> Pass X/Y through in ~40 ns (pure silicon) so the board reads live 2D speed for corner locks.</span></li>
               <li><span class="plug-bullet">+</span><span><strong>24V Ohmic Tee (J3-2):</strong> Tap off your 24V ohmic shield line for 2.0 ms tip-up retracts.</span></li>
               <li><span class="plug-bullet">+</span><span><strong>Optional Signals:</strong> Wire <code class="mono-inline">TARGET VIN</code> for Hybrid SAV, <code class="mono-inline">THC ENA</code> for CAM freeze, and <code class="mono-inline">WATCHDOG</code> for 50 ms E-stop drop.</span></li>
             </ul>
@@ -2987,10 +2987,11 @@
               <span class="crash-badge cyan">Zero-Dependency Go Binary</span>
               <h3>Cross-Platform <code class="mono-inline">smart-thc</code> Tooling</h3>
               <p>
-                Single static binary for macOS, Linux, and Windows. Connects over USB-RS485 or an Ethernet TCP bridge.
+                Single static binary for macOS, Linux, and Windows. Connects over an RS-485-to-Ethernet TCP bridge (e.g. WaveShare).
               </p>
               <ul class="tier-list" style="margin-top: 0.35rem;">
                 <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc read [-watch]</code>: Live hardware audit, 6-axis step rates, and snooped Hypertherm SYNC telemetry.</span></li>
+                <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc config axis|divider|apply</code>: Commission steps/unit, polarity, Z limits, and voltage divider into Flash without recompiling.</span></li>
                 <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc dump -ascii-plot</code>: ASCII arc waveform and 46-column timestamped CSV with protection timing.</span></li>
                 <li><span class="plug-bullet">▸</span><span><code class="mono-inline">smart-thc jog up|down &lt;dist&gt;</code>: Direct bench jogging in inches or mm with safety interlocks.</span></li>
               </ul>
@@ -3000,7 +3001,7 @@
               <span class="crash-badge emerald">Unbrickable Page-0 Bootstub</span>
               <h3>Power-Loss-Safe Field Firmware Updates</h3>
               <p>
-                <code class="mono-inline">smart-thc flash</code> updates firmware over RS-485/Ethernet in under 2 minutes. Bootloader and calibration pages are hardware write-protected against mid-write power loss, with atomic CRC-32 verification.
+                <code class="mono-inline">smart-thc flash</code> updates firmware over RS-485/Ethernet in under 2 minutes. Bootstub and calibration pages are never erased by the flasher, and the Page-0 stub recovers via atomic CRC-32 verification after any mid-write power loss.
               </p>
             </div>
           </div>
@@ -3010,10 +3011,10 @@
               <div class="terminal-dots"><span></span><span></span><span></span></div>
               <span class="mono" style="font-size: 0.72rem; color: var(--text-muted);">smart-thc | WaveShare TCP Bridge (192.168.1.200:4196)</span>
             </div>
-            <div class="terminal-body"><span class="t-prompt">$</span> <span class="t-cmd">smart-thc read -host 192.168.1.200</span>
+            <div class="terminal-body"><span class="t-prompt">$</span> <span class="t-cmd">smart-thc -host 192.168.1.200 read</span>
 <span class="t-pass">[PASS]</span> Block A: Magic="TH" FW=v2.0 State=IDLE Uptime=14280s Fault=0x00
        V_arc=0.2V  V_preset=124.0V  Divider=87.2:1  OhmicEscapes=2 (0 faults)
-<span class="t-pass">[PASS]</span> Block B: 6-Axis Counters Ready (Z=500.0 spu MM, Y=169.765 spu, A=64000/rev)
+<span class="t-pass">[PASS]</span> Block B: 6-Axis Counters Ready (Z=500 spu MM, Y=170 spu, A=64000/rev)
 <span class="t-pass">[PASS]</span> Round-Trip Setpoint Self-Test (0x4080 -> 128.5V -> Restore)
 <span class="t-pass">[PASS]</span> Hypertherm SYNC Snoop (Slave 0x01): 65.0A | 78.5 PSI | Mode=Cut | Err=0
 
@@ -3030,8 +3031,8 @@ Protections : CornerFreeze=18.2ms | KerfAntiDive=6.5ms | OhmicEscape=0.0ms
  121V ┤ ╰──╯                                              ╰─
 Saved 46-column CSV -> <span class="t-cyan">telemetry_20261114_154210.csv</span>
 
-<span class="t-prompt">$</span> <span class="t-cmd">smart-thc flash yuna-rotary-v1.elf -y</span>
-Preflight OK: THAP CRC32=0x94A21C08 (Pages 1..44; Pages 0, 62-63 untouched)
+<span class="t-prompt">$</span> <span class="t-cmd">smart-thc flash -y yuna-rotary-v1.elf</span>
+Preflight OK: THAP CRC32=0x94A21C08 (Pages 1..27; Pages 0, 62-63 untouched)
 Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITTED &amp; LIVE (v2.0)</span></div>
           </div>
         </div>
@@ -3065,7 +3066,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               </div>
               <div class="spec-row">
                 <div class="spec-key">PCB &amp; Connectors</div>
-                <div class="spec-val">82.5 &times; 89.8 mm (3.25&Prime; &times; 3.54&Prime;) 4-layer EMI-shielded board; 15&times; latching Molex Mini-Fit Jr. headers + shield tie</div>
+                <div class="spec-val">82.5 &times; 89.8 mm (3.25&Prime; &times; 3.54&Prime;) 4-layer EMI-shielded board; 16&times; latching Molex Mini-Fit Jr. headers + shield tie</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Power &amp; Isolation</div>
@@ -3080,7 +3081,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
                 <div class="spec-val">0–10 V Arc &amp; Target (1% 25 ppm/°C, 10 nF filter, BAT54S clamped); TIM6-synced 16&times; oversampled ADC (90.35 µs)</div>
               </div>
               <div class="spec-row">
-                <div class="spec-key">Isolated 24V I/O</div>
+                <div class="spec-key">Opto-Coupled 24V I/O</div>
                 <div class="spec-val">5&times; 24V inputs + 3&times; 24V open-collector outputs via 2&times; Toshiba TLP291-4 optocouplers + upstream galvanically isolated 0-10V arc input</div>
               </div>
               <div class="spec-row">
@@ -3123,7 +3124,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               </div>
               <div class="spec-row">
                 <div class="spec-key">Recorder &amp; Bootstub</div>
-                <div class="spec-val">20 KB (1,024-frame) SRAM crash recorder; 2 KB Page-0 CRC-32 bootloader (Pages 0, 62, 63 write-protected)</div>
+                <div class="spec-val">20 KB (1,024-frame) SRAM crash recorder; 2 KB Page-0 CRC-32 bootstub (Pages 0, 62, 63 never erased by flasher)</div>
               </div>
             </div>
           </div>
