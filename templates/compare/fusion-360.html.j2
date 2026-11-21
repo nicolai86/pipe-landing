@@ -1,0 +1,338 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. Autodesk Fusion",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can I design tube frames in Autodesk Fusion and export directly to RotaryCAM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Model your weldment in Autodesk Fusion (including with the Structural Member add-in), export a multi-body STEP file, and drop it straight into RotaryCAM. Every tube profile, wall thickness, cope, hole, and bend centerline is recognized automatically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM replace Autodesk Fusion for 3D CAD modeling?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM is dedicated offline CAM software, not a parametric CAD modeler. Keep designing parts and weldments in Autodesk Fusion, SOLIDWORKS, Onshape, or FreeCAD, then run them through RotaryCAM for 4-axis tube and 2D flat-sheet plasma G-code."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why use RotaryCAM instead of Fusion 2D plasma toolpaths with a rotary post?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Fusion has no native 4-axis rotary tube plasma workflow for round pipe, square HSS, angle iron, C-channel, or I-beam without manual unwrapping or custom post hacks. RotaryCAM handles all 6 profiles natively, adds zero-bevel saddle compensation, 4-axis eccentric V-bevels, Kerf-Crossing THC Auto-Lock, and 1,025 cut charts."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM charge extra for nesting extensions or post-processors?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Both 1D interlocking stick nesting and 2D Matryoshka true-shape flat-sheet nesting, all 16 controller profiles across 14 dialects, and all 1,025 plasma cut presets are included in the one-time $199 Maker or $399 Pro Shop perpetual offline license."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is Autodesk Fusion CAM the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Autodesk Fusion is the stronger choice when your shop runs CNC mills, lathes, and routers alongside simple 2D plasma cutting and wants parametric CAD plus multi-process CAM inside one ecosystem."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. Autodesk Fusion</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">Autodesk Fusion (Fusion 360)</span></h1>
+        <p class="docs-subtitle">
+          Autodesk Fusion combines full parametric 3D CAD with milling, turning, and 2D plasma CAM. When you cut 4-axis rotary tubes, structural steel, or want 100% offline perpetual licensing, designing in Fusion and exporting STEP straight into RotaryCAM gives you the best of both worlds.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; Offline $199/$399 Perpetual CAM vs. Cloud CAD/CAM Subscription</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Best Pair:</strong> Fusion STEP Export &rarr; RotaryCAM</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            {% for cmp in compare_pages %}
+            <li>
+              <a href="{{ root_prefix }}compare/{{ cmp.slug }}/"{% if cmp.slug == page.slug %} class="active"{% endif %}>
+                <span class="docs-nav-num">VS</span>
+                <span>{{ cmp.sidebar_label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Fusion is built as a cloud-connected CAD/CAM ecosystem across machining and 2D sheet cutting. RotaryCAM is purpose-built offline CAM for 4-axis rotary tube and 2D plasma tables.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>Autodesk Fusion (Fusion 360)</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Core Role</strong></td>
+                    <td>Full parametric 3D CAD, assemblies, and multi-process CAM (milling, turning, 2D plasma)</td>
+                    <td>Dedicated offline 4-axis rotary tube, structural steel, and 2D flat-sheet plasma CAM</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4-Axis Tube &amp; Structural</strong></td>
+                    <td>No dedicated structural plasma CAM; requires manual cylinder unwrapping or custom JS post hacks</td>
+                    <td>Native round pipe, square/rect HSS, angle iron, C-channel, I-beam (beamline emulation), and Cut-and-Bend unfolding</td>
+                  </tr>
+                  <tr>
+                    <td><strong>CAD Workflow</strong></td>
+                    <td>Native sketches, parameters, assemblies, and Structural Member weldments</td>
+                    <td>Direct multi-body STEP/IGES import straight from Fusion exports, plus 2D DXF/SVG flat and wrapped files</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bevel &amp; Cope Fit-Up</strong></td>
+                    <td>Standard 2D plasma contours; tube cope pullback must be modeled manually</td>
+                    <td>Built-in dual-curve zero-bevel saddles, heel pullback on rect HSS miters, and 4-axis eccentric V-bevel weld prep</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Plasma Physics &amp; Charts</strong></td>
+                    <td>Generic tool-library feed/height fields; THC locking depends on custom post logic</td>
+                    <td>1,025 factory plasma presets (Hypertherm SYNC, Duramax, Generic Air), Kerf-Crossing THC Auto-Lock, and True Hole rules</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2D &amp; 1D Nesting</strong></td>
+                    <td>True-shape plate nesting requires paid Nesting &amp; Fabrication Extension; no 1D tube stick packing</td>
+                    <td>Built-in 1D interlocking stick nesting + common-line sever AND 2D Matryoshka true-shape sheet nesting + guillotine crop</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Controller Posts</strong></td>
+                    <td>Community/custom CPS JavaScript posts; 4-axis rotary plasma setups require manual post editing</td>
+                    <td>16 ready-to-cut profiles across 14 dialects (SimCNC 4D G94/G93, Mach3/4, QTPlasmaC, MASSO G3, Acorn, FireControl, WinCNC, etc.)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>OS &amp; Offline Operation</strong></td>
+                    <td>macOS &amp; Windows; recurring cloud subscription + login model</td>
+                    <td>Native macOS, Windows, and Linux; 100% air-gapped offline + local <code class="mono">rotarycam-mcp</code> server</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pricing Model</strong></td>
+                    <td>Recurring annual/monthly subscription plus paid Manufacturing and Nesting extensions</td>
+                    <td>$199 Maker / $399 Pro Shop one-time perpetual offline key (30-day free beta, 1 year updates included)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>Design in Fusion, Cut in RotaryCAM</h3>
+                <p>
+                  Model frames in Fusion with Structural Member, export a multi-body <code class="mono">.step</code> file, and drop it into RotaryCAM. Follow our <a href="{{ docs_prefix }}ai-autodetection.html">Fusion 360 &amp; AI Autodetect Guide</a> for a clean zero-unwrap pipeline.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Real 4-Axis Tube &amp; Structural CAM</h3>
+                <p>
+                  Skip manual sketch unwrapping and CPS JavaScript post hacks. RotaryCAM natively cuts round pipe, rect HSS, angle, C-channel, and I-beam with zero-bevel copes and 4-axis eccentric V-bevels.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Perpetual Offline Keys, Zero Extensions</h3>
+                <p>
+                  One $199 Maker or $399 Pro Shop license includes 1D stick nesting, 2D Matryoshka sheet nesting, Cut-and-Bend unfolding, and 16 controller profiles without cloud lock-in or annual extension bills.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>1,025 Cut Charts &amp; THC Auto-Lock</h3>
+                <p>
+                  Select Hypertherm SYNC, Duramax, or Generic Air Plasma presets mapped to detected wall thickness, with spatial Kerf-Crossing THC Auto-Lock and True Hole small-hole control built in.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose Autodesk Fusion vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Many fabricators use both together: Fusion handles 3D parametric CAD and CNC milling, while RotaryCAM turns exported STEP and DXF files into shop-ready plasma G-code.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For Integrated CAD + Milling/Turning + 2D Plate</div>
+                <h3>Choose Autodesk Fusion CAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You need full parametric 3D CAD, assemblies, and multi-process CAM</strong> for 3/5-axis milling, turning, and probing in one suite.</li>
+                  <li><strong>Your plasma table only cuts flat 2D plates</strong> and you already have working Fusion CPS posts and Manufacturing/Nesting extensions.</li>
+                  <li><strong>Your shop prefers cloud-synced revisions</strong> across engineering and machining seats on macOS or Windows.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For 4-Axis Tube, Structural &amp; Offline Plasma Shops</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You design weldments in Fusion (or any CAD) and want instant STEP-to-G-code</strong> for pipe, HSS, angle, channel, I-beam, and bent sticks.</li>
+                  <li><strong>You want 2D Matryoshka nesting, zero-bevel copes, 4-axis eccentric V-bevels</strong>, THC Auto-Lock, and 1,025 presets with no paid extensions.</li>
+                  <li><strong>You want $199/$399 perpetual offline software</strong> running natively on macOS, Windows, or Linux across 16 controller profiles.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>How do Fusion and RotaryCAM work together in practice?</h3>
+                <p>
+                  Build your frame or bracket assembly in Autodesk Fusion, export a single multi-body <code class="mono">.step</code> file (or <code class="mono">.dxf</code> for flat brackets), and open it in RotaryCAM. Every solid profile and cut contour is detected automatically.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM work with Fusion's Structural Member plugin?</h3>
+                <p>
+                  Yes. We have a dedicated <a href="{{ docs_prefix }}ai-autodetection.html">Fusion 360 Structural Member Guide</a> showing how to sketch centerlines, assign ANSI/AISC profiles, combine bends, and auto-detect every stick in RotaryCAM.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Do I have to edit JavaScript CPS post-processors in RotaryCAM?</h3>
+                <p>
+                  No. RotaryCAM includes 16 pre-tuned controller profiles across 14 dialects (SimCNC 4D, Mach3/4, MASSO G3, Acorn, LinuxCNC QTPlasmaC, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL).
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can RotaryCAM nest 2D DXF brackets without a paid nesting extension?</h3>
+                <p>
+                  Yes. True-shape Matryoshka part-in-hole nesting, common-line cutting, guillotine skeleton crops, chain/bridge cuts, and Flat-Plate Pro Cuts are all built into the base license.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM run offline on the shop floor without an internet connection?</h3>
+                <p>
+                  Yes. Once activated with your offline key, RotaryCAM runs 100% offline on macOS, Windows, and Linux with zero cloud login checks.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Export a STEP From Fusion and Test Free for 30 Days</h2>
+            <p>
+              Run RotaryCAM offline on macOS, Windows, or Linux. Drop a multi-body Fusion STEP weldment or DXF bracket kit in and preview every 4-axis move before cutting steel.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}ai-autodetection.html" class="compare-btn-secondary">Fusion STEP Guide</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> Autodesk and Fusion are trademarks of Autodesk, Inc. All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by Autodesk, Inc. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}

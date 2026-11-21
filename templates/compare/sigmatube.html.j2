@@ -1,0 +1,328 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. SigmaTUBE",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM require a SOLIDWORKS license like SigmaTUBE?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM is a completely standalone offline app for macOS, Windows, and Linux. Export STEP or IGES assemblies from SOLIDWORKS, Fusion, Onshape, FreeCAD, or Inventor, or load 2D DXF and SVG files directly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does RotaryCAM handle bevel fit-up on a 4-axis plasma table without a 5-axis head?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM includes dual-curve zero-bevel pullback on round pipe saddles and heel pullback on rectangular HSS miters for fixed 90-degree torches, plus 4-axis eccentric V-bevel weld prep in Pro Shop."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which structural steel profiles does RotaryCAM support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM supports all 6 profiles: round pipe, square/rectangular HSS, angle iron, C-channel, I-beam with 4-axis beamline emulation, and 2D flat sheet."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does pricing compare between SigmaTUBE and RotaryCAM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SigmaTUBE is enterprise OEM software priced in the $12,000 to $30,000+ range with annual maintenance and a SOLIDWORKS seat required. RotaryCAM is sold online for $199 (Maker) or $399 (Pro Shop) as a perpetual offline license with no enterprise quote needed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is SigmaTUBE the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SigmaTUBE is the stronger choice for large enterprise fabricators running SOLIDWORKS seats alongside 5-axis BLM, Trumpf, Mazak, or Bystronic tube laser/plasma machines, heavy DSTV structural workflows, and SigmaNEST ERP/MRP integration."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. SigmaTUBE</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">SigmaTUBE (SigmaTEK)</span></h1>
+        <p class="docs-subtitle">
+          SigmaTUBE delivers SOLIDWORKS-embedded 5-axis tube CAM, machine simulation, and SigmaNEST ERP integration for enterprise OEM lasers and heavy structural cells. Here is how it compares to standalone 4-axis plasma CAM at $199/$399.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; Standalone 4-Axis Plasma CAM vs. Enterprise SOLIDWORKS OEM Add-In</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            {% for cmp in compare_pages %}
+            <li>
+              <a href="{{ root_prefix }}compare/{{ cmp.slug }}/"{% if cmp.slug == page.slug %} class="active"{% endif %}>
+                <span class="docs-nav-num">VS</span>
+                <span>{{ cmp.sidebar_label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Both programs work straight from 3D solid assemblies rather than manual DXF unwrapping, but they serve completely different machine budgets and shop sizes.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>SigmaTUBE (SigmaTEK)</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Architecture &amp; CAD Dependency</strong></td>
+                    <td>Direct SOLIDWORKS add-in with associative CAD refresh (requires SOLIDWORKS seat)</td>
+                    <td>Standalone CAD-agnostic app: imports multi-body STEP/IGES from any CAD plus 2D DXF/SVG flat &amp; wrapped files</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Target Machines</strong></td>
+                    <td>5-axis OEM tube lasers and heavy structural systems (BLM, Trumpf, Mazak, Bystronic, Voortman)</td>
+                    <td>4-axis rotary &amp; flat-sheet CNC plasma tables across 16 profiles (SimCNC, Mach3/4, QTPlasmaC, MASSO G3, Acorn, FireControl, WinCNC, etc.)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Profiles Supported</strong></td>
+                    <td>Round, square/rect, angle, channel, I/H-beam, custom extrusions, and DSTV heavy structural</td>
+                    <td>All 6 profiles: round pipe, square/rect HSS, angle iron, C-channel, I-beam (4-axis beamline emulation), and 2D flat sheet</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bevel &amp; Fit-Up Strategy</strong></td>
+                    <td>Full 5-axis tilting bevel head collision avoidance and full machine envelope simulation</td>
+                    <td>Perpendicular-torch zero-bevel on round pipe &amp; rect HSS miters, plus 4-axis eccentric V-bevel weld prep without a 5-axis head</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Plasma Physics &amp; Nesting</strong></td>
+                    <td>Multi-process laser/plasma nesting linked to SigmaNEST ERP/MRP and inventory control</td>
+                    <td>Kerf-Crossing THC Auto-Lock, True Hole rules, 1,025 plasma presets, 1D stick nesting + common-line sever, and 2D Matryoshka nesting</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows (bound to SOLIDWORKS workstation)</td>
+                    <td>Native macOS, Windows, and Linux (100% offline) + local <code class="mono">rotarycam-mcp</code> server</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pricing &amp; Buying Process</strong></td>
+                    <td>Enterprise quote ($12,000 to $30,000+ per seat) plus annual maintenance and SOLIDWORKS license</td>
+                    <td>30-day free beta; published $199 Maker / $399 Pro Shop one-time perpetual offline key</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>No SOLIDWORKS Seat Required</h3>
+                <p>
+                  Bring STEP or IGES assemblies from SOLIDWORKS, Fusion, Onshape, Inventor, or FreeCAD, plus 2D DXF/SVG brackets. No expensive CAD add-in lock-in on your shop-floor PC.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Zero-Bevel &amp; 4-Axis V-Bevel Without 5-Axis Hardware</h3>
+                <p>
+                  Instead of requiring a 5-axis bevel head, RotaryCAM eliminates overhanging saddle interference via dual-curve zero-bevel pullback and creates eccentric V-groove weld preps on standard 4-axis rotary axes.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Built for Open 4-Axis Plasma Controllers</h3>
+                <p>
+                  Skip $12k-$30k+ custom OEM post contracts. Pick from 16 built-in profiles across 14 dialects, including SimCNC 4D trajectory scaling, QTPlasmaC, MASSO G3, Acorn, Mach4, and FireControl.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>100x Lower Software Cost</h3>
+                <p>
+                  Get 1D interlocking stick nesting, 2D Matryoshka plate nesting, Cut-and-Bend unfolding, and 1,025 plasma presets for $199 or $399 once, offline on macOS, Windows, or Linux.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose SigmaTUBE vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              SigmaTUBE and RotaryCAM sit in different machine tiers. Choose the tool built for the iron on your shop floor.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For Enterprise OEM 5-Axis Tube Lasers</div>
+                <h3>Choose SigmaTUBE if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>Your shop runs industrial 5-axis tube lasers or beamlines</strong> from BLM, Trumpf, Mazak, or Bystronic needing full machine-envelope simulation.</li>
+                  <li><strong>Your engineers work natively inside SOLIDWORKS</strong> and require associative model updates and heavy DSTV structural workflows.</li>
+                  <li><strong>You already run SigmaNEST ERP/MRP</strong> for multi-machine scheduling and automated stock inventory.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For 4-Axis Plasma Tables &amp; Job Shops</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You run a 4-axis rotary/plate plasma table</strong> on SimCNC, MASSO, Acorn, Mach3/4, LinuxCNC QTPlasmaC, or FireControl.</li>
+                  <li><strong>You want standalone STEP/IGES + DXF/SVG CAM</strong> across all 6 profiles without paying for SOLIDWORKS seats or $12k-$30k+ enterprise quotes.</li>
+                  <li><strong>You need zero-bevel copes, 4-axis eccentric V-bevels</strong>, Kerf-Crossing THC Auto-Lock, and 1D/2D nesting offline on Mac, Windows, or Linux.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Can RotaryCAM open SOLIDWORKS weldments without installing a plugin?</h3>
+                <p>
+                  Yes. Save your SOLIDWORKS weldment or assembly as <code class="mono">.step</code> or <code class="mono">.stp</code> and drop it into RotaryCAM. Every tube body, miter, cope, hole, and bend centerline is recognized directly.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How does 4-axis I-beam beamline emulation work?</h3>
+                <p>
+                  RotaryCAM classifies web and flange faces on I-beams from 3D STEP files and schedules rotary A-axis indexing and X/Y/Z torch clearances automatically for 4-axis tables.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I inspect and adjust pierces, tabs, and nesting interactively?</h3>
+                <p>
+                  Yes. You can relocate pierces and micro-tabs on the canvas, drag/rotate/flip 2D parts inside Matryoshka nests, and reorder/flip/roll sticks in 1D pack mode before running the 3D simulator.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM support local automation?</h3>
+                <p>
+                  Yes. RotaryCAM ships with a local Model Context Protocol server (<code class="mono">rotarycam-mcp</code>) so you can automate STEP analysis, machine selection, and G-code exports completely offline.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Are cut charts and post-processors extra add-ons?</h3>
+                <p>
+                  No. All 16 controller profiles across 14 dialects and all 1,025 factory plasma presets (Hypertherm SYNC, Duramax, Generic Air Plasma) are included at $199 Maker or $399 Pro Shop.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Download the offline desktop beta for macOS, Windows, or Linux. Drop a SOLIDWORKS STEP assembly or plate DXF kit in and inspect the simulated 4-axis G-code yourself.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}index.html" class="compare-btn-secondary">Browse {{ total_tutorials }} Guides</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> SigmaTUBE and SigmaNEST are trademarks of SigmaTEK Systems, LLC; SOLIDWORKS is a trademark of Dassault Systèmes. All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by SigmaTEK Systems, LLC or Dassault Systèmes. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}

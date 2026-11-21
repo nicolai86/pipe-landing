@@ -1,0 +1,338 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. Bend-Tech Dragon",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM require buying a turnkey machine like the Bend-Tech Dragon?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM is standalone offline CAM software ($199 Maker / $399 Pro Shop perpetual) built to run on any 4-axis rotary plasma build, retrofit, or custom table using SimCNC, MASSO, Acorn, Mach3/4, LinuxCNC QTPlasmaC, FireControl, or WinCNC."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can RotaryCAM cut flat sheet brackets alongside structural tubes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. RotaryCAM unifies all 6 profiles in one offline app: round pipe, square/rectangular HSS, angle iron, C-channel, I-beam (with 4-axis beamline emulation), and 2D DXF/SVG flat sheet nesting."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does RotaryCAM handle bent tube assemblies and part marking?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM automatically unfolds 3D bent tube STEP models into straight-stick Cut-and-Bend kerf relief patterns and supports part-ID stenciling, assembly witness marks, and DXF TEXT single-stroke scribing."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which operating systems and CAD formats does RotaryCAM support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM runs natively offline on macOS, Windows, and Linux and imports multi-body 3D STEP/IGES assemblies, 2D DXF/SVG flat sheets, and wrapped DXF/SVG artwork on round pipe and HSS."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is a Bend-Tech Dragon machine the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Bend-Tech Dragon is the stronger fit for production shops that want a $40k to $80k+ turnkey hardware-and-software tube machine featuring integrated pneumatic engraving, laser alignment, and native Bend-Tech bender/cage design workflows."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. Bend-Tech Dragon</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">Bend-Tech Dragon</span></h1>
+        <p class="docs-subtitle">
+          Bend-Tech Dragon bundles a turnkey tube plasma machine with proprietary Bend-Tech CAD/CAM, laser alignment, and pneumatic marking. If you want standalone CAM for your own 4-axis table or retrofit, here is how they compare.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; Standalone $199/$399 CAM vs. Turnkey $40k-$80k+ Machine</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Profiles:</strong> All 6 Profiles + Flat Sheet</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            {% for cmp in compare_pages %}
+            <li>
+              <a href="{{ root_prefix }}compare/{{ cmp.slug }}/"{% if cmp.slug == page.slug %} class="active"{% endif %}>
+                <span class="docs-nav-num">VS</span>
+                <span>{{ cmp.sidebar_label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Bend-Tech Dragon is a complete hardware-plus-software machine platform, while RotaryCAM gives you industrial 4-axis tube and flat-sheet CAM on any table you build or already own.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>Bend-Tech Dragon</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Delivery Model</strong></td>
+                    <td>Turnkey proprietary CNC tube plasma machine + Dragon CAD/CAM software ecosystem</td>
+                    <td>Standalone offline CAM software ($199/$399 perpetual) for any custom, kit, or retrofit 4-axis plasma table</td>
+                  </tr>
+                  <tr>
+                    <td><strong>CAD &amp; File Import</strong></td>
+                    <td>Native Bend-Tech bending/chassis workflows plus STEP/IGES import on Dragon A250/A400</td>
+                    <td>Direct multi-body 3D STEP/IGES assemblies, 2D DXF/SVG flat sheet, wrapped DXF/SVG on round/HSS, and DXF TEXT scribing</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Profiles Supported</strong></td>
+                    <td>Round pipe, square/rect tube, angle, and channel (tube-focused machine bed)</td>
+                    <td>All 6 profiles in one app: round pipe, square/rect HSS, angle iron, C-channel, I-beam (4-axis beamline emulation), and 2D flat sheet</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Marking &amp; Alignment</strong></td>
+                    <td>Integrated hardware pneumatic engraver and laser alignment on Dragon frames</td>
+                    <td>Software part-ID stenciling, assembly witness marks, and DXF TEXT single-stroke scribing posts for air scribes</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bevel &amp; Fit-Up Control</strong></td>
+                    <td>Standard Dragon tube copes and bend-marker workflows</td>
+                    <td>Round + rect HSS zero-bevel fit-up, 4-axis eccentric V-bevel weld prep (Pro Shop), Cut-and-Bend unfolding, and ERW weld-seam avoidance</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Nesting &amp; Flat Plate</strong></td>
+                    <td>Multi-part stick nesting on Dragon tube stock (no flat plate bed)</td>
+                    <td>1D interlocking stick nesting + common-line sever AND 2D Matryoshka true-shape flat-sheet nesting with Flat-Plate Pro Cuts</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Controllers Supported</strong></td>
+                    <td>Proprietary Bend-Tech Dragon machine controller</td>
+                    <td>16 profiles across 14 dialects: SimCNC 4D G94/G93, Mach3/4, LinuxCNC QTPlasmaC, MASSO G3, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows (machine ecosystem)</td>
+                    <td>Native macOS, Windows, and Linux (100% offline) + local <code class="mono">rotarycam-mcp</code> server</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Investment Range</strong></td>
+                    <td>$40,000 to $80,000+ turnkey machine hardware and software</td>
+                    <td>$199 Maker / $399 Pro Shop one-time perpetual software key (30-day free beta)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>Bring Your Own 4-Axis Table</h3>
+                <p>
+                  Build a $5k-$15k rotary table with our open hardware blueprint or retrofit your existing plate table with a chuck. RotaryCAM generates tuned 4-axis G-code without locking you into a $40k-$80k+ OEM machine.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Tube + I-Beam + Flat Plate Unified</h3>
+                <p>
+                  Dragon is strictly a tube bed. RotaryCAM handles all 6 profiles, adding 4-axis I-beam beamline emulation and full 2D DXF/SVG flat-sheet nesting with guillotine skeleton crops in the same app.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Cut-and-Bend &amp; Zero-Bevel Copes</h3>
+                <p>
+                  Unfold 3D bent tube STEP parts into straight Cut-and-Bend relief patterns, or cut tight 45&deg; saddle copes with dual-curve zero-bevel pullback and 4-axis eccentric V-bevels.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>1,025 Plasma Charts &amp; THC Auto-Lock</h3>
+                <p>
+                  Includes 1,025 factory torch presets (Hypertherm SYNC, Duramax, Generic Air Plasma), spatial Kerf-Crossing THC Auto-Lock, and True Hole small-feature rules out of the box.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose Bend-Tech Dragon vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              This decision comes down to whether you are buying a complete turnkey production machine or software for your own 4-axis plasma hardware.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For Turnkey Tube Production Hardware</div>
+                <h3>Choose Bend-Tech Dragon if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You want a turnkey $40k-$80k+ machine delivered ready to run</strong> with factory support, laser alignment, and pneumatic tube engraving hardware.</li>
+                  <li><strong>Your shop already lives inside Bend-Tech</strong> designing roll cages, chassis, and mandrel-bent assemblies tied to bender tooling.</li>
+                  <li><strong>You want single-vendor hardware and software</strong> with no machine assembly or controller tuning.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For Custom, DIY &amp; Multi-Profile Tables</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You already own or are building a 4-axis rotary table</strong> running SimCNC, MASSO G3, Acorn, Mach3/4, LinuxCNC QTPlasmaC, or FireControl.</li>
+                  <li><strong>You cut I-beams and 2D flat-plate gussets alongside tubes</strong> and want 1D stick + 2D Matryoshka nesting in one app.</li>
+                  <li><strong>You want $199/$399 perpetual offline software</strong> on macOS, Windows, or Linux with zero machine vendor lock-in.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Can RotaryCAM output bend marks and part numbers without a pneumatic engraver?</h3>
+                <p>
+                  Yes. RotaryCAM generates plasma part-ID stenciling, assembly witness marks, and DXF TEXT single-stroke scribing posts that run with either your plasma torch at low current or a dedicated air-scribe output.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I cut both structural steel and flat sheet brackets in RotaryCAM?</h3>
+                <p>
+                  Yes. All 6 profiles are built in: round pipe, square/rect HSS, angle iron, C-channel, I-beam with 4-axis beamline emulation, and 2D flat sheet DXF/SVG nesting.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM support Cut-and-Bend relief slotting on square and round tube?</h3>
+                <p>
+                  Yes. Load a 3D bent tube STEP file and RotaryCAM unfolds the bend centerlines into a straight stick with customizable kerf relief slots and spine widths.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>What if I build my own rotary plasma table?</h3>
+                <p>
+                  Check out our <a href="{{ root_prefix }}build-guide.html">6-Meter Open Hardware Build Guide</a> and <a href="{{ root_prefix }}hardware-thc.html">10 kHz Hardware THC</a>, then pair the table with RotaryCAM's 16 built-in controller profiles.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How much does RotaryCAM cost?</h3>
+                <p>
+                  Test free for 30 days offline. Perpetual offline licenses are $199 (Maker) or $399 (Pro Shop) with 1 year of updates included.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Run RotaryCAM offline on macOS, Windows, or Linux. Drop a tube frame STEP assembly or bracket DXF kit in and verify every 4-axis move on your controller before cutting metal.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ root_prefix }}build-guide.html" class="compare-btn-secondary">Table Build Guide</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> Bend-Tech and Dragon are trademarks of Bend-Tech LLC. All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by Bend-Tech LLC. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}

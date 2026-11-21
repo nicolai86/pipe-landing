@@ -1,0 +1,333 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. GCmaker",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM lock you into JD Squared hardware like GCmaker?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM is hardware-agnostic and ships with 16 built-in CNC plasma controller profiles across 14 dialects, including SimCNC, Mach3/4, MASSO G3, Acorn, LinuxCNC QTPlasmaC, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, and grblHAL."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does RotaryCAM pricing compare for non-JD Squared or second-hand tables?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While GCmaker is included free for original owners of compatible JD Squared hardware (with subscription plans for secondary owners), RotaryCAM offers transparent $199 Maker and $399 Pro Shop one-time perpetual offline licenses regardless of who built your table."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM handle 3D CAD assemblies and all structural steel profiles?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. RotaryCAM imports multi-body 3D STEP/IGES assemblies from Fusion, SOLIDWORKS, Onshape, or FreeCAD and supports round pipe, square/rectangular HSS, angle iron, C-channel, I-beam (with 4-axis beamline emulation), Cut-and-Bend unfolding, and 2D flat-sheet DXF/SVG nesting in one app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What bevel and plasma cut features does RotaryCAM add for 4-axis tables?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM includes dual-curve zero-bevel pullback on round saddles, heel pullback on rectangular HSS miters, 4-axis eccentric V-bevel weld prep (Pro Shop), Kerf-Crossing THC Auto-Lock, 1,025 factory plasma presets, and local rotarycam-mcp automation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is GCmaker the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GCmaker is the better choice if you are the original owner of a compatible JD Squared machine where it is bundled free, want walk-up parametric joint design or NC1 structural import inside that hardware ecosystem, and run Windows."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. GCmaker</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">GCmaker (JD Squared)</span></h1>
+        <p class="docs-subtitle">
+          GCmaker was built with JD Squared for walk-up parametric 3D tube and structural steel design, including NC1 import, and is bundled free for original JD Squared hardware owners. If you run any other 4-axis table or want open perpetual CAM on macOS, Windows, or Linux, here is how they compare.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; 16 Open Controllers vs. JD Squared OEM Ecosystem</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            {% for cmp in compare_pages %}
+            <li>
+              <a href="{{ root_prefix }}compare/{{ cmp.slug }}/"{% if cmp.slug == page.slug %} class="active"{% endif %}>
+                <span class="docs-nav-num">VS</span>
+                <span>{{ cmp.sidebar_label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Both programs tackle 3D rotary tube and structural steel plasma cutting, but GCmaker is tied to the JD Squared hardware ecosystem while RotaryCAM targets any 4-axis controller.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>GCmaker (JD Squared)</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Controller Support</strong></td>
+                    <td>Built for JD Squared plasma machines and their coupled control ecosystem</td>
+                    <td>Hardware-agnostic across 16 profiles &amp; 14 dialects (SimCNC, Mach3/4, MASSO, Acorn, LinuxCNC QTPlasmaC, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Profiles Supported</strong></td>
+                    <td>Round, square/rect, angle, channel, and I-beam structural steel</td>
+                    <td>All 6 profiles in one app: round pipe, square/rect HSS, angle iron, C-channel, I-beam (4-axis beamline emulation), plus 2D flat sheet</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Design vs. CAD Import</strong></td>
+                    <td>Strong walk-up parametric part/joint builder plus structural NC1 file import</td>
+                    <td>Direct multi-body 3D STEP/IGES assemblies from any CAD, wrapped DXF/SVG artwork, 2D DXF/SVG sheets, and Cut-and-Bend unfolding</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bevel &amp; Fit-Up Control</strong></td>
+                    <td>Standard tube cope and joint cut paths tuned for JD Squared rotary setups</td>
+                    <td>Dual-curve zero-bevel saddles, heel pullback on rect HSS miters, and 4-axis eccentric V-bevel weld prep (Pro Shop)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Plasma Physics &amp; Charts</strong></td>
+                    <td>Machine-paired cut parameters inside the JD Squared software stack</td>
+                    <td>1,025 factory cut presets (Hypertherm SYNC, Duramax, Generic Air), CSV import/export, Kerf-Crossing THC Auto-Lock, and True Hole rules</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2D Plate Nesting</strong></td>
+                    <td>Handled by a separate companion product (GCnester)</td>
+                    <td>Built-in 1D interlocking stick nesting + 2D Matryoshka true-shape plate nesting with common-line and skeleton crop in the same app</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems &amp; Automation</strong></td>
+                    <td>Windows desktop software</td>
+                    <td>Native macOS, Windows, and Linux (100% offline) + local <code class="mono">rotarycam-mcp</code> server</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pricing &amp; Ownership</strong></td>
+                    <td>Free for original owners of compatible JD Squared machines; subscription plans for secondary owners</td>
+                    <td>$199 Maker / $399 Pro Shop one-time perpetual offline key (30-day free beta), independent of table brand</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>Zero Hardware or OEM Lock-In</h3>
+                <p>
+                  Run any DIY, retrofit, or commercial 4-axis rotary table. RotaryCAM ships with 16 built-in profiles covering SimCNC, Mach3/4, MASSO G3, Acorn, QTPlasmaC, FireControl, FlashCut, WinCNC, and grblHAL.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Transparent Perpetual Licensing</h3>
+                <p>
+                  No machine-serial restrictions or secondary-owner subscription plans. Buy a $199 Maker or $399 Pro Shop offline key once and install natively on macOS, Windows, or Linux.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>4-Axis Eccentric V-Bevel &amp; Zero-Bevel</h3>
+                <p>
+                  Dial in perpendicular-torch zero-bevel fit-up on round saddles and rect HSS miters, or cut 4-axis eccentric V-bevel weld preps without a 5-axis tilting torch head.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>1,025 Cut Presets + 2D Plate + MCP</h3>
+                <p>
+                  Includes 1,025 factory presets across Hypertherm SYNC, Duramax, and Air Plasma, full 2D DXF/SVG flat-sheet nesting in the same window, and local <code class="mono">rotarycam-mcp</code> scripting.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose GCmaker vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              If you already own a new JD Squared table, GCmaker may already be included. For every other table, custom build, or multi-controller shop, RotaryCAM gives you full freedom.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For Original JD Squared Table Owners</div>
+                <h3>Choose GCmaker if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You are the original owner of a compatible JD Squared machine</strong> where GCmaker is included free with the table.</li>
+                  <li><strong>You prefer walk-up parametric tube/joint design</strong> and structural NC1 import directly on Windows without a separate 3D CAD package.</li>
+                  <li><strong>All of your rotary and structural cutting stays inside the JD Squared ecosystem.</strong></li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For Any 4-Axis Controller, Retrofit &amp; Cross-Platform Shop</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You run a custom build, retrofit, or non-JD Squared table</strong> on SimCNC, Mach3/4, MASSO, Acorn, QTPlasmaC, FireControl, FlashCut, or WinCNC.</li>
+                  <li><strong>You want 100% offline perpetual licensing ($199/$399)</strong> on macOS, Windows, or Linux with zero secondary-owner subscriptions.</li>
+                  <li><strong>You want 3D STEP/IGES assemblies, 4-axis eccentric V-bevel weld prep</strong>, 1,025 cut charts, 2D sheet nesting, and local MCP automation in one app.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Can I use RotaryCAM on a custom or retrofitted rotary plasma table?</h3>
+                <p>
+                  Yes. Pick from 16 built-in controller profiles across 14 dialects, enter your axis velocity/acceleration limits and chuck travel mode, and export tuned G-code immediately.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM support structural shapes beyond round and square tube?</h3>
+                <p>
+                  Yes. RotaryCAM extracts features directly from 3D STEP/IGES files for round pipe, square/rectangular HSS, angle iron, C-channel, I-beam (with 4-axis beamline emulation), and bent sticks.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Are flat-plate brackets included or do I need a separate nester?</h3>
+                <p>
+                  Flat-plate DXF/SVG nesting is built right into RotaryCAM, including recursive Matryoshka part-in-hole packing, common-line sharing, skeleton crop, and Flat-Plate Pro Cuts.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How does Kerf-Crossing THC Auto-Lock prevent torch dives?</h3>
+                <p>
+                  RotaryCAM inspects every toolpath spatially and inserts controller-specific THC lock/unlock commands before the torch crosses an existing kerf void or common-line cut.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How does licensing work if I upgrade computers or switch tables?</h3>
+                <p>
+                  Your $199 Maker or $399 Pro Shop offline key is perpetual and tied to you, not a specific machine brand or table serial number.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Download the offline desktop beta for macOS, Windows, or Linux. Drop a tube frame STEP assembly or plate DXF in and check the simulated 4-axis G-code on your controller.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}machine-configuration.html" class="compare-btn-secondary">16 Controller Profiles</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> GC-CAD, GCmaker, and JD Squared are trademarks of their respective owners. All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by GC-CAD or JD Squared. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}

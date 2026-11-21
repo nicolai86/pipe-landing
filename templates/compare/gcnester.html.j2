@@ -1,0 +1,328 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. GCnester",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM include 2D flat-sheet nesting AND 4-axis rotary tube CAM in one app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. RotaryCAM combines true-shape 2D Matryoshka flat-sheet DXF/SVG nesting with full 4-axis rotary tube and structural CAM (round pipe, square/rect HSS, angle iron, C-channel, I-beam, and Cut-and-Bend unfolding) in one offline desktop app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What 2D plate features are included in RotaryCAM's Flat-Plate Pro Cuts?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM includes Matryoshka part-in-hole nesting, interactive drag/rotate/flip, 2D common-line sharing, open-path L/R kerf, edge pierce, guillotine skeleton crop, chain/bridge cutting, 2-point magnetic scale fixing, and Kerf-Crossing THC Auto-Lock."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which CNC controllers does RotaryCAM support for flat plate and tube?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM includes 16 built-in controller profiles across 14 dialects: SimCNC, Mach3/4, MASSO G3, Centroid Acorn, LinuxCNC QTPlasmaC, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic RS-274 G94."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does pricing compare between GCnester and RotaryCAM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GCnester is included free for original JD Squared table owners, with paid subscription plans for standalone use and Business remnant/quoting tools. RotaryCAM is $199 (Maker) or $399 (Pro Shop) once as a perpetual offline license covering both 2D sheet nesting and 4-axis tube CAM across any controller."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is GCnester the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "GCnester is the better choice if you are the original owner of a JD Squared machine where it is bundled free, only cut 2D flat plate on Windows, or need Business-tier remnant inventory tracking and built-in job quoting."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. GCnester</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">GCnester</span></h1>
+        <p class="docs-subtitle">
+          GCnester focuses on 2D flat-plate nesting and plasma CAM, bundled free for original JD Squared table owners with remnant inventory and quoting on Business plans. If you want 2D sheet nesting AND 4-axis rotary tube CAM in one perpetual offline app across any controller, here is how they compare.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; Unified 2D Plate + 4-Axis Tube CAM vs. 2D Plate Nester</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            {% for cmp in compare_pages %}
+            <li>
+              <a href="{{ root_prefix }}compare/{{ cmp.slug }}/"{% if cmp.slug == page.slug %} class="active"{% endif %}>
+                <span class="docs-nav-num">VS</span>
+                <span>{{ cmp.sidebar_label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              GCnester is a dedicated 2D flat-plate nesting application, whereas RotaryCAM puts 2D sheet nesting and 4-axis rotary tube CAM in a single offline package.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>GCnester</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Machine Scope</strong></td>
+                    <td>2D flat-plate nesting &amp; plasma CAM (3D tube requires separate GCmaker)</td>
+                    <td>Unified 2D flat-sheet nesting AND full 4-axis rotary tube &amp; structural CAM (round, HSS, angle, channel, I-beam)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2D Nesting Tools</strong></td>
+                    <td>True-shape plate nesting with part flip, rotate, and manual nudge</td>
+                    <td>True-shape Matryoshka part-in-hole nesting, interactive drag/rotate/flip, common-line sharing, and multi-file DXF/SVG/ZIP import</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Plate Cut Features</strong></td>
+                    <td>Standard 2D lead-ins, kerf compensation, and cut sequencing</td>
+                    <td>Open-path L/R kerf, edge pierce, guillotine skeleton crop, chain/bridge cutting, 2-point scale fix, and G20/G21 export</td>
+                  </tr>
+                  <tr>
+                    <td><strong>THC &amp; Cut Charts</strong></td>
+                    <td>Table-paired plasma parameters; remnant inventory &amp; quoting on Business plans</td>
+                    <td>Kerf-Crossing THC Auto-Lock, True Hole small-hole rules, and 1,025 presets (Hypertherm SYNC, Duramax, Generic Air) + CSV sync</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Controller Support</strong></td>
+                    <td>Paired for original JD Squared tables (or standalone plans)</td>
+                    <td>16 profiles across 14 dialects (SimCNC, Mach3/4, MASSO, Acorn, LinuxCNC QTPlasmaC, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows desktop application</td>
+                    <td>Native macOS, Windows, and Linux (100% offline) + local <code class="mono">rotarycam-mcp</code> server</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pricing Model</strong></td>
+                    <td>Free for original JD Squared table owners; monthly/subscription plans for standalone and Business quoting/remnant tiers</td>
+                    <td>$199 Maker / $399 Pro Shop one-time perpetual offline key (30-day free beta), zero OEM lock-in</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>2D Sheet + 4-Axis Tube Unified</h3>
+                <p>
+                  Cut flat gussets on Monday and rotary tube chassis on Tuesday without buying or switching between two apps. All 6 profiles live inside one workspace.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Matryoshka &amp; Flat-Plate Pro Cuts</h3>
+                <p>
+                  Pack small parts inside large cutouts automatically, share common lines, chain/bridge parts to cut pierces, crop skeletons with guillotine cuts, and set open-path L/R kerf.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Kerf-Crossing THC Auto-Lock</h3>
+                <p>
+                  RotaryCAM detects every crossing over previously cut kerfs and common lines and locks THC automatically so your torch never dives into an empty slot.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>16 Controllers, 3 OSes, One Fee</h3>
+                <p>
+                  Pay $199 Maker or $399 Pro Shop once and run offline on macOS, Windows, or Linux across any major plasma controller without OEM lock-in or monthly subscriptions.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose GCnester vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Both nest 2D plate cleanly, so the real question is whether you want JD Squared quoting and remnant management on a bundled table, or unified 2D/4-axis CAM across any controller.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For JD Squared Owners &amp; Shop Quoting</div>
+                <h3>Choose GCnester if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You are the original owner of a JD Squared table</strong> where GCnester is included free out of the box.</li>
+                  <li><strong>You want Business-tier remnant inventory tracking and job quoting</strong> built directly into your 2D plate nester.</li>
+                  <li><strong>You only cut 2D flat sheet on Windows</strong> and do not need 4-axis rotary tube CAM.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For Multi-Controller, Tube + Plate &amp; Perpetual Shops</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You want 2D Matryoshka sheet nesting AND 4-axis rotary tube CAM</strong> in one app without paying for separate tube and plate tools.</li>
+                  <li><strong>You run SimCNC, MASSO, Acorn, Mach3/4, QTPlasmaC, FireControl, FlashCut, or WinCNC</strong> instead of a bundled OEM setup.</li>
+                  <li><strong>You want a $199/$399 perpetual offline license</strong> on macOS, Windows, or Linux with THC Auto-Lock, 1,025 cut charts, and Flat-Plate Pro Cuts.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Can I import a batch of DXF or SVG files and nest them together?</h3>
+                <p>
+                  Yes. Drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> kits onto the canvas, fix unknown drawing units with 2-point magnetic scaling, set quantities, and pack them onto your sheet.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM support common-line cutting and chain/bridge cuts on 2D sheets?</h3>
+                <p>
+                  Yes. You can enable 2D common-line sharing, chain/bridge cutting between neighboring parts, open-path L/R kerf for scribe or slit lines, edge pierce, and guillotine skeleton cropping.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How does RotaryCAM handle small bolt holes on flat plate?</h3>
+                <p>
+                  True Hole rules automatically slow feedrate to 60%, lock THC during the hole, and adjust lead-in/overburn geometry for clean, round bolt holes.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I output Imperial (G20) inches as well as Metric (G21) G-code?</h3>
+                <p>
+                  Yes. Toggle between Imperial (<code class="mono">G20</code> 4-decimal inches, IPM) and Metric (<code class="mono">G21</code> mm, mm/min) for any controller profile.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Is 4-axis rotary tube CAM included in the same license as 2D sheet nesting?</h3>
+                <p>
+                  Yes. Both $199 Maker and $399 Pro Shop keys include full 2D DXF/SVG nesting and 4-axis rotary tube/structural CAM in the same offline app.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Nest Your Own DXF Brackets and Tubes Free for 30 Days</h2>
+            <p>
+              Run RotaryCAM offline on macOS, Windows, or Linux. Drop a multi-file DXF kit or STEP tube frame in and verify every move in the 3D simulator before striking an arc.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}dxf-svg-flat-sheet.html" class="compare-btn-secondary">2D Sheet Nesting Guide</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> GC-CAD, GCnester, and JD Squared are trademarks of their respective owners. All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by GC-CAD or JD Squared. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}

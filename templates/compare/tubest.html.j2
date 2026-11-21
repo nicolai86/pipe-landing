@@ -1,0 +1,333 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. TubesT",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why shouldn't I use fiber-laser tube CAM like TubesT for a CNC plasma table?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TubesT outputs proprietary .zx jobs tuned for Friendess FSCUT, CypTube, and TubePro fiber laser controllers. CNC plasma tables need standard G94/G93 G-code plus plasma arc physics: IHS touch-off, pierce delay, Kerf-Crossing THC Auto-Lock, True Hole slowdown, and zero-bevel fishmouth pullback for wider plasma kerfs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which CNC controllers does RotaryCAM support instead of FSCUT?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM includes 16 built-in profiles across 14 open plasma dialects: SimCNC 4D G94 and G93, Mach3, Mach4 (ESS/TMC3in1), LinuxCNC QTPlasmaC, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic G94."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can RotaryCAM also nest 2D flat-sheet brackets alongside multi-stick tube jobs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. RotaryCAM unifies 1D interlocking stick nesting (with common-line severs) across all structural profiles and 2D Matryoshka part-in-hole DXF/SVG flat-sheet nesting in one app."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM include plasma cut charts and weld-seam avoidance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. RotaryCAM ships with 1,025 factory cut presets (Hypertherm SYNC, Duramax, Generic Air Plasma) with CSV import/export, ERW weld-seam avoidance, part-ID stenciling, and Cut-and-Bend tube unfolding."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is TubesT the right choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TubesT is the ideal fit when you operate an imported or OEM fiber laser tube cutter running a Friendess FSCUT, CypTube, or TubePro controller that natively consumes .zx multi-bar laser nesting programs."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. TubesT</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">TubesT (Friendess / Bochu)</span></h1>
+        <p class="docs-subtitle">
+          TubesT is fast 64-bit tube nesting built for Friendess FSCUT and TubePro fiber laser cutters. If you run an open-controller CNC plasma table rather than a Bochu laser, here is why plasma physics and open G-code matter.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; Dedicated CNC Plasma CAM vs. FSCUT Fiber Laser Nesting</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            {% for cmp in compare_pages %}
+            <li>
+              <a href="{{ root_prefix }}compare/{{ cmp.slug }}/"{% if cmp.slug == page.slug %} class="active"{% endif %}>
+                <span class="docs-nav-num">VS</span>
+                <span>{{ cmp.sidebar_label }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Both programs ingest 3D STEP assemblies and pack tubes onto multi-meter bars, yet fiber laser nesting and CNC plasma cutting solve completely different physics problems.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>TubesT (Friendess / Bochu)</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Target Cutting Process</strong></td>
+                    <td>Dedicated fiber laser tube cutting (FSCUT / CypTube / TubePro)</td>
+                    <td>Dedicated CNC plasma cutting and air scribing with 1,025 torch presets (Hypertherm SYNC, Duramax, Generic Air Plasma)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Controller Output</strong></td>
+                    <td>Proprietary <code class="mono">.zx</code> / Bochu pipeline locked to FSCUT / TubePro laser hardware</td>
+                    <td>Open G-code across 16 profiles &amp; 14 dialects (SimCNC 4D G94/G93, Mach3/4, QTPlasmaC, MASSO G3, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Arc &amp; Torch Physics</strong></td>
+                    <td>Laser head collision avoidance, optical focus/follow, and laser weld-seam tracking</td>
+                    <td>IHS touch-off, pierce delay, Kerf-Crossing / Prior-Void Spatial THC Auto-Lock, True Hole slowdown, and ERW weld-seam avoidance</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bevel &amp; Saddle Fit-Up</strong></td>
+                    <td>Narrow laser kerf with optional laser bevel head support</td>
+                    <td>Wider plasma kerf compensation, round + rect HSS zero-bevel fit-up for 90&deg; torches, and 4-axis eccentric V-bevel weld prep (Pro Shop)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Profiles &amp; Flat Sheet</strong></td>
+                    <td>Round, square, L/U/T/H structural profiles on tube laser chucks</td>
+                    <td>All 6 profiles (round pipe, square/rect HSS, angle iron, C-channel, I-beam with 4-axis beamline emulation) PLUS 2D DXF/SVG flat-sheet nesting</td>
+                  </tr>
+                  <tr>
+                    <td><strong>CAD &amp; Unfolding</strong></td>
+                    <td>STEP/IGES/IGS tube import and multi-bar laser nesting</td>
+                    <td>Multi-body 3D STEP/IGES, 2D DXF/SVG flat &amp; wrapped on round/HSS, DXF TEXT scribing, and Cut-and-Bend origami unfolding</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows desktop (USB dongle / Bochu account)</td>
+                    <td>Native macOS, Windows, and Linux (100% offline key file) + local <code class="mono">rotarycam-mcp</code> server</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Licensing Model</strong></td>
+                    <td>Dongle-based regional/OEM licensing bundled with FSCUT laser machines</td>
+                    <td>30-day free beta; transparent $199 Maker / $399 Pro Shop one-time perpetual offline key</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>Real Plasma Physics, Not Laser Posts</h3>
+                <p>
+                  Plasma torches need Initial Height Sensing, pierce heights/delays, Kerf-Crossing THC Auto-Lock over prior cuts, and 60% small-hole feed rules. RotaryCAM bakes those into every cut automatically.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Open G-Code vs. Proprietary .zx</h3>
+                <p>
+                  TubesT targets Bochu <code class="mono">.zx</code> fiber laser controllers. RotaryCAM posts native <code class="mono">G94</code>, <code class="mono">G93</code> inverse-time, and SimCNC 4D trajectory G-code for 16 plasma controller profiles out of the box.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Zero-Bevel for Wider Plasma Kerfs</h3>
+                <p>
+                  A 1.5 mm plasma kerf on thick-wall pipe creates real bevel interference on 45&deg; saddles. Zero-bevel pullback and 4-axis eccentric V-bevels solve fit-up before the parts leave the chuck.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Tube Sticks + Flat Sheet in One App</h3>
+                <p>
+                  Along with 1D interlocking stick nesting and Cut-and-Bend unfolding, Pro Shop packs 2D DXF/SVG gussets with Matryoshka part-in-hole nesting and Flat-Plate Pro Cuts.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose TubesT vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Never force a fiber laser CAM onto a plasma torch or vice versa. Pick the software engineered for your energy source and controller.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For Friendess / Bochu Fiber Lasers</div>
+                <h3>Choose TubesT if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You run a fiber laser tube cutter</strong> equipped with a Friendess FSCUT, CypTube, or TubePro controller expecting <code class="mono">.zx</code> jobs.</li>
+                  <li><strong>Your machine uses optical height sensing</strong>, laser weld-seam cameras, and multi-bar automatic laser bundle loaders.</li>
+                  <li><strong>You cut L/U/T/H profiles exclusively with a fiber laser</strong> inside the Bochu ecosystem.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For CNC Plasma Tables &amp; Open Controllers</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You run a CNC plasma table</strong> on SimCNC, LinuxCNC QTPlasmaC, Mach3/4, MASSO G3, Acorn, FireControl, or WinCNC.</li>
+                  <li><strong>You need plasma-specific control</strong>: IHS touch-off, Kerf-Crossing THC Auto-Lock, True Hole rules, zero-bevel copes, and 1,025 plasma presets.</li>
+                  <li><strong>You want tube + flat-sheet CAM offline</strong> on macOS, Windows, or Linux with zero dongles for $199/$399 once.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Can RotaryCAM control ERW tube weld-seam orientation?</h3>
+                <p>
+                  Yes. RotaryCAM supports ERW weld-seam avoidance so you can orient critical holes, bends, or copes away from the rolled seam before posting G-code.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM support 1D common-line severing like tube laser nesters?</h3>
+                <p>
+                  Yes. Pro Shop nests interlocking miters and copes across raw sticks with 180&deg; flips, A-axis rolls, and single-cut common-line severing to cut pierce counts in half.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How does Kerf-Crossing THC Auto-Lock protect my plasma torch?</h3>
+                <p>
+                  When a cut path crosses a prior kerf or cutout void, arc voltage spikes and makes standard THC dive into the pipe. RotaryCAM detects every spatial crossing and locks THC automatically until the torch clears the gap.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM require a hardware USB dongle?</h3>
+                <p>
+                  No. Activation uses a portable offline <code class="mono">rotarycam.lic</code> file on macOS, Windows, or Linux with zero USB dongles or cloud checks.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I import my own plasma cut charts via CSV?</h3>
+                <p>
+                  Yes. Start from any of the 1,025 built-in Hypertherm SYNC, Duramax, and Generic Air Plasma presets or import/export your own unit-aware CSV cut tables.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Download the offline desktop beta for macOS, Windows, or Linux. Drop a multi-body STEP weldment or DXF bracket kit in and inspect every THC lock, pierce, and 4-axis move in 3D.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}index.html" class="compare-btn-secondary">Browse {{ total_tutorials }} Guides</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> TubesT, FSCUT, CypTube, and TubePro are trademarks of Shanghai Friendess Electronic Technology Corp., Ltd. (Bochu). All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by Shanghai Friendess Electronic Technology Corp., Ltd. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}

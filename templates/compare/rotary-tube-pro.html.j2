@@ -125,24 +125,14 @@
         <div class="docs-sidebar-group">
           <div class="docs-sidebar-heading">Other Comparisons</div>
           <ul class="docs-nav-list">
+            {% for cmp in compare_pages %}
             <li>
-              <a href="{{ root_prefix }}compare/sheetcam/">
+              <a href="{{ root_prefix }}compare/{{ cmp.slug }}/"{% if cmp.slug == page.slug %} class="active"{% endif %}>
                 <span class="docs-nav-num">VS</span>
-                <span>SheetCAM + Rotary</span>
+                <span>{{ cmp.sidebar_label }}</span>
               </a>
             </li>
-            <li>
-              <a href="{{ root_prefix }}compare/pronest/">
-                <span class="docs-nav-num">VS</span>
-                <span>Hypertherm ProNest</span>
-              </a>
-            </li>
-            <li>
-              <a href="{{ root_prefix }}compare/rotary-tube-pro/" class="active">
-                <span class="docs-nav-num">VS</span>
-                <span>Rotary Tube Pro</span>
-              </a>
-            </li>
+            {% endfor %}
           </ul>
         </div>
       </aside>
