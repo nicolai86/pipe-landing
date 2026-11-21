@@ -159,7 +159,7 @@
       <div class="site-header-left">
         <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
-          <span class="brand-tag">v0.8.6-BETA</span>
+          <span class="brand-tag">v0.8.7-BETA</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
         <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
@@ -888,7 +888,7 @@
               <li><strong>Open-Path Left / Right / Center Kerf (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Pick <span class="ui-chip">Center (On-Line)</span>, <span class="ui-chip">Left</span>, or <span class="ui-chip">Right</span> kerf offset on open slits, edge trims, and bend reliefs. Offset direction follows your CAD stroke direction.</li>
               <li><strong>Thick-Plate Edge-Start Piercing (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Enable <span class="ui-chip">Edge-Start (Thick Plate)</span> (default overhang <code class="mono">4.0 mm</code>) on heavy plate (<code class="mono">&ge; 12 mm</code> / <code class="mono">1/2&Prime;</code>). Your torch probes IHS on steel at the start point, retracts to pierce height, shifts off-edge into open air to fire, and locks THC until <code class="mono">6.0 mm</code> onto solid steel.</li>
               <li><strong>Flared Chain / Bridge Cutting (<code class="mono">Pro Shop</code>):</strong> Link adjacent parts with <span class="ui-chip">Daisy-Chain (Single Pierce)</span> using flared bridges that skip half-shape retracing, or use <span class="ui-chip">Micro-Bridge (Connected)</span> (default bridge width <code class="mono">3.0 mm</code> or stock auto-default, max link distance <code class="mono">25.0 mm</code>) for retention tabs. Interior holes always cut before chained contours, obstacle-crossing links are skipped, and Chain/Bridge cutting stays separate from Common-Line cutting.</li>
-              <li><strong>2D Interactive Sheet Drag, Rotate, Flip &amp; Collision Halos:</strong> Drag parts in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, and flip H/V. Live halos flag part-spacing and sheet-edge collisions, and <span class="ui-chip">Reset Auto-Nest</span> restores the auto-pack anytime (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>).</li>
+              <li><strong>2D Interactive Sheet Drag, Rotate, Flip &amp; Collision Halos:</strong> Drag parts in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, and flip H/V. Live halos flag part-spacing and sheet-edge collisions, and <span class="ui-chip">Reset Auto-Nest</span> restores the auto-pack anytime (<code class="mono">Maker</code> auto-nests 10 flat / 5 rotary with unlimited manual placement; <code class="mono">Pro Shop</code> unlimited auto-nest).</li>
               <li><strong>Void THC Auto-Lock &amp; Flat Corner Loops:</strong> Void lock holds THC off within <code class="mono">0.5 &times; kerf + 4.0 mm</code> of prior kerf slots and pierce craters so the torch never dives across earlier cuts. On <code class="mono">.flat</code> profiles, set your corner loop radius (default <code class="mono">3.0 mm</code>) for sharp square corners.</li>
             </ul>
 
