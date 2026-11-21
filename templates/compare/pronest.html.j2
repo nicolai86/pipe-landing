@@ -1,0 +1,337 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. Hypertherm ProNest",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM require a Hypertherm plasma cutter or Hypertherm CNC controller?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM includes 1,025 built-in presets for Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma torches (plus CSV chart import/export) and posts G-code for 14 CNC controllers including SimCNC, LinuxCNC QTPlasmaC, Mach3, Mach4, MASSO, Acorn, FireControl, WinCNC, and grblHAL."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can RotaryCAM import 3D STEP tube assemblies without paid rotary add-on modules?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Direct 3D STEP/IGES import for round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, and bent sticks is built into the core app with zero add-on modules."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does RotaryCAM handle small holes and tight saddle copes on a perpendicular torch?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM applies 60% small-hole feedrate rules, synchronous M62/M63 THC corner/void locking, kerf-compensated holding tabs, and dual-curve zero-bevel fishmouth pullback so overhanging walls do not block tube fit-up."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is RotaryCAM a subscription like ProNest LT?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM is sold as a perpetual offline license ($199 Maker, $399 Pro Shop) activated by a local key file. One year of updates is included, with optional renewals ($59/$99/yr) only if you want future releases."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is Hypertherm ProNest or ProNest LT the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "ProNest is the stronger fit for high-volume industrial plate shops running Hypertherm XPR, MAXPRO, or HPR systems that depend on certified SureCut True Hole, Rapid Part, multi-head bevel tables, and ERP/MRP inventory integration."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. ProNest</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">Hypertherm ProNest</span></h1>
+        <p class="docs-subtitle">
+          Hypertherm ProNest and ProNest LT set the industrial bar for high-volume plate nesting and SureCut automation. If your shop runs a 4-axis rotary tube table or mixed custom CNC plasma setup, here is how the two tools compare.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; Enterprise Plate CAM vs. 4-Axis Tube &amp; Sheet CAM</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="{{ root_prefix }}compare/sheetcam/">
+                <span class="docs-nav-num">VS</span>
+                <span>SheetCAM + Rotary</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ root_prefix }}compare/pronest/" class="active">
+                <span class="docs-nav-num">VS</span>
+                <span>Hypertherm ProNest</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              ProNest is engineered for industrial plate production centers. RotaryCAM is engineered from the ground up for 4-axis rotary tube, structural profiles, and flat sheet in a single offline app.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>Hypertherm ProNest / ProNest LT</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Core Focus</strong></td>
+                    <td>High-volume 2D industrial plate nesting, multi-torch tables, and ERP/MRP automation</td>
+                    <td>4-axis rotary pipe, HSS, structural steel, and 2D flat-sheet CAM in one desktop app</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3D Tube &amp; Structural Import</strong></td>
+                    <td>Requires separate rotary/tube CAD/CAM modules and higher product tiers</td>
+                    <td>Built-in 3D STEP/IGES import for pipe, HSS, angle iron, C-channel, I-beam, and bent sticks</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Hole &amp; Bevel Automation</strong></td>
+                    <td>Proprietary SureCut True Hole, Rapid Part, and multi-axis bevel head support</td>
+                    <td>Zero-bevel saddle pullback on perpendicular torches, 60% small-hole rules, tabs, and 4-axis eccentric weld bevels</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Controllers Supported</strong></td>
+                    <td>Optimized for Hypertherm CNCs/XPR/MAXPRO/Powermax and industrial production tables</td>
+                    <td>14 hobby-to-industrial dialects (SimCNC, LinuxCNC QTPlasmaC, Mach3/4, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>1D &amp; 2D Nesting</strong></td>
+                    <td>Enterprise automated 2D plate nesting, remnant tracking, and ERP quoting (ProNest)</td>
+                    <td>1D multi-stick tube nesting (180&deg; flips, A-rolls, common-line severs) + 2D plate cutout nesting and guillotine crops</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cut Charts</strong></td>
+                    <td>Built-in Hypertherm SureCut process database</td>
+                    <td>1,025 built-in presets (Hypertherm SYNC, Duramax, Air Plasma) + unit-aware CSV import/export</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows</td>
+                    <td>Native macOS, Windows, and Linux (100% air-gapped offline)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pricing &amp; Licensing</strong></td>
+                    <td>ProNest LT subscription (~$60/mo or $500+/yr) or enterprise ProNest licensing + modules</td>
+                    <td>30-day free beta; Maker $199 USD / Pro Shop $399 USD perpetual offline key (optional $59/$99/yr updates)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Architecture</span>
+            <h2 class="doc-step-title">Where the Two Products Diverge</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>Rotary &amp; Structural Included Out of the Box</h3>
+                <p>
+                  Instead of bolting separate pipe modules onto a plate nest engine, RotaryCAM parses 3D STEP assemblies natively for round pipe, square/rect HSS, angle iron, C-channel, I-beam, and cut-and-bend tubes.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Hobby-to-Industrial Controller Coverage</h3>
+                <p>
+                  Small fab shops and custom table builders rarely run factory Hypertherm CNC consoles. RotaryCAM generates native G93, G94, and SimCNC 4D trajectory G-code for 14 controller dialects right out of the box.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Zero-Bevel Fit-Up on a Standard Torch</h3>
+                <p>
+                  Without a 5-axis bevel head, steep saddle intersections leave an overhanging inner edge. RotaryCAM computes the inner-wall intersection curve and clamps the cut path so coped tubes mate tight.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Perpetual Offline Ownership</h3>
+                <p>
+                  Activate with a local `rotarycam.lic` file on Mac, Windows, or Linux. There is no mandatory cloud login, no seat-lease timeout if shop Wi-Fi drops, and no recurring subscription required to keep cutting.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose ProNest vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Enterprise plate CAM and agile 4-axis tube CAM solve different shop bottlenecks. Choose based on your floor hardware and order volume.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For High-Volume Industrial Plate</div>
+                <h3>Choose Hypertherm ProNest / ProNest LT if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You run Hypertherm XPR, MAXPRO, or HPR tables</strong> and need certified SureCut True Hole, Rapid Part, and multi-head bevel automation.</li>
+                  <li><strong>Your production team relies on ERP/MRP integration</strong>, automated job quoting, remnant databases, and multi-shift plate scheduling.</li>
+                  <li><strong>Your work is predominantly heavy 2D plate cutting</strong> on Windows with an enterprise software budget.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For Tube, Structural &amp; Custom Fab Shops</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You fabricate handrails, roll cages, trailers, or structural frames</strong> from round pipe, HSS, angle iron, channel, or I-beam alongside flat brackets.</li>
+                  <li><strong>You run SimCNC, LinuxCNC QTPlasmaC, MASSO, Acorn, Mach3/4, WinCNC, or FireControl</strong> and want dialed-in 4-axis rotary + 2D G-code without module upsells.</li>
+                  <li><strong>You prefer a fast offline app</strong> on macOS, Windows, or Linux with one-time $199/$399 perpetual pricing.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM require a Hypertherm plasma cutter or Hypertherm CNC controller?</h3>
+                <p>
+                  No. It ships with 1,025 presets covering Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma torches (plus CSV chart import/export), and outputs native G-code for 14 popular hobby-to-industrial controllers.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can RotaryCAM import multi-part 3D STEP assemblies without extra add-on modules?</h3>
+                <p>
+                  Yes. Multi-body `.step`/`.stp` inspection, profile autodetection, cut-and-bend unfolding, and 4-axis kinematics are built directly into the core desktop app.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How does RotaryCAM handle small holes and edge quality compared to industrial CAM?</h3>
+                <p>
+                  RotaryCAM applies 60% small-hole speed reduction, synchronous `M62/M63` THC void locking, overburn prevention, kerf-compensated tabs, and zero-bevel fishmouth compensation.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Is RotaryCAM a monthly subscription like ProNest LT?</h3>
+                <p>
+                  No. Maker ($199) and Pro Shop ($399) are perpetual offline licenses with 1 year of updates included. Optional renewals ($59/$99/yr) are only needed if you choose to upgrade in Year 2 or later.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I test RotaryCAM on my own STEP and DXF files before buying?</h3>
+                <p>
+                  Yes. Download the free 30-day offline beta and test your real `.step`, `.dxf`, and `.svg` parts in the 3D simulator with your controller's post output.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Run RotaryCAM offline on macOS, Windows, or Linux. Drop a tube frame STEP assembly or bracket DXF kit in and inspect every pierce, lead-in, and G93/G94 feedrate line in 3D.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}index.html" class="compare-btn-secondary">Browse 13 Guides</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> ProNest, ProNest LT, SureCut, True Hole, Rapid Part, Powermax, SYNC, Duramax, XPR, and MAXPRO are trademarks of Hypertherm, Inc. All other trademarks belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by Hypertherm, Inc. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}

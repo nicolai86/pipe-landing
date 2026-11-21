@@ -1650,3 +1650,188 @@ picture {
 .controller-sidebar-list a.active .controller-sidebar-ext {
   color: var(--amber-400);
 }
+
+/* ---------- Comparison Pages (/compare/*) ---------- */
+.compare-verdict-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.compare-card {
+  background: rgba(11, 14, 20, 0.92);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1.45rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.compare-card.rotarycam {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: linear-gradient(155deg, rgba(245, 158, 11, 0.08), rgba(11, 14, 20, 0.96));
+}
+
+.compare-card.competitor {
+  border-color: rgba(6, 182, 212, 0.35);
+  background: linear-gradient(155deg, rgba(6, 182, 212, 0.06), rgba(11, 14, 20, 0.96));
+}
+
+.compare-card-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cyan-400);
+}
+
+.compare-card.rotarycam .compare-card-kicker {
+  color: var(--amber-400);
+}
+
+.compare-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.compare-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.1rem;
+}
+
+.compare-feature-box {
+  background: rgba(9, 12, 18, 0.9);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.25rem;
+}
+
+.compare-feature-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.45rem;
+}
+
+.compare-feature-box p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.compare-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.compare-faq-item {
+  background: rgba(9, 12, 18, 0.92);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.35rem;
+}
+
+.compare-faq-item h3 {
+  font-family: var(--font-display);
+  font-size: 1.04rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.45rem;
+}
+
+.compare-faq-item p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.62;
+}
+
+.compare-cta-box {
+  background: linear-gradient(145deg, rgba(245, 158, 11, 0.1), rgba(6, 182, 212, 0.08));
+  border: 1px solid rgba(245, 158, 11, 0.38);
+  border-radius: var(--radius-lg);
+  padding: 1.85rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.compare-cta-copy h2 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+}
+
+.compare-cta-copy p {
+  font-size: 0.94rem;
+  color: var(--text-secondary);
+  max-width: 620px;
+}
+
+.compare-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.compare-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--amber-500);
+  color: #07090d;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: var(--radius-md);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.compare-btn-primary:hover {
+  background: var(--amber-400);
+  transform: translateY(-1px);
+}
+
+.compare-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(20, 23, 29, 0.95);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.compare-btn-secondary:hover {
+  border-color: var(--cyan-400);
+  color: #fff;
+}
+
+.trademark-disclaimer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 1.25rem;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+@media (max-width: 780px) {
+  .compare-verdict-grid,
+  .compare-feature-grid {
+    grid-template-columns: 1fr;
+  }
+}

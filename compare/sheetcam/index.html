@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RotaryCAM vs. SheetCAM (+ Rotary Plugin) | 4-Axis Plasma CAM Comparison</title>
+  <meta name="description" content="Factual comparison of RotaryCAM and SheetCAM + Rotary Plugin for CNC plasma cutting: 3D STEP assemblies vs. 2D DXF unwrapping, structural steel, zero-bevel copes, OS support, and pricing." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/compare/sheetcam/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/compare/sheetcam/" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="RotaryCAM vs. SheetCAM (+ Rotary Plugin) | 4-Axis Plasma CAM Comparison" />
+  <meta property="og:description" content="Factual comparison of RotaryCAM and SheetCAM + Rotary Plugin for CNC plasma cutting: 3D STEP assemblies vs. 2D DXF unwrapping, structural steel, zero-bevel copes, OS support, and pricing." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="RotaryCAM 3D CAD Tube Inspection and Feature Extraction" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RotaryCAM vs. SheetCAM (+ Rotary Plugin) | 4-Axis Plasma CAM Comparison" />
+  <meta name="twitter:description" content="Factual comparison of RotaryCAM and SheetCAM + Rotary Plugin for CNC plasma cutting: 3D STEP assemblies vs. 2D DXF unwrapping, structural steel, zero-bevel copes, OS support, and pricing." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. SheetCAM",
+        "item": "https://rotarycam.app/compare/sheetcam/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "RotaryCAM vs. SheetCAM (+ Rotary Plugin) | 4-Axis Plasma CAM Comparison",
+    "description": "Factual comparison of RotaryCAM and SheetCAM + Rotary Plugin for CNC plasma cutting: 3D STEP assemblies vs. 2D DXF unwrapping, structural steel, zero-bevel copes, OS support, and pricing.",
+    "url": "https://rotarycam.app/compare/sheetcam/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can RotaryCAM import 3D STEP files without unwrapping them to DXF first?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Drop multi-body .step or .stp assemblies straight into RotaryCAM. It detects round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, and bent sticks directly from 3D B-Rep geometry without manual CAD unwrapping."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I still cut flat 2D DXF and SVG sheet metal parts in RotaryCAM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. You can import multiple DXF, SVG, or ZIP drawings, fix unknown scales with 2-point snap scaling, nest parts inside cutouts with common-line cutting, and export G20 inch or G21 metric G-code."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM work with my existing CNC controller?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM ships with 14 built-in plasma dialects: SimCNC (including 4D trajectory scaling), LinuxCNC QTPlasmaC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is RotaryCAM a recurring subscription?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM offers a free 30-day offline beta and one-time perpetual offline license keys ($199 Maker, $399 Pro Shop) with 1 full year of updates included and optional renewals ($59/$99/yr) only when you want newer releases."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is SheetCAM + Rotary Plugin still the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SheetCAM is an excellent fit if your shop cuts mostly 2D DXF plate, relies on custom-written Lua post-processors across multiple processes (mill, router, oxy-fuel, waterjet), or already has a dialed-in SheetCAM workflow with no need for 3D STEP assembly import."
+        }
+      }
+    ]
+  }
+  </script>
+
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../docs/docs.css?v=20261121" />
+  <style>
+    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
+    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
+    
+    .site-header-left { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .site-header .brand { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+    .site-header .brand-tag { font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .site-header .nav-back-link { color: #94a3b8 !important; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.15s ease; white-space: nowrap; }
+    .site-header .nav-back-link:hover { color: #f59e0b !important; }
+    .site-header .nav-divider { width: 1px; height: 16px; background: #232833; }
+
+    .site-header .nav-links { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
+    .site-header .nav-links > a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.82rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.35rem 0; font-weight: 500; }
+    .site-header .nav-links > a:hover { color: #fff; }
+    .site-header .nav-links > a.active { color: #fff; font-weight: 600; }
+    .site-header .nav-links > a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+
+    /* Interactive Tutorials Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { background: transparent; border: none; color: #94a3b8; font-size: 0.82rem; font-family: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.35rem 0; transition: color 0.15s ease; }
+    .nav-dropdown-trigger:hover, .nav-dropdown:hover .nav-dropdown-trigger, .nav-dropdown-trigger.active { color: #fff; }
+    .nav-dropdown-trigger.active { font-weight: 600; }
+    .nav-dropdown-trigger .dropdown-caret { transition: transform 0.2s ease; opacity: 0.7; }
+    .nav-dropdown:hover .dropdown-caret, .nav-dropdown:focus-within .dropdown-caret { transform: rotate(180deg); opacity: 1; color: #f59e0b; }
+    .nav-active-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 1px 5px; border-radius: 4px; font-weight: 700; line-height: 1.2; }
+    .nav-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #232833; padding: 1px 5px; border-radius: 4px; font-weight: 600; line-height: 1.2; }
+
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 0.65rem); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(18, 22, 29, 0.98); border: 1px solid #232833; border-radius: 10px; box-shadow: 0 16px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); padding: 0.75rem; width: 560px; max-width: calc(100vw - 2rem); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; z-index: 1050; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: none; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .nav-dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.55rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.45rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+    .nav-dropdown-count { color: #f59e0b; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.5rem; max-height: 380px; }
+    .nav-dropdown-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.45rem 0.6rem; border-radius: 6px; text-decoration: none; color: #cbd5e1; transition: background 0.15s ease, color 0.15s ease; position: relative; }
+    .nav-dropdown-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .nav-dropdown-item.active { background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-dropdown-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #64748b; background: rgba(255,255,255,0.04); padding: 2px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+    .nav-dropdown-item.active .nav-dropdown-num { color: #f59e0b; background: rgba(245, 158, 11, 0.18); }
+    .nav-dropdown-content { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+    .nav-dropdown-title { font-size: 0.78rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-dropdown-sub { font-size: 0.66rem; color: #64748b; line-height: 1.2; }
+    .nav-dropdown-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink: 0; }
+
+    /* Right Section */
+    .site-header-right { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; font-weight: 500; }
+    .site-header .nav-cta:hover { border-color: #f59e0b; color: #fff; }
+    
+    .nav-mobile-toggle { display: none; background: #14171d; border: 1px solid #232833; color: #94a3b8; border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; padding: 0; }
+    .nav-mobile-toggle:hover { color: #fff; border-color: #f59e0b; }
+
+    /* Mobile Drawer */
+    .docs-mobile-drawer { display: none; position: fixed; inset: 0; top: 57px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 999; padding: 1.5rem; overflow-y: auto; flex-direction: column; gap: 1.25rem; }
+    .docs-mobile-drawer.open { display: flex; }
+    .docs-mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .docs-mobile-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .docs-mobile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 8px; text-decoration: none; color: #cbd5e1; background: rgba(255,255,255,0.02); border: 1px solid #232833; font-size: 0.88rem; }
+    .docs-mobile-link:hover, .docs-mobile-link.active { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+
+    @media (max-width: 960px) {
+      .site-header .nav-links { display: none; }
+      .site-header .nav-divider { display: none; }
+      .nav-mobile-toggle { display: inline-flex; }
+    }
+  </style>
+  <script src="../../webmcp.js" defer></script>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <header class="site-header" id="navbar">
+    <nav aria-label="Documentation Navigation">
+      <div class="site-header-left">
+        <a href="../../index.html" class="brand" aria-label="RotaryCAM Home">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.8.6-BETA</span>
+        </a>
+        <div class="nav-divider" aria-hidden="true"></div>
+        <a href="../../index.html" class="nav-back-link">← rotarycam.app</a>
+      </div>
+
+      <div class="nav-links">
+        <a href="../../docs/index.html">Overview</a>
+
+        <!-- Tutorials Dropdown -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
+            <span>Tutorials</span>
+            
+            <span class="nav-count-badge">13</span>
+            
+            <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-header">
+              <span>All Workflows &amp; Tutorials</span>
+              <span class="nav-dropdown-count">13 Guides</span>
+            </div>
+            <div class="nav-dropdown-grid">
+              
+              <a href="../../docs/machine-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">01</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Machine Configuration</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/cut-path-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">02</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">UI & Cut Path Config</span>
+                  <span class="nav-dropdown-sub">8 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/nesting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">03</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Multi-Part Stick Nesting</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/bending.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">04</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Bending HSS & HSS-O</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/changelog.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">05</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Build Info & Changelog</span>
+                  <span class="nav-dropdown-sub">3 Steps • Diagnostics & Storage</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/ai-autodetection.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">06</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Fusion 360 & AI Autodetect</span>
+                  <span class="nav-dropdown-sub">8 Steps • 11 Screenshots</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/simcnc-motion-sync.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">07</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">SimCNC Motion-Sync & 3D Ramp</span>
+                  <span class="nav-dropdown-sub">12 Steps • Technical Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/cut-charts-and-features.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">08</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
+                  <span class="nav-dropdown-sub">7 Steps • Visual Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/mcp-offline-workflows.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">09</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Offline MCP & AI Automation</span>
+                  <span class="nav-dropdown-sub">8 Steps • Integration Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/dxf-svg-flat-sheet.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/rotary-and-sheet-feedrates.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">11</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">G94, G93 & G20/G21 Feeds</span>
+                  <span class="nav-dropdown-sub">5 Sections</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/interactive-canvas-controls.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">12</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Interactive Canvas Controls</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../docs/flat-plate-pro-cutting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">13</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Flat Pro Primitives</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+            </div>
+          </div>
+        </div>
+
+        <a href="../../index.html#pricing">Pricing</a>
+        <a href="../../hardware-thc.html" style="color: #f59e0b; font-weight: 600;">Hardware THC</a>
+        <a href="../../build-guide.html">Machine Blueprint</a>
+        <a href="../../changelog.html">Changelog</a>
+      </div>
+
+      <div class="site-header-right">
+        <a href="../../index.html#download" class="nav-cta">Download Beta</a>
+        <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
+    <div class="docs-mobile-section-title">Navigation</div>
+    <div class="docs-mobile-list">
+      <a href="../../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="../../index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
+      <a href="../../docs/index.html" class="docs-mobile-link">Documentation Hub Overview</a>
+      <a href="../../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
+      <a href="../../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
+      <a href="../../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
+    </div>
+
+    <div class="docs-mobile-section-title" style="margin-top: 1rem;">Tutorials &amp; Guides</div>
+    <div class="docs-mobile-list">
+      
+      <a href="../../docs/machine-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">01</span>
+        <span>Machine Configuration</span>
+      </a>
+      
+      <a href="../../docs/cut-path-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">02</span>
+        <span>UI & Cut Path Config</span>
+      </a>
+      
+      <a href="../../docs/nesting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">03</span>
+        <span>Multi-Part Stick Nesting</span>
+      </a>
+      
+      <a href="../../docs/bending.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">04</span>
+        <span>Bending HSS & HSS-O</span>
+      </a>
+      
+      <a href="../../docs/changelog.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">05</span>
+        <span>Build Info & Changelog</span>
+      </a>
+      
+      <a href="../../docs/ai-autodetection.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">06</span>
+        <span>Fusion 360 & AI Autodetect</span>
+      </a>
+      
+      <a href="../../docs/simcnc-motion-sync.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">07</span>
+        <span>SimCNC Motion-Sync & 3D Ramp</span>
+      </a>
+      
+      <a href="../../docs/cut-charts-and-features.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">08</span>
+        <span>Cut Charts & Feature Toggles</span>
+      </a>
+      
+      <a href="../../docs/mcp-offline-workflows.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">09</span>
+        <span>Offline MCP & AI Automation</span>
+      </a>
+      
+      <a href="../../docs/dxf-svg-flat-sheet.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
+      <a href="../../docs/rotary-and-sheet-feedrates.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">11</span>
+        <span>G94, G93 & G20/G21 Feeds</span>
+      </a>
+      
+      <a href="../../docs/interactive-canvas-controls.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">12</span>
+        <span>Interactive Canvas Controls</span>
+      </a>
+      
+      <a href="../../docs/flat-plate-pro-cutting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">13</span>
+        <span>Flat Pro Primitives</span>
+      </a>
+      
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="../../index.html#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Mobile drawer toggle
+      const toggle = document.getElementById('navMobileToggle');
+      const drawer = document.getElementById('docsMobileDrawer');
+      if (toggle && drawer) {
+        toggle.addEventListener('click', function () {
+          const isOpen = drawer.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        drawer.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            drawer.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Desktop/tablet dropdown toggle on click
+      const ddTrigger = document.querySelector('.nav-dropdown-trigger');
+      const dd = document.querySelector('.nav-dropdown');
+      if (ddTrigger && dd) {
+        ddTrigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = dd.classList.toggle('open');
+          ddTrigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function (e) {
+          if (!dd.contains(e.target)) {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
+
+  <main>
+
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../../index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. SheetCAM</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">SheetCAM + Rotary Plugin</span></h1>
+        <p class="docs-subtitle">
+          SheetCAM is a proven 2D DXF staple in thousands of plasma shops. If you cut 3D tube frames, structural channel, or tight saddle copes on a 4-axis rotary table, here is an honest look at how both workflows stack up.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; 3D STEP CAM vs. 2D DXF + Plugin</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Key Workflow Differences</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="../../compare/sheetcam/" class="active">
+                <span class="docs-nav-num">VS</span>
+                <span>SheetCAM + Rotary</span>
+              </a>
+            </li>
+            <li>
+              <a href="../../compare/pronest/">
+                <span class="docs-nav-num">VS</span>
+                <span>Hypertherm ProNest</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Both tools target practical shop-floor cutting with perpetual licensing, but they start from very different geometry inputs.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>SheetCAM + Rotary Plugin</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Primary CAD Input</strong></td>
+                    <td>2D DXF, SVG, and HPGL (3D tubes must be unwrapped or drawn flat in CAD first)</td>
+                    <td>Native 3D STEP / IGES assemblies plus multi-file 2D DXF / SVG / ZIP</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Stock Profiles</strong></td>
+                    <td>Flat plate, round pipe, square/rectangular tube (via Rotary plugin)</td>
+                    <td>Round pipe, square/rect HSS, angle iron, C-channel, I-beam, and flat plate</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Zero-Bevel Saddle / Miter</strong></td>
+                    <td>Standard perpendicular path along unwrapped 2D contour</td>
+                    <td>Dual-curve zero-bevel fishmouth pullback and heel-only HSS miter compensation</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4-Axis Kinematics &amp; Feeds</strong></td>
+                    <td>Handled per post-processor script (G93/G94 depends on post)</td>
+                    <td>Built-in 4-axis IK, G93 inverse-time, G94, and SimCNC 4D vector scaling</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Post-Processors</strong></td>
+                    <td>Huge library of community and user-editable Lua posts</td>
+                    <td>14 built-in plasma dialects (SimCNC, Mach3/4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cut Simulation</strong></td>
+                    <td>2D / rotary toolpath preview</td>
+                    <td>Real-time 3D WebGL torch, chuck, and stock cut simulator with live DRO</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cut Charts</strong></td>
+                    <td>Custom or user-imported tool tables</td>
+                    <td>1,025 built-in presets (Hypertherm SYNC, Duramax, Air Plasma) + unit-aware CSV import/export</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bending &amp; Nesting</strong></td>
+                    <td>2D sheet nesting (add-on/standard tools)</td>
+                    <td>Cut-and-bend STEP unfolding, 1D multi-stick tube nesting, and 2D cutout nesting</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows and Linux native (macOS requires VM or Wine)</td>
+                    <td>Native macOS, Windows, and Linux desktop apps (100% offline)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Licensing</strong></td>
+                    <td>SheetCAM (~$140 USD) + Rotary plugin (~$100+ USD), perpetual</td>
+                    <td>30-day free beta; Maker $199 USD / Pro Shop $399 USD perpetual offline key</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>Direct 3D STEP vs. Manual Unwrapping</h3>
+                <p>
+                  In a DXF-first CAM workflow, every coped tube or multi-part roll cage must be unwrapped into 2D profiles one by one. In RotaryCAM, you drop the full 3D STEP weldment straight in and keep every part, wall thickness, and profile linked.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Open Structural Shapes</h3>
+                <p>
+                  Angle iron, C-channel, and I-beam are tricky to wrap cleanly as flat 2D drawings. RotaryCAM extracts B-Rep faces directly and projects lead-ins safely onto open-profile tangents.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Zero-Bevel Copes on Perpendicular Torches</h3>
+                <p>
+                  When a perpendicular torch cuts a tight 45&deg; saddle cope, the inner wall protrudes and blocks fit-up. RotaryCAM calculates inner-cylinder intersection pullback automatically so the mating tube drops right in.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>1D Stick &amp; 2D Plate Nesting Included</h3>
+                <p>
+                  Pro Shop nests multi-part tube assemblies across 6000 mm sticks with 180&deg; flips, A-rolls, and common-line severs, plus 2D flat-sheet nesting with part-in-cutout packing and guillotine remnant crops.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose SheetCAM vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              No single CAM fits every table. Pick the tool that matches the parts you actually cut most days of the week.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For 2D DXF &amp; Multi-Process</div>
+                <h3>Choose SheetCAM (+ Rotary Plugin) if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You mostly cut 2D sheet metal DXF files</strong> and only run round pipe on rare jobs.</li>
+                  <li><strong>You rely on custom Lua post-processors</strong> written specifically for your table's macros, oxy-fuel preheat, router spindles, or waterjet rules.</li>
+                  <li><strong>Your shop already runs SheetCAM on Windows or Linux</strong> with dialed-in tool tables and no 3D STEP unwrapping bottleneck.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For 3D Tube, Structural &amp; Mixed Shops</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You model frames, cages, or trailers in 3D CAD</strong> (Fusion 360, SolidWorks, Onshape) and want to cut straight from `.step` assemblies.</li>
+                  <li><strong>You cut square/rect HSS, angle iron, channel, or I-beam</strong> alongside round pipe and 2D DXF/SVG brackets.</li>
+                  <li><strong>You need zero-bevel fishmouth compensation</strong>, 3D cut simulation, SimCNC 4D feedrate scaling, or native macOS support with zero subscription fees.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Can RotaryCAM import 3D STEP files without unwrapping them to DXF first?</h3>
+                <p>
+                  Yes. Drop multi-body `.step` or `.stp` assemblies directly onto RotaryCAM. It detects round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, and bent tubes automatically with zero manual unwrapping.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I still cut flat 2D DXF and SVG sheet metal parts in RotaryCAM?</h3>
+                <p>
+                  Yes. Drop multiple `.dxf`, `.svg`, or `.zip` kits, fix missing drawing scale with magnetic 2-point snapping, set Left/Right/Center kerf on open slits, nest parts inside cutouts, and post native `G20` or `G21` G-code.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM work with my existing CNC controller?</h3>
+                <p>
+                  Yes. All 14 built-in dialects (SimCNC, LinuxCNC QTPlasmaC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94) are unlocked in both Maker and Pro Shop.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Do I need an internet connection or monthly subscription?</h3>
+                <p>
+                  No. RotaryCAM runs 100% offline on macOS, Windows, and Linux using a single `rotarycam.lic` key file. Maker ($199) and Pro Shop ($399) are perpetual licenses with 1 year of updates included.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I run both SheetCAM and RotaryCAM on the same shop PC?</h3>
+                <p>
+                  Yes. RotaryCAM outputs standard `.nc`, `.tap`, or `.ngc` files directly for your controller without modifying SheetCAM or any existing post setup.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Download the offline desktop beta for macOS, Windows, or Linux. Drop a real tube weldment or bracket DXF in and inspect the simulated G-code before spending a dollar.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="../../index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="../../docs/index.html" class="compare-btn-secondary">Browse 13 Guides</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> SheetCAM is a trademark of Stable Design. All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by Stable Design. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+
+
+  <!-- ========================================================================
+       FOOTER (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../../index.html" class="brand">
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="../../docs/index.html">Documentation Overview</a>
+          
+          <a href="../../docs/machine-configuration.html">01. Machine Configuration</a>
+          
+          <a href="../../docs/cut-path-configuration.html">02. Cut Path Configuration</a>
+          
+          <a href="../../docs/nesting.html">03. Multi-Part Nesting</a>
+          
+          <a href="../../docs/bending.html">04. Bending HSS & HSS-O</a>
+          
+          <a href="../../docs/changelog.html">05. Build Info & Changelog</a>
+          
+          <a href="../../docs/ai-autodetection.html">06. Fusion 360 & AI Autodetect</a>
+          
+          <a href="../../docs/simcnc-motion-sync.html">07. SimCNC Motion-Sync & Ramp</a>
+          
+          <a href="../../docs/cut-charts-and-features.html">08. Cut Charts & Feature Toggles</a>
+          
+          <a href="../../docs/mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
+          
+          <a href="../../docs/dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+          <a href="../../docs/rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
+          
+          <a href="../../docs/interactive-canvas-controls.html">12. Interactive Canvas Controls</a>
+          
+          <a href="../../docs/flat-plate-pro-cutting.html">13. Flat Pro Primitives</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../../index.html#showcase">Showcase</a>
+          <a href="../../index.html#features">Capabilities</a>
+          <a href="../../index.html#kinematics">4-Axis Kinematics</a>
+          <a href="../../hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
+          <a href="../../build-guide.html">Build Your Own Table</a>
+          <a href="../../changelog.html">Release Changelog &amp; Downloads</a>
+        </div>
+        <div class="footer-col">
+          <h4>Compare</h4>
+          <a href="../../compare/sheetcam/">RotaryCAM vs. SheetCAM</a>
+          <a href="../../compare/pronest/">RotaryCAM vs. ProNest</a>
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
+    </div>
+  </footer>
+
+
+</body>
+</html>

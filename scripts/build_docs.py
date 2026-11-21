@@ -41,10 +41,25 @@ TEMPLATES_DIR = ROOT_DIR / "templates" / "docs"
 PAGES_TEMPLATE_DIR = TEMPLATES_DIR / "pages"
 DOCS_OUT_DIR = ROOT_DIR / "docs"
 
-CSS_VERSION = "20261119"
+CSS_VERSION = "20261121"
 VERSION = version.resolve_version()
 BETA_LABEL = version.beta_label(VERSION)
 FOOTER_TECH_STRIP = "G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING"
+
+COMPARE_PAGES = [
+    {
+        "slug": "sheetcam",
+        "meta_title": "RotaryCAM vs. SheetCAM (+ Rotary Plugin) | 4-Axis Plasma CAM Comparison",
+        "meta_description": "Factual comparison of RotaryCAM and SheetCAM + Rotary Plugin for CNC plasma cutting: 3D STEP assemblies vs. 2D DXF unwrapping, structural steel, zero-bevel copes, OS support, and pricing.",
+        "has_lightbox": False,
+    },
+    {
+        "slug": "pronest",
+        "meta_title": "RotaryCAM vs. Hypertherm ProNest / ProNest LT | 4-Axis Tube & Plate CAM Comparison",
+        "meta_description": "Factual comparison of RotaryCAM and Hypertherm ProNest / ProNest LT: enterprise plate automation vs. 4-axis rotary tube STEP CAM, offline perpetual pricing, and controller support.",
+        "has_lightbox": False,
+    },
+]
 
 # Central single-source-of-truth registry of all documentation tutorials
 TUTORIALS = [
@@ -675,6 +690,13 @@ def generate_sitemap(controllers):
                 DOCS_OUT_DIR / "machine-configuration" / c["slug"] / "index.html",
             )
         )
+    for cmp_page in COMPARE_PAGES:
+        entries.append(
+            (
+                f"{SITE_BASE}/compare/{cmp_page['slug']}/",
+                ROOT_DIR / "compare" / cmp_page["slug"] / "index.html",
+            )
+        )
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -708,7 +730,7 @@ def build_all_docs():
             t["hub_thumb_height"] = h
 
     env = jinja2.Environment(
-        loader=jinja2.FileSystemLoader([str(TEMPLATES_DIR), str(PAGES_TEMPLATE_DIR)]),
+        loader=jinja2.FileSystemLoader([str(TEMPLATES_DIR), str(PAGES_TEMPLATE_DIR), str(ROOT_DIR / "templates")]),
         autoescape=False,
         keep_trailing_newline=True,
     )
@@ -815,7 +837,32 @@ def build_all_docs():
         out_path.write_text(rendered, encoding="utf-8")
         print(f"[build] Rendered docs/machine-configuration/{c['slug']}/index.html")
 
-    # 4. Generate sitemap.xml covering all 33 pages
+    # 3b. Render comparison pages under compare/<slug>/index.html
+    for cmp_page in COMPARE_PAGES:
+        cmp_tmpl = env.get_template(f"compare/{cmp_page['slug']}.html.j2")
+        rendered = cmp_tmpl.render(
+            page=cmp_page,
+            tutorials=TUTORIALS,
+            total_tutorials=total_tutorials,
+            total_steps=total_steps,
+            css_version=CSS_VERSION,
+            version=VERSION,
+            beta_label=BETA_LABEL,
+            footer_tech_strip=FOOTER_TECH_STRIP,
+            docs_prefix="../../docs/",
+            root_prefix="../../",
+            canonical_url=f"{SITE_BASE}/compare/{cmp_page['slug']}/",
+            og_type="article",
+            og_image=DEFAULT_OG_IMAGE,
+            og_image_alt=DEFAULT_OG_ALT,
+        )
+        out_dir = ROOT_DIR / "compare" / cmp_page["slug"]
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / "index.html"
+        out_path.write_text(rendered, encoding="utf-8")
+        print(f"[build] Rendered compare/{cmp_page['slug']}/index.html")
+
+    # 4. Generate sitemap.xml covering all pages
     generate_sitemap(controllers)
 
 
@@ -823,6 +870,13 @@ def controller_subpage_paths():
     return [
         DOCS_OUT_DIR / "machine-configuration" / c["slug"] / "index.html"
         for c in controllers_data.CONTROLLERS
+    ]
+
+
+def compare_page_paths():
+    return [
+        ROOT_DIR / "compare" / c["slug"] / "index.html"
+        for c in COMPARE_PAGES
     ]
 
 
@@ -837,6 +891,7 @@ def verify_links_and_assets():
         ]
         + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
         + controller_subpage_paths()
+        + compare_page_paths()
     )
 
     missing = []
@@ -875,6 +930,7 @@ def verify_zero_em_dashes():
         ]
         + [DOCS_OUT_DIR / t["filename"] for t in TUTORIALS]
         + controller_subpage_paths()
+        + compare_page_paths()
     )
 
     # Copywriting Rule #5: strictly ban em-dashes

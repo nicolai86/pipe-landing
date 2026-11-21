@@ -1,0 +1,347 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. SheetCAM",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can RotaryCAM import 3D STEP files without unwrapping them to DXF first?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Drop multi-body .step or .stp assemblies straight into RotaryCAM. It detects round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, and bent sticks directly from 3D B-Rep geometry without manual CAD unwrapping."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I still cut flat 2D DXF and SVG sheet metal parts in RotaryCAM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. You can import multiple DXF, SVG, or ZIP drawings, fix unknown scales with 2-point snap scaling, nest parts inside cutouts with common-line cutting, and export G20 inch or G21 metric G-code."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM work with my existing CNC controller?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM ships with 14 built-in plasma dialects: SimCNC (including 4D trajectory scaling), LinuxCNC QTPlasmaC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is RotaryCAM a recurring subscription?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM offers a free 30-day offline beta and one-time perpetual offline license keys ($199 Maker, $399 Pro Shop) with 1 full year of updates included and optional renewals ($59/$99/yr) only when you want newer releases."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is SheetCAM + Rotary Plugin still the better choice?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "SheetCAM is an excellent fit if your shop cuts mostly 2D DXF plate, relies on custom-written Lua post-processors across multiple processes (mill, router, oxy-fuel, waterjet), or already has a dialed-in SheetCAM workflow with no need for 3D STEP assembly import."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. SheetCAM</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">SheetCAM + Rotary Plugin</span></h1>
+        <p class="docs-subtitle">
+          SheetCAM is a proven 2D DXF staple in thousands of plasma shops. If you cut 3D tube frames, structural channel, or tight saddle copes on a 4-axis rotary table, here is an honest look at how both workflows stack up.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; 3D STEP CAM vs. 2D DXF + Plugin</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Key Workflow Differences</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="{{ root_prefix }}compare/sheetcam/" class="active">
+                <span class="docs-nav-num">VS</span>
+                <span>SheetCAM + Rotary</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ root_prefix }}compare/pronest/">
+                <span class="docs-nav-num">VS</span>
+                <span>Hypertherm ProNest</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Both tools target practical shop-floor cutting with perpetual licensing, but they start from very different geometry inputs.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>SheetCAM + Rotary Plugin</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Primary CAD Input</strong></td>
+                    <td>2D DXF, SVG, and HPGL (3D tubes must be unwrapped or drawn flat in CAD first)</td>
+                    <td>Native 3D STEP / IGES assemblies plus multi-file 2D DXF / SVG / ZIP</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Stock Profiles</strong></td>
+                    <td>Flat plate, round pipe, square/rectangular tube (via Rotary plugin)</td>
+                    <td>Round pipe, square/rect HSS, angle iron, C-channel, I-beam, and flat plate</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Zero-Bevel Saddle / Miter</strong></td>
+                    <td>Standard perpendicular path along unwrapped 2D contour</td>
+                    <td>Dual-curve zero-bevel fishmouth pullback and heel-only HSS miter compensation</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4-Axis Kinematics &amp; Feeds</strong></td>
+                    <td>Handled per post-processor script (G93/G94 depends on post)</td>
+                    <td>Built-in 4-axis IK, G93 inverse-time, G94, and SimCNC 4D vector scaling</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Post-Processors</strong></td>
+                    <td>Huge library of community and user-editable Lua posts</td>
+                    <td>14 built-in plasma dialects (SimCNC, Mach3/4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cut Simulation</strong></td>
+                    <td>2D / rotary toolpath preview</td>
+                    <td>Real-time 3D WebGL torch, chuck, and stock cut simulator with live DRO</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cut Charts</strong></td>
+                    <td>Custom or user-imported tool tables</td>
+                    <td>1,025 built-in presets (Hypertherm SYNC, Duramax, Air Plasma) + unit-aware CSV import/export</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bending &amp; Nesting</strong></td>
+                    <td>2D sheet nesting (add-on/standard tools)</td>
+                    <td>Cut-and-bend STEP unfolding, 1D multi-stick tube nesting, and 2D cutout nesting</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows and Linux native (macOS requires VM or Wine)</td>
+                    <td>Native macOS, Windows, and Linux desktop apps (100% offline)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Licensing</strong></td>
+                    <td>SheetCAM (~$140 USD) + Rotary plugin (~$100+ USD), perpetual</td>
+                    <td>30-day free beta; Maker $199 USD / Pro Shop $399 USD perpetual offline key</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Workflow</span>
+            <h2 class="doc-step-title">Where the Two Workflows Differ</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>Direct 3D STEP vs. Manual Unwrapping</h3>
+                <p>
+                  In a DXF-first CAM workflow, every coped tube or multi-part roll cage must be unwrapped into 2D profiles one by one. In RotaryCAM, you drop the full 3D STEP weldment straight in and keep every part, wall thickness, and profile linked.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Open Structural Shapes</h3>
+                <p>
+                  Angle iron, C-channel, and I-beam are tricky to wrap cleanly as flat 2D drawings. RotaryCAM extracts B-Rep faces directly and projects lead-ins safely onto open-profile tangents.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Zero-Bevel Copes on Perpendicular Torches</h3>
+                <p>
+                  When a perpendicular torch cuts a tight 45&deg; saddle cope, the inner wall protrudes and blocks fit-up. RotaryCAM calculates inner-cylinder intersection pullback automatically so the mating tube drops right in.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>1D Stick &amp; 2D Plate Nesting Included</h3>
+                <p>
+                  Pro Shop nests multi-part tube assemblies across 6000 mm sticks with 180&deg; flips, A-rolls, and common-line severs, plus 2D flat-sheet nesting with part-in-cutout packing and guillotine remnant crops.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose SheetCAM vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              No single CAM fits every table. Pick the tool that matches the parts you actually cut most days of the week.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For 2D DXF &amp; Multi-Process</div>
+                <h3>Choose SheetCAM (+ Rotary Plugin) if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You mostly cut 2D sheet metal DXF files</strong> and only run round pipe on rare jobs.</li>
+                  <li><strong>You rely on custom Lua post-processors</strong> written specifically for your table's macros, oxy-fuel preheat, router spindles, or waterjet rules.</li>
+                  <li><strong>Your shop already runs SheetCAM on Windows or Linux</strong> with dialed-in tool tables and no 3D STEP unwrapping bottleneck.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For 3D Tube, Structural &amp; Mixed Shops</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You model frames, cages, or trailers in 3D CAD</strong> (Fusion 360, SolidWorks, Onshape) and want to cut straight from `.step` assemblies.</li>
+                  <li><strong>You cut square/rect HSS, angle iron, channel, or I-beam</strong> alongside round pipe and 2D DXF/SVG brackets.</li>
+                  <li><strong>You need zero-bevel fishmouth compensation</strong>, 3D cut simulation, SimCNC 4D feedrate scaling, or native macOS support with zero subscription fees.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Can RotaryCAM import 3D STEP files without unwrapping them to DXF first?</h3>
+                <p>
+                  Yes. Drop multi-body `.step` or `.stp` assemblies directly onto RotaryCAM. It detects round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, and bent tubes automatically with zero manual unwrapping.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I still cut flat 2D DXF and SVG sheet metal parts in RotaryCAM?</h3>
+                <p>
+                  Yes. Drop multiple `.dxf`, `.svg`, or `.zip` kits, fix missing drawing scale with magnetic 2-point snapping, set Left/Right/Center kerf on open slits, nest parts inside cutouts, and post native `G20` or `G21` G-code.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM work with my existing CNC controller?</h3>
+                <p>
+                  Yes. All 14 built-in dialects (SimCNC, LinuxCNC QTPlasmaC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94) are unlocked in both Maker and Pro Shop.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Do I need an internet connection or monthly subscription?</h3>
+                <p>
+                  No. RotaryCAM runs 100% offline on macOS, Windows, and Linux using a single `rotarycam.lic` key file. Maker ($199) and Pro Shop ($399) are perpetual licenses with 1 year of updates included.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I run both SheetCAM and RotaryCAM on the same shop PC?</h3>
+                <p>
+                  Yes. RotaryCAM outputs standard `.nc`, `.tap`, or `.ngc` files directly for your controller without modifying SheetCAM or any existing post setup.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Download the offline desktop beta for macOS, Windows, or Linux. Drop a real tube weldment or bracket DXF in and inspect the simulated G-code before spending a dollar.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}index.html" class="compare-btn-secondary">Browse 13 Guides</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> SheetCAM is a trademark of Stable Design. All other product names, controller names, and trademarks mentioned on this page belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by Stable Design. Feature and pricing summaries are provided for factual comparison based on publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}
