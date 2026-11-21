@@ -59,6 +59,12 @@ COMPARE_PAGES = [
         "meta_description": "Factual comparison of RotaryCAM and Hypertherm ProNest / ProNest LT: enterprise plate automation vs. 4-axis rotary tube STEP CAM, offline perpetual pricing, and controller support.",
         "has_lightbox": False,
     },
+    {
+        "slug": "rotary-tube-pro",
+        "meta_title": "RotaryCAM vs. Hypertherm Rotary Tube Pro | 4-Axis Tube & Pipe CAM Comparison",
+        "meta_description": "Factual comparison of RotaryCAM and Hypertherm Rotary Tube Pro: parametric tube design and SureCut integration vs. 3D STEP/IGES CAD import, 15 controller posts, and offline perpetual pricing.",
+        "has_lightbox": False,
+    },
 ]
 
 # Central single-source-of-truth registry of all documentation tutorials

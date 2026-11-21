@@ -1,0 +1,343 @@
+{% extends "base.html.j2" %}
+
+{% block structured_data %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "RotaryCAM vs. Hypertherm Rotary Tube Pro",
+        "item": {{ canonical_url | tojson }}
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": {{ page.meta_title | tojson }},
+    "description": {{ page.meta_description | tojson }},
+    "url": {{ canonical_url | tojson }},
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM include a built-in parametric pipe designer like Rotary Tube Pro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. RotaryCAM imports 3D STEP and IGES assemblies directly from Fusion 360, SolidWorks, Onshape, and FreeCAD, plus 2D DXF and SVG files for flat sheet. If your shop prefers building miters, saddles, and hillside branches inside CAM without external 3D CAD, Hypertherm Rotary Tube Pro includes a built-in parametric designer."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which stock profiles and processes does RotaryCAM support compared to Rotary Tube Pro?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM focuses on CNC plasma cutting and air scribing across round pipe, square and rectangular HSS, angle iron, C-channel, I-beam, cut-and-bend tubes, and 2D flat sheet. Hypertherm Rotary Tube Pro supports multi-process industrial cutting including plasma, laser, waterjet, and oxyfuel."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does RotaryCAM handle perpendicular-torch saddle bevels without True Bevel?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "On steep fishmouth and saddle intersections, a fixed 90-degree torch leaves an overhanging inner wall that blocks fit-up. RotaryCAM calculates the inner-cylinder intersection curve and pulls the cut path back with dual-curve zero-bevel compensation so coped tubes drop in tight."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do pricing and OS support compare between Rotary Tube Pro and RotaryCAM?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Hypertherm Rotary Tube Pro is Windows-only desktop software sold through OEM, dealer, and distributor quotes with maintenance plans. RotaryCAM runs natively offline on macOS, Windows, and Linux with transparent perpetual licensing ($199 Maker, $399 Pro Shop) and no dealer quote or mandatory subscription."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which CNC controllers does RotaryCAM post G-code for?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM ships with 15 built-in post-processors: SimCNC (with 4D vector feedrate scaling), Mach3, Mach4, LinuxCNC QTPlasmaC, MASSO, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94, and Air Scribing."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
+
+{% block main %}
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="{{ root_prefix }}index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <span>Compare</span>
+          <span class="sep">/</span>
+          <span class="current">vs. Rotary Tube Pro</span>
+        </div>
+
+        <h1 class="docs-title">RotaryCAM vs. <span class="text-gradient-amber">Hypertherm Rotary Tube Pro</span></h1>
+        <p class="docs-subtitle">
+          Hypertherm Rotary Tube Pro brings parametric pipe design and SureCut automation to industrial tube tables. If you design in 3D CAD and run a custom 4-axis plasma table on macOS, Windows, or Linux, here is how both tools stack up.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; Industrial Multi-Process Tube CAM vs. Offline 4-Axis CAD-to-CAM</span>
+          <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
+          <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="container docs-shell">
+      <aside class="docs-sidebar" aria-label="Comparison Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#matrix"><span class="docs-toc-step">01</span><span>Side-by-Side Specs</span></a></li>
+            <li><a href="#differences"><span class="docs-toc-step">02</span><span>Where They Diverge</span></a></li>
+            <li><a href="#when-to-choose"><span class="docs-toc-step">03</span><span>When to Choose Which</span></a></li>
+            <li><a href="#faq"><span class="docs-toc-step">04</span><span>Fabricator FAQ</span></a></li>
+            <li><a href="#try-offline"><span class="docs-toc-step">05</span><span>Test on Your Parts</span></a></li>
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Other Comparisons</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="{{ root_prefix }}compare/sheetcam/">
+                <span class="docs-nav-num">VS</span>
+                <span>SheetCAM + Rotary</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ root_prefix }}compare/pronest/">
+                <span class="docs-nav-num">VS</span>
+                <span>Hypertherm ProNest</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ root_prefix }}compare/rotary-tube-pro/" class="active">
+                <span class="docs-nav-num">VS</span>
+                <span>Rotary Tube Pro</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="docs-main">
+        <article class="doc-step-card" id="matrix">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">01 &bull; Specs</span>
+            <h2 class="doc-step-title">Side-by-Side Comparison</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Both tools target rotary tube cutting from different starting points. Rotary Tube Pro pairs built-in parametric tube design with Hypertherm SureCut systems, while RotaryCAM turns your 3D CAD and 2D flat drawings straight into 4-axis plasma G-code.
+            </p>
+            <div class="table-wrap">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>Hypertherm Rotary Tube Pro</th>
+                    <th>RotaryCAM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Core Workflow</strong></td>
+                    <td>Built-in parametric tube, pipe, and branch designer (miters, copes, saddles, hillsides) plus 3D CAD import</td>
+                    <td>Direct 3D STEP/IGES import (Fusion 360, SolidWorks, Onshape, FreeCAD) plus 2D DXF/SVG flat sheet CAM</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Profiles &amp; Sheet Support</strong></td>
+                    <td>Round pipe, square/rectangular HSS, structural profiles, and rotary tube assemblies</td>
+                    <td>Round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, cut-and-bend tubes, and 2D flat sheet</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cutting Processes</strong></td>
+                    <td>Multi-process industrial support: plasma, laser, waterjet, and oxyfuel</td>
+                    <td>Dedicated CNC plasma and air scribing with 1,025 built-in torch presets + CSV import/export</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Bevel &amp; Hole Control</strong></td>
+                    <td>Native SureCut, True Hole, and True Bevel integration on supported Hypertherm systems</td>
+                    <td>Automatic zero-bevel saddle pullback for perpendicular torches, 60% small-hole rules, tabs, and eccentric weld bevels</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Nesting &amp; Simulation</strong></td>
+                    <td>Automatic tube nesting, common-line cutting, and integrated job costing</td>
+                    <td>1D multi-stick tube nesting (180&deg; flips, A-rolls, common-line severs), 2D plate nesting, and 3D XYZA cut simulation</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Controllers Supported</strong></td>
+                    <td>Industrial OEM tables and Hypertherm CNC/SureCut ecosystems</td>
+                    <td>15 built-in posts: SimCNC (4D feedrate scaling), Mach3, Mach4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94, Scribing</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Operating Systems</strong></td>
+                    <td>Windows desktop</td>
+                    <td>Native macOS, Windows, and Linux (100% air-gapped offline)</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Pricing &amp; Licensing</strong></td>
+                    <td>Quote-based OEM, dealer, and distributor licensing with maintenance/support plans</td>
+                    <td>30-day free beta; Maker $199 USD / Pro Shop $399 USD one-time perpetual key (no dealer quote or subscription)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="differences">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">02 &bull; Architecture</span>
+            <h2 class="doc-step-title">Where the Two Products Diverge</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-feature-grid">
+              <div class="compare-feature-box">
+                <h3>3D CAD + 2D Flat Sheet in One App</h3>
+                <p>
+                  Drop a multi-body STEP weldment or DXF bracket kit into one workspace. You get 1D stick packing, cut-and-bend tube unfolding, and 2D sheet nesting without switching programs.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Built for Fixed Perpendicular Torches</h3>
+                <p>
+                  No 5-axis bevel head on your rotary table? Zero-bevel compensation computes the inner-wall curve and clamps the saddle cut so coped pipes slide together without grinding.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>15 Hobby-to-Industrial Posts</h3>
+                <p>
+                  Post tuned G93, G94, or SimCNC 4D trajectory code straight to Mach3/4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, WinCNC, or grblHAL with synchronous M62/M63 THC locking.
+                </p>
+              </div>
+              <div class="compare-feature-box">
+                <h3>Transparent Offline Perpetual Keys</h3>
+                <p>
+                  Buy online for $199 (Maker) or $399 (Pro Shop) and activate with a local license file on Mac, Windows, or Linux. No dealer quotes, dongles, or cloud check-ins.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="when-to-choose">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">03 &bull; Honest Fit</span>
+            <h2 class="doc-step-title">When to Choose Rotary Tube Pro vs. RotaryCAM</h2>
+          </div>
+          <div class="doc-step-body">
+            <p>
+              Pick the tool that matches your CAD habits, cutting processes, and shop floor controller.
+            </p>
+            <div class="compare-verdict-grid">
+              <div class="compare-card competitor">
+                <div class="compare-card-kicker">Best Fit For Industrial Multi-Process Tube Tables</div>
+                <h3>Choose Hypertherm Rotary Tube Pro if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You want parametric tube design inside CAM</strong> to generate miters, saddles, and hillside branches without opening external 3D CAD.</li>
+                  <li><strong>Your floor runs industrial Hypertherm plasma</strong> with native SureCut, True Hole, and True Bevel automation, or cuts with laser, waterjet, and oxyfuel.</li>
+                  <li><strong>You rely on integrated job costing</strong> and purchase software through an OEM or dealer support plan on Windows.</li>
+                </ul>
+              </div>
+
+              <div class="compare-card rotarycam">
+                <div class="compare-card-kicker">Best Fit For 3D CAD Fab &amp; Mixed Tube/Sheet Tables</div>
+                <h3>Choose RotaryCAM if:</h3>
+                <ul class="doc-bullet-list">
+                  <li><strong>You model frames in Fusion 360, SolidWorks, Onshape, or FreeCAD</strong> and cut round pipe, HSS, angle iron, channel, I-beam, bent sticks, and DXF/SVG sheet in one app.</li>
+                  <li><strong>Your table runs a standard 90-degree torch</strong> on SimCNC, LinuxCNC, Mach3/4, MASSO, Acorn, FireControl, or WinCNC and needs tight zero-bevel copes plus 3D simulation.</li>
+                  <li><strong>You want offline Mac, Windows, or Linux software</strong> with upfront $199/$399 perpetual pricing and zero dealer wait.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="doc-step-card" id="faq">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">04 &bull; FAQ</span>
+            <h2 class="doc-step-title">Common Fabricator Questions</h2>
+          </div>
+          <div class="doc-step-body">
+            <div class="compare-faq-list">
+              <div class="compare-faq-item">
+                <h3>Does RotaryCAM include a built-in parametric pipe designer like Rotary Tube Pro?</h3>
+                <p>
+                  No. RotaryCAM imports 3D STEP/IGES parts directly from Fusion 360, SolidWorks, Onshape, and FreeCAD alongside 2D DXF/SVG drawings. If you want to build pipe branches inside CAM without external CAD, Rotary Tube Pro has a parametric designer built in.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Can I cut both structural steel shapes and flat plate brackets in RotaryCAM?</h3>
+                <p>
+                  Yes. RotaryCAM handles round pipe, square/rect HSS, angle iron, C-channel, I-beam, cut-and-bend tubes, and 2D flat sheet nesting in the same offline desktop app.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>How does zero-bevel compensation help on a perpendicular plasma torch?</h3>
+                <p>
+                  A 90-degree torch leaves an angled back wall on steep saddle cuts that stops tubes from seating. RotaryCAM calculates the inner-wall intersection curve and clamps the cut path so coped joints fit cleanly.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Do I need a dealer quote or annual maintenance contract for RotaryCAM?</h3>
+                <p>
+                  No. Maker ($199) and Pro Shop ($399) are published one-time perpetual offline licenses with 1 year of updates included. Optional renewals ($59/$99/yr) apply only if you choose future upgrades.
+                </p>
+              </div>
+              <div class="compare-faq-item">
+                <h3>Which CNC plasma controllers work out of the box?</h3>
+                <p>
+                  RotaryCAM includes 15 built-in post-processors: SimCNC (with 4D vector feedrate scaling), Mach3, Mach4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94, and Air Scribing.
+                </p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <div class="compare-cta-box" id="try-offline">
+          <div class="compare-cta-copy">
+            <h2>Test Your Own STEP and DXF Parts Free for 30 Days</h2>
+            <p>
+              Run RotaryCAM offline on macOS, Windows, or Linux. Drop a tube frame STEP assembly or bracket DXF kit in and inspect every pierce, lead-in, and G93/G94 move in the 3D simulator.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="{{ root_prefix }}index.html#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
+            <a href="{{ docs_prefix }}index.html" class="compare-btn-secondary">Browse {{ total_tutorials }} Guides</a>
+          </div>
+        </div>
+
+        <p class="trademark-disclaimer">
+          <strong>Trademark &amp; Fair-Use Notice:</strong> Hypertherm, Rotary Tube Pro, SureCut, True Hole, True Bevel, Powermax, SYNC, Duramax, XPR, and MAXPRO are trademarks of Hypertherm, Inc. All other trademarks belong to their respective owners. RotaryCAM is an independent software product and is not affiliated with, sponsored by, or endorsed by Hypertherm, Inc. Feature comparisons reflect publicly available product information.
+        </p>
+      </div>
+    </section>
+{% endblock %}
