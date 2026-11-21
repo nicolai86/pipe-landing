@@ -63,7 +63,7 @@
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#pricing",
-        "description": "Perpetual air-gapped offline license (rotarycam.lic) for 2 computers with 1 full year of updates included ($59/yr optional thereafter), Round/Square/Flat G-code, multi-file 2D DXF/SVG flat-sheet cutting, 12 controller dialects (16 profiles) in native Imperial (G20) and Metric (G21), 1,025 cut charts + CSV import/export, Zero-Bevel, custom machines, and your shop name stamped in every G-code header."
+        "description": "Perpetual air-gapped offline license (rotarycam.lic) for 2 computers with 1 full year of updates included ($59/yr optional thereafter), Round/Square/Flat G-code, multi-file 2D DXF/SVG flat-sheet cutting, 12 controller dialects (16 profiles) in native Imperial (G20) and Metric (G21), 1,025 cut charts + CSV import/export, Zero-Bevel, auto-nesting up to 10 flat-sheet parts or 5 rotary parts/stick with unlimited manual placement, custom machines, and your shop name stamped in every G-code header."
       },
       {
         "@type": "Offer",
@@ -72,7 +72,7 @@
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#pricing",
-        "description": "Commercial perpetual offline license (rotarycam.lic) for 3 computers with 1 full year of updates included ($99/yr optional thereafter), 4-axis round-tube eccentric V-groove weld-prep beveling without a 5-axis bevel head, Angle Iron/C-Channel/I-Beam 4-axis beamline cutting, recursive part-in-cutout flat-sheet nesting, 2D common-line cutting, dual coaxial (EasyScribe) and pneumatic air-scribe marking + center-point spotting, unlimited multi-stick nesting with common-line sever cuts, unlimited 3D cut-and-bend unfolding, kerf-compensated tabbing, part-ID scribing, and headless MCP automation."
+        "description": "Commercial perpetual offline license (rotarycam.lic) for 3 computers with 1 full year of updates included ($99/yr optional thereafter), 4-axis round-tube eccentric V-groove weld-prep beveling without a 5-axis bevel head, Angle Iron/C-Channel/I-Beam 4-axis beamline cutting, recursive part-in-cutout flat-sheet nesting, 2D common-line cutting, dual coaxial (EasyScribe) and pneumatic air-scribe marking + center-point spotting, unlimited multi-sheet and multi-stick auto-nesting with common-line sever cuts, unlimited 3D cut-and-bend unfolding, kerf-compensated tabbing, part-ID scribing, and headless MCP automation."
       }
     ],
     "description": "Dedicated 4-axis rotary and 2D flat-sheet CNC plasma CAM software. Transforms 3D CAD STEP assemblies and multi-file DXF/SVG plate kits directly into machine-ready G-code with automatic tube copes, round and rectangular HSS zero-bevel miter compensation, 4-axis eccentric pipe weld-prep beveling, recursive part-in-cutout nesting, 12 CNC plasma controller dialects in native Imperial (G20) and Metric (G21), 1,025 built-in cut presets across 3 torch families, and full mill-stick nesting.",
@@ -2312,7 +2312,8 @@
             <li><span class="pricing-check">✓</span><span><strong>1 Year Updates</strong> (<span class="mono">$59/yr</span> optional in Year 2+)</span></li>
             <li><span class="pricing-check">✓</span><span><strong>2 Computers</strong> (Office CAD + Shop Table PC)</span></li>
             <li><span class="pricing-check">✓</span><span>Everything in Beta across all <strong>12 controllers</strong> in <strong>G20 / G21</strong></span></li>
-            <li><span class="pricing-check">✓</span><span><strong>1,025 cut presets + CSV</strong>, Zero-Bevel, 60% bolt holes &amp; auto-nest 10 flat / 5 rotary + unlimited manual placement</span></li>
+            <li><span class="pricing-check">✓</span><span>Auto-nest <strong>10 flat-sheet / 5 rotary parts</strong> + <strong>unlimited manual placement</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>1,025 cut presets + CSV</strong>, Zero-Bevel, 60% bolt holes &amp; <strong>5 bends/file</strong></span></li>
             <li><span class="pricing-check">✓</span><span>Custom shop name stamped in G-code headers</span></li>
           </ul>
         </div>
@@ -2351,7 +2352,7 @@
             <li><span class="pricing-check">✓</span><span><strong>Dual Air-Scribe &amp; Dimple Spotting:</strong> Part IDs (<code class="mono">P1 &harr; P12</code>) &amp; witness marks</span></li>
             <li><span class="pricing-check">✓</span><span><strong>4-Axis Weld-Prep Bevels:</strong> Eccentric <code class="mono">Y/Z/A</code> V-groove pipe cuts</span></li>
             <li><span class="pricing-check">✓</span><span><strong>Angle Iron, C-Channel &amp; I-Beam</strong> 4-axis beamline cutting</span></li>
-            <li><span class="pricing-check">✓</span><span><strong>Unlimited Stick Nesting</strong>, <code class="mono">.zip</code> batch export &amp; common-line severs</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Unlimited Auto-Nesting</strong> (multi-sheet &amp; multi-stick), <code class="mono">.zip</code> batch export &amp; common-line severs</span></li>
             <li><span class="pricing-check">✓</span><span><strong>Unlimited 3D Cut-and-Bend</strong> + <strong>Kerf Micro-Tabs</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>Offline AI / MCP Automation (<code class="mono">rotarycam-mcp</code>)</strong></span></li>
           </ul>
@@ -3103,7 +3104,7 @@
           priceLabel: '$199',
           cadence: 'USD one-time',
           title: 'Maker: Founding Fabricator Perpetual License',
-          desc: '2 Computers • Round/Square/Flat G-Code & Zero-Bevel • 1 Yr Updates ($59/yr optional later)',
+          desc: '2 Computers • Round/Square/Flat G-Code, Zero-Bevel, Auto-Nest 10 Flat / 5 Rotary + Unlimited Manual Placement • 1 Yr Updates',
           cta: 'Continue to Stripe Checkout ($199) →',
           stampTier: 'Maker Perpetual',
           needsExisting: false
@@ -3115,7 +3116,7 @@
           priceLabel: '$399',
           cadence: 'USD one-time',
           title: 'Pro Shop: Founding Fabricator Perpetual License',
-          desc: '3 Computers • 4-Axis Pipe Weld Bevels, Open Profiles, Unlimited Nesting, Tabs, Scribe & MCP • 1 Yr Updates',
+          desc: '3 Computers • 4-Axis Pipe Weld Bevels, Open Profiles, Unlimited Auto-Nesting, Tabs, Scribe & MCP • 1 Yr Updates',
           cta: 'Continue to Stripe Checkout ($399) →',
           stampTier: 'Pro Shop Perpetual',
           needsExisting: false
@@ -3127,7 +3128,7 @@
           priceLabel: '$200',
           cadence: 'USD one-time upgrade',
           title: 'Upgrade Maker → Pro Shop Perpetual License',
-          desc: 'Unlocks 4-Axis Pipe Weld Bevels, Open Profiles, Unlimited Nesting, Tabs, Scribe, MCP + 3rd Computer',
+          desc: 'Unlocks 4-Axis Pipe Weld Bevels, Open Profiles, Unlimited Auto-Nesting, Tabs, Scribe, MCP + 3rd Computer',
           cta: 'Continue to Upgrade Checkout ($200) →',
           stampTier: 'Pro Shop Perpetual',
           needsExisting: true
