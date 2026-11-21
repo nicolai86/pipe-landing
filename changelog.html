@@ -1009,7 +1009,7 @@
     <nav>
       <a href="./" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.8.5-BETA</span>
+        <span class="brand-tag">v0.8.6-BETA</span>
       </a>
       <div class="nav-links">
         <a href="./">Overview</a>
@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.8.2-v0.8.5" class="jump-pill">
+      <a href="#v0.8.6" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.8.2-v0.8.5)
+        Release History (v0.8.6)
       </a>
     </div>
 
@@ -1134,7 +1134,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.5/RotaryCam-macOS-v0.8.5.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.6/RotaryCam-macOS-v0.8.6.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1165,7 +1165,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.5/RotaryCam-Windows-v0.8.5.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.6/RotaryCam-Windows-v0.8.6.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1196,7 +1196,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.5/RotaryCam-Linux-v0.8.5.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.6/RotaryCam-Linux-v0.8.6.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1336,6 +1336,33 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
+           RELEASE: November 21, 2026 (v0.8.6)
+           ================================================================ -->
+      <article class="release-entry" id="v0.8.6">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 21, 2026</span>
+              <span class="release-version-pill">v0.8.6 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Performance Improvements</span>
+          </div>
+          <p class="release-summary">
+            Faster STEP file loading, smaller offline installers, and snappier nesting and G-code generation on large multi-part assemblies.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Performance Improvements:</strong> Faster STEP file loading, smaller offline installers, and snappier nesting and G-code generation on large multi-part assemblies.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 19, 2026 (v0.8.2-v0.8.5)
            ================================================================ -->
       <article class="release-entry" id="v0.8.2-v0.8.5">
@@ -1345,7 +1372,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.2-v0.8.5 &bull; LATEST</span>
+              <span class="release-version-pill">v0.8.2-v0.8.5</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Angle-Iron &amp; C-Channel Cuts &bull; Streamlined Top-Bar &amp; Gloved Nesting UI &bull; Mach3 &amp; SimCNC XML Import &bull; 8 Controller Post Hardening</span>
           </div>
@@ -2625,11 +2652,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.5-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.6-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.8.5').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.8.6').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',
