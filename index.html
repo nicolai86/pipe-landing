@@ -63,7 +63,7 @@
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#pricing",
-        "description": "Perpetual air-gapped offline license (rotarycam.lic) for 2 computers with 1 full year of updates included ($59/yr optional thereafter), Round/Square/Flat G-code, multi-file 2D DXF/SVG flat-sheet cutting, 12 controller dialects (16 profiles) in native Imperial (G20) and Metric (G21), 1,025 cut charts + CSV import/export, Zero-Bevel, auto-nesting up to 10 flat-sheet parts or 5 rotary parts/stick with unlimited manual placement, custom machines, and your shop name stamped in every G-code header."
+        "description": "Perpetual air-gapped offline license (rotarycam.lic) for 2 computers with 1 full year of updates included ($59/yr optional thereafter), Round/Square/Flat G-code, multi-file 2D DXF/SVG/STEP flat-sheet cutting with Open L/R kerf, Edge-Start pierce, Kerf-Crossing THC lock, 12 controller dialects (16 profiles) in native Imperial (G20) and Metric (G21), 1,025 cut charts + CSV import/export, Zero-Bevel, auto-nesting up to 10 flat-sheet parts or 5 rotary parts/stick with unlimited manual placement, custom machines, and your shop name stamped in every G-code header."
       },
       {
         "@type": "Offer",
@@ -72,7 +72,7 @@
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#pricing",
-        "description": "Commercial perpetual offline license (rotarycam.lic) for 3 computers with 1 full year of updates included ($99/yr optional thereafter), 4-axis round-tube eccentric V-groove weld-prep beveling without a 5-axis bevel head, Angle Iron/C-Channel/I-Beam 4-axis beamline cutting, recursive part-in-cutout flat-sheet nesting, 2D common-line cutting, dual coaxial (EasyScribe) and pneumatic air-scribe marking + center-point spotting, unlimited multi-sheet and multi-stick auto-nesting with common-line sever cuts, unlimited 3D cut-and-bend unfolding, kerf-compensated tabbing, part-ID scribing, and headless MCP automation."
+        "description": "Commercial perpetual offline license (rotarycam.lic) for 3 computers with 1 full year of updates included ($99/yr optional thereafter), 4-axis round-tube eccentric V-groove weld-prep beveling without a 5-axis bevel head, Angle Iron/C-Channel/I-Beam 4-axis beamline cutting, recursive part-in-cutout flat-sheet nesting, 2D common-line cutting, Daisy-Chain and Micro-Bridge cutting, Remnant Skeleton Guillotine Crop, dual coaxial (EasyScribe) and pneumatic air-scribe marking + center-point spotting, unlimited multi-sheet and multi-stick auto-nesting with common-line sever cuts, unlimited 3D cut-and-bend unfolding, kerf-compensated tabbing, part-ID scribing, and headless MCP automation."
       }
     ],
     "description": "Dedicated 4-axis rotary and 2D flat-sheet CNC plasma CAM software. Transforms 3D CAD STEP assemblies and multi-file DXF/SVG plate kits directly into machine-ready G-code with automatic tube copes, round and rectangular HSS zero-bevel miter compensation, 4-axis eccentric pipe weld-prep beveling, recursive part-in-cutout nesting, 12 CNC plasma controller dialects in native Imperial (G20) and Metric (G21), 1,025 built-in cut presets across 3 torch families, and full mill-stick nesting.",
@@ -93,6 +93,8 @@
       "Round Pipe & Rectangular HSS Zero-Bevel Miter & Saddle Fitup Compensation",
       "4-Axis Round-Tube Eccentric V-Groove Weld-Prep Beveling (No 5-Axis Head Required)",
       "Recursive Part-in-Cutout ('Matryoshka') Flat-Sheet Nesting & 2D Common-Line Cutting",
+      "Daisy-Chain & Micro-Bridge Cutting, Remnant Skeleton Guillotine Crop, Thick-Plate Edge-Start Piercing, Open-Path L/R/Center Kerf & Kerf-Crossing THC Auto-Lock",
+      "Interactive 2D Canvas (Drag, 15-Degree Snap Rotate, Flip H/V, Move Pierce & Holding Tabs)",
       "12 Native CNC Plasma Controller Dialects (16 Built-In Machine Profiles)",
       "Native Imperial (G20 / IPM) and Metric (G21 / mm/min) Output",
       "1,025 Built-In Cut Presets Across 3 Torch Families (Hypertherm SYNC, Duramax & Air Plasma) + CSV Import/Export",
@@ -1581,11 +1583,11 @@
         <span>•</span>
         <span class="mono">100% OFFLINE</span>
         <span>•</span>
-        <span class="mono" style="color: var(--plasma-amber);">TUBE &amp; PLATE CAM</span>
+        <span class="mono" style="color: var(--plasma-amber);">4-AXIS TUBE &amp; 2D PLATE CAM</span>
       </div>
-      <h1>3D CAD Frames In. <span>Clean 4-Axis Plasma <span style="white-space: nowrap;">G-Code</span> Out.</span></h1>
+      <h1>Tube Frames &amp; Flat Plate In. <span>Cut-Ready Plasma <span style="white-space: nowrap;">G-Code</span> Out.</span></h1>
       <p>
-        Drop a 3D STEP roll cage or DXF bracket kit straight in. Runs 100% offline in your shop, outputting zero-gap saddles, tight miters, nested sticks, and cut-ready G-code.
+        Drop 3D STEP tube assemblies or multi-file DXF/SVG plate kits straight in. Runs 100% offline in your shop with Matryoshka sheet nesting, common-line cuts, zero-gap saddles, and cut-ready G-code.
       </p>
 
       <div class="cta-group" id="download">
@@ -1726,19 +1728,28 @@
     <!-- Showcase Item: Flat-Sheet DXF & SVG Kits -->
     <div class="showcase-card">
       <div class="showcase-header">
-        <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">FLAT-SHEET DXF / SVG • G20 / G21</span>
-        <h3>Flat-Sheet DXF &amp; SVG Plate Nesting</h3>
+        <span class="badge mono" style="color: var(--cyan-arc); margin-bottom: 0.75rem;">2D FLAT-SHEET CAM • DXF / SVG / STEP • G20 / G21</span>
+        <h3>Production 2D Flat-Sheet Nesting &amp; Plate Cutting</h3>
         <p>
-          Drop gussets and plates (<code class="mono">.dxf</code>, <code class="mono">.svg</code>, <code class="mono">.zip</code>) onto <code class="mono">48 &times; 96 in</code> sheets. Nest tabs inside scrap cutouts, link parts with daisy chains, share 2D edges, and post <code class="mono">G20/G21</code>.
+          Drop multi-file <code class="mono">.dxf</code>, <code class="mono">.svg</code>, <code class="mono">.zip</code>, or flat <code class="mono">.step</code> plates onto <code class="mono">48 &times; 96 in</code> sheets. Auto-splits disjoint islands, preserves <code class="mono">SCRIBE</code>/<code class="mono">MARK</code>/<code class="mono">BEND</code> layers, turns DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code> into single-stroke scribe paths, and snaps scale via 2-point reference.
         </p>
         <div class="pill-list mono">
-          <span class="pill pill-cyan"><span class="pill-dot"></span>Multi-File .DXF / .SVG</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>Recursive Cutouts &amp; Daisy Chains</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>2D Common-Line &amp; 2-Point Snap</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Matryoshka &amp; Common-Line Nest</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Daisy-Chain &amp; Micro-Bridge</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Guillotine Remnant Crop</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Edge-Start &amp; Open L/R Kerf</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Kerf-Crossing THC Lock</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Drag, 15&deg; Rotate, Flip &amp; Tabs</span>
         </div>
-        <div style="margin-top: 1rem;">
-          <a href="docs/dxf-svg-flat-sheet.html" class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.88rem; text-decoration: none;">
-            Read the 5-Step Flat-Sheet Tutorial &rarr;
+        <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.65rem 1.25rem;">
+          <a href="docs/dxf-svg-flat-sheet.html" class="mono" style="color: var(--cyan-arc); font-weight: 700; font-size: 0.86rem; text-decoration: none;">
+            DXF/SVG Import &amp; Nesting Guide &rarr;
+          </a>
+          <a href="docs/flat-plate-pro-cutting.html" class="mono" style="color: var(--plasma-amber); font-weight: 700; font-size: 0.86rem; text-decoration: none;">
+            Heavy-Plate, Crop &amp; Chain Guide &rarr;
+          </a>
+          <a href="docs/interactive-canvas-controls.html" class="mono" style="color: var(--emerald-cut); font-weight: 700; font-size: 0.86rem; text-decoration: none;">
+            Interactive Canvas Controls &rarr;
           </a>
         </div>
       </div>
@@ -1860,7 +1871,7 @@
     <div class="section-header">
       <div class="badge"><span class="mono">BUILT FOR FABRICATORS</span></div>
       <h2>Built for Tubing &amp; Plate. Not Rolled 2D Sheet Metal.</h2>
-      <p>RotaryCAM reads 3D tube geometry directly and solves 4-axis plasma cutting out of the box.</p>
+      <p>RotaryCAM solves 4-axis tube cutting and production 2D flat-plate nesting in one offline shop tool.</p>
     </div>
 
     <div class="grid-3">
@@ -1983,6 +1994,45 @@
           <span class="pill"><span class="pill-dot"></span>Weld Witness Marks</span>
         </div>
       </div>
+
+      <!-- Feature 10 -->
+      <div class="card">
+        <div>
+          <div class="card-num mono" style="color: var(--cyan-arc);">10 / 2D PLATE IMPORT &amp; NESTING</div>
+          <h3>DXF/SVG/STEP Plate &amp; Matryoshka Nest</h3>
+          <p>Auto-splits disjoint islands, keeps <code class="mono">SCRIBE</code>/<code class="mono">MARK</code>/<code class="mono">BEND</code> layers, scribes DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code>, snaps scale via 2-point pick, nests parts inside cutouts, and shares common-line edges.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill pill-cyan"><span class="pill-dot"></span>2-Point Snap &amp; TEXT Scribe</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Matryoshka &amp; Common-Line</span>
+        </div>
+      </div>
+
+      <!-- Feature 11 -->
+      <div class="card">
+        <div>
+          <div class="card-num mono" style="color: var(--cyan-arc);">11 / PRO PLATE CUTTING</div>
+          <h3>Edge-Start, Open Kerf, Crop &amp; Chain</h3>
+          <p>Probes steel then fires off-edge on &ge; 1/2&Prime; plate, sets Open L/R/Center kerf, and locks THC over prior kerfs. Pro Shop adds flared Daisy-Chains, Micro-Bridges, and Guillotine Crops.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Edge-Start &amp; Void THC Lock</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Daisy-Chain &amp; Guillotine Crop</span>
+        </div>
+      </div>
+
+      <!-- Feature 12 -->
+      <div class="card">
+        <div>
+          <div class="card-num mono" style="color: var(--cyan-arc);">12 / INTERACTIVE 2D CANVAS</div>
+          <h3>Drag, 15&deg; Rotate, Flip &amp; Tab Live</h3>
+          <p>Drag parts, rotate (<code class="mono">15&deg;</code> snap or free angle), and flip H/V with live collision halos. Move pierces into scrap or drag holding tabs right on the contour.</p>
+        </div>
+        <div class="pill-list mono">
+          <span class="pill pill-cyan"><span class="pill-dot"></span>15&deg; Snap &amp; Collision Halos</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Move Pierce &amp; Holding Tabs</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2005,7 +2055,7 @@
             <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Round Pipe:</strong> 1/8&Prime; pipe up to 16&Prime; heavy casing</li>
             <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Square &amp; Rect HSS:</strong> 1/2&Prime; up to 16&Prime;+ with corner tracking</li>
             <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Angle, C-Channel &amp; I-Beam:</strong> 4-axis leg &amp; web cutting</li>
-            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Plate (DXF/SVG):</strong> Multi-file nesting &amp; 2-point scale</li>
+            <li style="color: var(--text);"><span style="color: var(--plasma-amber);">▸</span> <strong>Flat Plate (DXF/SVG/STEP):</strong> Matryoshka &amp; common-line nesting, Open L/R kerf, Edge-Start, Guillotine Crop &amp; Daisy-Chains</li>
           </ul>
         </div>
         <div class="pill-list mono" style="margin-top: 1.25rem;">
@@ -2055,6 +2105,8 @@
           <li style="color: var(--cyan-arc);">✓ 4-axis Y/Z/A V-bevel weld prep without a 5-axis head</li>
           <li style="color: var(--cyan-arc);">✓ Corner rotation damping &amp; automatic THC anti-dive freeze</li>
           <li style="color: var(--cyan-arc);">✓ 3D ramp lead-ins, seam avoidance &amp; zero-divot early shutoff</li>
+          <li style="color: var(--cyan-arc);">✓ Thick-plate Edge-Start piercing &amp; Kerf-Crossing THC auto-lock</li>
+          <li style="color: var(--cyan-arc);">✓ Open-path L/R/Center kerf, Daisy-Chains &amp; Guillotine remnant crops</li>
         </ul>
       </div>
 
@@ -2312,7 +2364,8 @@
             <li><span class="pricing-check">✓</span><span><strong>1 Year Updates</strong> (<span class="mono">$59/yr</span> optional in Year 2+)</span></li>
             <li><span class="pricing-check">✓</span><span><strong>2 Computers</strong> (Office CAD + Shop Table PC)</span></li>
             <li><span class="pricing-check">✓</span><span>Everything in Beta across all <strong>12 controllers</strong> in <strong>G20 / G21</strong></span></li>
-            <li><span class="pricing-check">✓</span><span>Auto-nest <strong>10 flat-sheet / 5 rotary parts</strong> + <strong>unlimited manual placement</strong></span></li>
+            <li><span class="pricing-check">✓</span><span>Auto-nest <strong>10 flat-sheet / 5 rotary parts</strong> + <strong>unlimited manual placement</strong> (drag, 15&deg; rotate, flip, move pierce)</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>2D Plate Controls:</strong> Open L/R kerf, Edge-Start pierce, Kerf-Crossing THC lock, 2-point snap &amp; DXF <code class="mono">TEXT</code> scribe</span></li>
             <li><span class="pricing-check">✓</span><span><strong>1,025 cut presets + CSV</strong>, Zero-Bevel, 60% bolt holes &amp; <strong>5 bends/file</strong></span></li>
             <li><span class="pricing-check">✓</span><span>Custom shop name stamped in G-code headers</span></li>
           </ul>
@@ -2349,6 +2402,7 @@
             <li><span class="pricing-check">✓</span><span><strong>3 Computers</strong> (Office CAD + Foreman + Table PC)</span></li>
             <li class="pricing-plus-divider">Everything in Maker, PLUS:</li>
             <li><span class="pricing-check">✓</span><span><strong>Recursive Cutout Nesting &amp; 2D Common-Line Cuts</strong> on flat plate</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Daisy-Chain / Micro-Bridge Cutting</strong> &amp; <strong>Remnant Skeleton Guillotine Crop</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>Dual Air-Scribe &amp; Dimple Spotting:</strong> Part IDs (<code class="mono">P1 &harr; P12</code>) &amp; witness marks</span></li>
             <li><span class="pricing-check">✓</span><span><strong>4-Axis Weld-Prep Bevels:</strong> Eccentric <code class="mono">Y/Z/A</code> V-groove pipe cuts</span></li>
             <li><span class="pricing-check">✓</span><span><strong>Angle Iron, C-Channel &amp; I-Beam</strong> 4-axis beamline cutting</span></li>
@@ -2607,6 +2661,42 @@
             <p>Understand flat-sheet G94 vs rotary G93 inverse-time feedrates, SimCNC 4D vector scaling, and how to verify console speeds before cutting.</p>
           </div>
           <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 11 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 12 Card -->
+      <a href="docs/interactive-canvas-controls.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <picture>
+            <source srcset="docs/assets/v08-move-pierce.webp" type="image/webp" />
+            <img src="docs/assets/v08-move-pierce.png" alt="Tutorial 12: Interactive Canvas Controls and Nest Tweaking" width="2880" height="1800" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--emerald-cut);">TUTORIAL 12 • 4 STEPS</div>
+            <h3 style="color: #fff;">Interactive Canvas &amp; Nest Tweaking</h3>
+            <p>Move pierces into scrap, drag holding tabs on contours, and drag, 15&deg; snap-rotate, or flip 2D sheet parts with live collision halos.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--emerald-cut); font-weight: 700;">Read Tutorial 12 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 13 Card -->
+      <a href="docs/flat-plate-pro-cutting.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <picture>
+            <source srcset="docs/assets/v08-flat-pro-pack.webp" type="image/webp" />
+            <img src="docs/assets/v08-flat-pro-pack.png" alt="Tutorial 13: Flat-Plate Pro Cutting Primitives and Torch Crash Protection" width="2880" height="1800" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--plasma-amber);">TUTORIAL 13 • 4 STEPS</div>
+            <h3 style="color: #fff;">Flat-Plate Pro Cutting &amp; THC Lock</h3>
+            <p>Stop torch dives with Kerf-Crossing THC Lock, set Open L/R/Center kerf, Edge-Start thick plate, crop remnants, and chain thin-gauge parts.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 13 →</div>
         </div>
       </a>
     </div>
