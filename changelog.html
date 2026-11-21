@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.8.5" class="jump-pill">
+      <a href="#v0.8.2-v0.8.5" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.8.5)
+        Release History (v0.8.2-v0.8.5)
       </a>
     </div>
 
@@ -1335,22 +1335,22 @@
   <!-- Chronological Release Entries -->
   <main class="changelog-section">
     <div class="timeline-wrap">
-
       <!-- ================================================================
-           RELEASE: November 19, 2026 (v0.8.5)
+           RELEASE: November 19, 2026 (v0.8.2-v0.8.5)
            ================================================================ -->
-      <article class="release-entry" id="v0.8.5">
+      <article class="release-entry" id="v0.8.2-v0.8.5">
+        <span id="v0.8.5"></span><span id="v0.8.4"></span><span id="v0.8.3"></span><span id="v0.8.2"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.5 &bull; LATEST</span>
+              <span class="release-version-pill">v0.8.2-v0.8.5 &bull; LATEST</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Angle-Iron Sever Cuts &bull; Smooth Corner Rotations &bull; Instant Machine Switching</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Angle-Iron &amp; C-Channel Cuts &bull; Streamlined Top-Bar &amp; Gloved Nesting UI &bull; Mach3 &amp; SimCNC XML Import &bull; 8 Controller Post Hardening</span>
           </div>
           <p class="release-summary">
-            Angle-iron start and end cuts no longer wrap around leg tips, mitered C-channel and angle-iron corners rotate smoothly in Y, and top-bar machine switches update G-code cleanly in one pass with instant spinners.
+            Angle-iron and C-channel cuts no longer wrap around tips or hitch on 90-degree corners. Switch machines and units directly from the top bar with instant spinners, overlay DXF/SVG artwork live under 3D preview, import Mach3 and SimCNC XML profiles with actionable warnings, and cut with hardened post-processors across 8 CNC plasma controllers.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -1371,27 +1371,6 @@
                 <strong>Instant Top-Bar Machine Switching &amp; Immediate Spinners:</strong> Switching machines in the top bar updates G-code cleanly in a single pass, clears the G-code pane properly on incompatible machine/profile combinations, hides the unused idle kinematics card on the home screen, and shows loading spinners immediately when you change machines, pack counts, or settings.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 19, 2026 (v0.8.4)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.4">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.4</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Streamlined Sidebar &amp; Top-Bar Controls &bull; Inline DXF/SVG Tube Overlay &bull; Synced Single/Nest Settings &bull; Gloved Nesting UI</span>
-          </div>
-          <p class="release-summary">
-            Stock size and plasma cut settings stay visible without scrolling, DXF/SVG tube overlay controls sit right beneath the 3D Part Preview, Single-Part and Nesting settings stay in sync, and the redesigned Nesting UI adds gloved-friendly controls.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-improvement">IMPROVED</span>
               <div class="change-content">
@@ -1416,27 +1395,6 @@
                 <strong>Redesigned HSS Rotary &amp; Flat Sheet Nesting UI:</strong> Filter profiles right in the header, use docked 2D sheet controls with plain shop-floor labels, keep inactive Crop and Chain sub-inputs hidden until turned on, and tap gloved-friendly <code class="mono">24 px</code> checkboxes and <code class="mono">+</code>/<code class="mono">-</code> buttons.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 19, 2026 (v0.8.3)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.3">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.3</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-Part Pack Unselection Fix &bull; Clean Pro Feature Defaults &bull; Actionable XML Import Warnings</span>
-          </div>
-          <p class="release-summary">
-            Unchecking parts in Multi-Part Pack Nesting now removes them from both your nest layout and exported G-code. Pro-only automation defaults stay OFF until enabled, and Mach3, FlashCut, and SimCNC XML import warnings link straight to the rotarycam.app FAQ.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-fix">FIX</span>
               <div class="change-content">
@@ -1455,27 +1413,6 @@
                 <strong>Actionable Mach3, FlashCut &amp; SimCNC XML Import Warnings:</strong> Profile import warnings for Mach3 (<code class="mono">.xml</code>), FlashCut (<code class="mono">.xml</code>), and SimCNC (<code class="mono">config.xml</code>) now show clear fix steps with direct links to the <a href="docs/machine-configuration.html#import-warnings-faq" style="color: var(--plasma-amber);">rotarycam.app XML Import Warnings FAQ</a>.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 19, 2026 (v0.8.2)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.2">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.2</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Mach3 &amp; SimCNC XML Import &bull; Verification Email Draft &bull; LinuxCNC, UCCNC, Acorn CNC12, grblHAL, Portable RS-274, PlanetCNC TNG, EdingCNC &amp; Mach4 ESS/TMC3in1 Hardening</span>
-          </div>
-          <p class="release-summary">
-            One-click ArtSoft Mach3 (.xml) and CSLab SimCNC 3.6 (config.xml) profile import in the Machines modal, direct mailto:contact@rotarycam.app Machine Verification email drafts, LinuxCNC 2.9+ QTPlasmaC three-regime hardening, CNCdrive UCCNC XYZA post-processor hardening (UC100, UC300ETH, UC400ETH, AXBB-E), Centroid Acorn CNC12 v5.4+ Plasma two-regime hardening, grblHAL 32-Bit Plasma ($674 virtual ports &amp; Core Issue #1027) hardening, Portable RS-274 (generic_g94) hardening, PlanetCNC TNG Plasma (planetcnc) hardening, EdingCNC Plasma (edingcnc) hardening, and ArtSoft Mach4 ESS &amp; Warp9 TMC3in1 (mach4_ess) hardening.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
@@ -1539,22 +1476,22 @@
           </ul>
         </div>
       </article>
-
       <!-- ================================================================
-           RELEASE: November 18, 2026 (v0.8.1)
+           RELEASE: November 18, 2026 (v0.8.0-v0.8.1)
            ================================================================ -->
-      <article class="release-entry" id="v0.8.1">
+      <article class="release-entry" id="v0.8.0-v0.8.1">
+        <span id="v0.8.1"></span><span id="v0.8.0"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 18, 2026</span>
-              <span class="release-version-pill">v0.8.1</span>
+              <span class="release-version-pill">v0.8.0-v0.8.1</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Apply DXF/SVG onto STEP Tubes &amp; Scribing &bull; Beta Verification Badges &bull; SimCNC 3.6+ G93, FireControl, Mach3, ShopSabre WinCNC &amp; MASSO G3 Hardening</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Apply DXF/SVG onto Tubes &bull; Interactive Canvas &bull; Spatial Void THC Lock &bull; Remnant Crop &bull; 5 Controller Posts Hardened</span>
           </div>
           <p class="release-summary">
-            Load a 3D STEP file or assembly, pick any Round Pipe or Square/Rect HSS solid, and apply a <code class="mono">.dxf</code> or <code class="mono">.svg</code> (plus DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code> markings) straight onto its surface. Also extend an existing full-price paid license to Lifetime Updates by verifying Beta controller posts on your shop table, plus SimCNC 3.6+ G93 trajectory hardening, Langmuir FireControl v1.6+ to v24.1.6 cut-cycle hardening, ArtSoft Mach3 (.tap) XYZA rotary and 2D plasma hardening, ShopSabre WinCNC (+ SideKick Rotary, .tap) hardening, and MASSO G3 + DTHC (.nc) XYZA rotary and 2D plasma hardening.
+            Apply 2D DXF/SVG artwork directly onto 3D round pipe and rectangular HSS with automatic single-stroke text scribing. Move pierces and holding tabs interactively on the canvas, prevent torch dives with spatial void THC locking, square off drops with remnant guillotine cropping, and cut with hardened SimCNC, FireControl, Mach3, WinCNC, and MASSO post-processors.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -1599,27 +1536,6 @@
                 <strong>MASSO G3 + DTHC (<code class="mono">.nc</code>) XYZA Rotary &amp; 2D Plasma Hardening:</strong> Adds a 3-mode THC hardware selector (<strong>MASSO DTHC (<code class="mono">G200</code> Auto-IHS)</strong>, <strong>External Up/Down THC (Bare <code class="mono">G200</code> + <code class="mono">G38.2</code>)</strong>, and <strong>Fixed Height / No THC</strong>). Enforces <code class="mono">T112 M6</code> plasma mode before <code class="mono">G200</code>, supports <code class="mono">O0</code> (Touch Switch) vs. <code class="mono">O1</code> (Plasma Ohmic) and <code class="mono">S0</code> (Continuous) vs. <code class="mono">S1</code> (Slag-Stop), and emits <code class="mono">M667 F&lt;zFeed&gt;</code> / <code class="mono">M666</code> with an explicit <code class="mono">F</code> word (<code class="mono">75-600 mm/min</code> or <code class="mono">3-24 IPM</code> scaled by <code class="mono">1/25.4</code> in <code class="mono">G20</code>, never omitting <code class="mono">F</code>). Supports Bare <code class="mono">G200</code> 3D ramps (Option B2) vs. opt-in Hybrid <code class="mono">C=P</code> (Option B1, explicit <code class="mono">V &gt; 0</code>, never <code class="mono">V0</code>), Template C continuous 4D HSS cutting (<code class="mono">Bare G200</code> + <code class="mono">G38.2</code> + <code class="mono">G92 Z</code> + <code class="mono">G92.1</code> + <code class="mono">M666</code>), <code class="mono">G53 G0 Z0</code> safe retracts with <code class="mono">G92.1</code> offset cleanup (no <code class="mono">G92 A0</code>), separate-line <code class="mono">G91</code> / <code class="mono">G28 A0</code> / <code class="mono">G90</code> rotary unwinds, and <code class="mono">M30 L&lt;count&gt;</code> chuck-fed bar-advance looping.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 18, 2026 (v0.8.0)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.0">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 18, 2026</span>
-              <span class="release-version-pill">v0.8.0</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Spatial Void THC Auto-Lock &bull; Interactive Canvas &bull; Remnant Crop &bull; Serpentine Chains &bull; FlashCut Mode 2</span>
-          </div>
-          <p class="release-summary">
-            Move pierces, drag holding tabs, and arrange 2D sheets or 1D tube sticks right on the canvas. Kerf-crossing THC auto-lock prevents torch dives across prior cuts, while Remnant Guillotine Crop, Serpentine Daisy-Chain / Micro-Bridge paths, Open-Path Left/Right/Center kerf, Edge-Start thick-plate piercing, Smart <code class="mono">CAMAutoDefaults</code>, and FlashCut Mode 2 explicit lift-axis sync streamline daily shop jobs.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
@@ -1698,22 +1614,22 @@
           </ul>
         </div>
       </article>
-
       <!-- ================================================================
-           RELEASE: November 16, 2026 (v0.7.4)
+           RELEASE: November 16, 2026 (v0.7.2-v0.7.4)
            ================================================================ -->
-      <article class="release-entry" id="v0.7.4">
+      <article class="release-entry" id="v0.7.2-v0.7.4">
+        <span id="v0.7.4"></span><span id="v0.7.3"></span><span id="v0.7.2"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 16, 2026</span>
-              <span class="release-version-pill">v0.7.4</span>
+              <span class="release-version-pill">v0.7.2-v0.7.4</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Saved User Preferences &amp; &#8942; Defaults &bull; Recent Models Landing View &bull; Post-Processor Readiness Labels</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Saved User Preferences &bull; Recent Models View &bull; FlashCut FabHead Post &bull; Single-EXE Windows &bull; Auto Machine Profile Saving</span>
           </div>
           <p class="release-summary">
-            Stop re-typing your shop defaults on every new part. Save your preferred lead-ins, kerf, nesting, and Round Wall Bevel mode once from any setting's <code class="mono">&#8942;</code> menu, jump straight back into your last 10 models from the opening screen, and see Verified vs. Beta controller status at a glance.
+            Save persistent shop defaults across CAM and machine settings with Fusion 360-style default controls, reopen recent models in one click from the landing screen, and run native FlashCut Fabrication Head tables without pre-probe firing. Includes a single-EXE Windows bundle, automatic machine profile saving, and one-click diagnostics export in the About dialog.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -1734,27 +1650,6 @@
                 <strong>Post-Processor Readiness Labels (<code class="mono">2 Verified &middot; 14 Beta</code>):</strong> Updated controller compatibility status so shop-tested posts for <strong>CSLab SimCNC</strong> and <strong>FlashCut CNC</strong> display as <strong>Verified</strong> alongside 14 <strong>Beta</strong> post-processors.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 16, 2026 (v0.7.3)
-           ================================================================ -->
-      <article class="release-entry" id="v0.7.3">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 16, 2026</span>
-              <span class="release-version-pill">v0.7.3</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">FlashCut FabHead Cut2D &bull; Single-EXE Windows Bundle &bull; Clearer Torch &amp; THC Machine Settings</span>
-          </div>
-          <p class="release-summary">
-            Cut cleanly on FlashCut CNC tables with native Fabrication Head support that stops premature torch firing during touch-off probing. Windows workstations now download a single, self-contained RotaryCAM.exe bundle with automatic background process cleanup, and Machine Settings now hides controller-specific pins so configuring your torch and THC signals is simple.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
@@ -1773,27 +1668,6 @@
                 <strong>Clearer Torch Firing &amp; THC Hold Machine Controls:</strong> Replaces confusing duplicate pin dropdowns with plain-language <strong>Torch Firing Mode (Arc On / Off)</strong> and <strong>THC Hold / Lock Signal (Height Control)</strong> controls. Automatically hides SimCNC-only variables (<code class="mono">#4061</code>, <code class="mono">M62/M63</code> output pins, and unwind dwells) when configuring third-party controllers, displaying each controller's native Arc and THC protocol summary directly.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 16, 2026 (v0.7.2)
-           ================================================================ -->
-      <article class="release-entry" id="v0.7.2">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 16, 2026</span>
-              <span class="release-version-pill">v0.7.2</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Automatic Machine Profile Saving &bull; Reliable Cloned Machine Edits &bull; Script Cache-Busting &bull; One-Click Diagnostics Zip Bundle</span>
-          </div>
-          <p class="release-summary">
-            Keep your custom machine setups locked in permanently across browser restarts. RotaryCAM now automatically saves every machine profile edit, fixes cloned and custom machines misidentified as stock templates so they never reject edits or revert on unit toggles, adds automated asset cache-busting so updates load immediately without stale cached scripts, and adds a one-click Download Diagnostics zip bundle in the About dialog to bundle logs, UI error telemetry, and machine configs for instant troubleshooting.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
@@ -2008,22 +1882,22 @@
           </ul>
         </div>
       </article>
-
       <!-- ================================================================
-           RELEASE: November 10, 2026 (v0.6.0)
+           RELEASE: November 10, 2026 (v0.5.1-v0.6.0)
            ================================================================ -->
-      <article class="release-entry" id="v0.6.0">
+      <article class="release-entry" id="v0.5.1-v0.6.0">
+        <span id="v0.6.0"></span><span id="v0.5.3"></span><span id="v0.5.2"></span><span id="v0.5.1"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 10, 2026</span>
-              <span class="release-version-pill" style="background: rgba(245, 158, 11, 0.12); color: var(--plasma-amber); border-color: rgba(245, 158, 11, 0.3);">v0.6.0</span>
+              <span class="release-version-pill" style="background: rgba(245, 158, 11, 0.12); color: var(--plasma-amber); border-color: rgba(245, 158, 11, 0.3);">v0.5.1-v0.6.0 &bull; FOUNDING LAUNCH</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">6 CNC Plasma Controller Posts &bull; Smart 4-Axis Z Tracking &bull; Inline Cut Presets or Console Material Tables &bull; Scribe &amp; Spotting &bull; 3D Simulator</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">6 CNC Plasma Controller Posts &bull; Rectangular HSS Zero-Bevel &bull; 4-Axis Pipe Beveling &bull; C-Channel Beamline &bull; Founding Launch</span>
           </div>
           <p class="release-summary">
-            Drop ready-to-cut G-code straight onto QTPlasmaC, Langmuir FireControl, Mach4, MASSO G3, Mach3, or Centroid Acorn without hand-editing a single line. Your table gets smart 4-axis Z corner and web tracking so the torch never crashes when square corners rotate up, instant switching between inline cut presets and your CNC console's saved material tables, full EasyScribe and pneumatic air-scribe marking with automatic swap pauses, and complete 3D cut preview for every controller dialect.
+            Export drop-in G-code across 6 CNC plasma controllers with smart 4-axis Z web and corner tracking, cut weld-ready rectangular HSS zero-bevel miters and 4-axis round pipe weld preps, scale small hole speeds to 60% for taper-free bolts, cut C-channel miters and terminal web slots cleanly, and activate founding fabricator perpetual offline licenses.
           </p>
           <ul class="change-list">
             <li class="change-item">
@@ -2056,27 +1930,6 @@
                 <strong>Multi-Controller 3D Cut Simulator &amp; Native File Downloads:</strong> Preview probe touch-offs, rapid traverses, multi-tool scribe passes, and unwrapped FireControl round-pipe cuts in full 3D right in your browser before walking out to your cutting table. Single-part and pack exports automatically format in each controller's native extension (<code>.ngc</code>, <code>.tap</code>, <code>.nc</code>, <code>.gc</code>).
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 10, 2026 (v0.5.3)
-           ================================================================ -->
-      <article class="release-entry" id="v0.5.3">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 10, 2026</span>
-              <span class="release-version-pill">v0.5.3</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">True Rectangular HSS Zero-Bevel Miters &bull; 4-Axis Eccentric Pipe Weld Beveling &bull; 60% Small-Hole Bolt Speed &bull; Kerf-True Tabs &amp; ERW Seam Avoidance</span>
-          </div>
-          <p class="release-summary">
-            Pull square and rectangular HSS miters straight off the plasma table ready to weld with zero hand grinding, cut real V-groove weld prep on round pipe using your vertical 4-axis torch without buying a 5-axis bevel head, drop bolts straight through 60%-speed small holes without cone taper, and keep thin-wall tabs and pierces clean off ERW mill seams.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
@@ -2101,27 +1954,6 @@
                 <strong>Kerf-Compensated Micro-Joint Tabs &amp; Configurable ERW Weld-Seam Avoidance:</strong> Adds your full plasma kerf width to every tab gap so thin-wall micro-tabs never burn away before the torch shuts off, and lets you configure round or square/rectangular ERW weld-seam orientation so pierces automatically shift off thick internal mill weld flash.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 10, 2026 (v0.5.2)
-           ================================================================ -->
-      <article class="release-entry" id="v0.5.2">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 10, 2026</span>
-              <span class="release-version-pill">v0.5.2 &bull; FOUNDING LAUNCH</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">True-to-Model C-Channel Miter &amp; Slotted End Cuts &bull; Clean Edge Cutouts (Lead-Out: None) &bull; Founding Fabricator Perpetual Offline Licenses</span>
-          </div>
-          <p class="release-summary">
-            Cut compound miters and deep end-breaking web slots on C-Channel cleanly along your 3D CAD geometry, shut the torch off right at the open edge on flange notches and slots without over-running into good steel, and own your table's CAM setup offline forever with a one-time Maker ($199) or Pro Shop ($399) license.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-fix">FIX</span>
               <div class="change-content">
@@ -2140,27 +1972,6 @@
                 <strong>Founding Fabricator Perpetual Offline Licenses (<code>Maker</code> &amp; <code>Pro Shop</code>):</strong> Own your CAM setup outright with a 100% offline <code>rotarycam.lic</code> file that runs air-gapped at your plasma table forever, with full 3D preview unlocked on every profile and feature before you buy, plus instant checkout claim or USB thumb-drive activation. Pick <strong>Maker ($199)</strong> for 2 computers (Round Pipe, Square/Rect HSS &amp; Flat Bar, Zero-Bevel, custom machines, up to 5 parts/stick &amp; 5 bends/file, plus your shop name in the G-code header), or <strong>Pro Shop ($399)</strong> for 3 computers plus Angle Iron, C-Channel &amp; I-Beam cutting, unlimited multi-stick nesting with common-line sever cuts, tab cutting, part-ID scribing, and headless MCP automation. Both tiers include 1 full year of updates (<a href="./#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">compare tiers &rarr;</a>).
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 10, 2026 (v0.5.1)
-           ================================================================ -->
-      <article class="release-entry" id="v0.5.1">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 10, 2026</span>
-              <span class="release-version-pill">v0.5.1</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Multi-CAD C-Channel &amp; Open-Profile Detection &bull; Open-Ended Terminal Web Slots &bull; ~30&times; Faster STEP Assembly Loading</span>
-          </div>
-          <p class="release-summary">
-            Load tapered-flange and heavily notched C-Channels from Fusion 360 or any CAD package without profile mix-ups, trace open-ended terminal web slots and opposite-flange bolt holes cleanly, and open 37-part weldment assemblies in ~9 seconds instead of 4+ minutes.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-improvement">IMPROVEMENT</span>
               <div class="change-content">
