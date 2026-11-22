@@ -194,4 +194,113 @@
             </div>
           </figure>
         </article>
+
+        <!-- ==================================================================
+             STEP 6
+             ================================================================== -->
+        <article class="doc-step-card" id="step-6">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 06</span>
+            <h2 class="doc-step-title">Mandrel / Rotary-Draw Bender Mode (<code class="mono">Pro Shop</code>): Suppress Relief Slots &amp; Scribe Witness Marks</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Running the part on a hydraulic or CNC mandrel / rotary-draw bender instead of cut-and-bend folding? Switch the same bent tube into <strong>Mandrel Bender</strong> mode:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Switch Bend Process Mode:</strong> Under <strong>BEND PROCESS MODE</strong> in the left sidebar, click <span class="ui-chip cyan">Mandrel Bender</span>. RotaryCAM automatically suppresses all relief-cut slots, recalculates the developed straight length (<code class="mono">2020.9 mm</code>) using your die's achieved Centerline Radius (CLR) and elongation factor, and keeps every end cope, miter, and bolt hole intact.</li>
+              <li><strong>Pick Your Die &amp; Witness Marks:</strong> Select your matching die (such as <code class="mono">1.5" Sq HSS x 5.5" CLR</code>) and toggle <strong>Start Tangent + Intrados</strong>, <strong>Center / End</strong>, or <strong>Bend Labels (B1, B2)</strong> so the plasma scribe marks exact bend-start tangent lines and pull-direction ticks right on the straight tube before it goes to the bender.</li>
+              <li><strong>Reverse Bend Sequence:</strong> Need to feed the tube from the opposite end for clamp-die clearance? Click <span class="ui-chip">Reverse Bend Sequence</span> to mirror all feed lengths and roll angles in one click.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 6: Switching to Mandrel Bender mode to suppress relief slots, scribe witness marks, and preview the LRA Setup Summary</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/bending-6-mandrel-mode.webp" type="image/webp" />
+                <img src="assets/bending-6-mandrel-mode.png" alt="Step 6: Mandrel Bender mode active with calibrated die selector, witness mark checkboxes, LRA summary, and scribe G-code" width="2324" height="1397" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 7
+             ================================================================== -->
+        <article class="doc-step-card" id="step-7">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 07</span>
+            <h2 class="doc-step-title">Calibrate Your Shop Dies in the <code class="mono">Bender Die Library</code></h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Every physical die stretches and springs back slightly differently. Click the <strong>Manage Dies</strong> button next to the Bender Die dropdown to open the <strong>Bender Die Library</strong>:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Built-In &amp; Custom Shop Dies:</strong> RotaryCAM ships with 6 common imperial and metric round/square dies (JD2, RogueFab, Baileigh, and Metric Pipe). Click <span class="ui-chip emerald">+ Add Die</span> or <span class="ui-chip">Edit</span> to dial in your exact shop tooling.</li>
+              <li><strong>Calibrated CLR, Elongation &amp; 2-Parameter Springback:</strong> Store nominal vs. achieved CLR, stretch elongation factor, and affine springback (<code class="mono">Yield Offset + deg/90°</code>) plus minimum clamp grip length so every bend angle overbends accurately and tight inter-bend straights trigger clamp-grip warnings before you cut steel.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 7: Calibrating CLR, elongation, 2-parameter springback, and minimum clamp grip in the Bender Die Library</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/bending-7-bender-die-library.webp" type="image/webp" />
+                <img src="assets/bending-7-bender-die-library.png" alt="Step 7: Bender Die Library modal listing 6 shop dies with CLR, elongation, yield offset, springback, and min clamp grip" width="2324" height="1397" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
+        </article>
+
+        <!-- ==================================================================
+             STEP 8
+             ================================================================== -->
+        <article class="doc-step-card" id="step-8">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 08</span>
+            <h2 class="doc-step-title">Export the 1-Page Printable <code class="mono">LRA / YBC</code> Shop Setup Card (PDF)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Click <span class="ui-chip emerald">Print LRA Setup Card</span> in the <strong>Mandrel Bender LRA Setup Summary</strong> bar to open a clean, 1-page landscape setup sheet formatted for the bender operator:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Mandrel &amp; Tooling Guidance:</strong> Automatically calculates D-factor (<code class="mono">CLR / D</code>) and wall factor (<code class="mono">D / t</code>) to recommend mandrel ball count, nose projection past tangent, wiper die requirement, pressure die assist (PDA) boost, and ERW weld-seam clocking.</li>
+              <li><strong>Clamp-Grip &amp; Stub Safety Warnings:</strong> Flags any inter-bend straight or trailing rear collet stub shorter than your die's minimum clamp grip before you load the stick.</li>
+              <li><strong>Witness-Mark Schematic &amp; LRA/YBC Table:</strong> Shows every bend zone, Start Tangent X mark, Intrados pull direction (<code class="mono">0°</code> / <code class="mono">180°</code>), incremental carriage feed (<code class="mono">L / Y</code>), roll (<code class="mono">R / B</code>), and springback-compensated bend angle (<code class="mono">A / C</code>) in <code class="mono">mm</code> or <code class="mono">in</code>.</li>
+            </ul>
+
+            <div class="doc-callout tip" style="margin-top: 1rem;">
+              <div class="doc-callout-title">Example LRA Setup Card PDF (SM0022 HSS 1-1/2" x 1-1/2")</div>
+              <p>
+                Inspect a real RotaryCAM setup card exported directly from the <code class="mono">HSS Bending</code> sample fixture:
+                <a href="assets/lra-setup-card-sm0022-example.pdf" target="_blank" rel="noopener noreferrer" style="color: var(--cyan-400); font-weight: 600;">Download Example LRA Setup Card (PDF)</a>.
+              </p>
+            </div>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 8: Real exported 1-page landscape LRA / YBC Mandrel Setup Card (SM0022 HSS 1-1/2" x 1-1/2")</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/bending-8-lra-card-example.webp" type="image/webp" />
+                <img src="assets/bending-8-lra-card-example.png" alt="Step 8: Real exported RotaryCAM Mandrel / Rotary-Draw LRA Setup Card PDF for SM0022 HSS 1-1/2x1-1/2" width="2324" height="1642" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
+        </article>
 {% endblock %}
