@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No-CAD Part Design & 3D Tube Frames | RotaryCAM Docs</title>
+  <meta name="description" content="Design 50 flat-sheet shapes and multi-plane 3D tube frames inside RotaryCAM with length, spacing, angle, and parallel constraints, rotated sheets, and STEP export." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/no-cad-wizard-and-tube-frames.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/no-cad-wizard-and-tube-frames.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="No-CAD Part Design & 3D Tube Frames | RotaryCAM Docs" />
+  <meta property="og:description" content="Design 50 flat-sheet shapes and multi-plane 3D tube frames inside RotaryCAM with length, spacing, angle, and parallel constraints, rotated sheets, and STEP export." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="RotaryCAM 3D CAD Tube Inspection and Feature Extraction" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="No-CAD Part Design & 3D Tube Frames | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Design 50 flat-sheet shapes and multi-plane 3D tube frames inside RotaryCAM with length, spacing, angle, and parallel constraints, rotated sheets, and STEP export." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "No-CAD Part Design \u0026 3D Tube Frame Designer",
+        "item": "https://rotarycam.app/docs/no-cad-wizard-and-tube-frames.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "No-CAD Part Design \u0026 3D Tube Frame Designer",
+    "description": "Design 50 flat-sheet shapes and multi-plane 3D tube frames inside RotaryCAM with length, spacing, angle, and parallel constraints, rotated sheets, and STEP export.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/no-cad-wizard-and-tube-frames.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/no-cad-wizard-and-tube-frames.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="docs.css?v=20261121" />
+  <style>
+    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
+    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
+    
+    .site-header-left { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .site-header .brand { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+    .site-header .brand-tag { font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .site-header .nav-back-link { color: #94a3b8 !important; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.15s ease; white-space: nowrap; }
+    .site-header .nav-back-link:hover { color: #f59e0b !important; }
+    .site-header .nav-divider { width: 1px; height: 16px; background: #232833; }
+
+    .site-header .nav-links { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
+    .site-header .nav-links > a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.82rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.35rem 0; font-weight: 500; }
+    .site-header .nav-links > a:hover { color: #fff; }
+    .site-header .nav-links > a.active { color: #fff; font-weight: 600; }
+    .site-header .nav-links > a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+
+    /* Interactive Tutorials Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { background: transparent; border: none; color: #94a3b8; font-size: 0.82rem; font-family: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.35rem 0; transition: color 0.15s ease; }
+    .nav-dropdown-trigger:hover, .nav-dropdown:hover .nav-dropdown-trigger, .nav-dropdown-trigger.active { color: #fff; }
+    .nav-dropdown-trigger.active { font-weight: 600; }
+    .nav-dropdown-trigger .dropdown-caret { transition: transform 0.2s ease; opacity: 0.7; }
+    .nav-dropdown:hover .dropdown-caret, .nav-dropdown:focus-within .dropdown-caret { transform: rotate(180deg); opacity: 1; color: #f59e0b; }
+    .nav-active-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 1px 5px; border-radius: 4px; font-weight: 700; line-height: 1.2; }
+    .nav-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #232833; padding: 1px 5px; border-radius: 4px; font-weight: 600; line-height: 1.2; }
+
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 0.65rem); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(18, 22, 29, 0.98); border: 1px solid #232833; border-radius: 10px; box-shadow: 0 16px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); padding: 0.75rem; width: 560px; max-width: calc(100vw - 2rem); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; z-index: 1050; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: none; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .nav-dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.55rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.45rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+    .nav-dropdown-count { color: #f59e0b; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.5rem; max-height: 380px; }
+    .nav-dropdown-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.45rem 0.6rem; border-radius: 6px; text-decoration: none; color: #cbd5e1; transition: background 0.15s ease, color 0.15s ease; position: relative; }
+    .nav-dropdown-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .nav-dropdown-item.active { background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-dropdown-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #64748b; background: rgba(255,255,255,0.04); padding: 2px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+    .nav-dropdown-item.active .nav-dropdown-num { color: #f59e0b; background: rgba(245, 158, 11, 0.18); }
+    .nav-dropdown-content { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+    .nav-dropdown-title { font-size: 0.78rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-dropdown-sub { font-size: 0.66rem; color: #64748b; line-height: 1.2; }
+    .nav-dropdown-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink: 0; }
+
+    /* Right Section */
+    .site-header-right { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; font-weight: 500; }
+    .site-header .nav-cta:hover { border-color: #f59e0b; color: #fff; }
+    
+    .nav-mobile-toggle { display: none; background: #14171d; border: 1px solid #232833; color: #94a3b8; border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; padding: 0; }
+    .nav-mobile-toggle:hover { color: #fff; border-color: #f59e0b; }
+
+    /* Mobile Drawer */
+    .docs-mobile-drawer { display: none; position: fixed; inset: 0; top: 57px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 999; padding: 1.5rem; overflow-y: auto; flex-direction: column; gap: 1.25rem; }
+    .docs-mobile-drawer.open { display: flex; }
+    .docs-mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .docs-mobile-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .docs-mobile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 8px; text-decoration: none; color: #cbd5e1; background: rgba(255,255,255,0.02); border: 1px solid #232833; font-size: 0.88rem; }
+    .docs-mobile-link:hover, .docs-mobile-link.active { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+
+    @media (max-width: 960px) {
+      .site-header .nav-links { display: none; }
+      .site-header .nav-divider { display: none; }
+      .nav-mobile-toggle { display: inline-flex; }
+    }
+  </style>
+  <script src="../webmcp.js" defer></script>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <header class="site-header" id="navbar">
+    <nav aria-label="Documentation Navigation">
+      <div class="site-header-left">
+        <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.9.0-BETA</span>
+        </a>
+        <div class="nav-divider" aria-hidden="true"></div>
+        <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
+      </div>
+
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+
+        <!-- Tutorials Dropdown -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger active" aria-expanded="false" aria-haspopup="true">
+            <span>Tutorials</span>
+            
+            <span class="nav-active-badge">14</span>
+            
+            <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-header">
+              <span>All Workflows &amp; Tutorials</span>
+              <span class="nav-dropdown-count">14 Guides</span>
+            </div>
+            <div class="nav-dropdown-grid">
+              
+              <a href="machine-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">01</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Machine Configuration</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-path-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">02</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">UI & Cut Path Config</span>
+                  <span class="nav-dropdown-sub">8 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="nesting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">03</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Multi-Part Stick Nesting</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="bending.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">04</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Bending HSS & HSS-O</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="changelog.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">05</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Build Info & Changelog</span>
+                  <span class="nav-dropdown-sub">3 Steps • Diagnostics & Storage</span>
+                </span>
+                
+              </a>
+              
+              <a href="ai-autodetection.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">06</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Fusion 360 & AI Autodetect</span>
+                  <span class="nav-dropdown-sub">8 Steps • 11 Screenshots</span>
+                </span>
+                
+              </a>
+              
+              <a href="simcnc-motion-sync.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">07</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">SimCNC Motion-Sync & 3D Ramp</span>
+                  <span class="nav-dropdown-sub">12 Steps • Technical Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-charts-and-features.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">08</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
+                  <span class="nav-dropdown-sub">7 Steps • Visual Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="mcp-offline-workflows.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">09</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Offline MCP & AI Automation</span>
+                  <span class="nav-dropdown-sub">8 Steps • Integration Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="dxf-svg-flat-sheet.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="rotary-and-sheet-feedrates.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">11</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">G94, G93 & G20/G21 Feeds</span>
+                  <span class="nav-dropdown-sub">5 Sections</span>
+                </span>
+                
+              </a>
+              
+              <a href="interactive-canvas-controls.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">12</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Interactive Canvas Controls</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="flat-plate-pro-cutting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">13</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Flat Pro Primitives</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="no-cad-wizard-and-tube-frames.html" class="nav-dropdown-item active" role="menuitem">
+                <span class="nav-dropdown-num">14</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">No-CAD & 3D Tube Frames</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+                <span class="nav-dropdown-dot" title="Current Guide"></span>
+                
+              </a>
+              
+            </div>
+          </div>
+        </div>
+
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../hardware-thc.html" style="color: #f59e0b; font-weight: 600;">Hardware THC</a>
+        <a href="../build-guide.html">Machine Blueprint</a>
+        <a href="../changelog.html">Changelog</a>
+      </div>
+
+      <div class="site-header-right">
+        <a href="../index.html#download" class="nav-cta">Download Beta</a>
+        <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
+    <div class="docs-mobile-section-title">Navigation</div>
+    <div class="docs-mobile-list">
+      <a href="../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="../index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
+      <a href="index.html" class="docs-mobile-link">Documentation Hub Overview</a>
+      <a href="../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
+      <a href="../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
+      <a href="../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
+    </div>
+
+    <div class="docs-mobile-section-title" style="margin-top: 1rem;">Tutorials &amp; Guides</div>
+    <div class="docs-mobile-list">
+      
+      <a href="machine-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">01</span>
+        <span>Machine Configuration</span>
+      </a>
+      
+      <a href="cut-path-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">02</span>
+        <span>UI & Cut Path Config</span>
+      </a>
+      
+      <a href="nesting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">03</span>
+        <span>Multi-Part Stick Nesting</span>
+      </a>
+      
+      <a href="bending.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">04</span>
+        <span>Bending HSS & HSS-O</span>
+      </a>
+      
+      <a href="changelog.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">05</span>
+        <span>Build Info & Changelog</span>
+      </a>
+      
+      <a href="ai-autodetection.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">06</span>
+        <span>Fusion 360 & AI Autodetect</span>
+      </a>
+      
+      <a href="simcnc-motion-sync.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">07</span>
+        <span>SimCNC Motion-Sync & 3D Ramp</span>
+      </a>
+      
+      <a href="cut-charts-and-features.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">08</span>
+        <span>Cut Charts & Feature Toggles</span>
+      </a>
+      
+      <a href="mcp-offline-workflows.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">09</span>
+        <span>Offline MCP & AI Automation</span>
+      </a>
+      
+      <a href="dxf-svg-flat-sheet.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
+      <a href="rotary-and-sheet-feedrates.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">11</span>
+        <span>G94, G93 & G20/G21 Feeds</span>
+      </a>
+      
+      <a href="interactive-canvas-controls.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">12</span>
+        <span>Interactive Canvas Controls</span>
+      </a>
+      
+      <a href="flat-plate-pro-cutting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">13</span>
+        <span>Flat Pro Primitives</span>
+      </a>
+      
+      <a href="no-cad-wizard-and-tube-frames.html" class="docs-mobile-link active">
+        <span class="nav-dropdown-num">14</span>
+        <span>No-CAD & 3D Tube Frames</span>
+      </a>
+      
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="../index.html#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Mobile drawer toggle
+      const toggle = document.getElementById('navMobileToggle');
+      const drawer = document.getElementById('docsMobileDrawer');
+      if (toggle && drawer) {
+        toggle.addEventListener('click', function () {
+          const isOpen = drawer.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        drawer.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            drawer.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Desktop/tablet dropdown toggle on click
+      const ddTrigger = document.querySelector('.nav-dropdown-trigger');
+      const dd = document.querySelector('.nav-dropdown');
+      if (ddTrigger && dd) {
+        ddTrigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = dd.classList.toggle('open');
+          ddTrigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function (e) {
+          if (!dd.contains(e.target)) {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
+
+  <main>
+
+    <!-- ======================================================================
+         TUTORIAL HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <a href="index.html">Documentation</a>
+          <span class="sep">/</span>
+          <span class="current">14. No-CAD Part Design & 3D Tube Frame Designer</span>
+        </div>
+
+        <h1 class="docs-title">14. No-CAD Part Design &amp; <span class="text-gradient-amber">3D Tube Frame Designer</span></h1>
+        <p class="docs-subtitle">
+          Build flat brackets from the 50-shape 2D fabricator library or sketch complete 3D tube frames with US Imperial A500 and Metric EN 10219 HSS profiles, automatic saddle and box copes, rotated 2D sketch sheets, 3D Bay Extrude, and true 3D assembled STEP export.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 14 OF 14</strong> • 7 Steps</span>
+          
+          <span class="docs-meta-pill cyan"><strong>2D Flat Library:</strong> 50 Shapes Across 8 Shop Categories + Sheet Gauge</span>
+          
+          <span class="docs-meta-pill"><strong>3D Tube Frames:</strong> Rotated 2D Sheets, &ang;/&parallel; Constraints, 3D Bay Extrude &amp; STEP Export</span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN DOCUMENTATION SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Tutorial Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Tutorials &amp; Guides</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="index.html">
+                <span class="docs-nav-num">HUB</span>
+                <span>Documentation Overview</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="machine-configuration.html">
+                <span class="docs-nav-num">01</span>
+                <span>Machine Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="cut-path-configuration.html">
+                <span class="docs-nav-num">02</span>
+                <span>UI & Cut Path Config</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="nesting.html">
+                <span class="docs-nav-num">03</span>
+                <span>Multi-Part Stick Nesting</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="bending.html">
+                <span class="docs-nav-num">04</span>
+                <span>Bending HSS & HSS-O</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="changelog.html">
+                <span class="docs-nav-num">05</span>
+                <span>Build Info & Changelog</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="ai-autodetection.html">
+                <span class="docs-nav-num">06</span>
+                <span>Fusion 360 & AI Autodetect</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="simcnc-motion-sync.html">
+                <span class="docs-nav-num">07</span>
+                <span>SimCNC Motion-Sync & 3D Ramp</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="cut-charts-and-features.html">
+                <span class="docs-nav-num">08</span>
+                <span>Cut Charts & Feature Toggles</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="mcp-offline-workflows.html">
+                <span class="docs-nav-num">09</span>
+                <span>Offline MCP & AI Automation</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="dxf-svg-flat-sheet.html">
+                <span class="docs-nav-num">10</span>
+                <span>DXF/SVG & Imperial Units</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="rotary-and-sheet-feedrates.html">
+                <span class="docs-nav-num">11</span>
+                <span>G94, G93 & G20/G21 Feeds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="interactive-canvas-controls.html">
+                <span class="docs-nav-num">12</span>
+                <span>Interactive Canvas Controls</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="flat-plate-pro-cutting.html">
+                <span class="docs-nav-num">13</span>
+                <span>Flat Pro Primitives</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="no-cad-wizard-and-tube-frames.html" class="active">
+                <span class="docs-nav-num">14</span>
+                <span>No-CAD & 3D Tube Frames</span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            
+            <li><a href="#step-1"><span class="docs-toc-step">01</span> Open Create Part (No-CAD)</a></li>
+            
+            <li><a href="#step-2"><span class="docs-toc-step">02</span> 50-Shape 2D Fabricator Library</a></li>
+            
+            <li><a href="#step-3"><span class="docs-toc-step">03</span> 3D Tube Frame &amp; HSS Profiles</a></li>
+            
+            <li><a href="#step-4"><span class="docs-toc-step">04</span> Snap Branches &amp; Flip Joint Priority</a></li>
+            
+            <li><a href="#step-5"><span class="docs-toc-step">05</span> Length, Spacing, Angle &amp; Parallel</a></li>
+            
+            <li><a href="#step-6"><span class="docs-toc-step">06</span> + Add Sketch &amp; 3D Bay Extrude</a></li>
+            
+            <li><a href="#step-7"><span class="docs-toc-step">07</span> True 3D STEP &amp; Pack Mode</a></li>
+            
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Tutorial Column -->
+      <div class="docs-main">
+
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Design Brackets &amp; Complete 3D Tube Frames Without Opening CAD</h2>
+          <p>
+            Need a bolt flange, gusset, gear, or a full welded handrail before lunch? Open <strong>Create Part (No-CAD)</strong> right inside RotaryCAM. Build flat plate parts from the 50-shape fabricator library or sketch multi-plane 3D tube frames with automatic copes, miters, and live cut lists.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">2D Flat Plate</span>
+              <span class="value">50-Shape Library + Sheet Gauge</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">3D Tube Frame</span>
+              <span class="value">Rotated Sheets + 3D Bay Extrude</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Direct CAM Export</span>
+              <span class="value">True 3D Assembled STEP &amp; Pack Mode</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Open <code class="mono">Create Part (No-CAD)</code> &amp; Pick Units</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Launch the built-in part builder from anywhere in RotaryCAM:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip amber">Create Part (No-CAD)</span> on the Home screen, or click <span class="ui-chip">+ Create Part</span> in the top navigation bar.</li>
+              <li>Use the <span class="ui-chip">mm</span> / <span class="ui-chip">in</span> toggle in the top-right wizard header to match your tape measure and machine units.</li>
+              <li>Pick your workspace tab at the top: <strong>2D Flat Plate</strong> for sheet parts, <strong>3D Tube &amp; Pipe</strong> for single coped/mitered sticks, or <strong>3D Tube Frame</strong> for full welded assemblies.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Build Flat Parts from the 50-Shape 2D Fabricator Library</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              On the <strong>2D Flat Plate</strong> tab, pick a part family from the <strong>50-shape 2D fabricator library</strong>:
+            </p>
+
+            <div style="overflow-x: auto; margin: 0.75rem 0 1rem;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; background: rgba(15, 20, 28, 0.6); border: 1px solid var(--border-subtle); border-radius: 8px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.04);">
+                    <th style="padding: 0.7rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); width: 170px;">Category</th>
+                    <th style="padding: 0.7rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">Typical Shop Parts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--amber-400);">Plates &amp; Flanges</td>
+                    <td style="padding: 0.65rem 0.95rem;">Baseplates, frame plates, slotted brackets, circular BCD bolt flanges, and concentric weld washers.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--cyan-400);">Chassis Tabs &amp; Gussets</td>
+                    <td style="padding: 0.65rem 0.95rem;">4-link and shock tabs (flat or tube-radius base), corner gussets with weld relief, and bend-relieved L-brackets.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--emerald-400);">Hinges &amp; Screens</td>
+                    <td style="padding: 0.65rem 0.95rem;">Weld-on hinge straps and leaves, perforated screens, and vent grilles with patterned cutouts.</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--amber-400);">Gears &amp; Wrenches</td>
+                    <td style="padding: 0.65rem 0.95rem;">Custom tooth-count sprockets/gears and open-end, box, or hex service wrenches.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <ul class="doc-bullet-list">
+              <li><strong>Live Dimensioned Preview:</strong> Enter widths, hole diameters, bolt circle diameters, or slot counts on the right. The dimensioned center preview updates on every keystroke.</li>
+              <li><strong>Sheet Thickness Gauge:</strong> Pick your plate gauge (<code class="mono">16ga</code> through <code class="mono">1/2"</code> or metric <code class="mono">mm</code>) so RotaryCAM loads matching cut speeds, kerf, and pierce heights right away.</li>
+              <li><strong>Cut One or Nest a Kit:</strong> Click <span class="ui-chip cyan">Open in RotaryCAM →</span> to cut immediately, click <span class="ui-chip">+ Add to Batch Queue</span> then <span class="ui-chip">Load Batch into Pack Mode</span> to nest mixed quantities on one sheet, or click <span class="ui-chip">Download .dxf</span>.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Start a 3D Tube Frame &amp; Pick HSS / Pipe Profiles</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Switch to the <strong>3D Tube Frame</strong> tab to build weldments on a 2D stick-figure canvas with a live 3D assembly view beside it:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Pick a Starter Frame:</strong> Start from <strong>OSHA Walkway Guardrail</strong>, <strong>Shop Ladder</strong>, <strong>3D Storage Rack Bay</strong>, <strong>Truss Gate Frame</strong>, or choose <strong>Blank Canvas</strong> to draw from scratch.</li>
+              <li><strong>Draw &amp; Move Centerlines:</strong> Use <span class="ui-chip">Draw (L)</span> to sketch connected tubes, <span class="ui-chip">Select (V)</span> to drag nodes, and toggle <span class="ui-chip">Grid</span> or <span class="ui-chip">Ortho</span> for clean <code class="mono">0°</code>, <code class="mono">45°</code>, and <code class="mono">90°</code> snaps.</li>
+              <li><strong>Assign Tube Profiles per Line:</strong> Under <strong>Tube / HSS Profile</strong>, choose <strong>HSS-O Round</strong>, <strong>HSS Square</strong>, or <strong>HSS Rect</strong>, then pick US Imperial A500 sizes (such as <code class="mono">1.90" Sch 40</code> or <code class="mono">2"x2"x.120"</code>) or Metric EN 10219 sizes (such as <code class="mono">48.3x3.2</code> or <code class="mono">50x50x3</code>), or type custom dimensions.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Snap Branches Without Splitting Rails &amp; Flip Joint Priority</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              You do not have to split long rails into separate pieces just to weld in a rung, mid-rail, or post:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Automatic Interior T-Joints &amp; Copes:</strong> With <span class="ui-chip">Draw (L)</span>, snap a branch endpoint onto the middle of any existing tube. The host rail stays one continuous stick, and RotaryCAM automatically generates a <code class="mono">saddle_cope</code> (on round pipe) or <code class="mono">box_cope</code> (on square/rectangular HSS) on the branch end.</li>
+              <li><strong>Click Joint Badges to Flip Miter vs. Cope:</strong> Every corner and multi-tube node displays a clickable badge on the 2D canvas: <span class="ui-chip amber">M</span> for <strong>Bisector Miter</strong> or <span class="ui-chip cyan">C</span> for <strong>Cope</strong>. Click the badge to toggle priority or use the <strong>Joint Override</strong> card in the right inspector to pick which tube runs through uncut.</li>
+            </ul>
+
+            <div class="doc-callout tip" style="margin-top: 1rem;">
+              <div class="doc-callout-title">Shop Tip: Cut List Updates Live</div>
+              <p>
+                Every time you snap a branch or flip a joint badge from Miter to Cope, the <strong>Live Cut List Summary</strong> updates end-cut labels (<code class="mono">Miter</code>, <code class="mono">Saddle Cope</code>, <code class="mono">HSS Cope</code>, <code class="mono">Straight</code>) and exact cut lengths immediately.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Lock Dimensions with Length, Spacing, Angle (<code class="mono">&ang;</code>) &amp; Parallel (<code class="mono">&parallel;</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Turn rough stick sketches into exact shop-print dimensions using the 2D constraint solver:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Length &amp; Parallel Spacing:</strong> Click any live dimension pill on the canvas or pick <span class="ui-chip">Dim (D)</span>. Click one tube to lock its exact <strong>Length</strong>, or click two parallel rails (such as top rail and mid-rail) to lock exact <strong>Parallel Spacing</strong>.</li>
+              <li><strong>Angle (<code class="mono">&ang;</code>) Constraints:</strong> With <span class="ui-chip">Dim (D)</span>, click two intersecting or non-parallel tubes (or click <span class="ui-chip">&ang; Angle</span> in the dimension popover) to lock an exact corner or brace angle in degrees.</li>
+              <li><strong>Parallel (<code class="mono">&parallel;</code>) Constraints:</strong> Click <span class="ui-chip">&parallel; Parallel (P)</span> and select two tubes to force them parallel. Both <strong>Angle (<code class="mono">&ang;</code>)</strong> and <strong>&parallel; Parallel</strong> also work against a rotated sketch's cyan rotation axis so angled outriggers stay locked to your main frame.</li>
+              <li><strong>Edit or Clear Rules Anytime:</strong> Click any constraint value under <strong>Locked Constraints</strong> in the right inspector to type a new number, or click <code class="mono">&times;</code> to remove it.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 6
+             ================================================================== -->
+        <article class="doc-step-card" id="step-6">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 06</span>
+            <h2 class="doc-step-title">Add 3D Branches with <code class="mono">+ Add Sketch</code> or <code class="mono">3D Bay Extrude</code></h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Take any flat 2D frame into 3D using rotated sketch sheets or one-click bay extrusion:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Multi-Sketch Rotated 2D Sheets:</strong> Click <span class="ui-chip cyan">+ Add Sketch</span> in the <strong>2D Sheets</strong> bar above the canvas, click any existing line as your <strong>Anchor Line (Rotation Axis)</strong>, and enter an angle (<code class="mono">90°</code>, <code class="mono">-90°</code>, <code class="mono">45°</code>, <code class="mono">60°</code>, or any custom degree). Draw returns, corner kicks, or ladder standoffs on that rotated sheet and tweak its angle anytime in the top bar.</li>
+              <li><strong>3D Bay / Depth Extrude:</strong> Building a welding table, cart, or pallet rack? Check <strong>Enable</strong> on <strong>3D Bay / Depth Extrude</strong> in the right inspector, set <strong>Bay Count</strong>, <strong>Bay Depth</strong>, and <strong>Crossbar</strong> profile. RotaryCAM duplicates your side frame across every bay and connects matching nodes with coped crossbars automatically.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 7
+             ================================================================== -->
+        <article class="doc-step-card" id="step-7">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 07</span>
+            <h2 class="doc-step-title">Export True 3D Assembled STEP into RotaryCAM &amp; Pack Mode</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Verify your weldment in 3D and send every tube straight to plasma cutting:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Inspect Live 3D Assembly:</strong> Orbit the <strong>Live 3D Tube Assembly Preview</strong> on the right (or switch to <span class="ui-chip">3D Only</span>) to check every miter, saddle cope, and rotated branch before cutting steel.</li>
+              <li><strong>Open Frame in RotaryCAM:</strong> Click <span class="ui-chip cyan">Open Frame in RotaryCAM →</span> to generate the true 3D assembled <code class="mono">.step</code> model and load it straight into RotaryCAM.</li>
+              <li><strong>Clean Profile Grouping in Pack Mode:</strong> Mixed-profile frames (such as square HSS ladder rails with round pipe rungs) group cleanly by cross-section inside <strong>Pack Mode</strong> so each stock size nests onto its own sticks with zero manual sorting.</li>
+              <li><strong>Save Portable CAD:</strong> Click <span class="ui-chip">Download Assembly .step</span> anytime to keep the 3D STEP assembly for shop records or external CAD.</li>
+            </ul>
+
+            <div class="doc-callout info" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">Next Step on the Table</div>
+              <p>
+                Once your frame opens in RotaryCAM, follow <a href="nesting.html" style="color: var(--cyan-400);">Tutorial 03: Multi-Part Stick Nesting</a> to interlock mitered and coped tubes onto 6000 mm (20 ft) sticks, or check <a href="cut-path-configuration.html" style="color: var(--amber-400);">Tutorial 02: Cut Path Configuration</a> to dial in zero-bevel saddle copes.
+              </p>
+            </div>
+          </div>
+        </article>
+
+
+        <!-- Pagination -->
+        <nav class="docs-pagination" aria-label="Tutorial Pagination">
+          
+          <a href="flat-plate-pro-cutting.html" class="docs-page-link prev">
+            <span class="docs-page-dir">← Previous Tutorial (13 of 14)</span>
+            <span class="docs-page-title">Flat-Plate Pro Cutting Primitives & Torch Crash Protection</span>
+            <span class="docs-page-desc">Spatial Void THC Lock, open-path kerf, thick-plate Edge-Start, guillotine crops, and Chain/Bridge cutting</span>
+          </a>
+          
+          
+          <a href="index.html" class="docs-page-link next">
+            <span class="docs-page-dir">Back to Documentation Hub →</span>
+            <span class="docs-page-title">All Tutorials &amp; Guides</span>
+            <span class="docs-page-desc">Return to the RotaryCAM Documentation Overview</span>
+          </a>
+          
+        </nav>
+
+      </div>
+    </section>
+
+  </main>
+
+
+
+  <!-- ========================================================================
+       FOOTER (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="index.html">Documentation Overview</a>
+          
+          <a href="machine-configuration.html">01. Machine Configuration</a>
+          
+          <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
+          
+          <a href="nesting.html">03. Multi-Part Nesting</a>
+          
+          <a href="bending.html">04. Bending HSS & HSS-O</a>
+          
+          <a href="changelog.html">05. Build Info & Changelog</a>
+          
+          <a href="ai-autodetection.html">06. Fusion 360 & AI Autodetect</a>
+          
+          <a href="simcnc-motion-sync.html">07. SimCNC Motion-Sync & Ramp</a>
+          
+          <a href="cut-charts-and-features.html">08. Cut Charts & Feature Toggles</a>
+          
+          <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
+          
+          <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+          <a href="rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
+          
+          <a href="interactive-canvas-controls.html">12. Interactive Canvas Controls</a>
+          
+          <a href="flat-plate-pro-cutting.html">13. Flat Pro Primitives</a>
+          
+          <a href="no-cad-wizard-and-tube-frames.html">14. No-CAD & 3D Tube Frames</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../index.html#showcase">Showcase</a>
+          <a href="../index.html#features">Capabilities</a>
+          <a href="../index.html#kinematics">4-Axis Kinematics</a>
+          <a href="../hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
+          <a href="../build-guide.html">Build Your Own Table</a>
+          <a href="../changelog.html">Release Changelog &amp; Downloads</a>
+        </div>
+        <div class="footer-col">
+          <h4>Compare</h4>
+          
+          <a href="../compare/sheetcam/">RotaryCAM vs. SheetCAM</a>
+          
+          <a href="../compare/pronest/">RotaryCAM vs. ProNest</a>
+          
+          <a href="../compare/rotary-tube-pro/">RotaryCAM vs. Rotary Tube Pro</a>
+          
+          <a href="../compare/fusion-360/">RotaryCAM vs. Fusion 360</a>
+          
+          <a href="../compare/gc-maker/">RotaryCAM vs. GCmaker</a>
+          
+          <a href="../compare/gcnester/">RotaryCAM vs. GCnester</a>
+          
+          <a href="../compare/bend-tech-dragon/">RotaryCAM vs. Bend-Tech Dragon</a>
+          
+          <a href="../compare/sigmatube/">RotaryCAM vs. SigmaTUBE</a>
+          
+          <a href="../compare/tubest/">RotaryCAM vs. TubesT</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
+    </div>
+  </footer>
+
+
+</body>
+</html>

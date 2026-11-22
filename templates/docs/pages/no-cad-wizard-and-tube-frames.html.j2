@@ -1,0 +1,216 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Design Brackets &amp; Complete 3D Tube Frames Without Opening CAD</h2>
+          <p>
+            Need a bolt flange, gusset, gear, or a full welded handrail before lunch? Open <strong>Create Part (No-CAD)</strong> right inside RotaryCAM. Build flat plate parts from the 50-shape fabricator library or sketch multi-plane 3D tube frames with automatic copes, miters, and live cut lists.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">2D Flat Plate</span>
+              <span class="value">50-Shape Library + Sheet Gauge</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">3D Tube Frame</span>
+              <span class="value">Rotated Sheets + 3D Bay Extrude</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Direct CAM Export</span>
+              <span class="value">True 3D Assembled STEP &amp; Pack Mode</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Open <code class="mono">Create Part (No-CAD)</code> &amp; Pick Units</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Launch the built-in part builder from anywhere in RotaryCAM:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Click <span class="ui-chip amber">Create Part (No-CAD)</span> on the Home screen, or click <span class="ui-chip">+ Create Part</span> in the top navigation bar.</li>
+              <li>Use the <span class="ui-chip">mm</span> / <span class="ui-chip">in</span> toggle in the top-right wizard header to match your tape measure and machine units.</li>
+              <li>Pick your workspace tab at the top: <strong>2D Flat Plate</strong> for sheet parts, <strong>3D Tube &amp; Pipe</strong> for single coped/mitered sticks, or <strong>3D Tube Frame</strong> for full welded assemblies.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Build Flat Parts from the 50-Shape 2D Fabricator Library</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              On the <strong>2D Flat Plate</strong> tab, pick a part family from the <strong>50-shape 2D fabricator library</strong>:
+            </p>
+
+            <div style="overflow-x: auto; margin: 0.75rem 0 1rem;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; background: rgba(15, 20, 28, 0.6); border: 1px solid var(--border-subtle); border-radius: 8px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.04);">
+                    <th style="padding: 0.7rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); width: 170px;">Category</th>
+                    <th style="padding: 0.7rem 0.95rem; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);">Typical Shop Parts</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--amber-400);">Plates &amp; Flanges</td>
+                    <td style="padding: 0.65rem 0.95rem;">Baseplates, frame plates, slotted brackets, circular BCD bolt flanges, and concentric weld washers.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--cyan-400);">Chassis Tabs &amp; Gussets</td>
+                    <td style="padding: 0.65rem 0.95rem;">4-link and shock tabs (flat or tube-radius base), corner gussets with weld relief, and bend-relieved L-brackets.</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--emerald-400);">Hinges &amp; Screens</td>
+                    <td style="padding: 0.65rem 0.95rem;">Weld-on hinge straps and leaves, perforated screens, and vent grilles with patterned cutouts.</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 0.65rem 0.95rem; font-weight: 600; color: var(--amber-400);">Gears &amp; Wrenches</td>
+                    <td style="padding: 0.65rem 0.95rem;">Custom tooth-count sprockets/gears and open-end, box, or hex service wrenches.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <ul class="doc-bullet-list">
+              <li><strong>Live Dimensioned Preview:</strong> Enter widths, hole diameters, bolt circle diameters, or slot counts on the right. The dimensioned center preview updates on every keystroke.</li>
+              <li><strong>Sheet Thickness Gauge:</strong> Pick your plate gauge (<code class="mono">16ga</code> through <code class="mono">1/2"</code> or metric <code class="mono">mm</code>) so RotaryCAM loads matching cut speeds, kerf, and pierce heights right away.</li>
+              <li><strong>Cut One or Nest a Kit:</strong> Click <span class="ui-chip cyan">Open in RotaryCAM →</span> to cut immediately, click <span class="ui-chip">+ Add to Batch Queue</span> then <span class="ui-chip">Load Batch into Pack Mode</span> to nest mixed quantities on one sheet, or click <span class="ui-chip">Download .dxf</span>.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Start a 3D Tube Frame &amp; Pick HSS / Pipe Profiles</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Switch to the <strong>3D Tube Frame</strong> tab to build weldments on a 2D stick-figure canvas with a live 3D assembly view beside it:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Pick a Starter Frame:</strong> Start from <strong>OSHA Walkway Guardrail</strong>, <strong>Shop Ladder</strong>, <strong>3D Storage Rack Bay</strong>, <strong>Truss Gate Frame</strong>, or choose <strong>Blank Canvas</strong> to draw from scratch.</li>
+              <li><strong>Draw &amp; Move Centerlines:</strong> Use <span class="ui-chip">Draw (L)</span> to sketch connected tubes, <span class="ui-chip">Select (V)</span> to drag nodes, and toggle <span class="ui-chip">Grid</span> or <span class="ui-chip">Ortho</span> for clean <code class="mono">0°</code>, <code class="mono">45°</code>, and <code class="mono">90°</code> snaps.</li>
+              <li><strong>Assign Tube Profiles per Line:</strong> Under <strong>Tube / HSS Profile</strong>, choose <strong>HSS-O Round</strong>, <strong>HSS Square</strong>, or <strong>HSS Rect</strong>, then pick US Imperial A500 sizes (such as <code class="mono">1.90" Sch 40</code> or <code class="mono">2"x2"x.120"</code>) or Metric EN 10219 sizes (such as <code class="mono">48.3x3.2</code> or <code class="mono">50x50x3</code>), or type custom dimensions.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Snap Branches Without Splitting Rails &amp; Flip Joint Priority</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              You do not have to split long rails into separate pieces just to weld in a rung, mid-rail, or post:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Automatic Interior T-Joints &amp; Copes:</strong> With <span class="ui-chip">Draw (L)</span>, snap a branch endpoint onto the middle of any existing tube. The host rail stays one continuous stick, and RotaryCAM automatically generates a <code class="mono">saddle_cope</code> (on round pipe) or <code class="mono">box_cope</code> (on square/rectangular HSS) on the branch end.</li>
+              <li><strong>Click Joint Badges to Flip Miter vs. Cope:</strong> Every corner and multi-tube node displays a clickable badge on the 2D canvas: <span class="ui-chip amber">M</span> for <strong>Bisector Miter</strong> or <span class="ui-chip cyan">C</span> for <strong>Cope</strong>. Click the badge to toggle priority or use the <strong>Joint Override</strong> card in the right inspector to pick which tube runs through uncut.</li>
+            </ul>
+
+            <div class="doc-callout tip" style="margin-top: 1rem;">
+              <div class="doc-callout-title">Shop Tip: Cut List Updates Live</div>
+              <p>
+                Every time you snap a branch or flip a joint badge from Miter to Cope, the <strong>Live Cut List Summary</strong> updates end-cut labels (<code class="mono">Miter</code>, <code class="mono">Saddle Cope</code>, <code class="mono">HSS Cope</code>, <code class="mono">Straight</code>) and exact cut lengths immediately.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Lock Dimensions with Length, Spacing, Angle (<code class="mono">&ang;</code>) &amp; Parallel (<code class="mono">&parallel;</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Turn rough stick sketches into exact shop-print dimensions using the 2D constraint solver:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Length &amp; Parallel Spacing:</strong> Click any live dimension pill on the canvas or pick <span class="ui-chip">Dim (D)</span>. Click one tube to lock its exact <strong>Length</strong>, or click two parallel rails (such as top rail and mid-rail) to lock exact <strong>Parallel Spacing</strong>.</li>
+              <li><strong>Angle (<code class="mono">&ang;</code>) Constraints:</strong> With <span class="ui-chip">Dim (D)</span>, click two intersecting or non-parallel tubes (or click <span class="ui-chip">&ang; Angle</span> in the dimension popover) to lock an exact corner or brace angle in degrees.</li>
+              <li><strong>Parallel (<code class="mono">&parallel;</code>) Constraints:</strong> Click <span class="ui-chip">&parallel; Parallel (P)</span> and select two tubes to force them parallel. Both <strong>Angle (<code class="mono">&ang;</code>)</strong> and <strong>&parallel; Parallel</strong> also work against a rotated sketch's cyan rotation axis so angled outriggers stay locked to your main frame.</li>
+              <li><strong>Edit or Clear Rules Anytime:</strong> Click any constraint value under <strong>Locked Constraints</strong> in the right inspector to type a new number, or click <code class="mono">&times;</code> to remove it.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 6
+             ================================================================== -->
+        <article class="doc-step-card" id="step-6">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 06</span>
+            <h2 class="doc-step-title">Add 3D Branches with <code class="mono">+ Add Sketch</code> or <code class="mono">3D Bay Extrude</code></h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Take any flat 2D frame into 3D using rotated sketch sheets or one-click bay extrusion:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Multi-Sketch Rotated 2D Sheets:</strong> Click <span class="ui-chip cyan">+ Add Sketch</span> in the <strong>2D Sheets</strong> bar above the canvas, click any existing line as your <strong>Anchor Line (Rotation Axis)</strong>, and enter an angle (<code class="mono">90°</code>, <code class="mono">-90°</code>, <code class="mono">45°</code>, <code class="mono">60°</code>, or any custom degree). Draw returns, corner kicks, or ladder standoffs on that rotated sheet and tweak its angle anytime in the top bar.</li>
+              <li><strong>3D Bay / Depth Extrude:</strong> Building a welding table, cart, or pallet rack? Check <strong>Enable</strong> on <strong>3D Bay / Depth Extrude</strong> in the right inspector, set <strong>Bay Count</strong>, <strong>Bay Depth</strong>, and <strong>Crossbar</strong> profile. RotaryCAM duplicates your side frame across every bay and connects matching nodes with coped crossbars automatically.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 7
+             ================================================================== -->
+        <article class="doc-step-card" id="step-7">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 07</span>
+            <h2 class="doc-step-title">Export True 3D Assembled STEP into RotaryCAM &amp; Pack Mode</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Verify your weldment in 3D and send every tube straight to plasma cutting:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Inspect Live 3D Assembly:</strong> Orbit the <strong>Live 3D Tube Assembly Preview</strong> on the right (or switch to <span class="ui-chip">3D Only</span>) to check every miter, saddle cope, and rotated branch before cutting steel.</li>
+              <li><strong>Open Frame in RotaryCAM:</strong> Click <span class="ui-chip cyan">Open Frame in RotaryCAM →</span> to generate the true 3D assembled <code class="mono">.step</code> model and load it straight into RotaryCAM.</li>
+              <li><strong>Clean Profile Grouping in Pack Mode:</strong> Mixed-profile frames (such as square HSS ladder rails with round pipe rungs) group cleanly by cross-section inside <strong>Pack Mode</strong> so each stock size nests onto its own sticks with zero manual sorting.</li>
+              <li><strong>Save Portable CAD:</strong> Click <span class="ui-chip">Download Assembly .step</span> anytime to keep the 3D STEP assembly for shop records or external CAD.</li>
+            </ul>
+
+            <div class="doc-callout info" style="margin-top: 1.25rem;">
+              <div class="doc-callout-title">Next Step on the Table</div>
+              <p>
+                Once your frame opens in RotaryCAM, follow <a href="nesting.html" style="color: var(--cyan-400);">Tutorial 03: Multi-Part Stick Nesting</a> to interlock mitered and coped tubes onto 6000 mm (20 ft) sticks, or check <a href="cut-path-configuration.html" style="color: var(--amber-400);">Tutorial 02: Cut Path Configuration</a> to dial in zero-bevel saddle copes.
+              </p>
+            </div>
+          </div>
+        </article>
+{% endblock %}

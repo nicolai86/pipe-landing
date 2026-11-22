@@ -1300,6 +1300,13 @@
               <p>Factory support for 20 CNC controllers including CommandCNC, Torchmate VMD, MyPlasm, and Industrial EIA, plus a built-in editor for custom .rcpost.json post-processors.</p>
             </div>
           </div>
+          <div class="roadmap-feat-item">
+            <div class="roadmap-feat-num">03</div>
+            <div class="roadmap-feat-body">
+              <h3>Sheet Indexing (Oversized DXF Auto-Split)</h3>
+              <p>Available to both <strong>Maker</strong> and <strong>Pro Shop</strong> licenses: automatically splits oversized 2D DXF/SVG parts that exceed your plasma table's travel into indexed tiles with registration marks and alignment holes so you can slide the sheet forward and finish cutting.</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1355,13 +1362,13 @@
             <li class="change-item">
               <span class="badge-tag badge-feature">NEW</span>
               <div class="change-content">
-                <strong>3D Tube Frame Designer (No-CAD Mode):</strong> Sketch handrails, ladders, racks, and frames on an interactive 2D stick-figure canvas with live length, rail-spacing, and angle constraints. Pick standard Imperial or Metric HSS-O, HSS Square, and HSS Rect sizes, auto-generate bisector miters and round/HSS saddle or box copes (click any joint to flip), add 1-click 3D Bay Extrude for racks and tables, inspect the live 3D preview, and export straight to multi-body Pack Mode.
+                <strong>3D Tube Frame Designer (No-CAD Mode):</strong> Sketch handrails, ladders, racks, and gates on a 2D stick-figure canvas with live length, parallel spacing, angle (<code class="mono">&ang;</code>), and parallel (<code class="mono">&parallel;</code>) constraints (including against sketch rotation axes). Pick standard US Imperial A500 or Metric EN 10219 HSS-O, HSS Square, and HSS Rect sizes, snap branches onto unsplit rails for automatic <code class="mono">saddle_cope</code> and <code class="mono">box_cope</code> joints (click joint badges to flip Bisector Miter vs. Cope), add multi-sketch rotated 2D sheets (<code class="mono">+ Add Sketch</code>) or 1-click 3D Bay Extrude, and export a true 3D assembled <code class="mono">.step</code> straight into RotaryCAM and Pack Mode.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-feature">NEW</span>
               <div class="change-content">
-                <strong>Walk-Up Parametric Shape &amp; Tube Joint Wizard (No-CAD Mode):</strong> Generate 8 2D flat-plate staples (Baseplate, Flange, Gusset, 4-Link/Chassis Tab, Slotted Bracket, Washer, Frame Plate, L-Bracket) and 3D Round/HSS tubes (Straight, Miter, Compound Miter, Saddle Cope, Slotted End + Bolt Holes) inside RotaryCAM with live dimensioned SVG previews, Batch Queue to Pack Mode, and <code class="mono">.dxf</code>/<code class="mono">.step</code> export.
+                <strong>Walk-Up Parametric Shape &amp; Tube Joint Wizard (No-CAD Mode):</strong> Cut flat-sheet parts from the 50-shape 2D fabricator library (Plates, Flanges, Chassis Tabs, Gussets, Hinges, Screens, Gears, and Wrenches) plus 3D Round/HSS tubes (Straight, Miter, Compound Miter, Saddle Cope, Slotted End + Bolt Holes) inside RotaryCAM with live dimensioned SVG previews, sheet gauge selection, Batch Queue to Pack Mode, and <code class="mono">.dxf</code>/<code class="mono">.step</code> export.
               </div>
             </li>
             <li class="change-item">

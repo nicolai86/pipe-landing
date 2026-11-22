@@ -689,6 +689,59 @@ TUTORIALS = [
         "hub_cta_right": "2 Annotated Screenshots",
         "has_lightbox": True,
     },
+    {
+        "num": 14,
+        "slug": "no-cad-wizard-and-tube-frames",
+        "filename": "no-cad-wizard-and-tube-frames.html",
+        "nav_short": "No-CAD & Frames",
+        "sidebar_label": "No-CAD & 3D Tube Frames",
+        "footer_label": "No-CAD & 3D Tube Frames",
+        "breadcrumb_title": "No-CAD Part Design & 3D Tube Frame Designer",
+        "meta_title": "No-CAD Part Design & 3D Tube Frames | RotaryCAM Docs",
+        "meta_description": "Design 50 flat-sheet shapes and multi-plane 3D tube frames inside RotaryCAM with length, spacing, angle, and parallel constraints, rotated sheets, and STEP export.",
+        "hero_title_html": 'No-CAD Part Design &amp; <span class="text-gradient-amber">3D Tube Frame Designer</span>',
+        "hero_subtitle_html": 'Build flat brackets from the 50-shape 2D fabricator library or sketch complete 3D tube frames with US Imperial A500 and Metric EN 10219 HSS profiles, automatic saddle and box copes, rotated 2D sketch sheets, 3D Bay Extrude, and true 3D assembled STEP export.',
+        "steps_count": 7,
+        "steps_label": "7 Steps",
+        "meta_pills": [
+            {"style": "cyan", "html": "<strong>2D Flat Library:</strong> 50 Shapes Across 8 Shop Categories + Sheet Gauge"},
+            {"style": "", "html": "<strong>3D Tube Frames:</strong> Rotated 2D Sheets, &ang;/&parallel; Constraints, 3D Bay Extrude &amp; STEP Export"},
+        ],
+        "toc": [
+            {"id": "step-1", "badge": "01", "label": "Open Create Part (No-CAD)"},
+            {"id": "step-2", "badge": "02", "label": "50-Shape 2D Fabricator Library"},
+            {"id": "step-3", "badge": "03", "label": "3D Tube Frame &amp; HSS Profiles"},
+            {"id": "step-4", "badge": "04", "label": "Snap Branches &amp; Flip Joint Priority"},
+            {"id": "step-5", "badge": "05", "label": "Length, Spacing, Angle &amp; Parallel"},
+            {"id": "step-6", "badge": "06", "label": "+ Add Sketch &amp; 3D Bay Extrude"},
+            {"id": "step-7", "badge": "07", "label": "True 3D STEP &amp; Pack Mode"},
+        ],
+        "pagination_title": "No-CAD Part Design & 3D Tube Frame Designer",
+        "pagination_desc": "Build 50-shape 2D brackets and multi-plane 3D tube frames straight inside RotaryCAM",
+        "hub_thumb": None,
+        "hub_custom_thumb_html": """<div class="docs-hub-code-preview">
+              <div>
+                <div class="code-line-muted"># Create Part (No-CAD) + 3D Tube Frame Designer</div>
+                <div class="code-line-amber">50-Shape 2D Library: Plates, Flanges, Tabs, Gussets, Hinges, Gears</div>
+                <div class="code-line-cyan">+ Add Sketch (90 deg / 45 deg) + 3D Bay Extrude</div>
+              </div>
+              <div>
+                <div class="code-line-emerald">HSS-O / Square / Rect: Auto Saddle &amp; Box Copes</div>
+                <div>Constraints: Length, Spacing, Angle (&ang;), Parallel (&parallel;)</div>
+                <div class="code-line-amber">→ Open Frame in RotaryCAM (True 3D STEP + Pack Mode)</div>
+              </div>
+            </div>""",
+        "hub_title": "No-CAD Part Design &amp; 3D Tube Frame Designer",
+        "hub_desc": "Skip external CAD for shop brackets and weldments. Cut 50 flat-sheet shapes with live dimensioned previews or sketch 3D tube frames on rotated 2D sheets with automatic copes, miters, angle and parallel constraints, 3D Bay Extrude, and true 3D assembled STEP export.",
+        "hub_topics": [
+            '50-shape 2D library: Plates, Flanges, Chassis Tabs, Gussets, Hinges, Screens, Gears &amp; Wrenches',
+            'US Imperial A500 &amp; Metric EN 10219 HSS-O, Square &amp; Rect profiles',
+            'Unsplit rail snapping (<code class="mono">saddle_cope</code> / <code class="mono">box_cope</code>) &amp; click-to-flip Miter/Cope badges',
+            'Multi-sketch rotated 2D sheets (<code class="mono">+ Add Sketch</code>), <code class="mono">&ang;</code>/<code class="mono">&parallel;</code> constraints &amp; 3D Bay Extrude',
+        ],
+        "hub_cta_right": "7-Step Practical Guide",
+        "has_lightbox": False,
+    },
 ]
 
 
