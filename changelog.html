@@ -1009,7 +1009,7 @@
     <nav>
       <a href="./" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.8.7-BETA</span>
+        <span class="brand-tag">v0.9.0-BETA</span>
       </a>
       <div class="nav-links">
         <a href="./">Overview</a>
@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.8.7" class="jump-pill">
+      <a href="#v0.9.0" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.8.7)
+        Release History (v0.9.0)
       </a>
     </div>
 
@@ -1134,7 +1134,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.7/RotaryCam-macOS-v0.8.7.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.0/RotaryCam-macOS-v0.9.0.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1165,7 +1165,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.7/RotaryCam-Windows-v0.8.7.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.0/RotaryCam-Windows-v0.9.0.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1196,7 +1196,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.8.7/RotaryCam-Linux-v0.8.7.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.0/RotaryCam-Linux-v0.9.0.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1336,6 +1336,45 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
+           RELEASE: November 21, 2026 (v0.9.0)
+           ================================================================ -->
+      <article class="release-entry" id="v0.9.0">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 21, 2026</span>
+              <span class="release-version-pill">v0.9.0 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">No-CAD Parametric Wizard &bull; Mandrel Bender Prep &bull; NURBS Canonicalizer</span>
+          </div>
+          <p class="release-summary">
+            Build common brackets and coped tubes right on the table PC without opening CAD, unroll bent tubes for your mandrel bender with witness marks and printable LRA setup cards, and load NURBS STEP exports cleanly from any CAD package.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-feature">NEW</span>
+              <div class="change-content">
+                <strong>Walk-Up Parametric Shape &amp; Tube Joint Wizard (No-CAD Mode):</strong> Generate 8 2D flat-plate staples (Baseplate, Flange, Gusset, 4-Link/Chassis Tab, Slotted Bracket, Washer, Frame Plate, L-Bracket) and 3D Round/HSS tubes (Straight, Miter, Compound Miter, Saddle Cope, Slotted End + Bolt Holes) inside RotaryCAM with live dimensioned SVG previews, Batch Queue to Pack Mode, and <code class="mono">.dxf</code>/<code class="mono">.step</code> export.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-feature">NEW</span>
+              <div class="change-content">
+                <strong>Mandrel / Rotary-Draw Bender Prep Mode (Pro Shop):</strong> Unroll 3D bent Round/HSS tubes without relief slots using a Calibrated Bender Die Library (CLR, elongation, 2-parameter springback, clamp grip, mandrel/wiper/PDA tooling), scribe bend witness marks (<code class="mono">B1</code>/<code class="mono">B2</code> + start tangent + intrados tick), check inter-bend clamp grip and 3D weld-seam orientation, and print a 1-page landscape LRA/YBC shop setup card.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Multi-CAD NURBS Canonicalization &amp; Coplanar Seam Merge:</strong> Pure-Rust plane/cylinder canonicalizer fixes NURBS STEP exports from Rhino, Shapr3D, Tekla, and SolidWorks lofts, and merges split coplanar outer faces across C-Channel and Angle Iron.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            RELEASE: November 21, 2026 (v0.8.7)
            ================================================================ -->
       <article class="release-entry" id="v0.8.7">
@@ -1344,7 +1383,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 21, 2026</span>
-              <span class="release-version-pill">v0.8.7 &bull; LATEST</span>
+              <span class="release-version-pill">v0.8.7</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Unlimited Manual Nesting for Maker Licenses</span>
           </div>
@@ -2691,11 +2730,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.8.7-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.0-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.8.7').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.9.0').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',
