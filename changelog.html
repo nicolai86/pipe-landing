@@ -1347,339 +1347,63 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
-           RELEASE: November 21, 2026 (v0.9.0)
+           WEEK OF NOVEMBER 16 - 22, 2026 (v0.7.2 - v0.9.0)
            ================================================================ -->
       <article class="release-entry" id="v0.9.0">
+        <span id="v0.8.7"></span><span id="v0.8.6"></span><span id="v0.8.5"></span><span id="v0.8.4"></span><span id="v0.8.3"></span><span id="v0.8.2"></span><span id="v0.8.1"></span><span id="v0.8.0"></span><span id="v0.7.5"></span><span id="v0.7.4"></span><span id="v0.7.3"></span><span id="v0.7.2"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">November 21, 2026</span>
-              <span class="release-version-pill">v0.9.0 &bull; LATEST</span>
+              <span class="release-date">Week of November 16, 2026</span>
+              <span class="release-version-pill">v0.7.2 &ndash; v0.9.0 &bull; LATEST</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">3D Tube Frame Designer &bull; No-CAD Parametric Wizard &bull; Mandrel Bender Prep &bull; NURBS Canonicalizer</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">No-CAD Tube &amp; Plate Design &bull; Bender Prep &bull; Interactive Canvas &bull; 13 Hardened Posts</span>
           </div>
           <p class="release-summary">
-            Sketch complete handrails, ladders, and tube racks or build common brackets and coped tubes right in the browser without opening CAD, unroll bent tubes for your mandrel bender with witness marks and printable LRA setup cards, and load NURBS STEP exports cleanly from any CAD package.
+            Sketch handrails, racks, and brackets right at the table without opening CAD, unroll bent tubes for your mandrel bender, drag pierces and tabs on the canvas, and load your existing controller setup in one click.
           </p>
           <ul class="change-list">
             <li class="change-item">
-              <span class="badge-tag badge-feature">NEW</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>3D Tube Frame Designer (No-CAD Mode):</strong> Sketch handrails, ladders, racks, and gates on a 2D stick-figure canvas with live length, parallel spacing, angle (<code class="mono">&ang;</code>), and parallel (<code class="mono">&parallel;</code>) constraints (including against sketch rotation axes). Pick standard US Imperial A500 or Metric EN 10219 HSS-O, HSS Square, and HSS Rect sizes, snap branches onto unsplit rails for automatic <code class="mono">saddle_cope</code> and <code class="mono">box_cope</code> joints (click joint badges to flip Bisector Miter vs. Cope), add multi-sketch rotated 2D sheets (<code class="mono">+ Add Sketch</code>) or 1-click 3D Bay Extrude, and export a true 3D assembled <code class="mono">.step</code> straight into RotaryCAM and Pack Mode.
+                <strong>3D Tube Frame Designer &amp; Walk-Up Shape Wizard (No-CAD Mode):</strong> Sketch handrails, ladders, gates, and racks on a 2D stick canvas with automatic copes and miters, or build 50 common plates, gussets, flanges, and coped tubes from built-in shop templates.
               </div>
             </li>
             <li class="change-item">
-              <span class="badge-tag badge-feature">NEW</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Walk-Up Parametric Shape &amp; Tube Joint Wizard (No-CAD Mode):</strong> Cut flat-sheet parts from the 50-shape 2D fabricator library (Plates, Flanges, Chassis Tabs, Gussets, Hinges, Screens, Gears, and Wrenches) plus 3D Round/HSS tubes (Straight, Miter, Compound Miter, Saddle Cope, Slotted End + Bolt Holes) inside RotaryCAM with live dimensioned SVG previews, sheet gauge selection, Batch Queue to Pack Mode, and <code class="mono">.dxf</code>/<code class="mono">.step</code> export.
+                <strong>Mandrel Bender Prep Mode (Pro Shop):</strong> Unroll bent round and square tubes with bend witness marks (<code>B1</code>, <code>B2</code>, start tangent), clamp-grip checks, weld-seam orientation, and a printable 1-page bender setup card.
               </div>
             </li>
             <li class="change-item">
-              <span class="badge-tag badge-feature">NEW</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Mandrel / Rotary-Draw Bender Prep Mode (Pro Shop):</strong> Unroll 3D bent Round/HSS tubes without relief slots using a Calibrated Bender Die Library (CLR, elongation, 2-parameter springback, clamp grip, mandrel/wiper/PDA tooling), scribe bend witness marks (<code class="mono">B1</code>/<code class="mono">B2</code> + start tangent + intrados tick), check inter-bend clamp grip and 3D weld-seam orientation, and print a 1-page landscape LRA/YBC shop setup card.
+                <strong>Wrap DXF/SVG Artwork onto Tubes &amp; Scribe Text:</strong> Drop a <code>.dxf</code> or <code>.svg</code> logo, slot, or text label straight onto any round pipe or square/rectangular tube, adjust position and angle live under the 3D preview, and cut or scribe it.
               </div>
             </li>
             <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Multi-CAD NURBS Canonicalization &amp; Coplanar Seam Merge:</strong> Pure-Rust plane/cylinder canonicalizer fixes NURBS STEP exports from Rhino, Shapr3D, Tekla, and SolidWorks lofts, and merges split coplanar outer faces across C-Channel and Angle Iron.
+                <strong>Interactive Pierce, Tab, Sheet &amp; Stick Controls:</strong> Click to move pierces and holding tabs, drag or rotate parts on 2D sheets, reorder or flip 180&deg; parts on 1D mill sticks, and square off usable drops with remnant crop cuts and daisy-chained scrap bridges.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 21, 2026 (v0.8.7)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.7">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 21, 2026</span>
-              <span class="release-version-pill">v0.8.7</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Unlimited Manual Nesting for Maker Licenses</span>
-          </div>
-          <p class="release-summary">
-            Maker licenses auto-nest up to 10 flat-sheet parts (2D) or 5 rotary parts per stick (1D), and now allow unlimited manual placement beyond those limits.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
-              <span class="badge-tag badge-feature">NEW</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Unlimited Manual Nesting for Maker Licenses:</strong> Maker licenses auto-nest up to 10 flat-sheet parts (2D) or 5 rotary parts per stick (1D), and now allow unlimited manual placement beyond those limits. Extra parts stage neatly outside the cutting area (with an expanded 2D canvas and 1-click Place on Stick for rotary), keeping your manual placements intact as you add parts and generating G-code freely once placed inside bounds.
+                <strong>Unlimited Manual Nesting on Maker &amp; Saved Shop Defaults:</strong> Maker licenses can now place unlimited parts manually on sheets and sticks past the auto-nest limit. Save your preferred cut defaults, reopen your last 10 jobs from the home screen, and switch machines or <code>mm</code>/<code>in</code> straight from the top bar.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 21, 2026 (v0.8.6)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.6">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 21, 2026</span>
-              <span class="release-version-pill">v0.8.6</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Performance Improvements</span>
-          </div>
-          <p class="release-summary">
-            Faster STEP file loading, smaller offline installers, and snappier nesting and G-code generation on large multi-part assemblies.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Performance Improvements:</strong> Faster STEP file loading, smaller offline installers, and snappier nesting and G-code generation on large multi-part assemblies.
+                <strong>One-Click Controller Setup Import:</strong> Import your existing Mach3 (<code>.xml</code>), FlashCut (<code>.xml</code>), or SimCNC (<code>config.xml</code>) machine profile straight into RotaryCAM.
               </div>
             </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 19, 2026 (v0.8.2-v0.8.5)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.2-v0.8.5">
-        <span id="v0.8.5"></span><span id="v0.8.4"></span><span id="v0.8.3"></span><span id="v0.8.2"></span>
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 19, 2026</span>
-              <span class="release-version-pill">v0.8.2-v0.8.5</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Angle-Iron &amp; C-Channel Cuts &bull; Streamlined Top-Bar &amp; Gloved Nesting UI &bull; Mach3 &amp; SimCNC XML Import &bull; 8 Controller Post Hardening</span>
-          </div>
-          <p class="release-summary">
-            Angle-iron and C-channel cuts no longer wrap around tips or hitch on 90-degree corners. Switch machines and units directly from the top bar with instant spinners, overlay DXF/SVG artwork live under 3D preview, import Mach3 and SimCNC XML profiles with actionable warnings, and cut with hardened post-processors across 8 CNC plasma controllers.
-          </p>
-          <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-fix">FIXED</span>
               <div class="change-content">
-                <strong>Angle-Iron Sever Cuts Without Endpoint Loops:</strong> Fixed angle-iron start and end cuts wrapping around flat leg tips and inside toe fillets so cuts start cleanly on the outer leg edge with a straight axial approach and zero kerf flips.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Smooth C-Channel &amp; Angle-Iron Corner Rotations:</strong> Replaced corner snap guesses with exact corner-pivot splitting so mitered C-channel and angle-iron cuts stay smooth in <code class="mono">Y</code> without sudden feedrate drops around 90-degree corners.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Instant Top-Bar Machine Switching &amp; Immediate Spinners:</strong> Switching machines in the top bar updates G-code cleanly in a single pass, clears the G-code pane properly on incompatible machine/profile combinations, hides the unused idle kinematics card on the home screen, and shows loading spinners immediately when you change machines, pack counts, or settings.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Streamlined Sidebar, Top-Bar Machine Switcher &amp; Unit Toggle:</strong> Switch machines and flip between <code class="mono">mm</code> and <code class="mono">in</code> straight from the top bar. Your stock size and plasma cut settings stay directly visible in the left sidebar without scrolling.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Inline DXF/SVG Tube Overlay Under 3D Preview:</strong> Adjust, clock, scale, and mark <code class="mono">.dxf</code> or <code class="mono">.svg</code> artwork directly beneath the 3D Part Preview for live visual placement on round pipe and rectangular HSS.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Synced Single-Part &amp; Nesting Settings:</strong> Cut-path and marking settings stay synchronized across Single-Part and Nesting views so edits carry over automatically.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Redesigned HSS Rotary &amp; Flat Sheet Nesting UI:</strong> Filter profiles right in the header, use docked 2D sheet controls with plain shop-floor labels, keep inactive Crop and Chain sub-inputs hidden until turned on, and tap gloved-friendly <code class="mono">24 px</code> checkboxes and <code class="mono">+</code>/<code class="mono">-</code> buttons.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Multi-Part Pack Nesting Part Unselection Fix:</strong> Unchecking a part in Multi-Part Pack Nesting now drops it cleanly from both the nest layout and the generated G-code across flat-sheet and rotary stick runs.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Clean Pro Feature Defaults:</strong> Assembly Witness Marks, Auto-Scribe Part IDs, and Common-Line Cutting now default to OFF so new jobs stay clean until you turn them on.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Actionable Mach3, FlashCut &amp; SimCNC XML Import Warnings:</strong> Profile import warnings for Mach3 (<code class="mono">.xml</code>), FlashCut (<code class="mono">.xml</code>), and SimCNC (<code class="mono">config.xml</code>) now show clear fix steps with direct links to the <a href="docs/machine-configuration.html#import-warnings-faq" style="color: var(--plasma-amber);">rotarycam.app XML Import Warnings FAQ</a>.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>One-Click Mach3 (<code class="mono">.xml</code>) &amp; SimCNC 3.6 (<code class="mono">config.xml</code>) Setup Import:</strong> Upload your ArtSoft Mach3 <code class="mono">.xml</code> or CSLab SimCNC 3.6 <code class="mono">config.xml</code> profile directly in the Machines modal (alongside FlashCut <code class="mono">.xml</code>). Auto-fills units, XYZA velocity/acceleration/jerk limits, and rotary angular limits, and displays actionable safety warnings linked directly to the <a href="docs/machine-configuration.html#import-warnings-faq" style="color: var(--plasma-amber);">XML Import Warnings FAQ</a>.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Direct Machine Verification Email Draft (<code class="mono">mailto:contact@rotarycam.app</code>):</strong> Machine Verification submissions now launch a pre-filled <code class="mono">mailto:contact@rotarycam.app</code> email draft with <strong>Open Email Draft</strong> and <strong>Copy Report</strong> buttons so beta cut feedback reaches RotaryCAM directly.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>LinuxCNC 2.9+ QTPlasmaC (<code class="mono">.ngc</code>) Three-Regime Hardening:</strong> Separates <strong>2D Flat Sheet</strong> (no <code class="mono">#&lt;tube_cut&gt;</code>, no <code class="mono">#&lt;keep-z-motion&gt;</code>, zero Z/A words, <code class="mono">M3 $0 S1</code>, <code class="mono">F#&lt;_hal[plasmac.cut-feed-rate]&gt;</code>, <code class="mono">G64 P0.1 Q0.02</code>, <code class="mono">M52 P1</code>, <code class="mono">#&lt;holes&gt;=0</code>), <strong>Rotary &amp; 3D Ramps</strong> (<code class="mono">#&lt;tube_cut&gt;=1</code> before motion, <code class="mono">G91/G38.2/G90/G1 Z#5063/G10 L20 P0</code> probing, <code class="mono">M3 $0 S1</code> + <code class="mono">G94 G1 Z</code>, <code class="mono">G64 P0.25 Q0.05</code>, rotary lookahead <code class="mono">G94</code> on flat HSS faces to <code class="mono">G93</code> on <code class="mono">A</code> moves, <code class="mono">M190 P-1</code>, and per-part re-probing in unrolled pack runs), and <strong>Non-<code class="mono">M3</code> Scribes/Markers</strong> (<code class="mono">#&lt;keep-z-motion&gt;=1</code> restricted strictly to non-<code class="mono">M3</code> scribes and markers). Adds mutually exclusive catalog materials (<code class="mono">M190 P&lt;n&gt;</code> &rarr; <code class="mono">M66 P3 L3 Q2</code>, never mixed with <code class="mono">(o=0, ...)</code>), kerf void protection (<code class="mono">M62 P1/P2</code> &amp; <code class="mono">M63 P1/P2</code>), small-hole scaling (<code class="mono">M67 E3 Q60</code> / <code class="mono">Q0</code>), and the shop-floor INI/HAL checklist (<code class="mono">[TRAJ] SPINDLES=3</code>, <code class="mono">[AXIS_Z] OFFSET_AV_RATIO=0.5</code> with doubled <code class="mono">MAX_VELOCITY &ge; 100 mm/s</code> &amp; <code class="mono">MAX_ACCELERATION</code>, and <code class="mono">[RS274NGC] HAL_PIN_VARS=1</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>CNCdrive UCCNC (<code class="mono">.nc</code>) XYZA Post-Processor Hardening:</strong> Choose between Integrated <code class="mono">G31</code> + <code class="mono">G92 Z&lt;Zm - SwitchOffset&gt;</code> touch-off, <code class="mono">Neuron Lite</code> (XY-only external Z), or legacy <code class="mono">M31</code> macro (flat/concentric round only). Emits ArcOK-safe <code class="mono">M205-M212</code> THC handshakes (<code class="mono">M205/M207/M209/M211</code> before <code class="mono">M3</code>, <code class="mono">M211/M212</code> anti-dive modulation on flat/round, and a <code class="mono">0.200 mm</code> check move before <code class="mono">M206</code> lock on 3D ramps and 4D profiles). Adds motion board selection (<code class="mono">UC100</code> <code class="mono">0.2 s / 200 ms</code> dwell floor vs. <code class="mono">UC300ETH/UC400ETH/AXBB-E</code>), <code class="mono">Checkbox 212</code> seconds/ms <code class="mono">G04 P</code> switching, optional <code class="mono">G20/G21</code> suppression (<code class="mono">Steps/unit</code>), and <code class="mono">Z accel &ge; 500 mm/s&sup2;</code> enforcement.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Centroid Acorn CNC12 v5.4+ Plasma (<code class="mono">.nc</code>) Two-Regime Hardening:</strong> Splits <strong>2D Flat Plate</strong> (<code class="mono">G64 ON</code>, <code class="mono">M65</code> Material Profile, <code class="mono">M61/M62</code> macros, zero Z words, 15% Voltage Anti-Dive) from <strong>3D Ramps &amp; 4D Rotary</strong> (Centerline <code class="mono">Z=0</code>, <code class="mono">G54</code>, <code class="mono">M36</code> ATHC Hold before <code class="mono">M3</code>, <code class="mono">M150</code> <code class="mono">mfunc150.mac</code> touch-off via <code class="mono">M115</code> + <code class="mono">G92 Z&lt;Zm + offset&gt;</code>, <code class="mono">G93.1</code> smoothed inverse time, <code class="mono">G94</code> restore before <code class="mono">M5</code>, standalone <code class="mono">G4 P</code> dwells, exact 360&deg; <code class="mono">G92 A0</code> resets, and <code class="mono">;</code> comments with zero parentheses). Documents the CNC12 setup checklist: Plasma Pro/Ultimate (&gt;50 KB files), AcornSix for Dual-Y + A, <code class="mono">mfunc150.mac</code> rules (no <code class="mono">M38</code> Laser Interlock or <code class="mono">OUTPUT1-5</code>), onboard fast inputs (~5 ms vs. Ether1616 ~100 ms), and <code class="mono">P220=1</code> / <code class="mono">P225=1</code>.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>grblHAL 32-Bit Plasma (<code class="mono">.nc</code>) Hardening:</strong> Controls <code class="mono">Plugin_plasma</code> through standalone-line <code class="mono">$674</code> virtual ports (<code class="mono">P2</code> active-high THC disable <code class="mono">M64/M62 P2</code> &amp; enable <code class="mono">M63/M65 P2</code>, <code class="mono">P3</code> torch inhibit clear <code class="mono">M65 P3</code>, and <code class="mono">E3</code> feed override <code class="mono">M68 E3 Q100</code> / <code class="mono">M67 E3 Q60</code>, never mixed on one block). Emits <code class="mono">M190 P-1</code> in the preamble to keep <code class="mono">pierce_height = 0</code> under explicit CAM Z control, holds <code class="mono">M64 P2</code> continuously on 3D ramps and 4D HSS contours, emits <code class="mono">M5</code> + <code class="mono">G94 F</code> right after <code class="mono">G93</code> (preventing Core Issue #1027 &amp; the <code class="mono">G38.2</code> crash trap), uses modulo <code class="mono">G92 A&lt;mod_360&gt;</code> unwinds without <code class="mono">G92.1</code>, emits <code class="mono">G4 P</code> float seconds, caps lines at <code class="mono">&le; 80</code> chars, strips <code class="mono">? ! ~</code> from comments, and adds the core <code class="mono">20261015+</code> + Nov 2026+ <code class="mono">Plugin_plasma</code> checklist (<code class="mono">$376=1</code>, <code class="mono">$133=0</code>, <code class="mono">$384=1</code>, <code class="mono">$674</code> <code class="mono">virtual_ports=1</code> / <code class="mono">sync_pos=1</code>, <code class="mono">$350</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Portable RS-274 (<code class="mono">generic_g94</code>, <code class="mono">.nc</code>) Hardening:</strong> Restricts output to the strictly portable core subset (<code class="mono">G00</code>, <code class="mono">G01</code>, <code class="mono">G02</code>, <code class="mono">G03</code>, <code class="mono">G04</code>, <code class="mono">G17</code>, <code class="mono">G20</code>/<code class="mono">G21</code>, <code class="mono">G40</code>, <code class="mono">G90</code>, <code class="mono">G92</code>, <code class="mono">G94</code>, <code class="mono">M03</code>, <code class="mono">M05</code>, <code class="mono">M30</code>) with uppercase <code class="mono">(COMMENT)</code> blocks (&le; 80 chars) and zero <code class="mono">;</code>, <code class="mono">%</code>, <code class="mono">G49</code>, <code class="mono">G92.1</code>, or <code class="mono">G10 L20</code>. Defaults THC output to <code class="mono">None</code> (emitting an explicit header THC-lock warning on 3D ramps and 4D Z motion) while supporting <code class="mono">M62/M63</code> or custom M-codes when enabled. Adds pre-zeroed top-surface <code class="mono">Z0</code> default, configurable <code class="mono">G04</code> dwells (<code class="mono">G04 P0.500</code>, <code class="mono">G04 P500</code>, <code class="mono">G04 X0.500</code>, or suppressed; clamped &ge; 10 ms with forced decimal point), pure-rotary <code class="mono">deg/min</code> or <code class="mono">rad/min</code>, <code class="mono">&lt; 0.005 mm</code> linear snap, combined Cartesian <code class="mono">F_G94 = dL_xyz / dt</code>, split 3D ramp <code class="mono">M03</code> ignition, swing-envelope Safe Z before <code class="mono">A</code> rapids with <code class="mono">&le; 2.5&deg;</code> rotary steps, 2D flat-sheet <code class="mono">A</code> suppression, 360-degree <code class="mono">G92 A</code> modulo unwinds, and Dry-Run mode. Explicitly notes incompatibility with Burny, Dynatorch, and FlashCut Stingray.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>PlanetCNC TNG Plasma (<code class="mono">planetcnc</code>, <code class="mono">.nc</code>) Hardening:</strong> Emits <code class="mono">G90 G90.2</code> rotary absolute mode, initial <code class="mono">M54 P0</code> (THC OFF), and <code class="mono">M55 P0 M56 P0 M57 P0</code> (canceling Transform, Warp, and Swap) in the preamble, starts in <code class="mono">G94</code>, switches to <code class="mono">G93</code> only during rotary cut strokes, and restores <code class="mono">G94 F...</code> before safe-Z retracts and the footer. Prevents accidental triggering of TNG's 38 active parenthetical keywords by emitting general comments and pauses as <code class="mono">; ...</code> while using <code class="mono">(status, ...)</code> for intentional UI progress. Adds AL Axis-Lock clearing IHS retracts (<code class="mono">G91 G01 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>), optional two-stage precision probing (fast touch plus slow latch re-probe), centerline <code class="mono">Z=0</code> datum on HSS/structural tubes, lookahead-preserving THC (<code class="mono">M54 P1 Q&lt;speed&gt; R1</code> on 2D flat/Y-wrap vs. <code class="mono">M54 P1 R1</code> omitting <code class="mono">Q</code> on 4-axis round pipe), continuous <code class="mono">M54 P0</code> lock on 4D dynamic-Z cuts, post-ramp <code class="mono">M54</code> unlock, modulo-360 <code class="mono">G92 A</code> wrap resets (zero <code class="mono">G92.1</code>), optional <code class="mono">M02</code>/<code class="mono">M30</code> end, and the TNG commissioning checklist (disable Probe Lock under Jogging, zero <code class="mono">#&lt;_spindle_delay_start/stop&gt;</code>, disable A soft limits, verify <code class="mono">#&lt;_thc_speed&gt;</code> units/s, and audit <code class="mono">Scripts/M3.gcode</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>EdingCNC Plasma (<code class="mono">edingcnc</code>, <code class="mono">.nc</code>) Hardening:</strong> Adds a rotary 4THMILL Y-to-A mismatch guard (<code class="mono">If [#5150 == 2] Errmsg ...</code>), <code class="mono">G94</code> safe startup with initial <code class="mono">M21</code> and <code class="mono">M5</code>, <code class="mono">G10 L20 P#5220 A0.000</code> startup and modulo-360 wrap resets (<code class="mono">A[#5004 MOD 360.0]</code>, zero <code class="mono">G92.1</code>), optional <code class="mono">G64 R&lt;tol&gt;</code> tolerance (never <code class="mono">G64 P...</code>), and flattened 256-char comment hygiene. Guards <code class="mono">G38.2</code> probing against unrendered loads/simulations (<code class="mono">If [[#5380 == 0] AND [#5397 == 0]]</code>), checks <code class="mono">#5067 == 0</code> for missed probes, applies direct <code class="mono">G92 Z[datum - switchOffset]</code>, and supports optional centerline WCS <code class="mono">Z0</code>. Supports programmable <code class="mono">M22 Q&lt;volts&gt;</code> / <code class="mono">M23 Q&lt;volts&gt;</code> voltage setpoints vs. <code class="mono">measuredIsSetpoint = 1</code> material auto-sample, optional <code class="mono">M56</code> Arc-OK handshake with <code class="mono">#5399</code> timeout check, continuous <code class="mono">M21</code>/<code class="mono">M20</code> THC lock on 4D dynamic-Z cuts, post-ramp <code class="mono">M20</code> unlock, post-<code class="mono">M5</code> anti-dive dwell (<code class="mono">G4 P...</code>), <code class="mono">G94 F...</code> restore before safe-Z retracts, <code class="mono">0.005 mm</code> rotary micro-step deadband, optional <code class="mono">M60</code> UI Nesting end, and the EdingCNC commissioning checklist (disable 4THMILL, disable <code class="mono">G4 ms</code>, disable Pause on unexpected probe trigger, check CNC720 <code class="mono">P2</code>/<code class="mono">P3</code> FLOOD/MIST ports, and verify <code class="mono">macro.cnc ;@unit</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>ArtSoft Mach4 ESS &amp; Warp9 TMC3in1 (<code class="mono">mach4_ess</code>) Hardening:</strong> Separates <code class="mono">G90</code> and <code class="mono">G91.1</code> onto distinct preamble lines (<code class="mono">G00 G90 G17 G54 G40 G49 G80</code> then <code class="mono">G91.1</code>), runs <code class="mono">G94</code> for startup, rapids, and probing (switching to <code class="mono">G93</code> strictly during rotary strokes), uses modulo-360 <code class="mono">G92 A0.000</code> mid-pack resets without <code class="mono">G92.1</code>, and closes EOF with <code class="mono">G92.1</code> + <code class="mono">M30</code> + trailing <code class="mono">%</code> and newline. Upgrades probing to <code class="mono">G31.0</code>-<code class="mono">G31.3</code> with relative incremental backoff (<code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>), skip-after-probe (<code class="mono">refDistance</code>), and TMC3in1 <code class="mono">m2020 (HC_WORK_Z_ZEROED=1)</code> + <code class="mono">G04 P0.100</code> Lua sync on plasma and EasyScribe probes. Supports Standard ESS Pathway A (<code class="mono">M62/M63 P3</code> torch + <code class="mono">M65 P3</code> fail-safe + <code class="mono">M62/M63 P2</code> THC) vs. Pathway B (<code class="mono">m3</code>/<code class="mono">m5</code> OB1 fallback), switches TMC3in1 THC to Output #4 active-low (<code class="mono">M63 P4</code> Lock / <code class="mono">M62 P4</code> Unlock, fixing legacy <code class="mono">P2</code>), adds 3-step Pierce Drop (<code class="mono">&ge; 2</code> steps + <code class="mono">G04 P0.0011</code> + <code class="mono">G01 Z&lt;pierce&gt;</code>), sets <code class="mono">AD3_VELOCITY_ENABLED=0</code> on rotary cuts, emits full <code class="mono">W9_HC m2020</code> parameters (<code class="mono">AD1</code>, bands, ATV buffer, HC Z min/max, <code class="mono">ESS_DELAY_AFTER_ARC_OKAY</code>), holds continuous THC lock on 4D dynamic-Z (<code class="mono">HC Z Delta</code> desync protection), unlocks THC after 3D ramps, and blocks banned black-listed macros.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-      <!-- ================================================================
-           RELEASE: November 18, 2026 (v0.8.0-v0.8.1)
-           ================================================================ -->
-      <article class="release-entry" id="v0.8.0-v0.8.1">
-        <span id="v0.8.1"></span><span id="v0.8.0"></span>
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 18, 2026</span>
-              <span class="release-version-pill">v0.8.0-v0.8.1</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Apply DXF/SVG onto Tubes &bull; Interactive Canvas &bull; Spatial Void THC Lock &bull; Remnant Crop &bull; 5 Controller Posts Hardened</span>
-          </div>
-          <p class="release-summary">
-            Apply 2D DXF/SVG artwork directly onto 3D round pipe and rectangular HSS with automatic single-stroke text scribing. Move pierces and holding tabs interactively on the canvas, prevent torch dives with spatial void THC locking, square off drops with remnant guillotine cropping, and cut with hardened SimCNC, FireControl, Mach3, WinCNC, and MASSO post-processors.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Apply 2D DXF/SVG onto Loaded STEP Tubes &amp; <code class="mono">TEXT</code>/<code class="mono">MTEXT</code> Scribing (<code class="mono">v0.8-D</code>, <code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> Load a 3D STEP part or multi-part assembly, click any Round Pipe or Square/Rectangular HSS tube solid, and apply a <code class="mono">.dxf</code> or <code class="mono">.svg</code> file directly onto its surface. Set Axial Offset X (or Center along tube X), Clock Angle A, Scale Mode (<code class="mono">1:1 Literal</code> or <code class="mono">Stretch to Circumference</code>), Swap X/Y Axes, and Cut vs. Scribe/Plasma Mark, with DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code> converted into single-stroke markings.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Machine Verification Badges &amp; Lifetime Updates on Existing Paid License (<code class="mono">v0.8-E</code>, <code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>):</strong> SimCNC and FlashCut carry <code class="mono">Hardware Verified</code> badges, while all other controller posts show <code class="mono">Beta &middot; Help Verify</code>. A full-price paid <code class="mono">Maker</code> or <code class="mono">Pro Shop</code> license is required (no free licenses, discounts, or refunds). Submitting qualifying verification (test-cut results, controller XML/config details, and cut photos or videos) extends your existing paid license from the standard 1-year update window to <strong>Lifetime Updates</strong>.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>SimCNC 3.6+ (<code class="mono">G93</code> Inverse-Time) Controller-Safe Trajectory Hardening:</strong> Keeps SimCNC 3.6+ running smoothly across both <code class="mono">G21</code> metric and <code class="mono">G20</code> inch rotary cuts. Emits <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code>/<code class="mono">P0.4</code> corner blending even in <code class="mono">G20</code> programs (banning <code class="mono">G61</code> exact-stop), <code class="mono">4</code>-decimal <code class="mono">G93 F</code> speeds (<code class="mono">0.0001</code> floor), <code class="mono">&lt; 0.05 mm</code> / <code class="mono">&lt; 0.02&deg;</code> micro-move coalescing, axial <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) feathering between pure-XYZ and pure-ABC moves, <code class="mono">G4 P&ge;1</code> ms dwell suppression, max 1 <code class="mono">(...)</code> comment per line with strict character allowlisting, <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs (<code class="mono">I/J/K</code> within <code class="mono">0.005 mm</code>, split full circles, no <code class="mono">G90.1</code>/<code class="mono">G91.1</code>), and phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>, explicit <code class="mono">G0</code>/<code class="mono">G1</code> reset after <code class="mono">G80</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Langmuir FireControl (<code class="mono">v1.6+</code> to <code class="mono">v24.1.6</code>) Cut-Cycle &amp; Rotary Hardening:</strong> Stops "Torch Moving Before Cutting Voltage Sensed" faults on CrossFire Gen2 tables (which lack hardware Arc OK) by enforcing a mandatory <code class="mono">0.55 s</code> minimum <code class="mono">G4 P</code> ignition dwell after <code class="mono">M3</code> on 3D ramp entries while holding <code class="mono">H0</code> until cut height before switching <code class="mono">H1</code> on. Adds configurable <strong>Arc Transfer Latency</strong>, <strong>Loop 1 Extra Pierce Delay</strong> (<code class="mono">firstPierceExtraDelay</code>), and <strong>Post-Cut Settle Dwell</strong> (<code class="mono">G4 P</code> after <code class="mono">M5</code> for inverters with post-flow lockouts like Bestarc BTC800XP). Separates <code class="mono">0.020"</code> (<code class="mono">0.508 mm</code>) <strong>IHS Backlash</strong> from <strong>Thin-Sheet Springback</strong>, auto-zeroing springback on rigid pipe, structural tubing, and heavy plate (<code class="mono">&ge; 3/16&Prime;</code> / <code class="mono">4.7625 mm</code>) so <code class="mono">SMARTV</code> never samples an inflated cut height. Adds strict single-paren GRBL serial comment cleaning (<code class="mono">[...]</code> inside parens, no <code class="mono">;</code> or <code class="mono">/</code>), <code class="mono">&lt; 0.025 mm</code> (<code class="mono">&lt; 0.001"</code>) micro-move filtering that preserves Z plunges and refreshes modal feeds after every IHS/plunge, CrossFire PRO/XR speed caps (<code class="mono">300 IPM</code> XY / <code class="mono">150 IPM</code> Z), dynamic <code class="mono">X-WRAP</code> / <code class="mono">Y-WRAP</code> rotary headers (supporting PRO/XR single X-motor <code class="mono">X-Wrap</code>), and optional fixed-calibration chuck <code class="mono">Travel / Rev (L_rev)</code> with exact cylindrical DRO <code class="mono">G94</code> scaling and unscaled <code class="mono">(PS&lt;feed&gt;)</code>.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>ArtSoft Mach3 (<code class="mono">.tap</code>) XYZA Rotary &amp; 2D Plasma Hardening:</strong> Added a 4-topology Mach3 THC hardware selector in Machine Settings: <strong><code class="mono">M11Px / M10Px</code> Motion-Synced</strong> (pins 1-6 + polarity invert), <strong>CandCNC DTHC DCC</strong> (<code class="mono">S900/S10/S20</code> + optional <code class="mono">S3xx</code> voltage + polarity invert), <strong>ESS Proma 150 / TMC3in1</strong> (stationary <code class="mono">M102/M101</code> before <code class="mono">M3</code> + Internal Anti-Dive lock on small holes, 3D ramps, and 4D rotary), and <strong>ESS Proma Compact THC SD</strong> (mandatory <code class="mono">G31</code> every pierce + auxiliary bypass relay <code class="mono">M7/M9</code>). Fixes <code class="mono">M11 P#/M10 P#</code> motion sync by emitting <code class="mono">G93</code> before <code class="mono">M11</code> and blocking stranded <code class="mono">M11</code> lines right before <code class="mono">M5</code>. Eliminates the <code class="mono">G52</code> vs. <code class="mono">G92</code> register conflict by baking pneumatic scribe XY offsets directly into <code class="mono">G54</code> coordinates. Adds <code class="mono">%</code> program framing with trailing <code class="mono">M30\n%\n</code> newline, immediate <code class="mono">G94</code> restore after <code class="mono">M5</code> and coaxial scribe strokes, <code class="mono">&ge; 0.50 mm</code> (<code class="mono">0.02 in</code>) <code class="mono">G31</code> stroke guard with surface-relative probing, <code class="mono">&lt; 0.002 mm</code> (<code class="mono">0.0001 in</code>) <code class="mono">G93</code> linear noise deadband filtering, and a mode-aware <code class="mono">(CONFIG: ...)</code> header plus UI setup checks (<code class="mono">R3.043.062</code>, licensed Demo check, <code class="mono">G04 Dwell in ms = UNCHECKED</code>, <code class="mono">Use Radius for Feedrate</code> <code class="mono">G93</code> vs. <code class="mono">+0.0001</code> <code class="mono">G94</code> rule, LookAhead 200, and CV Feedrate OFF).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>ShopSabre WinCNC &amp; SideKick Rotary (<code class="mono">.tap</code>) Hardening:</strong> Fixes WinCNC metric units by emitting <code class="mono">G22</code> (millimeters) instead of <code class="mono">G21</code> (which WinCNC reads as centimeters, preventing 10x scaling errors). Adds <code class="mono">M65</code> init, optional <code class="mono">G9 S10</code>, <code class="mono">G94</code> before rapids and <code class="mono">M62</code>, <code class="mono">L28.1</code> modulo 0-360 wrap on rotary, and Pack-only <code class="mono">L92</code> before <code class="mono">M66</code> (keeping single-part <code class="mono">G92</code> restore intact). Supports continuous WinCNC <code class="mono">v3.1.06d+</code> THC (<code class="mono">L37.2 D1/D0</code> + inline <code class="mono">D1</code>/<code class="mono">D0</code> where <code class="mono">D1</code> = Disabled, <code class="mono">D0</code> = Enabled) vs. legacy <code class="mono">L37</code>/<code class="mono">L36</code>, a decoupled <code class="mono">L38.1</code> cut-parameter injection toggle, and Pattern 1 (<code class="mono">M61</code> + suppressed duplicate <code class="mono">G04 X</code> dwell + centerline <code class="mono">G92 Z</code> on 4D HSS/ramps) vs. Pattern 2 (<code class="mono">L38</code> direct ignition bypass, auto-used on 3D ramps if <code class="mono">L38.1</code> is off or legacy mode is active). Adds configurable SideKick rotary axis letters (<code class="mono">A</code>, <code class="mono">W</code>, or <code class="mono">B</code>) matching <code class="mono">WINCNC.INI</code>, plus software-baked <code class="mono">G54</code> XY pneumatic scribe offsets (no <code class="mono">G52</code>/<code class="mono">G53</code>/<code class="mono">G56</code> conflict).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>MASSO G3 + DTHC (<code class="mono">.nc</code>) XYZA Rotary &amp; 2D Plasma Hardening:</strong> Adds a 3-mode THC hardware selector (<strong>MASSO DTHC (<code class="mono">G200</code> Auto-IHS)</strong>, <strong>External Up/Down THC (Bare <code class="mono">G200</code> + <code class="mono">G38.2</code>)</strong>, and <strong>Fixed Height / No THC</strong>). Enforces <code class="mono">T112 M6</code> plasma mode before <code class="mono">G200</code>, supports <code class="mono">O0</code> (Touch Switch) vs. <code class="mono">O1</code> (Plasma Ohmic) and <code class="mono">S0</code> (Continuous) vs. <code class="mono">S1</code> (Slag-Stop), and emits <code class="mono">M667 F&lt;zFeed&gt;</code> / <code class="mono">M666</code> with an explicit <code class="mono">F</code> word (<code class="mono">75-600 mm/min</code> or <code class="mono">3-24 IPM</code> scaled by <code class="mono">1/25.4</code> in <code class="mono">G20</code>, never omitting <code class="mono">F</code>). Supports Bare <code class="mono">G200</code> 3D ramps (Option B2) vs. opt-in Hybrid <code class="mono">C=P</code> (Option B1, explicit <code class="mono">V &gt; 0</code>, never <code class="mono">V0</code>), Template C continuous 4D HSS cutting (<code class="mono">Bare G200</code> + <code class="mono">G38.2</code> + <code class="mono">G92 Z</code> + <code class="mono">G92.1</code> + <code class="mono">M666</code>), <code class="mono">G53 G0 Z0</code> safe retracts with <code class="mono">G92.1</code> offset cleanup (no <code class="mono">G92 A0</code>), separate-line <code class="mono">G91</code> / <code class="mono">G28 A0</code> / <code class="mono">G90</code> rotary unwinds, and <code class="mono">M30 L&lt;count&gt;</code> chuck-fed bar-advance looping.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Interactive Pierce, Holding Tab, 2D Sheet &amp; 1D Stick Controls (<code class="mono">v0.8-C</code>):</strong> Click the 3D model or 2D contour overlay to move pierce points (<strong>Move Pierce</strong>, <code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>) or drag and delete holding tabs (<strong>Edit Tabs</strong>, <code class="mono">Pro Shop</code>). On 2D sheets, drag parts in <code class="mono">(&Delta;X, &Delta;Y)</code>, rotate in <code class="mono">15&deg;</code> snaps or free angles, flip H/V with live collision halos, and click <strong>Reset Auto-Nest</strong> (<code class="mono">Maker &le; 5 parts</code> / <code class="mono">Pro Shop unlimited</code>). On 1D sticks, reorder parts, flip <code class="mono">180&deg;</code> end-for-end, nudge phase angle <code class="mono">&Delta;A</code>, and adjust gaps directly in the Pack panel.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Spatial Void THC Auto-Lock (<code class="mono">v0.8-A</code>):</strong> <code class="mono">SpatialVoidIndex</code> tracks every cut kerf slot and pierce crater on your sheet and locks THC automatically within <code class="mono">0.5 &times; kerfWidth + 4.0 mm</code> so the torch never dives across earlier cuts.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Open-Path Left/Right/Center Kerf &amp; Thick-Plate Edge-Start Piercing:</strong> Choose <code class="mono">Center</code>, <code class="mono">Left</code>, or <code class="mono">Right</code> kerf compensation on unclosed slits, trims, and bend reliefs (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>). For heavy plate (<code class="mono">&ge; 12 mm</code> / <code class="mono">1/2&Prime;</code>), <strong>Edge-Start</strong> probes IHS on steel, retracts, shifts off-edge into open air (<code class="mono">4.0 mm</code> default overhang) to fire the arc, and holds THC locked for <code class="mono">6.0 mm</code> onto solid steel.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Remnant Guillotine Crop &amp; Serpentine Scrap-Margin Chains (<code class="mono">v0.8-B</code>):</strong> Square off unused sheet drops with <code class="mono">Best Single Cut</code>, <code class="mono">L-Cut (X &amp; Y)</code>, <code class="mono">Vertical (X)</code>, or <code class="mono">Horizontal (Y)</code> and preview dashed <code class="mono">CROP</code> lines and the <code class="mono">Usable Remnant</code> box in the 2D Pack SVG (<code class="mono">Pro Shop</code>). Link adjacent nested outer profiles with serpentine scrap-margin <strong>Daisy-Chain (Single Pierce)</strong> or <strong>Micro-Bridge (Connected)</strong> paths using flared, vertex-pinched bridges that eliminate half-contour retracing.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Smart <code class="mono">CAMAutoDefaults</code> &amp; Flat Corner Loops:</strong> Stock-aware defaults populate lead-in/out lengths, corner loops (<code class="mono">corner_loop_radius_mm</code>, default <code class="mono">3.0 mm</code>), holding tabs, zero-bevel settings, and bridge widths automatically when no override is set. Added a one-click <strong>C-Channel [BEAMLINE]</strong> (<code class="mono">c-channel1.step</code>) Quick CAD example in the sidebar.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>FlashCut 9+ / 8.x Mode 2 Explicit Lift-Axis (<code class="mono">G631</code> / <code class="mono">G630</code>):</strong> Full Mode 2 Explicit Dynamic-Z cycle (<code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; Z Ramp &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code>) across FlashCut 9+ and 8.x keeps touch-off, arc-transfer hold, pierce-to-cut Z ramp, THC lock, and safe retract synchronized without <code class="mono">G601</code>/<code class="mono">G600</code>.
+                <strong>Controller &amp; Profile Fixes:</strong> Hardened touch-offs, corner anti-dive THC lock, and rotary moves across 13 CNC plasma posts, plus cleaner angle-iron and C-channel cuts.
               </div>
             </li>
           </ul>
@@ -1687,168 +1411,57 @@
       </article>
 
       <!-- ================================================================
-           RELEASE: November 17, 2026 (v0.7.5)
-           ================================================================ -->
-      <article class="release-entry" id="v0.7.5">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 17, 2026</span>
-              <span class="release-version-pill">v0.7.5</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">FlashCut .xml Setup Import &bull; 3D Ramp &amp; Tube Cut Cycle &bull; Round Planar Miter Fix</span>
-          </div>
-          <p class="release-summary">
-            Drop your FlashCut .xml setup file into the Machines modal to pull your arc-transfer input, plasma head ID, touch-off zeroing check, and rotary orientation in one click. Square and angle tubes plus 3D Ramp Lead-Ins now run the full FlashCut Mode 2 Explicit Dynamic-Z cycle (G631 to G630, no G601/G600), and round-tube planar miter common-line severs cut clean in one pass.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>FlashCut <code class="mono">.xml</code> Setup Import in Machines Modal:</strong> Upload your FlashCut controller <code class="mono">.xml</code> configuration directly inside <strong>Machines</strong>. RotaryCAM automatically extracts your <code class="mono">M101 I&lt;n&gt;</code> arc-transfer input, plasma head ID, <code class="mono">ZeroLiftAxisPositionAfterTouchOff</code> safety check, and rotary axis orientation (<code class="mono">Tube Along X</code> vs. <code class="mono">Tube Along Y</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>FlashCut Explicit Dynamic-Z for 3D Ramp Lead-Ins &amp; Square/Angle Tubes (Mode 2):</strong> Outputs the explicit <code class="mono">G631 &rarr; G602 &rarr; G605 &rarr; M50 &rarr; M101 &rarr; 3D Ramp / +CutHeight Z &rarr; G603 &rarr; M51 &rarr; G0 Z &rarr; G630</code> sequence without <code class="mono">G601</code>/<code class="mono">G600</code> for 3D Ramp Lead-Ins and HSS square or angle-iron tubes, keeping touch-off, arc-transfer hold, pierce-to-cut Z ramp, THC suspend/resume, and safe Z retract synced across faces and corners.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Round-Tube Planar Miter Common-Line Sever Fix:</strong> Fixes planar miter common-line sever paths on round pipe so nested mating miter cuts sever cleanly in a single pass with zero stray offset or double-cut passes.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-      <!-- ================================================================
-           RELEASE: November 16, 2026 (v0.7.2-v0.7.4)
-           ================================================================ -->
-      <article class="release-entry" id="v0.7.2-v0.7.4">
-        <span id="v0.7.4"></span><span id="v0.7.3"></span><span id="v0.7.2"></span>
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 16, 2026</span>
-              <span class="release-version-pill">v0.7.2-v0.7.4</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Saved User Preferences &bull; Recent Models View &bull; FlashCut FabHead Post &bull; Single-EXE Windows &bull; Auto Machine Profile Saving</span>
-          </div>
-          <p class="release-summary">
-            Save persistent shop defaults across CAM and machine settings with Fusion 360-style default controls, reopen recent models in one click from the landing screen, and run native FlashCut Fabrication Head tables without pre-probe firing. Includes a single-EXE Windows bundle, automatic machine profile saving, and one-click diagnostics export in the About dialog.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Saved User Preferences &amp; Fusion 360-Style <code class="mono">&#8942;</code> Default Controls:</strong> Lock in persistent shop defaults across Global CAM Settings, Pack Nesting, and Per-Feature Cut Settings. Click the <code class="mono">&#8942;</code> menu beside any field to <strong>Make Current Value Default</strong>, <strong>Reset to Saved User Default</strong>, or <strong>Clear Default</strong>, or manage everything in the <strong>Preferences</strong> modal. Precedence follows <code class="mono">Explicit &gt; User Preferences &gt; Active Machine &gt; Factory/Cut-Chart</code>, including Round Wall Bevel defaults (<code class="mono">Zero-Bevel</code>, <code class="mono">Eccentric</code>, and <code class="mono">Square 0&deg;</code>), plus <code class="mono">get_user_preferences</code> and <code class="mono">update_user_preferences</code> MCP tools and <code class="mono">user_preferences.json</code> in diagnostics zips.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Recent Models Landing View:</strong> Opening RotaryCAM without an active part replaces the idle 3D viewport with your last 10 processed models sorted by most recent access. Each card displays the filename, profile badge, part count, and timestamp for 1-click reopening.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVED</span>
-              <div class="change-content">
-                <strong>Post-Processor Readiness Labels (<code class="mono">2 Verified &middot; 14 Beta</code>):</strong> Updated controller compatibility status so shop-tested posts for <strong>CSLab SimCNC</strong> and <strong>FlashCut CNC</strong> display as <strong>Verified</strong> alongside 14 <strong>Beta</strong> post-processors.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>FlashCut FabHead Cut2D Post-Processor &amp; 3D Simulator Parity:</strong> Emits <code class="mono">#fabhead.mode = Cut</code> and <code class="mono">M106 Hplasma1</code> with <code class="mono">G602</code>/<code class="mono">G603</code> THC suspend and resume commands, <code class="mono">G93</code> inverse-time rotary feedrates, and <code class="mono">G605</code> surface touch-off before <code class="mono">M50</code> firing on center-spots. Eliminates pre-probe torch firing on FlashCut Fabrication Head tables, with full flame and kerf visualization in the 3D Cut Simulator.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Single-EXE Windows Bundle &amp; Process Cleanup:</strong> Packages the entire Windows desktop app into a single <code class="mono">RotaryCAM.exe</code> inside <code class="mono">RotaryCam-Windows-latest.zip</code>. Features single-instance tray enforcement, Windows Job Object child process cleanup, ephemeral port isolation against stale background servers, and backend <code class="mono">/health</code> telemetry in one-click diagnostics zips.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Clearer Torch Firing &amp; THC Hold Machine Controls:</strong> Replaces confusing duplicate pin dropdowns with plain-language <strong>Torch Firing Mode (Arc On / Off)</strong> and <strong>THC Hold / Lock Signal (Height Control)</strong> controls. Automatically hides SimCNC-only variables (<code class="mono">#4061</code>, <code class="mono">M62/M63</code> output pins, and unwind dwells) when configuring third-party controllers, displaying each controller's native Arc and THC protocol summary directly.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Automatic Machine Profile Saving &amp; Custom Machine Fix:</strong> Every change you make to axis travels, motor polarity, rotary alignment, post-processor dialects, or feedrate limits now saves automatically the instant you edit it. Resolves a critical bug where cloned and custom machine profiles were misidentified as stock built-in templates, causing edits to be rejected or reverting settings back to defaults when toggling units. Your custom shop setups and cloned machines now stay permanently locked in.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Automatic Browser Script Cache-Busting:</strong> Frontend scripts and static assets now include deterministic build hashes. When you update RotaryCAM, your browser downloads the new scripts immediately without serving stale cached code or requiring a manual hard refresh (<code class="mono">Ctrl+F5</code> or <code class="mono">Cmd+Shift+R</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>One-Click Download Diagnostics Zip in About Modal:</strong> Export a complete troubleshooting package straight from the <strong>About RotaryCAM</strong> dialog with one click. The generated <code class="mono">.zip</code> bundle includes backend server logs, browser console telemetry, active model information, viewport dimensions, and current machine configurations for instant troubleshooting without digging through application directories.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 15, 2026 (v0.7.1)
+           WEEK OF NOVEMBER 9 - 15, 2026 (v0.5.0 - v0.7.1)
            ================================================================ -->
       <article class="release-entry" id="v0.7.1">
+        <span id="v0.7.0"></span><span id="v0.6.1"></span><span id="v0.6.0"></span><span id="v0.5.3"></span><span id="v0.5.2"></span><span id="v0.5.1"></span><span id="v0.5.0"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">November 15, 2026</span>
-              <span class="release-version-pill">v0.7.1</span>
+              <span class="release-date">Week of November 9, 2026</span>
+              <span class="release-version-pill" style="background: rgba(245, 158, 11, 0.12); color: var(--plasma-amber); border-color: rgba(245, 158, 11, 0.3);">v0.5.0 &ndash; v0.7.1 &bull; FOUNDING LAUNCH</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Rotary Y-Axis Support &bull; 4 Chuck Travel Modes &bull; Flat 6 Datum Origins &bull; 90&deg; CCW Rotation &bull; Motor Polarity Inversion &bull; Hardware THC v2 Wiring Guide</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Founding Launch &bull; 12 Plasma Posts &bull; I-Beam &amp; C-Channel &bull; 1,025 Cut Charts &bull; Flat Sheet DXF/SVG</span>
           </div>
           <p class="release-summary">
-            Configure RotaryCAM to match your machine table layout. Support rotary attachments aligned parallel to your gantry Y rail with true right-handed rotation (never mirrored), pick from 4 physical chuck and torch travel modes (including touching off at the free tube tip without measuring stick length), orient 2D flat sheets with 90&deg; CCW rotation and 6 selectable work zero origins, invert motor directions with automatic arc-sense flipping, and explore the updated Hardware v2 Z-axis THC cabinet wiring guide with Pure vs. Hybrid SAV auto-voltage selection.
+            Cut structural I-Beams, C-Channels, round pipe weld bevels, and flat plate kits on your 4-axis table with 1,025 built-in plasma cut charts, 12 drop-in controller posts, and perpetual offline Maker ($199) and Pro Shop ($399) licenses.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Gantry-Parallel Rotary Y-Axis (<code class="mono">Tube Along X</code> vs. <code class="mono">Tube Along Y</code>):</strong> Native support for CNC plasma tables where the rotary chuck sits parallel to the Y gantry rail (FlashCut CNC, ShopSabre, Mach3/4, LinuxCNC, MASSO, Acorn, UCCNC, and SimCNC). Selecting <strong>Tube Along Y</strong> applies a true right-handed +90&deg; coordinate rotation (<code class="mono">L &rarr; Y, T &rarr; -X</code>). Longitudinal cuts move on Y, cross-torch bevel or HSS lateral moves shift on X, and acceleration/velocity limits automatically track the physical motor moving the torch. Because this is a true spatial rotation, asymmetric fishmouths and angled saddles are <strong>never mirrored</strong>. Automatic 3-axis linear wrap also adapts circumference mapping (<code class="mono">X_WRAP</code> when tube is along Y, <code class="mono">Y_WRAP</code> when tube is along X).
+                <strong>Founding Offline Licenses (<code>Maker $199</code> &amp; <code>Pro Shop $399</code>):</strong> Own RotaryCAM forever with an offline license key that runs air-gapped at your plasma table. Preview every profile and Pro feature free in 3D before you buy.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>4 Rotary Chuck &amp; Torch Travel Modes:</strong> Select how your chuck and gantry move on the shop floor:
-                (1) <em>Workpiece Moves (-L &rarr; 0)</em> for moving-tube feeders like SimCNC Rotary where the chuck pushes stock beneath a stationary-length torch;
-                (2) <em>Torch Moves: Chuck at 0 &rarr; Free End at +L</em> for standard stationary rotary attachments cutting outward from the chuck;
-                (3) <em>Torch Moves: Free End at +L &rarr; Chuck at 0</em> for cutting from the overhanging tip back toward the chuck so severed drops fall cleanly without sagging long sticks; and
-                (4) <em>Torch Moves: Free End at 0 &rarr; Chuck at -L</em> where the operator zeroes <code class="mono">X0</code> (or <code class="mono">Y0</code>) right at the free tip and cuts in negative travel without measuring total stick length beforehand. Both Single-Part and 1D Pack Mode automatically sequence cuts from free end to chuck.
+                <strong>I-Beam, C-Channel &amp; 4-Axis Pipe Weld Beveling:</strong> Cut flange holes, recessed web slots, miters, and copes on I-Beams and C-Channels on a 4-axis rotary without a 5-axis head, plus V-groove weld-prep bevels on round pipe and zero-bevel heel-pullback miters on square and rectangular HSS.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Flat Sheet Orientation (0&deg; vs. 90&deg; CCW) &amp; 6 Work Zero Datum Origins:</strong> Rigid right-handed 90&deg; CCW plate rotation (<code class="mono">X' = -Y, Y' = X</code>) guarantees asymmetric brackets, off-center holes, and etched part labels are never mirrored. Choose from 6 selectable <code class="mono">X0, Y0</code> sheet origins: <strong>Bottom-Left</strong> (default on all controllers), <strong>Top-Left</strong>, <strong>Bottom-Right</strong>, <strong>Top-Right</strong>, <strong>Center</strong> (ideal for remnant plates zeroed with a punch mark), and <strong>Moving Sheet (-X &rarr; 0)</strong> for automated plate feeders.
+                <strong>Multi-File DXF/SVG Flat Sheets, Cutout Nesting &amp; Common-Line Cuts:</strong> Drop <code>.dxf</code>, <code>.svg</code>, or <code>.zip</code> plate kits in together, scale unscaled drawings with 2-point magnetic snapping, pack small tabs inside larger cutouts, and share straight cuts to cut pierces in half.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Hardware Motor Polarity Overrides &amp; 3D Cut Simulator Parity:</strong> Independent <code class="mono">Invert X</code>, <code class="mono">Invert Y</code>, and <code class="mono">Invert Rotary A</code> motor wiring toggles. When an axis runs backward, RotaryCAM automatically flips physical coordinates, <code class="mono">G52</code> pneumatic scribe offsets, and circular arc direction (<code class="mono">G2</code> &harr; <code class="mono">G3</code>) across <code class="mono">G17/G18/G19</code> planes so lead-ins stay on the scrap side. The integrated 3D Cut Simulator fully supports inverted unrolling with live session status badges.
+                <strong>1,025 Plasma Cut Charts &amp; 12 Controller Posts:</strong> Built-in presets for Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma (with CSV import/export), 60% small-hole bolt speed scaling, EasyScribe/air-scribe/center-dimple marking, and drop-in G-code across 12 CNC plasma controllers.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Hardware THC v2 Cabinet Wiring Guide &amp; Pure vs. Hybrid SAV:</strong> Updated documentation and interactive reference on <a href="hardware-thc.html" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">Hardware THC ($199 CAD) &rarr;</a> detailing inline RS-422 differential Step/Dir interception, 2.0 ms ohmic tip-up escape, and the comparison between zero-config <strong>Pure SAV</strong> (set physical cut height and lock to live arc) and <strong>Hybrid SAV</strong> (clamping abnormal pierce spikes on thin, heat-bowed sheet metal).
+                <strong>Match Any Table Layout (<code>Tube Along Y</code>, 4 Chuck Modes, 6 Sheet Origins):</strong> Run rotary attachments mounted along X or Y without mirroring parts, zero at the chuck or free tube tip, flip motor directions safely, and switch between inches (<code>G20</code>) and millimeters (<code>G21</code>).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Cut-Cycle &amp; Profile Fixes:</strong> Cleaner stationary pierces, 3D ramp lead-ins, open-ended channel slots, and faster loading on large multi-part assemblies.
               </div>
             </li>
           </ul>
@@ -1856,338 +1469,45 @@
       </article>
 
       <!-- ================================================================
-           RELEASE: November 14, 2026 (v0.7.0)
-           ================================================================ -->
-      <article class="release-entry" id="v0.7.0">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 14, 2026</span>
-              <span class="release-version-pill">v0.7.0</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">1,025 Cut Presets (3 Torch Families) &bull; CSV Import/Export &bull; Multi-File DXF, SVG &amp; ZIP Flat Sheets &bull; Recursive Cutout Nesting &bull; 2D Common-Line Cuts &bull; Dedicated Mach4 ESS vs TMC3in1 &bull; 16-Post Grammar Linter &bull; Dynamic Anti-Dive THC</span>
-          </div>
-          <p class="release-summary">
-            Cut chassis gussets, shock tabs, winch mounts, and baseplates alongside your tube weldments without leaving RotaryCAM. Access 1,025 built-in cut presets across 3 plasma torch families (Hypertherm SYNC, Hypertherm Duramax, and Generic Air Plasma) or import/export shop spreadsheets via unit-aware CSV. Drop multiple 2D <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or zipped plate kits onto your table at once, pick your plate gauge from highlighted quick-picks to lock in cut charts, and pack smaller tabs inside cutouts three levels deep. Snap straight edges together for single-pass common-line cuts to cut pierces in half, fix scaled drawings with magnetic 2-point snapping, toggle machines between native Imperial (<code class="mono">in / G20</code>, <code class="mono">IPM</code>) and Metric (<code class="mono">mm / G21</code>), keep your torch from diving in tight corners with automated THC anti-dive across all 12 dialects, and inspect nested parts with smooth cursor zoom and click-to-inspect navigation.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>1,025 Built-In Factory Cut Presets Across 3 Plasma Torch Families:</strong> RotaryCAM now integrates 1,025 comprehensive cut charts across 3 distinct torch platforms: <strong>Hypertherm Powermax SYNC</strong> (<code class="mono">3.2 mm / 0.125"</code> cut height, 564 presets, <code class="mono">45A–105A</code>), <strong>Hypertherm Duramax / Legacy 30XP–105</strong> (<code class="mono">1.5 mm / 0.060"</code> cut height, 269 presets, <code class="mono">30A–105A</code> + FineCut), and <strong>Generic Air Plasma</strong> (<code class="mono">1.5 mm / 0.060"</code> cut height, 192 presets, <code class="mono">30A–80A</code> tuned for Razorweld 45, PrimeWeld Cut60, Everlast PowerPlasma, and Thermal Dynamics Cutmaster). All 3 families cover Mild Steel, Stainless Steel, and Aluminum in both Metric (<code class="mono">mm</code>) and Imperial (<code class="mono">GA / in</code>), and automatically scope wall-thickness matching and amperage tiers (<code class="mono">[30,45,60,80]</code> vs <code class="mono">[30,45,65,85,105]</code> vs <code class="mono">[45,65,85,105]</code>) to your machine profile's selected torch family.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Unit-Aware Cut Chart CSV Import &amp; Export (<code class="mono">⬇ Export CSV</code> / <code class="mono">⬆ Import CSV</code>):</strong> Export your filtered or full cut chart library as RFC-4180 CSV in your active machine's unit system (Metric <code class="mono">_mm, _mm_min, _bar</code> or Imperial <code class="mono">_in, _ipm, _psi</code>). Smart header auto-detection converts units on the fly when importing cross-unit spreadsheets, and non-destructive upsert merges updates into existing rows <code class="mono">(name, source, material, amperage, consumable_type)</code> without wiping factory presets or custom shop entries.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Dedicated Built-in ArtSoft Mach4 Profiles (Warp9 ESS vs. TMC3in1 / WarpRunner):</strong> Split Mach4 into two dedicated built-in machine profiles: <code class="mono">ArtSoft Mach4 (Warp9 ESS)</code> using external <code class="mono">M3/M5</code> or synced <code class="mono">M62/M63 P2</code> arc control with clean <code class="mono">G31</code> probing, and <code class="mono">ArtSoft Mach4 (Warp9 TMC3in1 / WarpRunner)</code> emitting full <code class="mono">m2020 (...)</code> tip voltage and standoff registers, mandatory <code class="mono">G04 P0.1</code> Lua synchronization dwells, and motion-synced <code class="mono">M62/M63 P3</code> arc control.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Multi-Dialect G-Code Grammar &amp; Modal State-Machine Linter:</strong> Automated 16-controller post-processor verification test suite inspecting modal G-code grammar, arc motion words, dwell syntax, THC pin assignments, and feedrate scaling across rotary HSS, round pipe, flat sheet DXF/SVG parts, scribes, and center-dimple marks in both <code class="mono">G21</code> and <code class="mono">G20</code>.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Multi-File DXF, SVG &amp; ZIP Flat-Sheet Ingestion &amp; Automatic Part Splitting:</strong> Drag and drop multiple <code class="mono">.dxf</code>, <code class="mono">.svg</code>, or <code class="mono">.zip</code> files into your workspace in a single drop. Multi-part drawings with disconnected cut loops automatically split into individual parts (<code class="mono">shock_tab_1</code>, <code class="mono">shock_tab_2</code>) with independent quantities. CAD layers named <code class="mono">SCRIBE</code>, <code class="mono">MARK</code>, <code class="mono">ETCH</code>, or <code class="mono">BEND</code> map directly to marker and relief-slit toolpaths, while open slit cuts cut kerf-free without closed-profile blowouts.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Highlighted Sheet Thickness &amp; Automatic Hypertherm Cut-Chart Matching:</strong> Because 2D CAD files have zero Z thickness, RotaryCAM protects your cut quality behind a prominent amber <code class="mono">Status: Awaiting Thickness</code> safety gate. One click on your sheet gauge (<code class="mono">16ga</code> through <code class="mono">1/2&Prime;</code> Imperial, or <code class="mono">1.5</code> through <code class="mono">12 mm</code> Metric) locks in matching cut-chart parameters (kerf width, feedrate, pierce height, cut height, and arc voltage) across all 12 supported CNC controllers.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Recursive Part-in-Cutout ("Matryoshka") Nesting &amp; Single-Pass Common-Line Cutting (<code class="mono">Pro Shop $399</code>):</strong> Stop throwing away usable drop. Pack smaller gussets, tabs, or spacers inside the hollow cutouts of larger mounting plates up to three levels deep, automatically sequenced from inside out so parts never drop into the water table early. Flip on Common-Line Cutting to snap identical straight edges of neighboring plates together, cutting shared seams in a single kerf-compensated pass that cuts pierces in half and slashes skeleton scrap. Test immediately with the 1-click built-in <strong>Flat Sheet DXF Kit</strong> under Quick CAD Fixtures.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Dynamic Anti-Dive THC Locking on 2D Flat Sheet (All 12 CNC Dialects):</strong> Stop your torch from diving into the plate on sharp corners. When the torch slows down for tight 90&deg; corners, small bolt holes, or deceleration zones, the plasma arc cuts a wider ditch, raising arc voltage and tricking standalone Torch Height Controls (THC) into plunging downward. RotaryCAM now automatically generates controller-native anti-dive commands across all 12 supported CNC controllers (Mach4 WarpRunner digital outputs, LinuxCNC QTPlasmaC, FlashCut G602/G603, ShopSabre WinCNC, UCCNC, and FireControl), locking torch Z height during deceleration so your torch cuts flat and never snags plate tip-ups.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Magnetic 2-Point Reference Scaling &amp; Instant Unit Flip:</strong> Never waste time redrawing an unscaled customer DXF or an SVG exported at screen DPI. Click the <strong>Scale Part</strong> tool and click any two reference points on the drawing. Magnetic snapping locks right onto vertex corners, hole centers, or edge midpoints. Enter your measured dimension to scale the part to size, or hit <code class="mono">&times;25.4</code> / <code class="mono">&divide;25.4</code> to fix inch/metric mix-ups in one click.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Machine-Driven Imperial (<code class="mono">in / G20</code>) &amp; Metric (<code class="mono">mm / G21</code>) Units:</strong> Switch your machine profile between Imperial and Metric with one click. Tables like Langmuir FireControl and ShopSabre WinCNC output native 4-decimal <code class="mono">G20</code> inches with exact <code class="mono">IPM</code> (<code class="mono">&divide; 25.4</code>) cut speeds, while European and industrial tables run native <code class="mono">G21</code> millimeters and <code class="mono">mm/min</code> across both flat sheet and 4-axis rotary G-code. (See <a href="docs/rotary-and-sheet-feedrates.html" style="color: var(--plasma-amber); font-weight: 600;">Tutorial 11: Understanding G94, G93 &amp; G20/G21 Feedrates</a> for the complete shop math and kinematics guide).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>SimCNC Imperial G20 &amp; <code class="mono">Z#3</code> 3D Ramp Lead-In Simulation:</strong> When running SimCNC tables in Imperial (<code class="mono">G20</code> inch) mode with smooth 3D ramp lead-ins, the in-app 3D Cut Simulator now accurately evaluates touch-off surface variable <code class="mono">Z#3</code> and bracket offsets (<code class="mono">Z[#3 + 0.040]</code>). The 3D viewport animates the real torch altitude diving to cut height and ramping down into the cut with zero artificial offsets or display clipping.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Cursor-Anchored Zoom, Pan &amp; Click-to-Inspect Navigation:</strong> Smoothly zoom straight into tight cutouts or pan across full <code class="mono">4 &times; 8 ft</code> sheets right under your mouse cursor with zero jumpiness. Click any nested plate on the 2D sheet nesting bed, 1D tube stick, or 3D assembly overview to jump straight into Single Part view to inspect internal cut orders, lead-in positions, and bend-line markers.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 13, 2026 (v0.6.1)
-           ================================================================ -->
-      <article class="release-entry" id="v0.6.1">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 13, 2026</span>
-              <span class="release-version-pill">v0.6.1</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">6 Additional CNC Plasma Posts &bull; Clean Stationary Pierce, Dwell &amp; Straight-Down Cut-Height Plunge &bull; 3D Ramp Lead-Ins</span>
-          </div>
-          <p class="release-summary">
-            Expand your cutting table with 6 additional drop-in CNC plasma controller posts: grblHAL 32-bit, CNCdrive UCCNC, FlashCut Plasma, EdingCNC, PlanetCNC TNG, and ShopSabre WinCNC, complete with automated touch-off probing, corner anti-dive THC locking, and native rotary feeds. Plus, every direct-Z controller now executes an explicit stationary pierce, dwell, and straight vertical plunge to cut height before lateral motion, or glides down smoothly without pausing when 3D ramp lead-ins are turned on.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>6 Additional CNC Plasma Controller Post-Processors (<code>Maker $199</code> &amp; <code>Pro Shop $399</code>):</strong> Export ready-to-cut Single-Part and Pack Mode G-code for grblHAL 32-bit ($376 rotary + Plasma THC, <code>.nc</code>), CNCdrive UCCNC (<code>.nc</code>), FlashCut CNC Plasma (<code>.nc</code>/<code>.gc</code>), EdingCNC (<code>.nc</code>), PlanetCNC TNG (<code>.nc</code>), and ShopSabre WinCNC (<code>.tap</code> with square-bracket comments and M61/M62 macros) with zero post scripts or hand editing.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Clean Stationary Pierce, Dwell &amp; Straight-Down Cut-Height Plunge:</strong> Every controller that drives Z directly in G-code (<code>FireControl</code>, <code>Mach4</code>, <code>Mach3</code>, <code>grblHAL</code>, <code>UCCNC</code>, <code>EdingCNC</code>, <code>PlanetCNC</code>, dynamic-Z <code>MASSO G3</code>, and <code>Generic RS-274</code>) now strictly steps through surface touch-off, retract to pierce height, arc fire, exact stationary pierce delay (<code>G4</code>), and a straight vertical drop to cut height before moving laterally.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Smooth 3D Ramp Lead-Ins Without Double Dwell:</strong> When you enable 3D ramp lead-ins, RotaryCAM automatically skips the stationary cut-height drop. It fires the arc at pierce height, completes the pierce dwell, and ramps smoothly down in Z along the lead-in line directly into the cut without a mid-air pause or surface divot.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Expanded Multi-Controller Scribe Marking:</strong> EasyScribe consumables-swap pauses (<code>M0</code>) and offset pneumatic air-scribe passes (<code>M3 $1 S1</code>, <code>T111 M6</code>, <code>M39</code>, <code>M21/M20</code>, <code>G52</code>) now run seamlessly across all 12 supported CNC controllers.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-      <!-- ================================================================
-           RELEASE: November 10, 2026 (v0.5.1-v0.6.0)
-           ================================================================ -->
-      <article class="release-entry" id="v0.5.1-v0.6.0">
-        <span id="v0.6.0"></span><span id="v0.5.3"></span><span id="v0.5.2"></span><span id="v0.5.1"></span>
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 10, 2026</span>
-              <span class="release-version-pill" style="background: rgba(245, 158, 11, 0.12); color: var(--plasma-amber); border-color: rgba(245, 158, 11, 0.3);">v0.5.1-v0.6.0 &bull; FOUNDING LAUNCH</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">6 CNC Plasma Controller Posts &bull; Rectangular HSS Zero-Bevel &bull; 4-Axis Pipe Beveling &bull; C-Channel Beamline &bull; Founding Launch</span>
-          </div>
-          <p class="release-summary">
-            Export drop-in G-code across 6 CNC plasma controllers with smart 4-axis Z web and corner tracking, cut weld-ready rectangular HSS zero-bevel miters and 4-axis round pipe weld preps, scale small hole speeds to 60% for taper-free bolts, cut C-channel miters and terminal web slots cleanly, and activate founding fabricator perpetual offline licenses.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>6 Drop-In CNC Plasma Controller Post-Processors (<code>Maker $199</code> &amp; <code>Pro Shop $399</code>):</strong> Export ready-to-cut Single-Part and Pack Mode G-code for LinuxCNC QTPlasmaC (<code>.ngc</code>), Langmuir FireControl (<code>.tap</code>, including CrossFire round-pipe Y-wrap rotary chucks), Mach4 + Warp9 ESS / TMC3in1 (<code>.tap</code>), MASSO G3 + DTHC (<code>.nc</code>), Mach3 (<code>.tap</code>), and Centroid Acorn CNC12 Plasma (<code>.nc</code>) with zero hand-editing or custom post scripts.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Smart 4-Axis Z Corner &amp; Web Protection:</strong> Keep your controller's built-in touch-off and arc-voltage THC running on flat plate and round pipe, while RotaryCAM automatically coordinates 4-axis Z tracking when square or rectangular tube corners swing up toward your torch body or when you step down into C-Channel and I-Beam webs.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Inline Cut Presets or Your Console's Material Table:</strong> Push pierce height, pierce delay, cut height, speed, and arc voltage straight from your RotaryCAM cut preset into the G-code header, or flip one toggle to command your CNC controller's saved tool library (<code>M190</code> for QTPlasmaC, <code>G200 V0</code> for FireControl, <code>M65</code> for Acorn).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>EasyScribe, Pneumatic Air-Scribe &amp; Center-Punch Spotting (<code>Pro Shop $399</code>):</strong> Drag-scribe heat numbers and weld witness marks right through your plasma torch cup with an EasyScribe across all 6 controllers (with an automatic <code>M0</code> pause to swap consumables before firing the plasma arc), drive offset pneumatic air-scribes (<code>M3 $1 S1</code>, <code>T111 M6</code>, <code>M39</code>, <code>G52</code>), or dimple drill centers with sub-second plasma spotting.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Multi-Controller 3D Cut Simulator &amp; Native File Downloads:</strong> Preview probe touch-offs, rapid traverses, multi-tool scribe passes, and unwrapped FireControl round-pipe cuts in full 3D right in your browser before walking out to your cutting table. Single-part and pack exports automatically format in each controller's native extension (<code>.ngc</code>, <code>.tap</code>, <code>.nc</code>, <code>.gc</code>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>True Geometric Rectangular HSS Zero-Bevel Miters &amp; Copes:</strong> When you cut an angled miter or cope on square or rectangular tubing with a vertical torch, only the obtuse inside heel wall overhangs and holds the joint open. Zero-Bevel now pulls back strictly that interfering heel wall (<code>t &middot; tan(&theta;)</code>) while keeping your side walls and acute toes flush, eliminating hand grinding on square and rectangular tube miters.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>4-Axis Round-Tube Eccentric Weld-Prep Beveling (<code>Pro Shop $399</code> &bull; Free 3D Preview on Beta &amp; Maker):</strong> Cut real V-groove weld prep on structural round pipe without a 5-axis tilting bevel head. Your vertical torch shifts laterally off-center in <code>Y</code>, drops <code>Z</code> along the pipe curve to maintain standoff, and counter-rotates <code>A</code> smoothly across all 4 saddle quadrants so the angled pipe wall cuts a clean V-bevel right onto the joint (<a href="./#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">inspect free in 3D on Beta &amp; Maker; export G-code on Pro Shop &rarr;</a>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Rotary Small-Hole (<code>60%</code>) &ldquo;True Hole&rdquo; Bolt Speed Scaling:</strong> Enclosed bolt holes (<code>&le; 25.4 mm</code> / <code>1&Prime;</code>) on round pipe and square/rectangular tubes automatically slow down to <code>60%</code> surface cutting speed, stopping plasma arc-lag cone taper so your bolts drop straight through without reaming or redrilling.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Kerf-Compensated Micro-Joint Tabs &amp; Configurable ERW Weld-Seam Avoidance:</strong> Adds your full plasma kerf width to every tab gap so thin-wall micro-tabs never burn away before the torch shuts off, and lets you configure round or square/rectangular ERW weld-seam orientation so pierces automatically shift off thick internal mill weld flash.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>True-to-Model C-Channel Miter &amp; Slotted End Cuts:</strong> Cut compound miters, notched copes, and deep end-breaking web slots on C-Channel cleanly along your 3D CAD lines, with accurate flange thickness even when a deep slot splits the end cap, full-travel miter paths without stair-stepped flange cutbacks, safe Z retracts pinned right to each flange-to-web corner, and a 3D toolpath preview that sits squarely on the outer web.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Clean Edge Cutouts Without Lead-Out Overrun (<code>Lead-Out: None</code> Default):</strong> Flange-tip notches, copes, and open-ended web slots on Angle Iron, C-Channel, and I-Beam now default to <code>Lead-Out: None</code> so your torch shuts off cleanly right as it exits the open steel edge, letting the scrap slug drop free instead of over-running into good stock.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Founding Fabricator Perpetual Offline Licenses (<code>Maker</code> &amp; <code>Pro Shop</code>):</strong> Own your CAM setup outright with a 100% offline <code>rotarycam.lic</code> file that runs air-gapped at your plasma table forever, with full 3D preview unlocked on every profile and feature before you buy, plus instant checkout claim or USB thumb-drive activation. Pick <strong>Maker ($199)</strong> for 2 computers (Round Pipe, Square/Rect HSS &amp; Flat Bar, Zero-Bevel, custom machines, up to 5 parts/stick &amp; 5 bends/file, plus your shop name in the G-code header), or <strong>Pro Shop ($399)</strong> for 3 computers plus Angle Iron, C-Channel &amp; I-Beam cutting, unlimited multi-stick nesting with common-line sever cuts, tab cutting, part-ID scribing, and headless MCP automation. Both tiers include 1 full year of updates (<a href="./#pricing" style="color: var(--plasma-amber); font-weight: 600; text-decoration: none;">compare tiers &rarr;</a>).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Multi-CAD C-Channel &amp; Open-Profile Detection (<code>C4x4.0</code> / <code>C4x4.5</code>, Tapered Flanges &amp; Notched Channels):</strong> Drop in standard American (<code>C</code> &amp; <code>MC</code>, including sloped-flange <code>C4x4.0</code> and <code>C4x4.5</code>), European (<code>UPN</code> &amp; <code>UPE</code>), or <code>PFC</code> structural channels exported from Fusion 360 and other CAD tools (even with steep inner flange slopes, circular flange-tip notches, and open-ended web slots), and your part always detects as C-Channel instead of getting confused with I-Beam.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Open-Ended Terminal Web Slot Cutting &amp; Opposite-Flange Bolt Holes:</strong> Open-ended axial web slots breaking through C-Channel end caps now trace all the way down both slot walls and around the semicircular bottom instead of jumping straight across the mouth, and bolt holes on both flanges extract cleanly.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>~30&times; Faster Multi-Part STEP Assembly &amp; Witness-Mark Loading:</strong> Drop in a large multi-part weldment STEP file (such as a 37-part <em>Headache Rack</em>) and all your tubes, plates, weld witness marks, and mating end-cut tags load in ~9 seconds instead of ~4.5 minutes, with live progress keep-alive so heavy assemblies always finish loading before opening your workspace.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 9, 2026 (v0.5.0)
-           ================================================================ -->
-      <article class="release-entry" id="v0.5.0">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 9, 2026</span>
-              <span class="release-version-pill">v0.5.0</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">I-Beam &amp; C-Channel 4-Axis Beamline Cutting &bull; Knee-Clearance Rotation &bull; Center-Point Dimple &amp; Peck Marking</span>
-          </div>
-          <p class="release-summary">
-            Cut structural I-Beams (H-Beams) and C-Channels right on your 4-axis XYZA rotary plasma table without a 5-axis bevel head, dimple drill or punch centers with a single stationary plasma spot or pneumatic scribe peck, or click <code>I-Beam [BEAMLINE]</code> in the left sidebar to load a sample beam and watch the toolpath run in 3D.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Cut Structural I-Beams &amp; C-Channels on a 4-Axis Rotary (&ldquo;Beamline Emulation&rdquo;):</strong> Drop in 3D STEP models of structural I-Beams (H-Beams) or C-Channels (<code>Profile_IBeam</code> &amp; <code>Profile_Channel</code>) and cut flange bolt holes, web slots, miters, and copes directly on your 4-axis XYZA rotary plasma cutter without needing a 5-axis bevel head.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Outside-Only Flange (&ldquo;Leg&rdquo;) Cuts with Straight-Off-the-Tip Lead-Ins:</strong> Cut both outer flange legs from the outside (<code>A = 0&deg;</code> and <code>A = 180&deg;</code>, <code>Z = 0</code>) while extending lead-ins and lead-outs straight off the flange tips in thin air so the torch starts cleanly outside the steel without wrapping around the edge or diving into the web.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Recessed Central Web Cutting &amp; Dynamic Knee-Clearance Rotation:</strong> For web holes, full-web slots, and copes, the torch drops down into the recessed central web (<code>A = &plusmn;90&deg;</code>) and automatically rotates the beam up to <code>45&deg;</code> as the torch approaches the inside web-to-flange knee so the overhanging flange leg swings out of the way of your torch shield cup, letting the arc cut all the way into the inside root fillet without colliding with the legs.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Separate Per-Wall Sever Cuts &amp; Safe Swing-Radius Retracts:</strong> Compound miter and cope end cuts across the top leg, web, and bottom leg are automatically split into separate per-wall cuts with safe Z retracts above the flange-tip swing radius between rotations, plus full 3D stock and flange-clearance visualization in the 3D Cut Simulator and CAD Viewer.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong><code>I-Beam [BEAMLINE]</code> Quick CAD Fixture in the Left Sidebar (<code>I-Beam1.step</code>):</strong> Click <strong>I-Beam [BEAMLINE]</strong> (<code>I-Beam1.step</code>) under <strong>Quick CAD Fixtures</strong> in the left sidebar navigation to load a ready-to-cut structural I-Beam in one click so you can inspect outside flange cuts, recessed web slots, and knee-clearance rotation in the 3D Cut Simulator before loading your own STEP file.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Stationary Center-Point Marking (<code>Contour</code> vs <code>Center Point</code>: Plasma Dimple &amp; Scribe Peck):</strong> Switch any hole or cutout from full <code>Contour</code> cutting to a single stationary <code>Center Point</code> mark to dimple drill or punch centers with a timed plasma spot or pneumatic scribe peck (<code>#1115</code> dwell &amp; <code>#1116</code> standoff).
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: November 4, 2026 (v0.4.1)
+           WEEK OF NOVEMBER 2 - 8, 2026 (v0.4.0 - v0.4.1)
            ================================================================ -->
       <article class="release-entry" id="v0.4.1">
+        <span id="v0.4.0"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">November 4, 2026</span>
-              <span class="release-version-pill">v0.4.1</span>
+              <span class="release-date">Week of November 2, 2026</span>
+              <span class="release-version-pill">v0.4.0 &ndash; v0.4.1</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Simulator G-Code Line Tracking &bull; Cleaner Single-Part View</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Auto-Scribe Piece IDs &amp; Weld Marks &bull; Chuck No-Cut Zones &bull; 1/8&Prime; Wall Presets</span>
           </div>
           <p class="release-summary">
-            Watch the G-code follow the torch while the cut simulator runs, and inspect single parts without the red chuck jaw band in the way.
+            Label every tube with its part ID, mating joint callouts, and weld witness marks so parts assemble fast on the welding table, protect your chuck jaws from torch crashes, and cut non-standard tube walls cleanly.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Follow Along in the G-Code While the Simulator Runs:</strong> When you play, step, or scrub the cut simulation, the G-code line the torch is running lights up in the G-code panel on the right. The panel scrolls with it, so you always see which line made the move.
+                <strong>Auto-Scribe Piece IDs, Mating Callouts (<code>P1</code> &harr; <code>P12</code>) &amp; Weld Witness Marks:</strong> Stencil part numbers, mating connection IDs right at each coped end, and weld footprint marks onto tubes and plates using EasyScribe or low-amp plasma marking so fit-up takes seconds without hunting through drawings.
               </div>
             </li>
             <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>No Chuck Jaw Band on Single Parts:</strong> The red chuck jaw dead-zone band no longer covers your part when you inspect a single part. You still see it in the nesting/pack view and the cut simulator, where it decides what you can cut.
+                <strong>Chuck Jaw No-Cut Zones &amp; Min Stock to Load:</strong> Set your chuck jaw dead zone and steady-rest keep-out bands so 1D stick nesting reserves grip stock automatically, shows exact minimum stick length to load, and warns you before a crash.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>1/8&Prime; Structural Wall Presets &amp; Auto Cut-Chart Blending:</strong> Added 1/8&Prime; (<code>3.175 mm</code>) mild steel and stainless presets plus automatic blending between gauge rows for odd tube wall thicknesses.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-improvement">IMPROVED</span>
+              <div class="change-content">
+                <strong>Live G-Code Tracking &amp; Cleaner Single-Part View:</strong> The G-code panel highlights and scrolls with the active cut line during 3D simulation, and the red chuck band stays hidden when inspecting a single part.
               </div>
             </li>
           </ul>
@@ -2195,113 +1515,45 @@
       </article>
 
       <!-- ================================================================
-           RELEASE: November 2, 2026 (v0.4.0)
-           ================================================================ -->
-      <article class="release-entry" id="v0.4.0">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 2, 2026</span>
-              <span class="release-version-pill">v0.4.0</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Auto-Scribe Piece IDs &amp; Mating Callouts (P1 &harr; P12) &bull; Multi-Stroke Witness Marks &bull; 1/8&Prime; Cut Presets &amp; Auto Interpolation &bull; Chuck Jaw &ldquo;No-Cut&rdquo; Zones</span>
-          </div>
-          <p class="release-summary">
-            Stencil single-stroke Piece IDs (<code>P1</code>, <code>P2</code>, &hellip;, <code>P12</code>), mating connection callouts (<code>P1</code> &harr; <code>P12</code>) right at every coped/mitered end cut and receiving weld footprint, and clean multi-stroke weld witness marks onto your tubes and flat plates so you know which piece connects where on the welding table without hunting through drawings or grabbing a tape measure. Cut <code>1/8&Prime;</code> (<code>3.175 mm</code>) structural wall and in-between tube gauges with built-in presets and automatic cut-chart interpolation, and protect your torch and chuck with configurable Chuck Jaw Dead Zones (<code>65 mm</code>), 3D red no-cut collision sleeves, and exact <strong>Min Stock to Load</strong> readouts.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Automatic Piece Labeling, Mating Connection Callouts (<code>P1</code> &harr; <code>P12</code>) &amp; Assembly Weld Witness Marks (Zero Sidecar Required):</strong> When you load a multi-part STEP assembly, your parts are automatically assigned short piece IDs (<code>P1</code>, <code>P2</code>, &hellip;, <code>P12</code>) matching your part list. Turn on one-click <strong>Auto-Scribe Part IDs</strong> to stencil single-stroke CNC stick-font labels onto the longest clear flat face or round-tube top crest, steering clear of holes, miters, and <code>.markings.json</code> artwork with clean <code>M5</code> &rarr; <code>G0</code> &rarr; <code>M3 S1</code> rapid hops between strokes via mechanical <strong>EasyScribe</strong> (<code>#1114=3</code>) or low-amperage <strong>Plasma Mark</strong> (<code>#1114=2</code> at <code>#1111=15A</code>). In addition to marking each piece with its own ID (<code>P1</code>) and scribing <code>5 mm</code> weld witness footprints where branch tubes or flat brackets touch a main header tube (<code>&le; 0.5 mm</code>), you get the <strong>mating piece ID scribed right at each end cut</strong> (for example, <code>P12</code> just inside <code>P1</code>'s coped or mitered end cut) and <strong>next to each receiving witness footprint</strong> (for example, <code>P1</code> beside the witness mark on <code>P12</code>), so you know at a glance which piece connects to which joint on the welding table.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Clean Multi-Stroke Witness Marks on Flat &amp; Tube Assemblies:</strong> Fixed multi-stroke witness mark G-code on flat plates and HSS/pipe assemblies so the torch turns off (<code>M5</code>) and retracts cleanly to Safe Z between every layout dash (never dragging a live arc between marks) and steps across louver and slot grids in one smooth direction in both Single-Part and Pack Mode.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Automatic Cut-Chart Interpolation &amp; 1/8&Prime; Structural Wall Presets:</strong> Added built-in <code>1/8&Prime;</code> (<code>3.175 mm</code>) Mild Steel and Stainless Steel Hypertherm SYNC presets plus automatic cut-chart interpolation whenever your tube wall or plate thickness falls between standard gauge rows. It automatically blends feedrate, arc voltage, and pierce delay from the nearest thinner and thicker charts so non-standard wall tubing cuts cleanly right off the CAD model.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Chuck Jaw, Steady-Rest &amp; Roller &ldquo;No-Cut&rdquo; Collision Zones &amp; Minimum Stick Load Length:</strong> Set your machine's <strong>Chuck Jaw Dead Zone</strong> (default <code>65 mm</code>), <strong>Min Chuck Grip Length</strong> (default <code>80 mm</code>), and steady-rest/roller keep-out bands in Machine Settings. RotaryCAM automatically subtracts the chuck dead zone from raw stick capacity during 1D tube nesting (<code>L_available = L_stick - L_dead</code>), calculates and displays the exact <strong>Min Stock to Load</strong> (<code>L_cut + L_dead</code>) in Single-Part and Pack Mode, renders 3D rotary chuck jaws and a translucent red no-cut zone in the CAD viewer, 3D simulator, and 1D stick bar, and flags pre-flight collision warnings before you hit Cycle Start.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>3D Cut Simulator Fitted Stock Bounds, Chuck Beyond Last Cut &amp; Live Torch Tracking:</strong> Simulated rotary stock now extends strictly across the required G-code cut span plus the uncut chuck dead-zone tail beyond the last cut so the 3D chuck jaws and red keep-out sleeve never overlap active cuts, while the camera follows the torch along the tube without bobbing on Z plunges and supports full-stick visibility up to 100,000 mm.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: October 31, 2026
+           WEEK OF OCTOBER 26 - NOVEMBER 1, 2026 (v0.3.0 - v0.3.2)
            ================================================================ -->
       <article class="release-entry" id="v0.3.2">
+        <span id="v0.3.1"></span><span id="v0.3.0"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">October 31, 2026</span>
-              <span class="release-version-pill">v0.3.2</span>
+              <span class="release-date">Week of October 26, 2026</span>
+              <span class="release-version-pill">v0.3.0 &ndash; v0.3.2</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Interlocking Miter &amp; Cope Nesting &bull; Common-Line Sever Cuts &bull; EasyScribe &amp; Plasma Mark (#1114=1/2/3) &bull; Batch Overrides &bull; 3D Ramp &amp; Zero-Overburn Defaults</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Interlocking Stick Nesting &bull; 2D Sheet Nesting &bull; EasyScribe &amp; Plasma Mark &bull; Small-Tube Pierce Protection</span>
           </div>
           <p class="release-summary">
-            Pack more parts onto every mill stick by automatically flipping tubes 180&deg; end-for-end and rolling them on the A-axis so miters and fishmouth copes interlock tightly, merge matching cutoffs into a single shared common-line sever cut, and switch any contour between full plasma cutting (<code>⚡ Cut</code>, <code>#1114=1</code>), low-amperage plasma marking (<code>🔥 Plasma Mark</code>, <code>#1114=2</code>), and mechanical EasyScribe proofing (<code>✏️ Scribe</code>, <code>#1114=3</code>).
+            Fit more parts on every 20ft or 24ft stick by interlocking angled ends, nest flat brackets on 2D sheets, switch any feature between Cut, Plasma Mark, or EasyScribe, and stop blow-through on small hollow tubes.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Interlocking Miter &amp; Cope Stick Nesting (180&deg; End-for-End Flip + A-Axis Roll):</strong> When packing tubes onto a raw stick, you no longer lose inches of material to triangular scrap wedges between angled ends. RotaryCAM automatically tests 180&deg; end-for-end flips and A-axis roll rotations on every tube in your stick pack so adjacent miters and fishmouth copes nest tightly into each other, fitting more parts onto every 20ft / 24ft / 6m stick.
+                <strong>Interlocking Miter/Cope Stick Nesting &amp; Common-Line Severing:</strong> Automatically flips and rolls tubes on the stick so angled miters and fishmouths interlock tightly, with optional single-cut shared severs that cut cutoff pierces in half.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Optional Single-Cut Common-Line Severing:</strong> Turn on the new <strong>Common-line sever cuts</strong> toggle in Multi-Part Pack Nesting to merge matching 90&deg; square cutoffs or complementary miter joints into a single shared sever cut with an on-kerf pierce. This cuts your cutoff pierces in half, saves torch consumables, and eliminates loose scrap rings between parts.
+                <strong>2D Sheet Nesting &amp; Guaranteed Flat <code>G94</code> Feedrates:</strong> Nest flat plates and brackets across configurable sheet sizes with inside-out cutout ordering, while flat stock always outputs standard linear feedrates even on rotary machines.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>EasyScribe Per-Feature Scribe Mode &amp; Sidecar Markings (<code>.markings.json</code>):</strong> Switch any individual CAD feature (holes, notches, cutouts, end cuts) or an entire tube or sheet (<code>✏️ Scribe All</code>) between all 3 supported modes directly in the feature table or batch toolbar: <strong>⚡ Cut</strong> (<code>#1114=1</code>) for full plasma cutting, <strong>🔥 Plasma Mark</strong> (<code>#1114=2</code>) for low-amperage plasma scoring/etching (<code>15A</code> target or cartridge minimum floor, <code>0s</code> pierce delay, exact CAD line) without swapping out your cutting cartridge, and <strong>✏️ Scribe</strong> (<code>#1114=3</code>) for mechanical EasyScribe proofing (<code>-3 mm</code> spring compression, arc OFF, exact CAD line with corner-tilt damping bypassed around square/rectangular HSS and round HSS-O corners). Upload <code>.markings.json</code> sidecar files alongside <code>.step</code> models (or inside a <code>.zip</code>) and assign any layout mark to Scribe, Plasma Mark, or Cut. Mechanical scribes (<code>#1114=3</code>) run first, followed by plasma marks (<code>#1114=2</code>), before any plasma through-cuts (<code>#1114=1</code>).
+                <strong>Per-Feature Cut, Plasma Mark &amp; EasyScribe + Batch Edits:</strong> Switch any hole, notch, or whole part between full plasma cut, low-amp plasma etch, or mechanical EasyScribe, and batch-edit multiple features at once.
               </div>
             </li>
             <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
+              <span class="badge-tag badge-improvement">IMPROVED</span>
               <div class="change-content">
-                <strong>Batch Feature Selection &amp; Batch Overrides:</strong> Select multiple features at once (Shift-click range selection, Select All, or filter by feature type) to batch-apply enable/disable, Cut / Plasma Mark / Scribe mode, Zero-Bevel, Corner Loop, 3D Ramp Lead-In, Zero-Overburn, Tabs, and Feedrate overrides in one step.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>3D Ramp Lead-In &amp; Corner-Safe Zero-Overburn Smart Defaults:</strong> Enabled by default across closed-profile sever cuts (<code>Startcut</code>/<code>Endcut</code>), cutouts, and holes, with automatic post-corner straight buffer protection (<code>max(kerfWidth, 1.5 mm)</code>) after 90&deg; corners and exact straight-segment splitting so early torch-out (<code>M5</code>) never extinguishes mid-corner.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Straight-Wall Midpoint Pierce &amp; Small-Tube Cavity Pierce Derating:</strong> Pierces at the true geometric midpoint of unsubdivided straight axial cutout walls on rectangular/square HSS tubes (scaling corner and weld-seam exclusion zones on small <code>&lt; 1.5&Prime;</code> tubes so flat-face walls aren't skipped), and automatically derates stationary pierce dwell on narrow hollow tubes (<code>D_cavity &lt; 1.5&Prime;</code> / <code>38.1 mm</code>, plus <code>0.25s</code> 12 GA Mild Steel presets) so the plasma jet doesn't blow across the inner cavity and scar the opposite wall.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>SimCNC <code>m3.py</code> Pre-Pierce Parameters (<code>#1091</code> &amp; <code>#1092</code>):</strong> Emits <code>#1091</code> (effective stationary pierce delay in seconds) and <code>#1092</code> (calculated surface cut feedrate) before <code>M3</code> for dynamic SimCNC torch-on macro control.
+                <strong>Faster Indexing, Snake Cutout Order &amp; Small-Tube Pierce Protection:</strong> Rotary indexing runs at full machine rapid limits, coaxial cutouts cut in a back-and-forth snake to avoid wind-up, and narrow tubes (<code>&lt; 1.5&Prime;</code>) automatically shorten pierce delay so the arc doesn't scar the opposite inner wall.
               </div>
             </li>
           </ul>
@@ -2309,164 +1561,45 @@
       </article>
 
       <!-- ================================================================
-           RELEASE: October 30, 2026
-           ================================================================ -->
-      <article class="release-entry" id="v0.3.1">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">October 30, 2026</span>
-              <span class="release-version-pill">v0.3.1</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Full-Speed G93 Indexing &bull; Snake A-Axis Cutout Ordering &bull; Optional #1111/#1112 &bull; 1&Prime;&times;1&Prime; HSS Sever THC Unlock</span>
-          </div>
-          <p class="release-summary">
-            Index between cuts at your machine's full G93 inverse-time rapid and rotary velocity limits, sequence co-axial cutouts in a contiguous circular snake pattern to eliminate 180&deg; cross-face jumps and A-axis wind-up, toggle pre-pierce RS485 amperage (<code>#1111</code>) and gas pressure (<code>#1112</code>) outputs per machine, and keep hardware THC (<code>M62 P0</code>) unlocked across all 3 full flat faces on 1&Prime;&times;1&Prime; HSS sever cuts even at high cutting speeds.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Full-Speed <code>G93</code> Inter-Feature Indexing:</strong> Native <code>G93</code> inverse-time indexing moves between cuts now run at your full machine <code>maxVelA</code> and <code>rapidRate</code> limits instead of the non-G93 <em>Safe Rotation</em> speed (<code>interFeatureRotationFeedRate</code>), and <em>Safe Rotation (&deg;/min)</em> in Machine Settings is automatically disabled when <code>G93</code> mode is active.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Contiguous Snake A-Axis Cutout Ordering:</strong> Co-axial internal cutouts at the same X station now cut in a contiguous circular chain and alternate (snake) direction from station to station, eliminating 180&deg; cross-face jumps and cumulative negative A-axis wind-up.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Optional Pre-Pierce Amperage (<code>#1111</code>) &amp; Gas Pressure (<code>#1112</code>) Outputs:</strong> Added per-machine <em>Emit Amperage (<code>#1111</code>)</em> and <em>Emit Gas Pressure (<code>#1112</code>)</em> checkboxes under <em>Machine Settings &rarr; Dynamic Parameter Modulation</em> (off by default) so pre-pierce RS485 parameters are only emitted when your cutter uses them.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>1&Prime;&times;1&Prime; HSS Sever Cut Flat-Face THC Unlock at High Cut Speeds:</strong> Corner-approach deceleration ramps on rectangular and square HSS tubes no longer double-lock straight flat faces outside the geometric corner window, keeping hardware THC unlocked (<code>M62 P0</code>) across all 3 full flat faces on 1&Prime;&times;1&Prime; (<code>25.4&times;25.4 mm</code>) HSS <code>Startcut</code> and <code>Endcut</code> severs even at high plasma cutting speeds.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: October 29, 2026
-           ================================================================ -->
-      <article class="release-entry" id="v0.3.0">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">October 29, 2026</span>
-              <span class="release-version-pill">v0.3.0</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">VectorNester 2.0 2D Sheet Nesting &bull; Guaranteed G94 Flat Cutting &bull; 5-Rule THC Filter &bull; Max Amperage Cap</span>
-          </div>
-          <p class="release-summary">
-            Pack flat brackets and gussets across 2D sheets alongside your tube nests with VectorNester 2.0 (including Part-in-Hole cavity nesting and adaptive guillotine remnant optimization), cut flat stock in guaranteed G94 linear feedrate mode even on G93 rotary machines, switch nesting profiles instantaneously, keep hardware THC active across every flat HSS face, and cap Hypertherm SYNC cartridge selection to your plasma power supply's rated amperage.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>2D XY Sheet Nesting with VectorNester 2.0:</strong> Pack flat bar and sheet parts (<code>Profile_Flat</code>) across configurable <em>Sheet Length (X)</em> and <em>Sheet Width (Y)</em> stock using adaptive guillotine remnant optimization, obstacle-relative edge matching, and Part-in-Hole interior cavity nesting with automatic inside-out containment cut ordering so inner parts sever before the outer ring drops. Includes an interactive 2D SVG nest preview showing part contours, interior holes, and 90&deg; rotations, plus exact 3D simulator sheet dimensions.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Guaranteed <code>G94</code> Linear Feedrates on Flat Stock:</strong> Flat stock always outputs standard <code>G94</code> (mm/min or IPM) linear feedrates in both single-part and pack mode, even when your active machine profile is set to <code>G93</code> inverse-time mode for rotary tubes.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-performance">PERFORMANCE</span>
-              <div class="change-content">
-                <strong>Instant Nesting Profile Switching:</strong> Switching cutting profiles or editing nesting quantities in Multi-Part Pack Nesting immediately cancels any in-flight G-code compilation and replaces pending UI swaps (<code>hx-sync</code>) so your workspace responds instantaneously.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Max Plasma Amperage Machine Cap (<code>maxAmperage</code>):</strong> Set your plasma power supply's rated limit (45A, 65A, 85A, or 105A) under <em>Machine Settings &rarr; THC &amp; Plasma Hardware</em>. Smart cartridge selection caps recommendations to your machine's max amperage, grays out oversized cartridges, and warns you if a selected preset exceeds your power supply.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>5-Rule Hardware THC <code>M63</code>/<code>M62</code> Filter &amp; Full HSS Sever Unlock:</strong> Locks hardware THC (<code>M63 P0</code>) across lead-ins, sharp turns (&gt;10&deg; or <code>R &lt; 15 mm</code>), 4-axis tube corners, slowdowns (&lt;85% feed), and pierce craters, then unlocks (<code>M62 P0</code>) cleanly across every flat wall on square and rectangular HSS sever cuts (<code>Startcut</code> / <code>Endcut</code>, down to 1&Prime;&times;1&Prime; / 25.4&times;25.4 mm tube).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Round &amp; Rectangular Tube Preamble Macros (<code>#1120</code> Material Width):</strong> Add custom startup macros for round pipe (<code>roundPreambleMacro</code>) and square/rectangular HSS (<code>rectangularPreambleMacro</code>) in Machine Settings. Your G-code preamble automatically sets <code>#1120</code> to the part's width at <code>A=0</code> before running your ohmic torch-centering routine.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>One-Direction (<code>X</code>) Cut Ordering &amp; Optional Post-<code>M5</code> Dwell:</strong> Built-in profiles now cut sequentially in one direction along <code>X</code> by default so long tubes feed smoothly out of your chuck and rollers without back-and-forth rapids (turn Thermal Hedging back on anytime for thin-wall stock). The post-<code>M5</code> <code>G4 P200</code> Z-axis unwind dwell is also now optional and off by default for faster retracts.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Flat Profile 3D Cut Preview, Profile Override Reset &amp; Single Default Machine:</strong> Cutting paths on flat bar and plate parts now sit flat on the 3D surface instead of wrapping around an imaginary cylinder, a <code>&#x21BA; Reset</code> button restores the auto-detected profile after a manual override, and your chosen default machine profile is strictly enforced and loaded on every new STEP file.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: October 23, 2026
+           WEEK OF OCTOBER 19 - 25, 2026 (v0.2.2 - v0.2.4)
            ================================================================ -->
       <article class="release-entry" id="v0.2.4">
+        <span id="v0.2.3"></span><span id="v0.2.2"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">October 23, 2026</span>
-              <span class="release-version-pill">v0.2.4</span>
+              <span class="release-date">Week of October 19, 2026</span>
+              <span class="release-version-pill">v0.2.2 &ndash; v0.2.4</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Offline MCP Server &bull; Kinematics Physics Tools &bull; Headless CAM</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">3D Cut-and-Bend Tube Unfolding &bull; Multi-Stick ZIP Export &bull; ClearPath Presets &bull; Offline Automation</span>
           </div>
           <p class="release-summary">
-            Shipped a standalone, 100% offline Model Context Protocol (MCP) stdio server directly inside release bundles. Fabricators can now automate CAD inspection, zero-beveling, kinematics physics calculations, and G-code generation through Claude Desktop, Cursor, or local LLMs without sending any files to the cloud.
+            Unfold 3D bent square and rectangular tubes into straight cut-and-bend sticks with kerf relief slots, export multi-stick jobs in one ZIP, and run tuned ClearPath servo motion presets.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>100% Offline MCP Stdio Server (<code>rotarycam-mcp</code>):</strong> Shipped cross-platform binaries for macOS (arm64), Linux (x64), and Windows (x64). Automatically discovers co-located <code>rotarycam.lic</code> and executes 19 CAD, CAM, kinematics, and nesting tools locally.
+                <strong>3D Bent Tube Cut-and-Bend Unfolding:</strong> Load bent square or rectangular tube STEP files and unfold them into straight sticks with automatic bend relief slots, living-hinge spines, and adjustable relief cut counts.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Kinematics Physics Tools:</strong> Added first-principles mechanical verification tools: <code>axis_max_velocity</code>, <code>axis_max_acceleration</code>, <code>axis_jerk_from_ramp</code>, <code>lead_screw_travel</code>, <code>rack_pinion_travel</code>, and <code>rotary_travel</code> to validate axis drive gearing and stepper/servo limits before cutting.
+                <strong>Multi-Stick ZIP Export &amp; Chuck Direction Options:</strong> Download all nested sticks in one ZIP archive with a cut manifest, and flip <code>+X</code>/<code>-X</code> travel direction to match front- or rear-mounted rotary chucks.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Headless STEP CAM Automation:</strong> Exposing <code>analyze_step</code>, <code>apply_zero_bevel</code>, and <code>generate_gcode</code> for fully automated script-driven CAM toolpath generation directly from terminal sessions.
+                <strong>ClearPath Servo Presets &amp; Accurate Cut-Time Estimates:</strong> Added tuned acceleration profiles for 10:1 planetary chucks with Teknic ClearPath servos, matching simulated cycle times to the real table within 2%.
               </div>
             </li>
             <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
+              <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>WebGL 3D Handoff (<code>open_in_rotarycam</code>):</strong> Terminal and MCP workflows can launch the interactive 3D WebGL viewport in your default browser with a single tool call, instantly loading your STEP solid with colored cut contours.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-performance">PERFORMANCE</span>
-              <div class="change-content">
-                <strong>Zero-Network License Validation:</strong> Offline Ed25519 signature checks verify license tokens in under 1 millisecond with zero external network socket requests.
+                <strong>100% Offline Automation Tools:</strong> Added local command-line and scriptable CAM tools so shops can batch-inspect STEP files and generate G-code offline without cloud uploads.
               </div>
             </li>
           </ul>
@@ -2474,197 +1607,45 @@
       </article>
 
       <!-- ================================================================
-           RELEASE: October 22, 2026
-           ================================================================ -->
-      <article class="release-entry" id="v0.2.3">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">October 22, 2026</span>
-              <span class="release-version-pill">v0.2.3</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">ClearPath Servos &bull; M108 Toggle &bull; Bent Rectangular HSS</span>
-          </div>
-          <p class="release-summary">
-            Tuned machine motion presets for high-speed Teknic ClearPath servos, defaulted M108 auxiliary velocity off for SimCNC compatibility, improved rectangular HSS spine unrolling, and refined G93 inverse-time simulator timing.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Tuned Teknic ClearPath Servo Profiles:</strong> Added pre-configured acceleration and jerk limits matched to 10:1 planetary rotary chucks and ClearPath CPM-SDSK servos.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>M108 Feed Velocity Toggle Defaulted Off:</strong> Auxiliary M108 velocity commands are now optional and defaulted to off to eliminate syntax conflicts on standard SimCNC and Mach4 controllers.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Continuous-Spine Bent Rectangular HSS Unrolling:</strong> Unfolding rectangular tubing across non-square cross-sections preserves uncut living-hinge webs without tearing corner geometry.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-performance">PERFORMANCE</span>
-              <div class="change-content">
-                <strong>Realistic G93 Simulator Timing:</strong> 3D toolpath simulation now accurately calculates rotary axis acceleration ramps and G93 inverse-time cycles, matching actual machine cutting times within 2%.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Non-Resident Session Storage:</strong> Disk-backed streaming session storage prevents RAM spikes when processing large assemblies with dozens of complex tubes.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: October 20, 2026
-           ================================================================ -->
-      <article class="release-entry" id="v0.2.2">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">October 20, 2026</span>
-              <span class="release-version-pill">v0.2.2</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">3D Cut-and-Bend Unfolding &bull; Multi-Stick ZIP Export &bull; SimCNC 3.6</span>
-          </div>
-          <p class="release-summary">
-            Introduced 3D Bent Tube cut-and-bend unfolding for square and rectangular tubing, multi-stick ZIP G-code bundling, dedicated SimCNC 3.5 vs. 3.6 beta post-processor profiles, and flat wall corner tracking.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>3D Bent Tube Cut-and-Bend Unfolding:</strong> Import 3D bent tube STEP files. RotaryCAM automatically detects bend centerlines, unfolds the tube into a straight stick, and programs kerf-relief slots with living hinge spines.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Multi-Stick ZIP Download:</strong> Automatically packages all nested sticks into a single ZIP archive containing individual numerical control files (<code>stick_01.nc</code>, <code>stick_02.nc</code>) and a complete nesting manifest.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>SimCNC 3.5 vs. 3.6 Beta Controller Profiles:</strong> Tailored G-code output supporting SimCNC 3.6 beta kinematics updates and legacy 3.5 motion scripts.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Configurable X Travel Direction:</strong> Machine profiles now support toggling +X forward vs. -X forward motion to match your rotary chuck orientation (front-mounted vs. rear-mounted).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Collapsible Bend Groups:</strong> Inspect each bend independently, override relief cut counts (e.g. <code>3 &rarr; 5</code> cuts), and adjust uncut web width (<code>Edge Left: 30 mm</code>) directly in the cut-path panel.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIX</span>
-              <div class="change-content">
-                <strong>Flat HSS Cheek Cut Corner Tracking:</strong> Fixed lead-in divots on rectangular tube flat walls by forcing straight-line tangent entries on outer corner radiuses.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: October 18, 2026
+           WEEK OF OCTOBER 12 - 18, 2026 (v0.2.0 - v0.2.1)
            ================================================================ -->
       <article class="release-entry" id="v0.2.1">
+        <span id="v0.2.0"></span>
         <div class="release-marker"></div>
         <div class="release-card">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">October 18, 2026</span>
-              <span class="release-version-pill">v0.2.1</span>
+              <span class="release-date">Week of October 12, 2026</span>
+              <span class="release-version-pill">v0.2.0 &ndash; v0.2.1</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">1D Mill-Stick Nesting &bull; Kerf Compensation &bull; Remnant Management</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Public Beta Launch &bull; Zero-Bevel Pipe Saddles &bull; 1D Mill-Stick Nesting &bull; Corner Anti-Dive THC</span>
           </div>
           <p class="release-summary">
-            Shipped universal multi-part stick nesting. Pack full CAD chassis frames and headache racks across standard 20ft / 6m mill sticks with automated kerf spacing, remnant tracking, and thermal hop cut sequencing.
+            Initial public beta release: cut zero-gap round pipe saddles with a vertical torch, pack multi-part tube frames onto 20ft/6m mill sticks, and lock THC around corners so the torch never dives.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Universal 1D Stick Nesting:</strong> Ingest multi-body assemblies (up to 37 tubes) and pack matching cross-sections across multiple sticks with configurable inter-part gaps (e.g. <code>10 mm</code>).
+                <strong>Zero-Bevel Round Pipe Saddle Fit-Up:</strong> Compensates perpendicular-torch saddle cuts so round pipe joints fit tight against the mating pipe with minimal or no grinding.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Remnant Management &amp; Cut Efficiency:</strong> Computes exact remnant offcut lengths and displays stick utilization percentages (consistently exceeding 99% on production runs).
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-performance">PERFORMANCE</span>
-              <div class="change-content">
-                <strong>Thermal Hop Sequencing:</strong> Alternates cut contours along opposite ends of the tube to minimize localized heat buildup and eliminate thermal expansion drift during long cutting jobs.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-improvement">IMPROVEMENT</span>
-              <div class="change-content">
-                <strong>Automatic Profile Cross-Section Filtering:</strong> Automatically separates 2x2 square tubing from 1.75in round tube and routes parts to corresponding stock nests.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           RELEASE: October 16, 2026
-           ================================================================ -->
-      <article class="release-entry" id="v0.2.0">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">October 16, 2026</span>
-              <span class="release-version-pill">v0.2.0</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Dual-Curve Zero-Bevel &bull; 4D Feedrate Scaling &bull; FOVNet AI</span>
-          </div>
-          <p class="release-summary">
-            Initial public beta milestone: Dual-curve zero-bevel saddle joint compensation, 4D SimCNC feedrate scaling, and deep neural network solid profile classification from raw STEP B-Rep topology.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Dual-Curve Zero-Bevel Saddle Compensation:</strong> Solves the perpendicular torch problem on round pipe. Shifts cutting curves to the inner cylinder intersection, eliminating grinding for tight, zero-gap saddle fitups.
+                <strong>1D Mill-Stick Nesting &amp; Remnant Tracking:</strong> Load multi-tube assemblies (such as chassis frames and headache racks), separate round and square stock automatically, and pack parts across 20ft/6m sticks with kerf spacing and remnant lengths.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>4D SimCNC Trajectory Feedrate Scaling:</strong> Dynamically calculates 4D Euclidean motion vector scaling (<code>useSimCNC: true</code>) to guarantee steady surface torch velocity across rapid rotary moves without native inverse-time support.
+                <strong>Corner Anti-Dive THC Lock &amp; Smooth Rotary Speeds:</strong> Automatically locks Torch Height Control during sharp corner slowdowns to stop torch dives, and keeps surface cutting speed steady across combined X/Y/Z/A moves.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>FOVNet Solid Profile Classifier:</strong> Graph neural network analyzes 3D STEP geometry directly, identifying round pipe, square tube, rectangular HSS, angle iron, and channel profiles instantly.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Dynamic THC Corner Anti-Dive Locking:</strong> Issues synchronized <code>M62</code> / <code>M63</code> high-speed digital output commands during corner slowdowns, preventing the torch from diving into the tube wall.
+                <strong>Automatic Tube &amp; Profile Detection:</strong> Drop in raw 3D STEP models and RotaryCAM identifies round pipe, square tube, rectangular HSS, angle iron, and channel automatically.
               </div>
             </li>
           </ul>
