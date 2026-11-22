@@ -29,19 +29,32 @@
         <article class="doc-step-card" id="step-1">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 01</span>
-            <h2 class="doc-step-title">Void THC Auto-Lock (Zero Torch Dives)</h2>
+            <h2 class="doc-step-title">Geometric Kerf-Crossing / Prior-Void Spatial THC Auto-Lock (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              When your torch crosses an old kerf slot or pierce crater, arc voltage spikes and makes THC dive the torch straight into the slats.
+              Crossing a previously cut kerf slot, bolt hole, or common-line seam causes arc voltage to spike, tricking standard THC units into diving the torch straight into the plate.
             </p>
             <ul class="doc-bullet-list">
-              <li>Every cut kerf and pierce crater is tracked automatically across flat-sheet and rotary jobs.</li>
-              <li>When a later cut, common-line pass, or crop line comes within <code class="mono">0.5 &times; kerf width + 4.0 mm</code> of a void, your <code class="mono">G1</code> move splits automatically.</li>
-              <li>THC locks across the gap and unlocks once your torch clears back onto solid steel. No manual keep-out rules needed.</li>
+              <li><strong>Cumulative Spatial Void Envelope:</strong> RotaryCAM tracks every cut slot and pierce crater across both flat <code class="mono">(X, Y)</code> and rotary <code class="mono">(X, S_A)</code> toolpaths, buffered by <code class="mono">0.5 &times; kerf + 4.0 mm</code>.</li>
+              <li><strong>Automatic <code class="mono">G1</code> Move Splitting &amp; Sync THC Lock:</strong> When a later cut, common-line pass, or crop line crosses an existing void, RotaryCAM splits the intersecting <code class="mono">G1</code> move and injects your controller&rsquo;s synchronous THC lock (<code class="mono">M63 P0</code>, <code class="mono">#&lt;thc_enable&gt;=0</code>, or <code class="mono">M11</code>) before entering the gap.</li>
+              <li><strong>Solid-Steel Restabilization:</strong> THC stays locked across the void and unlocks only once the torch clears back onto solid steel, working identically in both Single-File and Pack Mode.</li>
             </ul>
           </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Prior-void kerf-crossing spatial envelope and synchronous THC lock (M63/M62) injected automatically across cut voids</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/kerf-crossing-thc.webp" type="image/webp" />
+                <img src="assets/kerf-crossing-thc.png" alt="Step 1: Flat part with prior-void kerf-crossing spatial envelope and synchronous M63/M62 THC lock G-code generation" width="2324" height="1397" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
         </article>
 
         <!-- ==================================================================

@@ -1,0 +1,173 @@
+{% extends "tutorial_base.html.j2" %}
+
+{% block tutorial_body %}
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Wrap 2D Artwork onto Tubes &amp; Cut Structural Beams on a 4-Axis Table</h2>
+          <p>
+            Skip manual CAD projections and $150k beamline machines. Drop 2D <code class="mono">.dxf</code> or <code class="mono">.svg</code> logos, slots, and single-stroke <code class="mono">DXF TEXT</code> straight onto round pipe or HSS, or load I-Beam, C-Channel, and Angle Iron <code class="mono">.step</code> parts for clean 4-axis flange, web, and miter cuts.
+          </p>
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Part A: Tube Wrapping</span>
+              <span class="value">DXF / SVG + Hershey TEXT Scribe (<code class="mono">Maker</code> &amp; <code class="mono">Pro</code>)</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Part B: I-Beam Pipeline</span>
+              <span class="value">45&deg; Knee-Clearance &amp; Tip Lead-Ins (<code class="mono">Pro Shop</code>)</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Part B: Channel &amp; Angle</span>
+              <span class="value">Corner Pivot &amp; Edge-Start Sever (<code class="mono">Pro Shop</code>)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             PART A
+             ================================================================== -->
+        <div id="part-a" style="margin: 2rem 0 1rem;">
+          <span class="ui-chip cyan">PART A &bull; 2D DXF / SVG TUBE WRAPPING &amp; SCRIBING (MAKER &amp; PRO SHOP)</span>
+        </div>
+
+        <!-- STEP 1 -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Wrap a <code class="mono">.dxf</code> or <code class="mono">.svg</code> onto Round Pipe or HSS</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Add slots, vents, notches, or shop logos to any pipe or tube without rebuilding your 3D STEP model:
+            </p>
+            <ul class="doc-bullet-list">
+              <li>Load any round pipe or square/rectangular HSS <code class="mono">.step</code> part, then click <span class="ui-chip cyan">Wrap DXF / SVG</span> right under (in the header bar above) the <strong>3D Part Preview</strong> to open the wrap panel underneath.</li>
+              <li>Click <span class="ui-chip">Pick .dxf / .svg</span> to upload your 2D drawing, then choose <strong>Sizing</strong>: <code class="mono">Exact (1:1)</code> keeps true drawing dimensions, while <code class="mono">Stretch to Circumference</code> scales the artwork cleanly around the full tube perimeter.</li>
+              <li>Position the pattern with <strong>Axial Offset X</strong> (or check <strong>Center on Tube</strong>), dial in <strong>Clock Angle A</strong> (<code class="mono">0&deg;&ndash;360&deg;</code>), and toggle <strong>Rotate 90&deg;</strong> to flip orientation along the stick.</li>
+              <li>Set <strong>Cut / Mark</strong> to <code class="mono">Auto Layers</code> (keeps <code class="mono">CUT</code>, <code class="mono">SCRIBE</code>, and <code class="mono">MARK</code> layer assignments intact) or override all entities to Cut or Mark, then click <span class="ui-chip">Apply Wrap</span>.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Wrapping a 2D DXF/SVG onto round pipe with Exact (1:1) or Circumference Stretch, Axial Offset X, Clock Angle A, and Cut/Mark layer controls</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/tube-wrap-1-panel.webp" type="image/webp" />
+                <img src="assets/tube-wrap-1-panel.png" alt="Step 1: Live 3D Wrapped Tube Preview and Wrap DXF/SVG onto Tube panel showing Sizing, Cut/Mark, Offset X, Clock Angle A, Center on Tube, and Rotate 90 controls" width="2324" height="1397" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
+        </article>
+
+        <!-- STEP 2 -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Single-Stroke <code class="mono">DXF TEXT</code> / <code class="mono">MTEXT</code> Scribing &amp; <code class="mono">0&deg;/360&deg;</code> Seam Unwrapping</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Mark part numbers, heat lot codes, and weld alignment text straight from your CAD drawing with zero double-line outline tracing:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Single-Stroke Hershey Conversion:</strong> Any <code class="mono">TEXT</code> or <code class="mono">MTEXT</code> entity placed on a scribe or mark layer converts automatically into clean Hershey single-stroke toolpaths for your EasyScribe, air scribe, or low-amp plasma marker.</li>
+              <li><strong>Continuous <code class="mono">0&deg;/360&deg;</code> Seam Unwrapping:</strong> Artwork or text that crosses the <code class="mono">0&deg;/360&deg;</code> rotary boundary unwraps continuously without splitting contours or snapping back around the chuck.</li>
+              <li><strong>Single-File &amp; Pack Mode Parity:</strong> Wrapped cuts, logos, and scribed text follow every <code class="mono">180&deg;</code> flip and <code class="mono">&Delta;A</code> roll in <strong>Stock Nesting</strong> identically to native 3D CAD features.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             PART B
+             ================================================================== -->
+        <div id="part-b" style="margin: 2.25rem 0 1rem;">
+          <span class="ui-chip amber">PART B &bull; OPEN-PROFILE BEAMLINE CUTTING: I-BEAM, C-CHANNEL &amp; ANGLE IRON (PRO SHOP)</span>
+        </div>
+
+        <!-- STEP 3 -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Structural Beamline Sections Without a $150k Beamline Machine</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Closed tubes and open structural shapes behave differently under a plasma torch. RotaryCAM routes Angle Iron, C-Channel, and I-Beam <code class="mono">.step</code> solids into a dedicated <strong>Open-Profile pipeline</strong> (<code class="mono">Pro Shop</code>):
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Zero Closed-Tube Assumptions:</strong> Open profiles have exposed flange tips, inside web pockets, and sharp outside corners. RotaryCAM never wraps lead-ins into empty air or crashes the torch shield into opposing flanges.</li>
+              <li><strong>Automatic Profile Classification:</strong> Drop your structural <code class="mono">.step</code> beam in and RotaryCAM detects flange width, web depth, wall thickness, bolt holes, copes, and axial slots automatically.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- STEP 4 -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">I-Beam: Outside Flanges, <code class="mono">45&deg;</code> Web Knee-Clearance &amp; Axial Slots</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              I-Beams put a recessed central web between two deep flanges. RotaryCAM plans each zone so your torch clears every lip while keeping cut faces square:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Outside-Only Flange Cutting:</strong> Flange bolt holes, copes, and notches cut strictly from the outside faces with tangential tip lead-ins and lead-outs so the arc starts cleanly off the edge or in scrap.</li>
+              <li><strong>Dynamic <code class="mono">45&deg;</code> Web Knee-Clearance:</strong> When cutting inside the recessed central web, RotaryCAM dynamically rolls the A-axis up to <code class="mono">45&deg;</code> so the torch shield clears the top and bottom flange knees without colliding.</li>
+              <li><strong>Open-Ended Axial Web Slots:</strong> Slotted web cutouts and beam-end notches enter cleanly from the open edge and finish without leaving uncut bridge tabs.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 4: I-Beam 4-axis beamline cutting showing outside-only flange cuts, tangential tip lead-ins, recessed web knee-clearance, and axial web slots</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/beamline-1-ibeam.webp" type="image/webp" />
+                <img src="assets/beamline-1-ibeam.png" alt="Step 4: I-Beam structural section in RotaryCAM with flange cutouts, recessed central web slot, and generated 4-axis beamline G-code" width="2324" height="1397" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
+        </article>
+
+        <!-- STEP 5 -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">C-Channel &amp; Angle Iron: Corner Pivots, Seam Merging &amp; Edge-Start Severs</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              C-Channel and Angle Iron miters cross sharp <code class="mono">90&deg;</code> heels where standard rotary interpolation stalls or gouges the corner:
+            </p>
+            <ul class="doc-bullet-list">
+              <li><strong>Piecewise-Linear Sharp-Corner Pivot Decomposition:</strong> Every heel transition splits into three clean stages: <strong>Face 1 &rarr; pure corner pivot &rarr; Face 2</strong>. Your chuck rotates cleanly over the sharp corner with zero feedrate stalls or blown-out miters.</li>
+              <li><strong>Coplanar Split-Face Seam Merging:</strong> CAD exports that split a web or leg into multiple coplanar faces are stitched into one continuous cut pass with no extra pierces.</li>
+              <li><strong>Axial Edge-Start Sever Entries:</strong> End severs and open leg cuts lead in tangentially from the outer flange or leg tip, then lock THC across corner transitions for steady cut height.</li>
+            </ul>
+          </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 5: C-Channel 4-axis mitered cut with piecewise-linear corner pivots, coplanar seam merging, and synchronous THC lock G-code</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/beamline-2-channel.webp" type="image/webp" />
+                <img src="assets/beamline-2-channel.png" alt="Step 5: C-Channel structural section showing smooth mitered corner pivots, web contours, and generated G-code with M63 P0 THC lock" width="2324" height="1397" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
+        </article>
+{% endblock %}

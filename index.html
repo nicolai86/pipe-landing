@@ -63,7 +63,7 @@
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#pricing",
-        "description": "Perpetual air-gapped offline license (rotarycam.lic) for 2 computers with 1 full year of updates included ($59/yr optional thereafter), Round/Square/Flat G-code, multi-file 2D DXF/SVG/STEP flat-sheet cutting with Open L/R kerf, Edge-Start pierce, Kerf-Crossing THC lock, 12 controller dialects (16 profiles) in native Imperial (G20) and Metric (G21), 1,025 cut charts + CSV import/export, Zero-Bevel, auto-nesting up to 10 flat-sheet parts or 5 rotary parts/stick with unlimited manual placement, custom machines, and your shop name stamped in every G-code header."
+        "description": "Perpetual air-gapped offline license (rotarycam.lic) for 2 computers with 1 full year of updates included ($59/yr optional thereafter), Round/Square/Flat G-code, multi-CAD NURBS canonicalization (Rhino, Shapr3D, Tekla, SolidWorks), 2D DXF/SVG tube wrapping and single-stroke DXF TEXT scribing, 50-shape 2D fabricator library and 3D Tube Frame Designer, multi-file 2D DXF/SVG/STEP flat-sheet cutting with Open L/R kerf, Edge-Start pierce, Kerf-Crossing THC lock, 12 controller dialects (16 profiles) in native Imperial (G20) and Metric (G21), 1,025 cut charts + CSV import/export, Zero-Bevel, unlimited manual nesting (auto-nest up to 10 flat / 5 rotary parts), custom machines, and your shop name stamped in every G-code header."
       },
       {
         "@type": "Offer",
@@ -87,7 +87,9 @@
       "url": "https://rotarycam.app"
     },
     "featureList": [
-      "Direct 3D CAD STEP Assembly Ingestion & Multi-File DXF/SVG Flat-Sheet Import",
+      "Direct 3D CAD STEP Assembly Ingestion with Multi-CAD NURBS Canonicalization (Rhino, Shapr3D, Tekla, SolidWorks)",
+      "2D DXF/SVG Tube Wrapping & Single-Stroke Hershey DXF TEXT Scribing",
+      "50-Shape 2D Fabricator Library & 3D Tube Frame Designer",
       "Zero 2D DXF Unrolling Required for 4-Axis Rotary",
       "Round Pipe, Square/Rect HSS, Flat Bar, Angle Iron, C-Channel, and I-Beam Support",
       "Round Pipe & Rectangular HSS Zero-Bevel Miter & Saddle Fitup Compensation",
@@ -1880,11 +1882,11 @@
         <div>
           <div class="card-num mono">01 / NO 2D UNROLLING</div>
           <h3>Cut Straight from 3D CAD</h3>
-          <p>Skip flat DXF unrolling. Reads OD, wall thickness, corner radius, miters, saddles, and bolt holes directly from 3D STEP.</p>
+          <p>Skip flat DXF unrolling. Reads OD, wall, miters, saddles, and holes straight from 3D STEP, with multi-CAD NURBS cleanup for Rhino, Shapr3D, Tekla, and SolidWorks lofts.</p>
         </div>
         <div class="pill-list mono">
           <span class="pill"><span class="pill-dot"></span>Zero 2D Unrolling</span>
-          <span class="pill"><span class="pill-dot"></span>Auto Wall Thickness</span>
+          <span class="pill"><span class="pill-dot"></span>Multi-CAD NURBS Cleanup</span>
         </div>
       </div>
 
@@ -1985,12 +1987,13 @@
       <!-- Feature 9 -->
       <div class="card">
         <div>
-          <div class="card-num mono">09 / PIECE-ID SCRIBING</div>
-          <h3>Auto-Scribe IDs &amp; Mating Marks</h3>
-          <p>Stencils part IDs (<code class="mono">P1&ndash;P12</code>), joint callouts (<code class="mono">P12 on P1</code>), and weld marks via EasyScribe or low-amp plasma.</p>
+          <div class="card-num mono">09 / TUBE WRAP &amp; SCRIBING</div>
+          <h3>2D Tube Wrap &amp; Single-Stroke Scribe</h3>
+          <p>Wrap 2D DXF/SVG art or single-stroke <code class="mono">DXF TEXT</code> onto pipe and HSS, plus stencil <code class="mono">P1&ndash;P12</code> IDs and weld marks via EasyScribe or plasma.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill"><span class="pill-dot"></span>Piece ID Stencils</span>
+          <span class="pill"><span class="pill-dot"></span>DXF/SVG Tube Wrap</span>
+          <span class="pill"><span class="pill-dot"></span>Single-Stroke TEXT</span>
           <span class="pill"><span class="pill-dot"></span>Weld Witness Marks</span>
         </div>
       </div>
@@ -1998,12 +2001,12 @@
       <!-- Feature 10 -->
       <div class="card">
         <div>
-          <div class="card-num mono" style="color: var(--cyan-arc);">10 / 2D PLATE IMPORT &amp; NESTING</div>
-          <h3>DXF/SVG/STEP Plate &amp; Matryoshka Nest</h3>
-          <p>Auto-splits disjoint islands, keeps <code class="mono">SCRIBE</code>/<code class="mono">MARK</code>/<code class="mono">BEND</code> layers, scribes DXF <code class="mono">TEXT</code>/<code class="mono">MTEXT</code>, snaps scale via 2-point pick, nests parts inside cutouts, and shares common-line edges.</p>
+          <div class="card-num mono" style="color: var(--cyan-arc);">10 / 2D PLATE &amp; NO-CAD DESIGN</div>
+          <h3>DXF/SVG, 50-Shape Library &amp; Frames</h3>
+          <p>Drop DXF/SVG kits or build parts in the 50-shape 2D library and 3D Tube Frame Designer. Splits islands, keeps <code class="mono">SCRIBE</code>/<code class="mono">BEND</code> layers, and packs cutouts.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill pill-cyan"><span class="pill-dot"></span>2-Point Snap &amp; TEXT Scribe</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>50-Shape 2D &amp; 3D Frames</span>
           <span class="pill pill-cyan"><span class="pill-dot"></span>Matryoshka &amp; Common-Line</span>
         </div>
       </div>
@@ -2025,12 +2028,12 @@
       <div class="card">
         <div>
           <div class="card-num mono" style="color: var(--cyan-arc);">12 / INTERACTIVE 2D CANVAS</div>
-          <h3>Drag, 15&deg; Rotate, Flip &amp; Tab Live</h3>
-          <p>Drag parts, rotate (<code class="mono">15&deg;</code> snap or free angle), and flip H/V with live collision halos. Move pierces into scrap or drag holding tabs right on the contour.</p>
+          <h3>Unlimited Manual Nest, Rotate &amp; Tabs</h3>
+          <p>Unlimited manual placement: drag, <code class="mono">15&deg;</code> snap-rotate, and flip H/V with live collision halos. Move pierces into scrap or drag holding tabs on the contour.</p>
         </div>
         <div class="pill-list mono">
-          <span class="pill pill-cyan"><span class="pill-dot"></span>15&deg; Snap &amp; Collision Halos</span>
-          <span class="pill pill-cyan"><span class="pill-dot"></span>Move Pierce &amp; Holding Tabs</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Unlimited Manual Nest</span>
+          <span class="pill pill-cyan"><span class="pill-dot"></span>Move Pierce &amp; Tabs</span>
         </div>
       </div>
     </div>
@@ -2364,10 +2367,10 @@
             <li><span class="pricing-check">✓</span><span><strong>1 Year Updates</strong> (<span class="mono">$59/yr</span> optional in Year 2+)</span></li>
             <li><span class="pricing-check">✓</span><span><strong>2 Computers</strong> (Office CAD + Shop Table PC)</span></li>
             <li><span class="pricing-check">✓</span><span>Everything in Beta across all <strong>12 controllers</strong> in <strong>G20 / G21</strong></span></li>
-            <li><span class="pricing-check">✓</span><span>Auto-nest <strong>10 flat-sheet / 5 rotary parts</strong> + <strong>unlimited manual placement</strong> (drag, 15&deg; rotate, flip, move pierce)</span></li>
-            <li><span class="pricing-check">✓</span><span><strong>2D Plate Controls:</strong> Open L/R kerf, Edge-Start pierce, Kerf-Crossing THC lock, 2-point snap &amp; DXF <code class="mono">TEXT</code> scribe</span></li>
-            <li><span class="pricing-check">✓</span><span><strong>No-CAD Parametric Wizard &amp; 3D Tube Frame Designer:</strong> Design complete handrails, ladders, and tube racks right in the browser, or build 8 plate shapes &amp; 3D Round/HSS tubes with live preview, Pack queue &amp; <code class="mono">.dxf</code>/<code class="mono">.step</code> export</span></li>
-            <li><span class="pricing-check">✓</span><span><strong>1,025 cut presets + CSV</strong>, Zero-Bevel, 60% bolt holes &amp; <strong>5 bends/file</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Unlimited Manual Nesting on Maker</strong> (drag, 15&deg; rotate, flip, move pierce) + auto-nest up to <strong>10 flat / 5 rotary parts</strong></span></li>
+            <li><span class="pricing-check">✓</span><span><strong>2D Tube Wrap &amp; Plate Controls:</strong> Wrap DXF/SVG &amp; single-stroke <code class="mono">DXF TEXT</code> onto pipe/HSS, Open L/R kerf, Edge-Start, Kerf-Crossing THC lock &amp; 2-point snap</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>50-Shape 2D Library &amp; 3D Tube Frame Designer:</strong> Build shop brackets across 8 categories or sketch 3D handrails, ladders &amp; racks with Pack queue &amp; <code class="mono">.dxf</code>/<code class="mono">.step</code> export</span></li>
+            <li><span class="pricing-check">✓</span><span><strong>Multi-CAD NURBS Cleanup</strong> (Rhino, Shapr3D, Tekla, SolidWorks), <strong>1,025 cut presets + CSV</strong>, Zero-Bevel &amp; <strong>5 bends/file</strong></span></li>
             <li><span class="pricing-check">✓</span><span>Custom shop name stamped in G-code headers</span></li>
           </ul>
         </div>

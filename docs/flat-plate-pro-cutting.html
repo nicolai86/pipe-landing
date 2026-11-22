@@ -183,7 +183,7 @@
           <div class="nav-dropdown-menu" role="menu">
             <div class="nav-dropdown-header">
               <span>All Workflows &amp; Tutorials</span>
-              <span class="nav-dropdown-count">14 Guides</span>
+              <span class="nav-dropdown-count">15 Guides</span>
             </div>
             <div class="nav-dropdown-grid">
               
@@ -315,6 +315,15 @@
                 
               </a>
               
+              <a href="tube-wrap-and-open-profiles.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">15</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Tube Wrap & Open Beams</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
             </div>
           </div>
         </div>
@@ -421,6 +430,11 @@
         <span>No-CAD & 3D Tube Frames</span>
       </a>
       
+      <a href="tube-wrap-and-open-profiles.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">15</span>
+        <span>Tube Wrap & Open Beams</span>
+      </a>
+      
     </div>
 
     <div style="margin-top: 1rem;">
@@ -494,7 +508,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>TUTORIAL 13 OF 14</strong> • 4 Steps</span>
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 13 OF 15</strong> • 4 Steps</span>
           
           <span class="docs-meta-pill cyan"><strong>Protection:</strong> Spatial Void THC Auto-Lock (<code class="mono">v0.8-A</code>) &bull; Flat &amp; Rotary</span>
           
@@ -619,6 +633,13 @@
               </a>
             </li>
             
+            <li>
+              <a href="tube-wrap-and-open-profiles.html">
+                <span class="docs-nav-num">15</span>
+                <span>Tube Wrap & Open Beams</span>
+              </a>
+            </li>
+            
           </ul>
         </div>
 
@@ -626,7 +647,7 @@
           <div class="docs-sidebar-heading">On This Page</div>
           <ul class="docs-toc-list">
             
-            <li><a href="#step-1"><span class="docs-toc-step">01</span> Spatial Void THC Auto-Lock</a></li>
+            <li><a href="#step-1"><span class="docs-toc-step">01</span> Kerf-Crossing Spatial THC Auto-Lock</a></li>
             
             <li><a href="#step-2"><span class="docs-toc-step">02</span> Open-Path Kerf &amp; Edge-Start</a></li>
             
@@ -669,19 +690,32 @@
         <article class="doc-step-card" id="step-1">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 01</span>
-            <h2 class="doc-step-title">Void THC Auto-Lock (Zero Torch Dives)</h2>
+            <h2 class="doc-step-title">Geometric Kerf-Crossing / Prior-Void Spatial THC Auto-Lock (<code class="mono">Maker</code> &amp; <code class="mono">Pro Shop</code>)</h2>
           </div>
 
           <div class="doc-step-body">
             <p>
-              When your torch crosses an old kerf slot or pierce crater, arc voltage spikes and makes THC dive the torch straight into the slats.
+              Crossing a previously cut kerf slot, bolt hole, or common-line seam causes arc voltage to spike, tricking standard THC units into diving the torch straight into the plate.
             </p>
             <ul class="doc-bullet-list">
-              <li>Every cut kerf and pierce crater is tracked automatically across flat-sheet and rotary jobs.</li>
-              <li>When a later cut, common-line pass, or crop line comes within <code class="mono">0.5 &times; kerf width + 4.0 mm</code> of a void, your <code class="mono">G1</code> move splits automatically.</li>
-              <li>THC locks across the gap and unlocks once your torch clears back onto solid steel. No manual keep-out rules needed.</li>
+              <li><strong>Cumulative Spatial Void Envelope:</strong> RotaryCAM tracks every cut slot and pierce crater across both flat <code class="mono">(X, Y)</code> and rotary <code class="mono">(X, S_A)</code> toolpaths, buffered by <code class="mono">0.5 &times; kerf + 4.0 mm</code>.</li>
+              <li><strong>Automatic <code class="mono">G1</code> Move Splitting &amp; Sync THC Lock:</strong> When a later cut, common-line pass, or crop line crosses an existing void, RotaryCAM splits the intersecting <code class="mono">G1</code> move and injects your controller&rsquo;s synchronous THC lock (<code class="mono">M63 P0</code>, <code class="mono">#&lt;thc_enable&gt;=0</code>, or <code class="mono">M11</code>) before entering the gap.</li>
+              <li><strong>Solid-Steel Restabilization:</strong> THC stays locked across the void and unlocks only once the torch clears back onto solid steel, working identically in both Single-File and Pack Mode.</li>
             </ul>
           </div>
+
+          <figure class="doc-figure">
+            <div class="doc-figure-bar">
+              <span class="doc-figure-caption"><span class="dot"></span> Step 1: Prior-void kerf-crossing spatial envelope and synchronous THC lock (M63/M62) injected automatically across cut voids</span>
+              <span class="doc-figure-zoom">🔍 Click image to enlarge</span>
+            </div>
+            <div class="doc-figure-img-wrap">
+              <picture>
+                <source srcset="assets/kerf-crossing-thc.webp" type="image/webp" />
+                <img src="assets/kerf-crossing-thc.png" alt="Step 1: Flat part with prior-void kerf-crossing spatial envelope and synchronous M63/M62 THC lock G-code generation" width="2324" height="1397" loading="lazy" />
+              </picture>
+            </div>
+          </figure>
         </article>
 
         <!-- ==================================================================
@@ -779,14 +813,14 @@
         <nav class="docs-pagination" aria-label="Tutorial Pagination">
           
           <a href="interactive-canvas-controls.html" class="docs-page-link prev">
-            <span class="docs-page-dir">← Previous Tutorial (12 of 14)</span>
+            <span class="docs-page-dir">← Previous Tutorial (12 of 15)</span>
             <span class="docs-page-title">Interactive Canvas Controls & Nest Tweaking</span>
             <span class="docs-page-desc">Move pierces on canvas, place holding tabs, drag/rotate 2D nests, and tweak 1D stick strips</span>
           </a>
           
           
           <a href="no-cad-wizard-and-tube-frames.html" class="docs-page-link next">
-            <span class="docs-page-dir">Next Tutorial (14 of 14) →</span>
+            <span class="docs-page-dir">Next Tutorial (14 of 15) →</span>
             <span class="docs-page-title">14. No-CAD Part Design & 3D Tube Frame Designer</span>
             <span class="docs-page-desc">Build 50-shape 2D brackets and multi-plane 3D tube frames straight inside RotaryCAM</span>
           </a>
@@ -858,6 +892,8 @@
           <a href="flat-plate-pro-cutting.html">13. Flat Pro Primitives</a>
           
           <a href="no-cad-wizard-and-tube-frames.html">14. No-CAD & 3D Tube Frames</a>
+          
+          <a href="tube-wrap-and-open-profiles.html">15. Tube Wrap & Open Beams</a>
           
         </div>
         <div class="footer-col">
