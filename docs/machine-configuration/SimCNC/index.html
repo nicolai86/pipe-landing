@@ -1013,9 +1013,13 @@
             
             <li><a href="#blending-g93"><span class="docs-toc-step">01</span> G64 Blending, Feathering &amp; Guardrails</a></li>
             
-            <li><a href="#macro-sync"><span class="docs-toc-step">02</span> m3.py Parameters &amp; M62/M63 Sync</a></li>
+            <li><a href="#macro-sync"><span class="docs-toc-step">02</span> m3.py &amp; m5.py Snippets (IHS &amp; M62/M63)</a></li>
             
-            <li><a href="#xml-links"><span class="docs-toc-step">03</span> config.xml Import &amp; Guides</a></li>
+            <li><a href="#3d-ramp-leadin"><span class="docs-toc-step">03</span> 3D Ramp Lead-Ins (#1113 &amp; #1110)</a></li>
+            
+            <li><a href="#tab-cutting"><span class="docs-toc-step">04</span> Tab Cutting (m35.py &amp; m33.py)</a></li>
+            
+            <li><a href="#xml-links"><span class="docs-toc-step">05</span> config.xml Import &amp; Guides</a></li>
             
             <li><a href="#import-warnings-faq"><span class="docs-toc-step">FAQ</span> SimCNC (config.xml) Warnings FAQ</a></li>
             
@@ -1044,18 +1048,229 @@
         
         <article class="doc-step-card" id="macro-sync">
           <div class="doc-step-header">
-            <span class="doc-step-badge">m3.py & Sync</span>
-            <h2 class="doc-step-title">Macro Handshake (<code class="mono">#1110-#1114</code>) &amp; <code class="mono">M62/M63</code> Sync</h2>
+            <span class="doc-step-badge">m3.py & m5.py</span>
+            <h2 class="doc-step-title">Macro Handshake (<code class="mono">m3.py</code> &amp; <code class="mono">m5.py</code> Snippets)</h2>
           </div>
 
           <div class="doc-step-body">
             
             <p>
-              Before <code class="mono">M3 S1</code>, RotaryCAM updates modal registers for thickness (<code class="mono">#1110</code>), amps (<code class="mono">#1111</code>), gas pressure (<code class="mono">#1112</code>), target arc voltage (<code class="mono">#1090</code>), pierce delay (<code class="mono">#1091</code>), calculated surface feed (<code class="mono">#1092</code>), 3D ramp flag (<code class="mono">#1113</code>), and process mode (<code class="mono">#1114</code>).
+              Before <code class="mono">M3 S1</code>, your G-code sets modal registers for thickness (<code class="mono">#1110</code>), target arc voltage (<code class="mono">#1090</code>), pierce delay (<code class="mono">#1091</code>), calculated surface feed (<code class="mono">#1092</code>), 3D ramp flag (<code class="mono">#1113</code>), and process mode (<code class="mono">#1114</code>).
             </p>
             <p>
-              For full <code class="mono">ExtTrajSyncOut0/1</code> wiring (<code class="mono">M62/M63 P0/P1</code>), direct CSMIO/IP-M Arc OK polling, and <code class="mono">___CONF.py</code> / <code class="mono">m3.py</code> / <code class="mono">m5.py</code> scripts, see <a href="../../simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a> and <a href="../../rotary-and-sheet-feedrates.html" style="color: var(--amber-400);">Tutorial 11: G94, G93 &amp; G20/G21 Feedrates</a>.
+              SimCNC binds two trajectory-synchronized outputs in <code class="mono">___CONF.py</code>: <code class="mono">P0</code> (<code class="mono">ExtTrajSyncOut0</code>) locks/unlocks hardware THC (<code class="mono">M63 P0</code> / <code class="mono">M62 P0</code>), and <code class="mono">P1</code> (<code class="mono">ExtTrajSyncOut1</code>) fires/extinguishes the torch relay (<code class="mono">M62 P1</code> / <code class="mono">M63 P1</code>). <code class="mono">Arc OK</code> is read directly from CSMIO/IP-M digital input 7 via <code class="mono">check_arc_ok(d)</code>.
             </p>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot"></span> m3.py Snippet: Dual Ohmic/Floating IHS, Pierce Height &amp; M62 P1 Fire</span>
+                <span class="doc-code-lang">PYTHON (SimCNC)</span>
+              </div>
+              <pre><code># 1. Ohmic + Floating touch-off on Probe 0 (Input 6 active-LOW, Input 5 = Ohmic)
+result = d.executeProbing(CoordMode.Machine, Maximum_position, 0, Probing_velocity)
+if not result:
+    emergency("Probing did not trigger within Max_probing_distance")
+
+pin5 = mod.getDigitalIO(IOPortDir.InputPort, 5)
+Probe_touch_position = d.getProbingPosition(CoordMode.Machine)
+if pin5 == DIOPinVal.PinReset:
+    surface_z = Probe_touch_position[Axis.Z.value]  # Ohmic hit (0 deflection)
+else:
+    surface_z = Probe_touch_position[Axis.Z.value] + abs(Sensor_hysteresis)  # Floating head
+
+# 2. Lift to Pierce Height and anchor Program Z
+Pierce_height_position[Axis.Z.value] = surface_z + Pierce_height
+d.moveToPosition(CoordMode.Machine, Pierce_height_position, Lifting_velocity)
+d.setAxisProgPosition(Axis.Z, Pierce_height)
+
+# 3. Pre-fire Arc OK sanity check, then fire via ExtTrajSyncOut1 (M62 P1 + Z micro-wiggle)
+if check_arc_ok(d):
+    emergency("PRE-FIRE FAULT: Arc OK input already active before firing")
+
+fire_torch_hardware(d, Arc_Sync_Pin, unit)  # M62 P1 + 0.01 mm Z wiggle
+
+max_time = time.time() + (Timeout_Torch_is_on / 1000.0)
+while not check_arc_ok(d):
+    if max_time &lt; time.time():
+        emergency("Wait for Torch on (Arc OK) - Timeout")
+    time.sleep(0.005)</code></pre>
+            </div>
+            <p>
+              In <code class="mono">m5.py</code>, if the post already extinguished the arc on the fly with <code class="mono">M63 P1</code> (Zero-Overburn Early Torch-Out), <code class="mono">check_arc_ok(d)</code> is already false. <code class="mono">m5.py</code> skips the Z micro-wiggle and exits cleanly after locking THC:
+            </p>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot emerald"></span> m5.py Snippet: Fast Extinguish Check &amp; Synced Torch Off</span>
+                <span class="doc-code-lang">PYTHON (SimCNC)</span>
+              </div>
+              <pre><code>if check_arc_ok(d):
+    # Arc is still live: run M63 P1 + M63 P0 + 0.01 mm Z micro-wiggle
+    extinguish_torch_hardware(d, Arc_Sync_Pin, unit)
+    max_time = time.time() + (Timeout_Torch_is_on / 1000.0)
+    while check_arc_ok(d):
+        if max_time &lt; time.time():
+            emergency("Wait for Torch off (Arc OK false) - Timeout")
+        time.sleep(0.005)
+else:
+    # Already extinguished at full speed by M63 P1: fast M5 without motion
+    d.executeGCode("M63 " + Arc_Sync_Pin)
+    d.executeGCode("M63 " + THC_Sync_Pin)
+    d.setThcState(ThcState.Off)</code></pre>
+            </div>
+            <p>
+              For full <code class="mono">ExtTrajSyncOut0/1</code> wiring and <code class="mono">___CONF.py</code> micro-wiggle internals, see <a href="../../simcnc-motion-sync.html" style="color: var(--cyan-400);">Tutorial 07: SimCNC Motion-Synchronized Torch &amp; 3D Ramp Lead-Ins</a> and <a href="../../rotary-and-sheet-feedrates.html" style="color: var(--amber-400);">Tutorial 11: G94, G93 &amp; G20/G21 Feedrates</a>.
+            </p>
+          </div>
+        </article>
+        
+        <article class="doc-step-card" id="3d-ramp-leadin">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">3D Ramp</span>
+            <h2 class="doc-step-title">How 3D Ramp Lead-Ins Work (<code class="mono">#1113</code>, <code class="mono">#1110</code> &amp; <code class="mono">m3.py</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <p>
+              Standard plasma plunges drop straight down into the pierce puddle, which splashes molten slag onto your shield and nozzle. With <strong>3D Ramp Lead-In</strong> enabled, the torch pierces at <code class="mono">Pierce_height</code> and then ramps diagonally down to <code class="mono">Cut_height</code> (<code class="mono">Z#3</code>) during the lateral lead-in move while THC stays locked.
+            </p>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot"></span> G-Code Handshake for 3D Ramp Lead-In</span>
+                <span class="doc-code-lang">GCODE (.nc)</span>
+              </div>
+              <pre><code>#1110 = 3.000   (Material thickness in current units)
+#1113 = 1       (Arm 3D ramp lead-in inside m3.py)
+M63 P0          (Lock THC before firing and across the ramp)
+M3 S1           (Probes, pierces, and returns with Z still at Pierce_height)
+G1 X12.500 Y10.000 Z#3 F2800.0  (Diagonal 3D ramp down to Cut_height #3)
+M62 P0          (Unlock THC only after reaching Cut_height)</code></pre>
+            </div>
+            <p>
+              Inside <code class="mono">m3.py</code>, <code class="mono">#1113</code> and <code class="mono">#1110</code> control both the pierce dwell and the Z handoff:
+            </p>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot cyan"></span> m3.py Snippet: Thickness-Aware Dwell &amp; Pierce-Height Handoff</span>
+                <span class="doc-code-lang">PYTHON (SimCNC)</span>
+              </div>
+              <pre><code>ramp_lead_in_enabled = (float(d.getMachineParam(1113)) == 1.0)
+Material_thickness = float(d.getMachineParam(1110) or 0.0)
+
+if Pierce_delay &gt; 0:
+    thresh_thin = 0.080 if unit == "inch" else 2.0
+    if ramp_lead_in_enabled and Material_thickness &lt;= thresh_thin and Pierce_delay &lt; 400.0:
+        # Thin sheet (&lt;= 14 GA / 2.0 mm): 60% flying dwell (min 100 ms)
+        dwell_ms = max(100, int(Pierce_delay * 0.60))
+    else:
+        # Plate (&gt; 2.0 mm) or standard pierce: full 100% blowout dwell
+        dwell_ms = int(Pierce_delay)
+
+    max_time = time.time() + (dwell_ms / 1000.0)
+    while max_time &gt; time.time():
+        if not check_arc_ok(d):
+            emergency("Torch went out while piercing")
+        time.sleep(0.005)
+
+if ramp_lead_in_enabled:
+    # Keep Z at Pierce_height so the next G1 ... Z#3 block ramps down smoothly
+    d.setMachineParam(1113, 0.0)  # Reset one-shot handoff flag
+else:
+    if Pierce_height != Cut_height:
+        Cut_height_position = d.getPosition(CoordMode.Program)
+        Cut_height_position[Axis.Z.value] = Cut_height
+        d.moveToPosition(CoordMode.Program, Cut_height_position, Descent_velocity)</code></pre>
+            </div>
+          </div>
+        </article>
+        
+        <article class="doc-step-card" id="tab-cutting">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Tab Cutting</span>
+            <h2 class="doc-step-title">Tab Cutting &amp; Fast Bridge Restarts (<code class="mono">m35.py</code> &amp; <code class="mono">m33.py</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <p>
+              When cutting micro-tabs (uncut bridge joints that hold parts in the skeleton), running a full <code class="mono">M5</code> retract and <code class="mono">M3</code> IHS touch-off on every tab wastes seconds per part. Instead, your G-code calls <code class="mono">M35</code> to pause the arc across the tab and <code class="mono">M33</code> to re-ignite on the other side without re-probing:
+            </p>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot"></span> G-Code Sequence Across an Uncut Tab Bridge</span>
+                <span class="doc-code-lang">GCODE (.nc)</span>
+              </div>
+              <pre><code>G1 X48.000 Y20.000 F2800.0   (Cut up to tab entry)
+M35                          (Lock THC M63 P0, wait zero vel, extinguish M63 P1)
+G0 X52.000 Y20.000           (Rapid across 4 mm uncut tab at cut height)
+M33                          (Lift to Pierce_height, fire M62 P1, 35% dwell, plunge, M62 P0)
+G1 X90.000 Y20.000 F2800.0   (Resume cutting with THC active)</code></pre>
+            </div>
+            <p>
+              <strong><code class="mono">m35.py</code> (Tab Pause):</strong> Locks THC first (<code class="mono">M63 P0</code>) so the head cannot dive as the arc drops, waits for zero velocity, then extinguishes <code class="mono">M63 P1</code> and confirms <code class="mono">Arc OK</code> is false while holding Z at cut height.
+            </p>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot cyan"></span> m35.py Snippet: Lock THC, Stop Motion &amp; Extinguish Across Tab</span>
+                <span class="doc-code-lang">PYTHON (SimCNC)</span>
+              </div>
+              <pre><code>d.executeGCode("M63 " + THC_Sync_Pin)  # Lock THC immediately
+d.setThcState(ThcState.Off)
+
+if not d.waitForZeroVelocity(0.5):
+    emergency("M35 Zero Velocity - Timeout")
+
+d.executeGCode("M63 " + Arc_Sync_Pin)  # Extinguish arc
+max_time = time.time() + (Timeout_Torch_is_on / 1000.0)
+while check_arc_ok(d):
+    if max_time &lt; time.time():
+        emergency("M35 Arc Extinguish Timeout")
+    time.sleep(0.005)</code></pre>
+            </div>
+            <p>
+              <strong><code class="mono">m33.py</code> (Tab Fast Restart):</strong> Skips IHS probing completely, lifts to <code class="mono">Pierce_height</code> to prevent slag blowback, fires <code class="mono">M62 P1</code>, dwells for 35% of normal pierce delay (minimum <code class="mono">50 ms</code>, since the electrode is hot and post-flow is active), plunges to <code class="mono">Cut_height</code>, and re-enables THC via <code class="mono">M62 P0</code>.
+            </p>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot emerald"></span> m33.py Snippet: No-IHS Lift, 35% Restart Dwell &amp; THC Re-Enable</span>
+                <span class="doc-code-lang">PYTHON (SimCNC)</span>
+              </div>
+              <pre><code>d.executeGCode("M63 " + THC_Sync_Pin)  # Keep THC locked during restart
+if not d.waitForZeroVelocity(0.5):
+    emergency("M33 Zero Velocity - Timeout")
+
+# 1. Lift to Pierce_height without re-probing IHS
+current_pos = d.getPosition(CoordMode.Program)
+if Pierce_height &gt; Cut_height and current_pos[Axis.Z.value] &lt; (Pierce_height - 0.1):
+    pierce_pos = current_pos.copy()
+    pierce_pos[Axis.Z.value] = Pierce_height
+    d.moveToPosition(CoordMode.Program, pierce_pos, Lifting_velocity)
+
+# 2. Fire torch (M62 P1) and wait for Arc OK
+d.executeGCode("M62 " + Arc_Sync_Pin)
+max_time = time.time() + (Timeout_Torch_is_on / 1000.0)
+while not check_arc_ok(d):
+    if max_time &lt; time.time():
+        emergency("M33 Wait for Torch on - Timeout")
+    time.sleep(0.005)
+
+# 3. Reduced tab restart dwell (35% of Pierce_delay, min 50 ms)
+tab_restart_delay = min(Pierce_delay, max(50.0, Pierce_delay * 0.35))
+dwell_end = time.time() + (tab_restart_delay / 1000.0)
+while dwell_end &gt; time.time():
+    if not check_arc_ok(d):
+        emergency("M33 Torch went out while restarting on tab")
+    time.sleep(0.005)
+
+# 4. Plunge to Cut_height, unlock THC (M62 P0), and restore feedrate
+if Pierce_height != Cut_height:
+    cut_pos = d.getPosition(CoordMode.Program)
+    cut_pos[Axis.Z.value] = Cut_height
+    d.moveToPosition(CoordMode.Program, cut_pos, Descent_velocity)
+
+d.waitForZeroVelocity(0.1)
+d.executeGCode("M62 " + THC_Sync_Pin)
+d.setFeedrate(Feed_Rate)</code></pre>
+            </div>
           </div>
         </article>
         
