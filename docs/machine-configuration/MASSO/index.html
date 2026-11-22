@@ -864,8 +864,8 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G91 / G28 A0 / G90</code>
-                  <span class="cut-stage-code-desc">3-line rotary unwind (+ G0 A0)</span>
+                  <code class="cut-stage-code">G92 A&lt;mod_360&gt;</code>
+                  <span class="cut-stage-code-desc">Safe modulo-360 A reset (no G28 A)</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -874,7 +874,7 @@
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Never emits G92 A0, keeping rotary phase intact across unwinds.</p>
+              <p class="cut-stage-note">Uses safe modulo-360 A-axis software resets instead of mechanical G28 A homing on clamped tubes.</p>
             </div>
             
           </div>

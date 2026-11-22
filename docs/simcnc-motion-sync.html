@@ -1068,10 +1068,13 @@ d.setSpindleState(SpindleState.OFF)</code></pre>
                 <strong>1. Cut Start:</strong> Emits <code class="mono">M3</code> so <code class="mono">m3.py</code> probes, fires via <code class="mono">M62 P1</code> + wiggle, and dwells (or emits <code class="mono">M62 P1</code> before lead-in when <code class="mono">useM3M5</code> is off).
               </li>
               <li>
-                <strong>2. THC Lock (<code class="mono">P0</code>):</strong> Emits <code class="mono">M63 P0</code> before HSS tube corners, small holes, and lead-outs, then unlocks with <code class="mono">M62 P0</code> at steady cutting speed.
+                <strong>2. THC Lock (<code class="mono">P0</code>) &amp; <code class="mono">85%</code> Anti-Dive:</strong> Emits <code class="mono">M63 P0</code> whenever speed drops below <code class="mono">85%</code> (HSS tube corners, small holes, <code class="mono">D &le; 2t</code> True Holes, and lead-outs) and clamps Z on flat faces with ADLS. Larger flat and round contours unlock THC with <code class="mono">M62 P0</code> right after the lead-in ramp.
               </li>
               <li>
                 <strong>3. Zero-Overburn Early Torch-Out (<code class="mono">P1</code>):</strong> Right before the lead-out or overburn <code class="mono">G1</code>/<code class="mono">G2</code>/<code class="mono">G3</code> move, your G-code emits <code class="mono">M63 P0</code> (stops THC dive on voltage drop) and <code class="mono">M63 P1</code> (kills the torch on the first motion step), followed by <code class="mono">M5</code>.
+              </li>
+              <li>
+                <strong>4. Scribe Routing (<code class="mono">G52</code> + <code class="mono">M8</code>/<code class="mono">M9</code> vs. <code class="mono">#1114=3</code>):</strong> SimCNC pneumatic offset air-scribes run via <code class="mono">G52</code> work offsets plus <code class="mono">M8</code>/<code class="mono">M9</code> with zero swap pause, keeping <code class="mono">#1114=3</code> strictly for Coaxial EasyScribe with a mandatory <code class="mono">M0</code> tool-swap pause.
               </li>
             </ul>
 

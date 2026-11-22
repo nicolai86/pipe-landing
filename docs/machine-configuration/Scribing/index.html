@@ -1013,11 +1013,13 @@
               For high-production shops with an air-powered stylus mounted alongside the plasma torch. RotaryCAM applies your physical <code class="mono">(X, Y, Z)</code> head offset automatically and runs all marking before switching to plasma in one hands-off run:
             </p>
             <ul class="doc-bullet-list">
+              <li><strong>CSLab SimCNC:</strong> Pneumatic offset air-scribe via <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> + <code class="mono">M8</code>/<code class="mono">M9</code> and <code class="mono">G52 X0 Y0</code> cancel (keeping <code class="mono">#1114=3</code> strictly for Coaxial EasyScribe with mandatory <code class="mono">M0</code> swap pause).</li>
               <li><strong>LinuxCNC QTPlasmaC:</strong> <code class="mono">M3 $1 S1</code> (air on + slide drop) / <code class="mono">M5 $1</code> (retract)</li>
               <li><strong>MASSO G3:</strong> <code class="mono">T111 M6</code> (switch to Air Scribe) / <code class="mono">T112 M6</code> (restore Plasma)</li>
               <li><strong>Centroid Acorn:</strong> <code class="mono">M39</code> (extend &amp; offset) / <code class="mono">M40</code> (retract)</li>
               <li><strong>Mach4, UCCNC, FlashCut, EdingCNC, PlanetCNC, grblHAL, Generic RS-274:</strong> Auxiliary M-code pair with automatic <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> shift and <code class="mono">G52 X0 Y0</code> cancel.</li>
               <li><strong>ArtSoft Mach3 &amp; ShopSabre WinCNC:</strong> Auxiliary M-code pair with XY scribe offsets baked directly into <code class="mono">G54</code> coordinates (zero <code class="mono">G52/G92</code> conflict).</li>
+              <li><strong>Pneumatic Peck Center-Spotting:</strong> Supported across all 13 third-party controllers for drill-ready bolt center dimples before plasma cutting.</li>
             </ul>
           </div>
         </article>

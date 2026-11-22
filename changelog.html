@@ -1403,7 +1403,25 @@
             <li class="change-item">
               <span class="badge-tag badge-fix">FIXED</span>
               <div class="change-content">
-                <strong>Controller &amp; Profile Fixes:</strong> Hardened touch-offs, corner anti-dive THC lock, and rotary moves across 13 CNC plasma posts, plus cleaner angle-iron and C-channel cuts.
+                <strong>Chuck Jaw &amp; Steady-Rest Keep-Out Safety:</strong> Hard-blocks toolpaths that hit chuck jaws with instant fix options (load longer stock, flip part, adjust gap, or override), inserts Safe-Z retracts plus an <code>M0</code> pause before steady-rest roller zones, and flashes collisions red in the 3D simulator.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Cut Quality, True Hole &amp; Plasma Physics:</strong> Adds rolling semi-circle small-hole lead-ins, <code>D &le; 2t</code> rotary True Hole support, post-ramp THC unlock on larger flat and round features, <code>85%</code> anti-dive velocity lock, ADLS flat-face Z clamp, Crown-IHS lead-in ramp for eccentric round bevels, and collinear-merged high-speed witness marking.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>SimCNC Offset Air-Scribe &amp; 13-Controller Peck Spotting:</strong> Runs SimCNC pneumatic offset air-scribes via <code>G52</code> + <code>M8</code>/<code>M9</code> (keeping <code>#1114=3</code> strictly for Coaxial EasyScribe with mandatory <code>M0</code> swap pause), and adds pneumatic peck center-spotting across all 13 third-party controllers.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>14-Controller Dialect Hardening:</strong> Replaces mechanical <code>G28 A</code> homing on clamped tubes with safe modulo-360&deg; A-axis software resets, enables native <code>G17</code> <code>G2</code>/<code>G3</code> arcs on flat holes across all 13 third-party controllers, and keeps THC locked continuously across 4D square HSS.
               </div>
             </li>
           </ul>

@@ -464,7 +464,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
         "torch_summary": "M3 / M5 (T112 M6 Plasma | T111 M6 Scribe)",
         "thc_summary": "M666 (Off) / M667 F<zFeed> (On, F always required)",
         "sync_summary": "G200 F P D<ms> C V A0 O<0|1> S<0|1>",
-        "card_summary": "T112 M6 plasma mode, 3 THC modes, mandatory M667 F<zFeed> anti-dive, Bare G200 vs Hybrid C=P ramps &amp; G28 A0 unwind.",
+        "card_summary": "T112 M6 plasma mode, 3 THC modes, mandatory M667 F<zFeed> anti-dive, Bare G200 vs Hybrid C=P ramps &amp; modulo-360 A reset.",
         "badge_label": "MASSO G3 &amp; Touch &bull; DTHC v5.x (.nc)",
         "meta_title": "MASSO G3 + DTHC v5.x Setup & Cut Cycle | RotaryCAM Docs",
         "meta_description": "MASSO G3 + DTHC v5.x setup guide: 3 THC hardware modes, G200 probing, M667/M666 anti-dive, Hybrid C=P 3D ramps, Template C HSS, and M30 L feed.",
@@ -539,10 +539,10 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "codes": [
                     {"code": "G0 Z<safeZ> / G92.1", "desc": "Retract & clear temporary Z offset"},
                     {"code": "G53 G0 Z0", "desc": "EOF retract to machine Z top"},
-                    {"code": "G91 / G28 A0 / G90", "desc": "3-line rotary unwind (+ G0 A0)"},
+                    {"code": "G92 A<mod_360>", "desc": "Safe modulo-360 A reset (no G28 A)"},
                     {"code": "M30 / M30 L<count>", "desc": "End or chuck-fed bar-advance loop"},
                 ],
-                "note": "Never emits G92 A0, keeping rotary phase intact across unwinds.",
+                "note": "Uses safe modulo-360 A-axis software resets instead of mechanical G28 A homing on clamped tubes.",
             },
         ],
         "sections": [
@@ -1719,6 +1719,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
               <li><strong>Blending &amp; <code class="mono">G93</code> Precision:</strong> Emits <code class="mono">G69</code> plus metric <code class="mono">G64 P0.3</code> (flat/round) or <code class="mono">P0.4</code> (HSS) even inside <code class="mono">G20</code> inch files (banning <code class="mono">G61</code>), and formats <code class="mono">G93 F</code> to <code class="mono">4</code> decimals with a <code class="mono">0.0001</code> floor.</li>
               <li><strong>Micro-Move Coalescing &amp; Axial Feathering:</strong> Coalesces sub-<code class="mono">0.05 mm</code> / <code class="mono">0.02&deg;</code> segments and inserts <code class="mono">0.002 mm</code> (<code class="mono">0.0026 mm</code> in <code class="mono">G20</code>) axial feathering between pure-XYZ and pure-ABC strokes to prevent SimCNC planner stalls.</li>
               <li><strong>Dwell, Parameter &amp; Arc Guardrails:</strong> Suppresses sub-<code class="mono">1 ms</code> dwells (<code class="mono">G4 P&ge;1</code> ms), limits lines to 1 <code class="mono">(...)</code> comment, enforces the <code class="mono">#1999</code> parameter ceiling (with <code class="mono">#4061</code> THC allowlist and <code class="mono">G4 P1</code> sync), formats <code class="mono">G20</code> arcs to <code class="mono">5</code> decimals (splitting full circles, no <code class="mono">G90.1/G91.1</code>), and runs phase-preserving <code class="mono">G92 A</code> unwinds (no <code class="mono">G92.1</code>).</li>
+              <li><strong>Physics, THC &amp; Air-Scribe Routing:</strong> Locks THC below <code class="mono">85%</code> speed, unlocks THC right after lead-in ramps on larger flat/round features, clamps Z on flat faces with ADLS, and runs Crown-IHS lead-in ramps on eccentric round bevels. Pneumatic offset air-scribes use <code class="mono">G52</code> + <code class="mono">M8</code>/<code class="mono">M9</code>, keeping <code class="mono">#1114=3</code> strictly for Coaxial EasyScribe with an <code class="mono">M0</code> swap pause.</li>
             </ul>""",
             },
             {
@@ -2180,11 +2181,13 @@ d.setFeedrate(Feed_Rate)</code></pre>
               For high-production shops with an air-powered stylus mounted alongside the plasma torch. RotaryCAM applies your physical <code class="mono">(X, Y, Z)</code> head offset automatically and runs all marking before switching to plasma in one hands-off run:
             </p>
             <ul class="doc-bullet-list">
+              <li><strong>CSLab SimCNC:</strong> Pneumatic offset air-scribe via <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> + <code class="mono">M8</code>/<code class="mono">M9</code> and <code class="mono">G52 X0 Y0</code> cancel (keeping <code class="mono">#1114=3</code> strictly for Coaxial EasyScribe with mandatory <code class="mono">M0</code> swap pause).</li>
               <li><strong>LinuxCNC QTPlasmaC:</strong> <code class="mono">M3 $1 S1</code> (air on + slide drop) / <code class="mono">M5 $1</code> (retract)</li>
               <li><strong>MASSO G3:</strong> <code class="mono">T111 M6</code> (switch to Air Scribe) / <code class="mono">T112 M6</code> (restore Plasma)</li>
               <li><strong>Centroid Acorn:</strong> <code class="mono">M39</code> (extend &amp; offset) / <code class="mono">M40</code> (retract)</li>
               <li><strong>Mach4, UCCNC, FlashCut, EdingCNC, PlanetCNC, grblHAL, Generic RS-274:</strong> Auxiliary M-code pair with automatic <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> shift and <code class="mono">G52 X0 Y0</code> cancel.</li>
               <li><strong>ArtSoft Mach3 &amp; ShopSabre WinCNC:</strong> Auxiliary M-code pair with XY scribe offsets baked directly into <code class="mono">G54</code> coordinates (zero <code class="mono">G52/G92</code> conflict).</li>
+              <li><strong>Pneumatic Peck Center-Spotting:</strong> Supported across all 13 third-party controllers for drill-ready bolt center dimples before plasma cutting.</li>
             </ul>""",
             },
         ],
