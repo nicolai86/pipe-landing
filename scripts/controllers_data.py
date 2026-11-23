@@ -119,7 +119,7 @@ CONTROLLERS = [
               </li>
               <li>
                 <strong>Regime 2: Rotary &amp; 3D Ramps (<code class="mono">#&lt;tube_cut&gt;=1</code> Before Motion):</strong>
-                For 4-axis pipe saddles, square/rectangular HSS tubes, open beams, and 3D ramp lead-ins, RotaryCAM injects <code class="mono">#&lt;tube_cut&gt;=1</code> before motion so QTPlasmaC hands explicit Z probing and motion back to your program. It probes with <code class="mono">G91</code> / <code class="mono">G38.2</code> / <code class="mono">G90</code> / <code class="mono">G1 Z#5063</code> / <code class="mono">G10 L20 P0</code>, fires <code class="mono">M3 $0 S1</code>, executes a <code class="mono">G94 G1 Z</code> plunge/ramp, uses <code class="mono">G64 P0.25 Q0.05</code>, switches between <code class="mono">G94</code> (HSS flats) and <code class="mono">G93</code> (<code class="mono">A</code> moves), and ends with <code class="mono">M190 P-1</code>.
+                For 4-axis pipe saddles, square/rectangular HSS tubes, open beams, and 3D ramp lead-ins, RotaryCAM injects <code class="mono">#&lt;tube_cut&gt;=1</code> before motion so QTPlasmaC hands explicit Z probing and motion back to your program. It probes with <code class="mono">G91</code> / <code class="mono">G38.2</code> / <code class="mono">G90</code> / <code class="mono">G1 Z#5063</code> / <code class="mono">G10 L20 P0</code>, fires <code class="mono">M3 $0 S1</code>, executes a <code class="mono">G94 G1 Z</code> plunge/ramp, uses <code class="mono">G64 P0.25 Q0.05</code>, switches between <code class="mono">G94</code> (HSS flats) and <code class="mono">G93</code> (<code class="mono">A</code> moves), and ends with <code class="mono">M190 P-1</code>. Rotary center-spotting (<code class="mono">M3 $2</code>) under <code class="mono">#&lt;tube_cut&gt;=1</code> also probes with <code class="mono">G38.2</code> + <code class="mono">G10 L20</code> and drops to standoff height before firing.
               </li>
               <li>
                 <strong>Regime 3: Non-<code class="mono">M3</code> Scribes &amp; Markers (<code class="mono">#&lt;keep-z-motion&gt;=1</code> Restricted):</strong>
@@ -409,9 +409,9 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                     {"code": "G94 F<feed>", "desc": "Restore G94 before retract"},
                     {"code": "G0 Z<safeZ>", "desc": "Retract to Safe Z"},
                     {"code": "M65 P3", "desc": "Torch Fire Fail-Safe OFF (sync mode)"},
-                    {"code": "G0 A<360*k> / G92.1 / G92 A0", "desc": "Clear offsets & modulo unwind (G92.1 at EOF + M30 + %)"},
+                    {"code": "G0 A<nearestRev> / G92.1 / G92 A0.000", "desc": "Unwind in job frame, clear offsets, zero A (M30 + %)"},
                 ],
-                "note": "Modulo-360 resets run G92.1 cleanly before G92 A0.",
+                "note": "End-of-program unwind (G0 A<nearestRev>) runs inside the job frame before G92.1 and zero-motion G92 A0.000, preventing multi-turn spins from stale G54 A offsets.",
             },
         ],
         "sections": [
@@ -424,7 +424,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
               <li><strong>Separate <code class="mono">G90</code> &amp; <code class="mono">G91.1</code> Blocks:</strong> Emits <code class="mono">G00 G90 G17 G54 G40 G49 G80</code> followed by <code class="mono">G91.1</code> on its own line so Mach4 never rejects combined distance and arc-center modes.</li>
               <li><strong><code class="mono">G94</code> to <code class="mono">G93</code> Stroke Switching:</strong> Starts in <code class="mono">G94</code> for positioning and probing, switches to <code class="mono">G93</code> strictly during rotary cut strokes, and restores <code class="mono">G94 F&lt;feed&gt;</code> before retracts.</li>
               <li><strong><code class="mono">G31.0</code>-<code class="mono">G31.3</code> + Incremental Backoff:</strong> Probes on your chosen <code class="mono">G31.0</code>-<code class="mono">G31.3</code> input, backs off with <code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>, and skips redundant probes within <code class="mono">refDistance</code>.</li>
-              <li><strong>Modulo-360 Wrap Resets &amp; EOF:</strong> Emits <code class="mono">G92.1</code> before <code class="mono">G92 A0.000</code> modulo-360&deg; resets, then closes at EOF with <code class="mono">G92.1</code>, <code class="mono">M30</code>, and trailing <code class="mono">%</code>.</li>
+              <li><strong>Modulo-360 Wrap Resets &amp; EOF Unwind:</strong> Emits <code class="mono">G92.1</code> before <code class="mono">G92 A0.000</code> mid-pack resets. At end of program, rotary unwind (<code class="mono">G0 A&lt;nearestRev&gt;</code>) runs inside the job frame before <code class="mono">G92.1</code> and zero-motion <code class="mono">G92 A0.000</code> (preventing multi-turn spins from stale <code class="mono">G54 A</code> offsets), followed by <code class="mono">M30</code> and <code class="mono">%</code>.</li>
             </ul>""",
             },
             {

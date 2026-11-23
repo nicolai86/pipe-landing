@@ -874,12 +874,12 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G0 A&lt;360*k&gt; / G92.1 / G92 A0</code>
-                  <span class="cut-stage-code-desc">Clear offsets &amp; modulo unwind (G92.1 at EOF + M30 + %)</span>
+                  <code class="cut-stage-code">G0 A&lt;nearestRev&gt; / G92.1 / G92 A0.000</code>
+                  <span class="cut-stage-code-desc">Unwind in job frame, clear offsets, zero A (M30 + %)</span>
                 </div>
                 
               </div>
-              <p class="cut-stage-note">Modulo-360 resets run G92.1 cleanly before G92 A0.</p>
+              <p class="cut-stage-note">End-of-program unwind (G0 A&lt;nearestRev&gt;) runs inside the job frame before G92.1 and zero-motion G92 A0.000, preventing multi-turn spins from stale G54 A offsets.</p>
             </div>
             
           </div>
@@ -1041,7 +1041,7 @@
               <li><strong>Separate <code class="mono">G90</code> &amp; <code class="mono">G91.1</code> Blocks:</strong> Emits <code class="mono">G00 G90 G17 G54 G40 G49 G80</code> followed by <code class="mono">G91.1</code> on its own line so Mach4 never rejects combined distance and arc-center modes.</li>
               <li><strong><code class="mono">G94</code> to <code class="mono">G93</code> Stroke Switching:</strong> Starts in <code class="mono">G94</code> for positioning and probing, switches to <code class="mono">G93</code> strictly during rotary cut strokes, and restores <code class="mono">G94 F&lt;feed&gt;</code> before retracts.</li>
               <li><strong><code class="mono">G31.0</code>-<code class="mono">G31.3</code> + Incremental Backoff:</strong> Probes on your chosen <code class="mono">G31.0</code>-<code class="mono">G31.3</code> input, backs off with <code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>, and skips redundant probes within <code class="mono">refDistance</code>.</li>
-              <li><strong>Modulo-360 Wrap Resets &amp; EOF:</strong> Emits <code class="mono">G92.1</code> before <code class="mono">G92 A0.000</code> modulo-360&deg; resets, then closes at EOF with <code class="mono">G92.1</code>, <code class="mono">M30</code>, and trailing <code class="mono">%</code>.</li>
+              <li><strong>Modulo-360 Wrap Resets &amp; EOF Unwind:</strong> Emits <code class="mono">G92.1</code> before <code class="mono">G92 A0.000</code> mid-pack resets. At end of program, rotary unwind (<code class="mono">G0 A&lt;nearestRev&gt;</code>) runs inside the job frame before <code class="mono">G92.1</code> and zero-motion <code class="mono">G92 A0.000</code> (preventing multi-turn spins from stale <code class="mono">G54 A</code> offsets), followed by <code class="mono">M30</code> and <code class="mono">%</code>.</li>
             </ul>
           </div>
         </article>
