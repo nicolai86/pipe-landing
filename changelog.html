@@ -1009,7 +1009,7 @@
     <nav>
       <a href="./" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.9.0-BETA</span>
+        <span class="brand-tag">v0.9.1-BETA</span>
       </a>
       <div class="nav-links">
         <a href="./">Overview</a>
@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.9.0" class="jump-pill">
+      <a href="#v0.9.1" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.9.0)
+        Release History (v0.9.1)
       </a>
     </div>
 
@@ -1134,7 +1134,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.0/RotaryCam-macOS-v0.9.0.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.1/RotaryCam-macOS-v0.9.1.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1165,7 +1165,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.0/RotaryCam-Windows-v0.9.0.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.1/RotaryCam-Windows-v0.9.1.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1196,7 +1196,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.0/RotaryCam-Linux-v0.9.0.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.1/RotaryCam-Linux-v0.9.1.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1347,6 +1347,51 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
+           WEEK OF NOVEMBER 23, 2026 (v0.9.1)
+           ================================================================ -->
+      <article class="release-entry" id="v0.9.1">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 23, 2026</span>
+              <span class="release-version-pill">v0.9.1 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Hardening Release &bull; Lead-Ins &amp; Contours &bull; Sheet Safety &bull; 14-Dialect Posts &bull; Pre-Release QA</span>
+          </div>
+          <p class="release-summary">
+            Focused shop-floor hardening across every profile, sheet pierce, and controller post-processor.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Lead-In &amp; Contour Hardening Across All Profiles:</strong> Covers flat plate, round/rect HSS, angle iron, channel, and I-beam with rolling semi-circle center-pierce for True Hole, crater-safe spiral lead-ins, clean slot entries, and rotary seam-unwrap safety.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Flat-Sheet &amp; Pack-Mode Pierce Safety:</strong> Clamps 2D sheet-bounds pierces so high-speed lead-ins stay on steel, steers edge-starts clear of concave notches, and guards open slits.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Post-Processor Reliability:</strong> Coalesces <code>G93</code> micro-slivers, fixes 3D-ramp <code>M67</code> slowdowns, and enforces stricter controller modal hygiene across all 14 dialects.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Pre-Release QA Hardening:</strong> Verified across all 65 shipped fixtures, all built-in machines and dialect sub-modes, 1D/2D pack mode, and cross-process determinism.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            WEEK OF NOVEMBER 16 - 22, 2026 (v0.7.2 - v0.9.0)
            ================================================================ -->
       <article class="release-entry" id="v0.9.0">
@@ -1356,7 +1401,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">Week of November 16, 2026</span>
-              <span class="release-version-pill">v0.7.2 &ndash; v0.9.0 &bull; LATEST</span>
+              <span class="release-version-pill">v0.7.2 &ndash; v0.9.0</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">No-CAD Tube &amp; Plate Design &bull; Bender Prep &bull; Interactive Canvas &bull; 13 Hardened Posts</span>
           </div>
@@ -1764,11 +1809,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.0-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.1-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.9.0').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.9.1').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',
