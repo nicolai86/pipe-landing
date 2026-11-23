@@ -1045,7 +1045,7 @@
             
             <ul class="doc-bullet-list">
               <li><strong>Pre-<code class="mono">M3</code> Baseline:</strong> Emits <code class="mono">M205</code>, <code class="mono">M207</code>, <code class="mono">M209</code>, and <code class="mono">M211</code> before <code class="mono">M3</code> (never <code class="mono">M206</code> before <code class="mono">M3</code>) so UCCNC's ArcOK wait gate clears cleanly.</li>
-              <li><strong>Flat &amp; Concentric Round:</strong> Modulates <code class="mono">M211</code> (Anti-Dive ON / Lock) and <code class="mono">M212</code> (Anti-Dive OFF / Unlock) across tight corners and speed drops.</li>
+              <li><strong>Flat &amp; Concentric Round:</strong> Modulates <code class="mono">M211</code> (Anti-Dive ON / Lock) and <code class="mono">M212</code> (Anti-Dive OFF / Unlock) across tight corners and speed drops, and locks flat small holes with post-ArcOK <code class="mono">M206</code>.</li>
               <li><strong>3D Ramps &amp; 4D Profiles:</strong> Executes a <code class="mono">0.200 mm</code> check move after pierce before locking THC bilaterally with <code class="mono">M206</code>, then resets <code class="mono">M205</code>/<code class="mono">M209</code>/<code class="mono">M211</code> after <code class="mono">M5</code>.</li>
             </ul>
           </div>

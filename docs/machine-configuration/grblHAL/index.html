@@ -864,8 +864,8 @@
                 </div>
                 
                 <div class="cut-stage-code-item">
-                  <code class="cut-stage-code">G92 A&lt;mod_360&gt;</code>
-                  <span class="cut-stage-code-desc">Modulo-360 reset (zero G92.1)</span>
+                  <code class="cut-stage-code">G92.1 / G92 A&lt;mod_360&gt;</code>
+                  <span class="cut-stage-code-desc">Clear offsets before modulo-360 reset</span>
                 </div>
                 
                 <div class="cut-stage-code-item">
@@ -1071,7 +1071,7 @@
             <ul class="doc-bullet-list">
               <li><strong>Firmware Build:</strong> grblHAL core <code class="mono">20261015+</code> paired with Nov 2026+ <code class="mono">Plugin_plasma</code>.</li>
               <li><strong>Required EEPROM Settings:</strong> <code class="mono">$376=1</code>, <code class="mono">$133=0</code>, <code class="mono">$384=1</code>, <code class="mono">$674</code> (<code class="mono">virtual_ports=1</code>, <code class="mono">sync_pos=1</code>), and <code class="mono">$350</code>.</li>
-              <li><strong>Modulo Unwinds &amp; Float Dwells:</strong> Resets rotary wrap with modulo <code class="mono">G92 A&lt;mod_360&gt;</code> (never <code class="mono">G92.1</code>) and emits <code class="mono">G4 P&lt;sec&gt;</code> pierces in floating-point seconds.</li>
+              <li><strong>Modulo Unwinds &amp; Float Dwells:</strong> Runs <code class="mono">G92.1</code> before modulo <code class="mono">G92 A&lt;mod_360&gt;</code> unwinds and emits <code class="mono">G4 P&lt;sec&gt;</code> pierces in floating-point seconds.</li>
               <li><strong>Serial Line Limits:</strong> Caps lines at <code class="mono">&le; 80</code> characters and strips <code class="mono">?</code>, <code class="mono">!</code>, and <code class="mono">~</code> real-time command characters from comments.</li>
             </ul>
           </div>

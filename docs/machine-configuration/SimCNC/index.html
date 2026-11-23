@@ -729,7 +729,7 @@
                 </div>
                 
               </div>
-              <p class="cut-stage-note">3.5 uses G0 XY + G1 A F&lt;rotFeed&gt;; 3.6+ uses G93 coordinated pre-pierce then restores G94.</p>
+              <p class="cut-stage-note">3.5 uses G0 XY + G1 A F&lt;rotFeed&gt;; 3.6+ uses G93 coordinated pre-pierce capped to the inter-feature rotation speed limit, then restores G94.</p>
             </div>
             
             <div class="cut-stage-col" data-phase="2">
@@ -1203,7 +1203,10 @@ else:
               <pre><code>G1 X48.000 Y20.000 F2800.0   (Cut up to tab entry)
 M35                          (Lock THC M63 P0, wait zero vel, extinguish M63 P1)
 G0 X52.000 Y20.000           (Rapid across 4 mm uncut tab at cut height)
-M33                          (Lift to Pierce_height, fire M62 P1, 35% dwell, plunge, M62 P0)
+M33                          (Lift to Pierce_height, fire M62 P1, 35% dwell, plunge)
+M63 P0                       (Re-lock THC right after M33 restart)
+G1 X58.000 Y20.000 F2800.0   (Cut 6 mm post-tab restart with THC locked)
+M62 P0                       (Unlock THC after 6 mm clear of tab start)
 G1 X90.000 Y20.000 F2800.0   (Resume cutting with THC active)</code></pre>
             </div>
             <p>
@@ -1228,7 +1231,7 @@ while check_arc_ok(d):
     time.sleep(0.005)</code></pre>
             </div>
             <p>
-              <strong><code class="mono">m33.py</code> (Tab Fast Restart):</strong> Skips IHS probing completely, lifts to <code class="mono">Pierce_height</code> to prevent slag blowback, fires <code class="mono">M62 P1</code>, dwells for 35% of normal pierce delay (minimum <code class="mono">50 ms</code>, since the electrode is hot and post-flow is active), plunges to <code class="mono">Cut_height</code>, and re-enables THC via <code class="mono">M62 P0</code>.
+              <strong><code class="mono">m33.py</code> (Tab Fast Restart):</strong> Skips IHS probing completely, lifts to <code class="mono">Pierce_height</code> to prevent slag blowback, fires <code class="mono">M62 P1</code>, dwells for 35% of normal pierce delay (minimum <code class="mono">50 ms</code>, since the electrode is hot and post-flow is active), and plunges to <code class="mono">Cut_height</code>. RotaryCAM then keeps THC locked (<code class="mono">M63 P0</code>) right after <code class="mono">M33</code> and unlocks (<code class="mono">M62 P0</code>) after <code class="mono">6 mm</code> of travel.
             </p>
             <div class="doc-code-block">
               <div class="doc-code-bar">

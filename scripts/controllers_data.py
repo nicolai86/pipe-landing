@@ -409,9 +409,9 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                     {"code": "G94 F<feed>", "desc": "Restore G94 before retract"},
                     {"code": "G0 Z<safeZ>", "desc": "Retract to Safe Z"},
                     {"code": "M65 P3", "desc": "Torch Fire Fail-Safe OFF (sync mode)"},
-                    {"code": "G0 A<360*k> / G92 A0", "desc": "Modulo unwind (G92.1 at EOF + M30 + %)"},
+                    {"code": "G0 A<360*k> / G92.1 / G92 A0", "desc": "Clear offsets & modulo unwind (G92.1 at EOF + M30 + %)"},
                 ],
-                "note": "Modulo-360 resets mid-pack never call G92.1 so active G92 Z stays intact.",
+                "note": "Modulo-360 resets run G92.1 cleanly before G92 A0.",
             },
         ],
         "sections": [
@@ -424,7 +424,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
               <li><strong>Separate <code class="mono">G90</code> &amp; <code class="mono">G91.1</code> Blocks:</strong> Emits <code class="mono">G00 G90 G17 G54 G40 G49 G80</code> followed by <code class="mono">G91.1</code> on its own line so Mach4 never rejects combined distance and arc-center modes.</li>
               <li><strong><code class="mono">G94</code> to <code class="mono">G93</code> Stroke Switching:</strong> Starts in <code class="mono">G94</code> for positioning and probing, switches to <code class="mono">G93</code> strictly during rotary cut strokes, and restores <code class="mono">G94 F&lt;feed&gt;</code> before retracts.</li>
               <li><strong><code class="mono">G31.0</code>-<code class="mono">G31.3</code> + Incremental Backoff:</strong> Probes on your chosen <code class="mono">G31.0</code>-<code class="mono">G31.3</code> input, backs off with <code class="mono">G91 G00 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>, and skips redundant probes within <code class="mono">refDistance</code>.</li>
-              <li><strong>Modulo-360 Wrap Resets &amp; EOF:</strong> Resets rotary wrap with <code class="mono">G92 A0.000</code> mid-pack without <code class="mono">G92.1</code>, then closes at EOF with <code class="mono">G92.1</code>, <code class="mono">M30</code>, and trailing <code class="mono">%</code>.</li>
+              <li><strong>Modulo-360 Wrap Resets &amp; EOF:</strong> Emits <code class="mono">G92.1</code> before <code class="mono">G92 A0.000</code> modulo-360&deg; resets, then closes at EOF with <code class="mono">G92.1</code>, <code class="mono">M30</code>, and trailing <code class="mono">%</code>.</li>
             </ul>""",
             },
             {
@@ -617,7 +617,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "title": "Rapid & Rotate",
                 "codes": [
                     {"code": "G90 G91.1 G17 G40 G49 G64", "desc": "Incremental IJ + CV without syntax-breaking P"},
-                    {"code": "G94", "desc": "Units-per-minute positioning"},
+                    {"code": "G94", "desc": "Clean G94 startup (including rotary)"},
                     {"code": "G0 X<x> Y<y> A<a>", "desc": "Rapid at Safe Z (0.002 mm G93 deadband)"},
                 ],
                 "note": "Header prints (CONFIG: ...) checklist summarizing dwell, LookAhead, Use Radius, and THC pins.",
@@ -815,7 +815,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
             <ul class="doc-bullet-list">
               <li>
                 <strong>Regime 1: 2D Flat Plate (<code class="mono">G64 ON</code>, <code class="mono">M65</code>, <code class="mono">M61/M62</code>, Zero Z Words):</strong>
-                Emits <code class="mono">G64 ON</code> smoothing and <code class="mono">M65</code> to load your CNC12 Material Profile, then calls <code class="mono">M61</code> (probe, pierce, dwell, cut height) and <code class="mono">M62</code> (arc off, retract) with zero <code class="mono">Z</code> words and CNC12's 15% Voltage Anti-Dive active.
+                Emits <code class="mono">G64 ON</code> smoothing and <code class="mono">M65</code> to load your CNC12 Material Profile, then calls <code class="mono">M61</code> (probe, pierce, dwell, cut height) and <code class="mono">M62</code> (arc off, retract) with zero <code class="mono">Z</code> words, 15% Voltage Anti-Dive, and <code class="mono">M36</code>/<code class="mono">M35</code> ATHC locking on flat small holes.
               </li>
               <li>
                 <strong>Regime 2: 3D Ramps &amp; 4D Rotary (<code class="mono">Z=0</code> Centerline, <code class="mono">M150</code>, <code class="mono">M36</code>, <code class="mono">G93.1</code>):</strong>
@@ -933,7 +933,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "title": "Safe Retract & Unwind",
                 "codes": [
                     {"code": "G0 Z<safeZ>", "desc": "Retract to Safe Z"},
-                    {"code": "G92 A<mod_360>", "desc": "Modulo-360 reset (zero G92.1)"},
+                    {"code": "G92.1 / G92 A<mod_360>", "desc": "Clear offsets before modulo-360 reset"},
                     {"code": "M65 P2 / M30", "desc": "Enable THC port & end program"},
                 ],
                 "note": "Lines <= 80 chars; strips ?, !, ~ real-time command characters from comments.",
@@ -974,7 +974,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
             <ul class="doc-bullet-list">
               <li><strong>Firmware Build:</strong> grblHAL core <code class="mono">20261015+</code> paired with Nov 2026+ <code class="mono">Plugin_plasma</code>.</li>
               <li><strong>Required EEPROM Settings:</strong> <code class="mono">$376=1</code>, <code class="mono">$133=0</code>, <code class="mono">$384=1</code>, <code class="mono">$674</code> (<code class="mono">virtual_ports=1</code>, <code class="mono">sync_pos=1</code>), and <code class="mono">$350</code>.</li>
-              <li><strong>Modulo Unwinds &amp; Float Dwells:</strong> Resets rotary wrap with modulo <code class="mono">G92 A&lt;mod_360&gt;</code> (never <code class="mono">G92.1</code>) and emits <code class="mono">G4 P&lt;sec&gt;</code> pierces in floating-point seconds.</li>
+              <li><strong>Modulo Unwinds &amp; Float Dwells:</strong> Runs <code class="mono">G92.1</code> before modulo <code class="mono">G92 A&lt;mod_360&gt;</code> unwinds and emits <code class="mono">G4 P&lt;sec&gt;</code> pierces in floating-point seconds.</li>
               <li><strong>Serial Line Limits:</strong> Caps lines at <code class="mono">&le; 80</code> characters and strips <code class="mono">?</code>, <code class="mono">!</code>, and <code class="mono">~</code> real-time command characters from comments.</li>
             </ul>""",
             },
@@ -1090,7 +1090,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "body_html": """
             <ul class="doc-bullet-list">
               <li><strong>Pre-<code class="mono">M3</code> Baseline:</strong> Emits <code class="mono">M205</code>, <code class="mono">M207</code>, <code class="mono">M209</code>, and <code class="mono">M211</code> before <code class="mono">M3</code> (never <code class="mono">M206</code> before <code class="mono">M3</code>) so UCCNC's ArcOK wait gate clears cleanly.</li>
-              <li><strong>Flat &amp; Concentric Round:</strong> Modulates <code class="mono">M211</code> (Anti-Dive ON / Lock) and <code class="mono">M212</code> (Anti-Dive OFF / Unlock) across tight corners and speed drops.</li>
+              <li><strong>Flat &amp; Concentric Round:</strong> Modulates <code class="mono">M211</code> (Anti-Dive ON / Lock) and <code class="mono">M212</code> (Anti-Dive OFF / Unlock) across tight corners and speed drops, and locks flat small holes with post-ArcOK <code class="mono">M206</code>.</li>
               <li><strong>3D Ramps &amp; 4D Profiles:</strong> Executes a <code class="mono">0.200 mm</code> check move after pierce before locking THC bilaterally with <code class="mono">M206</code>, then resets <code class="mono">M205</code>/<code class="mono">M209</code>/<code class="mono">M211</code> after <code class="mono">M5</code>.</li>
             </ul>""",
             },
@@ -1451,7 +1451,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                 "title": "Safe Retract & Unwind",
                 "codes": [
                     {"code": "G0 Z<safeZ>", "desc": "Retract to Safe Z clearance"},
-                    {"code": "G92 A<mod_360>", "desc": "Modulo-360 reset (zero G92.1)"},
+                    {"code": "G92.1 / G92 A<mod_360>", "desc": "Clear offsets before modulo-360 reset"},
                     {"code": "M54 P0 / M02 or M30", "desc": "THC OFF & selectable M02/M30 end"},
                 ],
                 "note": "Optional (status, ...) lines report piece progress in TNG's status bar.",
@@ -1653,7 +1653,7 @@ H1                      (THC Active only after reaching Cut Height)</code></pre>
                     {"code": "G0 X<x> Y<y> (Flat)", "desc": "Flat rapid (#1123/#1124 plate Z reuse)"},
                     {"code": "G93 -> G1 X Y A F<1/t> -> G94", "desc": "3.6+ coordinated rotary pre-pierce"},
                 ],
-                "note": "3.5 uses G0 XY + G1 A F<rotFeed>; 3.6+ uses G93 coordinated pre-pierce then restores G94.",
+                "note": "3.5 uses G0 XY + G1 A F<rotFeed>; 3.6+ uses G93 coordinated pre-pierce capped to the inter-feature rotation speed limit, then restores G94.",
             },
             {
                 "num": 2,
@@ -1865,7 +1865,10 @@ else:
               <pre><code>G1 X48.000 Y20.000 F2800.0   (Cut up to tab entry)
 M35                          (Lock THC M63 P0, wait zero vel, extinguish M63 P1)
 G0 X52.000 Y20.000           (Rapid across 4 mm uncut tab at cut height)
-M33                          (Lift to Pierce_height, fire M62 P1, 35% dwell, plunge, M62 P0)
+M33                          (Lift to Pierce_height, fire M62 P1, 35% dwell, plunge)
+M63 P0                       (Re-lock THC right after M33 restart)
+G1 X58.000 Y20.000 F2800.0   (Cut 6 mm post-tab restart with THC locked)
+M62 P0                       (Unlock THC after 6 mm clear of tab start)
 G1 X90.000 Y20.000 F2800.0   (Resume cutting with THC active)</code></pre>
             </div>
             <p>
@@ -1890,7 +1893,7 @@ while check_arc_ok(d):
     time.sleep(0.005)</code></pre>
             </div>
             <p>
-              <strong><code class="mono">m33.py</code> (Tab Fast Restart):</strong> Skips IHS probing completely, lifts to <code class="mono">Pierce_height</code> to prevent slag blowback, fires <code class="mono">M62 P1</code>, dwells for 35% of normal pierce delay (minimum <code class="mono">50 ms</code>, since the electrode is hot and post-flow is active), plunges to <code class="mono">Cut_height</code>, and re-enables THC via <code class="mono">M62 P0</code>.
+              <strong><code class="mono">m33.py</code> (Tab Fast Restart):</strong> Skips IHS probing completely, lifts to <code class="mono">Pierce_height</code> to prevent slag blowback, fires <code class="mono">M62 P1</code>, dwells for 35% of normal pierce delay (minimum <code class="mono">50 ms</code>, since the electrode is hot and post-flow is active), and plunges to <code class="mono">Cut_height</code>. RotaryCAM then keeps THC locked (<code class="mono">M63 P0</code>) right after <code class="mono">M33</code> and unlocks (<code class="mono">M62 P0</code>) after <code class="mono">6 mm</code> of travel.
             </p>
             <div class="doc-code-block">
               <div class="doc-code-bar">
