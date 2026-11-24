@@ -1009,7 +1009,7 @@
     <nav>
       <a href="./" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.9.1-BETA</span>
+        <span class="brand-tag">v0.9.2-BETA</span>
       </a>
       <div class="nav-links">
         <a href="./">Overview</a>
@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.9.1" class="jump-pill">
+      <a href="#v0.9.2" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.9.1)
+        Release History (v0.9.2)
       </a>
     </div>
 
@@ -1134,7 +1134,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.1/RotaryCam-macOS-v0.9.1.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.2/RotaryCam-macOS-v0.9.2.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1165,7 +1165,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.1/RotaryCam-Windows-v0.9.1.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.2/RotaryCam-Windows-v0.9.2.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1196,7 +1196,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.1/RotaryCam-Linux-v0.9.1.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.2/RotaryCam-Linux-v0.9.2.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1347,6 +1347,57 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
+           NOVEMBER 24, 2026 (v0.9.2)
+           ================================================================ -->
+      <article class="release-entry" id="v0.9.2">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">November 24, 2026</span>
+              <span class="release-version-pill">v0.9.2 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Chained Common-Line &bull; One-Swap Scribing &bull; Tighter Plate Nests &bull; Cutout Chains</span>
+          </div>
+          <p class="release-summary">
+            Cleaner common-line cutting, tighter plate nests that save drop steel, and one-swap sheet scribing across multi-part jobs.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>True Chained Common-Line Cutting:</strong> Touching parts on flat plate now cut as one unified job instead of separate trimmed shapes. Internal dividing lines run first in long, straight passes while the plate stays locked together, followed by continuous outer perimeter cuts with fewer pierces and zero tiny sub-6 mm leftover stub cuts.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>One-Swap Sheet Scribing &amp; Global Cut Order:</strong> Multi-part flat sheets now run all scribing and marking first while the plate is cold and rigid, then cut all internal holes and cutouts, and finish with outer perimeters. EasyScribe setups pause once per sheet instead of swapping consumables between parts.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">IMPROVED</span>
+              <div class="change-content">
+                <strong>Tighter, Faster 2D Plate Nesting:</strong> Fits more parts onto every sheet to save drop steel while nesting complex curved and multi-part batches much faster.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Daisy-Chain &amp; Bridge Cutting Inside Cutouts:</strong> Small parts nested inside larger part cutouts can now daisy-chain and micro-bridge together to cut down on pierces and save consumables, while still finishing inside parts before the outer cutout drops loose.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Chain-Safe Remnant Crop Cuts &amp; Multi-Part Stability:</strong> Guillotine remnant crop cuts now automatically stay clear of daisy-chain connection lines and bridge webs so your torch never double-cuts a chain link, and large multi-part DXF/SVG batches with common-line cutting turned on load reliably without freezing.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
            WEEK OF NOVEMBER 23, 2026 (v0.9.1)
            ================================================================ -->
       <article class="release-entry" id="v0.9.1">
@@ -1355,7 +1406,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 23, 2026</span>
-              <span class="release-version-pill">v0.9.1 &bull; LATEST</span>
+              <span class="release-version-pill">v0.9.1</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Hardening Release &bull; Lead-Ins &amp; Contours &bull; Sheet Safety &bull; 14-Dialect Posts &bull; Pre-Release QA</span>
           </div>
@@ -1809,11 +1860,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.1-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.2-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.9.1').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.9.2').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',
