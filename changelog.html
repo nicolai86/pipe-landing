@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#v0.9.2" class="jump-pill">
+      <a href="#upcoming" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.9.2)
+        Release History (Next + v0.9.2)
       </a>
     </div>
 
@@ -1346,6 +1346,57 @@
   <!-- Chronological Release Entries -->
   <main class="changelog-section">
     <div class="timeline-wrap">
+      <!-- ================================================================
+           NEXT RELEASE (IN PROGRESS: GEOMETRY & 14-DIALECT HARDENING)
+           ================================================================ -->
+      <article class="release-entry" id="upcoming">
+        <div class="release-marker"></div>
+        <div class="release-card" style="border-color: rgba(6, 182, 212, 0.35);">
+          <div class="release-meta">
+            <div class="release-date-wrap">
+              <span class="release-date">Next Release (In Progress)</span>
+              <span class="release-version-pill" style="color: var(--cyan-arc); background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.3);">GEOMETRY &amp; DIALECT HARDENING</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Swept-Kerf QA &bull; Zero Gouges &bull; Zero Windup &bull; 14-Dialect Parity</span>
+          </div>
+          <p class="release-summary">
+            Deep cut-geometry and post-processor hardening ahead of v1.0, verified end-to-end across all 6 stock profiles, all 14 controller dialects, and both Single-Part and Pack Mode.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>No More Lead-In, Lead-Out, or Slit Gouges:</strong> Internal hole linear lead-outs now exit inward into the drop slug instead of nicking finished walls. Centerline slits cut straight without lateral lead-in marks, and nested flat parts sitting away from the sheet edge automatically switch from Edge-Start to a full-height inboard pierce.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Cleaner Channel, Angle, HSS &amp; Common-Line Cuts:</strong> C-channel coped end cuts now run toe-to-toe in one clean pass with zero double-cutting. Angle and channel edge-notches keep pierces strictly on scrap and exit cleanly past free toes. Square/rect HSS cutouts drop cross-corner hairpin lead-ins, rotary cutouts eliminate kerf bowties, and rounded-corner common-line nests leave zero uncut bridges.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Zero Rotary Cable Windup &amp; Prior-Kerf Avoidance:</strong> Multi-station HSS cutouts stay tightly bounded around 0&deg; instead of winding the chuck 20+ turns across third-party dialects, with automatic zero-spin modulo-360&deg; resets on multi-sever sticks. Adjacent rotary severs now keep their pierce points clear of already-cut kerfs.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Smoother 14-Dialect Output &amp; 3D Simulator Accuracy:</strong> All 6 controller-kerf dialects emit clean <code>G41</code>/<code>G42</code>/<code>G40</code> paths, FireControl and UCCNC merge tiny collinear rotary micro-moves to stop buffer stutter on small pipe, and Channel/Angle corner radii now sit flush on the surface in the 3D cut simulator.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">IMPROVED</span>
+              <div class="change-content">
+                <strong>25x Faster Dense Rotary Cuts &amp; Swept-Kerf QA Gate:</strong> Dense multi-turn helical cuts compile in under 1 second (down from ~24 seconds). Every pre-release build now passes an automated swept-kerf boolean geometry check across all 65 test parts and 16 machine profiles, plus real LinuxCNC <code>rs274</code>/<code>qtplasmac_gcode</code> and <code>grblHAL</code> simulator verification.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
       <!-- ================================================================
            NOVEMBER 24, 2026 (v0.9.2)
            ================================================================ -->
