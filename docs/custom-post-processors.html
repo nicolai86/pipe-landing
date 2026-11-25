@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Lua Post-Processors (api_version = 1) | RotaryCAM Docs</title>
+  <meta name="description" content="Write sandboxed Lua 5.4 custom post-processors for 2D flat sheet and 4-axis rotary plasma cutting with live GCodeGrammarLinter validation and HTTP API." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/custom-post-processors.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/custom-post-processors.html" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Custom Lua Post-Processors (api_version = 1) | RotaryCAM Docs" />
+  <meta property="og:description" content="Write sandboxed Lua 5.4 custom post-processors for 2D flat sheet and 4-axis rotary plasma cutting with live GCodeGrammarLinter validation and HTTP API." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="RotaryCAM 3D CAD Tube Inspection and Feature Extraction" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Custom Lua Post-Processors (api_version = 1) | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Write sandboxed Lua 5.4 custom post-processors for 2D flat sheet and 4-axis rotary plasma cutting with live GCodeGrammarLinter validation and HTTP API." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "How to Write a Custom Post-Processor (Lua)",
+        "item": "https://rotarycam.app/docs/custom-post-processors.html"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "How to Write a Custom Post-Processor (Lua)",
+    "description": "Write sandboxed Lua 5.4 custom post-processors for 2D flat sheet and 4-axis rotary plasma cutting with live GCodeGrammarLinter validation and HTTP API.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/custom-post-processors.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/custom-post-processors.html"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="docs.css?v=20261121" />
+  <style>
+    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
+    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
+    
+    .site-header-left { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .site-header .brand { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+    .site-header .brand-tag { font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .site-header .nav-back-link { color: #94a3b8 !important; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.15s ease; white-space: nowrap; }
+    .site-header .nav-back-link:hover { color: #f59e0b !important; }
+    .site-header .nav-divider { width: 1px; height: 16px; background: #232833; }
+
+    .site-header .nav-links { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
+    .site-header .nav-links > a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.82rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.35rem 0; font-weight: 500; }
+    .site-header .nav-links > a:hover { color: #fff; }
+    .site-header .nav-links > a.active { color: #fff; font-weight: 600; }
+    .site-header .nav-links > a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+
+    /* Interactive Tutorials Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { background: transparent; border: none; color: #94a3b8; font-size: 0.82rem; font-family: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.35rem 0; transition: color 0.15s ease; }
+    .nav-dropdown-trigger:hover, .nav-dropdown:hover .nav-dropdown-trigger, .nav-dropdown-trigger.active { color: #fff; }
+    .nav-dropdown-trigger.active { font-weight: 600; }
+    .nav-dropdown-trigger .dropdown-caret { transition: transform 0.2s ease; opacity: 0.7; }
+    .nav-dropdown:hover .dropdown-caret, .nav-dropdown:focus-within .dropdown-caret { transform: rotate(180deg); opacity: 1; color: #f59e0b; }
+    .nav-active-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 1px 5px; border-radius: 4px; font-weight: 700; line-height: 1.2; }
+    .nav-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #232833; padding: 1px 5px; border-radius: 4px; font-weight: 600; line-height: 1.2; }
+
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 0.65rem); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(18, 22, 29, 0.98); border: 1px solid #232833; border-radius: 10px; box-shadow: 0 16px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); padding: 0.75rem; width: 560px; max-width: calc(100vw - 2rem); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; z-index: 1050; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: none; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .nav-dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.55rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.45rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+    .nav-dropdown-count { color: #f59e0b; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.5rem; max-height: 380px; }
+    .nav-dropdown-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.45rem 0.6rem; border-radius: 6px; text-decoration: none; color: #cbd5e1; transition: background 0.15s ease, color 0.15s ease; position: relative; }
+    .nav-dropdown-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .nav-dropdown-item.active { background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-dropdown-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #64748b; background: rgba(255,255,255,0.04); padding: 2px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+    .nav-dropdown-item.active .nav-dropdown-num { color: #f59e0b; background: rgba(245, 158, 11, 0.18); }
+    .nav-dropdown-content { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+    .nav-dropdown-title { font-size: 0.78rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-dropdown-sub { font-size: 0.66rem; color: #64748b; line-height: 1.2; }
+    .nav-dropdown-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink: 0; }
+
+    /* Right Section */
+    .site-header-right { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; font-weight: 500; }
+    .site-header .nav-cta:hover { border-color: #f59e0b; color: #fff; }
+    
+    .nav-mobile-toggle { display: none; background: #14171d; border: 1px solid #232833; color: #94a3b8; border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; padding: 0; }
+    .nav-mobile-toggle:hover { color: #fff; border-color: #f59e0b; }
+
+    /* Mobile Drawer */
+    .docs-mobile-drawer { display: none; position: fixed; inset: 0; top: 57px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 999; padding: 1.5rem; overflow-y: auto; flex-direction: column; gap: 1.25rem; }
+    .docs-mobile-drawer.open { display: flex; }
+    .docs-mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .docs-mobile-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .docs-mobile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 8px; text-decoration: none; color: #cbd5e1; background: rgba(255,255,255,0.02); border: 1px solid #232833; font-size: 0.88rem; }
+    .docs-mobile-link:hover, .docs-mobile-link.active { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+
+    @media (max-width: 960px) {
+      .site-header .nav-links { display: none; }
+      .site-header .nav-divider { display: none; }
+      .nav-mobile-toggle { display: inline-flex; }
+    }
+  </style>
+  <script src="../webmcp.js" defer></script>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <header class="site-header" id="navbar">
+    <nav aria-label="Documentation Navigation">
+      <div class="site-header-left">
+        <a href="../index.html" class="brand" aria-label="RotaryCAM Home">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.9.2-BETA</span>
+        </a>
+        <div class="nav-divider" aria-hidden="true"></div>
+        <a href="../index.html" class="nav-back-link">← rotarycam.app</a>
+      </div>
+
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+
+        <!-- Tutorials Dropdown -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger active" aria-expanded="false" aria-haspopup="true">
+            <span>Tutorials</span>
+            
+            <span class="nav-active-badge">16</span>
+            
+            <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-header">
+              <span>All Workflows &amp; Tutorials</span>
+              <span class="nav-dropdown-count">16 Guides</span>
+            </div>
+            <div class="nav-dropdown-grid">
+              
+              <a href="machine-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">01</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Machine Configuration</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-path-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">02</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">UI & Cut Path Config</span>
+                  <span class="nav-dropdown-sub">8 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="nesting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">03</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Multi-Part Stick Nesting</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="bending.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">04</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Bending HSS & HSS-O</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="changelog.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">05</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Build Info & Changelog</span>
+                  <span class="nav-dropdown-sub">3 Steps • Diagnostics & Storage</span>
+                </span>
+                
+              </a>
+              
+              <a href="ai-autodetection.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">06</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Fusion 360 & AI Autodetect</span>
+                  <span class="nav-dropdown-sub">8 Steps • 11 Screenshots</span>
+                </span>
+                
+              </a>
+              
+              <a href="simcnc-motion-sync.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">07</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">SimCNC Motion-Sync & 3D Ramp</span>
+                  <span class="nav-dropdown-sub">12 Steps • Technical Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="cut-charts-and-features.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">08</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
+                  <span class="nav-dropdown-sub">7 Steps • Visual Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="mcp-offline-workflows.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">09</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Offline MCP & AI Automation</span>
+                  <span class="nav-dropdown-sub">8 Steps • Integration Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="dxf-svg-flat-sheet.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="rotary-and-sheet-feedrates.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">11</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">G94, G93 & G20/G21 Feeds</span>
+                  <span class="nav-dropdown-sub">5 Sections</span>
+                </span>
+                
+              </a>
+              
+              <a href="interactive-canvas-controls.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">12</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Interactive Canvas Controls</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="flat-plate-pro-cutting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">13</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Flat Pro Primitives</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="no-cad-wizard-and-tube-frames.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">14</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">No-CAD & 3D Tube Frames</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="tube-wrap-and-open-profiles.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">15</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Tube Wrap & Open Beams</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="custom-post-processors.html" class="nav-dropdown-item active" role="menuitem">
+                <span class="nav-dropdown-num">16</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Custom Post-Processors (Lua)</span>
+                  <span class="nav-dropdown-sub">6 Steps • Lua 5.4 Guide</span>
+                </span>
+                
+                <span class="nav-dropdown-dot" title="Current Guide"></span>
+                
+              </a>
+              
+            </div>
+          </div>
+        </div>
+
+        <a href="../index.html#pricing">Pricing</a>
+        <a href="../hardware-thc.html" style="color: #f59e0b; font-weight: 600;">Hardware THC</a>
+        <a href="../build-guide.html">Machine Blueprint</a>
+        <a href="../changelog.html">Changelog</a>
+      </div>
+
+      <div class="site-header-right">
+        <a href="../index.html#download" class="nav-cta">Download Beta</a>
+        <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
+    <div class="docs-mobile-section-title">Navigation</div>
+    <div class="docs-mobile-list">
+      <a href="../index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="../index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
+      <a href="index.html" class="docs-mobile-link">Documentation Hub Overview</a>
+      <a href="../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
+      <a href="../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
+      <a href="../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
+    </div>
+
+    <div class="docs-mobile-section-title" style="margin-top: 1rem;">Tutorials &amp; Guides</div>
+    <div class="docs-mobile-list">
+      
+      <a href="machine-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">01</span>
+        <span>Machine Configuration</span>
+      </a>
+      
+      <a href="cut-path-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">02</span>
+        <span>UI & Cut Path Config</span>
+      </a>
+      
+      <a href="nesting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">03</span>
+        <span>Multi-Part Stick Nesting</span>
+      </a>
+      
+      <a href="bending.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">04</span>
+        <span>Bending HSS & HSS-O</span>
+      </a>
+      
+      <a href="changelog.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">05</span>
+        <span>Build Info & Changelog</span>
+      </a>
+      
+      <a href="ai-autodetection.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">06</span>
+        <span>Fusion 360 & AI Autodetect</span>
+      </a>
+      
+      <a href="simcnc-motion-sync.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">07</span>
+        <span>SimCNC Motion-Sync & 3D Ramp</span>
+      </a>
+      
+      <a href="cut-charts-and-features.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">08</span>
+        <span>Cut Charts & Feature Toggles</span>
+      </a>
+      
+      <a href="mcp-offline-workflows.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">09</span>
+        <span>Offline MCP & AI Automation</span>
+      </a>
+      
+      <a href="dxf-svg-flat-sheet.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
+      <a href="rotary-and-sheet-feedrates.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">11</span>
+        <span>G94, G93 & G20/G21 Feeds</span>
+      </a>
+      
+      <a href="interactive-canvas-controls.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">12</span>
+        <span>Interactive Canvas Controls</span>
+      </a>
+      
+      <a href="flat-plate-pro-cutting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">13</span>
+        <span>Flat Pro Primitives</span>
+      </a>
+      
+      <a href="no-cad-wizard-and-tube-frames.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">14</span>
+        <span>No-CAD & 3D Tube Frames</span>
+      </a>
+      
+      <a href="tube-wrap-and-open-profiles.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">15</span>
+        <span>Tube Wrap & Open Beams</span>
+      </a>
+      
+      <a href="custom-post-processors.html" class="docs-mobile-link active">
+        <span class="nav-dropdown-num">16</span>
+        <span>Custom Post-Processors (Lua)</span>
+      </a>
+      
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="../index.html#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Mobile drawer toggle
+      const toggle = document.getElementById('navMobileToggle');
+      const drawer = document.getElementById('docsMobileDrawer');
+      if (toggle && drawer) {
+        toggle.addEventListener('click', function () {
+          const isOpen = drawer.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        drawer.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            drawer.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Desktop/tablet dropdown toggle on click
+      const ddTrigger = document.querySelector('.nav-dropdown-trigger');
+      const dd = document.querySelector('.nav-dropdown');
+      if (ddTrigger && dd) {
+        ddTrigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = dd.classList.toggle('open');
+          ddTrigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function (e) {
+          if (!dd.contains(e.target)) {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
+
+  <main>
+
+    <!-- ======================================================================
+         TUTORIAL HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../index.html">RotaryCAM</a>
+          <span class="sep">/</span>
+          <a href="index.html">Documentation</a>
+          <span class="sep">/</span>
+          <span class="current">16. How to Write a Custom Post-Processor (Lua)</span>
+        </div>
+
+        <h1 class="docs-title">16. How to Write a <span class="text-gradient-amber">Custom Post-Processor (Lua)</span></h1>
+        <p class="docs-subtitle">
+          Build your own sandboxed Lua 5.4 post-processor on the exact <code class="mono">api_version = 1</code> contract that drives RotaryCAM&rsquo;s built-in controllers, covering both 2D Flat Sheet and 4-Axis Rotary Tube/Structural jobs with pre-save <code class="mono">GCodeGrammarLinter</code> checks.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>TUTORIAL 16 OF 16</strong> • 6 Steps • Lua 5.4 Guide</span>
+          
+          <span class="docs-meta-pill cyan"><strong>Runtime:</strong> Sandboxed Lua 5.4 (<code class="mono">api_version = 1</code>) &bull; 4 MB / 2M Ops</span>
+          
+          <span class="docs-meta-pill"><strong>Tiers:</strong> Maker (<code class="mono">$199</code>) &amp; Pro Shop (<code class="mono">$399</code>) &bull; Flat + 4-Axis Rotary</span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN DOCUMENTATION SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Tutorial Navigation">
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">Tutorials &amp; Guides</div>
+          <ul class="docs-nav-list">
+            <li>
+              <a href="index.html">
+                <span class="docs-nav-num">HUB</span>
+                <span>Documentation Overview</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="machine-configuration.html">
+                <span class="docs-nav-num">01</span>
+                <span>Machine Configuration</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="cut-path-configuration.html">
+                <span class="docs-nav-num">02</span>
+                <span>UI & Cut Path Config</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="nesting.html">
+                <span class="docs-nav-num">03</span>
+                <span>Multi-Part Stick Nesting</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="bending.html">
+                <span class="docs-nav-num">04</span>
+                <span>Bending HSS & HSS-O</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="changelog.html">
+                <span class="docs-nav-num">05</span>
+                <span>Build Info & Changelog</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="ai-autodetection.html">
+                <span class="docs-nav-num">06</span>
+                <span>Fusion 360 & AI Autodetect</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="simcnc-motion-sync.html">
+                <span class="docs-nav-num">07</span>
+                <span>SimCNC Motion-Sync & 3D Ramp</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="cut-charts-and-features.html">
+                <span class="docs-nav-num">08</span>
+                <span>Cut Charts & Feature Toggles</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="mcp-offline-workflows.html">
+                <span class="docs-nav-num">09</span>
+                <span>Offline MCP & AI Automation</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="dxf-svg-flat-sheet.html">
+                <span class="docs-nav-num">10</span>
+                <span>DXF/SVG & Imperial Units</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="rotary-and-sheet-feedrates.html">
+                <span class="docs-nav-num">11</span>
+                <span>G94, G93 & G20/G21 Feeds</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="interactive-canvas-controls.html">
+                <span class="docs-nav-num">12</span>
+                <span>Interactive Canvas Controls</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="flat-plate-pro-cutting.html">
+                <span class="docs-nav-num">13</span>
+                <span>Flat Pro Primitives</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="no-cad-wizard-and-tube-frames.html">
+                <span class="docs-nav-num">14</span>
+                <span>No-CAD & 3D Tube Frames</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="tube-wrap-and-open-profiles.html">
+                <span class="docs-nav-num">15</span>
+                <span>Tube Wrap & Open Beams</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="custom-post-processors.html" class="active">
+                <span class="docs-nav-num">16</span>
+                <span>Custom Post-Processors (Lua)</span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            
+            <li><a href="#step-1"><span class="docs-toc-step">01</span> Anatomy of a .lua Post (<code class="mono">post</code> Table)</a></li>
+            
+            <li><a href="#step-2"><span class="docs-toc-step">02</span> Lifecycle Hooks, <code class="mono">ctx</code> &amp; <code class="mono">rc</code> API</a></li>
+            
+            <li><a href="#step-3"><span class="docs-toc-step">03</span> Worked 60-Line Shop-Floor Example</a></li>
+            
+            <li><a href="#step-4"><span class="docs-toc-step">04</span> Method A: Machines UI Editor</a></li>
+            
+            <li><a href="#step-5"><span class="docs-toc-step">05</span> Method B: Local HTTP API (<code class="mono">curl</code>)</a></li>
+            
+            <li><a href="#step-6"><span class="docs-toc-step">06</span> Pre-Save Safety Checks &amp; Linter</a></li>
+            
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Tutorial Column -->
+      <div class="docs-main">
+
+        <!-- Intro Card -->
+        <div class="doc-intro-card">
+          <h2>Write Your Own Controller Post in Sandboxed Lua 5.4</h2>
+          <p>
+            Need a custom M-code for an older plasma table, a shop-built floating head, or a specific IHS probe cycle? Write a single <code class="mono">.lua</code> post-processor and run it on both <strong>2D Flat Sheet</strong> and <strong>4-Axis Rotary Tube/Structural</strong> jobs with Pack Mode parity built in.
+          </p>
+          <p style="margin-top: 0.75rem;">
+            Your custom post runs on the exact same <code class="mono">api_version = 1</code> Lua 5.4 contract that powers RotaryCAM&rsquo;s built-in controllers. If you have ever edited a SheetCam <code class="mono">.scpost</code> file, the hook layout will feel familiar right away.
+          </p>
+
+          <ul class="doc-bullet-list" style="margin-top: 0.85rem;">
+            <li><strong>Built for both 2D plate and 4-axis rotary:</strong> One post handles flat sheet, round pipe, HSS, open beams, and multi-stick Pack Mode without maintaining separate files.</li>
+            <li><strong>Strictly sandboxed:</strong> No filesystem (<code class="mono">io</code>), no OS shell (<code class="mono">os</code>), and no external modules (<code class="mono">package</code>). Each run is capped at <code class="mono">4 MB</code> of memory and <code class="mono">2,000,000</code> VM instructions, so accidental infinite loops abort cleanly in milliseconds.</li>
+            <li><strong>Included in every paid tier:</strong> Custom Lua post-processors are unlocked on both <strong>Maker ($199)</strong> and <strong>Pro Shop ($399)</strong> licenses.</li>
+          </ul>
+
+          <div class="doc-intro-grid">
+            <div class="doc-intro-stat">
+              <span class="label">Runtime Contract</span>
+              <span class="value">Sandboxed Lua 5.4 (<code class="mono">api_version = 1</code>)</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">Sandbox Guardrails</span>
+              <span class="value">4 MB RAM &bull; 2,000,000 VM Ops &bull; Zero I/O</span>
+            </div>
+            <div class="doc-intro-stat">
+              <span class="label">License Access</span>
+              <span class="value">Maker &amp; Pro Shop</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             STEP 1: ANATOMY OF A .LUA POST-PROCESSOR
+             ================================================================== -->
+        <article class="doc-step-card" id="step-1">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 01</span>
+            <h2 class="doc-step-title">Anatomy of a <code class="mono">.lua</code> Post-Processor (<code class="mono">api_version = 1</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Every custom post starts with a global <code class="mono">post</code> metadata table. It tells RotaryCAM your post&rsquo;s unique ID, output file extension, comment syntax, rotary feed mode, and Z-axis model.
+            </p>
+
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot"></span> Required Metadata Table</span>
+                <span class="doc-code-lang">Lua 5.4</span>
+              </div>
+              <pre><code>post = {
+  api_version      = 1,
+  id               = "shop_custom_thc",
+  name             = "Shop Custom Plasma + THC",
+  description      = "G38.2 touch-off with ref-distance skip and M62/M63 THC sync",
+  file_extension   = "nc",
+  comment_style    = "parens",   -- "parens", "semicolon", or "brackets"
+  rotary_feed_mode = "g93",      -- "g93", "g94", or "spoofed_g94"
+  z_model          = "explicit", -- "explicit" or "controller_managed"
+}</code></pre>
+            </div>
+
+            <div class="table-wrap" style="margin: 1rem 0;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th style="min-width: 165px;">Field</th>
+                    <th style="min-width: 150px;">Example Values</th>
+                    <th>What It Controls on Your Table</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code class="mono">api_version</code></td>
+                    <td><code class="mono">1</code></td>
+                    <td>Required contract version. Always set to <code class="mono">1</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">id</code></td>
+                    <td><code class="mono">"shop_custom_thc"</code></td>
+                    <td>Unique slug used in machine profiles (<code class="mono">post_processor_id</code>) and HTTP API URLs. Use lowercase letters, numbers, and underscores.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">name</code></td>
+                    <td><code class="mono">"Shop Custom Plasma"</code></td>
+                    <td>Human-readable label shown in the <strong>Controller / Post-Processor</strong> dropdown.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">description</code></td>
+                    <td>Short summary text</td>
+                    <td>Shown in the Post Processors list so operators know which table this post targets.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">file_extension</code></td>
+                    <td><code class="mono">"nc"</code>, <code class="mono">"tap"</code>, <code class="mono">"ngc"</code></td>
+                    <td>File extension used when you download single-part or Pack Mode G-code.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">comment_style</code></td>
+                    <td><code class="mono">"parens"</code>, <code class="mono">"semicolon"</code>, <code class="mono">"brackets"</code></td>
+                    <td>Sets comment framing (<code class="mono">(text)</code>, <code class="mono">; text</code>, or <code class="mono">[text]</code>) and configures the pre-save comment linter.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">rotary_feed_mode</code></td>
+                    <td><code class="mono">"g93"</code>, <code class="mono">"g94"</code>, <code class="mono">"spoofed_g94"</code></td>
+                    <td>Chooses inverse-time (<code class="mono">G93</code>), standard units/min (<code class="mono">G94</code>), or 4D Euclidean feedrate spoofing for rotary cuts.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">z_model</code></td>
+                    <td><code class="mono">"explicit"</code>, <code class="mono">"controller_managed"</code></td>
+                    <td><code class="mono">"explicit"</code> emits full CAM Z heights (required for 3D ramps and 4D HSS). <code class="mono">"controller_managed"</code> lets a controller macro own Z on flat plate.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 2: LIFECYCLE HOOKS & CTX / RC API
+             ================================================================== -->
+        <article class="doc-step-card" id="step-2">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 02</span>
+            <h2 class="doc-step-title">Lifecycle Hooks, <code class="mono">ctx</code> Fields &amp; <code class="mono">rc</code> Helpers</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Every hook function is optional. Omit any hook you do not need, and RotaryCAM falls back to clean RS-274 defaults so you only write the lines that differ on your controller.
+            </p>
+
+            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 1.25rem; margin-bottom: 0.5rem;">1. Lifecycle Hooks</h3>
+            <div class="table-wrap" style="margin: 0.75rem 0;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th style="min-width: 245px;">Hook Signature</th>
+                    <th>When It Runs &amp; Return Contract</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code class="mono">on_validate(ctx)</code></td>
+                    <td>Runs before generation. Return an error string (or <code class="mono">{ error = "..." }</code>) to reject unsupported stock profiles or machine settings cleanly.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_capabilities(ctx)</code></td>
+                    <td>Returns a table of per-job capability overrides (for example switching <code class="mono">z_model</code> or <code class="mono">rotary_feed_mode</code> between flat sheet and 4-axis tube).</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_preamble(ctx)</code><br><code class="mono">on_preamble_post_sim(ctx)</code></td>
+                    <td>Emits program header lines (units <code class="mono">G20/G21</code>, <code class="mono">G90</code>, <code class="mono">G94</code>, safe retract, material macros). <code class="mono">on_preamble_post_sim</code> runs right after simulator setup lines.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_piece_start(ctx)</code><br><code class="mono">on_between_pieces(ctx)</code></td>
+                    <td>Pack Mode parity hooks. Emit per-stick/per-sheet headers, reset touch-off state, or insert bar-advance/operator pauses between nested pieces.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_pre_cut_setup(ctx)</code></td>
+                    <td>Runs once per contour after the rapid move to the pierce XY/XA point and before <code class="mono">on_pierce(ctx)</code>. Good for per-hole speed or material register updates.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_pierce(ctx)</code></td>
+                    <td>Emits IHS probe, switch-offset <code class="mono">G92 Z</code>, pierce height, torch fire (<code class="mono">M3</code>), pierce dwell, and plunge (skipped when <code class="mono">ctx.is_ramped</code> is true). Return <code class="mono">{ thc_locked = true }</code> or <code class="mono">{ thc_locked = false }</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_torch_off(ctx)</code></td>
+                    <td>Extinguishes the arc (<code class="mono">M5</code>), restores <code class="mono">G94</code> if needed, and retracts to <code class="mono">ctx.safe_z</code>. Return <code class="mono">{ thc_locked = true/false }</code> so THC state tracking stays exact.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_thc_lock(ctx)</code><br><code class="mono">on_thc_unlock(ctx)</code><br><code class="mono">on_inline_thc_suffix(ctx)</code></td>
+                    <td>Emits standalone THC lock/unlock lines (check <code class="mono">ctx.reason</code> for corners, small holes, or kerf voids) or appends an inline motion-sync word to a cut line.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_hardware_kerf(ctx)</code></td>
+                    <td>Optional controller-side kerf compensation. Return a token list such as <code class="mono">{"G41.1", "D1.500"}</code> or <code class="mono">{"G41", "P0.750"}</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_dwell(ctx)</code><br><code class="mono">on_resolve_cut_z(ctx)</code></td>
+                    <td>Formats controller-specific dwells (such as <code class="mono">G04 P</code> vs <code class="mono">G04 X</code>) and optionally overrides the emitted cut Z height for a stroke.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_center_spot(ctx)</code></td>
+                    <td>Emits center-punch or plasma dimple cycles for drill marks on flat plate or rotary tubes.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_pneumatic_scribe_on(ctx)</code><br><code class="mono">on_pneumatic_scribe_off(ctx)</code><br><code class="mono">on_coaxial_scribe_touch_off(ctx)</code></td>
+                    <td>Controls pneumatic air-scribe solenoids or coaxial spring-loaded scribe touch-off cycles without firing the plasma torch.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_rotary_unwind(ctx)</code></td>
+                    <td>Resets multi-turn rotary axis wrap safely (for example <code class="mono">G92 A&lt;rotary_mod_deg&gt;</code>) instead of unwinding a clamped stick backward.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">on_footer(ctx)</code></td>
+                    <td>Restores <code class="mono">G94</code>, retracts to safe clearance, parks if desired, and ends cleanly with <code class="mono">M30</code> or <code class="mono">M2</code>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Built-In Helper Functions (<code class="mono">ctx</code> &amp; <code class="mono">rc</code>)</h3>
+            <div class="table-wrap" style="margin: 0.75rem 0;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th style="min-width: 225px;">Helper Call</th>
+                    <th>Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><code class="mono">ctx.emit(line)</code></td>
+                    <td>Appends one G-code line to the output stream.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">ctx.emit_lines(tbl)</code></td>
+                    <td>Appends an ordered Lua array of G-code strings in one call.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">ctx.set_state(key, val)</code></td>
+                    <td>Stores per-job state (read back from <code class="mono">ctx.state[key]</code> on later hooks), such as probe distance counters or active modal flags.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">rc.fmt(v, dec)</code></td>
+                    <td>Formats number <code class="mono">v</code> to fixed decimal places <code class="mono">dec</code> with deterministic decimal dots (never scientific notation or locale commas).</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">rc.clamp(v, lo, hi)</code></td>
+                    <td>Clamps <code class="mono">v</code> inside <code class="mono">[lo, hi]</code> so dwells, feeds, or voltages never exceed controller bounds.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">rc.round(v)</code></td>
+                    <td>Rounds <code class="mono">v</code> to the nearest integer (useful for millisecond dwells or integer register values).</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 style="color: #fff; font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">3. Key <code class="mono">ctx</code> Fields Passed to Hooks</h3>
+            <div class="table-wrap" style="margin: 0.75rem 0;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th style="min-width: 170px;">Category</th>
+                    <th>Available <code class="mono">ctx</code> Fields</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Units &amp; Heights</strong></td>
+                    <td><code class="mono">unit_code</code> (<code class="mono">"G21"</code> / <code class="mono">"G20"</code>), <code class="mono">safe_z</code>, <code class="mono">pierce_z</code>, <code class="mono">cut_z</code>, <code class="mono">pierce_surface_z</code>, <code class="mono">probe_target_z</code>, <code class="mono">probe_feed</code>, <code class="mono">switch_offset</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Cut Chart &amp; Torch</strong></td>
+                    <td><code class="mono">pierce_dwell_sec</code>, <code class="mono">plunge_feed</code>, <code class="mono">cut_feed</code>, <code class="mono">arc_volts</code>, <code class="mono">amps</code>, <code class="mono">kerf_width</code>, <code class="mono">thickness</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Mode Flags</strong></td>
+                    <td><code class="mono">is_flat</code>, <code class="mono">is_rotary</code>, <code class="mono">is_dynamic_z</code>, <code class="mono">is_rotary_g93</code>, <code class="mono">is_small_hole</code>, <code class="mono">is_ramped</code>, <code class="mono">is_pack_mode</code></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Rotary &amp; Context</strong></td>
+                    <td><code class="mono">rotary_axis</code> (<code class="mono">"A"</code>, <code class="mono">"B"</code>, <code class="mono">"W"</code>), <code class="mono">rotary_mod_deg</code>, <code class="mono">reason</code> (THC/unwind reason tag), <code class="mono">settings</code> (machine &amp; custom post settings table)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 3: WORKED SHOP-FLOOR EXAMPLE
+             ================================================================== -->
+        <article class="doc-step-card" id="step-3">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 03</span>
+            <h2 class="doc-step-title">Worked Shop-Floor Example (~60 Lines)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Copy this complete custom post as a starting point. It skips redundant flat-sheet IHS touch-offs within <code class="mono">ref_distance</code> using a stateful <code class="mono">cut_travel_since_probe</code> counter, syncs THC lock/unlock on <code class="mono">M63 P0</code> / <code class="mono">M62 P0</code>, supports 3D ramp lead-ins, and resets rotary wrap cleanly with modulo-360&deg; <code class="mono">G92</code>.
+            </p>
+
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot emerald"></span> shop_custom_thc.lua</span>
+                <span class="doc-code-lang">Lua 5.4 &bull; Copy-Paste Ready</span>
+              </div>
+              <pre><code>post = {
+  api_version      = 1,
+  id               = "shop_custom_thc",
+  name             = "Shop Custom Plasma + Sync THC",
+  description      = "G38.2 touch-off with ref-distance skip, M62/M63 THC, and G93 rotary",
+  file_extension   = "nc",
+  comment_style    = "parens",
+  rotary_feed_mode = "g93",
+  z_model          = "explicit",
+}
+
+function on_preamble(ctx)
+  ctx.set_state("has_probed", false)
+  ctx.set_state("cut_travel_since_probe", 0)
+  ctx.emit_lines({
+    ctx.unit_code .. " G90 G40 G94",
+    "(STOCK " .. rc.fmt(ctx.thickness, 2) .. " KERF " .. rc.fmt(ctx.kerf_width, 2) .. ")",
+    "M63 P0 (THC LOCKED)",
+    "G0 Z" .. rc.fmt(ctx.safe_z, 3),
+  })
+end
+
+function on_piece_start(ctx)
+  ctx.set_state("has_probed", false)
+  ctx.set_state("cut_travel_since_probe", 0)
+end
+
+function on_pierce(ctx)
+  local st = ctx.state or {}
+  local ref_distance = (ctx.settings and ctx.settings.ref_distance) or 250
+  local need_probe = (not st.has_probed) or ctx.is_rotary
+    or ((st.cut_travel_since_probe or 0) &gt;= ref_distance)
+
+  if ctx.is_rotary_g93 then ctx.emit("G94") end
+  if need_probe then
+    ctx.emit_lines({
+      "G38.2 Z" .. rc.fmt(ctx.probe_target_z, 3) .. " F" .. rc.fmt(ctx.probe_feed, 1),
+      "G92 Z" .. rc.fmt(ctx.pierce_surface_z - ctx.switch_offset, 3),
+    })
+    ctx.set_state("has_probed", true)
+    ctx.set_state("cut_travel_since_probe", 0)
+  end
+
+  ctx.emit("G0 Z" .. rc.fmt(ctx.pierce_z, 3))
+  ctx.emit("M3 (" .. rc.round(ctx.amps) .. "A " .. rc.round(ctx.arc_volts) .. "V)")
+  if ctx.pierce_dwell_sec &gt; 0 then
+    ctx.emit("G4 P" .. rc.fmt(rc.clamp(ctx.pierce_dwell_sec, 0.05, 10.0), 3))
+  end
+  if not ctx.is_ramped then
+    ctx.emit("G1 Z" .. rc.fmt(ctx.cut_z, 3) .. " F" .. rc.fmt(ctx.plunge_feed, 1))
+  end
+  return { thc_locked = true }
+end
+
+function on_thc_lock(ctx)   ctx.emit("M63 P0 (THC LOCK " .. (ctx.reason or "CUT") .. ")") end
+function on_thc_unlock(ctx) if not (ctx.is_dynamic_z or ctx.is_small_hole) then ctx.emit("M62 P0") end end
+
+function on_torch_off(ctx)
+  local st = ctx.state or {}
+  local cut_step = (ctx.settings and ctx.settings.last_cut_length) or 100
+  ctx.set_state("cut_travel_since_probe", (st.cut_travel_since_probe or 0) + cut_step)
+  ctx.emit_lines({ "M63 P0", "M5" })
+  if ctx.is_rotary_g93 then ctx.emit("G94") end
+  ctx.emit("G0 Z" .. rc.fmt(ctx.safe_z, 3))
+  return { thc_locked = true }
+end
+
+function on_rotary_unwind(ctx)
+  ctx.emit("G92 " .. (ctx.rotary_axis or "A") .. rc.fmt(ctx.rotary_mod_deg, 3))
+end
+
+function on_footer(ctx)
+  ctx.emit_lines({ "M63 P0", "G94", "G0 Z" .. rc.fmt(ctx.safe_z, 3), "M30" })
+end</code></pre>
+            </div>
+
+            <div class="doc-callout tip">
+              <div class="doc-callout-title">✓ Why Three Details in This Post Protect Your Torch</div>
+              <p>
+                First, <code class="mono">on_pierce</code> always probes on rotary stock (<code class="mono">ctx.is_rotary</code>) because tube ovality and sag shift the top surface around the stick, while flat sheet skips extra probes inside <code class="mono">ref_distance</code>. Second, <code class="mono">on_thc_unlock</code> keeps THC locked on <code class="mono">ctx.is_dynamic_z</code> (4D square HSS) and <code class="mono">ctx.is_small_hole</code> so voltage spikes never dive the torch. Third, <code class="mono">on_torch_off</code> restores <code class="mono">G94</code> before retracting to <code class="mono">ctx.safe_z</code>.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 4: METHOD A - MACHINES UI
+             ================================================================== -->
+        <article class="doc-step-card" id="step-4">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 04</span>
+            <h2 class="doc-step-title">Method A: Author, Validate &amp; Assign Inside the Machines UI</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              The fastest way to build a custom post is directly inside RotaryCAM&rsquo;s <strong>Machines</strong> dialog. Start from the closest built-in controller so you never have to guess probing or rotary framing from scratch:
+            </p>
+
+            <ul class="doc-bullet-list">
+              <li><strong>1. Open the Lua editor tab:</strong> Click <span class="ui-chip cyan">⚙ Machines</span> in the top bar, then select the <span class="ui-chip">Post Processors (Lua)</span> tab.</li>
+              <li><strong>2. Start from a template:</strong> Click <span class="ui-chip">Clone Built-In</span> to copy an existing controller post (such as Mach4, LinuxCNC, or Generic RS-274), or click <span class="ui-chip">New Blank Post</span> to start clean.</li>
+              <li><strong>3. Edit your hooks:</strong> Set a unique <code class="mono">id</code> and <code class="mono">name</code> in the <code class="mono">post</code> table, then update your probe, torch, THC, or unwind hooks.</li>
+              <li><strong>4. Run Validate &amp; Preview:</strong> Click <span class="ui-chip cyan">Validate &amp; Preview</span>. RotaryCAM compiles your Lua post against three real test jobs (<strong>Flat Sheet</strong>, <strong>4-Axis Rotary</strong>, and <strong>Pack Mode</strong>) and runs <code class="mono">GCodeGrammarLinter</code> on all three outputs with instant pass/fail diagnostics.</li>
+              <li><strong>5. Save and assign to a table:</strong> Click <span class="ui-chip emerald">Save Custom Post</span>, then switch to your machine profile&rsquo;s <strong>Controller &amp; Compensation</strong> tab and choose your new post from the <strong>Controller / Post-Processor</strong> dropdown.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 5: METHOD B - LOCAL HTTP API
+             ================================================================== -->
+        <article class="doc-step-card" id="step-5">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 05</span>
+            <h2 class="doc-step-title">Method B: Edit in VS Code &amp; Automate via Local HTTP API</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Prefer editing <code class="mono">.lua</code> files in VS Code, storing shop posts in Git, or running automated validation in CI? Talk straight to your running local RotaryCAM instance on <code class="mono">http://localhost:3000</code> with four REST calls.
+            </p>
+
+            <h3 style="color: #fff; font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.45rem;">1. List All Posts &amp; Download a Built-In Post to Edit</h3>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot"></span> GET /api/post-processors</span>
+                <span class="doc-code-lang">Shell / curl</span>
+              </div>
+              <pre><code># List every built-in and custom Lua post-processor
+curl -s http://localhost:3000/api/post-processors | jq .
+
+# Download a built-in .lua post as a starting point (example: mach4_ess)
+curl -s "http://localhost:3000/api/post-processors/mach4_ess?download=1" -o my_custom_post.lua</code></pre>
+            </div>
+
+            <h3 style="color: #fff; font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.45rem;">2. Validate Before Saving (Syntax + Sandbox + Grammar Linter)</h3>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot cyan"></span> POST /api/post-processors/validate</span>
+                <span class="doc-code-lang">Shell / curl</span>
+              </div>
+              <pre><code># Validate local .lua file across Flat, 4-Axis Rotary, and Pack Mode in mm (or "in")
+jq -Rs '{ source: ., units: "mm" }' my_custom_post.lua \
+  | curl -s -X POST http://localhost:3000/api/post-processors/validate \
+      -H "Content-Type: application/json" \
+      -d @- | jq .</code></pre>
+            </div>
+
+            <h3 style="color: #fff; font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.45rem;">3. Create, Update &amp; Assign to a Machine Profile</h3>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot emerald"></span> POST / PUT /api/post-processors &amp; PUT /machines/&lt;id&gt;</span>
+                <span class="doc-code-lang">Shell / curl</span>
+              </div>
+              <pre><code># Create a brand-new custom post
+jq -Rs '{ source: . }' my_custom_post.lua \
+  | curl -s -X POST http://localhost:3000/api/post-processors \
+      -H "Content-Type: application/json" \
+      -d @- | jq .
+
+# Push subsequent edits to an existing custom post ID
+jq -Rs '{ source: . }' my_custom_post.lua \
+  | curl -s -X PUT http://localhost:3000/api/post-processors/my_custom_post \
+      -H "Content-Type: application/json" \
+      -d @- | jq .
+
+# Assign the custom post to a machine profile
+curl -s -X PUT http://localhost:3000/machines/my_table_id \
+  -H "Content-Type: application/json" \
+  -d '{ "post_processor_id": "my_custom_post" }' | jq .</code></pre>
+            </div>
+
+            <h3 style="color: #fff; font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.45rem;">4. Delete a Custom Post</h3>
+            <div class="doc-code-block">
+              <div class="doc-code-bar">
+                <span class="doc-code-title"><span class="dot"></span> DELETE /api/post-processors/&lt;id&gt;</span>
+                <span class="doc-code-lang">Shell / curl</span>
+              </div>
+              <pre><code># Remove a custom post (built-in posts are read-only and cannot be deleted)
+curl -s -X DELETE http://localhost:3000/api/post-processors/my_custom_post | jq .</code></pre>
+            </div>
+          </div>
+        </article>
+
+        <!-- ==================================================================
+             STEP 6: PRE-SAVE SAFETY CHECKS & TROUBLESHOOTING
+             ================================================================== -->
+        <article class="doc-step-card" id="step-6">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Step 06</span>
+            <h2 class="doc-step-title">Pre-Save Safety Checks &amp; Troubleshooting (<code class="mono">GCodeGrammarLinter</code>)</h2>
+          </div>
+
+          <div class="doc-step-body">
+            <p>
+              Before you save a custom post or send G-code to your plasma table, RotaryCAM runs the same <code class="mono">GCodeGrammarLinter</code> used on all built-in controllers. Every check below catches real table hazards automatically:
+            </p>
+
+            <div class="table-wrap" style="margin: 1rem 0;">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th style="min-width: 195px;">Automated Safety Check</th>
+                    <th style="min-width: 220px;">Table Hazard Prevented</th>
+                    <th>How to Fix in Your Lua Post</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Torch left on at EOF</strong></td>
+                    <td>Dragging a live plasma arc across the table or into the chuck at job end.</td>
+                    <td>Emit <code class="mono">M5</code> (or your controller&rsquo;s torch-off M-code) in <code class="mono">on_torch_off(ctx)</code> and verify every pierce closes cleanly.</td>
+                  </tr>
+                  <tr>
+                    <td><strong><code class="mono">G0</code> rapid with live torch</strong></td>
+                    <td>Blasting a molten slash across finished parts during traverse moves.</td>
+                    <td>Never emit <code class="mono">G0</code> between torch fire and torch off. Move to pierce height before <code class="mono">M3</code>, and retract after <code class="mono">M5</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><strong><code class="mono">G93</code> left active at EOF</strong></td>
+                    <td>Next jog or MDI move runs at runaway inverse-time speed.</td>
+                    <td>Emit <code class="mono">G94</code> in <code class="mono">on_torch_off(ctx)</code> (when <code class="mono">ctx.is_rotary_g93</code> is true) and again in <code class="mono">on_footer(ctx)</code> before <code class="mono">M30</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Missing <code class="mono">M30</code> / <code class="mono">M2</code></strong></td>
+                    <td>Controller hangs at end of file or refuses to rewind for the next stick.</td>
+                    <td>Always finish <code class="mono">on_footer(ctx)</code> with <code class="mono">M30</code> (or <code class="mono">M2</code> if your control expects it).</td>
+                  </tr>
+                  <tr>
+                    <td><strong><code class="mono">NaN</code> or infinite coordinates</strong></td>
+                    <td>Controller parser fault or unpredictable axis jump.</td>
+                    <td>Guard divisions against zero (e.g. feedrate or distance) and format every number through <code class="mono">rc.fmt(v, dec)</code> and <code class="mono">rc.clamp(v, lo, hi)</code>.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Comment delimiter violation</strong></td>
+                    <td>Syntax error on strict controls (nested parens on GRBL/Mach, parens on Acorn, or unbracketed text on WinCNC).</td>
+                    <td>Match <code class="mono">post.comment_style</code> (<code class="mono">"parens"</code>, <code class="mono">"semicolon"</code>, or <code class="mono">"brackets"</code>) and avoid nested <code class="mono">( )</code> or stray <code class="mono">;</code> inside comments.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Sandbox memory / op timeout</strong></td>
+                    <td>Runaway script freezing CAM generation (4 MB RAM or 2,000,000 VM ops exceeded).</td>
+                    <td>Check <code class="mono">while</code> / <code class="mono">for</code> loop exit conditions and avoid building massive strings inside per-segment hooks.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="doc-callout danger">
+              <div class="doc-callout-title">⚠ Always Dry-Run New Custom Posts With Torch Disabled</div>
+              <p>
+                Even after <code class="mono">GCodeGrammarLinter</code> passes, run your first cut on a new custom post in <strong>Dry-Run</strong> (plasma power off) with one hand near E-Stop. Confirm IHS probe direction, switch offset, safe Z clearance over rotary corners, and <code class="mono">M62/M63</code> THC LED timing before striking your first real arc.
+              </p>
+            </div>
+          </div>
+        </article>
+
+
+        <!-- Pagination -->
+        <nav class="docs-pagination" aria-label="Tutorial Pagination">
+          
+          <a href="tube-wrap-and-open-profiles.html" class="docs-page-link prev">
+            <span class="docs-page-dir">← Previous Tutorial (15 of 16)</span>
+            <span class="docs-page-title">2D DXF/SVG Tube Wrapping & Open-Profile Beamline Cutting</span>
+            <span class="docs-page-desc">Wrap 2D DXF/SVG art and TEXT scribes on tubes, or cut I-Beam, C-Channel, and Angle Iron</span>
+          </a>
+          
+          
+          <a href="index.html" class="docs-page-link next">
+            <span class="docs-page-dir">Back to Documentation Hub →</span>
+            <span class="docs-page-title">All Tutorials &amp; Guides</span>
+            <span class="docs-page-desc">Return to the RotaryCAM Documentation Overview</span>
+          </a>
+          
+        </nav>
+
+      </div>
+    </section>
+
+  </main>
+
+
+
+  <!-- ========================================================================
+       FOOTER (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../index.html" class="brand">
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="index.html">Documentation Overview</a>
+          
+          <a href="machine-configuration.html">01. Machine Configuration</a>
+          
+          <a href="cut-path-configuration.html">02. Cut Path Configuration</a>
+          
+          <a href="nesting.html">03. Multi-Part Nesting</a>
+          
+          <a href="bending.html">04. Bending HSS & HSS-O</a>
+          
+          <a href="changelog.html">05. Build Info & Changelog</a>
+          
+          <a href="ai-autodetection.html">06. Fusion 360 & AI Autodetect</a>
+          
+          <a href="simcnc-motion-sync.html">07. SimCNC Motion-Sync & Ramp</a>
+          
+          <a href="cut-charts-and-features.html">08. Cut Charts & Feature Toggles</a>
+          
+          <a href="mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
+          
+          <a href="dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+          <a href="rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
+          
+          <a href="interactive-canvas-controls.html">12. Interactive Canvas Controls</a>
+          
+          <a href="flat-plate-pro-cutting.html">13. Flat Pro Primitives</a>
+          
+          <a href="no-cad-wizard-and-tube-frames.html">14. No-CAD & 3D Tube Frames</a>
+          
+          <a href="tube-wrap-and-open-profiles.html">15. Tube Wrap & Open Beams</a>
+          
+          <a href="custom-post-processors.html">16. Custom Post-Processors (Lua)</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../index.html#showcase">Showcase</a>
+          <a href="../index.html#features">Capabilities</a>
+          <a href="../index.html#kinematics">4-Axis Kinematics</a>
+          <a href="../hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
+          <a href="../build-guide.html">Build Your Own Table</a>
+          <a href="../changelog.html">Release Changelog &amp; Downloads</a>
+        </div>
+        <div class="footer-col">
+          <h4>Compare</h4>
+          
+          <a href="../compare/sheetcam/">RotaryCAM vs. SheetCAM</a>
+          
+          <a href="../compare/pronest/">RotaryCAM vs. ProNest</a>
+          
+          <a href="../compare/rotary-tube-pro/">RotaryCAM vs. Rotary Tube Pro</a>
+          
+          <a href="../compare/fusion-360/">RotaryCAM vs. Fusion 360</a>
+          
+          <a href="../compare/gc-maker/">RotaryCAM vs. GCmaker</a>
+          
+          <a href="../compare/gcnester/">RotaryCAM vs. GCnester</a>
+          
+          <a href="../compare/bend-tech-dragon/">RotaryCAM vs. Bend-Tech Dragon</a>
+          
+          <a href="../compare/sigmatube/">RotaryCAM vs. SigmaTUBE</a>
+          
+          <a href="../compare/tubest/">RotaryCAM vs. TubesT</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
+    </div>
+  </footer>
+
+
+</body>
+</html>

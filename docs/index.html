@@ -167,7 +167,7 @@
           <button type="button" class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true">
             <span>Tutorials</span>
             
-            <span class="nav-count-badge">15</span>
+            <span class="nav-count-badge">16</span>
             
             <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -177,7 +177,7 @@
           <div class="nav-dropdown-menu" role="menu">
             <div class="nav-dropdown-header">
               <span>All Workflows &amp; Tutorials</span>
-              <span class="nav-dropdown-count">15 Guides</span>
+              <span class="nav-dropdown-count">16 Guides</span>
             </div>
             <div class="nav-dropdown-grid">
               
@@ -316,6 +316,15 @@
                 
               </a>
               
+              <a href="custom-post-processors.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">16</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Custom Post-Processors (Lua)</span>
+                  <span class="nav-dropdown-sub">6 Steps • Lua 5.4 Guide</span>
+                </span>
+                
+              </a>
+              
             </div>
           </div>
         </div>
@@ -427,6 +436,11 @@
         <span>Tube Wrap & Open Beams</span>
       </a>
       
+      <a href="custom-post-processors.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">16</span>
+        <span>Custom Post-Processors (Lua)</span>
+      </a>
+      
     </div>
 
     <div style="margin-top: 1rem;">
@@ -498,7 +512,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>15 Core Workflows</strong> • 94 Documented Steps</span>
+          <span class="docs-meta-pill amber"><strong>16 Core Workflows</strong> • 100 Documented Steps</span>
           <span class="docs-meta-pill cyan"><strong>Controllers:</strong> Any 4-Axis CNC (G93 / G94) • Native G20 (in) &amp; G21 (mm) • FireControl, WinCNC, Mach4, LinuxCNC</span>
           <span class="docs-meta-pill"><strong>CAD Input:</strong> STEP (.step / .stp) 3D Assemblies &amp; DXF / SVG Flat-Sheet Kits</span>
         </div>
@@ -1053,6 +1067,48 @@
           </div>
         </a>
         
+        <!-- Guide 16: Custom Post-Processors (Lua 5.4) -->
+        <a href="custom-post-processors.html" class="docs-hub-card">
+          <div class="docs-hub-thumb">
+            
+            <div class="docs-hub-code-preview">
+              <div>
+                <div class="code-line-muted">-- Sandboxed Lua 5.4 (api_version = 1)</div>
+                <div class="code-line-amber">post = { api_version = 1, rotary_feed_mode = "g93" }</div>
+                <div class="code-line-cyan">function on_pierce(ctx) ... return { thc_locked = true } end</div>
+              </div>
+              <div>
+                <div class="code-line-emerald">function on_thc_lock(ctx) ctx.emit("M63 P0") end</div>
+                <div>POST /api/post-processors/validate (Flat + Rotary + Pack)</div>
+                <div class="code-line-amber">→ GCodeGrammarLinter PASS → Save &amp; Assign</div>
+              </div>
+            </div>
+            
+            <span class="docs-hub-badge">TUTORIAL 16 • 6 STEPS • LUA 5.4 GUIDE</span>
+          </div>
+          <div class="docs-hub-content">
+            <h2 class="docs-hub-title">Custom Post-Processors (Lua 5.4)</h2>
+            <p class="docs-hub-desc">
+              Write sandboxed Lua 5.4 post-processors on RotaryCAM's native `api_version = 1` contract for both 2D flat sheet and 4-axis rotary tube jobs, validate in the Machines UI or via `curl`, and catch torch or G93 hazards before cutting.
+            </p>
+            <ul class="docs-hub-topics">
+              
+              <li>Sandboxed Lua 5.4 (<code class="mono">4 MB</code> RAM, <code class="mono">2M</code> ops, zero I/O) on Maker &amp; Pro Shop</li>
+              
+              <li>Full <code class="mono">api_version = 1</code> hook, <code class="mono">ctx</code> field, and <code class="mono">rc</code> helper reference</li>
+              
+              <li>Complete 60-line post with <code class="mono">ref_distance</code> probe skipping, <code class="mono">M62/M63</code> THC &amp; unwind</li>
+              
+              <li>Machines UI live preview + local HTTP API (<code class="mono">/api/post-processors</code>) &amp; grammar linter</li>
+              
+            </ul>
+            <div class="docs-hub-footer">
+              <span>Read Tutorial 16</span>
+              <span>6-Step Lua Reference →</span>
+            </div>
+          </div>
+        </a>
+        
       </div>
 
       <!-- Quick Reference Callout -->
@@ -1133,6 +1189,8 @@
           <a href="no-cad-wizard-and-tube-frames.html">14. No-CAD & 3D Tube Frames</a>
           
           <a href="tube-wrap-and-open-profiles.html">15. Tube Wrap & Open Beams</a>
+          
+          <a href="custom-post-processors.html">16. Custom Post-Processors (Lua)</a>
           
         </div>
         <div class="footer-col">

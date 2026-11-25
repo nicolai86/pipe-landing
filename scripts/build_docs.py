@@ -782,6 +782,58 @@ TUTORIALS = [
         "hub_cta_right": "3 Annotated Screenshots",
         "has_lightbox": True,
     },
+    {
+        "num": 16,
+        "slug": "custom-post-processors",
+        "filename": "custom-post-processors.html",
+        "nav_short": "Custom Lua Posts",
+        "sidebar_label": "Custom Post-Processors (Lua)",
+        "footer_label": "Custom Post-Processors (Lua)",
+        "breadcrumb_title": "How to Write a Custom Post-Processor (Lua)",
+        "meta_title": "Custom Lua Post-Processors (api_version = 1) | RotaryCAM Docs",
+        "meta_description": "Write sandboxed Lua 5.4 custom post-processors for 2D flat sheet and 4-axis rotary plasma cutting with live GCodeGrammarLinter validation and HTTP API.",
+        "hero_title_html": 'How to Write a <span class="text-gradient-amber">Custom Post-Processor (Lua)</span>',
+        "hero_subtitle_html": 'Build your own sandboxed Lua 5.4 post-processor on the exact <code class="mono">api_version = 1</code> contract that drives RotaryCAM&rsquo;s built-in controllers, covering both 2D Flat Sheet and 4-Axis Rotary Tube/Structural jobs with pre-save <code class="mono">GCodeGrammarLinter</code> checks.',
+        "steps_count": 6,
+        "steps_label": "6 Steps • Lua 5.4 Guide",
+        "meta_pills": [
+            {"style": "cyan", "html": '<strong>Runtime:</strong> Sandboxed Lua 5.4 (<code class="mono">api_version = 1</code>) &bull; 4 MB / 2M Ops'},
+            {"style": "", "html": '<strong>Tiers:</strong> Maker (<code class="mono">$199</code>) &amp; Pro Shop (<code class="mono">$399</code>) &bull; Flat + 4-Axis Rotary'},
+        ],
+        "toc": [
+            {"id": "step-1", "badge": "01", "label": "Anatomy of a .lua Post (<code class=\"mono\">post</code> Table)"},
+            {"id": "step-2", "badge": "02", "label": "Lifecycle Hooks, <code class=\"mono\">ctx</code> &amp; <code class=\"mono\">rc</code> API"},
+            {"id": "step-3", "badge": "03", "label": "Worked 60-Line Shop-Floor Example"},
+            {"id": "step-4", "badge": "04", "label": "Method A: Machines UI Editor"},
+            {"id": "step-5", "badge": "05", "label": "Method B: Local HTTP API (<code class=\"mono\">curl</code>)"},
+            {"id": "step-6", "badge": "06", "label": "Pre-Save Safety Checks &amp; Linter"},
+        ],
+        "pagination_title": "How to Write a Custom Post-Processor (Lua)",
+        "pagination_desc": "Write, validate, and assign sandboxed Lua 5.4 posts via Machines UI or local HTTP API",
+        "hub_thumb": None,
+        "hub_custom_thumb_html": """<div class="docs-hub-code-preview">
+              <div>
+                <div class="code-line-muted">-- Sandboxed Lua 5.4 (api_version = 1)</div>
+                <div class="code-line-amber">post = { api_version = 1, rotary_feed_mode = "g93" }</div>
+                <div class="code-line-cyan">function on_pierce(ctx) ... return { thc_locked = true } end</div>
+              </div>
+              <div>
+                <div class="code-line-emerald">function on_thc_lock(ctx) ctx.emit("M63 P0") end</div>
+                <div>POST /api/post-processors/validate (Flat + Rotary + Pack)</div>
+                <div class="code-line-amber">→ GCodeGrammarLinter PASS → Save &amp; Assign</div>
+              </div>
+            </div>""",
+        "hub_title": "Custom Post-Processors (Lua 5.4)",
+        "hub_desc": "Write sandboxed Lua 5.4 post-processors on RotaryCAM's native `api_version = 1` contract for both 2D flat sheet and 4-axis rotary tube jobs, validate in the Machines UI or via `curl`, and catch torch or G93 hazards before cutting.",
+        "hub_topics": [
+            'Sandboxed Lua 5.4 (<code class="mono">4 MB</code> RAM, <code class="mono">2M</code> ops, zero I/O) on Maker &amp; Pro Shop',
+            'Full <code class="mono">api_version = 1</code> hook, <code class="mono">ctx</code> field, and <code class="mono">rc</code> helper reference',
+            'Complete 60-line post with <code class="mono">ref_distance</code> probe skipping, <code class="mono">M62/M63</code> THC &amp; unwind',
+            'Machines UI live preview + local HTTP API (<code class="mono">/api/post-processors</code>) &amp; grammar linter',
+        ],
+        "hub_cta_right": "6-Step Lua Reference",
+        "has_lightbox": False,
+    },
 ]
 
 

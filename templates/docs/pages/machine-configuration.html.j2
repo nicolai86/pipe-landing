@@ -267,9 +267,9 @@
             </div>
 
             <div class="doc-callout info">
-              <div class="doc-callout-title">📖 Full Controller Setup Guides in Step 06</div>
+              <div class="doc-callout-title">📖 Full Controller Setup Guides &amp; Custom Lua Posts</div>
               <p>
-                Jump to <a href="#step-6"><strong>Step 06</strong></a> below for pinout mappings, macro wiring, and 6-phase cut-cycle checklists for your exact controller.
+                Jump to <a href="#step-6"><strong>Step 06</strong></a> below for pinout mappings, macro wiring, and 6-phase cut-cycle checklists for your exact controller. Running a custom table or non-standard M-codes? Follow <a href="custom-post-processors.html"><strong>Tutorial 16: How to Write a Custom Post-Processor (Lua)</strong></a> to clone any built-in post or write your own sandboxed Lua 5.4 post.
               </p>
             </div>
 
@@ -464,6 +464,13 @@
                 </div>
               </a>
               {% endfor %}
+            </div>
+
+            <div class="doc-callout tip" style="margin-top: 1.5rem;">
+              <div class="doc-callout-title">🧩 Need a Custom Controller Post? Write It in Sandboxed Lua 5.4</div>
+              <p>
+                Running a legacy table, custom M-codes, or a shop-built touch-off cycle? Open <strong>Machines &rarr; Post Processors (Lua)</strong> to clone any built-in controller or author your own <code class="mono">.lua</code> post on the native <code class="mono">api_version = 1</code> engine. See <a href="custom-post-processors.html"><strong>Tutorial 16: How to Write a Custom Post-Processor (Lua) &rarr;</strong></a>.
+              </p>
             </div>
           </div>
         </article>
