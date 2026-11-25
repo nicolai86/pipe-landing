@@ -1009,7 +1009,7 @@
     <nav>
       <a href="./" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.9.2-BETA</span>
+        <span class="brand-tag">v0.9.3-BETA</span>
       </a>
       <div class="nav-links">
         <a href="./">Overview</a>
@@ -1062,7 +1062,7 @@
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (Next + v0.9.2)
+        Release History (v0.9.3)
       </a>
     </div>
 
@@ -1134,7 +1134,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.2/RotaryCam-macOS-v0.9.2.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.3/RotaryCam-macOS-v0.9.3.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1165,7 +1165,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.2/RotaryCam-Windows-v0.9.2.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.3/RotaryCam-Windows-v0.9.3.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1196,7 +1196,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.2/RotaryCam-Linux-v0.9.2.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.3/RotaryCam-Linux-v0.9.3.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1347,22 +1347,34 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
-           NEXT RELEASE (IN PROGRESS: GEOMETRY & 14-DIALECT HARDENING)
+           NOVEMBER 25, 2026 (v0.9.3)
            ================================================================ -->
-      <article class="release-entry" id="upcoming">
+      <article class="release-entry" id="v0.9.3">
         <div class="release-marker"></div>
         <div class="release-card" style="border-color: rgba(6, 182, 212, 0.35);">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">Next Release (In Progress)</span>
-              <span class="release-version-pill" style="color: var(--cyan-arc); background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.3);">GEOMETRY &amp; DIALECT HARDENING</span>
+              <span class="release-date">November 25, 2026</span>
+              <span class="release-version-pill">v0.9.3 &bull; LATEST</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Zero Gouges &bull; Zero Windup &bull; 14-Dialect Parity &bull; 25x Faster Rotary</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Lua 5.4 Post Engine &bull; 14/14 Dialects &bull; Zero Gouges &bull; 25x Faster Rotary</span>
           </div>
           <p class="release-summary">
-            Deep cut-geometry and post-processor hardening ahead of v1.0 across all 6 stock profiles, all 14 controller dialects, and both Single-Part and Pack Mode.
+            All 14 built-in controller dialects now run on RotaryCAM's sandboxed Lua 5.4 post-processor engine, paired with deep cut-geometry and real-controller hardening across all 6 stock profiles.
           </p>
           <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Sandboxed Lua 5.4 Post-Processor Engine &amp; Editor (All 14 Built-In Dialects):</strong> Every built-in CNC plasma controller dialect now runs natively on Lua 5.4 (<code>api_version = 1</code>). Inspect, clone, edit, validate, import, and export custom posts right inside the Machines window with live Flat, 4-Axis Rotary, and Pack Mode G-code previews and automatic grammar safety checks before saving. <a href="docs/custom-post-processors.html" style="color: var(--cyan-arc);">Read the Custom Post-Processors guide &rarr;</a>
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Real-Controller LinuxCNC QTPlasmaC &amp; grblHAL Hardening:</strong> Fixed LinuxCNC <code>M190 P0</code> default-material footer resets, kept <code>G41.1</code>/<code>G42.1</code> cutter compensation free of mid-contour <code>M62</code>/<code>M63</code> faults and concave-corner gouge alarms, ensured small holes always release <code>M63 P2</code> after <code>M5 $0</code>, and switched grblHAL pneumatic scribing to baked XY offsets without unsupported <code>G52</code>.
+              </div>
+            </li>
             <li class="change-item">
               <span class="badge-tag badge-fix">FIXED</span>
               <div class="change-content">
@@ -1372,7 +1384,7 @@
             <li class="change-item">
               <span class="badge-tag badge-fix">FIXED</span>
               <div class="change-content">
-                <strong>Cleaner Channel, Angle, HSS &amp; Common-Line Cuts:</strong> C-channel coped end cuts now run toe-to-toe in one clean pass with zero double-cutting. Angle and channel edge-notches keep pierces strictly on scrap and exit cleanly past free toes. Square/rect HSS cutouts drop cross-corner hairpin lead-ins, rotary cutouts eliminate kerf bowties, and rounded-corner common-line nests leave zero uncut bridges.
+                <strong>Cleaner Channel, Angle, HSS, Zero-Bevel &amp; Common-Line Cuts:</strong> C-channel coped end cuts now run toe-to-toe in one clean pass with zero double-cutting. Angle and channel edge-notches keep pierces strictly on scrap and exit cleanly past free toes. Square/rect HSS cutouts drop cross-corner hairpin lead-ins, round/HSS zero-bevel tracks exact inner-wall curves, rotary cutouts eliminate kerf bowties, and rounded-corner common-line nests leave zero uncut bridges.
               </div>
             </li>
             <li class="change-item">
@@ -1406,7 +1418,7 @@
           <div class="release-meta">
             <div class="release-date-wrap">
               <span class="release-date">November 24, 2026</span>
-              <span class="release-version-pill">v0.9.2 &bull; LATEST</span>
+              <span class="release-version-pill">v0.9.2</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Chained Common-Line &bull; One-Swap Scribing &bull; Tighter Plate Nests &bull; Cutout Chains</span>
           </div>
@@ -1911,11 +1923,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.2-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.3-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.9.2').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.9.3').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',

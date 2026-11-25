@@ -489,7 +489,7 @@
 
             <h3 style="color: #fff; font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Dynamic Overrides Returned by <code class="mono">on_capabilities(ctx)</code></h3>
             <p style="margin-bottom: 0.5rem;">
-              <code class="mono">on_capabilities(ctx)</code> receives <code class="mono">ctx.feat_dynamic_z</code>, <code class="mono">ctx.is_plasma_cut</code>, <code class="mono">ctx.is_small_hole</code>, <code class="mono">ctx.arc_volts</code>, <code class="mono">ctx.amps</code>, <code class="mono">ctx.stock</code>, and <code class="mono">ctx.settings</code>. Return a table containing any of these <strong>30 dynamic fields</strong>:
+              <code class="mono">on_capabilities(ctx)</code> receives <code class="mono">ctx.feat_dynamic_z</code>, <code class="mono">ctx.is_plasma_cut</code>, <code class="mono">ctx.is_small_hole</code>, <code class="mono">ctx.arc_volts</code>, <code class="mono">ctx.amps</code>, <code class="mono">ctx.stock</code>, and <code class="mono">ctx.settings</code>. Return a table containing any of these <strong>31 dynamic fields</strong>:
             </p>
             <div class="table-wrap" style="margin: 0.75rem 0;">
               <table class="doc-table">
@@ -681,6 +681,12 @@
                     <td>Boolean</td>
                     <td><code class="mono">false</code></td>
                     <td>Flags in program setup comments that Z0 references an external centerline or controller datum.</td>
+                  </tr>
+                  <tr>
+                    <td><code class="mono">forbids_synced_io_during_hardware_kerf</code></td>
+                    <td>Boolean</td>
+                    <td><code class="mono">false</code></td>
+                    <td>Suppresses mid-contour synced I/O (<code class="mono">M62</code>/<code class="mono">M63</code>/<code class="mono">M67</code>) while <code class="mono">G41</code>/<code class="mono">G42</code> cutter compensation is active (required by LinuxCNC RS274NGC).</td>
                   </tr>
                 </tbody>
               </table>
