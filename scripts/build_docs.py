@@ -814,8 +814,8 @@ TUTORIALS = [
         "hub_custom_thumb_html": """<div class="docs-hub-code-preview">
               <div>
                 <div class="code-line-muted">-- Sandboxed Lua 5.4 (api_version = 1)</div>
-                <div class="code-line-amber">post = { api_version = 1, rotary_feed_mode = "g93" }</div>
-                <div class="code-line-cyan">function on_pierce(ctx) ... return { thc_locked = true } end</div>
+                <div class="code-line-amber">post = { api_version = 1, rotary_feed_mode = "inverse_time_g93" }</div>
+                <div class="code-line-cyan">function on_pierce(ctx) ... return { initial_thc_locked = true } end</div>
               </div>
               <div>
                 <div class="code-line-emerald">function on_thc_lock(ctx) ctx.emit("M63 P0") end</div>
