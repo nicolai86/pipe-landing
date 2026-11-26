@@ -132,7 +132,7 @@ TUTORIALS = [
         "footer_label": "Machine Configuration",
         "breadcrumb_title": "Basic Machine Configuration",
         "meta_title": "Basic Machine Configuration | RotaryCAM Docs",
-        "meta_description": "Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers.",
+        "meta_description": "Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 19 controllers.",
         "hero_title_html": 'Basic <span class="text-gradient-amber">Machine Configuration</span>',
         "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 14 supported controllers.',
         "steps_count": 7,

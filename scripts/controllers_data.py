@@ -1,12 +1,14 @@
 """
-Single-source-of-truth registry of all 14 CNC controller post-processors
+Single-source-of-truth registry of all 19 CNC controller post-processors
 plus Scribing (Coaxial EasyScribe vs. Pneumatic Air-Scribe) for:
   - docs/machine-configuration.html (Step 6 comparison table & card grid)
   - docs/machine-configuration/<Slug>/index.html (per-controller setup + 6-phase cut cycle)
 
 Every G-code, M-code, parameter register, and checklist item is verified directly
-against pipe-macos/PostProcessor/Dialects/*.swift.
+against pipe-macos/PostProcessor/BuiltInPosts/*.lua.
 """
+
+from controllers_data_extra import EXTRA_CONTROLLERS
 
 CONTROLLERS = [
     {
@@ -1949,6 +1951,7 @@ d.setFeedrate(Feed_Rate)</code></pre>
             },
         ],
     },
+    *EXTRA_CONTROLLERS,
     {
         "slug": "GenericG94",
         "is_scribing": False,
@@ -2083,20 +2086,20 @@ d.setFeedrate(Feed_Rate)</code></pre>
         "name": "Coaxial EasyScribe vs. Pneumatic Air-Scribe",
         "short_name": "Scribing (EasyScribe / Air)",
         "ext": "Multi-Tool",
-        "rotary_mode": "All 14 Controllers (Pro Shop)",
+        "rotary_mode": "All 19 Controllers (Pro Shop)",
         "ihs_summary": "Surface touch-off + spring preload Z_scribe (1.0-1.5 mm)",
-        "torch_summary": "EasyScribe: Arc strictly OFF (M0 swap) | Air: M3 $1 / M39 / T111",
+        "torch_summary": "EasyScribe: Arc strictly OFF (M0 swap) | Air: M3 $1 / M39 / T111 / M09",
         "thc_summary": "THC locked throughout marking strokes",
         "sync_summary": "EasyScribe coaxial (0 wiring) vs Pneumatic (G52 / G54 baked)",
         "card_summary": "Engrave Part IDs, bend lines &amp; weld ticks using coaxial EasyScribe (all controllers, M0 swap) or pneumatic offset air-scribe.",
         "badge_label": "Multi-Tool Marking &bull; Pro Shop ($399)",
         "meta_title": "Coaxial EasyScribe & Air-Scribe Setup | RotaryCAM Docs",
-        "meta_description": "Coaxial EasyScribe vs pneumatic offset air-scribe setup across 14 controllers: M0 tool pauses, Z_scribe preload, M3 $1, T111 M6, and G52/G54 shifts.",
+        "meta_description": "Coaxial EasyScribe vs pneumatic offset air-scribe setup across 19 controllers: M0 tool pauses, Z_scribe preload, M3 $1, T111 M6, and G52/G54 shifts.",
         "hero_title_html": 'Scribing: <span class="text-gradient-amber">EasyScribe &amp; Air-Scribe</span>',
         "subtitle_html": 'Engrave Part IDs, chassis bend lines, and weld fit-up witness ticks directly on your parts before cutting, using either a drop-in <strong>Coaxial EasyScribe</strong> or a dedicated <strong>Pneumatic Offset Air-Scribe</strong>.',
         "meta_pills": [
             {"style": "cyan", "html": '<strong>Tier:</strong> Pro Shop ($399)'},
-            {"style": "", "html": '<strong>Coaxial EasyScribe:</strong> All 14 Controllers &bull; Auto <code class="mono">M0</code> Swap'},
+            {"style": "", "html": '<strong>Coaxial EasyScribe:</strong> All 19 Controllers &bull; Auto <code class="mono">M0</code> Swap'},
             {"style": "", "html": '<strong>Pneumatic Air-Scribe:</strong> Native Multi-Tool &bull; Zero Swap Pause'},
         ],
         "toc": [

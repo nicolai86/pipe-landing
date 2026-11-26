@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Starfire / Fangling Industrial EIA Setup & Cut Cycle | RotaryCAM Docs</title>
+  <meta name="description" content="Starfire SF-2100C and Fangling F2100B/F2300B (.txt) setup guide: drift-free quantized G91 incremental output, G21/G20 units, M07/M08 firing, 180-deg arcs, and bare-EIA mode." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://rotarycam.app/docs/machine-configuration/StarfireFangling/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://rotarycam.app/docs/machine-configuration/StarfireFangling/" />
+  <meta property="og:site_name" content="RotaryCAM" />
+  <meta property="og:title" content="Starfire / Fangling Industrial EIA Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta property="og:description" content="Starfire SF-2100C and Fangling F2100B/F2300B (.txt) setup guide: drift-free quantized G91 incremental output, G21/G20 units, M07/M08 firing, 180-deg arcs, and bare-EIA mode." />
+  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta property="og:image:alt" content="Starfire / Fangling Industrial EIA (SF-2100C / F2100B / F2300B) Setup and Cut Cycle in RotaryCAM" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Starfire / Fangling Industrial EIA Setup & Cut Cycle | RotaryCAM Docs" />
+  <meta name="twitter:description" content="Starfire SF-2100C and Fangling F2100B/F2300B (.txt) setup guide: drift-free quantized G91 incremental output, G21/G20 units, M07/M08 firing, 180-deg arcs, and bare-EIA mode." />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "RotaryCAM",
+        "item": "https://rotarycam.app/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": "https://rotarycam.app/docs/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Machine Configuration",
+        "item": "https://rotarycam.app/docs/machine-configuration.html"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Starfire / Fangling Industrial EIA (SF-2100C / F2100B / F2300B)",
+        "item": "https://rotarycam.app/docs/machine-configuration/StarfireFangling/"
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Starfire / Fangling Industrial EIA (SF-2100C / F2100B / F2300B) Setup and Cut Cycle",
+    "description": "Starfire SF-2100C and Fangling F2100B/F2300B (.txt) setup guide: drift-free quantized G91 incremental output, G21/G20 units, M07/M08 firing, 180-deg arcs, and bare-EIA mode.",
+    "image": "https://rotarycam.app/assets/cad-inspection.png",
+    "url": "https://rotarycam.app/docs/machine-configuration/StarfireFangling/",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://rotarycam.app/docs/machine-configuration/StarfireFangling/"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Raphael Randschau"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "RotaryCAM",
+      "url": "https://rotarycam.app/"
+    }
+  }
+  </script>
+
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../docs.css?v=20261121" />
+  <style>
+    .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(13, 15, 18, 0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid #232833; width: 100%; box-sizing: border-box; }
+    .site-header nav { max-width: 1240px; margin: 0 auto; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; box-sizing: border-box; min-width: 0; }
+    
+    .site-header-left { display: flex; align-items: center; gap: 0.85rem; flex-shrink: 0; }
+    .site-header .brand { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 1.15rem; font-weight: 700; color: #fff; text-decoration: none; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; }
+    .site-header .brand-tag { font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; white-space: nowrap; line-height: 1.2; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+    .site-header .nav-back-link { color: #94a3b8 !important; font-size: 0.78rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.25rem; transition: color 0.15s ease; white-space: nowrap; }
+    .site-header .nav-back-link:hover { color: #f59e0b !important; }
+    .site-header .nav-divider { width: 1px; height: 16px; background: #232833; }
+
+    .site-header .nav-links { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
+    .site-header .nav-links > a { position: relative; color: #94a3b8; text-decoration: none; font-size: 0.82rem; line-height: 1.2; white-space: nowrap; transition: color 0.15s ease; padding: 0.35rem 0; font-weight: 500; }
+    .site-header .nav-links > a:hover { color: #fff; }
+    .site-header .nav-links > a.active { color: #fff; font-weight: 600; }
+    .site-header .nav-links > a.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background: #f59e0b; border-radius: 2px; box-shadow: 0 0 8px rgba(245, 158, 11, 0.3); }
+
+    /* Interactive Tutorials Dropdown */
+    .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+    .nav-dropdown-trigger { background: transparent; border: none; color: #94a3b8; font-size: 0.82rem; font-family: inherit; font-weight: 500; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0.35rem 0; transition: color 0.15s ease; }
+    .nav-dropdown-trigger:hover, .nav-dropdown:hover .nav-dropdown-trigger, .nav-dropdown-trigger.active { color: #fff; }
+    .nav-dropdown-trigger.active { font-weight: 600; }
+    .nav-dropdown-trigger .dropdown-caret { transition: transform 0.2s ease; opacity: 0.7; }
+    .nav-dropdown:hover .dropdown-caret, .nav-dropdown:focus-within .dropdown-caret { transform: rotate(180deg); opacity: 1; color: #f59e0b; }
+    .nav-active-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 1px 5px; border-radius: 4px; font-weight: 700; line-height: 1.2; }
+    .nav-count-badge { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; background: rgba(255, 255, 255, 0.05); color: #94a3b8; border: 1px solid #232833; padding: 1px 5px; border-radius: 4px; font-weight: 600; line-height: 1.2; }
+
+    .nav-dropdown-menu { position: absolute; top: calc(100% + 0.65rem); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(18, 22, 29, 0.98); border: 1px solid #232833; border-radius: 10px; box-shadow: 0 16px 36px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05); padding: 0.75rem; width: 560px; max-width: calc(100vw - 2rem); opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease; z-index: 1050; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); pointer-events: none; }
+    .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); pointer-events: auto; }
+    .nav-dropdown-header { display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.55rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 0.45rem; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; }
+    .nav-dropdown-count { color: #f59e0b; }
+    .nav-dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 0.5rem; max-height: 380px; }
+    .nav-dropdown-item { display: flex; align-items: center; gap: 0.65rem; padding: 0.45rem 0.6rem; border-radius: 6px; text-decoration: none; color: #cbd5e1; transition: background 0.15s ease, color 0.15s ease; position: relative; }
+    .nav-dropdown-item:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+    .nav-dropdown-item.active { background: rgba(245, 158, 11, 0.1); color: #f59e0b; font-weight: 600; border: 1px solid rgba(245, 158, 11, 0.25); }
+    .nav-dropdown-num { font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: #64748b; background: rgba(255,255,255,0.04); padding: 2px 5px; border-radius: 4px; font-weight: 600; flex-shrink: 0; }
+    .nav-dropdown-item.active .nav-dropdown-num { color: #f59e0b; background: rgba(245, 158, 11, 0.18); }
+    .nav-dropdown-content { display: flex; flex-direction: column; gap: 0.1rem; flex: 1; min-width: 0; }
+    .nav-dropdown-title { font-size: 0.78rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-dropdown-sub { font-size: 0.66rem; color: #64748b; line-height: 1.2; }
+    .nav-dropdown-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; box-shadow: 0 0 6px #f59e0b; flex-shrink: 0; }
+
+    /* Right Section */
+    .site-header-right { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .site-header .nav-cta { display: inline-flex; align-items: center; background: #14171d; border: 1px solid #232833; color: #f1f5f9; padding: 0.42rem 0.85rem; border-radius: 8px; font-size: 0.8rem; line-height: 1.2; text-decoration: none; white-space: nowrap; transition: all 0.2s ease; font-weight: 500; }
+    .site-header .nav-cta:hover { border-color: #f59e0b; color: #fff; }
+    
+    .nav-mobile-toggle { display: none; background: #14171d; border: 1px solid #232833; color: #94a3b8; border-radius: 8px; width: 36px; height: 36px; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s ease; padding: 0; }
+    .nav-mobile-toggle:hover { color: #fff; border-color: #f59e0b; }
+
+    /* Mobile Drawer */
+    .docs-mobile-drawer { display: none; position: fixed; inset: 0; top: 57px; background: rgba(10, 12, 16, 0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); z-index: 999; padding: 1.5rem; overflow-y: auto; flex-direction: column; gap: 1.25rem; }
+    .docs-mobile-drawer.open { display: flex; }
+    .docs-mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; font-weight: 700; margin-bottom: 0.5rem; }
+    .docs-mobile-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .docs-mobile-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.85rem; border-radius: 8px; text-decoration: none; color: #cbd5e1; background: rgba(255,255,255,0.02); border: 1px solid #232833; font-size: 0.88rem; }
+    .docs-mobile-link:hover, .docs-mobile-link.active { background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+
+    @media (max-width: 960px) {
+      .site-header .nav-links { display: none; }
+      .site-header .nav-divider { display: none; }
+      .nav-mobile-toggle { display: inline-flex; }
+    }
+  </style>
+  <script src="../../../webmcp.js" defer></script>
+</head>
+<body>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       NAVIGATION (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <header class="site-header" id="navbar">
+    <nav aria-label="Documentation Navigation">
+      <div class="site-header-left">
+        <a href="../../../" class="brand" aria-label="RotaryCAM Home">
+          <span>RotaryCAM</span>
+          <span class="brand-tag">v0.9.3-BETA</span>
+        </a>
+        <div class="nav-divider" aria-hidden="true"></div>
+        <a href="../../../" class="nav-back-link">← rotarycam.app</a>
+      </div>
+
+      <div class="nav-links">
+        <a href="../../">Overview</a>
+
+        <!-- Tutorials Dropdown -->
+        <div class="nav-dropdown">
+          <button type="button" class="nav-dropdown-trigger active" aria-expanded="false" aria-haspopup="true">
+            <span>Tutorials</span>
+            
+            <span class="nav-active-badge">01</span>
+            
+            <svg class="dropdown-caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-header">
+              <span>All Workflows &amp; Tutorials</span>
+              <span class="nav-dropdown-count">16 Guides</span>
+            </div>
+            <div class="nav-dropdown-grid">
+              
+              <a href="../../machine-configuration.html" class="nav-dropdown-item active" role="menuitem">
+                <span class="nav-dropdown-num">01</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Machine Configuration</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+                <span class="nav-dropdown-dot" title="Current Guide"></span>
+                
+              </a>
+              
+              <a href="../../cut-path-configuration.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">02</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">UI & Cut Path Config</span>
+                  <span class="nav-dropdown-sub">8 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../nesting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">03</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Multi-Part Stick Nesting</span>
+                  <span class="nav-dropdown-sub">6 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../bending.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">04</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Bending HSS & HSS-O</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../changelog.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">05</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Build Info & Changelog</span>
+                  <span class="nav-dropdown-sub">3 Steps • Diagnostics & Storage</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../ai-autodetection.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">06</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Fusion 360 & AI Autodetect</span>
+                  <span class="nav-dropdown-sub">8 Steps • 11 Screenshots</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../simcnc-motion-sync.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">07</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">SimCNC Motion-Sync & 3D Ramp</span>
+                  <span class="nav-dropdown-sub">12 Steps • Technical Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../cut-charts-and-features.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">08</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Cut Charts & Feature Toggles</span>
+                  <span class="nav-dropdown-sub">7 Steps • Visual Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../mcp-offline-workflows.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">09</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Offline MCP & AI Automation</span>
+                  <span class="nav-dropdown-sub">8 Steps • Integration Guide</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../dxf-svg-flat-sheet.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">10</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">DXF/SVG & Imperial Units</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../rotary-and-sheet-feedrates.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">11</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">G94, G93 & G20/G21 Feeds</span>
+                  <span class="nav-dropdown-sub">5 Sections</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../interactive-canvas-controls.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">12</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Interactive Canvas Controls</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../flat-plate-pro-cutting.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">13</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Flat Pro Primitives</span>
+                  <span class="nav-dropdown-sub">4 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../no-cad-wizard-and-tube-frames.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">14</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">No-CAD & 3D Tube Frames</span>
+                  <span class="nav-dropdown-sub">7 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../tube-wrap-and-open-profiles.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">15</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Tube Wrap & Open Beams</span>
+                  <span class="nav-dropdown-sub">5 Steps</span>
+                </span>
+                
+              </a>
+              
+              <a href="../../custom-post-processors.html" class="nav-dropdown-item" role="menuitem">
+                <span class="nav-dropdown-num">16</span>
+                <span class="nav-dropdown-content">
+                  <span class="nav-dropdown-title">Custom Post-Processors (Lua)</span>
+                  <span class="nav-dropdown-sub">6 Steps • Lua 5.4 Guide</span>
+                </span>
+                
+              </a>
+              
+            </div>
+          </div>
+        </div>
+
+        <a href="../../../#pricing">Pricing</a>
+        <a href="../../../hardware-thc.html" style="color: #f59e0b; font-weight: 600;">Hardware THC</a>
+        <a href="../../../build-guide.html">Machine Blueprint</a>
+        <a href="../../../changelog.html">Changelog</a>
+      </div>
+
+      <div class="site-header-right">
+        <a href="../../../#download" class="nav-cta">Download Beta</a>
+        <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
+    <div class="docs-mobile-section-title">Navigation</div>
+    <div class="docs-mobile-list">
+      <a href="../../../" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="../../../#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
+      <a href="../../" class="docs-mobile-link">Documentation Hub Overview</a>
+      <a href="../../../hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
+      <a href="../../../build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
+      <a href="../../../changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
+    </div>
+
+    <div class="docs-mobile-section-title" style="margin-top: 1rem;">Tutorials &amp; Guides</div>
+    <div class="docs-mobile-list">
+      
+      <a href="../../machine-configuration.html" class="docs-mobile-link active">
+        <span class="nav-dropdown-num">01</span>
+        <span>Machine Configuration</span>
+      </a>
+      
+      <a href="../../cut-path-configuration.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">02</span>
+        <span>UI & Cut Path Config</span>
+      </a>
+      
+      <a href="../../nesting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">03</span>
+        <span>Multi-Part Stick Nesting</span>
+      </a>
+      
+      <a href="../../bending.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">04</span>
+        <span>Bending HSS & HSS-O</span>
+      </a>
+      
+      <a href="../../changelog.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">05</span>
+        <span>Build Info & Changelog</span>
+      </a>
+      
+      <a href="../../ai-autodetection.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">06</span>
+        <span>Fusion 360 & AI Autodetect</span>
+      </a>
+      
+      <a href="../../simcnc-motion-sync.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">07</span>
+        <span>SimCNC Motion-Sync & 3D Ramp</span>
+      </a>
+      
+      <a href="../../cut-charts-and-features.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">08</span>
+        <span>Cut Charts & Feature Toggles</span>
+      </a>
+      
+      <a href="../../mcp-offline-workflows.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">09</span>
+        <span>Offline MCP & AI Automation</span>
+      </a>
+      
+      <a href="../../dxf-svg-flat-sheet.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">10</span>
+        <span>DXF/SVG & Imperial Units</span>
+      </a>
+      
+      <a href="../../rotary-and-sheet-feedrates.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">11</span>
+        <span>G94, G93 & G20/G21 Feeds</span>
+      </a>
+      
+      <a href="../../interactive-canvas-controls.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">12</span>
+        <span>Interactive Canvas Controls</span>
+      </a>
+      
+      <a href="../../flat-plate-pro-cutting.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">13</span>
+        <span>Flat Pro Primitives</span>
+      </a>
+      
+      <a href="../../no-cad-wizard-and-tube-frames.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">14</span>
+        <span>No-CAD & 3D Tube Frames</span>
+      </a>
+      
+      <a href="../../tube-wrap-and-open-profiles.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">15</span>
+        <span>Tube Wrap & Open Beams</span>
+      </a>
+      
+      <a href="../../custom-post-processors.html" class="docs-mobile-link">
+        <span class="nav-dropdown-num">16</span>
+        <span>Custom Post-Processors (Lua)</span>
+      </a>
+      
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="../../../#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // Mobile drawer toggle
+      const toggle = document.getElementById('navMobileToggle');
+      const drawer = document.getElementById('docsMobileDrawer');
+      if (toggle && drawer) {
+        toggle.addEventListener('click', function () {
+          const isOpen = drawer.classList.toggle('open');
+          toggle.setAttribute('aria-expanded', isOpen);
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+        drawer.addEventListener('click', function (e) {
+          if (e.target.tagName === 'A') {
+            drawer.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+          }
+        });
+      }
+
+      // Desktop/tablet dropdown toggle on click
+      const ddTrigger = document.querySelector('.nav-dropdown-trigger');
+      const dd = document.querySelector('.nav-dropdown');
+      if (ddTrigger && dd) {
+        ddTrigger.addEventListener('click', function (e) {
+          e.stopPropagation();
+          const isOpen = dd.classList.toggle('open');
+          ddTrigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function (e) {
+          if (!dd.contains(e.target)) {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+        window.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape') {
+            dd.classList.remove('open');
+            ddTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+    })();
+  </script>
+
+  <main>
+
+    <!-- ======================================================================
+         CONTROLLER SETUP HERO
+         ====================================================================== -->
+    <section class="docs-hero">
+      <div class="container">
+        <div class="docs-breadcrumb">
+          <a href="../../../">RotaryCAM</a>
+          <span class="sep">/</span>
+          <a href="../../">Documentation</a>
+          <span class="sep">/</span>
+          <a href="../../machine-configuration.html#step-6">01. Machine Configuration</a>
+          <span class="sep">/</span>
+          <span class="current">Starfire / Fangling (EIA)</span>
+        </div>
+
+        <h1 class="docs-title">Starfire &amp; Fangling <span class="text-gradient-amber">Industrial EIA Setup</span></h1>
+        <p class="docs-subtitle">
+          Zero-drift <code class="mono">.txt</code> EIA files for Starfire (<code class="mono">SF-2100C</code> / <code class="mono">SF-2300S</code>) and Fangling (<code class="mono">F2100B</code> / <code class="mono">F2300B</code>) panels with quantized <code class="mono">G91</code> incremental moves, 180&deg; arc splitting, zero <code class="mono">%</code> framing, and optional comment-free output.
+        </p>
+
+        <div class="docs-meta-bar">
+          <span class="docs-meta-pill amber"><strong>CONTROLLER GUIDE</strong> &bull; Starfire SF-2100C &bull; Fangling F2100B/F2300B (.txt)</span>
+          
+          <span class="docs-meta-pill cyan"><strong>Extension:</strong> <code class="mono">.txt</code> (Zero <code class="mono">%</code>)</span>
+          
+          <span class="docs-meta-pill"><strong>Coordinates:</strong> Quantized <code class="mono">G91</code> (Default) or <code class="mono">G90</code></span>
+          
+          <span class="docs-meta-pill"><strong>Torch &amp; End:</strong> <code class="mono">M07 / M08</code> &bull; Mandatory <code class="mono">M02</code></span>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6-PHASE CUT CYCLE VISUALIZATION + EXACT STAGE G-CODE BREAKDOWN
+         ====================================================================== -->
+    <section class="container cut-cycle-section" id="cut-cycle">
+      <div class="cut-cycle-header">
+        <div>
+          <div class="cut-cycle-kicker">6-Phase Plasma Cut Cycle &bull; Starfire / Fangling Industrial EIA (SF-2100C / F2100B / F2300B)</div>
+          <h2 class="cut-cycle-heading">Torch Motion, Z-Height &amp; Exact Stage G-Code</h2>
+        </div>
+        <div class="cut-cycle-legend">
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #22d3ee;"></span> G0 Rapid / Motion</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #fbbf24;"></span> Probe / Dwell</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #fb7185;"></span> Plasma Arc ON</span>
+          <span class="cut-cycle-legend-item"><span class="legend-swatch" style="background: #34d399;"></span> THC Active / Cut</span>
+        </div>
+      </div>
+
+      <div class="cut-cycle-scroll">
+        <div class="cut-cycle-board">
+          <!-- Shared Dark-Themed 6-Phase Torch Motion SVG -->
+          <div class="cut-cycle-svg-wrap">
+            <svg class="cut-cycle-svg" viewBox="0 0 1200 246" width="1200" height="246" role="img" aria-label="6-phase plasma cut cycle timeline showing torch Z-height, arc state, and THC state across Rapid and Rotate, IHS Touch-Off, Pierce and Dwell, Cut and THC Control, Torch Off and Unlock, and Safe Retract and Unwind">
+              <defs>
+                <linearGradient id="plasmaArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fbbf24" />
+                  <stop offset="50%" stop-color="#fb7185" />
+                  <stop offset="100%" stop-color="#22d3ee" />
+                </linearGradient>
+                <linearGradient id="cutPathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#fb7185" />
+                  <stop offset="40%" stop-color="#34d399" />
+                  <stop offset="100%" stop-color="#34d399" />
+                </linearGradient>
+                <linearGradient id="plateSteelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#334155" />
+                  <stop offset="100%" stop-color="#1e293b" />
+                </linearGradient>
+                <radialGradient id="pierceGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.85" />
+                  <stop offset="55%" stop-color="#fb7185" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#fb7185" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <!-- Background Phase Columns -->
+              <rect x="0" y="0" width="200" height="246" fill="rgba(6, 182, 212, 0.03)" />
+              <rect x="200" y="0" width="200" height="246" fill="rgba(245, 158, 11, 0.03)" />
+              <rect x="400" y="0" width="200" height="246" fill="rgba(251, 113, 133, 0.04)" />
+              <rect x="600" y="0" width="200" height="246" fill="rgba(16, 185, 129, 0.04)" />
+              <rect x="800" y="0" width="200" height="246" fill="rgba(245, 158, 11, 0.025)" />
+              <rect x="1000" y="0" width="200" height="246" fill="rgba(148, 163, 184, 0.03)" />
+
+              <!-- Top Phase Header Bar -->
+              <rect x="0" y="0" width="1200" height="30" fill="#0d121c" />
+              <line x1="0" y1="30" x2="1200" y2="30" stroke="#232833" stroke-width="1" />
+
+              <!-- Vertical Phase Dividers -->
+              <line x1="200" y1="0" x2="200" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="400" y1="0" x2="400" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="600" y1="0" x2="600" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="800" y1="0" x2="800" y2="246" stroke="#1e2636" stroke-width="1" />
+              <line x1="1000" y1="0" x2="1000" y2="246" stroke="#1e2636" stroke-width="1" />
+
+              <!-- Phase Titles -->
+              <text x="14" y="19" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">01 RAPID &amp; ROTATE</text>
+              <text x="214" y="19" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">02 IHS TOUCH-OFF</text>
+              <text x="414" y="19" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">03 PIERCE &amp; DWELL</text>
+              <text x="614" y="19" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">04 CUT &amp; THC</text>
+              <text x="814" y="19" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">05 TORCH OFF</text>
+              <text x="1014" y="19" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="10.5" font-weight="700">06 RETRACT &amp; UNWIND</text>
+
+              <!-- Chevrons at dividers -->
+              <path d="M193 11 L198 15 L193 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M393 11 L398 15 L393 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M593 11 L598 15 L593 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M793 11 L798 15 L793 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M993 11 L998 15 L993 19" fill="none" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+
+              <!-- Horizontal Z Reference Lines -->
+              <line x1="0" y1="54" x2="1200" y2="54" stroke="#1e293b" stroke-width="1" stroke-dasharray="4 4" />
+              <text x="8" y="49" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">SAFE Z</text>
+
+              <line x1="0" y1="108" x2="1200" y2="108" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 4" />
+              <text x="8" y="103" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">PIERCE H</text>
+
+              <line x1="0" y1="136" x2="1200" y2="136" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 4" />
+              <text x="8" y="131" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="9">CUT H</text>
+
+              <!-- Steel Workpiece Surface (Z = 0) -->
+              <rect x="0" y="164" width="1200" height="12" fill="url(#plateSteelGrad)" />
+              <line x1="0" y1="164" x2="1200" y2="164" stroke="#475569" stroke-width="1.2" />
+              <text x="8" y="173" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="600">STOCK SURFACE Z = 0</text>
+
+              <!-- PHASE 1: Rapid & Rotate at Safe Z -->
+              <path d="M 18 54 L 185 54" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="7 4" />
+              <circle cx="18" cy="54" r="3.5" fill="#22d3ee" />
+              <polygon points="185,54 176,49 176,59" fill="#22d3ee" />
+              <!-- Rotary A Spin Badge -->
+              <circle cx="102" cy="82" r="13" fill="rgba(6, 182, 212, 0.1)" stroke="#22d3ee" stroke-width="1.3" stroke-dasharray="4 2" />
+              <path d="M 111 73 L 114 79 L 107 79" fill="none" stroke="#22d3ee" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+              <text x="102" y="85" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="700">A&deg;</text>
+              <text x="102" y="106" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">G0 XY + A</text>
+
+              <!-- PHASE 2: IHS Touch-Off Down to Z=0 & Backoff -->
+              <path d="M 185 54 L 222 54 L 266 163 L 296 151 L 348 151 L 388 108" fill="none" stroke="#fbbf24" stroke-width="2.5" stroke-linejoin="round" />
+              <!-- Contact spark ring at Z=0 -->
+              <circle cx="266" cy="163" r="6" fill="none" stroke="#fbbf24" stroke-width="1.6" />
+              <circle cx="266" cy="163" r="2.5" fill="#fbbf24" />
+              <text x="266" y="187" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8">TOUCH Z0</text>
+              <text x="332" y="88" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">Offset + Lift</text>
+
+              <!-- PHASE 3: Pierce & Dwell -> Plunge / 3D Ramp to Cut H -->
+              <circle cx="445" cy="108" r="26" fill="url(#pierceGlow)" />
+              <path d="M 388 108 L 440 108 L 535 108 L 592 136" fill="none" stroke="#fb7185" stroke-width="2.75" stroke-linejoin="round" />
+              <!-- Plasma pierce jet cone -->
+              <polygon points="445,112 436,164 454,164" fill="rgba(251, 113, 133, 0.35)" />
+              <line x1="445" y1="112" x2="445" y2="164" stroke="#fbbf24" stroke-width="2" />
+              <!-- Torch nozzle icon at Pierce H -->
+              <polygon points="438,94 452,94 449,108 441,108" fill="#cbd5e1" />
+              <text x="488" y="96" text-anchor="middle" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">M3 + DWELL</text>
+              <text x="566" y="152" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">Plunge / Ramp</text>
+
+              <!-- PHASE 4: Cut & THC Control -->
+              <path d="M 592 136 C 635 136, 660 130, 700 136 C 740 142, 765 136, 808 136" fill="none" stroke="#34d399" stroke-width="2.8" />
+              <!-- Plasma cutting arc curtain -->
+              <polygon points="620,137 788,137 788,164 620,164" fill="rgba(16, 185, 129, 0.14)" />
+              <line x1="700" y1="137" x2="700" y2="164" stroke="#22d3ee" stroke-width="2.2" />
+              <polygon points="693,122 707,122 704,136 696,136" fill="#e2e8f0" />
+              <text x="700" y="96" text-anchor="middle" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">ARC + THC ACTIVE</text>
+
+              <!-- PHASE 5: Torch Off & Lock -->
+              <path d="M 808 136 L 945 136" fill="none" stroke="#fbbf24" stroke-width="2.5" />
+              <circle cx="845" cy="136" r="5" fill="#0b0f17" stroke="#fbbf24" stroke-width="2" />
+              <line x1="839" y1="130" x2="851" y2="142" stroke="#fb7185" stroke-width="2" />
+              <line x1="851" y1="130" x2="839" y2="142" stroke="#fb7185" stroke-width="2" />
+              <text x="895" y="122" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">LOCK THC + ARC OFF</text>
+
+              <!-- PHASE 6: Safe Retract & Unwind -->
+              <path d="M 945 136 L 1030 54 L 1182 54" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-dasharray="6 3" />
+              <polygon points="1182,54 1173,49 1173,59" fill="#94a3b8" />
+              <circle cx="1108" cy="82" r="13" fill="rgba(148, 163, 184, 0.08)" stroke="#94a3b8" stroke-width="1.3" stroke-dasharray="4 2" />
+              <text x="1108" y="85" text-anchor="middle" fill="#cbd5e1" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">A&rarr;0</text>
+              <text x="1108" y="106" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8.5">SAFE Z + UNWIND</text>
+
+              <!-- Bottom Status Strips: ARC & THC -->
+              <rect x="0" y="192" width="1200" height="54" fill="#090d14" />
+              <line x1="0" y1="192" x2="1200" y2="192" stroke="#1e2636" stroke-width="1" />
+
+              <!-- ARC STATE BAR -->
+              <text x="10" y="211" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">ARC:</text>
+              <rect x="52" y="201" width="338" height="14" rx="3" fill="rgba(148, 163, 184, 0.1)" stroke="#232833" />
+              <text x="221" y="211" text-anchor="middle" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8">ARC OFF (POSITIONING / PROBING)</text>
+
+              <rect x="404" y="201" width="192" height="14" rx="3" fill="rgba(251, 113, 133, 0.18)" stroke="rgba(251, 113, 133, 0.45)" />
+              <text x="500" y="211" text-anchor="middle" fill="#fb7185" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">PILOT / PIERCE IGNITION</text>
+
+              <rect x="604" y="201" width="192" height="14" rx="3" fill="rgba(16, 185, 129, 0.18)" stroke="rgba(16, 185, 129, 0.45)" />
+              <text x="700" y="211" text-anchor="middle" fill="#34d399" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">CUTTING ARC LIVE</text>
+
+              <rect x="804" y="201" width="386" height="14" rx="3" fill="rgba(148, 163, 184, 0.1)" stroke="#232833" />
+              <text x="997" y="211" text-anchor="middle" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8">ARC EXTINGUISHED / SAFE RETRACT</text>
+
+              <!-- THC STATE BAR -->
+              <text x="10" y="233" fill="#64748b" font-family="'JetBrains Mono', monospace" font-size="8.5" font-weight="700">THC:</text>
+              <rect x="52" y="223" width="544" height="14" rx="3" fill="rgba(245, 158, 11, 0.12)" stroke="rgba(245, 158, 11, 0.32)" />
+              <text x="324" y="233" text-anchor="middle" fill="#fbbf24" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="600">THC LOCKED (NO DIVE DURING PROBE / PIERCE / RAMP)</text>
+
+              <rect x="604" y="223" width="192" height="14" rx="3" fill="rgba(6, 182, 212, 0.15)" stroke="rgba(6, 182, 212, 0.4)" />
+              <text x="700" y="233" text-anchor="middle" fill="#22d3ee" font-family="'JetBrains Mono', monospace" font-size="8" font-weight="700">UNLOCKED / CORNER LOCK</text>
+
+              <rect x="804" y="223" width="386" height="14" rx="3" fill="rgba(245, 158, 11, 0.1)" stroke="rgba(245, 158, 11, 0.25)" />
+              <text x="997" y="233" text-anchor="middle" fill="#94a3b8" font-family="'JetBrains Mono', monospace" font-size="8">LOCKED BEFORE ARC OFF / RESET</text>
+            </svg>
+          </div>
+
+          <!-- 6 Exact Stage Columns Aligned Directly Below the SVG -->
+          <div class="cut-cycle-stages">
+            
+            <div class="cut-stage-col" data-phase="1">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">01</span>
+                <span class="cut-stage-title">Header &amp; Rapid</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G21 | G20</code>
+                  <span class="cut-stage-code-desc">Metric (G21) or inch (G20); never G70/G71</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G91 (default) | G90</code>
+                  <span class="cut-stage-code-desc">Incremental default so panel origin shifts work anywhere</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G92 X0 Y0 / G40</code>
+                  <span class="cut-stage-code-desc">Zero local origin &amp;amp; cancel kerf</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G00 X&lt;dx&gt; Y&lt;dy&gt;</code>
+                  <span class="cut-stage-code-desc">Zero-padded rapid to pierce point (zero Z / A)</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">No % characters anywhere in the file; comments are 7-bit ASCII UPPERCASE &lt;= 80 chars or turned off completely.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="2">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">02</span>
+                <span class="cut-stage-title">IHS Touch-Off</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">(Owned by Panel)</code>
+                  <span class="cut-stage-code-desc">Controller executes IHS and pierce height inside M07</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Strictly 2-axis XY output so your front panel owns Z height and collision recovery.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="3">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">03</span>
+                <span class="cut-stage-title">Pierce</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M38 (opt)</code>
+                  <span class="cut-stage-code-desc">Optional THC disable when M38/M39 mode is selected</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M07</code>
+                  <span class="cut-stage-code-desc">Start plasma cut</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G04 L&lt;sec&gt; | P&lt;cs&gt; (opt)</code>
+                  <span class="cut-stage-code-desc">Omitted by default (panel owns pierce delay)</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Most Starfire and Fangling panels time pierce delay from the front keypad; enable G04 only if your panel needs it.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="4">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">04</span>
+                <span class="cut-stage-title">Cut &amp; 180&amp;deg; Arcs</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">G01 / G02 / G03 X&lt;dx&gt; Y&lt;dy&gt; I J</code>
+                  <span class="cut-stage-code-desc">Quantized G91 deltas with &lt;= 180-deg arcs (or G01 linearized)</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M39 / M38 (opt)</code>
+                  <span class="cut-stage-code-desc">Optional THC enable/disable (never M50 or M10-M13)</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Whole-step move tracking guarantees closed contours return to the exact start point with zero drift.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="5">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">05</span>
+                <span class="cut-stage-title">Torch Off</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M39 (if M38 locked)</code>
+                  <span class="cut-stage-code-desc">Always restore THC before M08</span>
+                </div>
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M08</code>
+                  <span class="cut-stage-code-desc">Extinguish arc and lift torch</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Every M07 is cleanly paired with M08 before the next rapid.</p>
+            </div>
+            
+            <div class="cut-stage-col" data-phase="6">
+              <div class="cut-stage-col-head">
+                <span class="cut-stage-num">06</span>
+                <span class="cut-stage-title">Program End</span>
+              </div>
+              <div class="cut-stage-codes">
+                
+                <div class="cut-stage-code-item">
+                  <code class="cut-stage-code">M02</code>
+                  <span class="cut-stage-code-desc">Mandatory program end (never M30)</span>
+                </div>
+                
+              </div>
+              <p class="cut-stage-note">Runs flat plate and concentric round-pipe Y-wrap; blocks 4D HSS and open profiles before export.</p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="cut-cycle-scroll-hint">Scroll horizontally to inspect all 6 cut-cycle columns side by side.</div>
+    </section>
+
+    <!-- ======================================================================
+         TWO-COLUMN CONTROLLER REFERENCE & CHECKLIST SHELL
+         ====================================================================== -->
+    <section class="container docs-shell">
+
+      <!-- Left Sticky Sidebar -->
+      <aside class="docs-sidebar" aria-label="Controller Navigation">
+        <div class="docs-sidebar-group">
+          <a href="../../machine-configuration.html#step-6" class="controller-sidebar-back">
+            <span>&larr;</span>
+            <span>All 14 Controllers Overview</span>
+          </a>
+          <div class="docs-sidebar-heading">Controller Guides</div>
+          <ul class="controller-sidebar-list">
+            
+            <li>
+              <a href="../LinuxCNC/">
+                <span>LinuxCNC QTPlasmaC</span>
+                <span class="controller-sidebar-ext">.ngc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../FireControl/">
+                <span>Langmuir FireControl</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Mach4/">
+                <span>Mach4 + ESS / TMC3in1</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../MASSO/">
+                <span>MASSO G3 + DTHC</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Mach3/">
+                <span>ArtSoft Mach3</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Acorn/">
+                <span>Centroid Acorn CNC12</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../grblHAL/">
+                <span>grblHAL 32-Bit Plasma</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../UCCNC/">
+                <span>CNCdrive UCCNC</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../FlashCut/">
+                <span>FlashCut CNC</span>
+                <span class="controller-sidebar-ext">.nc / .gc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../EdingCNC/">
+                <span>EdingCNC Plasma</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../PlanetCNC/">
+                <span>PlanetCNC TNG</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../WinCNC/">
+                <span>ShopSabre WinCNC</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../SimCNC/">
+                <span>CSLab SimCNC</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../CommandCNC/">
+                <span>CandCNC CommandCNC</span>
+                <span class="controller-sidebar-ext">.ngc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../TorchmateVMD/">
+                <span>Torchmate VMD</span>
+                <span class="controller-sidebar-ext">.fgc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../MyPlasm/">
+                <span>MyPlasm PRO / CNC</span>
+                <span class="controller-sidebar-ext">.tap</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../HyperthermEIA/">
+                <span>Hypertherm EDGE Connect (EIA)</span>
+                <span class="controller-sidebar-ext">.cnc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../StarfireFangling/" class="active">
+                <span>Starfire / Fangling (EIA)</span>
+                <span class="controller-sidebar-ext">.txt</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../GenericG94/">
+                <span>Portable RS-274</span>
+                <span class="controller-sidebar-ext">.nc</span>
+              </a>
+            </li>
+            
+            <li>
+              <a href="../Scribing/">
+                <span>Scribing (EasyScribe / Air)</span>
+                <span class="controller-sidebar-ext">Multi-Tool</span>
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+
+        <div class="docs-sidebar-group">
+          <div class="docs-sidebar-heading">On This Page</div>
+          <ul class="docs-toc-list">
+            <li><a href="#cut-cycle"><span class="docs-toc-step">00</span> 6-Phase Cut Cycle</a></li>
+            
+            <li><a href="#quantized-g91"><span class="docs-toc-step">01</span> Drift-Free Quantized G91 Incremental Coordinates</a></li>
+            
+            <li><a href="#panel-rules"><span class="docs-toc-step">02</span> SF-2100C / F2100B Dialect Rules &amp; Bare-EIA Mode</a></li>
+            
+            <li><a href="#dwell-thc-scribe"><span class="docs-toc-step">03</span> Dwells, Optional M38/M39 THC &amp; Scribing</a></li>
+            
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Main Controller Documentation Column -->
+      <div class="docs-main">
+        
+        <article class="doc-step-card" id="quantized-g91">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Zero-Drift G91</span>
+            <h2 class="doc-step-title">Why Quantized <code class="mono">G91</code> Incremental Coordinates Matter</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <p>
+              Starfire and Fangling panels default to <code class="mono">G91</code> incremental programs with <code class="mono">G92 X0 Y0</code> so you can jog to any spot on a sheet and hit Start. Standard incremental posts stack up rounding errors around curves and nested sheets. Tracking exact rounded grid positions (<code class="mono">delta = round(target) - cursor</code>) on every line and <code class="mono">G02/G03</code> arc keeps multi-part sheets dead-on from start to finish.
+            </p>
+          </div>
+        </article>
+        
+        <article class="doc-step-card" id="panel-rules">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Panel Hygiene</span>
+            <h2 class="doc-step-title">SF-2100C / F2100B Dialect Rules &amp; Bare-EIA Mode</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <ul class="doc-bullet-list">
+              <li><strong>Clean Panel Code:</strong> Zero <code class="mono">%</code> characters, zero <code class="mono">G70/G71</code>, zero <code class="mono">M30</code>, zero <code class="mono">Z</code> words, and zero-padded <code class="mono">G00/G01/G02/G03/M07/M08/M02</code> codes.</li>
+              <li><strong>180&deg; Arc Splitting (or <code class="mono">G01</code> Straight Segments):</strong> Full 360&deg; circles split into two 180&deg; arcs so older panels never drop a hole. Turn on <strong>Linearize Arcs (G01 Only)</strong> in Post Options for older controllers that need straight segments.</li>
+              <li><strong>Comment-Free Mode:</strong> Turn off <strong>Emit Comments</strong> in Machines &rarr; Post Options to strip every <code class="mono">(...)</code> comment for panels that reject text lines.</li>
+            </ul>
+          </div>
+        </article>
+        
+        <article class="doc-step-card" id="dwell-thc-scribe">
+          <div class="doc-step-header">
+            <span class="doc-step-badge">Options</span>
+            <h2 class="doc-step-title">Dwells, Optional <code class="mono">M38/M39</code> THC &amp; Scribe Modes</h2>
+          </div>
+
+          <div class="doc-step-body">
+            
+            <ul class="doc-bullet-list">
+              <li><strong>Pierce Dwell:</strong> Left out by default so your front keypad controls pierce time. Turn on <code class="mono">G04 L&lt;sec&gt;</code> (Starfire seconds) or <code class="mono">G04 P&lt;cs&gt;</code> (Fangling integer centiseconds, like <code class="mono">P50</code> = 0.50 s) if needed.</li>
+              <li><strong>THC Control:</strong> Uses panel THC by default (no THC M-codes), or enable <code class="mono">M38/M39</code> corner hold in Post Options. Never emits Hypertherm <code class="mono">M50</code> or <code class="mono">M10..M13</code>.</li>
+              <li><strong>Scribing:</strong> Pick Fangling <code class="mono">M09/M10</code> or Starfire <code class="mono">M32/M33</code> with XY marker offsets already built into the coordinates.</li>
+            </ul>
+          </div>
+        </article>
+        
+
+        
+
+        <!-- Prev / Next Controller Pagination -->
+        <nav class="docs-pagination" aria-label="Controller Guide Pagination">
+          
+          <a href="../HyperthermEIA/" class="docs-page-link prev">
+            <span class="docs-page-dir">&larr; Previous Controller</span>
+            <span class="docs-page-title">Hypertherm EDGE Connect (EIA)</span>
+            <span class="docs-page-desc">Industrial .cnc EIA files for Hypertherm EDGE Connect, EDGE Pro, and MicroEDGE with M07/M08, M50/M51 THC, optional G59 cut charts, and Marker 1.</span>
+          </a>
+          
+          
+          <a href="../GenericG94/" class="docs-page-link next">
+            <span class="docs-page-dir">Next Controller &rarr;</span>
+            <span class="docs-page-title">Portable RS-274</span>
+            <span class="docs-page-desc">Clean ISO 6983 G94 core with configurable G04 dwells, swing-envelope Safe Z, optional THC/IHS, and Dry-Run mode.</span>
+          </a>
+          
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+
+
+  <!-- ========================================================================
+       FOOTER (Generated by scripts/build_docs.py)
+       ======================================================================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="../../../" class="brand">
+          <span class="brand-icon">R</span>
+          <span class="brand-name">RotaryCAM</span>
+          <span class="brand-badge">XYZA</span>
+        </a>
+        <p class="footer-tagline">
+          4-Axis Rotary Tube &amp; Pipe CNC Plasma CAM System.<br />
+          From STEP assembly to shop-ready G-code in seconds.
+        </p>
+      </div>
+
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Documentation</h4>
+          <a href="../../">Documentation Overview</a>
+          
+          <a href="../../machine-configuration.html">01. Machine Configuration</a>
+          
+          <a href="../../cut-path-configuration.html">02. Cut Path Configuration</a>
+          
+          <a href="../../nesting.html">03. Multi-Part Nesting</a>
+          
+          <a href="../../bending.html">04. Bending HSS & HSS-O</a>
+          
+          <a href="../../changelog.html">05. Build Info & Changelog</a>
+          
+          <a href="../../ai-autodetection.html">06. Fusion 360 & AI Autodetect</a>
+          
+          <a href="../../simcnc-motion-sync.html">07. SimCNC Motion-Sync & Ramp</a>
+          
+          <a href="../../cut-charts-and-features.html">08. Cut Charts & Feature Toggles</a>
+          
+          <a href="../../mcp-offline-workflows.html">09. Offline MCP & AI Automation</a>
+          
+          <a href="../../dxf-svg-flat-sheet.html">10. DXF/SVG Flat-Sheet CAM</a>
+          
+          <a href="../../rotary-and-sheet-feedrates.html">11. Rotary & Sheet Feedrates</a>
+          
+          <a href="../../interactive-canvas-controls.html">12. Interactive Canvas Controls</a>
+          
+          <a href="../../flat-plate-pro-cutting.html">13. Flat Pro Primitives</a>
+          
+          <a href="../../no-cad-wizard-and-tube-frames.html">14. No-CAD & 3D Tube Frames</a>
+          
+          <a href="../../tube-wrap-and-open-profiles.html">15. Tube Wrap & Open Beams</a>
+          
+          <a href="../../custom-post-processors.html">16. Custom Post-Processors (Lua)</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="../../../#showcase">Showcase</a>
+          <a href="../../../#features">Capabilities</a>
+          <a href="../../../#kinematics">4-Axis Kinematics</a>
+          <a href="../../../hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
+          <a href="../../../build-guide.html">Build Your Own Table</a>
+          <a href="../../../changelog.html">Release Changelog &amp; Downloads</a>
+        </div>
+        <div class="footer-col">
+          <h4>Compare</h4>
+          
+          <a href="../../../compare/sheetcam/">RotaryCAM vs. SheetCAM</a>
+          
+          <a href="../../../compare/pronest/">RotaryCAM vs. ProNest</a>
+          
+          <a href="../../../compare/rotary-tube-pro/">RotaryCAM vs. Rotary Tube Pro</a>
+          
+          <a href="../../../compare/fusion-360/">RotaryCAM vs. Fusion 360</a>
+          
+          <a href="../../../compare/gc-maker/">RotaryCAM vs. GCmaker</a>
+          
+          <a href="../../../compare/gcnester/">RotaryCAM vs. GCnester</a>
+          
+          <a href="../../../compare/bend-tech-dragon/">RotaryCAM vs. Bend-Tech Dragon</a>
+          
+          <a href="../../../compare/sigmatube/">RotaryCAM vs. SigmaTUBE</a>
+          
+          <a href="../../../compare/tubest/">RotaryCAM vs. TubesT</a>
+          
+        </div>
+        <div class="footer-col">
+          <h4>Application</h4>
+          <a href="https://app.pipecam.info">Launch Web App</a>
+          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>&copy; 2026 RotaryCAM. Dedicated 4-axis rotary CNC plasma CAM.</span>
+      <span class="mono">G93 + G94 • G20/G21 • ZERO-BEVEL • CUT-AND-BEND • 1D STICK & 2D DXF/SVG NESTING</span>
+    </div>
+  </footer>
+
+
+</body>
+</html>

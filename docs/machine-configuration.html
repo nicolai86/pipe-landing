@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Basic Machine Configuration | RotaryCAM Docs</title>
-  <meta name="description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers." />
+  <meta name="description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 19 controllers." />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="https://rotarycam.app/docs/machine-configuration.html" />
 
@@ -13,14 +13,14 @@
   <meta property="og:url" content="https://rotarycam.app/docs/machine-configuration.html" />
   <meta property="og:site_name" content="RotaryCAM" />
   <meta property="og:title" content="Basic Machine Configuration | RotaryCAM Docs" />
-  <meta property="og:description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers." />
+  <meta property="og:description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 19 controllers." />
   <meta property="og:image" content="https://rotarycam.app/docs/assets/machine-config-2-limits.png" />
   <meta property="og:image:alt" content="RotaryCAM Machine Profiles & Kinematics Modal" />
 
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Basic Machine Configuration | RotaryCAM Docs" />
-  <meta name="twitter:description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers." />
+  <meta name="twitter:description" content="Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 19 controllers." />
   <meta name="twitter:image" content="https://rotarycam.app/docs/assets/machine-config-2-limits.png" />
 
   
@@ -55,7 +55,7 @@
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": "Basic Machine Configuration",
-    "description": "Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers.",
+    "description": "Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 19 controllers.",
     "image": "https://rotarycam.app/docs/assets/machine-config-2-limits.png",
     "url": "https://rotarycam.app/docs/machine-configuration.html",
     "mainEntityOfPage": {
@@ -1096,7 +1096,7 @@
               Every CNC controller handles touch-off probing, torch ignition, THC locking, and rotary feeds differently. All <strong>14 supported controllers</strong> (unlocked in both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong>), plus coaxial EasyScribe and pneumatic air-scribe marking, output ready-to-run code with zero hand edits.
             </p>
             <p>
-              Compare the 14 dialects below, then open your controller's guide for its 6-phase cut cycle diagram, stage G-code, wiring checklists, and hardware toggles.
+              Compare the 19 dialects below, then open your controller's guide for its 6-phase cut cycle diagram, stage G-code, wiring checklists, and hardware toggles.
             </p>
 
             <div class="table-wrap" style="margin: 0.75rem 0;">
@@ -1268,6 +1268,66 @@
                     <td>M63 P0 (Lock) / M62 P0 (Unlock) / #4061</td>
                     <td>3.5: 4D Spoofed G94 | 3.6+: Hardened G93</td>
                     <td>config.xml import + G64 P0.3/0.4 + 0.002mm feather + M112</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/CommandCNC/" class="doc-table-link">CandCNC CommandCNC (DTHC IV / V)</a>
+                    </td>
+                    <td><code class="mono">.ngc</code></td>
+                    <td>2D: o&lt;touchoff&gt; call | 3D/4D: G38.2 + G1 Z#5063 + G10 L20 P0</td>
+                    <td>M3 S100 (positive S required) / M5</td>
+                    <td>M67 E0 Q10/Q20 (synced) &amp; M68 E0 Q### (DCC presets)</td>
+                    <td>G94 (2D/HSS Flats) + G93 (4-Axis Rotary)</td>
+                    <td>M68 E0 Q900/Q3xxx/Q5xx + G4 P0.1 pacing</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/TorchmateVMD/" class="doc-table-link">Lincoln Electric Torchmate VMD (Accumove MVC)</a>
+                    </td>
+                    <td><code class="mono">.fgc</code></td>
+                    <td>Controller-owned inside M64 (AVHC touch-off &amp; plunge)</td>
+                    <td>M06 T1 (Plasma) / M06 T2 (Marker) + M64 (On) / M65 (Off)</td>
+                    <td>Managed by Accumove VMD AVHC (zero Z words emitted)</td>
+                    <td>2D Flat &amp; Concentric Round Y-Wrap (No A / Z)</td>
+                    <td>G70/G71 units (never G20/G21), G04 D<ms>, explicit G00-G03, M02</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/MyPlasm/" class="doc-table-link">Proma Elektronika MyPlasm PRO / CNC</a>
+                    </td>
+                    <td><code class="mono">.tap</code></td>
+                    <td>PRO FW 1.3+: G38.2 + G92.38 | FW 1.2: G38.2 + G92 Z</td>
+                    <td>M3 I / M5 I + Arc-OK Wait (M66 Q# on FW 1.3+, M0 S# on FW 1.2)</td>
+                    <td>M666 I (THC Off) / M667 I (THC On, optional P volts)</td>
+                    <td>PRO FW 1.2/1.3+: 4-Axis A | Legacy 2D: Y-Wrap</td>
+                    <td>Strict metric G21, G4 P<int ms>, inline I flag, +/-3600 deg A limit</td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/HyperthermEIA/" class="doc-table-link">Hypertherm EDGE Connect / ProNest (Industrial EIA)</a>
+                    </td>
+                    <td><code class="mono">.cnc</code></td>
+                    <td>Controller-owned Sensor THC inside M07 / RF</td>
+                    <td>M07 / M08 (default) or legacy RF / RT</td>
+                    <td>M50 (Disable) / M51 (Enable, always restored before M08)</td>
+                    <td>2D Flat &amp; Concentric Round Y-Wrap (Zero Z / A)</td>
+                    <td>G70/G71 (opt G20/G21), opt G59 V509/V600-V603, G41/G42 + G43 D# X<kerf></td>
+                  </tr>
+                  
+                  <tr>
+                    <td>
+                      <a href="machine-configuration/StarfireFangling/" class="doc-table-link">Starfire / Fangling Industrial EIA (SF-2100C / F2100B / F2300B)</a>
+                    </td>
+                    <td><code class="mono">.txt</code></td>
+                    <td>Controller-owned inside M07 (console THC &amp; pierce)</td>
+                    <td>M07 (Cut On) / M08 (Cut Off), zero-padded G00-G03 &amp; M02</td>
+                    <td>Console default (none) or optional M38/M39 (never M50)</td>
+                    <td>2D Flat &amp; Concentric Round Y-Wrap (2-Axis XY)</td>
+                    <td>Drift-free quantized G91 incremental default, G21/G20, G92 X0 Y0, 180-deg arcs</td>
                   </tr>
                   
                   <tr>
@@ -1452,6 +1512,66 @@
                 </div>
               </a>
               
+              <a href="machine-configuration/CommandCNC/" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.ngc</span>
+                  <span class="controller-card-mode">G94 (2D/HSS Flats) + G93 (4-Axis Rotary)</span>
+                </div>
+                <div class="controller-card-title">CandCNC CommandCNC (DTHC IV / V)</div>
+                <p class="controller-card-summary">Ready-to-run .ngc files for CandCNC tables with o&lt;touchoff&gt;, DTHC IV/V M67/M68 E0 Q### presets, and 4-axis G93 rotary.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/TorchmateVMD/" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.fgc</span>
+                  <span class="controller-card-mode">2D Flat &amp; Concentric Round Y-Wrap (No A / Z)</span>
+                </div>
+                <div class="controller-card-title">Lincoln Electric Torchmate VMD (Accumove MVC)</div>
+                <p class="controller-card-summary">Native .fgc files for Torchmate 4400/4800/Growth Series with G70/G71 units, M64/M65 AVHC firing, G04 D&lt;ms&gt;, and Y-wrap round pipe.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/MyPlasm/" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.tap</span>
+                  <span class="controller-card-mode">PRO FW 1.2/1.3+: 4-Axis A | Legacy 2D: Y-Wrap</span>
+                </div>
+                <div class="controller-card-title">Proma Elektronika MyPlasm PRO / CNC</div>
+                <p class="controller-card-summary">Metric .tap post for Proma MyPlasm PRO (FW 1.2 &amp; 1.3+) and Legacy 2D with G92.38 probing, M666/M667 THC, and 4-axis A rotary.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/HyperthermEIA/" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.cnc</span>
+                  <span class="controller-card-mode">2D Flat &amp; Concentric Round Y-Wrap (Zero Z / A)</span>
+                </div>
+                <div class="controller-card-title">Hypertherm EDGE Connect / ProNest (Industrial EIA)</div>
+                <p class="controller-card-summary">Industrial .cnc EIA files for Hypertherm EDGE Connect, EDGE Pro, and MicroEDGE with M07/M08, M50/M51 THC, optional G59 cut charts, and Marker 1.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
+              <a href="machine-configuration/StarfireFangling/" class="controller-card">
+                <div class="controller-card-top">
+                  <span class="controller-card-ext">.txt</span>
+                  <span class="controller-card-mode">2D Flat &amp; Concentric Round Y-Wrap (2-Axis XY)</span>
+                </div>
+                <div class="controller-card-title">Starfire / Fangling Industrial EIA (SF-2100C / F2100B / F2300B)</div>
+                <p class="controller-card-summary">Shop-ready .txt EIA files for SF-2100C, F2100B, and F2300B panels with zero-drift G91 incremental moves, 180-deg arc splitting, and bare-EIA mode.</p>
+                <div class="controller-card-cta">
+                  <span>Open Setup &amp; Cut Cycle Guide &rarr;</span>
+                </div>
+              </a>
+              
               <a href="machine-configuration/GenericG94/" class="controller-card">
                 <div class="controller-card-top">
                   <span class="controller-card-ext">.nc</span>
@@ -1467,7 +1587,7 @@
               <a href="machine-configuration/Scribing/" class="controller-card scribing-card">
                 <div class="controller-card-top">
                   <span class="controller-card-ext">Multi-Tool</span>
-                  <span class="controller-card-mode">All 14 Controllers (Pro Shop)</span>
+                  <span class="controller-card-mode">All 19 Controllers (Pro Shop)</span>
                 </div>
                 <div class="controller-card-title">Coaxial EasyScribe vs. Pneumatic Air-Scribe</div>
                 <p class="controller-card-summary">Engrave Part IDs, bend lines &amp; weld ticks using coaxial EasyScribe (all controllers, M0 swap) or pneumatic offset air-scribe.</p>
