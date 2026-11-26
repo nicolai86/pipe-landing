@@ -107,16 +107,16 @@
   <header class="site-header" id="navbar">
     <nav aria-label="Documentation Navigation">
       <div class="site-header-left">
-        <a href="{{ root_prefix | default('../') }}index.html" class="brand" aria-label="RotaryCAM Home">
+        <a href="{{ root_prefix | default('../') }}" class="brand" aria-label="RotaryCAM Home">
           <span>RotaryCAM</span>
           <span class="brand-tag">{{ beta_label }}</span>
         </a>
         <div class="nav-divider" aria-hidden="true"></div>
-        <a href="{{ root_prefix | default('../') }}index.html" class="nav-back-link">← rotarycam.app</a>
+        <a href="{{ root_prefix | default('../') }}" class="nav-back-link">← rotarycam.app</a>
       </div>
 
       <div class="nav-links">
-        <a href="{{ docs_prefix | default('') }}index.html"{% if page.slug == 'index' %} class="active"{% endif %}>Overview</a>
+        <a href="{{ docs_prefix or './' }}"{% if page.slug == 'index' %} class="active"{% endif %}>Overview</a>
 
         <!-- Tutorials Dropdown -->
         <div class="nav-dropdown">
@@ -154,14 +154,14 @@
           </div>
         </div>
 
-        <a href="{{ root_prefix | default('../') }}index.html#pricing">Pricing</a>
+        <a href="{{ root_prefix | default('../') }}#pricing">Pricing</a>
         <a href="{{ root_prefix | default('../') }}hardware-thc.html" style="color: #f59e0b; font-weight: 600;">Hardware THC</a>
         <a href="{{ root_prefix | default('../') }}build-guide.html">Machine Blueprint</a>
         <a href="{{ root_prefix | default('../') }}changelog.html">Changelog</a>
       </div>
 
       <div class="site-header-right">
-        <a href="{{ root_prefix | default('../') }}index.html#download" class="nav-cta">Download Beta</a>
+        <a href="{{ root_prefix | default('../') }}#download" class="nav-cta">Download Beta</a>
         <button type="button" class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle Mobile Menu" aria-expanded="false">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 5H17M3 10H17M3 15H17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -175,9 +175,9 @@
   <div class="docs-mobile-drawer" id="docsMobileDrawer" aria-label="Mobile Navigation">
     <div class="docs-mobile-section-title">Navigation</div>
     <div class="docs-mobile-list">
-      <a href="{{ root_prefix | default('../') }}index.html" class="docs-mobile-link">← Return to RotaryCAM Home</a>
-      <a href="{{ root_prefix | default('../') }}index.html#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
-      <a href="{{ docs_prefix | default('') }}index.html" class="docs-mobile-link{% if page.slug == 'index' %} active{% endif %}">Documentation Hub Overview</a>
+      <a href="{{ root_prefix | default('../') }}" class="docs-mobile-link">← Return to RotaryCAM Home</a>
+      <a href="{{ root_prefix | default('../') }}#pricing" class="docs-mobile-link">Founding Pricing &amp; Offline Licenses</a>
+      <a href="{{ docs_prefix or './' }}" class="docs-mobile-link{% if page.slug == 'index' %} active{% endif %}">Documentation Hub Overview</a>
       <a href="{{ root_prefix | default('../') }}hardware-thc.html" class="docs-mobile-link">10 kHz Hardware THC ($199 CAD)</a>
       <a href="{{ root_prefix | default('../') }}build-guide.html" class="docs-mobile-link">Machine Build Guide Blueprint</a>
       <a href="{{ root_prefix | default('../') }}changelog.html" class="docs-mobile-link">Release Notes &amp; Downloads</a>
@@ -194,7 +194,7 @@
     </div>
 
     <div style="margin-top: 1rem;">
-      <a href="{{ root_prefix | default('../') }}index.html#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
+      <a href="{{ root_prefix | default('../') }}#download" class="primary-btn" style="width: 100%; justify-content: center; text-decoration: none;">Download Beta ↗</a>
     </div>
   </div>
 
@@ -264,7 +264,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <a href="{{ root_prefix | default('../') }}index.html" class="brand">
+        <a href="{{ root_prefix | default('../') }}" class="brand">
           <span class="brand-icon">R</span>
           <span class="brand-name">RotaryCAM</span>
           <span class="brand-badge">XYZA</span>
@@ -278,16 +278,16 @@
       <div class="footer-links">
         <div class="footer-col">
           <h4>Documentation</h4>
-          <a href="{{ docs_prefix | default('') }}index.html">Documentation Overview</a>
+          <a href="{{ docs_prefix or './' }}">Documentation Overview</a>
           {% for t in tutorials %}
           <a href="{{ docs_prefix | default('') }}{{ t.filename }}">{{ "%02d"|format(t.num) }}. {{ t.footer_label }}</a>
           {% endfor %}
         </div>
         <div class="footer-col">
           <h4>Product</h4>
-          <a href="{{ root_prefix | default('../') }}index.html#showcase">Showcase</a>
-          <a href="{{ root_prefix | default('../') }}index.html#features">Capabilities</a>
-          <a href="{{ root_prefix | default('../') }}index.html#kinematics">4-Axis Kinematics</a>
+          <a href="{{ root_prefix | default('../') }}#showcase">Showcase</a>
+          <a href="{{ root_prefix | default('../') }}#features">Capabilities</a>
+          <a href="{{ root_prefix | default('../') }}#kinematics">4-Axis Kinematics</a>
           <a href="{{ root_prefix | default('../') }}hardware-thc.html">10 kHz Hardware THC ($199 CAD)</a>
           <a href="{{ root_prefix | default('../') }}build-guide.html">Build Your Own Table</a>
           <a href="{{ root_prefix | default('../') }}changelog.html">Release Changelog &amp; Downloads</a>

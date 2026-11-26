@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+Disallow: /cdn-cgi/
+Disallow: /vendor/$
+Disallow: /*.step.gz$
+
 Sitemap: https://rotarycam.app/sitemap.xml

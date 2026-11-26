@@ -428,7 +428,7 @@
                   {% for c in controllers if not c.is_scribing %}
                   <tr>
                     <td>
-                      <a href="machine-configuration/{{ c.slug }}/index.html" class="doc-table-link">{{ c.name }}</a>
+                      <a href="machine-configuration/{{ c.slug }}/" class="doc-table-link">{{ c.name }}</a>
                     </td>
                     <td><code class="mono">{{ c.ext }}</code></td>
                     <td>{{ c.ihs_summary }}</td>
@@ -452,7 +452,7 @@
 
             <div class="controller-grid">
               {% for c in controllers %}
-              <a href="machine-configuration/{{ c.slug }}/index.html" class="controller-card{% if c.is_scribing %} scribing-card{% endif %}">
+              <a href="machine-configuration/{{ c.slug }}/" class="controller-card{% if c.is_scribing %} scribing-card{% endif %}">
                 <div class="controller-card-top">
                   <span class="controller-card-ext">{{ c.ext }}</span>
                   <span class="controller-card-mode">{{ c.rotary_mode }}</span>
@@ -491,7 +491,7 @@
 
             <!-- 1. ArtSoft Mach3 (.xml) -->
             <div class="doc-section-divider" style="margin-top: 1.5rem;">
-              <div class="doc-section-kicker">ArtSoft Mach3 • Profile .xml Warnings • <a href="machine-configuration/Mach3/index.html#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">Mach3 Page &rarr;</a></div>
+              <div class="doc-section-kicker">ArtSoft Mach3 • Profile .xml Warnings • <a href="machine-configuration/Mach3/#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">Mach3 Page &rarr;</a></div>
               <h3 class="doc-section-heading">1. ArtSoft Mach3 (.xml) Import Warnings</h3>
             </div>
             {% with faq_items = xml_warnings["Mach3"] %}
@@ -500,7 +500,7 @@
 
             <!-- 2. FlashCut CNC (Setup.xml) -->
             <div class="doc-section-divider" style="margin-top: 2.25rem;">
-              <div class="doc-section-kicker">FlashCut CNC • Setup.xml Warnings • <a href="machine-configuration/FlashCut/index.html#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">FlashCut Page &rarr;</a></div>
+              <div class="doc-section-kicker">FlashCut CNC • Setup.xml Warnings • <a href="machine-configuration/FlashCut/#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">FlashCut Page &rarr;</a></div>
               <h3 class="doc-section-heading">2. FlashCut CNC (Setup.xml) Import Warnings</h3>
             </div>
             {% with faq_items = xml_warnings["FlashCut"] %}
@@ -509,7 +509,7 @@
 
             <!-- 3. CSLab SimCNC 3.6 (config.xml) -->
             <div class="doc-section-divider cyan" style="margin-top: 2.25rem;">
-              <div class="doc-section-kicker">CSLab SimCNC 3.6 • config.xml Warnings • <a href="machine-configuration/SimCNC/index.html#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">SimCNC Page &rarr;</a></div>
+              <div class="doc-section-kicker">CSLab SimCNC 3.6 • config.xml Warnings • <a href="machine-configuration/SimCNC/#import-warnings-faq" style="color: var(--cyan-400); text-decoration: underline;">SimCNC Page &rarr;</a></div>
               <h3 class="doc-section-heading">3. CSLab SimCNC 3.6 (config.xml) Import Warnings</h3>
             </div>
             {% with faq_items = xml_warnings["SimCNC"] %}
