@@ -153,3 +153,12 @@ Whenever adding or updating an interactive 3D PCB viewer on `build-guide.html` o
 
 - Automatically preserves XCAF sRGB colors, groups faces into the exact PBR material buckets expected by `initPcbViewer()` (`fr4`, `copper`, `soldermask`, `silkscreen`, `metal`, `plastic`, `ceramic`, `led`, `default`), centers the assembly, rotates CAD Z-up into Three.js Y-up (`Rx(-90°)`), and emits `bounds` + `board` decal metadata.
 - Pair with a static isometric preview PNG (`assets/<slug>-preview.png`) in `#thc-cover` so the page renders instantaneously and loads the WebGL mesh only when the user clicks **"Click to Explore"**.
+
+---
+
+## 5. Public Changelog Weekly Grouping Rule (`changelog.html`)
+
+On `changelog.html`, **group releases by calendar week (Monday–Sunday) into a single `<article class="release-entry">` card and a single `.release-version-pill`**, NOT one card per release tag:
+- When cutting a new release in the same week as the latest card, merge its highlights into that week's existing card, update `id="vX.Y.Z"` to the latest tag, keep older versions from that week as inline `<span id="vA.B.C"></span>` anchors immediately inside `<article>`, and update the single pill to a range (e.g., `Week of November 23, 2026` with `v0.9.1 &ndash; v0.9.4 &bull; LATEST`).
+- Start a new weekly card only when a release falls in a new calendar week, moving `&bull; LATEST` and the cyan border highlight to the new top card.
+- Always remove any shipped capabilities from the `#roadmap` section of `changelog.html` when cutting the release that delivers them.

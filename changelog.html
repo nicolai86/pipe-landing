@@ -1340,209 +1340,57 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
-           NOVEMBER 26, 2026 (v0.9.4)
+           WEEK OF NOVEMBER 23, 2026 (v0.9.1 - v0.9.4)
            ================================================================ -->
       <article class="release-entry" id="v0.9.4">
+        <span id="v0.9.3"></span><span id="v0.9.2"></span><span id="v0.9.1"></span>
         <div class="release-marker"></div>
         <div class="release-card" style="border-color: rgba(6, 182, 212, 0.35);">
           <div class="release-meta">
             <div class="release-date-wrap">
-              <span class="release-date">November 26, 2026</span>
-              <span class="release-version-pill">v0.9.4 &bull; LATEST</span>
+              <span class="release-date">Week of November 23, 2026</span>
+              <span class="release-version-pill">v0.9.1 &ndash; v0.9.4 &bull; LATEST</span>
             </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">21 Built-In Machines &bull; 5 New Lua Posts &bull; Per-Post Options &bull; Cut Safety</span>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">21 Built-In Machines &bull; Lua 5.4 Post Editor &bull; Chained Common-Line &bull; Cut Safety</span>
           </div>
           <p class="release-summary">
-            Expanded RotaryCAM to 21 built-in machine profiles (19 Lua 5.4 dialects) with five new industrial and shop-floor controller posts, declarative per-post options in the Machines window, and targeted lead-in, scribe, and common-line safety fixes.
+            Every built-in controller post now runs on RotaryCAM's Lua 5.4 engine with five new industrial and shop-floor controllers, per-post options in the Machines window, unified chained common-line cutting, one-swap sheet scribing, and broad lead-in and controller safety hardening.
           </p>
           <ul class="change-list">
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>5 New Controller Posts (21 Built-In Machines / 19 Lua Dialects):</strong> Added ready-to-cut Lua 5.4 posts for <a href="docs/machine-configuration/CommandCNC/" style="color: var(--cyan-arc);">CandCNC CommandCNC</a> (<code>.ngc</code>, <code>o&lt;touchoff&gt;</code>, DTHC IV/V <code>M67/M68 E0 Q###</code>, 4-axis <code>G93</code>), <a href="docs/machine-configuration/TorchmateVMD/" style="color: var(--cyan-arc);">Lincoln Electric Torchmate VMD</a> (<code>.fgc</code>, <code>G70/G71</code>, <code>M64/M65</code> AVHC, <code>M06 T1/T2</code>, round Y-wrap), <a href="docs/machine-configuration/MyPlasm/" style="color: var(--cyan-arc);">Proma MyPlasm PRO / CNC</a> (metric <code>G21</code>, <code>G92.38</code>, <code>M66 Q#</code> / <code>M0 S#</code> Arc-OK wait, <code>M666/M667 I</code>, 4-axis <code>A</code> unwind), <a href="docs/machine-configuration/HyperthermEIA/" style="color: var(--cyan-arc);">Hypertherm EDGE Connect / ProNest EIA</a> (<code>.cnc</code>, <code>G70/G71</code>, <code>M07/M08</code> or <code>RF/RT</code>, <code>M50/M51</code> THC, optional <code>G59 V###</code> cut chart &amp; <code>G43 D# X</code> kerf), and <a href="docs/machine-configuration/StarfireFangling/" style="color: var(--cyan-arc);">Starfire / Fangling Industrial EIA</a> (<code>.txt</code>, zero-drift <code>G91</code> incremental moves, 180&deg; split arcs, comment-free mode).
+                <strong>5 New Controller Posts (21 Built-In Machines / 19 Lua Dialects):</strong> Added ready-to-cut posts for <a href="docs/machine-configuration/CommandCNC/" style="color: var(--cyan-arc);">CandCNC CommandCNC</a>, <a href="docs/machine-configuration/TorchmateVMD/" style="color: var(--cyan-arc);">Lincoln Electric Torchmate VMD</a>, <a href="docs/machine-configuration/MyPlasm/" style="color: var(--cyan-arc);">Proma MyPlasm PRO / CNC</a>, <a href="docs/machine-configuration/HyperthermEIA/" style="color: var(--cyan-arc);">Hypertherm EDGE Connect / ProNest EIA</a>, and <a href="docs/machine-configuration/StarfireFangling/" style="color: var(--cyan-arc);">Starfire / Fangling Industrial EIA</a> (with zero-drift <code>G91</code> incremental moves and 180&deg; split arcs).
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>Per-Post Options in the Machines Window:</strong> Built-in and custom Lua posts can now declare checkboxes, dropdowns, and numeric fields right inside the Machines window, so you can tune THC hold, pierce dwell, kerf registers, or scribing syntax without editing post code.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>FlashCut &amp; Z-Less Scribe Safety:</strong> FlashCut now switches automatically to Mode 2 (<code>G631</code> + <code>G605</code>) for coaxial/pneumatic scribing and center-spotting so Mode 1 Cut2D never fires the plasma torch during scribe moves, bans <code>G38.2</code> on FlashCut, and routes coaxial scribes safely on Z-less MyPlasm Legacy 2D and UCCNC Neuron Lite profiles.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Cleaner Thin-Wall Lead-Ins, Small-Pipe Entries &amp; Internal Lead-Outs:</strong> Capped stationary-pierce lead-in scaling on fast thin sheet, capped rotational arc lead-in sweep on small-OD pipe to stop near-full-turn scrap wraps, and replaced internal rotational arc lead-outs with safe drop-slug exits.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Clean Curved Common-Line Seams &amp; Narrow Slots:</strong> Thick-kerf (<code>2.6 mm</code>) curved shared seams leave zero uncut bridge, and ultra-narrow slots pierce down the center line instead of angling sharply into the wall.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           NOVEMBER 25, 2026 (v0.9.3)
-           ================================================================ -->
-      <article class="release-entry" id="v0.9.3">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 25, 2026</span>
-              <span class="release-version-pill">v0.9.3</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Lua 5.4 Post Engine &bull; 14/14 Dialects &bull; Zero Gouges &bull; 25x Faster Rotary</span>
-          </div>
-          <p class="release-summary">
-            All 14 built-in controller dialects now run on RotaryCAM's sandboxed Lua 5.4 post-processor engine, paired with deep cut-geometry and real-controller hardening across all 6 stock profiles.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Sandboxed Lua 5.4 Post-Processor Engine &amp; Editor (All 14 Built-In Dialects):</strong> Every built-in CNC plasma controller dialect now runs natively on Lua 5.4 (<code>api_version = 1</code>). Inspect, clone, edit, validate, import, and export custom posts right inside the Machines window with live Flat, 4-Axis Rotary, and Pack Mode G-code previews and automatic grammar safety checks before saving. <a href="docs/custom-post-processors.html" style="color: var(--cyan-arc);">Read the Custom Post-Processors guide &rarr;</a>
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Real-Controller LinuxCNC QTPlasmaC &amp; grblHAL Hardening:</strong> Fixed LinuxCNC <code>M190 P0</code> default-material footer resets, kept <code>G41.1</code>/<code>G42.1</code> cutter compensation free of mid-contour <code>M62</code>/<code>M63</code> faults and concave-corner gouge alarms, ensured small holes always release <code>M63 P2</code> after <code>M5 $0</code>, and switched grblHAL pneumatic scribing to baked XY offsets without unsupported <code>G52</code>.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>No More Lead-In, Lead-Out, or Slit Gouges:</strong> Internal hole linear lead-outs now exit inward into the drop slug instead of nicking finished walls. Centerline slits cut straight without lateral lead-in marks, and nested flat parts sitting away from the sheet edge automatically switch from Edge-Start to a full-height inboard pierce.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Cleaner Channel, Angle, HSS, Zero-Bevel &amp; Common-Line Cuts:</strong> C-channel coped end cuts now run toe-to-toe in one clean pass with zero double-cutting. Angle and channel edge-notches keep pierces strictly on scrap and exit cleanly past free toes. Square/rect HSS cutouts drop cross-corner hairpin lead-ins, round/HSS zero-bevel tracks exact inner-wall curves, rotary cutouts eliminate kerf bowties, and rounded-corner common-line nests leave zero uncut bridges.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Zero Rotary Cable Windup &amp; Prior-Kerf Avoidance:</strong> Multi-station HSS cutouts stay tightly bounded around 0&deg; instead of winding the chuck 20+ turns across third-party dialects, with automatic zero-spin modulo-360&deg; resets on multi-sever sticks. Adjacent rotary severs now keep their pierce points clear of already-cut kerfs.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Smoother 14-Dialect Output &amp; 3D Simulator Accuracy:</strong> All 6 controller-kerf dialects emit clean <code>G41</code>/<code>G42</code>/<code>G40</code> paths, FireControl and UCCNC merge tiny collinear rotary micro-moves to stop buffer stutter on small pipe, and Channel/Angle corner radii now sit flush on the surface in the 3D cut simulator.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">IMPROVED</span>
-              <div class="change-content">
-                <strong>25x Faster Dense Rotary Cuts:</strong> Dense multi-turn helical and complex coped tube cuts now compile in under 1 second instead of ~24 seconds.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           NOVEMBER 24, 2026 (v0.9.2)
-           ================================================================ -->
-      <article class="release-entry" id="v0.9.2">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 24, 2026</span>
-              <span class="release-version-pill">v0.9.2</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Chained Common-Line &bull; One-Swap Scribing &bull; Tighter Plate Nests &bull; Cutout Chains</span>
-          </div>
-          <p class="release-summary">
-            Cleaner common-line cutting, tighter plate nests that save drop steel, and one-swap sheet scribing across multi-part jobs.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>True Chained Common-Line Cutting:</strong> Touching parts on flat plate now cut as one unified job instead of separate trimmed shapes. Internal dividing lines run first in long, straight passes while the plate stays locked together, followed by continuous outer perimeter cuts with fewer pierces and zero tiny sub-6 mm leftover stub cuts.
+                <strong>Built-In Lua 5.4 Post Editor &amp; Per-Post Options:</strong> Inspect, clone, edit, import, and export custom posts right inside the Machines window with live Flat, 4-Axis Rotary, and Pack Mode G-code previews plus automatic safety checks. Posts can now show checkboxes, dropdowns, and numeric fields directly in the Machines window so you can tune THC hold, pierce dwell, kerf registers, or scribing syntax without editing code. <a href="docs/custom-post-processors.html" style="color: var(--cyan-arc);">Read the Custom Post-Processors guide &rarr;</a>
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-new">NEW</span>
               <div class="change-content">
-                <strong>One-Swap Sheet Scribing &amp; Global Cut Order:</strong> Multi-part flat sheets now run all scribing and marking first while the plate is cold and rigid, then cut all internal holes and cutouts, and finish with outer perimeters. EasyScribe setups pause once per sheet instead of swapping consumables between parts.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">IMPROVED</span>
-              <div class="change-content">
-                <strong>Tighter, Faster 2D Plate Nesting:</strong> Fits more parts onto every sheet to save drop steel while nesting complex curved and multi-part batches much faster.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-new">NEW</span>
-              <div class="change-content">
-                <strong>Daisy-Chain &amp; Bridge Cutting Inside Cutouts:</strong> Small parts nested inside larger part cutouts can now daisy-chain and micro-bridge together to cut down on pierces and save consumables, while still finishing inside parts before the outer cutout drops loose.
+                <strong>True Chained Common-Line Cutting, One-Swap Scribing &amp; Cutout Chains:</strong> Touching parts on flat plate cut as one unified job (internal dividers first, then continuous outer perimeters with zero tiny stub cuts). Multi-part sheets run all scribing first so EasyScribe pauses once per sheet, small parts nested inside cutouts can daisy-chain and bridge to save pierces, and guillotine remnant crops stay clear of chain links.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-fix">FIXED</span>
               <div class="change-content">
-                <strong>Chain-Safe Remnant Crop Cuts &amp; Multi-Part Stability:</strong> Guillotine remnant crop cuts now automatically stay clear of daisy-chain connection lines and bridge webs so your torch never double-cuts a chain link, and large multi-part DXF/SVG batches with common-line cutting turned on load reliably without freezing.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- ================================================================
-           WEEK OF NOVEMBER 23, 2026 (v0.9.1)
-           ================================================================ -->
-      <article class="release-entry" id="v0.9.1">
-        <div class="release-marker"></div>
-        <div class="release-card">
-          <div class="release-meta">
-            <div class="release-date-wrap">
-              <span class="release-date">November 23, 2026</span>
-              <span class="release-version-pill">v0.9.1</span>
-            </div>
-            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Hardening Release &bull; Lead-Ins &amp; Contours &bull; Sheet Safety &bull; 14-Dialect Posts &bull; Pre-Release QA</span>
-          </div>
-          <p class="release-summary">
-            Focused shop-floor hardening across every profile, sheet pierce, and controller post-processor.
-          </p>
-          <ul class="change-list">
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Lead-In &amp; Contour Hardening Across All Profiles:</strong> Covers flat plate, round/rect HSS, angle iron, channel, and I-beam with rolling semi-circle center-pierce for True Hole, crater-safe spiral lead-ins, clean slot entries, and rotary seam-unwrap safety.
+                <strong>FlashCut, LinuxCNC QTPlasmaC &amp; grblHAL Real-Controller Safety:</strong> FlashCut automatically switches to Mode 2 (<code>G631</code> + <code>G605</code>) for scribing and center-spotting so Mode 1 never fires plasma during scribe moves, MyPlasm Legacy 2D and UCCNC Neuron Lite route coaxial scribes safely without Z moves, LinuxCNC fixes <code>M190 P0</code> resets and <code>G41.1</code>/<code>G42.1</code> gouge alarms, and grblHAL bakes scribe XY offsets cleanly without <code>G52</code>.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-fix">FIXED</span>
               <div class="change-content">
-                <strong>Flat-Sheet &amp; Pack-Mode Pierce Safety:</strong> Clamps 2D sheet-bounds pierces so high-speed lead-ins stay on steel, steers edge-starts clear of concave notches, and guards open slits.
+                <strong>Cleaner Lead-Ins, Lead-Outs, Common-Line Seams &amp; Narrow Slots:</strong> Capped fast thin-sheet stationary lead-ins and small-pipe rotational arc sweep, routed internal hole and cutout lead-outs safely into drop slugs, centered narrow-slot pierces, kept 2D pack pierces on steel, and eliminated thick-kerf curved common-line bridges.
               </div>
             </li>
             <li class="change-item">
               <span class="badge-tag badge-fix">FIXED</span>
               <div class="change-content">
-                <strong>Post-Processor Reliability:</strong> Coalesces <code>G93</code> micro-slivers, fixes 3D-ramp <code>M67</code> slowdowns, and enforces stricter controller modal hygiene across all 14 dialects.
-              </div>
-            </li>
-            <li class="change-item">
-              <span class="badge-tag badge-fix">FIXED</span>
-              <div class="change-content">
-                <strong>Pre-Release QA Hardening:</strong> Verified across all 65 shipped fixtures, all built-in machines and dialect sub-modes, 1D/2D pack mode, and cross-process determinism.
+                <strong>Cleaner Channel, Angle, HSS, Zero-Bevel &amp; 25x Faster Rotary Cuts:</strong> One-pass toe-to-toe C-channel copes, scrap-only angle/channel edge-notches, exact round/HSS zero-bevel inner-wall tracking, zero rotary cable windup on multi-station tubes, flush Channel/Angle corner radii in the 3D simulator, and dense multi-turn helical tube compiles in under 1 second.
               </div>
             </li>
           </ul>
