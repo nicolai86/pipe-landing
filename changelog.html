@@ -1009,7 +1009,7 @@
     <nav>
       <a href="./" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.9.3-BETA</span>
+        <span class="brand-tag">v0.9.4-BETA</span>
       </a>
       <div class="nav-links">
         <a href="./">Overview</a>
@@ -1058,11 +1058,11 @@
         </svg>
         Public Roadmap
       </a>
-      <a href="#upcoming" class="jump-pill">
+      <a href="#v0.9.4" class="jump-pill">
         <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
         </svg>
-        Release History (v0.9.3)
+        Release History (v0.9.4)
       </a>
     </div>
 
@@ -1134,7 +1134,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.3/RotaryCam-macOS-v0.9.3.dmg" class="download-btn" id="btn-macos">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-macOS-v0.9.4.dmg" class="download-btn" id="btn-macos">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1165,7 +1165,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.3/RotaryCam-Windows-v0.9.3.zip" class="download-btn" id="btn-windows">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-Windows-v0.9.4.zip" class="download-btn" id="btn-windows">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1196,7 +1196,7 @@
             </p>
           </div>
           <div>
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.3/RotaryCam-Linux-v0.9.3.zip" class="download-btn" id="btn-linux">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-Linux-v0.9.4.zip" class="download-btn" id="btn-linux">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
@@ -1254,7 +1254,7 @@
         <div class="roadmap-card-header">
           <div>
             <span class="roadmap-milestone-tag">v1.0 GA</span>
-            <div class="roadmap-card-title">Stable Core, Commercial Shop &amp; Custom Posts</div>
+            <div class="roadmap-card-title">Stable Core, Commercial Shop &amp; Sheet Indexing</div>
           </div>
           <span class="roadmap-status-pill">Production Target</span>
         </div>
@@ -1271,13 +1271,6 @@
           </div>
           <div class="roadmap-feat-item">
             <div class="roadmap-feat-num">02</div>
-            <div class="roadmap-feat-body">
-              <h3>20 Built-In Controller Profiles &amp; Custom Post Editor</h3>
-              <p>Factory support for 20 CNC controllers including CommandCNC, Torchmate VMD, MyPlasm, and Industrial EIA, plus a built-in editor for custom .rcpost.json post-processors.</p>
-            </div>
-          </div>
-          <div class="roadmap-feat-item">
-            <div class="roadmap-feat-num">03</div>
             <div class="roadmap-feat-body">
               <h3>Sheet Indexing (Oversized DXF Auto-Split)</h3>
               <p>Available to both <strong>Maker</strong> and <strong>Pro Shop</strong> licenses: automatically splits oversized 2D DXF/SVG parts that exceed your plasma table's travel into indexed tiles with registration marks and alignment holes so you can slide the sheet forward and finish cutting.</p>
@@ -1347,15 +1340,66 @@
   <main class="changelog-section">
     <div class="timeline-wrap">
       <!-- ================================================================
-           NOVEMBER 25, 2026 (v0.9.3)
+           NOVEMBER 26, 2026 (v0.9.4)
            ================================================================ -->
-      <article class="release-entry" id="v0.9.3">
+      <article class="release-entry" id="v0.9.4">
         <div class="release-marker"></div>
         <div class="release-card" style="border-color: rgba(6, 182, 212, 0.35);">
           <div class="release-meta">
             <div class="release-date-wrap">
+              <span class="release-date">November 26, 2026</span>
+              <span class="release-version-pill">v0.9.4 &bull; LATEST</span>
+            </div>
+            <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">21 Built-In Machines &bull; 5 New Lua Posts &bull; Per-Post Options &bull; Cut Safety</span>
+          </div>
+          <p class="release-summary">
+            Expanded RotaryCAM to 21 built-in machine profiles (19 Lua 5.4 dialects) with five new industrial and shop-floor controller posts, declarative per-post options in the Machines window, and targeted lead-in, scribe, and common-line safety fixes.
+          </p>
+          <ul class="change-list">
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>5 New Controller Posts (21 Built-In Machines / 19 Lua Dialects):</strong> Added ready-to-cut Lua 5.4 posts for <a href="docs/machine-configuration/CommandCNC/" style="color: var(--cyan-arc);">CandCNC CommandCNC</a> (<code>.ngc</code>, <code>o&lt;touchoff&gt;</code>, DTHC IV/V <code>M67/M68 E0 Q###</code>, 4-axis <code>G93</code>), <a href="docs/machine-configuration/TorchmateVMD/" style="color: var(--cyan-arc);">Lincoln Electric Torchmate VMD</a> (<code>.fgc</code>, <code>G70/G71</code>, <code>M64/M65</code> AVHC, <code>M06 T1/T2</code>, round Y-wrap), <a href="docs/machine-configuration/MyPlasm/" style="color: var(--cyan-arc);">Proma MyPlasm PRO / CNC</a> (metric <code>G21</code>, <code>G92.38</code>, <code>M66 Q#</code> / <code>M0 S#</code> Arc-OK wait, <code>M666/M667 I</code>, 4-axis <code>A</code> unwind), <a href="docs/machine-configuration/HyperthermEIA/" style="color: var(--cyan-arc);">Hypertherm EDGE Connect / ProNest EIA</a> (<code>.cnc</code>, <code>G70/G71</code>, <code>M07/M08</code> or <code>RF/RT</code>, <code>M50/M51</code> THC, optional <code>G59 V###</code> cut chart &amp; <code>G43 D# X</code> kerf), and <a href="docs/machine-configuration/StarfireFangling/" style="color: var(--cyan-arc);">Starfire / Fangling Industrial EIA</a> (<code>.txt</code>, zero-drift <code>G91</code> incremental moves, 180&deg; split arcs, comment-free mode).
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-new">NEW</span>
+              <div class="change-content">
+                <strong>Per-Post Options in the Machines Window:</strong> Built-in and custom Lua posts can now declare checkboxes, dropdowns, and numeric fields right inside the Machines window, so you can tune THC hold, pierce dwell, kerf registers, or scribing syntax without editing post code.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>FlashCut &amp; Z-Less Scribe Safety:</strong> FlashCut now switches automatically to Mode 2 (<code>G631</code> + <code>G605</code>) for coaxial/pneumatic scribing and center-spotting so Mode 1 Cut2D never fires the plasma torch during scribe moves, bans <code>G38.2</code> on FlashCut, and routes coaxial scribes safely on Z-less MyPlasm Legacy 2D and UCCNC Neuron Lite profiles.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Cleaner Thin-Wall Lead-Ins, Small-Pipe Entries &amp; Internal Lead-Outs:</strong> Capped stationary-pierce lead-in scaling on fast thin sheet, capped rotational arc lead-in sweep on small-OD pipe to stop near-full-turn scrap wraps, and replaced internal rotational arc lead-outs with safe drop-slug exits.
+              </div>
+            </li>
+            <li class="change-item">
+              <span class="badge-tag badge-fix">FIXED</span>
+              <div class="change-content">
+                <strong>Clean Curved Common-Line Seams &amp; Narrow Slots:</strong> Thick-kerf (<code>2.6 mm</code>) curved shared seams leave zero uncut bridge, and ultra-narrow slots pierce down the center line instead of angling sharply into the wall.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- ================================================================
+           NOVEMBER 25, 2026 (v0.9.3)
+           ================================================================ -->
+      <article class="release-entry" id="v0.9.3">
+        <div class="release-marker"></div>
+        <div class="release-card">
+          <div class="release-meta">
+            <div class="release-date-wrap">
               <span class="release-date">November 25, 2026</span>
-              <span class="release-version-pill">v0.9.3 &bull; LATEST</span>
+              <span class="release-version-pill">v0.9.3</span>
             </div>
             <span class="mono" style="font-size: 0.78rem; color: var(--text-dim);">Lua 5.4 Post Engine &bull; 14/14 Dialects &bull; Zero Gouges &bull; 25x Faster Rotary</span>
           </div>
@@ -1923,11 +1967,11 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.3-BETA';
+    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.4-BETA';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
-    var ver = (window.ROTARYCAM_VERSION || '0.9.3').replace(/^v/, '');
+    var ver = (window.ROTARYCAM_VERSION || '0.9.4').replace(/^v/, '');
     var base = 'https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v' + ver;
     var map = {
       'btn-macos': base + '/RotaryCam-macOS-v' + ver + '.dmg',
