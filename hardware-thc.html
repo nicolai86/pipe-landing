@@ -7,7 +7,7 @@
   <!-- Primary SEO Meta -->
   <title>Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM</title>
   <meta name="title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
-  <meta name="description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, corner freeze, and 4-axis rotary cam." />
+  <meta name="description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, active corner and small-hole THC, and 4-axis rotary cam." />
   <meta name="author" content="Raphael Randschau" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://rotarycam.app/hardware-thc.html" />
@@ -18,7 +18,7 @@
   <meta property="og:url" content="https://rotarycam.app/hardware-thc.html" />
   <meta property="og:site_name" content="RotaryCAM" />
   <meta property="og:title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
-  <meta property="og:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, corner freeze, and 4-axis rotary cam." />
+  <meta property="og:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, active corner and small-hole THC, and 4-axis rotary cam." />
   <meta property="og:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
   <meta property="og:image:alt" content="RotaryCAM Hardware v2 10 kHz Z-Axis Torch Height Controller PCB" />
 
@@ -26,7 +26,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://rotarycam.app/hardware-thc.html" />
   <meta name="twitter:title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
-  <meta name="twitter:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, corner freeze, and 4-axis rotary cam." />
+  <meta name="twitter:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, active corner and small-hole THC, and 4-axis rotary cam." />
   <meta name="twitter:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
 
   <!-- Favicon -->
@@ -38,7 +38,7 @@
     "@context": "https://schema.org",
     "@type": "Product",
     "name": "RotaryCAM Smart Z-Axis Hardware THC & Motion Interceptor (Hardware v2)",
-    "description": "Standalone 10,000 Hz (100 µs) RS-422 differential Step/Dir Z-axis plasma Torch Height Controller with 2.0 ms active in-cut ohmic collision escape, ~40 ns hardware 6-axis pass-through, macro-free XY(A) corner freeze, 4-axis rotary tube cam feedforward, passive Hypertherm SYNC bus snooping, and 20 KB 10 kHz flight recorder.",
+    "description": "Standalone 10,000 Hz (100 µs) RS-422 differential Step/Dir Z-axis plasma Torch Height Controller with 2.0 ms active in-cut ohmic collision escape, ~40 ns hardware 6-axis pass-through, macro-free active corner and small-hole THC (velocity feedforward, apex taper, and chord-curvature hole clamp), 4-axis rotary tube cam feedforward, passive Hypertherm SYNC bus snooping, and 20 KB 10 kHz flight recorder.",
     "brand": {
       "@type": "Brand",
       "name": "RotaryCAM"
@@ -2206,7 +2206,7 @@
           </div>
           <div class="telemetry-metric cyan">
             <div class="telemetry-val">2.0 ms <span>Trigger</span></div>
-            <div class="telemetry-lbl">In-Cut Ohmic Collision Trigger (Overrides Corner Freezes)</div>
+            <div class="telemetry-lbl">In-Cut Ohmic Collision Trigger (Overrides Every Hold)</div>
           </div>
           <div class="telemetry-metric emerald">
             <div class="telemetry-val">&lt; 0.002&Prime; <span>(&lt; 0.3 V)*</span></div>
@@ -2282,10 +2282,10 @@
                 <td class="col-smart"><span class="good-pill">2.0 ms ohmic trigger</span>: overrides freezes, instantly lifts torch (+1.0 mm @ 150 IPM on ClearPath 2311S*) &amp; holds feed</td>
               </tr>
               <tr>
-                <td class="row-label">Corners &amp; Old G-Code</td>
-                <td><span class="bad-pill">Dives on slowdown</span> unless every file has perfect M62/M63 macros</td>
+                <td class="row-label">Corners, Holes &amp; Old G-Code</td>
+                <td><span class="bad-pill">Dives on slowdown</span> unless every file disables THC on corners &amp; small holes</td>
                 <td>Requires custom CNC velocity analog/serial integration</td>
-                <td class="col-smart"><span class="good-pill">Auto-learns cruise speed</span>: locks Z below 80% feed or 0.08–0.10 G decel</td>
+                <td class="col-smart"><span class="good-pill">Active corner &amp; hole THC</span>: velocity feedforward, 50%&rarr;35% apex taper, and chord-curvature hole clamp (0.40 mm floor). Never disable THC on corners or bolt holes.</td>
               </tr>
               <tr>
                 <td class="row-label">Motors &amp; Retrofit Cost</td>
@@ -2318,7 +2318,7 @@
             <span class="crash-badge">2.0 ms Silicon Trigger</span>
             <h3>Active In-Cut Ohmic Collision Escape</h3>
             <p>
-              Voltage THCs go blind during corner freezes and kerf crossings. Tap one wire off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) and the board overrides every freeze, pulling the torch up in 2.0 ms when a tipped slug hits the shield.
+              Voltage THCs go blind during holds and kerf crossings. Tap one wire off your 24V ohmic shield (<code class="mono-inline">J3-2</code>) and the board overrides every hold, pulling the torch up in 2.0 ms when a tipped slug hits the shield.
             </p>
             <div class="crash-stat-footer">
               0.001&Prime; travel @ 30 IPM &bull; +0.500&Prime; (12.7 mm) lift cap
@@ -2327,10 +2327,10 @@
 
           <!-- Card 2 -->
           <article class="crash-card">
-            <span class="crash-badge cyan">Zero Macros Needed</span>
-            <h3>Macro-Free Corner, Hole &amp; Kerf Anti-Dive</h3>
+            <span class="crash-badge cyan">No Disable Macros</span>
+            <h3>Active Corner &amp; Small-Hole THC (No Lock Needed)</h3>
             <p>
-              Watches your live step pulses and locks downward Z whenever speed drops below 80% of cruise or decel hits 0.08–0.10 G. You need zero post-processor macros or M-codes, even on old G-code.
+              No need to turn THC off on corners or small bolt holes. Live step counters run zero-calibration velocity feedforward, a progressive 50%&rarr;35% corner apex taper, and a 1.0 mm chord-curvature hole clamp (0.40 mm max dive floor) while keeping full upward tracking live.
             </p>
             <div class="crash-stat-footer">
               Up to 295 IPM UP (ClearPath 2311S) / 75 IPM DOWN &bull; Auto-adapts to FRO
@@ -2784,12 +2784,12 @@
             </div>
             <h3>Adds X/Y Speed Tap &amp; 2.0 ms Ohmic Escape</h3>
             <p style="font-size: 0.87rem; color: var(--text-muted);">
-              Adds M-code-free corner freeze and mid-cut tip-up collision escape:
+              Adds active corner &amp; small-hole tracking and mid-cut tip-up collision escape:
             </p>
             <ul class="tier-list">
-              <li><span class="plug-bullet">+</span><span><strong>[INPUT X, Y] &rarr; [OUTPUT X, Y]:</strong> Pass X/Y through in ~40 ns (pure silicon) so the board reads live 2D speed for corner locks.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>[INPUT X, Y] &rarr; [OUTPUT X, Y]:</strong> Pass X/Y through in ~40 ns (pure silicon) so the board tracks live 2D speed and curvature for active corner and small-hole THC.</span></li>
               <li><span class="plug-bullet">+</span><span><strong>24V Ohmic Tee (J3-2):</strong> Tap off your 24V ohmic shield line for 2.0 ms tip-up retracts.</span></li>
-              <li><span class="plug-bullet">+</span><span><strong>Optional Signals:</strong> Wire <code class="mono-inline">TARGET VIN</code> for Hybrid SAV, <code class="mono-inline">THC ENA</code> for CAM freeze, and <code class="mono-inline">WATCHDOG</code> for 50 ms E-stop drop.</span></li>
+              <li><span class="plug-bullet">+</span><span><strong>Optional Signals:</strong> Wire <code class="mono-inline">TARGET VIN</code> for Hybrid SAV, <code class="mono-inline">THC ENA</code> only if you want manual CAM holds, and <code class="mono-inline">WATCHDOG</code> for 50 ms E-stop drop.</span></li>
             </ul>
           </div>
 
@@ -2815,13 +2815,13 @@
         <div class="zero-sw-callout">
           <div class="zero-sw-main">
             <span class="crash-badge" style="margin-bottom: 0.1rem;">Inline Z Step/Dir Control</span>
-            <h3>Zero CNC THC Pin Mapping. Hardware Corner Freeze Built In.</h3>
+            <h3>Zero CNC THC Pin Mapping. Zero Corner or Small-Hole Macros.</h3>
             <p>
-              You never map THC Up/Down pins in Mach3/4, MASSO, Centroid Acorn, LinuxCNC, FlashCut, or simCNC. Because the board reads your X/Y step rate in hardware, corner anti-dive works out of the box too. On flat sheet and round pipe in Pure SAV mode, you need zero <code class="mono-inline">0-10V</code> DAC wires and zero SheetCAM M-codes.
+              You never map THC Up/Down pins in Mach3/4, MASSO, Centroid Acorn, LinuxCNC, FlashCut, or simCNC. Because the board reads your X/Y step rate and path curvature in silicon, active corner and small-hole THC keeps tracking warped plate without locking out. On flat sheet and round pipe in Pure SAV mode, you need zero <code class="mono-inline">0-10V</code> DAC wires and zero corner or small-hole M-codes.
             </p>
           </div>
           <div class="zero-sw-footnote">
-            <strong>Optional Add-On (Small Bolt Holes &amp; Square/Rect HSS):</strong> Wire one <code class="mono-inline">THC ENA</code> output from your controller to freeze Z on small holes below cruise speed or 4-axis square/rect HSS, using the CAM freeze rule built into RotaryCAM or standard in SheetCAM.
+            <strong>No <code class="mono-inline">THC ENA</code> Wire Needed for Corners or Small Bolt Holes:</strong> Leave THC enabled through tight corners and small holes. Only wire <code class="mono-inline">THC ENA</code> if you want your controller to command a manual hold on specialty 4-axis structural jobs.
           </div>
         </div>
 
@@ -2953,7 +2953,7 @@
             </div>
             <div class="rotary-feat-item">
               <h4><span class="mono" style="color: var(--cyan-arc);">02</span> True Surface Speed (<code class="mono-inline">v_surface(&theta;)</code>)</h4>
-              <p>Calculates real torch speed over the tube skin at 10 kHz to drive corner anti-dive.</p>
+              <p>Calculates real torch speed over the tube skin at 10 kHz to drive velocity feedforward and corner taper.</p>
             </div>
             <div class="rotary-feat-item">
               <h4><span class="mono" style="color: var(--emerald-cut);">03</span> Corner Roll vs. Kerf Filter</h4>
@@ -3023,7 +3023,7 @@ Downloading 1,024 frames (20,480 B @ 10.0 kHz) [██████████�
 Trigger: <span class="t-amber">CUT_END (ENA_DROP)</span>  Window: 102.4 ms  Unit: MM
 Arc Voltage : Min 121.8 V | Mean <span class="t-cyan">123.4 V</span> | Max 126.9 V (Target 123.3 V)
 Z Speed     : Max UP 94.2 mm/s (222 IPM) | Max DOWN -18.4 mm/s (-43 IPM)
-Protections : CornerFreeze=18.2ms | KerfAntiDive=6.5ms | OhmicEscape=0.0ms
+Protections : ApexTaper=18.2ms | HoleClamp=0.0ms | KerfAntiDive=6.5ms | OhmicEscape=0.0ms
 
  127V ┤                   ╭──╮  <span class="t-amber">← Kerf crossing frozen (667 V/s dV/dt)</span>
  125V ┤                 ╭─╯  ╰─╮
@@ -3116,7 +3116,7 @@ Programming &amp; readback verifying 256B chunks... <span class="t-pass">COMMITT
               </div>
               <div class="spec-row">
                 <div class="spec-key">Ohmic &amp; Anti-Dive</div>
-                <div class="spec-val">2.0 ms ohmic retract (+1.0 mm lift, 150 ms Feedhold); 667 V/s kerf hold; &lt;80% speed corner lock</div>
+                <div class="spec-val">2.0 ms ohmic retract (+1.0 mm lift, 150 ms Feedhold); 667 V/s kerf hold; active corner &amp; small-hole THC (vel FF, 50%&rarr;35% apex taper, 1.0 mm chord hole clamp / 0.40 mm floor)</div>
               </div>
               <div class="spec-row">
                 <div class="spec-key">Rotary Cam (XYZA)</div>
