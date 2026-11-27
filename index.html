@@ -49,12 +49,12 @@
     "offers": [
       {
         "@type": "Offer",
-        "name": "Public Beta (30-Day Rolling Offline Evaluation)",
+        "name": "30-Day Free Trial (Offline Evaluation)",
         "price": "0",
         "priceCurrency": "USD",
         "availability": "https://schema.org/InStock",
         "url": "https://rotarycam.app/#download",
-        "description": "Free 30-day offline evaluation with full 3D STEP assembly inspection, multi-file 2D DXF/SVG flat-sheet cutting with 2-point snap scaling, Round/Square/Flat G-code across 19 controller dialects (21 profiles) in native G20/G21, Zero-Bevel saddle compensation, 1,025 cut charts across 3 torch families + CSV import/export, and up to 5 parts/stick & 5 bends/file."
+        "description": "30-day free offline trial with full 3D STEP assembly inspection, multi-file 2D DXF/SVG flat-sheet cutting with 2-point snap scaling, Round/Square/Flat G-code across 19 controller dialects (21 profiles) in native G20/G21, Zero-Bevel saddle compensation, 1,025 cut charts across 3 torch families + CSV import/export, and up to 5 parts/stick & 5 bends/file."
       },
       {
         "@type": "Offer",
@@ -1313,6 +1313,62 @@
       text-decoration: underline;
     }
 
+    .ctrl-inline-link {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(6, 182, 212, 0.45);
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .ctrl-inline-link:hover {
+      color: var(--cyan-arc);
+      border-bottom-color: var(--cyan-arc);
+    }
+
+    .compare-strip {
+      margin-top: 1.25rem;
+      background: rgba(20, 23, 29, 0.72);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 1.15rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .compare-strip-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.45rem 0.9rem;
+    }
+
+    .compare-strip-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .compare-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.36rem 0.75rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      font-size: 0.78rem;
+      text-decoration: none;
+      transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .compare-pill:hover {
+      border-color: var(--cyan-arc);
+      color: var(--cyan-arc);
+      background: rgba(6, 182, 212, 0.08);
+    }
+
     /* Checkout & Claim License Modal */
     .lic-modal-card {
       max-width: 620px;
@@ -1549,6 +1605,93 @@
         padding: 1.25rem;
       }
     }
+    .pricing-guarantee-note {
+      font-size: 0.75rem;
+      line-height: 1.45;
+      color: var(--emerald-cut);
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 6px;
+      padding: 0.45rem 0.65rem;
+      text-align: center;
+    }
+    .pricing-guarantee-note strong {
+      color: #fff;
+    }
+    .pricing-guarantee-note a {
+      color: inherit;
+      text-decoration: underline;
+    }
+    .mobile-send-link {
+      display: none;
+      margin-top: 0.35rem;
+      padding: 0.75rem 0.9rem;
+      background: rgba(20, 23, 29, 0.9);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+    .mobile-send-title {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .mobile-send-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .mobile-send-btn {
+      flex: 1 1 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 6px;
+      background: rgba(6, 182, 212, 0.14);
+      border: 1px solid rgba(6, 182, 212, 0.45);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .mobile-send-btn:hover {
+      background: rgba(6, 182, 212, 0.24);
+      border-color: var(--cyan-arc);
+    }
+    .mobile-copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.55rem 0.85rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .mobile-copy-btn:hover {
+      border-color: var(--plasma-amber);
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .mobile-send-link {
+        display: flex;
+      }
+      .os-picker-menu {
+        min-width: min(340px, calc(100vw - 3rem));
+      }
+    }
     @media (max-width: 600px) {
       .badge {
         flex-wrap: wrap;
@@ -1567,7 +1710,7 @@
     <nav>
       <a href="#" class="brand">
         <span>RotaryCAM</span>
-        <span class="brand-tag">v0.9.4-BETA</span>
+        <span class="brand-tag">v0.9.4</span>
       </a>
       <div class="nav-links">
         <a href="#showcase">Showcase</a>
@@ -1581,7 +1724,7 @@
         <a href="build-guide.html">Build Guide</a>
         <a href="changelog.html">Changelog</a>
       </div>
-      <a href="#download" class="nav-cta">Download Beta</a>
+      <a href="#download" class="nav-cta">30-Day Free Trial</a>
     </nav>
   </header>
 
@@ -1596,7 +1739,7 @@
         <span>•</span>
         <span class="mono" style="color: var(--plasma-amber);">4-AXIS TUBE &amp; 2D PLATE CAM</span>
       </div>
-      <h1>Tube Frames &amp; Flat Plate In. <span>Cut-Ready Plasma <span style="white-space: nowrap;">G-Code</span> Out.</span></h1>
+      <h1>4-Axis Rotary Tube &amp; Flat Plate <span>CNC Plasma CAM.</span></h1>
       <p>
         Drop 3D STEP tube assemblies or multi-file DXF/SVG plate kits straight in. Runs 100% offline in your shop with Matryoshka sheet nesting, common-line cuts, zero-gap saddles, and cut-ready G-code.
       </p>
@@ -1604,29 +1747,29 @@
       <div class="cta-group" id="download">
         <div style="display: flex; gap: 0.7rem; flex-wrap: wrap; align-items: center;">
           <div class="split-download" id="hero-split-download">
-            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-macOS-v0.9.4.dmg" class="primary-btn" id="hero-download-btn">
+            <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-Windows-v0.9.4.zip" class="primary-btn" id="hero-download-btn">
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
               </svg>
-              <span id="hero-download-text">Download Free Beta</span>
+              <span id="hero-download-text">Download 30-Day Free Trial</span>
             </a>
             <button type="button" class="split-toggle-btn" id="os-picker-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Choose operating system">
-              <span id="os-picker-label">macOS</span>
+              <span id="os-picker-label">Windows</span>
               <span aria-hidden="true">▾</span>
             </button>
             <div class="os-picker-menu" id="os-picker-menu" role="menu">
-              <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-macOS-v0.9.4.dmg" class="platform-chip active" id="chip-macos" onclick="selectPlatform('macos', event)" style="padding: 0.6rem 0.85rem; justify-content: space-between;">
-                <span>🍎 macOS (Apple Silicon)</span><span style="color: var(--text-dim);">.dmg</span>
-              </a>
-              <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-Windows-v0.9.4.zip" class="platform-chip" id="chip-windows" onclick="selectPlatform('windows', event)" style="padding: 0.6rem 0.85rem; justify-content: space-between;">
+              <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-Windows-v0.9.4.zip" class="platform-chip active" id="chip-windows" onclick="selectPlatform('windows', event)" style="padding: 0.6rem 0.85rem; justify-content: space-between;">
                 <span>🪟 Windows (64-bit)</span><span style="color: var(--text-dim);">.zip</span>
+              </a>
+              <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-macOS-v0.9.4.dmg" class="platform-chip" id="chip-macos" onclick="selectPlatform('macos', event)" style="padding: 0.6rem 0.85rem; justify-content: space-between;">
+                <span>🍎 macOS (Apple Silicon)</span><span style="color: var(--text-dim);">.dmg</span>
               </a>
               <a href="https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-Linux-v0.9.4.zip" class="platform-chip" id="chip-linux" onclick="selectPlatform('linux', event)" style="padding: 0.6rem 0.85rem; justify-content: space-between;">
                 <span>🐧 Linux (64-bit)</span><span style="color: var(--text-dim);">.zip</span>
               </a>
               <div class="platform-notes-box" id="platform-run-notes" style="margin-top: 0.2rem;">
-                <div id="note-macos"><strong>Mac install:</strong> Drag <code>RotaryCAM.app</code> to Applications, then Right-click &rarr; Open on first launch.</div>
-                <div id="note-windows" style="display: none;"><strong>Windows:</strong> On SmartScreen, click <em>More info</em> &rarr; <em>Run anyway</em>.</div>
+                <div id="note-windows"><strong>Windows:</strong> Extract the <code>.zip</code> and launch <code>RotaryCAM.exe</code> (Authenticode signed).</div>
+                <div id="note-macos" style="display: none;"><strong>Mac install:</strong> Drag <code>RotaryCAM.app</code> to Applications, then Right-click &rarr; Open on first launch.</div>
                 <div id="note-linux" style="display: none;"><strong>Linux:</strong> Extract archive and run <code>chmod +x RotaryCAM</code>.</div>
               </div>
               <a href="changelog.html#downloads" class="mono" style="font-size: 0.76rem; color: var(--plasma-amber); text-decoration: none; padding: 0.25rem 0.25rem 0;">
@@ -1642,7 +1785,17 @@
           </a>
         </div>
 
-        <div class="sub-cta mono" style="text-align: left; margin-top: 0.2rem;">Free 30-day offline beta &bull; $199 Maker / $399 Pro forever</div>
+        <div class="sub-cta mono" style="text-align: left; margin-top: 0.2rem;">30-Day Free Trial (100% offline) &bull; $199 Maker / $399 Pro forever</div>
+
+        <div class="mobile-send-link" id="mobile-send-link">
+          <div class="mobile-send-title">Browsing on your phone? Save the installer for your shop PC:</div>
+          <div class="mobile-send-actions">
+            <a href="mailto:?subject=RotaryCAM%2030-Day%20Free%20Trial%20Download%20%2B%20Sample%20G-Code&body=RotaryCAM%20v0.9.4%3A%2030-Day%20Free%20Trial%20(100%25%20Offline)%0A%0ADownload%20for%20your%20shop%20PC%3A%0AWindows%20(64-bit)%3A%20https%3A%2F%2Frotarycam-app.s3.us-east-2.amazonaws.com%2Freleases%2Fv0.9.4%2FRotaryCam-Windows-v0.9.4.zip%0AmacOS%20(Apple%20Silicon)%3A%20https%3A%2F%2Frotarycam-app.s3.us-east-2.amazonaws.com%2Freleases%2Fv0.9.4%2FRotaryCam-macOS-v0.9.4.dmg%0ALinux%20(64-bit)%3A%20https%3A%2F%2Frotarycam-app.s3.us-east-2.amazonaws.com%2Freleases%2Fv0.9.4%2FRotaryCam-Linux-v0.9.4.zip%0A%0ASample%20G-Code%20%26%20Controller%20Guides%3A%20https%3A%2F%2Frotarycam.app%2Fdocs%2Fmachine-configuration.html%0ADocs%20%26%20Tutorials%3A%20https%3A%2F%2Frotarycam.app%2Fdocs%2F%0A" class="mobile-send-btn" id="mobile-email-link">
+              ✉️ Email Yourself the Download Link + Sample G-Code
+            </a>
+            <button type="button" class="mobile-copy-btn" id="mobile-copy-link">Copy Link</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -2083,13 +2236,14 @@
           <h3 style="margin-bottom: 0.85rem;">19 CNC Plasma Dialects (21 Profiles)</h3>
           <p style="margin-bottom: 1rem;">Native touch-off probing, THC locks, and rotary macros (2 verified, 19 beta):</p>
           <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.82rem;" class="mono">
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--emerald-cut); font-weight: 700;">[Verified]</span> <strong>CSLab SimCNC:</strong> 4D speed scaling, THC lock &amp; current ramp</li>
-            <li style="color: var(--text);"><span style="color: var(--emerald-cut); font-weight: 700;">[Verified]</span> <strong>FlashCut CNC:</strong> M50/M51 touch-off &amp; G602/G603 anti-dive</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <strong>LinuxCNC QTPlasmaC &amp; CommandCNC:</strong> DTHC, 2D/3D/Rotary</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <strong>Torchmate VMD, MyPlasm &amp; FireControl:</strong> AVHC &amp; Y-wrap</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <strong>Hypertherm EDGE &amp; Starfire/Fangling:</strong> Industrial EIA</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <strong>Mach4, Mach3, MASSO G3 &amp; Centroid Acorn:</strong> ESS, G200 &amp; G93</li>
-            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <strong>WinCNC, UCCNC, grblHAL, Eding &amp; PlanetCNC:</strong> Touch-off &amp; G93</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--emerald-cut); font-weight: 700;">[Verified]</span> <a href="docs/machine-configuration/SimCNC/" class="ctrl-inline-link">CSLab SimCNC</a>: 4D speed scaling, THC lock &amp; current ramp</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--emerald-cut); font-weight: 700;">[Verified]</span> <a href="docs/machine-configuration/FlashCut/" class="ctrl-inline-link">FlashCut CNC</a>: M50/M51 touch-off &amp; G602/G603 anti-dive</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <a href="docs/machine-configuration/LinuxCNC/" class="ctrl-inline-link">LinuxCNC QTPlasmaC</a> &amp; <a href="docs/machine-configuration/CommandCNC/" class="ctrl-inline-link">CommandCNC</a>: DTHC, 2D/3D/Rotary</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <a href="docs/machine-configuration/TorchmateVMD/" class="ctrl-inline-link">Torchmate VMD</a>, <a href="docs/machine-configuration/MyPlasm/" class="ctrl-inline-link">MyPlasm</a> &amp; <a href="docs/machine-configuration/FireControl/" class="ctrl-inline-link">FireControl</a>: AVHC &amp; Y-wrap</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <a href="docs/machine-configuration/HyperthermEIA/" class="ctrl-inline-link">Hypertherm EDGE</a> &amp; <a href="docs/machine-configuration/StarfireFangling/" class="ctrl-inline-link">Starfire/Fangling</a>: Industrial EIA</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <a href="docs/machine-configuration/Mach4/" class="ctrl-inline-link">Mach4</a>, <a href="docs/machine-configuration/Mach3/" class="ctrl-inline-link">Mach3</a>, <a href="docs/machine-configuration/MASSO/" class="ctrl-inline-link">MASSO G3</a> &amp; <a href="docs/machine-configuration/Acorn/" class="ctrl-inline-link">Centroid Acorn</a>: ESS, G200 &amp; G93</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--plasma-amber); font-weight: 700;">[Beta]</span> <a href="docs/machine-configuration/WinCNC/" class="ctrl-inline-link">WinCNC</a>, <a href="docs/machine-configuration/UCCNC/" class="ctrl-inline-link">UCCNC</a>, <a href="docs/machine-configuration/grblHAL/" class="ctrl-inline-link">grblHAL</a>, <a href="docs/machine-configuration/EdingCNC/" class="ctrl-inline-link">EdingCNC</a> &amp; <a href="docs/machine-configuration/PlanetCNC/" class="ctrl-inline-link">PlanetCNC</a>: Touch-off &amp; G93</li>
+            <li style="color: var(--text);"><span style="color: var(--cyan-arc);">▸</span> <span style="color: var(--cyan-arc); font-weight: 700;">[Guides]</span> <a href="docs/machine-configuration/GenericG94/" class="ctrl-inline-link">Portable RS-274 (G94)</a> &amp; <a href="docs/machine-configuration/Scribing/" class="ctrl-inline-link">EasyScribe / Air-Scribe</a></li>
           </ul>
         </div>
         <div class="pill-list mono" style="margin-top: 1.25rem;">
@@ -2263,7 +2417,7 @@
       <div class="mono" style="font-size: 0.85rem; color: var(--text-muted);">
         <span style="color: var(--plasma-amber);">100% Offline Desktop Builds:</span> macOS .dmg (RotaryCAM.app) • Windows x64 (RotaryCAM.exe) • Linux x64 (RotaryCAM) • Built-In rotarycam-mcp Local AI Server
       </div>
-      <a href="#download" class="nav-cta mono" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">Download Beta →</a>
+      <a href="#download" class="nav-cta mono" style="font-size: 0.85rem; padding: 0.4rem 0.85rem;">30-Day Free Trial &rarr;</a>
     </div>
   </section>
 
@@ -2322,17 +2476,17 @@
 
     <!-- 3-Tier Pricing Cards -->
     <div class="pricing-grid">
-      <!-- Card 1: Public Beta -->
+      <!-- Card 1: 30-Day Free Trial -->
       <div class="pricing-card">
         <div>
           <div class="pricing-tier-meta">
-            <span class="pricing-tier-tag" style="color: var(--text-muted);">30-Day Rolling Eval</span>
+            <span class="pricing-tier-tag" style="color: var(--text-muted);">30-Day Offline Trial</span>
             <span class="pricing-save-pill" style="background: rgba(255,255,255,0.05); border-color: var(--surface-border); color: var(--text-muted);">MACOS • WIN • LINUX</span>
           </div>
-          <h3>Public Beta</h3>
+          <h3>30-Day Free Trial</h3>
           <div class="pricing-price-row">
             <span class="pricing-price">$0</span>
-            <span class="pricing-cadence">30-day offline eval</span>
+            <span class="pricing-cadence">30-day offline trial</span>
           </div>
           <p class="pricing-subnote">
             Test 3D STEP frames and 2D DXF/SVG kits live on your table before buying.
@@ -2349,7 +2503,7 @@
         </div>
 
         <div class="pricing-cta-wrap">
-          <a href="#download" class="secondary-btn pricing-cta">Download Free Beta</a>
+          <a href="#download" class="secondary-btn pricing-cta">Download 30-Day Free Trial</a>
           <div class="mono" style="font-size: 0.74rem; color: var(--text-dim); text-align: center;">No credit card required</div>
         </div>
       </div>
@@ -2375,7 +2529,7 @@
             <li><span class="pricing-check">✓</span><span><strong>Perpetual Offline Key</strong> removes the 30-day clock forever</span></li>
             <li><span class="pricing-check">✓</span><span><strong>1 Year Updates</strong> (<span class="mono">$59/yr</span> optional in Year 2+)</span></li>
             <li><span class="pricing-check">✓</span><span><strong>2 Computers</strong> (Office CAD + Shop Table PC)</span></li>
-            <li><span class="pricing-check">✓</span><span>Everything in Beta across all <strong>19 controllers (21 profiles)</strong> in <strong>G20 / G21</strong></span></li>
+            <li><span class="pricing-check">✓</span><span>Everything in the Free Trial across all <strong>19 controllers (21 profiles)</strong> in <strong>G20 / G21</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>Unlimited Manual Nesting on Maker</strong> (drag, 15&deg; rotate, flip, move pierce) + auto-nest up to <strong>10 flat / 5 rotary parts</strong></span></li>
             <li><span class="pricing-check">✓</span><span><strong>2D Tube Wrap &amp; Plate Controls:</strong> Wrap DXF/SVG &amp; single-stroke <code class="mono">DXF TEXT</code> onto pipe/HSS, Open L/R kerf, Edge-Start, Kerf-Crossing THC lock &amp; 2-point snap</span></li>
             <li><span class="pricing-check">✓</span><span><strong>50-Shape 2D Library &amp; 3D Tube Frame Designer:</strong> Build shop brackets across 8 categories or sketch 3D handrails, ladders &amp; racks with Pack queue &amp; <code class="mono">.dxf</code>/<code class="mono">.step</code> export</span></li>
@@ -2388,6 +2542,9 @@
           <button type="button" class="secondary-btn pricing-cta pricing-cta-maker" onclick="openLicenseCheckout('maker')">
             Buy Maker License ($199)
           </button>
+          <div class="pricing-guarantee-note">
+            <strong>30-Day No-Risk Shop Guarantee:</strong> Try every feature in your shop for 30 days, or <a href="mailto:contact@rotarycam.app">email</a> for a full refund.
+          </div>
           <div class="mono" style="font-size: 0.74rem; color: var(--text-dim); text-align: center;">Instant license download after checkout</div>
         </div>
       </div>
@@ -2430,6 +2587,9 @@
           <button type="button" class="primary-btn pricing-cta" onclick="openLicenseCheckout('pro')">
             Buy Pro Shop License ($399)
           </button>
+          <div class="pricing-guarantee-note">
+            <strong>30-Day No-Risk Shop Guarantee:</strong> Try every feature in your shop for 30 days, or <a href="mailto:contact@rotarycam.app">email</a> for a full refund.
+          </div>
           <button type="button" class="pricing-upgrade-link" onclick="openLicenseCheckout('upgrade_pro')">
             Already own Maker? Upgrade to Pro Shop for $200 &rarr;
           </button>
@@ -2448,6 +2608,25 @@
         <button type="button" class="pricing-inline-btn" onclick="openLicenseCheckout('renew_maker')">Renew Maker Updates ($59/yr)</button>
         <span style="color: var(--surface-border);">|</span>
         <button type="button" class="pricing-inline-btn" onclick="openLicenseCheckout('renew_pro')">Renew Pro Updates ($99/yr)</button>
+      </div>
+    </div>
+
+    <!-- Software Comparisons Strip -->
+    <div class="compare-strip" aria-label="Compare RotaryCAM with other plasma CAM software">
+      <div class="compare-strip-head">
+        <span class="mono" style="font-size: 0.75rem; color: var(--plasma-amber); font-weight: 700; letter-spacing: 0.06em;">COMPARE PLASMA CAM</span>
+        <span style="font-size: 0.84rem; color: var(--text-muted);">Side-by-side breakdowns on 3D STEP import, controller support, and one-time pricing:</span>
+      </div>
+      <div class="compare-strip-links mono">
+        <a href="compare/sheetcam/" class="compare-pill">vs. SheetCAM</a>
+        <a href="compare/pronest/" class="compare-pill">vs. ProNest</a>
+        <a href="compare/rotary-tube-pro/" class="compare-pill">vs. Rotary Tube Pro</a>
+        <a href="compare/fusion-360/" class="compare-pill">vs. Fusion 360</a>
+        <a href="compare/bend-tech-dragon/" class="compare-pill">vs. Bend-Tech Dragon</a>
+        <a href="compare/sigmatube/" class="compare-pill">vs. SigmaTUBE</a>
+        <a href="compare/tubest/" class="compare-pill">vs. TubesT</a>
+        <a href="compare/gc-maker/" class="compare-pill">vs. GCmaker</a>
+        <a href="compare/gcnester/" class="compare-pill">vs. GCnester</a>
       </div>
     </div>
   </section>
@@ -2713,6 +2892,65 @@
           <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 13 →</div>
         </div>
       </a>
+
+      <!-- Tutorial 14 Card -->
+      <a href="docs/no-cad-wizard-and-tube-frames.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <picture>
+            <source srcset="docs/assets/no-cad-7-assembled-3d.webp" type="image/webp" />
+            <img src="docs/assets/no-cad-7-assembled-3d.png" alt="Tutorial 14: No-CAD Part Design and 3D Tube Frame Designer" width="2324" height="1397" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--cyan-arc);">TUTORIAL 14 • 7 STEPS</div>
+            <h3 style="color: #fff;">No-CAD &amp; 3D Tube Frame Designer</h3>
+            <p>Build 50 flat-plate bracket shapes or sketch multi-plane 3D tube frames with auto copes, miters, and live cut lists straight inside RotaryCAM.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--cyan-arc); font-weight: 700;">Read Tutorial 14 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 15 Card -->
+      <a href="docs/tube-wrap-and-open-profiles.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: #07090d; aspect-ratio: 16/9.6; overflow: hidden;">
+          <picture>
+            <source srcset="docs/assets/tube-wrap-1-panel.webp" type="image/webp" />
+            <img src="docs/assets/tube-wrap-1-panel.png" alt="Tutorial 15: 2D DXF/SVG Tube Wrapping and Open-Profile Beamline Cutting" width="2324" height="1397" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; display: block;" />
+          </picture>
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--emerald-cut);">TUTORIAL 15 • 5 STEPS</div>
+            <h3 style="color: #fff;">2D Tube Wrap &amp; Open Beamline</h3>
+            <p>Wrap 2D DXF/SVG art and single-stroke TEXT onto round pipe or HSS, or cut I-Beam, C-Channel, and Angle Iron on a 4-axis table.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--emerald-cut); font-weight: 700;">Read Tutorial 15 →</div>
+        </div>
+      </a>
+
+      <!-- Tutorial 16 Card -->
+      <a href="docs/custom-post-processors.html" class="card" style="text-decoration: none; padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+        <div style="border-bottom: 1px solid var(--surface-border); background: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.14), transparent 55%), #06090e; aspect-ratio: 16/9.6; overflow: hidden; padding: 1.35rem 1.2rem; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; line-height: 1.5; color: #cbd5e1;">
+          <div>
+            <div style="color: #64748b;">-- Sandboxed Lua 5.4 (api_version = 1)</div>
+            <div style="color: #fbbf24; font-weight: 600;">post = { api_version = 1, rotary_feed_mode = "inverse_time_g93" }</div>
+            <div style="color: #22d3ee;">function on_pierce(ctx) return { initial_thc_locked = true } end</div>
+          </div>
+          <div>
+            <div style="color: #34d399;">function on_thc_lock(ctx) ctx.emit("M63 P0") end</div>
+            <div style="color: #cbd5e1;">GCodeGrammarLinter PASS &rarr; Flat + 4-Axis Rotary</div>
+          </div>
+        </div>
+        <div style="padding: 1.65rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between;">
+          <div>
+            <div class="card-num mono" style="color: var(--plasma-amber);">TUTORIAL 16 • 6 STEPS</div>
+            <h3 style="color: #fff;">Custom Post-Processors (Lua 5.4)</h3>
+            <p>Write sandboxed Lua post-processors for custom M-codes and probe cycles across 2D flat sheet and 4-axis rotary jobs with pre-save linting.</p>
+          </div>
+          <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 16 →</div>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -2769,7 +3007,7 @@
         <a href="compare/tubest/" class="footer-link">vs. TubesT</a>
       </div>
       <a href="#impressum" id="open-impressum-btn" class="footer-link">Legal Notice &amp; Safety (Impressum)</a>
-      <a href="#download" class="footer-link">Download Beta</a>
+      <a href="#download" class="footer-link">30-Day Free Trial</a>
       <a href="mailto:contact@rotarycam.app" class="footer-link mono">contact@rotarycam.app</a>
     </div>
   </footer>
@@ -2837,7 +3075,7 @@
           IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </p>
         <p>
-          <strong>Pre-Release Beta Software:</strong> RotaryCAM is in active beta development (<span class="mono" id="disclaimer-version">v0.9.4-BETA</span>). Geometry recognition algorithms, kinematic feedrate scaling calculations, and CNC post-processors are subject to continuous updates and modifications. Users must validate all generated cut paths against their specific controller manual and machine safety configurations.
+          <strong>Release Validation Notice (<span class="mono" id="disclaimer-version">v0.9.4</span>):</strong> Geometry extraction, kinematic feedrate scaling, and CNC post-processors receive ongoing updates. Always dry-run and validate generated cut paths against your controller manual and machine safety limits before striking an arc.
         </p>
 
         <!-- Trademark & Compatibility Notice -->
@@ -3018,7 +3256,7 @@
         if (downloadUrls[os] && btn && text) {
           btn.href = downloadUrls[os];
           const osName = os === 'macos' ? 'macOS' : (os === 'windows' ? 'Windows' : 'Linux');
-          text.textContent = 'Download Free Beta';
+          text.textContent = 'Download 30-Day Free Trial';
           if (pickerLabel) pickerLabel.textContent = osName;
 
           chips.forEach(c => {
@@ -3044,12 +3282,68 @@
 
       const platStr = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase();
       const uaStr = navigator.userAgent.toLowerCase();
-      if (platStr.includes('win') || uaStr.includes('windows')) {
-        updateHeroPlatform('windows');
-      } else if (platStr.includes('linux') || uaStr.includes('linux')) {
+      const isMobileUa = /android|iphone|ipad|ipod|mobile/.test(uaStr);
+      if (!isMobileUa && (platStr.includes('mac') || (uaStr.includes('mac os') && !uaStr.includes('iphone') && !uaStr.includes('ipad')))) {
+        updateHeroPlatform('macos');
+      } else if (!isMobileUa && (platStr.includes('linux') || uaStr.includes('linux'))) {
         updateHeroPlatform('linux');
       } else {
-        updateHeroPlatform('macos');
+        updateHeroPlatform('windows');
+      }
+
+      // 4. Mobile Email / Copy Download Link + Sample G-Code
+      const mobileEmailLink = document.getElementById('mobile-email-link');
+      if (mobileEmailLink) {
+        const mailSubject = 'RotaryCAM 30-Day Free Trial Download + Sample G-Code';
+        const mailBody = [
+          `RotaryCAM v${releaseVer}: 30-Day Free Trial (100% Offline)`,
+          '',
+          'Download for your shop PC:',
+          `Windows (64-bit): ${downloadUrls.windows}`,
+          `macOS (Apple Silicon): ${downloadUrls.macos}`,
+          `Linux (64-bit): ${downloadUrls.linux}`,
+          '',
+          'Sample G-Code & Controller Setup Guides: https://rotarycam.app/docs/machine-configuration.html',
+          'Full Docs & Tutorials: https://rotarycam.app/docs/',
+          'Landing Page: https://rotarycam.app/#download'
+        ].join('\n');
+        mobileEmailLink.href = `mailto:?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+      }
+
+      const mobileCopyBtn = document.getElementById('mobile-copy-link');
+      if (mobileCopyBtn) {
+        mobileCopyBtn.addEventListener('click', async () => {
+          const copyTarget = 'https://rotarycam.app/#download';
+          const originalText = mobileCopyBtn.textContent;
+          let copied = false;
+          if (navigator.clipboard && window.isSecureContext) {
+            try {
+              await navigator.clipboard.writeText(copyTarget);
+              copied = true;
+            } catch (_) {
+              copied = false;
+            }
+          }
+          if (!copied) {
+            const tmp = document.createElement('textarea');
+            tmp.value = copyTarget;
+            tmp.setAttribute('readonly', '');
+            tmp.style.position = 'fixed';
+            tmp.style.opacity = '0';
+            document.body.appendChild(tmp);
+            tmp.select();
+            try {
+              copied = document.execCommand('copy');
+            } catch (_) {
+              copied = false;
+            }
+            document.body.removeChild(tmp);
+          }
+          mobileCopyBtn.textContent = copied ? '✓ Link Copied' : copyTarget;
+          setTimeout(() => {
+            mobileCopyBtn.textContent = originalText;
+          }, 2200);
+        });
       }
     });
   </script>
@@ -3649,7 +3943,7 @@
 <script src="version.js"></script>
 <script>
   (function () {
-    var v = window.ROTARYCAM_VERSION_BETA || 'v0.9.4-BETA';
+    var v = window.ROTARYCAM_VERSION ? ('v' + String(window.ROTARYCAM_VERSION).replace(/^v/, '')) : 'v0.9.4';
     document.querySelectorAll('.brand-tag').forEach(function (el) { el.textContent = v; });
     var d = document.getElementById('disclaimer-version');
     if (d) { d.textContent = v; }
