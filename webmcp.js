@@ -141,6 +141,56 @@
       aliases: ['simcnc', 'sim cnc', 'cslab', 'csmio']
     },
     {
+      slug: 'CommandCNC',
+      name: 'CandCNC CommandCNC (DTHC IV / V)',
+      shortName: 'CandCNC CommandCNC',
+      extension: '.ngc',
+      rotaryMode: 'G94 (2D/HSS Flats) + G93 (4-Axis Rotary)',
+      url: 'https://rotarycam.app/docs/machine-configuration/CommandCNC/',
+      summary: 'Ready-to-run .ngc files for CandCNC tables with o<touchoff>, DTHC IV/V M67/M68 E0 Q### presets, and 4-axis G93 rotary.',
+      aliases: ['commandcnc', 'candcnc', 'dthc', 'dthc iv', 'dthc v']
+    },
+    {
+      slug: 'TorchmateVMD',
+      name: 'Lincoln Electric Torchmate VMD (Accumove MVC)',
+      shortName: 'Torchmate VMD',
+      extension: '.fgc',
+      rotaryMode: '2D Flat & Concentric Round Y-Wrap (No A / Z)',
+      url: 'https://rotarycam.app/docs/machine-configuration/TorchmateVMD/',
+      summary: 'Native .fgc files for Torchmate 4400/4800/Growth Series with G70/G71 units, M64/M65 AVHC firing, G04 D<ms>, and Y-wrap round pipe.',
+      aliases: ['torchmate', 'torchmate vmd', 'accumove', 'lincoln electric', 'fgc']
+    },
+    {
+      slug: 'MyPlasm',
+      name: 'Proma Elektronika MyPlasm PRO / CNC',
+      shortName: 'MyPlasm PRO / CNC',
+      extension: '.tap',
+      rotaryMode: 'PRO FW 1.2/1.3+: 4-Axis A | Legacy 2D: Y-Wrap',
+      url: 'https://rotarycam.app/docs/machine-configuration/MyPlasm/',
+      summary: 'Metric .tap post for Proma MyPlasm PRO (FW 1.2 & 1.3+) and Legacy 2D with G92.38 probing, M666/M667 THC, and 4-axis A rotary.',
+      aliases: ['myplasm', 'my plasm', 'proma', 'proma elektronika']
+    },
+    {
+      slug: 'HyperthermEIA',
+      name: 'Hypertherm EDGE Connect / ProNest (Industrial EIA)',
+      shortName: 'Hypertherm EDGE Connect (EIA)',
+      extension: '.cnc',
+      rotaryMode: '2D Flat & Concentric Round Y-Wrap (Zero Z / A)',
+      url: 'https://rotarycam.app/docs/machine-configuration/HyperthermEIA/',
+      summary: 'Industrial .cnc EIA files for Hypertherm EDGE Connect, EDGE Pro, and MicroEDGE with M07/M08, M50/M51 THC, optional G59 cut charts, and Marker 1.',
+      aliases: ['hypertherm', 'edge connect', 'edge pro', 'microedge', 'pronest', 'eia']
+    },
+    {
+      slug: 'StarfireFangling',
+      name: 'Starfire / Fangling Industrial EIA (SF-2100C / F2100B / F2300B)',
+      shortName: 'Starfire / Fangling (EIA)',
+      extension: '.txt',
+      rotaryMode: '2D Flat & Concentric Round Y-Wrap (2-Axis XY)',
+      url: 'https://rotarycam.app/docs/machine-configuration/StarfireFangling/',
+      summary: 'Shop-ready .txt EIA files for SF-2100C, F2100B, and F2300B panels with zero-drift G91 incremental moves, 180-deg arc splitting, and bare-EIA mode.',
+      aliases: ['starfire', 'fangling', 'sf-2100c', 'f2100b', 'f2300b']
+    },
+    {
       slug: 'GenericG94',
       name: 'Portable RS-274 (generic_g94)',
       shortName: 'Portable RS-274',
@@ -155,7 +205,7 @@
       name: 'Coaxial EasyScribe vs. Pneumatic Air-Scribe',
       shortName: 'Scribing (EasyScribe / Air)',
       extension: 'Multi-Tool',
-      rotaryMode: 'All 14 Controllers (Pro Shop)',
+      rotaryMode: 'All 19 Controllers (Pro Shop)',
       url: 'https://rotarycam.app/docs/machine-configuration/Scribing/',
       summary: 'Engrave Part IDs, bend lines & weld ticks using coaxial EasyScribe (all controllers, M0 swap) or pneumatic offset air-scribe.',
       aliases: ['scribing', 'scribe', 'easyscribe', 'air-scribe', 'marking', 'engraving']
@@ -168,7 +218,7 @@
       slug: 'machine-configuration',
       title: 'Basic Machine Configuration',
       url: 'https://rotarycam.app/docs/machine-configuration.html',
-      description: 'Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 14 controllers.'
+      description: 'Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 19 controllers (21 profiles).'
     },
     {
       num: 2,
@@ -253,6 +303,27 @@
       title: 'Flat-Plate Pro Cutting Primitives & Torch Crash Protection',
       url: 'https://rotarycam.app/docs/flat-plate-pro-cutting.html',
       description: 'Prevent torch dives with Spatial Void THC Auto-Lock, offset open slits Left/Right/Center, pierce thick plate from the edge, crop remnants, and chain.'
+    },
+    {
+      num: 14,
+      slug: 'no-cad-wizard-and-tube-frames',
+      title: 'No-CAD Part Design & 3D Tube Frame Designer',
+      url: 'https://rotarycam.app/docs/no-cad-wizard-and-tube-frames.html',
+      description: 'Design 50 flat-sheet shapes and multi-plane 3D tube frames inside RotaryCAM with length, spacing, angle, and parallel constraints, rotated sheets, and STEP export.'
+    },
+    {
+      num: 15,
+      slug: 'tube-wrap-and-open-profiles',
+      title: '2D Tube Wrapping, TEXT Scribing & Open-Profile Beamline Cutting',
+      url: 'https://rotarycam.app/docs/tube-wrap-and-open-profiles.html',
+      description: 'Wrap 2D DXF/SVG art and single-stroke Hershey DXF TEXT onto round pipe or HSS, and cut I-Beam, C-Channel, and Angle Iron on a 4-axis plasma table.'
+    },
+    {
+      num: 16,
+      slug: 'custom-post-processors',
+      title: 'How to Write a Custom Post-Processor (Lua)',
+      url: 'https://rotarycam.app/docs/custom-post-processors.html',
+      description: 'Write sandboxed Lua 5.4 custom post-processors for 2D flat sheet and 4-axis rotary plasma cutting with live GCodeGrammarLinter validation and HTTP API.'
     }
   ];
 
@@ -272,7 +343,7 @@
         url: 'https://rotarycam.app/#download',
         keyFeatures: [
           'Full 3D STEP assembly inspection & multi-file 2D DXF/SVG flat-sheet cutting with 2-point snap scaling',
-          'Round Pipe, Square/Rect HSS & 2D Flat Sheet G-code across 12 controller dialects (16 profiles) in native G20/G21',
+          'Round Pipe, Square/Rect HSS & 2D Flat Sheet G-code across 19 controller dialects (21 profiles) in native G20/G21',
           'Zero-Bevel saddle/miter compensation & 60% small-hole speed',
           '1,025 cut charts across 3 torch families + CSV import/export & ERW seam avoidance',
           'Up to 5 parts/stick & 5 bends/file (Cut-and-Bend)'
@@ -291,7 +362,7 @@
         url: 'https://rotarycam.app/#pricing',
         keyFeatures: [
           'Perpetual air-gapped offline license (rotarycam.lic) with 30-day clock removed forever',
-          'Everything in Public Beta across all 12 controller dialects (16 profiles) in native Imperial (G20) and Metric (G21)',
+          'Everything in Public Beta across all 19 controller dialects (21 profiles) in native Imperial (G20) and Metric (G21)',
           'Round Pipe, Square/Rect HSS & multi-file 2D DXF/SVG flat-sheet cutting',
           '1,025 cut charts + CSV import/export, Zero-Bevel, custom machines & up to 5 parts/stick',
           'Your shop name stamped in every G-code header'

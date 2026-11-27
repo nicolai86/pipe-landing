@@ -68,7 +68,7 @@ COMPARE_PAGES = [
         "sidebar_label": "Rotary Tube Pro",
         "footer_label": "RotaryCAM vs. Rotary Tube Pro",
         "meta_title": "RotaryCAM vs. Hypertherm Rotary Tube Pro | 4-Axis Tube & Pipe CAM Comparison",
-        "meta_description": "Factual comparison of RotaryCAM and Hypertherm Rotary Tube Pro: parametric tube design and SureCut integration vs. 3D STEP/IGES CAD import, 16 controller profiles, and offline perpetual pricing.",
+        "meta_description": "Factual comparison of RotaryCAM and Hypertherm Rotary Tube Pro: parametric tube design and SureCut integration vs. 3D STEP/IGES CAD import, 19 controller dialects (21 profiles), and offline perpetual pricing.",
         "has_lightbox": False,
     },
     {
@@ -84,7 +84,7 @@ COMPARE_PAGES = [
         "sidebar_label": "GCmaker (3D Tube)",
         "footer_label": "RotaryCAM vs. GCmaker",
         "meta_title": "RotaryCAM vs. GCmaker (JD Squared) | 4-Axis Rotary Tube Plasma Comparison",
-        "meta_description": "Factual comparison of RotaryCAM and GCmaker: hardware-agnostic 4-axis rotary tube & structural CAM across 16 controller profiles vs. JD Squared OEM coupling.",
+        "meta_description": "Factual comparison of RotaryCAM and GCmaker: hardware-agnostic 4-axis rotary tube & structural CAM across 19 controller dialects (21 profiles) vs. JD Squared OEM coupling.",
         "has_lightbox": False,
     },
     {
@@ -116,7 +116,7 @@ COMPARE_PAGES = [
         "sidebar_label": "TubesT (Bochu)",
         "footer_label": "RotaryCAM vs. TubesT",
         "meta_title": "RotaryCAM vs. TubesT (Friendess / Bochu) | CNC Plasma vs. Fiber Laser Tube CAM",
-        "meta_description": "Factual comparison of RotaryCAM and TubesT: plasma physics (THC auto-lock, IHS, True Hole, zero-bevel) and 16 open G-code profiles vs. Bochu FSCUT fiber laser nesting.",
+        "meta_description": "RotaryCAM vs TubesT: plasma physics (THC auto-lock, IHS, True Hole, zero-bevel) and 21 open G-code profiles vs. Bochu FSCUT fiber laser nesting.",
         "has_lightbox": False,
     },
 ]
@@ -134,12 +134,12 @@ TUTORIALS = [
         "meta_title": "Basic Machine Configuration | RotaryCAM Docs",
         "meta_description": "Set up 4-axis plasma kinematics, X/Y/Z/A velocity limits, G94/G93 dialects, synchronous THC locking, and zero-bevel defaults across 19 controllers.",
         "hero_title_html": 'Basic <span class="text-gradient-amber">Machine Configuration</span>',
-        "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 14 supported controllers.',
+        "hero_subtitle_html": 'How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 19 supported controllers (21 built-in profiles).',
         "steps_count": 7,
         "steps_label": "7 Steps",
         "meta_pills": [
             {"style": "cyan", "html": "<strong>Persistence:</strong> Multi-Profile Saved Across Restarts"},
-            {"style": "", "html": "<strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC • Generic RS-274"},
+            {"style": "", "html": "<strong>Applies To:</strong> 19 Dialects (21 Profiles) • LinuxCNC • CommandCNC • FireControl • Torchmate VMD • MyPlasm • Hypertherm EIA • Starfire/Fangling • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC • Generic RS-274"},
         ],
         "toc": [
             {"id": "step-1", "badge": "01", "label": "Open Machine Profiles Modal"},
@@ -160,7 +160,7 @@ TUTORIALS = [
             "Velocity, acceleration, jerk &amp; Safe Z clearance limits",
             "Rotary axis orientation (Along X vs. Y) &amp; 4 chuck travel modes",
             "Flat sheet orientation (0° vs. 90° CCW) &amp; 6 work zero origins",
-            "14 Controller Dialects: QTPlasmaC, FireControl, Mach4, MASSO, Mach3, Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, WinCNC, SimCNC &amp; Generic RS-274",
+            "19 Controller Dialects (21 Profiles): QTPlasmaC, CommandCNC, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire/Fangling, Mach4, MASSO, Mach3, Acorn, grblHAL, UCCNC, FlashCut, EdingCNC, PlanetCNC, WinCNC, SimCNC &amp; Generic RS-274",
             "Synchronous M62/M63 THC locking &amp; 60% small-hole bolt speed",
             "Hardware motor polarity (Invert X/Y/A) &amp; air-scribe setup",
         ],
@@ -586,7 +586,7 @@ TUTORIALS = [
         "steps_label": "5 Sections",
         "meta_pills": [
             {"style": "cyan", "html": "<strong>Kinematics Modes:</strong> G94 Distance/Min • G93 Inverse-Time (1/Min) • SimCNC 4D Vector"},
-            {"style": "", "html": "<strong>Units &amp; Controllers:</strong> Native G20 (in / IPM) &amp; G21 (mm / mm/min) • All 13 Major Controllers"},
+            {"style": "", "html": "<strong>Units &amp; Controllers:</strong> Native G20 (in / IPM) &amp; G21 (mm / mm/min) • All 19 Supported Controllers"},
         ],
         "toc": [
             {"id": "step-1", "badge": "01", "label": "Why Torch Surface Speed Controls Cut Quality"},
@@ -606,7 +606,7 @@ TUTORIALS = [
             "G94 distance-per-minute on flat plate &amp; 3-axis Y-wrapped round pipe",
             "G93 inverse-time math: why `speed &divide; distance` cancels the 25.4 unit factor",
             "SimCNC 4D trajectory spoofing: 4D vector scaling vs. pure-A deg/min spins",
-            "Shop-floor controller matrix for all 13 supported CNC plasma posts",
+            "Shop-floor controller matrix for all 19 supported CNC plasma posts",
         ],
         "hub_cta_right": "Math & G-Code Reference",
         "has_lightbox": False,
@@ -942,6 +942,8 @@ def build_all_docs():
 
     total_tutorials = len(TUTORIALS)
     total_steps = sum(t["steps_count"] for t in TUTORIALS)
+    total_controllers = sum(1 for c in controllers_data.CONTROLLERS if not c.get("is_scribing"))
+    total_profiles = 21
 
     # 1. Render docs/index.html
     index_page = {
@@ -957,6 +959,8 @@ def build_all_docs():
         compare_pages=COMPARE_PAGES,
         total_tutorials=total_tutorials,
         total_steps=total_steps,
+        total_controllers=total_controllers,
+        total_profiles=total_profiles,
         css_version=CSS_VERSION,
         version=VERSION,
         beta_label=BETA_LABEL,
@@ -986,6 +990,8 @@ def build_all_docs():
             xml_warnings=controllers_data.XML_IMPORT_WARNINGS,
             total_tutorials=total_tutorials,
             total_steps=total_steps,
+            total_controllers=total_controllers,
+            total_profiles=total_profiles,
             prev_tutorial=prev_t,
             next_tutorial=next_t,
             css_version=CSS_VERSION,
@@ -1028,6 +1034,8 @@ def build_all_docs():
             compare_pages=COMPARE_PAGES,
             total_tutorials=total_tutorials,
             total_steps=total_steps,
+            total_controllers=total_controllers,
+            total_profiles=total_profiles,
             css_version=CSS_VERSION,
             version=VERSION,
             beta_label=BETA_LABEL,
@@ -1054,6 +1062,8 @@ def build_all_docs():
             compare_pages=COMPARE_PAGES,
             total_tutorials=total_tutorials,
             total_steps=total_steps,
+            total_controllers=total_controllers,
+            total_profiles=total_profiles,
             css_version=CSS_VERSION,
             version=VERSION,
             beta_label=BETA_LABEL,

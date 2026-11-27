@@ -45,7 +45,7 @@
         "name": "Does RotaryCAM lock you into JD Squared hardware like GCmaker?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. RotaryCAM is hardware-agnostic and ships with 16 built-in CNC plasma controller profiles across 14 dialects, including SimCNC, Mach3/4, MASSO G3, Acorn, LinuxCNC QTPlasmaC, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, and grblHAL."
+          "text": "No. RotaryCAM is hardware-agnostic and ships with {{ total_profiles }} built-in CNC plasma controller profiles across {{ total_controllers }} dialects, including SimCNC, Mach3/4, MASSO G3, Acorn, LinuxCNC QTPlasmaC, CommandCNC, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, and grblHAL."
         }
       },
       {
@@ -102,7 +102,7 @@
         </p>
 
         <div class="docs-meta-bar">
-          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; 16 Open Controllers vs. JD Squared OEM Ecosystem</span>
+          <span class="docs-meta-pill amber"><strong>Comparison</strong> &bull; {{ total_controllers }} Open Controllers vs. JD Squared OEM Ecosystem</span>
           <span class="docs-meta-pill cyan"><strong>OS Support:</strong> macOS, Windows &amp; Linux (Offline)</span>
           <span class="docs-meta-pill"><strong>Pricing:</strong> $199 Maker / $399 Pro Shop Perpetual</span>
         </div>
@@ -160,7 +160,7 @@
                   <tr>
                     <td><strong>Controller Support</strong></td>
                     <td>Built for JD Squared plasma machines and their coupled control ecosystem</td>
-                    <td>Hardware-agnostic across 16 profiles &amp; 14 dialects (SimCNC, Mach3/4, MASSO, Acorn, LinuxCNC QTPlasmaC, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL)</td>
+                    <td>Hardware-agnostic across {{ total_profiles }} profiles &amp; {{ total_controllers }} dialects (SimCNC, Mach3/4, MASSO, Acorn, LinuxCNC QTPlasmaC, CommandCNC, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL)</td>
                   </tr>
                   <tr>
                     <td><strong>Profiles Supported</strong></td>
@@ -213,7 +213,7 @@
               <div class="compare-feature-box">
                 <h3>Zero Hardware or OEM Lock-In</h3>
                 <p>
-                  Run any DIY, retrofit, or commercial 4-axis rotary table. RotaryCAM ships with 16 built-in profiles covering SimCNC, Mach3/4, MASSO G3, Acorn, QTPlasmaC, FireControl, FlashCut, WinCNC, and grblHAL.
+                  Run any DIY, retrofit, or commercial 4-axis rotary table. RotaryCAM ships with {{ total_profiles }} built-in profiles across {{ total_controllers }} dialects covering SimCNC, Mach3/4, MASSO G3, Acorn, QTPlasmaC, CommandCNC, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, FlashCut, WinCNC, and grblHAL.
                 </p>
               </div>
               <div class="compare-feature-box">
@@ -281,7 +281,7 @@
               <div class="compare-faq-item">
                 <h3>Can I use RotaryCAM on a custom or retrofitted rotary plasma table?</h3>
                 <p>
-                  Yes. Pick from 16 built-in controller profiles across 14 dialects, enter your axis velocity/acceleration limits and chuck travel mode, and export tuned G-code immediately.
+                  Yes. Pick from {{ total_profiles }} built-in controller profiles across {{ total_controllers }} dialects, enter your axis velocity/acceleration limits and chuck travel mode, and export tuned G-code immediately.
                 </p>
               </div>
               <div class="compare-faq-item">
@@ -321,7 +321,7 @@
           </div>
           <div class="compare-cta-actions">
             <a href="{{ root_prefix }}#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
-            <a href="{{ docs_prefix }}machine-configuration.html" class="compare-btn-secondary">16 Controller Profiles</a>
+            <a href="{{ docs_prefix }}machine-configuration.html" class="compare-btn-secondary">{{ total_controllers }} Controller Dialects</a>
           </div>
         </div>
 

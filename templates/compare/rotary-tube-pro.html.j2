@@ -77,7 +77,7 @@
         "name": "Which CNC controllers does RotaryCAM post G-code for?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RotaryCAM ships with 15 built-in post-processors: SimCNC (with 4D vector feedrate scaling), Mach3, Mach4, LinuxCNC QTPlasmaC, MASSO, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94, and Air Scribing."
+          "text": "RotaryCAM ships with {{ total_controllers }} built-in controller dialects ({{ total_profiles }} machine profiles) plus Scribing: SimCNC, Mach3, Mach4, LinuxCNC QTPlasmaC, CommandCNC, MASSO, Centroid Acorn, Langmuir FireControl, Torchmate VMD, MyPlasm PRO, Hypertherm EIA, Starfire/Fangling, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic G94."
         }
       }
     ]
@@ -185,7 +185,7 @@
                   <tr>
                     <td><strong>Controllers Supported</strong></td>
                     <td>Industrial OEM tables and Hypertherm CNC/SureCut ecosystems</td>
-                    <td>15 built-in posts: SimCNC (4D feedrate scaling), Mach3, Mach4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94, Scribing</td>
+                    <td>{{ total_controllers }} dialects ({{ total_profiles }} profiles) + Scribing: SimCNC, Mach3/4, QTPlasmaC, CommandCNC, MASSO, Acorn, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94</td>
                   </tr>
                   <tr>
                     <td><strong>Operating Systems</strong></td>
@@ -223,7 +223,7 @@
                 </p>
               </div>
               <div class="compare-feature-box">
-                <h3>15 Hobby-to-Industrial Posts</h3>
+                <h3>{{ total_controllers }} Hobby-to-Industrial Dialects</h3>
                 <p>
                   Post tuned G93, G94, or SimCNC 4D trajectory code straight to Mach3/4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, WinCNC, or grblHAL with synchronous M62/M63 THC locking.
                 </p>
@@ -305,7 +305,7 @@
               <div class="compare-faq-item">
                 <h3>Which CNC plasma controllers work out of the box?</h3>
                 <p>
-                  RotaryCAM includes 15 built-in post-processors: SimCNC (with 4D vector feedrate scaling), Mach3, Mach4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94, and Air Scribing.
+                  RotaryCAM includes {{ total_controllers }} built-in controller dialects ({{ total_profiles }} machine profiles) plus Air Scribing: SimCNC, Mach3, Mach4, LinuxCNC QTPlasmaC, CommandCNC, MASSO, Acorn, FireControl, Torchmate VMD, MyPlasm PRO, Hypertherm EIA, Starfire/Fangling, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic G94.
                 </p>
               </div>
             </div>

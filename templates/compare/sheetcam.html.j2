@@ -69,7 +69,7 @@
         "name": "Does RotaryCAM work with my existing CNC controller?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RotaryCAM ships with 14 built-in plasma dialects: SimCNC (including 4D trajectory scaling), LinuxCNC QTPlasmaC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94."
+          "text": "RotaryCAM ships with {{ total_controllers }} built-in plasma dialects ({{ total_profiles }} profiles): SimCNC (including 4D trajectory scaling), LinuxCNC QTPlasmaC, CommandCNC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, Torchmate VMD, MyPlasm PRO, Hypertherm EIA, Starfire/Fangling, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94."
         }
       },
       {
@@ -188,7 +188,7 @@
                   <tr>
                     <td><strong>Post-Processors</strong></td>
                     <td>Huge library of community and user-editable Lua posts</td>
-                    <td>14 built-in plasma dialects (SimCNC, Mach3/4, LinuxCNC QTPlasmaC, MASSO, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
+                    <td>{{ total_controllers }} built-in dialects ({{ total_profiles }} profiles: SimCNC, Mach3/4, QTPlasmaC, CommandCNC, MASSO, Acorn, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
                   </tr>
                   <tr>
                     <td><strong>Cut Simulation</strong></td>
@@ -323,7 +323,7 @@
               <div class="compare-faq-item">
                 <h3>Does RotaryCAM work with my existing CNC controller?</h3>
                 <p>
-                  Yes. All 14 built-in dialects (SimCNC, LinuxCNC QTPlasmaC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94) are unlocked in both Maker and Pro Shop.
+                  Yes. All {{ total_controllers }} built-in dialects ({{ total_profiles }} profiles: SimCNC, LinuxCNC QTPlasmaC, CommandCNC, Mach4, Mach3, MASSO G3, Centroid Acorn, Langmuir FireControl, Torchmate VMD, MyPlasm PRO, Hypertherm EIA, Starfire/Fangling, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC TNG, grblHAL, and Generic RS-274 G94) are unlocked in both Maker and Pro Shop.
                 </p>
               </div>
               <div class="compare-faq-item">
@@ -351,7 +351,7 @@
           </div>
           <div class="compare-cta-actions">
             <a href="{{ root_prefix }}#download" class="compare-btn-primary">Download 30-Day Beta &rarr;</a>
-            <a href="{{ docs_prefix or './' }}" class="compare-btn-secondary">Browse 13 Guides</a>
+            <a href="{{ docs_prefix or './' }}" class="compare-btn-secondary">Browse {{ total_tutorials }} Guides</a>
           </div>
         </div>
 

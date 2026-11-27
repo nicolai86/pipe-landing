@@ -24,7 +24,7 @@
             </div>
             <div class="doc-intro-stat">
               <span class="label">Controller Dialects</span>
-              <span class="value">All 13 Major CNC Plasma Posts</span>
+              <span class="value">All {{ total_controllers }} Supported CNC Plasma Posts</span>
             </div>
           </div>
         </div>
@@ -489,7 +489,7 @@ G00 Z25.000 ; Retract</code></pre>
         <article class="doc-step-card" id="step-5">
           <div class="doc-step-header">
             <span class="doc-step-badge">Step 05</span>
-            <h2 class="doc-step-title">Quick Shop-Floor Cheat Sheet (<code class="mono">G21</code> vs. <code class="mono">G20</code> Across All 13 Controllers)</h2>
+            <h2 class="doc-step-title">Quick Shop-Floor Cheat Sheet (<code class="mono">G21</code> vs. <code class="mono">G20</code> Across All {{ total_controllers }} Controllers)</h2>
           </div>
 
           <div class="doc-step-body">
@@ -613,6 +613,46 @@ G00 Z25.000 ; Retract</code></pre>
                     <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
                     <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--emerald-400);">&lt; 3.6: 4D Scaled</strong> / <strong style="color: var(--amber-400);">3.6+: Identical F</strong></td>
                     <td style="padding: 0.65rem 0.85rem;">Managed by <code class="mono">m3.py</code> (M63 sync arc off)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>CandCNC CommandCNC (DTHC IV/V)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS / Open</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G94</code> (2D) / <code class="mono">G93</code> (4D)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><strong style="color: var(--amber-400);">Identical F</strong> (<code class="mono">G93</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;">2D: <code class="mono">o&lt;touchoff&gt;</code> / 4D: <code class="mono">G38.2</code> (<code class="mono">G94</code>)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Torchmate VMD (Accumove MVC)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate &amp; Concentric Y-Wrap</td>
+                    <td style="padding: 0.65rem 0.85rem;">Modal <code class="mono">G70/G71</code> (no <code class="mono">G93/G94</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM, optional <code class="mono">F</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (Y-Wrap only)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Controller-owned inside <code class="mono">M64</code> (zero Z)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Proma MyPlasm PRO / CNC</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate / Round / HSS / Open</td>
+                    <td style="padding: 0.65rem 0.85rem;">Strict metric <code class="mono">G21</code> (<code class="mono">G94</code> modal)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Auto-converted to <code class="mono">mm/min</code></td>
+                    <td style="padding: 0.65rem 0.85rem;">Metric <code class="mono">mm/min</code> (<code class="mono">G92 A</code> mod 360)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G38.2</code> + <code class="mono">G92.38</code> / <code class="mono">G92 Z</code></td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Hypertherm EDGE Connect (EIA)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate &amp; Concentric Y-Wrap</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G70/G71</code> (opt <code class="mono">G20/G21</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM, opt <code class="mono">F</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (Y-Wrap only)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Sensor THC inside <code class="mono">M07</code> (zero Z)</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border-subtle);">
+                    <td style="padding: 0.65rem 0.85rem;"><strong>Starfire / Fangling (EIA)</strong></td>
+                    <td style="padding: 0.65rem 0.85rem;">Plate &amp; Concentric Y-Wrap</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">G91</code> (default) or <code class="mono">G90</code></td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (IPM, opt <code class="mono">F</code>)</td>
+                    <td style="padding: 0.65rem 0.85rem;"><code class="mono">&divide; 25.4</code> (Y-Wrap only)</td>
+                    <td style="padding: 0.65rem 0.85rem;">Panel THC inside <code class="mono">M07</code> (zero Z)</td>
                   </tr>
                   <tr>
                     <td style="padding: 0.65rem 0.85rem;"><strong>Generic RS-274 (<code class="mono">generic_g94</code>)</strong></td>

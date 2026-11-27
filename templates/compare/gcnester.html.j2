@@ -61,7 +61,7 @@
         "name": "Which CNC controllers does RotaryCAM support for flat plate and tube?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RotaryCAM includes 16 built-in controller profiles across 14 dialects: SimCNC, Mach3/4, MASSO G3, Centroid Acorn, LinuxCNC QTPlasmaC, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic RS-274 G94."
+          "text": "RotaryCAM includes {{ total_profiles }} built-in controller profiles across {{ total_controllers }} dialects: SimCNC, Mach3/4, MASSO G3, Centroid Acorn, LinuxCNC QTPlasmaC, CommandCNC, Langmuir FireControl, Torchmate VMD, MyPlasm PRO, Hypertherm EIA, Starfire/Fangling, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic RS-274 G94."
         }
       },
       {
@@ -180,7 +180,7 @@
                   <tr>
                     <td><strong>Controller Support</strong></td>
                     <td>Paired for original JD Squared tables (or standalone plans)</td>
-                    <td>16 profiles across 14 dialects (SimCNC, Mach3/4, MASSO, Acorn, LinuxCNC QTPlasmaC, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL)</td>
+                    <td>{{ total_profiles }} profiles across {{ total_controllers }} dialects (SimCNC, Mach3/4, MASSO, Acorn, QTPlasmaC, CommandCNC, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL)</td>
                   </tr>
                   <tr>
                     <td><strong>Operating Systems</strong></td>
@@ -224,7 +224,7 @@
                 </p>
               </div>
               <div class="compare-feature-box">
-                <h3>16 Controllers, 3 OSes, One Fee</h3>
+                <h3>{{ total_controllers }} Controllers, 3 OSes, One Fee</h3>
                 <p>
                   Pay $199 Maker or $399 Pro Shop once and run offline on macOS, Windows, or Linux across any major plasma controller without OEM lock-in or monthly subscriptions.
                 </p>

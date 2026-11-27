@@ -53,7 +53,7 @@
         "name": "Which CNC controllers does RotaryCAM support instead of FSCUT?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "RotaryCAM includes 16 built-in profiles across 14 open plasma dialects: SimCNC 4D G94 and G93, Mach3, Mach4 (ESS/TMC3in1), LinuxCNC QTPlasmaC, MASSO G3, Centroid Acorn, Langmuir FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic G94."
+          "text": "RotaryCAM includes {{ total_profiles }} built-in profiles across {{ total_controllers }} open plasma dialects: SimCNC 4D G94 and G93, Mach3, Mach4 (ESS/TMC3in1), LinuxCNC QTPlasmaC, CommandCNC, MASSO G3, Centroid Acorn, Langmuir FireControl, Torchmate VMD, MyPlasm PRO, Hypertherm EIA, Starfire/Fangling, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, and Generic G94."
         }
       },
       {
@@ -165,7 +165,7 @@
                   <tr>
                     <td><strong>Controller Output</strong></td>
                     <td>Proprietary <code class="mono">.zx</code> / Bochu pipeline locked to FSCUT / TubePro laser hardware</td>
-                    <td>Open G-code across 16 profiles &amp; 14 dialects (SimCNC 4D G94/G93, Mach3/4, QTPlasmaC, MASSO G3, Acorn, FireControl, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
+                    <td>Open G-code across {{ total_profiles }} profiles &amp; {{ total_controllers }} dialects (SimCNC 4D G94/G93, Mach3/4, QTPlasmaC, CommandCNC, MASSO G3, Acorn, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire, FlashCut, EdingCNC, UCCNC, WinCNC, PlanetCNC, grblHAL, Generic G94)</td>
                   </tr>
                   <tr>
                     <td><strong>Arc &amp; Torch Physics</strong></td>
@@ -219,7 +219,7 @@
               <div class="compare-feature-box">
                 <h3>Open G-Code vs. Proprietary .zx</h3>
                 <p>
-                  TubesT targets Bochu <code class="mono">.zx</code> fiber laser controllers. RotaryCAM posts native <code class="mono">G94</code>, <code class="mono">G93</code> inverse-time, and SimCNC 4D trajectory G-code for 16 plasma controller profiles out of the box.
+                  TubesT targets Bochu <code class="mono">.zx</code> fiber laser controllers. RotaryCAM posts native <code class="mono">G94</code>, <code class="mono">G93</code> inverse-time, and SimCNC 4D trajectory G-code for {{ total_profiles }} plasma controller profiles ({{ total_controllers }} dialects) out of the box.
                 </p>
               </div>
               <div class="compare-feature-box">

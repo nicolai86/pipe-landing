@@ -518,7 +518,7 @@
 
         <h1 class="docs-title">01. Basic <span class="text-gradient-amber">Machine Configuration</span></h1>
         <p class="docs-subtitle">
-          How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 14 supported controllers.
+          How to configure your 4-axis rotary plasma kinematics, controller G-code dialect (<code class="mono">G94</code> vs. <code class="mono">G93</code> inverse-time), synchronous Torch Height Control (THC) locking, default cut compensation profiles, and drop-in post-processors for all 19 supported controllers (21 built-in profiles).
         </p>
 
         <div class="docs-meta-bar">
@@ -526,7 +526,7 @@
           
           <span class="docs-meta-pill cyan"><strong>Persistence:</strong> Multi-Profile Saved Across Restarts</span>
           
-          <span class="docs-meta-pill"><strong>Applies To:</strong> LinuxCNC • FireControl • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC • Generic RS-274</span>
+          <span class="docs-meta-pill"><strong>Applies To:</strong> 19 Dialects (21 Profiles) • LinuxCNC • CommandCNC • FireControl • Torchmate VMD • MyPlasm • Hypertherm EIA • Starfire/Fangling • Mach4 • MASSO • Mach3 • Acorn • grblHAL • UCCNC • FlashCut • EdingCNC • PlanetCNC • WinCNC • SimCNC • Generic RS-274</span>
           
         </div>
       </div>
@@ -937,13 +937,18 @@
               <li><span class="ui-chip">PlanetCNC TNG Plasma (.nc)</span>: Built for PlanetCNC Mk3, Mk3/4, and TNG using <code class="mono">G90 G90.2</code> rotary absolute mode, <code class="mono">M54 P0</code> + <code class="mono">M55/M56/M57 P0</code> startup, and <code class="mono">G94</code>-to-<code class="mono">G93</code> cut-stroke switching (<code class="mono">G94 F...</code> restored before retracts and footer) with <code class="mono">; ...</code> comments (<code class="mono">(status, ...)</code> for progress only). Clears AL Axis-Lock during IHS (<code class="mono">G91 G01 Z&lt;switchOffset&gt;</code> &rarr; <code class="mono">G90</code> &rarr; <code class="mono">G92 Z&lt;datum&gt;</code>) with optional two-stage probing and centerline <code class="mono">Z=0</code> on HSS tubes. Uses lookahead-safe <code class="mono">M54 P1 Q&lt;speed&gt; R1</code> / <code class="mono">M54 P1 R1</code> THC, continuous <code class="mono">M54 P0</code> on 4D dynamic-Z cuts, post-ramp <code class="mono">M54</code> unlock, <code class="mono">G92.1</code> before modulo-360 <code class="mono">G92 A</code> resets, and optional <code class="mono">M02</code>/<code class="mono">M30</code> end.</li>
               <li><span class="ui-chip">ShopSabre WinCNC Plasma (.tap)</span>: Built for ShopSabre tables and SideKick rotaries (<code class="mono">v3.1.06d+</code> or legacy). Outputs <code class="mono">G22</code> mm / <code class="mono">G20</code> in (never <code class="mono">G21</code>), <code class="mono">[square bracket]</code> comments, and configurable <code class="mono">A</code>/<code class="mono">W</code>/<code class="mono">B</code> SideKick axis letters matching <code class="mono">WINCNC.INI</code>. Handles <code class="mono">L37.2 D1/D0</code> continuous THC (or legacy <code class="mono">L37/L36</code>), <code class="mono">L38.1</code> cut parameters (<code class="mono">THC=... M1/M0</code>), <code class="mono">M61</code> / <code class="mono">L38</code> cycles, <code class="mono">G4 X&lt;sec&gt;</code> dwells, <code class="mono">L28.1</code>/<code class="mono">L92</code> wraps, <code class="mono">G54</code>-baked scribe offsets, and <code class="mono">G93</code> rotary feeds.</li>
               <li><span class="ui-chip">CSLab SimCNC 3.5 &amp; 3.6+ (.nc)</span>: Includes one-click <code class="mono">config.xml</code> import, 4D trajectory feedrate spoofing for SimCNC 3.5, and <code class="mono">G93</code> inverse-time for SimCNC 3.6+ (<code class="mono">F = 1 / Δt</code>, <code class="mono">G69</code> + metric <code class="mono">G64 P0.3/P0.4</code>, <code class="mono">G93</code> pre-pierce rapids capped to your rotation speed limit, micro-segment coalescing, <code class="mono">0.002 mm</code> axial feathering, <code class="mono">5</code>-decimal <code class="mono">G20</code> arcs, <code class="mono">G92 A</code> phase-preserving unwinds, and <code class="mono">#1999</code>/<code class="mono">#4061</code> guards). Syncs <code class="mono">M62/M63 P1</code> torch fire and <code class="mono">M63/M62 P0</code> THC lock.</li>
+              <li><span class="ui-chip">CandCNC CommandCNC (DTHC IV / V) (.ngc)</span>: Built for CandCNC LinuxCNC tables. Runs <code class="mono">o&lt;touchoff&gt; call</code> on 2D flat sheet, <code class="mono">G38.2</code> + <code class="mono">G1 Z#5063</code> + <code class="mono">G10 L20 P0</code> on 4-axis rotary in <code class="mono">G93</code>, positive <code class="mono">M3 S100</code> torch ignition, <code class="mono">M68 E0 Q###</code> DCC presets paced with <code class="mono">G4 P0.1</code>, and motion-synced <code class="mono">M67 E0 Q10/Q20</code> anti-dive.</li>
+              <li><span class="ui-chip">Lincoln Electric Torchmate VMD (.fgc)</span>: Built for Torchmate 4400/4800/5100 and Accumove VMD tables. Uses native <code class="mono">G70</code>/<code class="mono">G71</code> units (never <code class="mono">G20/G21</code>), apostrophe <code class="mono">'</code> comments, <code class="mono">M06 T1/T2</code> torch/marker select, zero-Z <code class="mono">M64</code>/<code class="mono">M65</code> AVHC cycles, explicit <code class="mono">G00-G03</code> per line, <code class="mono">M02</code> program end, and concentric round-pipe Y-wrap.</li>
+              <li><span class="ui-chip">Proma MyPlasm PRO / CNC (.tap)</span>: Strict metric <code class="mono">G21</code> output across <code class="mono">PRO FW 1.3+</code> (<code class="mono">G38.2</code> + <code class="mono">G92.38</code>, <code class="mono">M66 Q#</code> Arc-OK), <code class="mono">PRO FW 1.2</code> (<code class="mono">G92 Z</code>, <code class="mono">M0 S#</code>), and <code class="mono">Legacy 2D</code>. Uses integer-ms <code class="mono">G4 P&lt;ms&gt;</code> dwells, inline <code class="mono">I</code>-flagged <code class="mono">M666/M667</code> THC locks, and <code class="mono">&plusmn;3600&deg;</code> modulo-360 <code class="mono">G92 A</code> protection.</li>
+              <li><span class="ui-chip">Hypertherm EDGE Connect / ProNest EIA (.cnc)</span>: Industrial EIA output for EDGE Connect, EDGE Pro, and MicroEDGE. Uses <code class="mono">G70/G71</code> (or optional <code class="mono">G20/G21</code>), zero-Z Sensor THC <code class="mono">M07/M08</code> (or <code class="mono">RF/RT</code>), <code class="mono">M50/M51</code> corner hold always restored before <code class="mono">M08</code>, 180&deg; split arcs, optional <code class="mono">G59 V###</code> cut-chart variables, <code class="mono">G43</code> kerf, and Marker 1 (<code class="mono">M11/M09/M10/M12</code>).</li>
+              <li><span class="ui-chip">Starfire / Fangling Industrial EIA (.txt)</span>: Built for SF-2100C, SF-2300S, F2100B, and F2300B panels. Defaults to drift-free quantized <code class="mono">G91</code> incremental moves (<code class="mono">G92 X0 Y0</code>), <code class="mono">G21/G20</code> units, <code class="mono">M07/M08</code> firing, 180&deg; split arcs (or <code class="mono">G01</code> linearization), zero <code class="mono">%</code> framing, optional <code class="mono">M38/M39</code> THC, bare-EIA comment-free toggle, and <code class="mono">M02</code> end.</li>
               <li><span class="ui-chip">Generic RS-274 (.nc)</span>: Portable <code class="mono">generic_g94</code> subset (<code class="mono">G00/G01/G02/G03/G04/G17/G20-G21/G40/G90/G92/G94</code>, <code class="mono">M03/M05/M30</code>) with uppercase <code class="mono">(COMMENT)</code> lines (&le; 80 chars) and zero <code class="mono">;</code>/<code class="mono">%</code>/<code class="mono">G49</code>/<code class="mono">G92.1</code>/<code class="mono">G10 L20</code>. Defaults to pre-zeroed <code class="mono">Z0</code> and THC <code class="mono">None</code> (or <code class="mono">M62/M63</code> / custom M-codes), with configurable <code class="mono">G04</code> dwells, <code class="mono">F_G94 = dL_xyz / dt</code>, swing-envelope Safe Z, <code class="mono">G92 A</code> modulo unwinds, and Dry-Run mode. Not compatible with Burny, Dynatorch, or FlashCut Stingray.</li>
             </ul>
 
             <div class="doc-callout info">
-              <div class="doc-callout-title">🛡️ 14-Controller Dialect Guardrails</div>
+              <div class="doc-callout-title">🛡️ 19-Controller Dialect Guardrails</div>
               <p style="margin-bottom: 0;">
-                Across all 13 third-party controllers and CSLab SimCNC, clamped-tube programs reset rotary wrap with safe modulo-360&deg; A-axis software resets (never mechanical <code class="mono">G28 A</code> homing), hold THC locked continuously across 4D square HSS, emit native <code class="mono">G17</code> <code class="mono">G2</code>/<code class="mono">G3</code> arcs on flat holes, and support pneumatic peck center-spotting.
+                Across all 19 controller dialects (21 built-in profiles), clamped rotary programs reset wrap with safe modulo-360&deg; A-axis software resets (never mechanical <code class="mono">G28 A</code> homing), hold THC locked continuously across 4D square HSS, emit native <code class="mono">G17</code> <code class="mono">G2</code>/<code class="mono">G3</code> arcs on flat holes, and support marking passes.
               </p>
             </div>
 
@@ -1093,10 +1098,10 @@
 
           <div class="doc-step-body">
             <p>
-              Every CNC controller handles touch-off probing, torch ignition, THC locking, and rotary feeds differently. All <strong>14 supported controllers</strong> (unlocked in both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong>), plus coaxial EasyScribe and pneumatic air-scribe marking, output ready-to-run code with zero hand edits.
+              Every CNC controller handles touch-off probing, torch ignition, THC locking, and rotary feeds differently. All <strong>19 supported controllers (21 built-in profiles)</strong>, unlocked in both <strong>Maker $199</strong> and <strong>Pro Shop $399</strong>, plus coaxial EasyScribe and pneumatic air-scribe marking, output ready-to-run code with zero hand edits.
             </p>
             <p>
-              Compare the 19 dialects below, then open your controller's guide for its 6-phase cut cycle diagram, stage G-code, wiring checklists, and hardware toggles.
+              Compare all 19 dialects below, then open your controller's guide for its 6-phase cut cycle diagram, stage G-code, wiring checklists, and hardware toggles.
             </p>
 
             <div class="table-wrap" style="margin: 0.75rem 0;">
@@ -1944,8 +1949,9 @@
         </div>
         <div class="footer-col">
           <h4>Application</h4>
-          <a href="https://app.pipecam.info">Launch Web App</a>
-          <a href="https://app.pipecam.info">Built-In CAD Fixtures</a>
+          <a href="https://rotarycam.app/#download">Download Desktop App</a>
+          <a href="https://rotarycam.app/#pricing">Maker &amp; Pro Shop Pricing</a>
+          <a href="https://rotarycam.app/docs/">Documentation Hub</a>
         </div>
       </div>
     </div>

@@ -2193,7 +2193,7 @@ d.setFeedrate(Feed_Rate)</code></pre>
               <li><strong>Centroid Acorn:</strong> <code class="mono">M39</code> (extend &amp; offset) / <code class="mono">M40</code> (retract)</li>
               <li><strong>Mach4, UCCNC, FlashCut, EdingCNC, PlanetCNC, grblHAL, Generic RS-274:</strong> Auxiliary M-code pair with automatic <code class="mono">G52 X&lt;dx&gt; Y&lt;dy&gt;</code> shift and <code class="mono">G52 X0 Y0</code> cancel.</li>
               <li><strong>ArtSoft Mach3 &amp; ShopSabre WinCNC:</strong> Auxiliary M-code pair with XY scribe offsets baked directly into <code class="mono">G54</code> coordinates (zero <code class="mono">G52/G92</code> conflict).</li>
-              <li><strong>Pneumatic Peck Center-Spotting:</strong> Supported across all 13 third-party controllers for drill-ready bolt center dimples before plasma cutting.</li>
+              <li><strong>Pneumatic Peck Center-Spotting:</strong> Supported across all 19 controller dialects for drill-ready bolt center dimples before plasma cutting.</li>
             </ul>""",
             },
         ],
