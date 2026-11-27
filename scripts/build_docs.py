@@ -866,7 +866,7 @@ def bootstrap_missing_page_templates():
 
 
 SITE_BASE = "https://rotarycam.app"
-DEFAULT_OG_IMAGE = f"{SITE_BASE}/assets/cad-inspection.png"
+DEFAULT_OG_IMAGE = f"{SITE_BASE}/assets/og-cad-inspection.jpg"
 DEFAULT_OG_ALT = "RotaryCAM 3D CAD Tube Inspection and Feature Extraction"
 
 
@@ -980,7 +980,15 @@ def build_all_docs():
         prev_t = TUTORIALS[idx - 1] if idx > 0 else None
         next_t = TUTORIALS[idx + 1] if idx + 1 < total_tutorials else None
         tmpl = env.get_template(f"pages/{t['slug']}.html.j2")
-        og_img = f"{SITE_BASE}/docs/{t['hub_thumb']}" if t.get("hub_thumb") else DEFAULT_OG_IMAGE
+        if t.get("hub_thumb"):
+            thumb_path = DOCS_OUT_DIR / t["hub_thumb"]
+            og_jpg = thumb_path.with_name(f"og-{thumb_path.stem}.jpg")
+            if og_jpg.exists():
+                og_img = f"{SITE_BASE}/docs/{og_jpg.relative_to(DOCS_OUT_DIR).as_posix()}"
+            else:
+                og_img = f"{SITE_BASE}/docs/{t['hub_thumb']}"
+        else:
+            og_img = DEFAULT_OG_IMAGE
         og_alt = t.get("hub_thumb_alt") or DEFAULT_OG_ALT
         rendered = tmpl.render(
             page=t,

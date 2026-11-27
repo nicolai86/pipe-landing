@@ -19,7 +19,10 @@
   <meta property="og:site_name" content="RotaryCAM" />
   <meta property="og:title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
   <meta property="og:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, active corner and small-hole THC, and 4-axis rotary cam." />
-  <meta property="og:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
+  <meta property="og:image" content="https://rotarycam.app/assets/og-z-axis-thc-v2-preview.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="1139" />
   <meta property="og:image:alt" content="RotaryCAM Hardware v2 10 kHz Z-Axis Torch Height Controller PCB" />
 
   <!-- Twitter / X -->
@@ -27,10 +30,12 @@
   <meta name="twitter:url" content="https://rotarycam.app/hardware-thc.html" />
   <meta name="twitter:title" content="Smart Z-Axis Hardware THC v2 (10 kHz Step/Dir) | RotaryCAM" />
   <meta name="twitter:description" content="Standalone 10,000 Hz Step/Dir hardware THC ($199 CAD). 2.0 ms ohmic tip-up escape, full-stroke warp tracking, active corner and small-hole THC, and 4-axis rotary cam." />
-  <meta name="twitter:image" content="https://rotarycam.app/assets/z-axis-thc-v2-preview.png" />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/og-z-axis-thc-v2-preview.jpg" />
 
   <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%2314171d' stroke='%23f59e0b' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='16' r='4' fill='%23f59e0b'/></svg>" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
   <!-- Schema.org Product Structured Data -->
   <script type="application/ld+json">
@@ -629,6 +634,99 @@
       .thc-mid-cta-form-wrap {
         flex: 1 1 auto;
       }
+    }
+
+    /* Software Cross-Sell Banner */
+    .thc-software-band {
+      padding: 1.5rem 0;
+      background: #0a0d12;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .software-cross-sell {
+      padding: 1.35rem 1.75rem;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(6, 182, 212, 0.08));
+      border: 1px solid rgba(245, 158, 11, 0.38);
+      border-radius: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    }
+
+    .software-cross-sell-copy {
+      flex: 1 1 460px;
+    }
+
+    .software-cross-sell-kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--plasma-amber);
+      margin-bottom: 0.3rem;
+    }
+
+    .software-cross-sell-copy h2 {
+      font-size: 1.28rem;
+      margin-bottom: 0.3rem;
+      color: #fff;
+    }
+
+    .software-cross-sell-copy p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 640px;
+    }
+
+    .software-cross-sell-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .cross-sell-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--plasma-amber);
+      color: #07090d;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.72rem 1.25rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      box-shadow: 0 4px 14px var(--plasma-glow);
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+
+    .cross-sell-btn-primary:hover {
+      background: #fbbf24;
+      transform: translateY(-1px);
+    }
+
+    .cross-sell-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(20, 23, 29, 0.95);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 0.72rem 1.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .cross-sell-btn-secondary:hover {
+      border-color: var(--cyan-arc);
+      color: #fff;
     }
 
     /* Right Column Interactive 3D Hardware Card */
@@ -2224,6 +2322,27 @@
         </div>
       </div>
     </section>
+
+    <!-- =====================================================================
+         ROTARYCAM SOFTWARE CROSS-SELL BANNER
+         ===================================================================== -->
+    <aside class="thc-software-band" aria-label="RotaryCAM Desktop Software">
+      <div class="container">
+        <div class="software-cross-sell">
+          <div class="software-cross-sell-copy">
+            <div class="software-cross-sell-kicker">RotaryCAM Desktop CAM &bull; 21 Built-In Machines</div>
+            <h2>Zero-Bevel 4-Axis XYZA G-Code Built for Hardware THC</h2>
+            <p>
+              No 2D unrolling. RotaryCAM exports verified 4-axis tube and flat-plate G-code 100% offline with built-in THC sync ($199 Maker / $399 Pro Shop).
+            </p>
+          </div>
+          <div class="software-cross-sell-actions">
+            <a href="index.html#download" class="cross-sell-btn-primary">30-Day Free Trial &rarr;</a>
+            <a href="assets/rotarycam-sample-gcode.zip" download class="cross-sell-btn-secondary">Download Verified Sample G-Code</a>
+          </div>
+        </div>
+      </div>
+    </aside>
 
     <!-- =====================================================================
          SECTION 01: WHY SOFTWARE THCS DIVE

@@ -19,11 +19,11 @@
   <meta property="og:site_name" content="RotaryCAM" />
   <meta property="og:title" content="4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM | RotaryCAM" />
   <meta property="og:description" content="Drop 3D STEP tube assemblies and DXF/SVG kits straight in for cut-ready G-code. 19 controller dialects (21 profiles) in G20/G21, 1,025 cut presets, and 100% offline." />
-  <meta property="og:image" content="https://rotarycam.app/assets/cad-inspection.png" />
-  <meta property="og:image:secure_url" content="https://rotarycam.app/assets/cad-inspection.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="2000" />
-  <meta property="og:image:height" content="1060" />
+  <meta property="og:image" content="https://rotarycam.app/assets/og-cad-inspection.jpg" />
+  <meta property="og:image:secure_url" content="https://rotarycam.app/assets/og-cad-inspection.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image:width" content="1600" />
+  <meta property="og:image:height" content="848" />
   <meta property="og:image:alt" content="RotaryCAM 3D CAD Tube Inspection and Feature Extraction" />
   <meta property="og:locale" content="en_US" />
 
@@ -32,11 +32,13 @@
   <meta name="twitter:url" content="https://rotarycam.app/" />
   <meta name="twitter:title" content="4-Axis Rotary &amp; Flat-Sheet CNC Plasma CAM | RotaryCAM" />
   <meta name="twitter:description" content="Drop 3D STEP tube assemblies and DXF/SVG kits straight in for cut-ready G-code. 19 controller dialects (21 profiles) in G20/G21, 1,025 cut presets, and 100% offline." />
-  <meta name="twitter:image" content="https://rotarycam.app/assets/cad-inspection.png" />
+  <meta name="twitter:image" content="https://rotarycam.app/assets/og-cad-inspection.jpg" />
   <meta name="twitter:image:alt" content="RotaryCAM 4-Axis Rotary CNC Plasma CAM Interface" />
 
   <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%2314171d' stroke='%23f59e0b' stroke-width='2'/><path d='M16 6v20M6 16h20' stroke='%2306b6d4' stroke-width='2' stroke-linecap='round'/><circle cx='16' cy='16' r='4' fill='%23f59e0b'/></svg>" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
 
   <!-- Schema.org JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -44,8 +46,16 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "RotaryCAM",
+    "softwareVersion": "0.9.4",
     "applicationCategory": "ComputerAidedManufacturingApplication",
     "operatingSystem": "macOS, Windows, Linux",
+    "downloadUrl": "https://rotarycam-app.s3.us-east-2.amazonaws.com/releases/v0.9.4/RotaryCam-Windows-v0.9.4.zip",
+    "screenshot": [
+      "https://rotarycam.app/assets/og-cad-inspection.jpg",
+      "https://rotarycam.app/assets/pack-nesting.webp",
+      "https://rotarycam.app/assets/dxf-svg-flat-sheet.webp",
+      "https://rotarycam.app/assets/cut-simulation.webp"
+    ],
     "offers": [
       {
         "@type": "Offer",
@@ -107,6 +117,136 @@
       "Dynamic THC Corner Anti-Dive Locking (M62/M63)",
       "1D Mill Stick Nesting with Common-Line Sever Cuts & 180-Degree Interlocking",
       "Perpetual 100% Air-Gapped Offline Desktop Licensing (rotarycam.lic)"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I have to unwrap 3D tubes into flat DXF files first?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Drop multi-body .step or .stp tube frames straight in and RotaryCAM detects round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, and bent sticks directly from 3D CAD. You still get 2D DXF/SVG wrapping if you want to wrap logos, slots, or single-stroke text onto a tube."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I cut flat 2D DXF and SVG plate kits alongside rotary tubes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Load multi-file DXF, SVG, ZIP, or flat STEP kits onto 48 x 96 in sheets with 2-point snap scaling, recursive part-in-cutout nesting, common-line cuts, Edge-Start piercing, and Kerf-Crossing THC lock."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which CNC plasma controllers work out of the box?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RotaryCAM ships with 19 controller dialects (21 built-in profiles) in native G20 inches and G21 metric, including CSLab SimCNC, FlashCut, LinuxCNC QTPlasmaC, CommandCNC, Mach4, Mach3, MASSO G3, Centroid Acorn, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire/Fangling, WinCNC, UCCNC, grblHAL, EdingCNC, PlanetCNC, and Generic RS-274 G94, plus sandboxed Lua 5.4 custom posts."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does flat-sheet F change in Inches (G20), while rotary G93 F stays identical?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Flat-sheet G94 feedrate is distance per minute, so switching from mm/min to IPM divides F by 25.4. Rotary G93 inverse-time defines 1 divided by move duration in minutes, so the unit factor cancels out and F stays identical in both G20 and G21."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does RotaryCAM require an internet connection or monthly subscription?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Every desktop build runs 100% offline with zero CAD uploads, and both Maker ($199) and Pro Shop ($399) ship a perpetual rotarycam.lic key file you own forever with 1 year of updates included."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between the $199 Maker and $399 Pro Shop licenses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Maker ($199, 2 PCs) covers round pipe, square/rect HSS, flat-sheet cutting, Zero-Bevel copes, 2D tube wrapping, the 50-shape 2D library, and the 3D Tube Frame Designer. Pro Shop ($399, 3 PCs) adds 4-axis eccentric V-bevel weld prep, Angle/C-Channel/I-Beam cutting, recursive cutout and common-line nesting, dual scribe marking, unlimited multi-stick nesting, mandrel bender prep, and headless MCP automation."
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "RotaryCAM Live 4-Axis Rotary CNC Plasma Cutting Videos",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "VideoObject",
+          "name": "Cutting Square & Rectangular HSS",
+          "description": "Live plasma cutting on structural rectangular tubing with dynamic THC height tracking and 4D feedrate scaling across corner radii.",
+          "thumbnailUrl": "https://i.ytimg.com/vi/9BRmgDwqXck/hqdefault.jpg",
+          "uploadDate": "2026-10-18T00:00:00Z",
+          "embedUrl": "https://www.youtube.com/embed/9BRmgDwqXck",
+          "contentUrl": "https://www.youtube.com/shorts/9BRmgDwqXck"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "VideoObject",
+          "name": "First Test Cut on Round Pipe",
+          "description": "Synchronized 360-degree A-axis stock rotation and longitudinal X traverse cutting a saddle joint fishmouth on round pipe.",
+          "thumbnailUrl": "https://i.ytimg.com/vi/ACsAyeFF3xk/hqdefault.jpg",
+          "uploadDate": "2026-10-18T00:00:00Z",
+          "embedUrl": "https://www.youtube.com/embed/ACsAyeFF3xk",
+          "contentUrl": "https://www.youtube.com/shorts/ACsAyeFF3xk"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "VideoObject",
+          "name": "A & X Axis Motion Walkthrough",
+          "description": "Walkaround of the 6-meter carriage traversing the helical rack, paired with dual synchronized ClearPath rotary chucks.",
+          "thumbnailUrl": "https://i.ytimg.com/vi/SxPffLVxEtA/hqdefault.jpg",
+          "uploadDate": "2026-10-18T00:00:00Z",
+          "embedUrl": "https://www.youtube.com/embed/SxPffLVxEtA",
+          "contentUrl": "https://www.youtube.com/shorts/SxPffLVxEtA"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "VideoObject",
+          "name": "Front Chuck & Slewing Ring",
+          "description": "Close-up of the front headstock with XSU080318 crossed roller slewing ring, machined 6061 faceplate, and protective covers.",
+          "thumbnailUrl": "https://i.ytimg.com/vi/dbIxk7xQxyU/hqdefault.jpg",
+          "uploadDate": "2026-10-18T00:00:00Z",
+          "embedUrl": "https://www.youtube.com/embed/dbIxk7xQxyU",
+          "contentUrl": "https://www.youtube.com/shorts/dbIxk7xQxyU"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "VideoObject",
+          "name": "Machine Chassis & Bed Assembly",
+          "description": "Fabrication progress overview on the 5x3x1/4 inch steel spine, M24 leveling pedestals, HGH25 linear rails, and cable carrier.",
+          "thumbnailUrl": "https://i.ytimg.com/vi/0OIRPtqcSMY/hqdefault.jpg",
+          "uploadDate": "2026-10-18T00:00:00Z",
+          "embedUrl": "https://www.youtube.com/embed/0OIRPtqcSMY",
+          "contentUrl": "https://www.youtube.com/shorts/0OIRPtqcSMY"
+        }
+      }
     ]
   }
   </script>
@@ -1861,8 +2001,8 @@
       </div>
       <div class="showcase-img-container">
         <picture>
-          <source srcset="assets/cad-inspection.webp" type="image/webp" />
-          <img src="assets/cad-inspection.png" alt="Single Part CAD Inspection in RotaryCAM" width="2000" height="1060" loading="lazy" decoding="async" />
+          <source srcset="docs/assets/no-cad-7-assembled-3d.webp" type="image/webp" />
+          <img src="docs/assets/no-cad-7-assembled-3d.png" alt="Full 3D Assembled Frame Inspection and Auto-Detected Tube Features in RotaryCAM" width="2324" height="1397" loading="lazy" decoding="async" />
         </picture>
       </div>
     </div>
@@ -2951,6 +3091,47 @@
           <div class="mono" style="margin-top: 1.25rem; font-size: 0.82rem; color: var(--plasma-amber); font-weight: 700;">Read Tutorial 16 →</div>
         </div>
       </a>
+    </div>
+  </section>
+
+  <!-- Shop-Floor FAQ Section -->
+  <section id="faq" class="section-wrap" style="padding-top: 1rem; padding-bottom: 2.5rem;">
+    <div class="section-header" style="margin-bottom: 2rem;">
+      <div class="badge"><span class="mono">SHOP-FLOOR FAQ</span></div>
+      <h2>Common Questions Before You Cut</h2>
+      <p>Quick answers on 3D STEP import, 2D sheet kits, controller dialects, G93 feedrates, and offline licensing.</p>
+    </div>
+
+    <div class="grid-2" style="gap: 1.25rem;">
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="font-size: 1.05rem; margin-bottom: 0.55rem;">Do I have to unwrap 3D tubes into flat DXF files first?</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">No. Drop multi-body <code class="mono">.step</code> or <code class="mono">.stp</code> tube frames straight in and RotaryCAM detects round pipe, square/rectangular HSS, angle iron, C-channel, I-beam, and bent sticks directly from 3D CAD. You still get 2D DXF/SVG wrapping if you want to wrap logos, slots, or single-stroke text onto a tube.</p>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="font-size: 1.05rem; margin-bottom: 0.55rem;">Can I cut flat 2D DXF and SVG plate kits alongside rotary tubes?</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Yes. Load multi-file DXF, SVG, ZIP, or flat STEP kits onto <code class="mono">48 &times; 96 in</code> sheets with 2-point snap scaling, recursive part-in-cutout nesting, common-line cuts, Edge-Start piercing, and Kerf-Crossing THC lock.</p>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="font-size: 1.05rem; margin-bottom: 0.55rem;">Which CNC plasma controllers work out of the box?</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">RotaryCAM ships with 19 controller dialects (21 built-in profiles) in native <code class="mono">G20</code> inches and <code class="mono">G21</code> metric, including CSLab SimCNC, FlashCut, LinuxCNC QTPlasmaC, CommandCNC, Mach4, Mach3, MASSO G3, Centroid Acorn, FireControl, Torchmate VMD, MyPlasm, Hypertherm EIA, Starfire/Fangling, WinCNC, UCCNC, grblHAL, EdingCNC, PlanetCNC, and Generic RS-274 G94, plus sandboxed Lua 5.4 custom posts.</p>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="font-size: 1.05rem; margin-bottom: 0.55rem;">Why does flat-sheet F change in Inches (G20), while rotary G93 F stays identical?</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Flat-sheet <code class="mono">G94</code> feedrate is distance per minute, so switching from mm/min to IPM divides <code class="mono">F</code> by 25.4. Rotary <code class="mono">G93</code> inverse-time defines 1 divided by move duration in minutes, so the unit factor cancels out and <code class="mono">F</code> stays identical in both <code class="mono">G20</code> and <code class="mono">G21</code>.</p>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="font-size: 1.05rem; margin-bottom: 0.55rem;">Does RotaryCAM require an internet connection or monthly subscription?</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">No. Every desktop build runs 100% offline with zero CAD uploads, and both Maker ($199) and Pro Shop ($399) ship a perpetual <code class="mono">rotarycam.lic</code> key file you own forever with 1 year of updates included.</p>
+      </div>
+
+      <div class="card" style="padding: 1.5rem;">
+        <h3 style="font-size: 1.05rem; margin-bottom: 0.55rem;">What is the difference between the $199 Maker and $399 Pro Shop licenses?</h3>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Maker ($199, 2 PCs) covers round pipe, square/rect HSS, flat-sheet cutting, Zero-Bevel copes, 2D tube wrapping, the 50-shape 2D library, and the 3D Tube Frame Designer. Pro Shop ($399, 3 PCs) adds 4-axis eccentric V-bevel weld prep, Angle/C-Channel/I-Beam cutting, recursive cutout and common-line nesting, dual scribe marking, unlimited multi-stick nesting, mandrel bender prep, and headless MCP automation.</p>
+      </div>
     </div>
   </section>
 

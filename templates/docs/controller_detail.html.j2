@@ -357,6 +357,20 @@
         </article>
         {% endif %}
 
+        <!-- Contextual Controller CTA -->
+        <div class="compare-cta-box" id="controller-download-cta">
+          <div class="compare-cta-copy">
+            <h2>Ready to Cut on {{ controller.name }}?</h2>
+            <p>
+              Drop a 3D STEP tube assembly or 2D DXF sheet into RotaryCAM and export verified {% if controller.ext == 'Multi-Tool' %}scribe and plasma programs{% else %}{{ controller.ext }} programs{% endif %} 100% offline. 30-day free trial, $199 Maker / $399 Pro Shop.
+            </p>
+          </div>
+          <div class="compare-cta-actions">
+            <a href="https://rotarycam.app/#download" class="compare-btn-primary">Download RotaryCAM for {{ controller.short_name }} (30-Day Free Trial) &rarr;</a>
+            <a href="{{ root_prefix }}assets/rotarycam-sample-gcode.zip" download class="compare-btn-secondary">Download Verified Sample G-Code (.nc / .ngc / .tap)</a>
+          </div>
+        </div>
+
         <!-- Prev / Next Controller Pagination -->
         <nav class="docs-pagination" aria-label="Controller Guide Pagination">
           {% if prev_controller %}
